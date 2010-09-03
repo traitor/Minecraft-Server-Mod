@@ -277,9 +277,6 @@ public class ia extends eh implements ed {
                 return;
             }
 
-            if (str.startsWith(">"))
-                str += Colors.Green;
-
             String message = "<" + etc.getInstance().getUserColor(e.ap) + this.e.ap + Colors.White + "> " + str;
             a.log(Level.INFO, "<" + e.ap + "> " + str);
             this.d.f.a(new az(message));
