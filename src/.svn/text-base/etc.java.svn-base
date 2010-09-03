@@ -1,0 +1,558 @@
+/* Just a general storage for all my crap */
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import net.minecraft.server.*;
+
+public class etc {
+    private static final Logger log = Logger.getLogger("Minecraft");
+    private static volatile etc instance;
+    private ArrayList<String> muted = new ArrayList<String>();
+    public String usersLoc = "users.txt", kitsLoc = "kits.txt", homeLoc = "homes.txt", warpLoc = "warps.txt", itemLoc = "items.txt", groupLoc = "groups.txt", commandsLoc = "commands.txt";
+    public String whitelistLoc = "whitelist.txt", reservelistLoc = "reservelist.txt";
+    public String[] allowedItems = null;
+    public String[] disallowedItems = null;
+    public String[] itemSpawnBlacklist = null;
+    public String[] motd = null;
+    public boolean saveHomes = true;
+    public boolean firstLoad = true;
+    public int playerLimit = 20;
+    public int spawnProtectionSize = 16;
+    public long sleepTime = 30000;
+    public long saveInterval = 1800000;
+    public LinkedHashMap<String, String> commands = new LinkedHashMap<String, String>();
+    private String dataSourceType;
+    private ReloadThread reloadThread;
+    private SaveAllThread saveThread;
+    private DataSource dataSource;
+    private co properties;
+
+    private etc() {
+        commands.put("/help", "[Page] - Shows a list of commands. 7 per page.");
+        commands.put("/playerlist", "- Shows a list of players");
+        commands.put("/reload", "- Reloads config");
+        commands.put("/banip", "[Player] <Reason> - Bans the player's IP");
+        commands.put("/unbanip", "[IP] - Unbans the IP");
+        commands.put("/ban", "[Player] <Reason> - Bans the player");
+        commands.put("/unban", "[Player] - Unbans the player");
+        commands.put("/mute", "[Player] - Toggles mute on player.");
+        commands.put("/tp", "[Player] - Teleports to player. Credits to Zet from SA");
+        commands.put("/tphere", "[Player] - Teleports the player to you");
+        commands.put("/kick", "[Player] <Reason> - Kicks player");
+        commands.put("/item", "[ID] [Amount] <Player> - Gives items");
+        commands.put("/kit", "[Kit] - Gives a kit. To get a list of kits type /kit");
+        commands.put("/home", "- Teleports you home");
+        commands.put("/sethome", "- Sets your home");
+        commands.put("/setspawn", "- Sets the spawn point to your position.");
+        commands.put("/me", "[Message] - * hey0 says hi!");
+        commands.put("/msg", "[Player] [Message] - Sends a message to player");
+        commands.put("/spawn", "- Teleports you to spawn");
+        commands.put("/warp", "[Warp] - Warps to the specified warp.");
+        commands.put("/setwarp", "[Warp] - Sets the warp to your current position.");
+        commands.put("/getpos", "- Displays your current position.");
+        commands.put("/compass", "- Gives you a compass reading.");
+        commands.put("/time", "[Time|day|night] - Changes time");
+        commands.put("/lighter", "- Gives you a lighter for lighting furnaces");
+        commands.put("/motd", "- Displays the MOTD");
+        commands.put("/modify", "[player] [key] [value] - Type /modify for more info");
+        commands.put("/whitelist", "[operation (add or remove)] [player]");
+        commands.put("/reservelist", "[operation (add or remove)] [player]");
+
+        load();
+    }
+
+    public final void load() {
+        if (properties == null) {
+            properties = new co(new File("server.properties"));
+        } else {
+            properties.reload(new File("server.properties"));
+        }
+
+        try {
+            dataSourceType = properties.getString("data-source", "flatfile");
+
+            allowedItems = properties.getString("alloweditems", "").split(",");
+            disallowedItems = properties.getString("disalloweditems", "").split(",");
+            itemSpawnBlacklist = properties.getString("itemspawnblacklist", "").split(",");
+            motd = properties.getString("motd", "Type /help for a list of commands.").split("@");
+            playerLimit = properties.getInt("max-players", 20);
+            saveHomes = properties.getBoolean("save-homes", true);
+            if (dataSourceType.equalsIgnoreCase("flatfile")) {
+                usersLoc = properties.getString("admintxtlocation", "users.txt");
+                kitsLoc = properties.getString("kitstxtlocation", "kits.txt");
+                homeLoc = properties.getString("homelocation", "homes.txt");
+                warpLoc = properties.getString("warplocation", "warps.txt");
+                itemLoc = properties.getString("itemstxtlocation", "items.txt");
+                groupLoc = properties.getString("group-txt-location", "groups.txt");
+                whitelistLoc = properties.getString("whitelist-txt-location", "whitelist.txt");
+                reservelistLoc = properties.getString("reservelist-txt-location", "reservelist.txt");
+            }
+            spawnProtectionSize = properties.getInt("spawn-protection-size", 16);
+            sleepTime = properties.getLong("reload-interval", 30000);
+            saveInterval = properties.getLong("save-interval", 1800000);
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "Exception while reading from server.properties", e);
+            // Just in case...
+            disallowedItems = new String[]{""};
+            allowedItems = new String[]{""};
+            itemSpawnBlacklist = new String[]{""};
+            motd = new String[]{"Type /help for a list of commands."};
+        }
+    }
+
+    public void loadData() {
+        if (dataSourceType.equalsIgnoreCase("flatfile") && dataSource == null) {
+            dataSource = new FlatFileSource();
+        } else if (dataSourceType.equalsIgnoreCase("mysql") && dataSource == null) {
+            dataSource = new MySQLSource();
+        }
+
+        dataSource.initialize();
+    }
+
+    public static etc getInstance() {
+        if (instance == null) {
+            instance = new etc();
+        }
+
+        return instance;
+    }
+
+    public void startThreads(MinecraftServer paramMinecraftServer) {
+        if (saveInterval > 0 && saveThread == null) {
+            saveThread = new SaveAllThread(paramMinecraftServer);
+            saveThread.start();
+        }
+
+        if (sleepTime > 0 && reloadThread == null) {
+            reloadThread = new ReloadThread();
+            reloadThread.start();
+        }
+    }
+
+    public boolean isUserInGroup(dy e, String group) {
+        return isUserInGroup(e.ap, group);
+    }
+
+    public boolean isUserInGroup(String name, String group) {
+        if (group != null) {
+            if (getDefaultGroup() != null) {
+                if (group.equalsIgnoreCase(getDefaultGroup().Name)) {
+                    return true;
+                }
+            } else {
+                log.info("There's no default group.");
+            }
+        }
+        User user = getUser(name);
+        if (user != null) {
+            for (String str : user.Groups) {
+                if (recursiveUserInGroup(getGroup(str), group)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean recursiveUserInGroup(Group g, String group) {
+        if (g == null || group == null) {
+            return false;
+        }
+
+        if (g.Name.equalsIgnoreCase(group)) {
+            return true;
+        }
+
+        if (g.InheritedGroups != null) {
+            for (String str : g.InheritedGroups) {
+                if (g.Name.equalsIgnoreCase(str)) {
+                    return true;
+                }
+
+                Group g2 = getGroup(str);
+                if (g2 != null) {
+                    if (recursiveUserInGroup(g2, group)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public User getUser(String name) {
+        return dataSource.getUser(name);
+    }
+
+    public Group getDefaultGroup() {
+        return dataSource.getDefaultGroup();
+    }
+
+    public String getUserColor(String name) {
+        User user = getUser(name);
+        if (user != null) {
+            if (user.Prefix != null) {
+                if (!user.Prefix.equals("")) {
+                    return "§" + user.Prefix;
+                }
+            }
+
+            Group group = getGroup(user.Groups[0]);
+            if (group != null) {
+                return "§" + group.Prefix;
+            }
+        }
+        Group def = getDefaultGroup();
+        return def != null ? "§" + def.Prefix : "";
+    }
+
+    public boolean canUseCommand(String name, String command) {
+        User user = getUser(name);
+        //holy motherfuck
+        if (user != null) {
+            for (String str : user.Commands) {
+                if (str.equalsIgnoreCase(command)) {
+                    return true;
+                }
+            }
+
+            for (String str : user.Groups) {
+                Group g = getGroup(str);
+                if (g != null) {
+                    if (recursiveUseCommand(g, command)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        Group def = getDefaultGroup();
+        if (def != null) {
+            if (recursiveUseCommand(def, command)) {
+                return true;
+            }
+        } else {
+            log.info("No default group.");
+        }
+
+        return false;
+    }
+
+    private boolean recursiveUseCommand(Group g, String command) {
+        for (String str : g.Commands) {
+            if (str.equalsIgnoreCase(command) || str.equals("*")) {
+                return true;
+            }
+        }
+
+        if (g.InheritedGroups != null) {
+            for (String str : g.InheritedGroups) {
+                Group g2 = getGroup(str);
+                if (g2 != null) {
+                    if (recursiveUseCommand(g2, command)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public Group getGroup(String name) {
+        return dataSource.getGroup(name);
+    }
+
+    public boolean hasKits() {
+        return dataSource.hasKits();
+    }
+
+    public String getKitNames(dy e) {
+        return dataSource.getKitNames(e.ap);
+    }
+
+    public Kit getKit(String name) {
+        return dataSource.getKit(name);
+    }
+
+    public boolean isAdmin(dy player) {
+        return isAdmin(player.ap);
+    }
+
+    public boolean isAdmin(String player) {
+        User user = getUser(player);
+        if (user == null) {
+            return false;
+        }
+        if (user.Administrator) {
+            return true;
+        }
+
+        for (String str : user.Groups) {
+            Group group = getGroup(str);
+            if (group != null) {
+                if (group.Administrator) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean canIgnoreRestrictions(dy player) {
+        return canIgnoreRestrictions(player.ap);
+
+    }
+
+    public boolean canIgnoreRestrictions(String player) {
+        User user = getUser(player);
+        if (user == null) {
+            return false;
+        }
+        if (user.Administrator || user.IgnoreRestrictions) {
+            return true;
+        }
+
+        for (String str : user.Groups) {
+            Group group = getGroup(str);
+            if (group != null) {
+                if (group.Administrator || group.IgnoreRestrictions) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean canBuild(dy player) {
+        User user = getUser(player.ap);
+
+        if (user == null) {
+            return getDefaultGroup().CanModifyWorld;
+        }
+
+        if (!user.CanModifyWorld) {
+            return false;
+        }
+
+        for (String str : user.Groups) {
+            Group group = getGroup(str);
+            if (group != null) {
+                if (!group.CanModifyWorld) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean isMuted(dy e) {
+        return muted.contains(e.ap);
+    }
+
+    public boolean toggleMute(dy e) {
+        if (muted.contains(e.ap)) {
+            muted.remove(e.ap);
+        } else {
+            muted.add(e.ap);
+        }
+        return muted.contains(e.ap);
+    }
+
+    public void changeHome(String name, Location loc) {
+        if (dataSource.getHome(name) == null) {
+            dataSource.addHome(name, loc);
+        } else {
+            dataSource.changeHome(name, loc);
+        }
+    }
+
+    public void setWarp(String warpname, Location loc) {
+        warpname = warpname.toLowerCase();
+        if (dataSource.getWarp(warpname) == null) {
+            dataSource.addWarp(warpname, loc);
+        } else {
+            dataSource.changeWarp(warpname, loc);
+        }
+    }
+
+    public boolean isOnItemBlacklist(int id) {
+        for (String str : itemSpawnBlacklist) {
+            if (Integer.toString(id).equalsIgnoreCase(str)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public DataSource getDataSource() {
+        return dataSource;
+    }
+
+    public boolean parseConsoleCommand(String command, MinecraftServer server) {
+        String[] split = command.split(" ");
+        boolean dontParseRegular = true;
+        if (split[0].equalsIgnoreCase("help") || split[0].equalsIgnoreCase("mod-help")) {
+            if (split[0].equalsIgnoreCase("help")) {
+                dontParseRegular = false;
+            }
+            log.info("Server mod help:");
+            log.info("help          Displays this mod's and server's help");
+            log.info("mod-help      Displays this mod's help");
+            log.info("reload        Reloads the config");
+            log.info("modify        Type modify for more info");
+            log.info("whitelist     Type whitelist for more info");
+            log.info("reservelist   Type reservelist for more info");
+        } else if (split[0].equalsIgnoreCase("reload")) {
+            load();
+            loadData();
+            log.info("Reloaded mod");
+        } else if (split[0].equalsIgnoreCase("modify")) {
+            if (split.length < 4) {
+                log.info("Usage is: /modify [player] [key] [value]");
+                log.info("Keys:");
+                log.info("prefix: only the letter the color represents");
+                log.info("commands: list seperated by comma");
+                log.info("groups: list seperated by comma");
+                log.info("ignoresrestrictions: true or false");
+                log.info("admin: true or false");
+                log.info("modworld: true or false");
+                return true;
+            }
+
+            dy player = match(split[1], server);
+
+            if (player == null) {
+                log.info("Player does not exist.");
+                return true;
+            }
+
+            String key = split[2];
+            String value = split[3];
+            User user = etc.getInstance().getUser(split[1]);
+            boolean newUser = false;
+
+            if (user == null) {
+                if (!key.equalsIgnoreCase("groups") && !key.equalsIgnoreCase("g")) {
+                    log.info("When adding a new user, set their group(s) first.");
+                    return true;
+                }
+                log.info("Adding new user.");
+                newUser = true;
+                user = new User();
+                user.Name = split[1];
+                user.Administrator = false;
+                user.CanModifyWorld = true;
+                user.IgnoreRestrictions = false;
+                user.Commands = new String[]{""};
+                user.Prefix = "";
+            }
+
+            if (key.equalsIgnoreCase("prefix") || key.equalsIgnoreCase("p")) {
+                user.Prefix = "§" + value;
+            } else if (key.equalsIgnoreCase("commands") || key.equalsIgnoreCase("c")) {
+                user.Commands = value.split(",");
+            } else if (key.equalsIgnoreCase("groups") || key.equalsIgnoreCase("g")) {
+                user.Groups = value.split(",");
+            } else if (key.equalsIgnoreCase("ignoresrestrictions") || key.equalsIgnoreCase("ir")) {
+                user.IgnoreRestrictions = value.equalsIgnoreCase("true") || value.equals("1");
+            } else if (key.equalsIgnoreCase("admin") || key.equalsIgnoreCase("a")) {
+                user.Administrator = value.equalsIgnoreCase("true") || value.equals("1");
+            } else if (key.equalsIgnoreCase("modworld") || key.equalsIgnoreCase("mw")) {
+                user.CanModifyWorld = value.equalsIgnoreCase("true") || value.equals("1");
+            }
+
+            if (newUser) {
+                dataSource.addUser(user);
+            } else {
+                dataSource.modifyUser(user);
+            }
+            log.info("Modified user.");
+        } else if (split[0].equalsIgnoreCase("whitelist")) {
+            if (split.length != 3) {
+                log.info("whitelist [operation (add or remove)] [player]");
+                return true;
+            }
+
+            if (split[1].equalsIgnoreCase("add")) {
+                dataSource.addToWhitelist(split[2]);
+                log.info(split[2] + " added to whitelist");
+            } else if (split[1].equalsIgnoreCase("remove")) {
+                dataSource.removeFromWhitelist(split[2]);
+                log.info(split[2] + " removed from whitelist");
+            } else {
+                log.info("Invalid operation.");
+            }
+        } else if (split[0].equalsIgnoreCase("reservelist")) {
+            if (split.length != 3) {
+                log.info("reservelist [operation (add or remove)] [player]");
+                return true;
+            }
+
+            if (split[1].equalsIgnoreCase("add")) {
+                dataSource.addToReserveList(split[2]);
+                log.info(split[2] + " added to reservelist");
+            } else if (split[1].equalsIgnoreCase("remove")) {
+                dataSource.removeFromReserveList(split[2]);
+                log.info(split[2] + " removed from reservelist");
+            } else {
+                log.info("Invalid operation.");
+            }
+        } else {
+            dontParseRegular = false;
+        }
+        return dontParseRegular;
+    }
+
+    private static dy match(String name, MinecraftServer d) {
+        dy player = null;
+        boolean found = false;
+        if (("`" + d.f.c().toUpperCase() + "`").split(name.toUpperCase()).length == 2) {
+            for (int i = 0; i < d.f.b.size() && !found; ++i) {
+                dy localdy = (dy) d.f.b.get(i);
+                if (("`" + localdy.ap.toUpperCase() + "`").split(name.toUpperCase()).length == 2) {
+                    player = localdy;
+                    found = true;
+                }
+            }
+        } else if (("`" + d.f.c() + "`").split(name).length > 2) {
+            // Too many partial matches.
+            for (int i = 0; i < d.f.b.size() && !found; ++i) {
+                dy localdy = (dy) d.f.b.get(i);
+                if (localdy.ap.equalsIgnoreCase(name)) {
+                    player = localdy;
+                    found = true;
+                }
+            }
+        }
+        return player;
+    }
+
+    public static String getCompassPointForDirection(double degrees) {
+        if (0 <= degrees && degrees < 22.5) {
+            return "N";
+        } else if (22.5 <= degrees && degrees < 67.5) {
+            return "NE";
+        } else if (67.5 <= degrees && degrees < 112.5) {
+            return "E";
+        } else if (112.5 <= degrees && degrees < 157.5) {
+            return "SE";
+        } else if (157.5 <= degrees && degrees < 202.5) {
+            return "S";
+        } else if (202.5 <= degrees && degrees < 247.5) {
+            return "SW";
+        } else if (247.5 <= degrees && degrees < 292.5) {
+            return "W";
+        } else if (292.5 <= degrees && degrees < 337.5) {
+            return "NW";
+        } else if (337.5 <= degrees && degrees < 360.0) {
+            return "N";
+        } else {
+            return "ERR";
+        }
+    }
+}
