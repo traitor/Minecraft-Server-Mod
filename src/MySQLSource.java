@@ -13,7 +13,15 @@ import java.util.logging.Level;
 
 public class MySQLSource extends DataSource {
     private String driver, username, password, db;
-    private Connection conn;
+
+    private Connection getConnection() {
+        try {
+            return DriverManager.getConnection(db + "?autoReconnect=true&user=" + username + "&password=" + password);
+        } catch (SQLException ex) {
+            log.log(Level.SEVERE, "Unable to retreive connection", ex);
+        }
+        return null;
+    }
 
     public void initialize() {
         co properties = new co(new File("mysql.properties"));
@@ -26,11 +34,6 @@ public class MySQLSource extends DataSource {
             Class.forName(driver);
         } catch (ClassNotFoundException ex) {
             log.log(Level.SEVERE, "Unable to find class " + driver, ex);
-        }
-        try {
-            conn = DriverManager.getConnection(db + "?autoReconnect=true&user=" + username + "&password=" + password);
-        } catch (SQLException ex) {
-            log.log(Level.SEVERE, "Unable to retreive connection", ex);
         }
 
         loadUsers();
@@ -46,9 +49,11 @@ public class MySQLSource extends DataSource {
     public void loadUsers() {
         synchronized (userLock) {
             users = new ArrayList<User>();
+            Connection conn = null;
             PreparedStatement ps = null;
             ResultSet rs = null;
             try {
+                conn = getConnection();
                 ps = conn.prepareStatement("SELECT * FROM users");
                 rs = ps.executeQuery();
                 while (rs.next()) {
@@ -73,6 +78,9 @@ public class MySQLSource extends DataSource {
                     if (rs != null) {
                         rs.close();
                     }
+                    if (conn != null) {
+                        conn.close();
+                    }
                 } catch (SQLException ex) {
                 }
             }
@@ -82,9 +90,11 @@ public class MySQLSource extends DataSource {
     public void loadGroups() {
         synchronized (groupLock) {
             groups = new ArrayList<Group>();
+            Connection conn = null;
             PreparedStatement ps = null;
             ResultSet rs = null;
             try {
+                conn = getConnection();
                 ps = conn.prepareStatement("SELECT * FROM groups");
                 rs = ps.executeQuery();
                 while (rs.next()) {
@@ -110,6 +120,9 @@ public class MySQLSource extends DataSource {
                     if (rs != null) {
                         rs.close();
                     }
+                    if (conn != null) {
+                        conn.close();
+                    }
                 } catch (SQLException ex) {
                 }
             }
@@ -119,9 +132,11 @@ public class MySQLSource extends DataSource {
     public void loadKits() {
         synchronized (kitLock) {
             kits = new ArrayList<Kit>();
+            Connection conn = null;
             PreparedStatement ps = null;
             ResultSet rs = null;
             try {
+                conn = getConnection();
                 ps = conn.prepareStatement("SELECT * FROM kits");
                 rs = ps.executeQuery();
                 while (rs.next()) {
@@ -156,6 +171,9 @@ public class MySQLSource extends DataSource {
                     if (rs != null) {
                         rs.close();
                     }
+                    if (conn != null) {
+                        conn.close();
+                    }
                 } catch (SQLException ex) {
                 }
             }
@@ -168,9 +186,11 @@ public class MySQLSource extends DataSource {
             if (!etc.getInstance().saveHomes) {
                 return;
             }
+            Connection conn = null;
             PreparedStatement ps = null;
             ResultSet rs = null;
             try {
+                conn = getConnection();
                 ps = conn.prepareStatement("SELECT * FROM homes");
                 rs = ps.executeQuery();
                 while (rs.next()) {
@@ -202,9 +222,11 @@ public class MySQLSource extends DataSource {
     public void loadWarps() {
         synchronized (warpLock) {
             warps = new HashMap<String, Location>();
+            Connection conn = null;
             PreparedStatement ps = null;
             ResultSet rs = null;
             try {
+                conn = getConnection();
                 ps = conn.prepareStatement("SELECT * FROM warps");
                 rs = ps.executeQuery();
                 while (rs.next()) {
@@ -227,6 +249,9 @@ public class MySQLSource extends DataSource {
                     if (rs != null) {
                         rs.close();
                     }
+                    if (conn != null) {
+                        conn.close();
+                    }
                 } catch (SQLException ex) {
                 }
             }
@@ -236,9 +261,11 @@ public class MySQLSource extends DataSource {
     public void loadItems() {
         synchronized (itemLock) {
             items = new HashMap<String, Integer>();
+            Connection conn = null;
             PreparedStatement ps = null;
             ResultSet rs = null;
             try {
+                conn = getConnection();
                 ps = conn.prepareStatement("SELECT * FROM items");
                 rs = ps.executeQuery();
                 while (rs.next()) {
@@ -254,6 +281,9 @@ public class MySQLSource extends DataSource {
                     if (rs != null) {
                         rs.close();
                     }
+                    if (conn != null) {
+                        conn.close();
+                    }
                 } catch (SQLException ex) {
                 }
             }
@@ -263,9 +293,11 @@ public class MySQLSource extends DataSource {
     public void loadWhitelist() {
         synchronized (whiteListLock) {
             whiteList = new ArrayList<String>();
+            Connection conn = null;
             PreparedStatement ps = null;
             ResultSet rs = null;
             try {
+                conn = getConnection();
                 ps = conn.prepareStatement("SELECT * FROM whitelist");
                 rs = ps.executeQuery();
                 while (rs.next()) {
@@ -281,6 +313,9 @@ public class MySQLSource extends DataSource {
                     if (rs != null) {
                         rs.close();
                     }
+                    if (conn != null) {
+                        conn.close();
+                    }
                 } catch (SQLException ex) {
                 }
             }
@@ -290,9 +325,11 @@ public class MySQLSource extends DataSource {
     public void loadReserveList() {
         synchronized (reserveListLock) {
             reserveList = new ArrayList<String>();
+            Connection conn = null;
             PreparedStatement ps = null;
             ResultSet rs = null;
             try {
+                conn = getConnection();
                 ps = conn.prepareStatement("SELECT * FROM reservelist");
                 rs = ps.executeQuery();
                 while (rs.next()) {
@@ -308,6 +345,9 @@ public class MySQLSource extends DataSource {
                     if (rs != null) {
                         rs.close();
                     }
+                    if (conn != null) {
+                        conn.close();
+                    }
                 } catch (SQLException ex) {
                 }
             }
@@ -316,9 +356,11 @@ public class MySQLSource extends DataSource {
 
     //Users
     public void addUser(User user) {
+        Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
+            conn = getConnection();
             ps = conn.prepareStatement("INSERT INTO users (name, groups, prefix, commands, admin, canmodifyworld, ignoresrestrictions) VALUES (?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, user.Name);
             ps.setString(2, ia.combineSplit(0, user.Groups, ","));
@@ -346,14 +388,19 @@ public class MySQLSource extends DataSource {
                 if (rs != null) {
                     rs.close();
                 }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (SQLException ex) {
             }
         }
     }
 
     public void modifyUser(User user) {
+        Connection conn = null;
         PreparedStatement ps = null;
         try {
+            conn = getConnection();
             ps = conn.prepareStatement("UPDATE users SET groups = ?, prefix = ?, commands = ?, admin = ?, canmodifyworld = ?, ignoresrestrictions = ? WHERE id = ?");
             ps.setString(1, ia.combineSplit(0, user.Groups, ","));
             ps.setString(2, user.Prefix);
@@ -369,6 +416,9 @@ public class MySQLSource extends DataSource {
             try {
                 if (ps != null) {
                     ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
                 }
             } catch (SQLException ex) {
             }
@@ -395,9 +445,11 @@ public class MySQLSource extends DataSource {
 
     //Homes
     public void addHome(String name, Location location) {
+        Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
+            conn = getConnection();
             ps = conn.prepareStatement("INSERT INTO homes (name, x, y, z, rotX, rotY) VALUES(?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, name);
             ps.setDouble(2, location.x);
@@ -424,14 +476,19 @@ public class MySQLSource extends DataSource {
                 if (rs != null) {
                     rs.close();
                 }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (SQLException ex) {
             }
         }
     }
 
     public void changeHome(String name, Location location) {
+        Connection conn = null;
         PreparedStatement ps = null;
         try {
+            conn = getConnection();
             ps = conn.prepareStatement("UPDATE homes SET x = ?, y = ?, z = ?, rotX = ?, rotY = ? WHERE name = ?");
             ps.setDouble(1, location.x);
             ps.setDouble(2, location.y);
@@ -450,6 +507,9 @@ public class MySQLSource extends DataSource {
                 if (ps != null) {
                     ps.close();
                 }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (SQLException ex) {
             }
         }
@@ -457,9 +517,11 @@ public class MySQLSource extends DataSource {
 
     //Warps
     public void addWarp(String name, Location location) {
+        Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
+            conn = getConnection();
             ps = conn.prepareStatement("INSERT INTO warps (name, x, y, z, rotX, rotY) VALUES(?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, name);
             ps.setDouble(2, location.x);
@@ -486,14 +548,19 @@ public class MySQLSource extends DataSource {
                 if (rs != null) {
                     rs.close();
                 }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (SQLException ex) {
             }
         }
     }
 
     public void changeWarp(String name, Location location) {
+        Connection conn = null;
         PreparedStatement ps = null;
         try {
+            conn = getConnection();
             ps = conn.prepareStatement("UPDATE warps SET x = ?, y = ?, z = ?, rotX = ?, rotY = ? WHERE name = ?");
             ps.setDouble(1, location.x);
             ps.setDouble(2, location.y);
@@ -512,6 +579,9 @@ public class MySQLSource extends DataSource {
                 if (ps != null) {
                     ps.close();
                 }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (SQLException ex) {
             }
         }
@@ -519,8 +589,10 @@ public class MySQLSource extends DataSource {
 
     //Whitelist
     public void addToWhitelist(String name) {
+        Connection conn = null;
         PreparedStatement ps = null;
         try {
+            conn = getConnection();
             ps = conn.prepareStatement("INSERT INTO whitelist VALUES(?)");
             ps.setString(1, name);
             ps.executeUpdate();
@@ -534,14 +606,19 @@ public class MySQLSource extends DataSource {
                 if (ps != null) {
                     ps.close();
                 }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (SQLException ex) {
             }
         }
     }
 
     public void removeFromWhitelist(String name) {
+        Connection conn = null;
         PreparedStatement ps = null;
         try {
+            conn = getConnection();
             ps = conn.prepareStatement("DELETE FROM whitelist WHERE name = ?");
             ps.setString(1, name);
             ps.executeUpdate();
@@ -555,6 +632,9 @@ public class MySQLSource extends DataSource {
                 if (ps != null) {
                     ps.close();
                 }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (SQLException ex) {
             }
         }
@@ -562,8 +642,10 @@ public class MySQLSource extends DataSource {
 
     //Reservelist
     public void addToReserveList(String name) {
+        Connection conn = null;
         PreparedStatement ps = null;
         try {
+            conn = getConnection();
             ps = conn.prepareStatement("INSERT INTO reservelist VALUES(?)");
             ps.setString(1, name);
             ps.executeUpdate();
@@ -577,14 +659,19 @@ public class MySQLSource extends DataSource {
                 if (ps != null) {
                     ps.close();
                 }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (SQLException ex) {
             }
         }
     }
 
     public void removeFromReserveList(String name) {
+        Connection conn = null;
         PreparedStatement ps = null;
         try {
+            conn = getConnection();
             ps = conn.prepareStatement("DELETE FROM reservelist WHERE name = ?");
             ps.setString(1, name);
             ps.executeUpdate();
@@ -597,6 +684,9 @@ public class MySQLSource extends DataSource {
             try {
                 if (ps != null) {
                     ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
                 }
             } catch (SQLException ex) {
             }
