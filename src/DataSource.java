@@ -140,8 +140,8 @@ public abstract class DataSource {
 
     public Location getWarp(String name) {
         synchronized (warpLock) {
-            if (warps.containsKey(name)) {
-                return warps.get(name);
+            if (warps.containsKey(name.toLowerCase())) {
+                return warps.get(name.toLowerCase());
             }
         }
         return null;
