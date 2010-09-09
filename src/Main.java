@@ -20,6 +20,15 @@ public class Main {
             System.out.println("finished downloading, starting server");
         }
 
+        if (checkForUpdate()) {
+            System.out.println("Update found.");
+            //derp.
+        }
+
         net.minecraft.server.MinecraftServer.main(args);
+    }
+
+    public static boolean checkForUpdate() {
+        return false;
     }
 }
