@@ -12,6 +12,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 
 public class FlatFileSource extends DataSource {
+
     public void initialize() {
         loadUsers();
         loadGroups();
@@ -242,7 +243,7 @@ public class FlatFileSource extends DataSource {
 
     public void loadHomes() {
         synchronized (homeLock) {
-            homes = new HashMap<String, Location>();
+            homes = new ArrayList<Warp>();
             if (!etc.getInstance().saveHomes) {
                 return;
             }
@@ -264,11 +265,19 @@ public class FlatFileSource extends DataSource {
                         loc.x = Double.parseDouble(split[1]);
                         loc.y = Double.parseDouble(split[2]);
                         loc.z = Double.parseDouble(split[3]);
-                        if (split.length == 6) {
+                        if (split.length >= 6) {
                             loc.rotX = Float.parseFloat(split[4]);
                             loc.rotY = Float.parseFloat(split[5]);
                         }
-                        homes.put(split[0], loc);
+                        Warp home = new Warp();
+                        home.Name = split[0];
+                        home.Location = loc;
+                        if (split.length >= 7) {
+                            home.Group = split[6];
+                        } else {
+                            home.Group = "";
+                        }
+                        homes.add(home);
                     }
                     scanner.close();
                 } catch (Exception e) {
@@ -280,7 +289,7 @@ public class FlatFileSource extends DataSource {
 
     public void loadWarps() {
         synchronized (warpLock) {
-            warps = new HashMap<String, Location>();
+            warps = new ArrayList<Warp>();
             String location = etc.getInstance().warpLoc;
 
             if (new File(location).exists()) {
@@ -304,7 +313,15 @@ public class FlatFileSource extends DataSource {
                             loc.rotX = Float.parseFloat(split[4]);
                             loc.rotY = Float.parseFloat(split[5]);
                         }
-                        warps.put(split[0].toLowerCase(), loc);
+                        Warp warp = new Warp();
+                        warp.Name = split[0];
+                        warp.Location = loc;
+                        if (split.length >= 7) {
+                            warp.Group = split[6];
+                        } else {
+                            warp.Group = "";
+                        }
+                        warps.add(warp);
                     }
                     scanner.close();
                 } catch (Exception e) {
@@ -711,38 +728,49 @@ public class FlatFileSource extends DataSource {
     }
 
     //Homes
-    public void addHome(String name, Location location) {
+    public void addHome(Warp home) {
         String homeLoc = etc.getInstance().homeLoc;
         try {
             if (etc.getInstance().saveHomes) {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(homeLoc, true));
                 StringBuilder builder = new StringBuilder();
-                builder.append(name);
+                builder.append(home.Name);
                 builder.append(":");
-                builder.append(location.x);
+                builder.append(home.Location.x);
                 builder.append(":");
-                builder.append(location.y);
+                builder.append(home.Location.y);
                 builder.append(":");
-                builder.append(location.z);
+                builder.append(home.Location.z);
                 builder.append(":");
-                builder.append(location.rotX);
+                builder.append(home.Location.rotX);
                 builder.append(":");
-                builder.append(location.rotY);
+                builder.append(home.Location.rotY);
+                builder.append(":");
+                builder.append(home.Group);
                 bw.append(builder.toString());
                 bw.newLine();
                 bw.close();
             }
             synchronized (homeLock) {
-                homes.put(name, location);
+                homes.add(home);
             }
         } catch (Exception e2) {
             log.log(Level.SEVERE, "Exception while writing new user home to " + homeLoc, e2);
         }
     }
 
-    public void changeHome(String name, Location location) {
+    public void changeHome(Warp home) {
         synchronized (homeLock) {
-            homes.put(name, location);
+            Warp toRem = null;
+            for (Warp h : homes) {
+                if (h.Name == home.Name) {
+                    toRem = h;
+                }
+            }
+            if (toRem != null) {
+                homes.remove(toRem);
+            }
+            homes.add(home);
         }
         FileWriter writer = null;
         String homeLoc = etc.getInstance().homeLoc;
@@ -753,21 +781,23 @@ public class FlatFileSource extends DataSource {
                 StringBuilder toWrite = new StringBuilder();
                 String line = "";
                 while ((line = reader.readLine()) != null) {
-                    if (!line.contains(name)) {
+                    if (!line.contains(home.Name)) {
                         toWrite.append(line).append("\r\n");
                     } else {
                         StringBuilder builder = new StringBuilder();
-                        builder.append(name);
+                        builder.append(home.Name);
                         builder.append(":");
-                        builder.append(location.x);
+                        builder.append(home.Location.x);
                         builder.append(":");
-                        builder.append(location.y);
+                        builder.append(home.Location.y);
                         builder.append(":");
-                        builder.append(location.z);
+                        builder.append(home.Location.z);
                         builder.append(":");
-                        builder.append(location.rotX);
+                        builder.append(home.Location.rotX);
                         builder.append(":");
-                        builder.append(location.rotY);
+                        builder.append(home.Location.rotY);
+                        builder.append(":");
+                        builder.append(home.Group);
                         toWrite.append(builder.toString()).append("\r\n");
                     }
                 }
@@ -790,76 +820,81 @@ public class FlatFileSource extends DataSource {
     }
 
     //Warps
-    public void addWarp(String name, Location location) {
-        BufferedWriter bw = null;
+    public void addWarp(Warp warp) {
         String warpLoc = etc.getInstance().warpLoc;
         try {
-            bw = new BufferedWriter(new FileWriter(warpLoc, true));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(warpLoc, true));
             StringBuilder builder = new StringBuilder();
-            builder.append(name.toLowerCase());
+            builder.append(warp.Name);
             builder.append(":");
-            builder.append(location.x);
+            builder.append(warp.Location.x);
             builder.append(":");
-            builder.append(location.y);
+            builder.append(warp.Location.y);
             builder.append(":");
-            builder.append(location.z);
+            builder.append(warp.Location.z);
             builder.append(":");
-            builder.append(location.rotX);
+            builder.append(warp.Location.rotX);
             builder.append(":");
-            builder.append(location.rotY);
+            builder.append(warp.Location.rotY);
+            builder.append(":");
+            builder.append(warp.Group);
             bw.append(builder.toString());
             bw.newLine();
+            bw.close();
             synchronized (warpLock) {
-                warps.put(name, location);
+                warps.add(warp);
             }
         } catch (Exception e2) {
             log.log(Level.SEVERE, "Exception while writing new warp to " + warpLoc, e2);
-        } finally {
-            try {
-                if (bw != null) {
-                    bw.close();
-                }
-            } catch (IOException ex) {
-            }
         }
     }
 
-    public void changeWarp(String name, Location location) {
+    public void changeWarp(Warp warp) {
         synchronized (warpLock) {
-            warps.put(name, location);
+            Warp toRem = null;
+            for (Warp h : warps) {
+                if (h.Name == warp.Name) {
+                    toRem = h;
+                }
+            }
+            if (toRem != null) {
+                warps.remove(toRem);
+            }
+            warps.add(warp);
         }
         FileWriter writer = null;
         String warpLoc = etc.getInstance().warpLoc;
-
         try {
             // Now to save...
             BufferedReader reader = new BufferedReader(new FileReader(new File(warpLoc)));
+            StringBuilder toWrite = new StringBuilder();
             String line = "";
-            StringBuilder toSave = new StringBuilder();
-
             while ((line = reader.readLine()) != null) {
-                if (!line.contains(name.toLowerCase())) {
-                    toSave.append(line).append("\r\n");
+                if (!line.contains(warp.Name)) {
+                    toWrite.append(line).append("\r\n");
                 } else {
                     StringBuilder builder = new StringBuilder();
-                    builder.append(name.toLowerCase());
+                    builder.append(warp.Name);
                     builder.append(":");
-                    builder.append(location.x);
+                    builder.append(warp.Location.x);
                     builder.append(":");
-                    builder.append(location.y);
+                    builder.append(warp.Location.y);
                     builder.append(":");
-                    builder.append(location.z);
+                    builder.append(warp.Location.z);
                     builder.append(":");
-                    builder.append(location.rotX);
+                    builder.append(warp.Location.rotX);
                     builder.append(":");
-                    builder.append(location.rotY);
-                    toSave.append(builder.toString()).append("\r\n");
+                    builder.append(warp.Location.rotY);
+                    builder.append(":");
+                    builder.append(warp.Group);
+                    toWrite.append(builder.toString()).append("\r\n");
                 }
             }
             reader.close();
 
             writer = new FileWriter(warpLoc);
-            writer.write(toSave.toString());
+            writer.write(toWrite.toString());
+            writer.close();
         } catch (Exception e1) {
             log.log(Level.SEVERE, "Exception while editing warp in " + warpLoc, e1);
         } finally {
@@ -938,7 +973,7 @@ public class FlatFileSource extends DataSource {
             bw = new BufferedWriter(new FileWriter(location, true));
             bw.append(name);
             bw.newLine();
-            
+
             synchronized (whiteListLock) {
                 reserveList.add(name);
             }

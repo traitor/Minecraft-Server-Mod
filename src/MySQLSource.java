@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.logging.Level;
 
 public class MySQLSource extends DataSource {
+
     private String driver, username, password, db;
 
     private Connection getConnection() {
@@ -182,7 +183,7 @@ public class MySQLSource extends DataSource {
 
     public void loadHomes() {
         synchronized (homeLock) {
-            homes = new HashMap<String, Location>();
+            homes = new ArrayList<Warp>();
             if (!etc.getInstance().saveHomes) {
                 return;
             }
@@ -200,8 +201,12 @@ public class MySQLSource extends DataSource {
                     location.z = rs.getDouble("z");
                     location.rotX = rs.getFloat("rotX");
                     location.rotY = rs.getFloat("rotY");
-                    location.ID = rs.getInt("id");
-                    homes.put(rs.getString("name"), location);
+                    Warp home = new Warp();
+                    home.ID = rs.getInt("id");
+                    home.Location = location;
+                    home.Name = rs.getString("name");
+                    home.Group = rs.getString("group");
+                    homes.add(home);
                 }
             } catch (SQLException ex) {
                 log.log(Level.SEVERE, "Unable to retreive homes from home table", ex);
@@ -224,7 +229,7 @@ public class MySQLSource extends DataSource {
 
     public void loadWarps() {
         synchronized (warpLock) {
-            warps = new HashMap<String, Location>();
+            warps = new ArrayList<Warp>();
             Connection conn = null;
             PreparedStatement ps = null;
             ResultSet rs = null;
@@ -239,8 +244,12 @@ public class MySQLSource extends DataSource {
                     location.z = rs.getDouble("z");
                     location.rotX = rs.getFloat("rotX");
                     location.rotY = rs.getFloat("rotY");
-                    location.ID = rs.getInt("id");
-                    warps.put(rs.getString("name"), location);
+                    Warp warp = new Warp();
+                    warp.ID = rs.getInt("id");
+                    warp.Location = location;
+                    warp.Name = rs.getString("name");
+                    warp.Group = rs.getString("group");
+                    warps.add(warp);
                 }
             } catch (SQLException ex) {
                 log.log(Level.SEVERE, "Unable to retreive warps from warp table", ex);
@@ -447,26 +456,27 @@ public class MySQLSource extends DataSource {
     }
 
     //Homes
-    public void addHome(String name, Location location) {
+    public void addHome(Warp home) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             conn = getConnection();
-            ps = conn.prepareStatement("INSERT INTO homes (name, x, y, z, rotX, rotY) VALUES(?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, name);
-            ps.setDouble(2, location.x);
-            ps.setDouble(3, location.y);
-            ps.setDouble(4, location.z);
-            ps.setFloat(5, location.rotX);
-            ps.setFloat(6, location.rotY);
+            ps = conn.prepareStatement("INSERT INTO homes (name, x, y, z, rotX, rotY, group) VALUES(?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, home.Name);
+            ps.setDouble(2, home.Location.x);
+            ps.setDouble(3, home.Location.y);
+            ps.setDouble(4, home.Location.z);
+            ps.setFloat(5, home.Location.rotX);
+            ps.setFloat(6, home.Location.rotY);
+            ps.setString(7, home.Group);
             ps.executeUpdate();
 
             rs = ps.getGeneratedKeys();
             if (rs.next()) {
-                location.ID = rs.getInt(1);
+                home.ID = rs.getInt(1);
                 synchronized (homeLock) {
-                    homes.put(name, location);
+                    homes.add(home);
                 }
             }
         } catch (SQLException ex) {
@@ -487,21 +497,32 @@ public class MySQLSource extends DataSource {
         }
     }
 
-    public void changeHome(String name, Location location) {
+    public void changeHome(Warp home) {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
             conn = getConnection();
-            ps = conn.prepareStatement("UPDATE homes SET x = ?, y = ?, z = ?, rotX = ?, rotY = ? WHERE name = ?");
-            ps.setDouble(1, location.x);
-            ps.setDouble(2, location.y);
-            ps.setDouble(3, location.z);
-            ps.setFloat(4, location.rotX);
-            ps.setFloat(5, location.rotY);
-            ps.setString(6, name);
+            ps = conn.prepareStatement("UPDATE homes SET x = ?, y = ?, z = ?, rotX = ?, rotY = ?, group = ? WHERE name = ?");
+            ps.setDouble(1, home.Location.x);
+            ps.setDouble(2, home.Location.y);
+            ps.setDouble(3, home.Location.z);
+            ps.setFloat(4, home.Location.rotX);
+            ps.setFloat(5, home.Location.rotY);
+            ps.setString(6, home.Group);
+            ps.setString(7, home.Name);
             ps.executeUpdate();
+
             synchronized (homeLock) {
-                homes.put(name, location);
+                Warp toRem = null;
+                for (Warp h : homes) {
+                    if (h.Name == home.Name) {
+                        toRem = h;
+                    }
+                }
+                if (toRem != null) {
+                    homes.remove(toRem);
+                }
+                homes.add(home);
             }
         } catch (SQLException ex) {
             log.log(Level.SEVERE, "Unable to update home in homes table", ex);
@@ -519,26 +540,27 @@ public class MySQLSource extends DataSource {
     }
 
     //Warps
-    public void addWarp(String name, Location location) {
+    public void addWarp(Warp warp) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             conn = getConnection();
-            ps = conn.prepareStatement("INSERT INTO warps (name, x, y, z, rotX, rotY) VALUES(?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, name);
-            ps.setDouble(2, location.x);
-            ps.setDouble(3, location.y);
-            ps.setDouble(4, location.z);
-            ps.setFloat(5, location.rotX);
-            ps.setFloat(6, location.rotY);
+            ps = conn.prepareStatement("INSERT INTO warps (name, x, y, z, rotX, rotY, group) VALUES(?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, warp.Name);
+            ps.setDouble(2, warp.Location.x);
+            ps.setDouble(3, warp.Location.y);
+            ps.setDouble(4, warp.Location.z);
+            ps.setFloat(5, warp.Location.rotX);
+            ps.setFloat(6, warp.Location.rotY);
+            ps.setString(7, warp.Group);
             ps.executeUpdate();
 
             rs = ps.getGeneratedKeys();
             if (rs.next()) {
-                location.ID = rs.getInt(1);
+                warp.ID = rs.getInt(1);
                 synchronized (warpLock) {
-                    warps.put(name, location);
+                    warps.add(warp);
                 }
             }
         } catch (SQLException ex) {
@@ -559,21 +581,32 @@ public class MySQLSource extends DataSource {
         }
     }
 
-    public void changeWarp(String name, Location location) {
+    public void changeWarp(Warp warp) {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
             conn = getConnection();
-            ps = conn.prepareStatement("UPDATE warps SET x = ?, y = ?, z = ?, rotX = ?, rotY = ? WHERE name = ?");
-            ps.setDouble(1, location.x);
-            ps.setDouble(2, location.y);
-            ps.setDouble(3, location.z);
-            ps.setFloat(4, location.rotX);
-            ps.setFloat(5, location.rotY);
-            ps.setString(6, name);
+            ps = conn.prepareStatement("UPDATE warps SET x = ?, y = ?, z = ?, rotX = ?, rotY = ?, group = ? WHERE name = ?");
+            ps.setDouble(1, warp.Location.x);
+            ps.setDouble(2, warp.Location.y);
+            ps.setDouble(3, warp.Location.z);
+            ps.setFloat(4, warp.Location.rotX);
+            ps.setFloat(5, warp.Location.rotY);
+            ps.setString(6, warp.Group);
+            ps.setString(7, warp.Name);
             ps.executeUpdate();
+
             synchronized (warpLock) {
-                warps.put(name, location);
+                Warp toRem = null;
+                for (Warp h : warps) {
+                    if (h.Name == warp.Name) {
+                        toRem = h;
+                    }
+                }
+                if (toRem != null) {
+                    warps.remove(toRem);
+                }
+                warps.add(warp);
             }
         } catch (SQLException ex) {
             log.log(Level.SEVERE, "Unable to update warp in warps table", ex);

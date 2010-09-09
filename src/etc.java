@@ -151,7 +151,7 @@ public class etc {
         User user = getUser(name);
         if (user != null) {
             for (String str : user.Groups) {
-                if (recursiveUserInGroup(getGroup(str), group)) {
+                if (recursiveUserInGroup(dataSource.getGroup(str), group)) {
                     return true;
                 }
             }
@@ -174,7 +174,7 @@ public class etc {
                     return true;
                 }
 
-                Group g2 = getGroup(str);
+                Group g2 = dataSource.getGroup(str);
                 if (g2 != null) {
                     if (recursiveUserInGroup(g2, group)) {
                         return true;
@@ -202,7 +202,7 @@ public class etc {
                 }
             }
 
-            Group group = getGroup(user.Groups[0]);
+            Group group = dataSource.getGroup(user.Groups[0]);
             if (group != null) {
                 return "§" + group.Prefix;
             }
@@ -222,7 +222,7 @@ public class etc {
             }
 
             for (String str : user.Groups) {
-                Group g = getGroup(str);
+                Group g = dataSource.getGroup(str);
                 if (g != null) {
                     if (recursiveUseCommand(g, command)) {
                         return true;
@@ -252,7 +252,7 @@ public class etc {
 
         if (g.InheritedGroups != null) {
             for (String str : g.InheritedGroups) {
-                Group g2 = getGroup(str);
+                Group g2 = dataSource.getGroup(str);
                 if (g2 != null) {
                     if (recursiveUseCommand(g2, command)) {
                         return true;
@@ -261,22 +261,6 @@ public class etc {
             }
         }
         return false;
-    }
-
-    public Group getGroup(String name) {
-        return dataSource.getGroup(name);
-    }
-
-    public boolean hasKits() {
-        return dataSource.hasKits();
-    }
-
-    public String getKitNames(dy e) {
-        return dataSource.getKitNames(e.ap);
-    }
-
-    public Kit getKit(String name) {
-        return dataSource.getKit(name);
     }
 
     public boolean isAdmin(dy player) {
@@ -293,7 +277,7 @@ public class etc {
         }
 
         for (String str : user.Groups) {
-            Group group = getGroup(str);
+            Group group = dataSource.getGroup(str);
             if (group != null) {
                 if (group.Administrator) {
                     return true;
@@ -318,7 +302,7 @@ public class etc {
         }
 
         for (String str : user.Groups) {
-            Group group = getGroup(str);
+            Group group = dataSource.getGroup(str);
             if (group != null) {
                 if (group.Administrator || group.IgnoreRestrictions) {
                     return true;
@@ -340,7 +324,7 @@ public class etc {
         }
 
         for (String str : user.Groups) {
-            Group group = getGroup(str);
+            Group group = dataSource.getGroup(str);
             if (group != null) {
                 if (!group.CanModifyWorld) {
                     return false;
@@ -363,20 +347,19 @@ public class etc {
         return muted.contains(e.ap);
     }
 
-    public void changeHome(String name, Location loc) {
-        if (dataSource.getHome(name) == null) {
-            dataSource.addHome(name, loc);
+    public void changeHome(Warp home) {
+        if (dataSource.getHome(home.Name) == null) {
+            dataSource.addHome(home);
         } else {
-            dataSource.changeHome(name, loc);
+            dataSource.changeHome(home);
         }
     }
 
-    public void setWarp(String warpname, Location loc) {
-        warpname = warpname.toLowerCase();
-        if (dataSource.getWarp(warpname) == null) {
-            dataSource.addWarp(warpname, loc);
+    public void setWarp(Warp warp) {
+        if (dataSource.getWarp(warp.Name) == null) {
+            dataSource.addWarp(warp);
         } else {
-            dataSource.changeWarp(warpname, loc);
+            dataSource.changeWarp(warp);
         }
     }
 

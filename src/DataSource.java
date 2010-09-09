@@ -7,14 +7,15 @@ import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 
 public abstract class DataSource {
+
     protected static final Logger log = Logger.getLogger("Minecraft");
     protected List<User> users;
     protected List<String> reserveList;
     protected List<String> whiteList;
     protected List<Group> groups;
     protected List<Kit> kits;
-    protected Map<String, Location> homes;
-    protected Map<String, Location> warps;
+    protected List<Warp> homes;
+    protected List<Warp> warps;
     protected Map<String, Integer> items;
     protected MinecraftServer server;
     protected final Object userLock = new Object(), groupLock = new Object(), kitLock = new Object();
@@ -121,30 +122,55 @@ public abstract class DataSource {
         return builder.toString();
     }
 
-    abstract public void addHome(String name, Location location);
+    abstract public void addHome(Warp home);
 
-    abstract public void changeHome(String name, Location location);
+    abstract public void changeHome(Warp home);
 
-    public Location getHome(String name) {
+    public Warp getHome(String name) {
         synchronized (homeLock) {
-            if (homes.containsKey(name)) {
-                return homes.get(name);
+            for (Warp home : homes) {
+                if (home.Name.equalsIgnoreCase(name)) {
+                    return home;
+                }
             }
         }
         return null;
     }
 
-    abstract public void addWarp(String name, Location location);
+    abstract public void addWarp(Warp warp);
 
-    abstract public void changeWarp(String name, Location location);
+    abstract public void changeWarp(Warp warp);
 
-    public Location getWarp(String name) {
+    public Warp getWarp(String name) {
         synchronized (warpLock) {
-            if (warps.containsKey(name.toLowerCase())) {
-                return warps.get(name.toLowerCase());
+            for (Warp warp : warps) {
+                if (warp.Name.equalsIgnoreCase(name)) {
+                    return warp;
+                }
             }
         }
         return null;
+    }
+
+    public boolean hasWarps() {
+        synchronized (warpLock) {
+            return warps.size() > 0;
+        }
+    }
+
+    public String getWarpNames(String player) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(""); //incaseofnull
+
+        synchronized (warpLock) {
+            for (Warp warp : warps) {
+                if (etc.getInstance().isUserInGroup(player, warp.Group) || warp.Group.equals("")) {
+                    builder.append(warp.Name).append(" ");
+                }
+            }
+        }
+
+        return builder.toString();
     }
 
     public int getItem(String name) {

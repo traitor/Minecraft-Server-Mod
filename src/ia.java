@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 
 public class ia extends eh implements ed {
+
     public static final Logger a = Logger.getLogger("Minecraft");
     public ba b;
     public boolean c = false;
@@ -347,7 +348,10 @@ public class ia extends eh implements ed {
                 List<String> availableCommands = new ArrayList<String>();
                 for (Entry<String, String> entry : etc.getInstance().commands.entrySet()) {
                     if (etc.getInstance().canUseCommand(e.ap, entry.getKey())) {
-                        if (entry.getKey().equals("/kit") && !etc.getInstance().hasKits()) {
+                        if (entry.getKey().equals("/kit") && !etc.getInstance().getDataSource().hasKits()) {
+                            continue;
+                        }
+                        if (entry.getKey().equals("/listwarps") && !etc.getInstance().getDataSource().hasWarps()) {
                             continue;
                         }
 
@@ -519,9 +523,9 @@ public class ia extends eh implements ed {
                 } else {
                     msg(Colors.Rose + "Couldn't find player " + split[1]);
                 }
-            } else if (split[0].equalsIgnoreCase("/kit") && etc.getInstance().hasKits()) {
+            } else if (split[0].equalsIgnoreCase("/kit") && etc.getInstance().getDataSource().hasKits()) {
                 if (split.length != 2 && split.length != 3) {
-                    msg(Colors.Rose + "Available kits: " + etc.getInstance().getKitNames(e));
+                    msg(Colors.Rose + "Available kits: " + Colors.White + etc.getInstance().getDataSource().getKitNames(e.ap));
                     return;
                 }
 
@@ -530,7 +534,7 @@ public class ia extends eh implements ed {
                     toGive = match(split[1]);
                 }
 
-                Kit kit = etc.getInstance().getKit(split[1]);
+                Kit kit = etc.getInstance().getDataSource().getKit(split[1]);
                 if (toGive != null) {
                     if (kit != null) {
                         if (!etc.getInstance().isUserInGroup(e, kit.Group) && !kit.Group.equals("")) {
@@ -819,7 +823,11 @@ public class ia extends eh implements ed {
                 loc.z = e.m;
                 loc.rotX = e.q;
                 loc.rotY = e.r;
-                etc.getInstance().changeHome(e.ap, loc);
+                Warp home = new Warp();
+                home.Location = loc;
+                home.Group = ""; //no group neccessary, lol.
+                home.Name = e.ap;
+                etc.getInstance().changeHome(home);
                 msg(Colors.Rose + "Your home has been set.");
             } else if (split[0].equalsIgnoreCase("/spawn")) {
                 int k = this.d.e.d(this.d.e.m, this.d.e.o);
@@ -832,9 +840,9 @@ public class ia extends eh implements ed {
                 msg(Colors.Rose + "You have set the spawn to your current position.");
             } else if (split[0].equalsIgnoreCase("/home")) {
                 a.info(this.e.ap + " returned home");
-                Location loc = etc.getInstance().getDataSource().getHome(e.ap);
-                if (loc != null) {
-                    a(loc.x, loc.y, loc.z, loc.rotX, loc.rotY);
+                Warp home = etc.getInstance().getDataSource().getHome(e.ap);
+                if (home != null) {
+                    a(home.Location.x, home.Location.y, home.Location.z, home.Location.rotX, home.Location.rotY);
                 } else {
                     int k = this.d.e.d(this.d.e.m, this.d.e.o);
                     a(this.d.e.m + 0.5D, k + 1.5D, this.d.e.o + 0.5D, 0.0F, 0.0F);
@@ -845,26 +853,39 @@ public class ia extends eh implements ed {
                     return;
                 }
                 dy toWarp = e;
-                Location loc = null;
+                Warp warp = null;
                 if (split.length == 3 && etc.getInstance().canIgnoreRestrictions(e)) {
-                    loc = etc.getInstance().getDataSource().getWarp(split[1]);
+                    warp = etc.getInstance().getDataSource().getWarp(split[1]);
                     toWarp = match(split[2]);
                 } else {
-                    loc = etc.getInstance().getDataSource().getWarp(split[1]);
+                    warp = etc.getInstance().getDataSource().getWarp(split[1]);
                 }
                 if (toWarp != null) {
-                    if (loc != null) {
-                        toWarp.a.a(loc.x, loc.y, loc.z, loc.rotX, loc.rotY);
-                        toWarp.a.msg(Colors.Rose + "Woosh!");
+                    if (warp != null) {
+                        if (!etc.getInstance().isUserInGroup(e, warp.Group) && !warp.Group.equals("")) {
+                            msg(Colors.Rose + "That warp not found.");
+                        } else {
+                            toWarp.a.a(warp.Location.x, warp.Location.y, warp.Location.z, warp.Location.rotX, warp.Location.rotY);
+                            toWarp.a.msg(Colors.Rose + "Woosh!");
+                        }
                     } else {
                         msg(Colors.Rose + "Warp not found");
                     }
                 } else {
                     msg(Colors.Rose + "Player not found.");
                 }
+            } else if (split[0].equalsIgnoreCase("/listwarps") && etc.getInstance().getDataSource().hasWarps()) {
+                if (split.length != 2 && split.length != 3) {
+                    msg(Colors.Rose + "Available warps: " + Colors.White + etc.getInstance().getDataSource().getWarpNames(e.ap));
+                    return;
+                }
             } else if (split[0].equalsIgnoreCase("/setwarp")) {
                 if (split.length < 2) {
-                    msg(Colors.Rose + "Correct usage is: /setwarp [warpname]");
+                    if (etc.getInstance().canIgnoreRestrictions(e)) {
+                        msg(Colors.Rose + "Correct usage is: /setwarp [warpname] [group]");
+                    } else {
+                        msg(Colors.Rose + "Correct usage is: /setwarp [warpname]");
+                    }
                     return;
                 }
                 Location loc = new Location();
@@ -873,7 +894,15 @@ public class ia extends eh implements ed {
                 loc.z = e.m;
                 loc.rotX = e.q;
                 loc.rotY = e.r;
-                etc.getInstance().setWarp(split[1], loc);
+                Warp warp = new Warp();
+                warp.Name = split[1];
+                warp.Location = loc;
+                if (split.length == 3) {
+                    warp.Group = split[2];
+                } else {
+                    warp.Group = "";
+                }
+                etc.getInstance().setWarp(warp);
                 msg(Colors.Rose + "Created warp point " + split[1] + ".");
             } else if (split[0].equalsIgnoreCase("/lighter")) {
                 if (MinecraftServer.b.containsKey(this.e.ap + " lighter")) {
