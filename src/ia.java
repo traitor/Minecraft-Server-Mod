@@ -863,7 +863,7 @@ public class ia extends eh implements ed {
                 if (toWarp != null) {
                     if (warp != null) {
                         if (!etc.getInstance().isUserInGroup(e, warp.Group) && !warp.Group.equals("")) {
-                            msg(Colors.Rose + "That warp not found.");
+                            msg(Colors.Rose + "Warp not found.");
                         } else {
                             toWarp.a.a(warp.Location.x, warp.Location.y, warp.Location.z, warp.Location.rotX, warp.Location.rotY);
                             toWarp.a.msg(Colors.Rose + "Woosh!");

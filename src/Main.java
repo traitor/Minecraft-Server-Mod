@@ -17,7 +17,7 @@ public class Main {
             FileOutputStream fos = new FileOutputStream("minecraft_server.jar");
             fos.getChannel().transferFrom(rbc, 0, 1 << 24);
 
-            System.out.println("finished downloading, starting server");
+            System.out.println("Finished downloading, starting server");
         }
 
         if (checkForUpdate()) {
