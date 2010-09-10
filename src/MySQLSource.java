@@ -375,9 +375,9 @@ public class MySQLSource extends DataSource {
             conn = getConnection();
             ps = conn.prepareStatement("INSERT INTO users (name, groups, prefix, commands, admin, canmodifyworld, ignoresrestrictions) VALUES (?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, user.Name);
-            ps.setString(2, ia.combineSplit(0, user.Groups, ","));
+            ps.setString(2, id.combineSplit(0, user.Groups, ","));
             ps.setString(3, user.Prefix);
-            ps.setString(4, ia.combineSplit(0, user.Commands, ","));
+            ps.setString(4, id.combineSplit(0, user.Commands, ","));
             ps.setBoolean(5, user.Administrator);
             ps.setBoolean(6, user.CanModifyWorld);
             ps.setBoolean(7, user.IgnoreRestrictions);
@@ -414,9 +414,9 @@ public class MySQLSource extends DataSource {
         try {
             conn = getConnection();
             ps = conn.prepareStatement("UPDATE users SET groups = ?, prefix = ?, commands = ?, admin = ?, canmodifyworld = ?, ignoresrestrictions = ? WHERE id = ?");
-            ps.setString(1, ia.combineSplit(0, user.Groups, ","));
+            ps.setString(1, id.combineSplit(0, user.Groups, ","));
             ps.setString(2, user.Prefix);
-            ps.setString(3, ia.combineSplit(0, user.Commands, ","));
+            ps.setString(3, id.combineSplit(0, user.Commands, ","));
             ps.setBoolean(4, user.Administrator);
             ps.setBoolean(5, user.CanModifyWorld);
             ps.setBoolean(6, user.IgnoreRestrictions);

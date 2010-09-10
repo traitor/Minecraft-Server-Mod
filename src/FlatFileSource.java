@@ -636,7 +636,7 @@ public class FlatFileSource extends DataSource {
             //#NAME:GROUPS:ADMIN/UNRESTRICTED:COLOR:COMMANDS
             builder.append(user.Name);
             builder.append(":");
-            builder.append(ia.combineSplit(0, user.Groups, ","));
+            builder.append(id.combineSplit(0, user.Groups, ","));
             builder.append(":");
             if (user.Administrator) {
                 builder.append("2");
@@ -650,7 +650,7 @@ public class FlatFileSource extends DataSource {
             builder.append(":");
             builder.append(user.Prefix);
             builder.append(":");
-            builder.append(ia.combineSplit(0, user.Commands, ","));
+            builder.append(id.combineSplit(0, user.Commands, ","));
             bw.append(builder.toString());
             bw.newLine();
             bw.close();
@@ -677,7 +677,7 @@ public class FlatFileSource extends DataSource {
                     StringBuilder builder = new StringBuilder();
                     builder.append(user.Name);
                     builder.append(":");
-                    builder.append(ia.combineSplit(0, user.Groups, ","));
+                    builder.append(id.combineSplit(0, user.Groups, ","));
                     builder.append(":");
                     if (user.Administrator) {
                         builder.append("2");
@@ -691,7 +691,7 @@ public class FlatFileSource extends DataSource {
                     builder.append(":");
                     builder.append(user.Prefix);
                     builder.append(":");
-                    builder.append(ia.combineSplit(0, user.Commands, ","));
+                    builder.append(id.combineSplit(0, user.Commands, ","));
                     toWrite.append(builder.toString()).append("\r\n");
                 }
             }

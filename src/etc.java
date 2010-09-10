@@ -136,8 +136,8 @@ public class etc {
         }
     }
 
-    public boolean isUserInGroup(dy e, String group) {
-        return isUserInGroup(e.ap, group);
+    public boolean isUserInGroup(ea e, String group) {
+        return isUserInGroup(e.aq, group);
     }
 
     public boolean isUserInGroup(String name, String group) {
@@ -265,8 +265,8 @@ public class etc {
         return false;
     }
 
-    public boolean isAdmin(dy player) {
-        return isAdmin(player.ap);
+    public boolean isAdmin(ea player) {
+        return isAdmin(player.aq);
     }
 
     public boolean isAdmin(String player) {
@@ -289,8 +289,8 @@ public class etc {
         return false;
     }
 
-    public boolean canIgnoreRestrictions(dy player) {
-        return canIgnoreRestrictions(player.ap);
+    public boolean canIgnoreRestrictions(ea player) {
+        return canIgnoreRestrictions(player.aq);
 
     }
 
@@ -314,8 +314,8 @@ public class etc {
         return false;
     }
 
-    public boolean canBuild(dy player) {
-        User user = getUser(player.ap);
+    public boolean canBuild(ea player) {
+        User user = getUser(player.aq);
 
         if (user == null) {
             return getDefaultGroup().CanModifyWorld;
@@ -336,17 +336,17 @@ public class etc {
         return true;
     }
 
-    public boolean isMuted(dy e) {
-        return muted.contains(e.ap);
+    public boolean isMuted(ea e) {
+        return muted.contains(e.aq);
     }
 
-    public boolean toggleMute(dy e) {
-        if (muted.contains(e.ap)) {
-            muted.remove(e.ap);
+    public boolean toggleMute(ea e) {
+        if (muted.contains(e.aq)) {
+            muted.remove(e.aq);
         } else {
-            muted.add(e.ap);
+            muted.add(e.aq);
         }
-        return muted.contains(e.ap);
+        return muted.contains(e.aq);
     }
 
     public void changeHome(Warp home) {
@@ -409,7 +409,7 @@ public class etc {
                 return true;
             }
 
-            dy player = match(split[1], server);
+            ea player = match(split[1], server);
 
             if (player == null) {
                 log.info("Player does not exist.");
@@ -493,23 +493,23 @@ public class etc {
         return dontParseRegular;
     }
 
-    private static dy match(String name, MinecraftServer d) {
-        dy player = null;
+    private static ea match(String name, MinecraftServer d) {
+        ea player = null;
         boolean found = false;
         if (("`" + d.f.c().toUpperCase() + "`").split(name.toUpperCase()).length == 2) {
             for (int i = 0; i < d.f.b.size() && !found; ++i) {
-                dy localdy = (dy) d.f.b.get(i);
-                if (("`" + localdy.ap.toUpperCase() + "`").split(name.toUpperCase()).length == 2) {
-                    player = localdy;
+                ea localea = (ea) d.f.b.get(i);
+                if (("`" + localea.aq.toUpperCase() + "`").split(name.toUpperCase()).length == 2) {
+                    player = localea;
                     found = true;
                 }
             }
         } else if (("`" + d.f.c() + "`").split(name).length > 2) {
             // Too many partial matches.
             for (int i = 0; i < d.f.b.size() && !found; ++i) {
-                dy localdy = (dy) d.f.b.get(i);
-                if (localdy.ap.equalsIgnoreCase(name)) {
-                    player = localdy;
+                ea localea = (ea) d.f.b.get(i);
+                if (localea.aq.equalsIgnoreCase(name)) {
+                    player = localea;
                     found = true;
                 }
             }
