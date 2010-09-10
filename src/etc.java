@@ -35,6 +35,7 @@ public class etc {
         commands.put("/help", "[Page] - Shows a list of commands. 7 per page.");
         commands.put("/playerlist", "- Shows a list of players");
         commands.put("/reload", "- Reloads config");
+        commands.put("/listbans", "<IP or bans> - Gives a list of bans");
         commands.put("/banip", "[Player] <Reason> - Bans the player's IP");
         commands.put("/unbanip", "[IP] - Unbans the IP");
         commands.put("/ban", "[Player] <Reason> - Bans the player");
@@ -45,6 +46,7 @@ public class etc {
         commands.put("/kick", "[Player] <Reason> - Kicks player");
         commands.put("/item", "[ID] [Amount] <Player> - Gives items");
         commands.put("/kit", "[Kit] - Gives a kit. To get a list of kits type /kit");
+        commands.put("/listwarps", "- Gives a list of available warps");
         commands.put("/home", "- Teleports you home");
         commands.put("/sethome", "- Sets your home");
         commands.put("/setspawn", "- Sets the spawn point to your position.");

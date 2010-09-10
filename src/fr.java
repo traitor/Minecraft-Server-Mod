@@ -19,9 +19,9 @@ public class fr {
     private MinecraftServer c;
     private he d;
     private int e;
-    private Set f = new HashSet();
-    private Set g = new HashSet();
-    private Set h = new HashSet();
+    private ArrayList f = new ArrayList();
+    private ArrayList g = new ArrayList();
+    private ArrayList h = new ArrayList();
     private File i;
     private File j;
     private File k;
@@ -122,6 +122,28 @@ public class fr {
                 builder.append(", ");
             }
             builder.append(((dy) this.b.get(l)).ap);
+        }
+        return builder.toString();
+    }
+
+    public String getBans() {
+        StringBuilder builder = new StringBuilder();
+        for (int l = 0; l < this.f.size(); ++l) {
+            if (l > 0) {
+                builder.append(", ");
+            }
+            builder.append(this.f.get(l));
+        }
+        return builder.toString();
+    }
+
+    public String getIpBans() {
+        StringBuilder builder = new StringBuilder();
+        for (int l = 0; l < this.g.size(); ++l) {
+            if (l > 0) {
+                builder.append(", ");
+            }
+            builder.append(this.g.get(l));
         }
         return builder.toString();
     }

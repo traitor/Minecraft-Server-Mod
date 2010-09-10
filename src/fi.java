@@ -17,6 +17,17 @@ public class fi {
         ConsoleHandler localConsoleHandler = new ConsoleHandler();
         localConsoleHandler.setFormatter(localgv);
         a.addHandler(localConsoleHandler);
+
+        //For parsers, or whatever.
+        try {
+            FileHandler localFileHandler = new FileHandler("server.log");
+            localFileHandler.setFormatter(localgv);
+            a.addHandler(localFileHandler);
+        } catch (Exception localException) {
+            a.log(Level.WARNING, "Failed to log to server log", localException);
+        }
+
+        //Keep these files logged.
         File log = new File("logs");
         try {
             if (!log.exists()) {

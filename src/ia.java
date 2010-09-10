@@ -359,7 +359,7 @@ public class ia extends eh implements ed {
                     }
                 }
 
-                msg(Colors.Blue + "Available commands (Page " + (split.length == 2 ? split[1] : "1") + " of " + (int) Math.ceil((double) availableCommands.size() / (double) 7) + "):");
+                msg(Colors.Blue + "Available commands (Page " + (split.length == 2 ? split[1] : "1") + " of " + (int) Math.ceil((double) availableCommands.size() / (double) 7) + ") [] = required <> = optional:");
                 if (split.length == 2) {
                     try {
                         int amount = Integer.parseInt(split[1]);
@@ -711,7 +711,16 @@ public class ia extends eh implements ed {
                 } else {
                     msg(Colors.Rose + "Can't find user " + split[3]);
                 }
-
+            } else if (split[0].equalsIgnoreCase("/banlist")) {
+                byte type = 0;
+                if (split.length == 2)
+                    if (split[1].equalsIgnoreCase("ips"))
+                        type = 1;
+                if (type == 0) { //Regular user bans
+                    msg(Colors.Blue + "Ban list:" + Colors.White + " " + d.f.getBans());
+                } else { //IP bans
+                    msg(Colors.Blue + "IP Ban list:" + Colors.White + " " + d.f.getBans());
+                }
             } else if (split[0].equalsIgnoreCase("/banip")) {
                 if (split.length < 2) {
                     msg(Colors.Rose + "Correct usage is: /banip [player] <reason> (optional) NOTE: this permabans IPs.");
