@@ -646,9 +646,9 @@ public class id extends ej
                                     int temp = kit.IDs.get(entry.getKey());
                                     do {
                                         if (temp - 64 >= 64) {
-                                            toGive.a(new gn(itemId, 64));
+                                            toGive.a(new gp(itemId, 64));
                                         } else {
-                                            toGive.a(new gn(itemId, temp));
+                                            toGive.a(new gp(itemId, temp));
                                         }
                                         temp -= 64;
                                     } while (temp >= 64);
@@ -673,7 +673,7 @@ public class id extends ej
                 ea player = match(split[1]);
 
                 if (this.e.aq.equalsIgnoreCase(split[1])) {
-                    msg(Colors.Rose + "You're alreaea here!");
+                    msg(Colors.Rose + "You're already here!");
                     return;
                 }
 
@@ -764,9 +764,9 @@ public class id extends ej
 
                                 do {
                                     if (temp - 64 >= 64) {
-                                        toGive.a(new gn(i2, 64));
+                                        toGive.a(new gp(i2, 64));
                                     } else {
-                                        toGive.a(new gn(i2, temp));
+                                        toGive.a(new gp(i2, temp));
                                     }
                                     temp -= 64;
                                 } while (temp >= 64);
