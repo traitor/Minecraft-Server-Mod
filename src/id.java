@@ -757,8 +757,8 @@ public class id extends ej
                                 }
                             }
                         }
-                        if (i2 < ff.n.length) {
-                            if (ff.n[i2] != null && (allowedItem || etc.getInstance().canIgnoreRestrictions(this.e))) {
+                        if (i2 < ez.c.length) {
+                            if (ez.c[i2] != null && (allowedItem || etc.getInstance().canIgnoreRestrictions(this.e))) {
                                 a.log(Level.INFO, "Giving " + toGive.aq + " some " + i2);
                                 int temp = i3;
 
@@ -777,7 +777,7 @@ public class id extends ej
                                     msg(Colors.Rose + "Gift given! :D");
                                     toGive.a.msg(Colors.Rose + "Enjoy your gift! :D");
                                 }
-                            } else if ((!allowedItem) && (ff.n[i2] != null) && !etc.getInstance().canIgnoreRestrictions(this.e)) {
+                            } else if ((!allowedItem) && (ez.c[i2] != null) && !etc.getInstance().canIgnoreRestrictions(this.e)) {
                                 msg(Colors.Rose + "You are not allowed to spawn that item.");
                             } else {
                                 msg(Colors.Rose + "No item with ID " + split[1]);
