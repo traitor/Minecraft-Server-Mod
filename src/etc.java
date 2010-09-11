@@ -29,7 +29,7 @@ public class etc {
     private ReloadThread reloadThread;
     private SaveAllThread saveThread;
     private DataSource dataSource;
-    private co properties;
+    private cq properties;
 
     private etc() {
         commands.put("/help", "[Page] - Shows a list of commands. 7 per page.");
@@ -69,7 +69,7 @@ public class etc {
 
     public final void load() {
         if (properties == null) {
-            properties = new co(new File("server.properties"));
+            properties = new cq(new File("server.properties"));
         } else {
             properties.reload(new File("server.properties"));
         }
