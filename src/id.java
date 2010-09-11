@@ -950,16 +950,16 @@ public class id extends ej
                     }
                 }
             } else if (split[0].equalsIgnoreCase("/getpos")) {
-                msg("Pos X: " + e.k + " Y: " + e.l + " Z " + e.m);
-                msg("Rotation X: " + e.q + " Y: " + e.r);
+                msg("Pos X: " + e.l + " Y: " + e.m + " Z " + e.n);
+                msg("Rotation X: " + e.r + " Y: " + e.s);
 
-                double degreeRotation = ((e.q - 90) % 360);
+                double degreeRotation = ((e.r - 90) % 360);
                 if (degreeRotation < 0) {
                     degreeRotation += 360.0;
                 }
                 msg("Compass: " + etc.getCompassPointForDirection(degreeRotation) + " (" + (Math.round(degreeRotation * 10) / 10.0) + ")");
             } else if (split[0].equalsIgnoreCase("/compass")) {
-                double degreeRotation = ((e.q - 90) % 360);
+                double degreeRotation = ((e.r - 90) % 360);
                 if (degreeRotation < 0) {
                     degreeRotation += 360.0;
                 }
