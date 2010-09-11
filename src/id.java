@@ -1,5 +1,7 @@
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -189,6 +191,9 @@ public class id extends ej
     }
 
     public void a(fe paramfe) {
+        if (!etc.getInstance().canBuild(e)) {
+            return;
+        }
         boolean bool = this.d.e.z = (this.d.f.g(this.e.aq) || etc.getInstance().isAdmin(e));
         int m = paramfe.b;
         int n = paramfe.c;
@@ -718,6 +723,24 @@ public class id extends ej
                 } else {
                     msg(Colors.Rose + "Can't find user " + split[3]);
                 }
+            } else if (split[0].equalsIgnoreCase("/tempban")) {
+                // /tempban MINUTES HOURS DAYS
+                if (split.length == 1) {
+                    //TODO;
+                    return;
+                }
+                int minutes = 0, hours = 0, days = 0;
+                if (split.length >= 2) {
+                    minutes = Integer.parseInt(split[1]);
+                }
+                if (split.length >= 3) {
+                    hours = Integer.parseInt(split[2]);
+                }
+                if (split.length >= 4) {
+                    days = Integer.parseInt(split[3]);
+                }
+                Date date = new Date();
+                //date.
             } else if (split[0].equalsIgnoreCase("/banlist")) {
                 byte type = 0;
                 if (split.length == 2) {
