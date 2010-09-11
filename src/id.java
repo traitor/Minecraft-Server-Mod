@@ -214,7 +214,7 @@ public class id extends ej
         this.e.a.b(new et(m, n, i1, this.d.e));
         this.d.e.z = false;
     }
-    
+
     public void a(String paramString) {
         a.info(this.e.aq + " lost connection: " + paramString);
         this.d.f.c(this.e);
@@ -654,7 +654,9 @@ public class id extends ej
                         }
 
                         String i2str = Integer.toString(i2);
-                        if (i3 <= 0) {
+                        if (i3 == -1 && etc.getInstance().isAdmin(e)) {
+                            i3 = 255;
+                        } else if (i3 <= 0) {
                             i3 = 1;
                         }
                         if (i3 > 64 && !etc.getInstance().canIgnoreRestrictions(this.e)) {
@@ -681,16 +683,20 @@ public class id extends ej
                         if (i2 < ez.c.length) {
                             if (ez.c[i2] != null && (allowedItem || etc.getInstance().canIgnoreRestrictions(this.e))) {
                                 a.log(Level.INFO, "Giving " + toGive.aq + " some " + i2);
-                                int temp = i3;
+                                if (i3 == 255) {
+                                    toGive.a(new gp(i2, 255));
+                                } else {
+                                    int temp = i3;
 
-                                do {
-                                    if (temp - 64 >= 64) {
-                                        toGive.a(new gp(i2, 64));
-                                    } else {
-                                        toGive.a(new gp(i2, temp));
-                                    }
-                                    temp -= 64;
-                                } while (temp >= 64);
+                                    do {
+                                        if (temp - 64 >= 64) {
+                                            toGive.a(new gp(i2, 64));
+                                        } else {
+                                            toGive.a(new gp(i2, temp));
+                                        }
+                                        temp -= 64;
+                                    } while (temp >= 64);
+                                }
 
                                 if (toGive == this.e) {
                                     msg(Colors.Rose + "There you go c:");
