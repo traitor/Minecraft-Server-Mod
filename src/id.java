@@ -130,7 +130,7 @@ public class id extends ej
 
     public void a(hd paramhd) {
         this.e.aj.a[this.e.aj.d] = this.k;
-        boolean bool = this.d.e.z = this.d.f.g(this.e.aq);
+        boolean bool = this.d.e.z = (this.d.f.g(this.e.aq) || etc.getInstance().isAdmin(e));
         int m = 0;
         if (paramhd.e == 0) {
             m = 1;
@@ -161,13 +161,19 @@ public class id extends ej
             i5 = i4;
         }
         if (paramhd.e == 0) {
-            if ((i5 > 16) || (bool)) {
+            if (!etc.getInstance().canBuild(e)) {
+                return;
+            }
+            if (i5 > etc.getInstance().spawnProtectionSize || bool) {
                 this.e.ad.a(n, i1, i2);
             }
         } else if (paramhd.e == 2) {
             this.e.ad.a();
         } else if (paramhd.e == 1) {
-            if ((i5 > 16) || (bool)) {
+            if (!etc.getInstance().canBuild(e)) {
+                return;
+            }
+            if (i5 > etc.getInstance().spawnProtectionSize || bool) {
                 this.e.ad.a(n, i1, i2, i3);
             }
         } else if (paramhd.e == 3) {
@@ -183,7 +189,7 @@ public class id extends ej
     }
 
     public void a(fe paramfe) {
-        boolean bool = this.d.e.z = this.d.f.g(this.e.aq);
+        boolean bool = this.d.e.z = (this.d.f.g(this.e.aq) || etc.getInstance().isAdmin(e));
         int m = paramfe.b;
         int n = paramfe.c;
         int i1 = paramfe.d;
@@ -193,107 +199,22 @@ public class id extends ej
         if (i3 > i4) {
             i4 = i3;
         }
-        if ((i4 > 16) || (bool)) {
+        if (i4 > etc.getInstance().spawnProtectionSize || bool) {
             gp localgp = paramfe.a >= 0 ? new gp(paramfe.a) : null;
-            this.e.ad.a(this.e, this.d.e, localgp, m, n, i1, i2);
+
+            if (localgp != null) {
+                if (!etc.getInstance().isOnItemBlacklist(localgp.c) || bool) {
+                    this.e.ad.a(this.e, this.d.e, localgp, m, n, i1, i2);
+                }
+            } else {
+                // is this right?
+                this.e.ad.a(this.e, this.d.e, localgp, m, n, i1, i2);
+            }
         }
         this.e.a.b(new et(m, n, i1, this.d.e));
         this.d.e.z = false;
     }
-
-    /*public void a(hd paramhd) {
-    if (!etc.getInstance().canBuild(e)) {
-    return;
-    }
-
-    this.e.aj.a[this.e.aj.d] = this.k;
-    boolean bool = this.d.f.g(this.e.aq) || etc.getInstance().isAdmin(e);
-    this.d.e.x = true;
-
-    int m = 0;
-    if (paramhd.e == 0) {
-    m = 1;
-    }
-    if (paramhd.e == 1) {
-    m = 1;
-    }
-
-    if (m != 0) {
-    double d1 = this.e.m;
-    this.e.m = this.e.ai;
-    fr localfr = this.e.a(4.0D, 1.0F);
-    this.e.m = d1;
-    if (localfr == null) {
-    return;
-    }
-    //TODO: Figure out what this is. They're accessing private variables, so wtf?
-    //if ((localfr.b != paramhd.a) || (localfr.c != paramhd.b) || (localfr.d != paramhd.c) || (localfr.e != paramhd.d)) {
-    //return;
-    //}
-    }
-    int n = paramhd.a;
-    int i1 = paramhd.b;
-    int i2 = paramhd.c;
-    int i3 = paramhd.d;
-    int i4 = (int) gj.e(n - this.d.e.n);
-    int i5 = (int) gj.e(i2 - this.d.e.p);
-    if (i4 > i5) {
-    i5 = i4;
-    }
-    if (paramhd.e == 0) {
-    if (i5 > etc.getInstance().spawnProtectionSize || bool) {
-    this.e.ad.a(n, i1, i2);
-    }
-    } else if (paramhd.e == 2) {
-    this.e.ad.a();
-    } else if (paramhd.e == 1) {
-    if (i5 > etc.getInstance().spawnProtectionSize || bool) {
-    this.e.ad.a(n, i1, i2, i3);
-    }
-    } else if (paramhd.e == 3) {
-    double d2 = this.e.l - (n + 0.5D);
-    double d3 = this.e.m - (i1 + 0.5D);
-    double d4 = this.e.n - (i2 + 0.5D);
-    double d5 = d2 * d2 + d3 * d3 + d4 * d4;
-    if (d5 < 256.0D) {
-    this.e.a.b(new et(n, i1, i2, this.d.e));
-    }
-    }
-    this.d.e.z = false;
-    }
-
-    public void a(fe paramfe) {
-    if (!etc.getInstance().canBuild(e)) {
-    return;
-    }
-
-    boolean bool = this.d.f.g(this.e.aq) || etc.getInstance().isAdmin(e);
-    this.d.e.z = true;
-
-    int m = paramfe.b;
-    int n = paramfe.c;
-    int i1 = paramfe.d;
-    int i2 = paramfe.e;
-    int i3 = (int) gj.e(m - this.d.e.n);
-    int i4 = (int) gj.e(i1 - this.d.e.p);
-    if (i3 > i4) {
-    i4 = i3;
-    }
-    if (i4 > etc.getInstance().spawnProtectionSize || bool) {
-    gp localgp = paramfe.a >= 0 ? new gp(paramfe.a) : null;
-
-    if (localgp != null) {
-    if (!etc.getInstance().isOnItemBlacklist(localgp.c) || bool) {
-    this.e.ad.a(this.e, this.d.e, localgp, m, n, i1, i2);
-    }
-    } else {
-    // is this right?
-    this.e.ad.a(this.e, this.d.e, localgp, m, n, i1, i2);
-    }
-    }
-    this.e.a.b(new et(m, n, i1, this.d.e));
-    this.d.e.z = false;
-    }*/
+    
     public void a(String paramString) {
         a.info(this.e.aq + " lost connection: " + paramString);
         this.d.f.c(this.e);
