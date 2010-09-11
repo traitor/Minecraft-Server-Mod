@@ -515,7 +515,7 @@ public class MySQLSource extends DataSource {
             synchronized (homeLock) {
                 Warp toRem = null;
                 for (Warp h : homes) {
-                    if (h.Name == home.Name) {
+                    if (h.Name.equalsIgnoreCase(home.Name)) {
                         toRem = h;
                     }
                 }
@@ -599,7 +599,7 @@ public class MySQLSource extends DataSource {
             synchronized (warpLock) {
                 Warp toRem = null;
                 for (Warp h : warps) {
-                    if (h.Name == warp.Name) {
+                    if (h.Name.equalsIgnoreCase(warp.Name)) {
                         toRem = h;
                     }
                 }
