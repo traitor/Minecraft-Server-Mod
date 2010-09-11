@@ -462,7 +462,7 @@ public class MySQLSource extends DataSource {
         ResultSet rs = null;
         try {
             conn = getConnection();
-            ps = conn.prepareStatement("INSERT INTO homes (name, x, y, z, rotX, rotY, group) VALUES(?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            ps = conn.prepareStatement("INSERT INTO homes (name, x, y, z, rotX, rotY, `group`) VALUES(?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, home.Name);
             ps.setDouble(2, home.Location.x);
             ps.setDouble(3, home.Location.y);
@@ -502,7 +502,7 @@ public class MySQLSource extends DataSource {
         PreparedStatement ps = null;
         try {
             conn = getConnection();
-            ps = conn.prepareStatement("UPDATE homes SET x = ?, y = ?, z = ?, rotX = ?, rotY = ?, group = ? WHERE name = ?");
+            ps = conn.prepareStatement("UPDATE homes SET x = ?, y = ?, z = ?, rotX = ?, rotY = ?, `group` = ? WHERE name = ?");
             ps.setDouble(1, home.Location.x);
             ps.setDouble(2, home.Location.y);
             ps.setDouble(3, home.Location.z);
@@ -546,7 +546,7 @@ public class MySQLSource extends DataSource {
         ResultSet rs = null;
         try {
             conn = getConnection();
-            ps = conn.prepareStatement("INSERT INTO warps (name, x, y, z, rotX, rotY, group) VALUES(?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            ps = conn.prepareStatement("INSERT INTO warps (name, x, y, z, rotX, rotY, `group`) VALUES(?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, warp.Name);
             ps.setDouble(2, warp.Location.x);
             ps.setDouble(3, warp.Location.y);
@@ -586,7 +586,7 @@ public class MySQLSource extends DataSource {
         PreparedStatement ps = null;
         try {
             conn = getConnection();
-            ps = conn.prepareStatement("UPDATE warps SET x = ?, y = ?, z = ?, rotX = ?, rotY = ?, group = ? WHERE name = ?");
+            ps = conn.prepareStatement("UPDATE warps SET x = ?, y = ?, z = ?, rotX = ?, rotY = ?, `group` = ? WHERE name = ?");
             ps.setDouble(1, warp.Location.x);
             ps.setDouble(2, warp.Location.y);
             ps.setDouble(3, warp.Location.z);

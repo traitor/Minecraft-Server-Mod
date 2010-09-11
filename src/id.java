@@ -968,9 +968,9 @@ public class id extends ej
                 }
 
                 if (split[1].equalsIgnoreCase("day")) {
-                    this.d.e.c = 0; //morning.
+                    this.d.e.c = 0;
                 } else if (split[1].equalsIgnoreCase("night")) {
-                    this.d.e.c = 500000; //approx value for midnight basically
+                    this.d.e.c = 13000;
                 } else {
                     try {
                         this.d.e.c = Long.parseLong(split[1]);
