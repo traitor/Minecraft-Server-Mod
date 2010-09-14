@@ -15,6 +15,7 @@ public class ReloadThread implements Runnable {
             } catch (InterruptedException localInterruptedException) {
             }
             etc.getInstance().load();
+            etc.getInstance().loadData();
         }
     }
 

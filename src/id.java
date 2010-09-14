@@ -130,6 +130,7 @@ public class id extends ej
         this.e.a.b(new dq(paramDouble1, paramDouble2 + 1.620000004768372D, paramDouble2, paramDouble3, paramFloat1, paramFloat2, false));
     }
 
+    //Destroy function
     public void a(hd paramhd) {
         this.e.aj.a[this.e.aj.d] = this.k;
         boolean bool = this.d.e.z = (this.d.f.g(this.e.aq) || etc.getInstance().isAdmin(e));
@@ -190,6 +191,7 @@ public class id extends ej
         this.d.e.z = false;
     }
 
+    //Build function
     public void a(fe paramfe) {
         if (!etc.getInstance().canBuild(e)) {
             return;

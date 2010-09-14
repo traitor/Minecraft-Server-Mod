@@ -40,6 +40,8 @@ public abstract class DataSource {
 
     abstract public void loadReserveList();
 
+    //abstract public void loadBanList();
+
     abstract public void addUser(User user);
 
     abstract public void modifyUser(User user);
