@@ -62,12 +62,14 @@ public class PluginLoader {
         }
     }
 
-    public void callHook(HOOKS h, Object[] parameters) {
+    public boolean callHook(HOOKS h, Object[] parameters) {
+        boolean toRet = false;
         for (Plugin plugin : plugins) {
             try {
                 switch (h) {
                     case LOGINCHECK:
-                        plugin.onLoginChecks((String) parameters[0]);
+                        if (!plugin.onLoginChecks((String) parameters[0]))
+                            toRet = true;
                         break;
                     case LOGIN:
                         plugin.onLogin((ea) parameters[0]);
@@ -76,7 +78,8 @@ public class PluginLoader {
                         plugin.onChat((ea) parameters[0], (String)parameters[1]);
                         break;
                     case COMMAND:
-                        plugin.onCommand((ea) parameters[0], (String[])parameters[1]);
+                        if (plugin.onCommand((ea) parameters[0], (String[])parameters[1]))
+                            toRet = true;
                         break;
                     case BAN:
                         plugin.onBan((ea) parameters[0], (String)parameters[1]);
@@ -97,5 +100,7 @@ public class PluginLoader {
             } catch (UnsupportedOperationException ex) {
             }
         }
+
+        return toRet;
     }
 }

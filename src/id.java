@@ -348,7 +348,8 @@ public class id extends ej
     private void d(String paramString) {
         try {
             String[] split = paramString.split(" ");
-            etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.COMMAND, new Object[] { e, split });
+            if (etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.COMMAND, new Object[] { e, split }))
+                return; //No need to go on, commands were parsed.
 
             if (!etc.getInstance().canUseCommand(e.aq, split[0]) && !split[0].startsWith("/#")) {
                 msg(Colors.Rose + "Unknown command.");

@@ -114,7 +114,8 @@ public class ft {
             return null;
         }
 
-        etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.LOGINCHECK, new Object[] { paramString1 });
+        if (etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.LOGINCHECK, new Object[] { paramString1 }))
+            return null;
 
         return new ea(this.c, this.c.e, paramString1, new in(this.c.e));
     }
