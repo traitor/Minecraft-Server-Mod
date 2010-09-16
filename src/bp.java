@@ -6,6 +6,8 @@ public class bp extends Thread {
     public bp(MinecraftServer paramMinecraftServer) {
         etc.getInstance().loadData();
         etc.getInstance().startThreads(paramMinecraftServer);
+        etc.getInstance().getLoader();
+        etc.setServer(paramMinecraftServer);
         setDaemon(true);
         start();
     }

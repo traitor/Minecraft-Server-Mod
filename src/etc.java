@@ -9,8 +9,10 @@ import java.util.logging.Logger;
 import net.minecraft.server.*;
 
 public class etc {
+
     private static final Logger log = Logger.getLogger("Minecraft");
     private static volatile etc instance;
+    private static MinecraftServer server;
     private ArrayList<String> muted = new ArrayList<String>();
     public String usersLoc = "users.txt", kitsLoc = "kits.txt", homeLoc = "homes.txt", warpLoc = "warps.txt", itemLoc = "items.txt", groupLoc = "groups.txt", commandsLoc = "commands.txt";
     public String whitelistLoc = "whitelist.txt", reservelistLoc = "reservelist.txt";
@@ -30,6 +32,7 @@ public class etc {
     private SaveAllThread saveThread;
     private DataSource dataSource;
     private cq properties;
+    private PluginLoader loader;
 
     private etc() {
         commands.put("/help", "[Page] - Shows a list of commands. 7 per page.");
@@ -122,6 +125,23 @@ public class etc {
         }
 
         return instance;
+    }
+
+    public static void setServer(MinecraftServer server) {
+        server = server;
+    }
+
+    public static MinecraftServer getServer() {
+        return server;
+    }
+
+    public PluginLoader getLoader() {
+        if (loader == null) {
+            loader = new PluginLoader();
+            loader.load();
+        }
+
+        return loader;
     }
 
     public void startThreads(MinecraftServer paramMinecraftServer) {

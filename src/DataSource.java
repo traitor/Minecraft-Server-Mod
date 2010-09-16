@@ -217,7 +217,7 @@ public abstract class DataSource {
 
     public boolean isUserOnReserveList(String user) {
         synchronized (reserveList) {
-            for (String name : whiteList) {
+            for (String name : reserveList) {
                 if (name.equalsIgnoreCase(user)) {
                     return true;
                 }

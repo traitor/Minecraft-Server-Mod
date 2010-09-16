@@ -62,6 +62,7 @@ public class ft {
         for (String str : etc.getInstance().motd) {
             paramea.a.b(new ba(str));
         }
+        etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.LOGIN, new Object[] { paramea });
     }
 
     public void b(ea paramea) {
@@ -112,6 +113,9 @@ public class ft {
             paramew.b("Server is full.");
             return null;
         }
+
+        etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.LOGINCHECK, new Object[] { paramString1 });
+
         return new ea(this.c, this.c.e, paramString1, new in(this.c.e));
     }
 
