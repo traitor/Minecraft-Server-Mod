@@ -127,8 +127,8 @@ public class etc {
         return instance;
     }
 
-    public static void setServer(MinecraftServer server) {
-        server = server;
+    public static void setServer(MinecraftServer s) {
+        server = s;
     }
 
     public static MinecraftServer getServer() {

@@ -282,7 +282,7 @@ public class id extends ej
                 msg(Colors.Rose + "You are currently muted.");
                 return;
             }
-            etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.CHAT, new Object[] { e, str });
+            etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.CHAT, new Object[]{e, str});
 
             String message = "<" + etc.getInstance().getUserColor(e.aq) + this.e.aq + Colors.White + "> " + str;
             a.log(Level.INFO, "<" + e.aq + "> " + str);
@@ -348,9 +348,9 @@ public class id extends ej
     private void d(String paramString) {
         try {
             String[] split = paramString.split(" ");
-            if (etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.COMMAND, new Object[] { e, split }))
+            if (etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.COMMAND, new Object[]{e, split})) {
                 return; //No need to go on, commands were parsed.
-
+            }
             if (!etc.getInstance().canUseCommand(e.aq, split[0]) && !split[0].startsWith("/#")) {
                 msg(Colors.Rose + "Unknown command.");
                 return;
@@ -776,7 +776,7 @@ public class id extends ej
                     // adds player to ban list
                     this.d.f.c(player.a.b.b().toString());
 
-                    etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.IPBAN, new Object[] { e, split.length > 2 ? split[1] : "" });
+                    etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.IPBAN, new Object[]{e, split.length > 2 ? split[1] : ""});
 
                     a.log(Level.INFO, "IP Banning " + player.aq + " (IP: " + player.a.b.b().toString() + ")");
                     msg(Colors.Rose + "IP Banning " + player.aq + " (IP: " + player.a.b.b().toString() + ")");
@@ -806,7 +806,7 @@ public class id extends ej
                     // adds player to ban list
                     this.d.f.a(player.aq);
 
-                    etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.BAN, new Object[] { e, split.length > 2 ? split[1] : "" });
+                    etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.BAN, new Object[]{e, split.length > 2 ? split[1] : ""});
 
                     if (split.length > 2) {
                         player.a.c("Banned by " + e.aq + ": " + combineSplit(2, split, " "));
@@ -846,7 +846,7 @@ public class id extends ej
                         return;
                     }
 
-                    etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.KICK, new Object[] { e, split.length > 2 ? split[1] : "" });
+                    etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.KICK, new Object[]{e, split.length > 2 ? split[1] : ""});
 
                     if (split.length > 2) {
                         player.a.c("Kicked by " + e.aq + ": " + combineSplit(2, split, " "));
@@ -1044,6 +1044,7 @@ public class id extends ej
         return this.e.aq;
     }
 
+    //Inventory changed?
     public void a(r paramr) {
         if (paramr.a == -1) {
             this.e.aj.a = paramr.b;
@@ -1056,6 +1057,7 @@ public class id extends ej
         }
     }
 
+    //Send current inventory?
     public void d() {
         this.b.a(new r(-1, this.e.aj.a));
         this.b.a(new r(-2, this.e.aj.c));
