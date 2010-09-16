@@ -131,13 +131,17 @@ public class etc {
         server = s;
     }
 
-    public static MinecraftServer getServer() {
+    public static MinecraftServer getMCServer() {
         return server;
+    }
+
+    public static Server getServer() {
+        return getInstance().getLoader().getServer();
     }
 
     public PluginLoader getLoader() {
         if (loader == null) {
-            loader = new PluginLoader();
+            loader = new PluginLoader(server);
             loader.load();
         }
 
@@ -154,6 +158,10 @@ public class etc {
             reloadThread = new ReloadThread(sleepTime);
             reloadThread.start();
         }
+    }
+
+    public boolean isUserInGroup(Player player, String group) {
+        return isUserInGroup(player.getName(), group);
     }
 
     public boolean isUserInGroup(ea e, String group) {

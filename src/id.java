@@ -1064,7 +1064,10 @@ public class id extends ej
         this.b.a(new r(-3, this.e.aj.b));
     }
 
+    //Chest inven crap?
     public void a(ib paramib) {
+        if (!etc.getInstance().canBuild(e))
+            return;
         as localas = this.d.e.k(paramib.a, paramib.b, paramib.c);
         if (localas != null) {
             localas.a(paramib.e);

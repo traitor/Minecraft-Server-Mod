@@ -48,6 +48,8 @@ public abstract class hp {
         }
 
         hp localhp = a(i);
+        /*if (i != 10)
+            System.out.println("ID " + i);*/
         if (localhp == null) {
             throw new IOException("Bad packet id " + i);
         }
@@ -110,13 +112,5 @@ public abstract class hp {
         a(59, ib.class);
 
         a(255, io.class); //Kick/disconnect
-
-        /* PREVIOUSLY:
-        a(0, iw.class); //Keep alive
-        a(1, z.class); //Login
-        a(2, e.class); //Handshake
-        a(3, az.class); //Chat
-        a(4, fj.class); //Time
-         */
     }
 }

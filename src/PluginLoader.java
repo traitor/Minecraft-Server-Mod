@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.minecraft.server.MinecraftServer;
 
 public class PluginLoader {
 
@@ -28,10 +29,12 @@ public class PluginLoader {
     }
     private static final Logger log = Logger.getLogger("Minecraft");
     private List<Plugin> plugins = new ArrayList<Plugin>();
+    private Server server;
     private cq properties;
 
-    public PluginLoader() {
+    public PluginLoader(MinecraftServer server) {
         properties = new cq(new File("server.properties"));
+        this.server = new Server(server);
     }
 
     public void load() {
@@ -49,7 +52,7 @@ public class PluginLoader {
 
                 try {
                     Plugin plugin = (Plugin) c.newInstance();
-                    plugin.initialize();
+                    plugin.enable();
                     plugins.add(plugin);
                 } catch (InstantiationException ex) {
                     log.log(Level.SEVERE, "Exception while loading class", ex);
@@ -62,6 +65,10 @@ public class PluginLoader {
         }
     }
 
+    public Server getServer() {
+        return server;
+    }
+
     public boolean callHook(HOOKS h, Object[] parameters) {
         boolean toRet = false;
         for (Plugin plugin : plugins) {
@@ -72,23 +79,23 @@ public class PluginLoader {
                             toRet = true;
                         break;
                     case LOGIN:
-                        plugin.onLogin((ea) parameters[0]);
+                        plugin.onLogin(new Player((ea) parameters[0]));
                         break;
                     case CHAT:
-                        plugin.onChat((ea) parameters[0], (String)parameters[1]);
+                        plugin.onChat(new Player((ea) parameters[0]), (String)parameters[1]);
                         break;
                     case COMMAND:
-                        if (plugin.onCommand((ea) parameters[0], (String[])parameters[1]))
+                        if (plugin.onCommand(new Player((ea) parameters[0]), (String[])parameters[1]))
                             toRet = true;
                         break;
                     case BAN:
-                        plugin.onBan((ea) parameters[0], (String)parameters[1]);
+                        plugin.onBan(new Player((ea) parameters[0]), (String)parameters[1]);
                         break;
                     case IPBAN:
-                        plugin.onIpBan((ea) parameters[0], (String)parameters[1]);
+                        plugin.onIpBan(new Player((ea) parameters[0]), (String)parameters[1]);
                         break;
                     case KICK:
-                        plugin.onKick((ea) parameters[0], (String)parameters[1]);
+                        plugin.onKick(new Player((ea) parameters[0]), (String)parameters[1]);
                         break;
                     case BLOCK_CREATED:
                         //Nothing yet.
