@@ -75,9 +75,6 @@ public class ea extends fc {
                 this.ag.remove(localIy);
                 this.a.b(new cz(localIy.a * 16, 0, localIy.b * 16, 16, 128, 16, this.b.e));
                 localObject2 = this.b.e.d(localIy.a * 16, 0, localIy.b * 16, localIy.a * 16 + 16, 128, localIy.b * 16 + 16);
-                if (!etc.getInstance().canBuild(this)) {
-                    return;
-                }
                 for (int j = 0; j < ((List) localObject2).size(); j++) {
                     as localas = (as) ((List) localObject2).get(j);
                     if (!etc.getInstance().canBuild(this) && (localas instanceof hb || localas instanceof df))
