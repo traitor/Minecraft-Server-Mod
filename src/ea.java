@@ -80,6 +80,8 @@ public class ea extends fc {
                 }
                 for (int j = 0; j < ((List) localObject2).size(); j++) {
                     as localas = (as) ((List) localObject2).get(j);
+                    if (!etc.getInstance().canBuild(this) && (localas instanceof hb || localas instanceof df))
+                        continue;
                     this.a.b(new ib(localas.b, localas.c, localas.d, localas));
                 }
             }
