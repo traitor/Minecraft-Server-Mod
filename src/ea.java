@@ -2,6 +2,7 @@
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import net.minecraft.server.MinecraftServer;
 
@@ -71,10 +72,10 @@ public class ea extends fc {
             }
 
             if (i != 0) {
-                iy localIy = (iy) localObject1;
-                this.ag.remove(localIy);
-                this.a.b(new cz(localIy.a * 16, 0, localIy.b * 16, 16, 128, 16, this.b.e));
-                localObject2 = this.b.e.d(localIy.a * 16, 0, localIy.b * 16, localIy.a * 16 + 16, 128, localIy.b * 16 + 16);
+                iy localiy = (iy) localObject1;
+                this.ag.remove(localiy);
+                this.a.b(new cz(localiy.a * 16, 0, localiy.b * 16, 16, 128, 16, this.b.e));
+                localObject2 = this.b.e.d(localiy.a * 16, 0, localiy.b * 16, localiy.a * 16 + 16, 128, localiy.b * 16 + 16);
                 for (int j = 0; j < ((List) localObject2).size(); j++) {
                     as localas = (as) ((List) localObject2).get(j);
                     if (!etc.getInstance().canBuild(this) && (localas instanceof hb || localas instanceof df))
@@ -85,10 +86,10 @@ public class ea extends fc {
         }
     }
 
-    public void x() {
+    public void y() {
         this.o = (this.p = this.q = 0.0D);
         this.bg = false;
-        super.x();
+        super.y();
     }
 
     public void c(dj paramdj, int paramInt) {
@@ -101,7 +102,7 @@ public class ea extends fc {
         super.c(paramdj, paramInt);
     }
 
-    public void y() {
+    public void z() {
         if (!this.ao) {
             this.ap = -1;
             this.ao = true;
@@ -109,7 +110,7 @@ public class ea extends fc {
         }
     }
 
-    protected float o() {
+    protected float p() {
         return 1.62F;
     }
 }
