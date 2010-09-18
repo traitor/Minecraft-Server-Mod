@@ -40,6 +40,8 @@ public class PluginLoader {
     public void load() {
         String[] classes = properties.getString("plugins", "").split(",");
         for (String sclass : classes) {
+            if (sclass.equals(""))
+                continue;
             try {
                 File myJar = new File("plugins/" + sclass + ".jar");
                 URLClassLoader child = null;
