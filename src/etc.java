@@ -33,6 +33,7 @@ public class etc {
     private DataSource dataSource;
     private cq properties;
     private PluginLoader loader;
+    private boolean logging = false;
 
     private etc() {
         commands.put("/help", "[Page] - Shows a list of commands. 7 per page.");
@@ -58,6 +59,7 @@ public class etc {
         commands.put("/spawn", "- Teleports you to spawn");
         commands.put("/warp", "[Warp] - Warps to the specified warp.");
         commands.put("/setwarp", "[Warp] - Sets the warp to your current position.");
+        commands.put("/removewarp", "[Warp] -Rmoves the specified warp.");
         commands.put("/getpos", "- Displays your current position.");
         commands.put("/compass", "- Gives you a compass reading.");
         commands.put("/time", "[Time|day|night] - Changes time");
@@ -99,6 +101,7 @@ public class etc {
             spawnProtectionSize = properties.getInt("spawn-protection-size", 16);
             sleepTime = properties.getLong("reload-interval", 30000);
             saveInterval = properties.getLong("save-interval", 1800000);
+            logging = properties.getBoolean("logging", false);
         } catch (Exception e) {
             log.log(Level.SEVERE, "Exception while reading from server.properties", e);
             // Just in case...
@@ -220,7 +223,10 @@ public class etc {
     }
 
     public Group getDefaultGroup() {
-        return dataSource.getDefaultGroup();
+        Group group = dataSource.getDefaultGroup();
+        if (group == null)
+            log.log(Level.SEVERE, "No default group! Expect lots of errors!");
+        return group;
     }
 
     public String getUserColor(String name) {
@@ -404,6 +410,10 @@ public class etc {
 
     public DataSource getDataSource() {
         return dataSource;
+    }
+
+    public boolean isLogging() {
+        return logging;
     }
 
     public boolean parseConsoleCommand(String command, MinecraftServer server) {

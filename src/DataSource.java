@@ -143,6 +143,8 @@ public abstract class DataSource {
 
     abstract public void changeWarp(Warp warp);
 
+    abstract public void removeWarp(Warp warp);
+
     public Warp getWarp(String name) {
         synchronized (warpLock) {
             for (Warp warp : warps) {

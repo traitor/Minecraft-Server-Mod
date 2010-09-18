@@ -623,6 +623,32 @@ public class MySQLSource extends DataSource {
         }
     }
 
+    public void removeWarp(Warp warp) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement("DELETE FROM warps WHERE id = ?");
+            ps.setDouble(1, warp.ID);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            log.log(Level.SEVERE, "Unable to delete warp from warps table", ex);
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+            }
+        }
+        synchronized (warpLock) {
+            warps.remove(warp);
+        }
+    }
+
     //Whitelist
     public void addToWhitelist(String name) {
         Connection conn = null;

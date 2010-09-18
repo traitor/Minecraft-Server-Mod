@@ -28,6 +28,8 @@ public class Item {
     }
 
     public static boolean isValidItem(int itemId) {
-        return ez.c[itemId] != null;
+        if (itemId < ez.c.length)
+            return ez.c[itemId] != null;
+        return false;
     }
 }

@@ -347,6 +347,8 @@ public class id extends ej
 
     private void d(String paramString) {
         try {
+            if (etc.getInstance().isLogging())
+                a.info("Command used by " + e.aq + " " + paramString);
             String[] split = paramString.split(" ");
             if (etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.COMMAND, new Object[]{e, split})) {
                 return; //No need to go on, commands were parsed.
@@ -893,10 +895,16 @@ public class id extends ej
                 a.info("Spawn position changed.");
                 msg(Colors.Rose + "You have set the spawn to your current position.");
             } else if (split[0].equalsIgnoreCase("/home")) {
-                a.info(this.e.aq + " returned home");
-                Warp home = etc.getInstance().getDataSource().getHome(e.aq);
+                Warp home = null;
+                if (split.length > 1 && etc.getInstance().isAdmin(e))
+                    home = etc.getInstance().getDataSource().getHome(split[1]);
+                else
+                    home = etc.getInstance().getDataSource().getHome(e.aq);
+
                 if (home != null) {
                     a(home.Location.x, home.Location.y, home.Location.z, home.Location.rotX, home.Location.rotY);
+                } else if (split.length > 1 && etc.getInstance().isAdmin(e)) {
+                    msg(Colors.Rose + "That player home does not exist");
                 } else {
                     int m = this.d.e.d(this.d.e.n, this.d.e.p);
                     a(this.d.e.n + 0.5D, m + 1.5D, this.d.e.p + 0.5D, 0.0F, 0.0F);
@@ -958,6 +966,18 @@ public class id extends ej
                 }
                 etc.getInstance().setWarp(warp);
                 msg(Colors.Rose + "Created warp point " + split[1] + ".");
+            } else if (split[0].equalsIgnoreCase("/removewarp")) {
+                if (split.length < 2) {
+                    msg(Colors.Rose + "Correct usage is: /removewarp [warpname]");
+                    return;
+                }
+                Warp warp = etc.getInstance().getDataSource().getWarp(split[1]);
+                if (warp != null) {
+                    etc.getInstance().getDataSource().removeWarp(warp);
+                    msg(Colors.Blue + "Warp removed.");
+                } else {
+                    msg(Colors.Rose + "That warp does not exist");
+                }
             } else if (split[0].equalsIgnoreCase("/lighter")) {
                 if (MinecraftServer.b.containsKey(this.e.aq + " lighter")) {
                     a.info(this.e.aq + " failed to iron!");

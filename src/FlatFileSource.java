@@ -907,6 +907,40 @@ public class FlatFileSource extends DataSource {
         }
     }
 
+    public void removeWarp(Warp warp) {
+        FileWriter writer = null;
+        String warpLoc = etc.getInstance().warpLoc;
+        try {
+            // Now to save...
+            BufferedReader reader = new BufferedReader(new FileReader(new File(warpLoc)));
+            StringBuilder toWrite = new StringBuilder();
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                if (!line.contains(warp.Name)) {
+                    toWrite.append(line).append("\r\n");
+                }
+            }
+            reader.close();
+
+            writer = new FileWriter(warpLoc);
+            writer.write(toWrite.toString());
+            writer.close();
+        } catch (Exception e1) {
+            log.log(Level.SEVERE, "Exception while delete warp from " + warpLoc, e1);
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException ex) {
+            }
+        }
+
+        synchronized (warpLock) {
+            warps.remove(warp);
+        }
+    }
+
     //Whitelist
     public void addToWhitelist(String name) {
         BufferedWriter bw = null;
