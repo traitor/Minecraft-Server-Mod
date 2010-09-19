@@ -867,6 +867,8 @@ public class id extends ej
                     msg(Colors.Rose + "You are currently muted.");
                     return;
                 }
+                if (split.length == 1)
+                    return;
                 String prefix = etc.getInstance().getUserColor(e.aq);
                 String paramString2 = "* " + prefix + this.e.aq + Colors.White + " " + paramString.substring(paramString.indexOf(" ")).trim();
                 a.info("* " + this.e.aq + " " + paramString.substring(paramString.indexOf(" ")).trim());

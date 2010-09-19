@@ -8,18 +8,26 @@ public class Player {
         this.user = user;
     }
 
+    public void kick(String reason) {
+        user.a.b(reason);
+    }
+
     public void sendMessage(String message) {
         user.a.msg(message);
     }
 
     public void giveItem(Item item) {
-        int temp = item.getAmount();
+        giveItem(item.getItemId(), item.getAmount());
+    }
+
+    public void giveItem(int itemId, int amount) {
+        int temp = amount;
 
         do {
             if (temp - 64 >= 64) {
-                user.a(new gp(item.getItemId(), 64));
+                user.a(new gp(itemId, 64));
             } else {
-                user.a(new gp(item.getItemId(), temp));
+                user.a(new gp(itemId, temp));
             }
             temp -= 64;
         } while (temp >= 64);

@@ -86,7 +86,7 @@ public class FlatFileSource extends DataSource {
                         user.Commands = split[4].split(",");
                     }
                     if (split.length >= 6) {
-                        user.IPs = split[4].split(",");
+                        user.IPs = split[5].split(",");
                     }
 
                     users.add(user);
@@ -948,8 +948,8 @@ public class FlatFileSource extends DataSource {
         String location = etc.getInstance().whitelistLoc;
         try {
             bw = new BufferedWriter(new FileWriter(location, true));
-            bw.append(name);
             bw.newLine();
+            bw.append(name);
 
             synchronized (whiteListLock) {
                 whiteList.add(name);
@@ -1006,8 +1006,8 @@ public class FlatFileSource extends DataSource {
         String location = etc.getInstance().reservelistLoc;
         try {
             bw = new BufferedWriter(new FileWriter(location, true));
-            bw.append(name);
             bw.newLine();
+            bw.append(name);
 
             synchronized (whiteListLock) {
                 reserveList.add(name);

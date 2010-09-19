@@ -212,8 +212,8 @@ public abstract class DataSource {
     abstract public void removeFromReserveList(String name);
 
     public boolean hasReserveList() {
-        synchronized (whiteListLock) {
-            return !whiteList.isEmpty();
+        synchronized (reserveList) {
+            return !reserveList.isEmpty();
         }
     }
 
