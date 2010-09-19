@@ -348,8 +348,9 @@ public class id extends ej
 
     private void d(String paramString) {
         try {
-            if (etc.getInstance().isLogging())
+            if (etc.getInstance().isLogging()) {
                 a.info("Command used by " + e.aq + " " + paramString);
+            }
             String[] split = paramString.split(" ");
             if (etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.COMMAND, new Object[]{e, split})) {
                 return; //No need to go on, commands were parsed.
@@ -897,10 +898,11 @@ public class id extends ej
                 msg(Colors.Rose + "You have set the spawn to your current position.");
             } else if (split[0].equalsIgnoreCase("/home")) {
                 Warp home = null;
-                if (split.length > 1 && etc.getInstance().isAdmin(e))
+                if (split.length > 1 && etc.getInstance().isAdmin(e)) {
                     home = etc.getInstance().getDataSource().getHome(split[1]);
-                else
+                } else {
                     home = etc.getInstance().getDataSource().getHome(e.aq);
+                }
 
                 if (home != null) {
                     a(home.Location.x, home.Location.y, home.Location.z, home.Location.rotX, home.Location.rotY);
@@ -1045,7 +1047,7 @@ public class id extends ej
 
     public void a(o paramo) {
         if (paramo.b == 1) {
-            this.e.y();
+            this.e.z();
         }
     }
 
@@ -1065,7 +1067,6 @@ public class id extends ej
         return this.e.aq;
     }
 
-    //Inventory changed?
     public void a(r paramr) {
         if (paramr.a == -1) {
             this.e.aj.a = paramr.b;
@@ -1078,17 +1079,13 @@ public class id extends ej
         }
     }
 
-    //Send current inventory?
     public void d() {
         this.b.a(new r(-1, this.e.aj.a));
         this.b.a(new r(-2, this.e.aj.c));
         this.b.a(new r(-3, this.e.aj.b));
     }
 
-    //Chest inven crap?
     public void a(ib paramib) {
-        if (!etc.getInstance().canBuild(e))
-            return;
         as localas = this.d.e.k(paramib.a, paramib.b, paramib.c);
         if (localas != null) {
             localas.a(paramib.e);

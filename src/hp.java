@@ -49,7 +49,7 @@ public abstract class hp {
 
         hp localhp = a(i);
         /*if (i != 10)
-            System.out.println("ID " + i);*/
+        System.out.println("ID " + i);*/
         if (localhp == null) {
             throw new IOException("Bad packet id " + i);
         }
