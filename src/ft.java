@@ -62,7 +62,7 @@ public class ft {
         for (String str : etc.getInstance().motd) {
             paramea.a.b(new ba(str));
         }
-        etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.LOGIN, new Object[] { paramea });
+        etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.LOGIN, new Object[]{paramea});
     }
 
     public void b(ea paramea) {
@@ -115,16 +115,23 @@ public class ft {
         }
         User user = etc.getInstance().getUser(paramString1);
         if (user != null) {
-            for (int i = 0; i < user.IPs.length; i++)
-                if (!user.IPs[i].equals("") && !ip.equals(user.IPs[i]))
-                {
+            if (!user.IPs[0].equals("")) {
+                boolean kick = true;
+                for (int i = 0; i < user.IPs.length; i++) {
+                    if (!user.IPs[i].equals("") && ip.equals(user.IPs[i])) {
+                        kick = false;
+                    }
+                }
+                if (kick) {
                     paramew.b("IP doesn't match specified IP.");
                     return null;
                 }
+            }
         }
 
-        if (etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.LOGINCHECK, new Object[] { paramString1 }))
+        if (etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.LOGINCHECK, new Object[]{paramString1})) {
             return null;
+        }
 
         return new ea(this.c, this.c.e, paramString1, new in(this.c.e));
     }
