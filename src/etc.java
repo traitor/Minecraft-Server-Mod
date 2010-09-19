@@ -59,7 +59,7 @@ public class etc {
         commands.put("/spawn", "- Teleports you to spawn");
         commands.put("/warp", "[Warp] - Warps to the specified warp.");
         commands.put("/setwarp", "[Warp] - Sets the warp to your current position.");
-        commands.put("/removewarp", "[Warp] -Rmoves the specified warp.");
+        commands.put("/removewarp", "[Warp] - Removes the specified warp.");
         commands.put("/getpos", "- Displays your current position.");
         commands.put("/compass", "- Gives you a compass reading.");
         commands.put("/time", "[Time|day|night] - Changes time");
@@ -414,6 +414,14 @@ public class etc {
 
     public boolean isLogging() {
         return logging;
+    }
+
+    public void addCommand(String command, String description) {
+        commands.put(command, description);
+    }
+
+    public void removeCommand(String command) {
+        commands.remove(command);
     }
 
     public boolean parseConsoleCommand(String command, MinecraftServer server) {
