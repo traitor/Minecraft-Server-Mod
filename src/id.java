@@ -1,4 +1,5 @@
 
+import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -776,7 +777,7 @@ public class id extends ej
                     }
 
                     // adds player to ban list
-                    this.d.f.c(player.a.b.b().toString());
+                    this.d.f.c(player.a.b.b().toString().split(":")[0].substring(1));
 
                     etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.IPBAN, new Object[]{e, split.length > 2 ? split[1] : ""});
 
