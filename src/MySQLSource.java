@@ -67,6 +67,7 @@ public class MySQLSource extends DataSource {
                     user.Administrator = rs.getBoolean("admin");
                     user.CanModifyWorld = rs.getBoolean("canmodifyworld");
                     user.IgnoreRestrictions = rs.getBoolean("ignoresrestrictions");
+                    user.IPs = rs.getString("ip").split(",");
                     users.add(user);
                 }
             } catch (SQLException ex) {

@@ -113,6 +113,15 @@ public class ft {
             paramew.b("Server is full.");
             return null;
         }
+        User user = etc.getInstance().getUser(paramString1);
+        if (user != null) {
+            for (int i = 0; i < user.IPs.length; i++)
+                if (!user.IPs[i].equals("") && !ip.equals(user.IPs[i]))
+                {
+                    paramew.b("IP doesn't match specified IP.");
+                    return null;
+                }
+        }
 
         if (etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.LOGINCHECK, new Object[] { paramString1 }))
             return null;

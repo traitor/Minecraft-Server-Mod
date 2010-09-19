@@ -33,7 +33,7 @@ public class FlatFileSource extends DataSource {
                 writer = new FileWriter(location);
                 writer.write("#Add your users here (When adding your entry DO NOT include #!)\r\n");
                 writer.write("#The format is:\r\n");
-                writer.write("#NAME:GROUPS:ADMIN/UNRESTRICTED:COLOR:COMMANDS\r\n");
+                writer.write("#NAME:GROUPS:ADMIN/UNRESTRICTED:COLOR:COMMANDS:IPs\r\n");
                 writer.write("#For administrative powers set admin/unrestricted to 2.\r\n");
                 writer.write("#For no restrictions and ability to give out items set it to 1.\r\n");
                 writer.write("#If you don't want the person to be able to build set it to -1.\r\n");
@@ -84,8 +84,9 @@ public class FlatFileSource extends DataSource {
                     }
                     if (split.length >= 5) {
                         user.Commands = split[4].split(",");
-                    } else {
-                        user.Commands = new String[]{""};
+                    }
+                    if (split.length >= 6) {
+                        user.IPs = split[4].split(",");
                     }
 
                     users.add(user);
