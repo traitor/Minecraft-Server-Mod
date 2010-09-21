@@ -22,6 +22,7 @@ public class etc {
     public String[] motd = null;
     public boolean saveHomes = true;
     public boolean firstLoad = true;
+    public boolean whitelistEnabled = false;
     public int playerLimit = 20;
     public int spawnProtectionSize = 16;
     public long sleepTime = 30000;
@@ -88,6 +89,7 @@ public class etc {
             motd = properties.getString("motd", "Type /help for a list of commands.").split("@");
             playerLimit = properties.getInt("max-players", 20);
             saveHomes = properties.getBoolean("save-homes", true);
+            whitelistEnabled = properties.getBoolean("whitelist", false);
             if (dataSourceType.equalsIgnoreCase("flatfile")) {
                 usersLoc = properties.getString("admintxtlocation", "users.txt");
                 kitsLoc = properties.getString("kitstxtlocation", "kits.txt");
@@ -424,6 +426,11 @@ public class etc {
         commands.remove(command);
     }
 
+    public boolean toggleWhitelist() {
+        whitelistEnabled = !whitelistEnabled;
+        return whitelistEnabled;
+    }
+
     public boolean parseConsoleCommand(String command, MinecraftServer server) {
         String[] split = command.split(" ");
         boolean dontParseRegular = true;
@@ -504,17 +511,23 @@ public class etc {
             }
             log.info("Modified user.");
         } else if (split[0].equalsIgnoreCase("whitelist")) {
-            if (split.length != 3) {
-                log.info("whitelist [operation (add or remove)] [player]");
+            if (split.length < 2) {
+                log.info("whitelist [operation (toggle, add or remove)] [player]");
                 return true;
             }
 
-            if (split[1].equalsIgnoreCase("add")) {
-                dataSource.addToWhitelist(split[2]);
-                log.info(split[2] + " added to whitelist");
-            } else if (split[1].equalsIgnoreCase("remove")) {
-                dataSource.removeFromWhitelist(split[2]);
-                log.info(split[2] + " removed from whitelist");
+            if (split[1].equalsIgnoreCase("toggle")) {
+                log.info(toggleWhitelist() ? "Whitelist enabled" : "Whitelist disabled");
+            } else if(split.length == 3) {
+                if (split[1].equalsIgnoreCase("add")) {
+                    dataSource.addToWhitelist(split[2]);
+                    log.info(split[2] + " added to whitelist");
+                } else if (split[1].equalsIgnoreCase("remove")) {
+                    dataSource.removeFromWhitelist(split[2]);
+                    log.info(split[2] + " removed from whitelist");
+                } else {
+                    log.info("Invalid operation.");
+                }
             } else {
                 log.info("Invalid operation.");
             }

@@ -469,17 +469,23 @@ public class id extends ej
                 msg(Colors.Rose + "Modified user.");
                 a.info("Modifed user " + split[1] + ". " + key + " => " + value + " by " + e.aq);
             } else if (split[0].equalsIgnoreCase("/whitelist")) {
-                if (split.length != 3) {
-                    msg(Colors.Rose + "whitelist [operation (add or remove)] [player]");
+                if (split.length < 2) {
+                    msg(Colors.Rose + "whitelist [operation (toggle, add or remove)] <player>");
                     return;
                 }
 
-                if (split[1].equalsIgnoreCase("add")) {
-                    etc.getInstance().getDataSource().addToWhitelist(split[2]);
-                    msg(Colors.Rose + split[2] + " added to whitelist");
-                } else if (split[1].equalsIgnoreCase("remove")) {
-                    etc.getInstance().getDataSource().removeFromWhitelist(split[2]);
-                    msg(Colors.Rose + split[2] + " removed from whitelist");
+                if (split[1].equalsIgnoreCase("toggle")) {
+                    msg(Colors.Rose + (etc.getInstance().toggleWhitelist() ? "Whitelist enabled" : "Whitelist disabled"));
+                } else if(split.length == 3) {
+                    if (split[1].equalsIgnoreCase("add")) {
+                        etc.getInstance().getDataSource().addToWhitelist(split[2]);
+                        msg(Colors.Rose + split[2] + " added to whitelist");
+                    } else if (split[1].equalsIgnoreCase("remove")) {
+                        etc.getInstance().getDataSource().removeFromWhitelist(split[2]);
+                        msg(Colors.Rose + split[2] + " removed from whitelist");
+                    } else {
+                        msg(Colors.Rose + "Invalid operation.");
+                    }
                 } else {
                     msg(Colors.Rose + "Invalid operation.");
                 }

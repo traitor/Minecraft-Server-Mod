@@ -85,6 +85,7 @@ public class ft {
             paramew.b("You are banned from this server!");
             return null;
         }
+        
         String ip = paramew.b.b().toString().split(":")[0].substring(1);
         if (this.g.contains(ip)) {
             paramew.b("Your IP address is banned from this server!");
@@ -104,7 +105,7 @@ public class ft {
                 // ^ otherwise no.
             }
         }
-        if (etc.getInstance().getDataSource().hasWhitelist() && !(etc.getInstance().getDataSource().isUserOnWhitelist(paramString1)
+        if (etc.getInstance().whitelistEnabled && !(etc.getInstance().getDataSource().isUserOnWhitelist(paramString1)
                 || etc.getInstance().isAdmin(paramString1))) {
             paramew.b("Not on whitelist.");
             return null;
