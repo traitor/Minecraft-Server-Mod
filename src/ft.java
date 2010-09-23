@@ -107,7 +107,7 @@ public class ft {
         }
         if (etc.getInstance().whitelistEnabled && !(etc.getInstance().getDataSource().isUserOnWhitelist(paramString1)
                 || etc.getInstance().isAdmin(paramString1))) {
-            paramew.b("Not on whitelist.");
+            paramew.b(etc.getInstance().whitelistMessage);
             return null;
         } else if (this.b.size() >= this.e && !(etc.getInstance().getDataSource().hasReserveList() && (etc.getInstance().isAdmin(paramString1)
                 || etc.getInstance().getDataSource().isUserOnReserveList(paramString1)))) {

@@ -159,7 +159,6 @@ public class id extends ej
         int i1 = paramhd.b;
         int i2 = paramhd.c;
         int i3 = paramhd.d;
-        a.info(n + " " + i1 + " " + i2 + " " + i2 + " " + i3);
         int i4 = (int) gj.e(n - this.d.e.n);
         int i5 = (int) gj.e(i2 - this.d.e.p);
         if (i4 > i5) {
@@ -170,7 +169,8 @@ public class id extends ej
                 return;
             }
             if (i5 > etc.getInstance().spawnProtectionSize || bool) {
-                this.e.ad.a(n, i1, i2);
+                if (!(Boolean)etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.BLOCK_DESTROYED, new Object[] {e, etc.getServer().getBlockAt(n, i1, i2)}))
+                    this.e.ad.a(n, i1, i2);
             }
         } else if (paramhd.e == 2) {
             this.e.ad.a();
@@ -179,7 +179,8 @@ public class id extends ej
                 return;
             }
             if (i5 > etc.getInstance().spawnProtectionSize || bool) {
-                this.e.ad.a(n, i1, i2, i3);
+                if (!(Boolean)etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.BLOCK_DESTROYED, new Object[] {e, etc.getServer().getBlockAt(n, i1, i2)}))
+                    this.e.ad.a(n, i1, i2, i3);
             }
         } else if (paramhd.e == 3) {
             double d2 = this.e.l - (n + 0.5D);
@@ -212,8 +213,10 @@ public class id extends ej
             gp localgp = paramfe.a >= 0 ? new gp(paramfe.a) : null;
 
             if (localgp != null) {
-                if (!etc.getInstance().isOnItemBlacklist(localgp.c) || bool) {
-                    this.e.ad.a(this.e, this.d.e, localgp, m, n, i1, i2);
+                if (!(Boolean)etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.BLOCK_CREATED, new Object[] {e, new Block(localgp.c, m, n, i1)})) {
+                    if (!etc.getInstance().isOnItemBlacklist(localgp.c) || bool) {
+                        this.e.ad.a(this.e, this.d.e, localgp, m, n, i1, i2);
+                    }
                 }
             } else {
                 // is this right?

@@ -16,6 +16,7 @@ public class etc {
     private ArrayList<String> muted = new ArrayList<String>();
     public String usersLoc = "users.txt", kitsLoc = "kits.txt", homeLoc = "homes.txt", warpLoc = "warps.txt", itemLoc = "items.txt", groupLoc = "groups.txt", commandsLoc = "commands.txt";
     public String whitelistLoc = "whitelist.txt", reservelistLoc = "reservelist.txt";
+    public String whitelistMessage = "Not on whitelist.";
     public String[] allowedItems = null;
     public String[] disallowedItems = null;
     public String[] itemSpawnBlacklist = null;
@@ -90,6 +91,7 @@ public class etc {
             playerLimit = properties.getInt("max-players", 20);
             saveHomes = properties.getBoolean("save-homes", true);
             whitelistEnabled = properties.getBoolean("whitelist", false);
+            whitelistMessage = properties.getString("whitelist-message", "Not on whitelist.");
             if (dataSourceType.equalsIgnoreCase("flatfile")) {
                 usersLoc = properties.getString("admintxtlocation", "users.txt");
                 kitsLoc = properties.getString("kitstxtlocation", "kits.txt");
