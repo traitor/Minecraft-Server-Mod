@@ -159,6 +159,7 @@ public class id extends ej
         int i1 = paramhd.b;
         int i2 = paramhd.c;
         int i3 = paramhd.d;
+        a.info(n + " " + i1 + " " + i2 + " " + i2 + " " + i3);
         int i4 = (int) gj.e(n - this.d.e.n);
         int i5 = (int) gj.e(i2 - this.d.e.p);
         if (i4 > i5) {
@@ -352,7 +353,7 @@ public class id extends ej
                 a.info("Command used by " + e.aq + " " + paramString);
             }
             String[] split = paramString.split(" ");
-            if (etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.COMMAND, new Object[]{e, split})) {
+            if ((Boolean)etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.COMMAND, new Object[]{e, split})) {
                 return; //No need to go on, commands were parsed.
             }
             if (!etc.getInstance().canUseCommand(e.aq, split[0]) && !split[0].startsWith("/#")) {

@@ -71,14 +71,15 @@ public class PluginLoader {
         return server;
     }
 
-    public boolean callHook(HOOKS h, Object[] parameters) {
-        boolean toRet = false;
+    public Object callHook(HOOKS h, Object[] parameters) {
+        Object toRet = false;
         for (Plugin plugin : plugins) {
             try {
                 switch (h) {
                     case LOGINCHECK:
-                        if (!plugin.onLoginChecks((String) parameters[0]))
-                            toRet = true;
+                        String result = (String)plugin.onLoginChecks((String) parameters[0]);
+                        if (result != null)
+                            toRet = result;
                         break;
                     case LOGIN:
                         plugin.onLogin(new Player((ea) parameters[0]));
@@ -100,10 +101,12 @@ public class PluginLoader {
                         plugin.onKick(new Player((ea) parameters[0]), (String)parameters[1]);
                         break;
                     case BLOCK_CREATED:
-                        //Nothing yet.
+                        if (plugin.onBlockCreate(new Player((ea) parameters[0]), (Block)parameters[1]))
+                            toRet = true;
                         break;
                     case BLOCK_DESTROYED:
-                        //Nothing yet.
+                        if (plugin.onBlockDestroy(new Player((ea) parameters[0]), (Block)parameters[1]))
+                            toRet = true;
                         break;
                 }
             } catch (UnsupportedOperationException ex) {

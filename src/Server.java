@@ -42,4 +42,24 @@ public class Server {
             toRet.add(new Player((ea)o));
         return toRet;
     }
+
+    public void setBlock(Block block) {
+        setBlockAt(block.getX(), block.getY(), block.getZ(), block.getType());
+    }
+
+    public Block getBlockAt(int x, int y, int z) {
+        return new Block(getBlockIdAt(x, y, z), x, y, z);
+    }
+
+    public void setBlockAt(int blockType, int x, int y, int z) {
+        server.e.a(x, y, z, blockType);
+    }
+
+    public int getHighestBlockY(int x, int z) {
+        return server.e.d(x, z);
+    }
+
+    public int getBlockIdAt(int x, int y, int z) {
+        return server.e.a(x, y, z);
+    }
 }

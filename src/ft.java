@@ -129,9 +129,14 @@ public class ft {
                 }
             }
         }
-
-        if (etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.LOGINCHECK, new Object[]{paramString1})) {
-            return null;
+        
+        Object obj = etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.LOGINCHECK, new Object[]{paramString1});
+        if (obj instanceof String) {
+            String result = (String)obj;
+            if (result != null && !result.equals("")) {
+                paramew.b(result);
+                return null;
+            }
         }
 
         return new ea(this.c, this.c.e, paramString1, new in(this.c.e));
