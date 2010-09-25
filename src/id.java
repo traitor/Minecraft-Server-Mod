@@ -287,7 +287,8 @@ public class id extends ej
                 msg(Colors.Rose + "You are currently muted.");
                 return;
             }
-            etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.CHAT, new Object[]{e, str});
+            if ((Boolean)etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.CHAT, new Object[]{e, str}))
+                return;
 
             String message = "<" + etc.getInstance().getUserColor(e.aq) + this.e.aq + Colors.White + "> " + str;
             a.log(Level.INFO, "<" + e.aq + "> " + str);
