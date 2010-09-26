@@ -552,7 +552,7 @@ public class id extends ej
                 }
             } else if (split[0].equalsIgnoreCase("/kit") && etc.getInstance().getDataSource().hasKits()) {
                 if (split.length != 2 && split.length != 3) {
-                    msg(Colors.Rose + "Available kits: " + Colors.White + etc.getInstance().getDataSource().getKitNames(e.aq));
+                    msg(Colors.Rose + "Available kits" + Colors.White + ": " + etc.getInstance().getDataSource().getKitNames(e.aq));
                     return;
                 }
 

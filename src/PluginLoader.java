@@ -114,7 +114,7 @@ public class PluginLoader {
                 }
             }
         } catch (Throwable ex) {
-            log.log(Level.SEVERE, "Exception while calling func (Invalid plugin?)", ex);
+            log.log(Level.SEVERE, "Exception while calling func (Outdated plugin?)", ex);
         }
 
         return toRet;
