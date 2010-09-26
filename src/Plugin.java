@@ -9,6 +9,6 @@ public interface Plugin {
     public void onBan(Player player, String reason);
     public void onIpBan(Player player, String reason);
     public void onKick(Player player, String reason);
-    public boolean onBlockCreate(Player player, Block block);
+    public boolean onBlockCreate(Player player, Block block, int itemId);
     public boolean onBlockDestroy(Player player, Block block);
 }

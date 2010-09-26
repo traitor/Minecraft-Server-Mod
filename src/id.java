@@ -212,15 +212,15 @@ public class id extends ej
         if (i4 > etc.getInstance().spawnProtectionSize || bool) {
             gp localgp = paramfe.a >= 0 ? new gp(paramfe.a) : null;
 
-            if (localgp != null) {
-                if (!(Boolean)etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.BLOCK_CREATED, new Object[] {e, new Block(localgp.c, m, n, i1)})) {
+            if (!(Boolean)etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.BLOCK_CREATED, new Object[] {e, new Block(localgp != null ? localgp.c : paramfe.a, m, n, i1), paramfe.a})) {
+                if (localgp != null) {
                     if (!etc.getInstance().isOnItemBlacklist(localgp.c) || bool) {
                         this.e.ad.a(this.e, this.d.e, localgp, m, n, i1, i2);
                     }
+                } else {
+                    // is this right?
+                    this.e.ad.a(this.e, this.d.e, localgp, m, n, i1, i2);
                 }
-            } else {
-                // is this right?
-                this.e.ad.a(this.e, this.d.e, localgp, m, n, i1, i2);
             }
         }
         this.e.a.b(new et(m, n, i1, this.d.e));

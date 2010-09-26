@@ -9,7 +9,7 @@ public class Player {
     }
 
     public void kick(String reason) {
-        user.a.b(reason);
+        user.a.c(reason);
     }
 
     public void sendMessage(String message) {

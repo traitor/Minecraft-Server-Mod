@@ -52,7 +52,7 @@ public class Server {
     }
 
     public void setBlockAt(int blockType, int x, int y, int z) {
-        server.e.a(x, y, z, blockType);
+        server.e.d(x, y, z, blockType);
     }
 
     public int getHighestBlockY(int x, int z) {
