@@ -211,8 +211,22 @@ public class id extends ej
         }
         if (i4 > etc.getInstance().spawnProtectionSize || bool) {
             gp localgp = paramfe.a >= 0 ? new gp(paramfe.a) : null;
+            Block block = new Block(localgp != null ? localgp.c : paramfe.a, m, n, i1);
+            
+            if (paramfe.e == 0)
+                block.setY(block.getY() - 1);
+            else if(paramfe.e == 1)
+                block.setY(block.getY() + 1);
+            else if(paramfe.e == 2)
+                block.setZ(block.getZ() - 1);
+            else if(paramfe.e == 3)
+                block.setZ(block.getZ() + 1);
+            else if(paramfe.e == 4)
+                block.setX(block.getX() - 1);
+            else if(paramfe.e == 5)
+                block.setX(block.getX() + 1);
 
-            if (!(Boolean)etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.BLOCK_CREATED, new Object[] {e, new Block(localgp != null ? localgp.c : paramfe.a, m, n, i1), paramfe.a})) {
+            if (!(Boolean)etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.BLOCK_CREATED, new Object[] {e, block, paramfe.a})) {
                 if (localgp != null) {
                     if (!etc.getInstance().isOnItemBlacklist(localgp.c) || bool) {
                         this.e.ad.a(this.e, this.d.e, localgp, m, n, i1, i2);
@@ -1099,6 +1113,9 @@ public class id extends ej
     }
 
     public void a(ib paramib) {
+        if (!etc.getInstance().canBuild(e))
+            return;
+
         as localas = this.d.e.k(paramib.a, paramib.b, paramib.c);
         if (localas != null) {
             localas.a(paramib.e);
