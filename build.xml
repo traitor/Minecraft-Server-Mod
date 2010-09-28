@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="build" name="Minecraft-Server-Mod">
+    <property environment="env"/>
+    <property name="version" value="65dev"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.5"/>
+    <property name="source" value="1.5"/>
+    <property name="build_dir" value="build"/>
+    <property name="release_dir" value="dist"/>
+    <property name="run_dir" value="run"/>
+    <path id="Minecraft-Server-Mod.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="run/minecraft_server.jar"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <mkdir dir="run"/>
+        <mkdir dir="${build_dir}"/>
+        <mkdir dir="${release_dir}"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+        <delete dir="build"/>
+        <delete dir="dist"/>
+        <delete includeEmptyDirs="true">
+            <fileset dir="run">
+                <exclude name="**/minecraft_server.jar"/>
+            </fileset>
+        </delete>
+    </target>
+    <target depends="clean" name="distclean">
+        <delete includeEmptyDirs="true">
+            <fileset dir="run">
+            </fileset>
+            <fileset dir="${release_dir}">
+            </fileset>
+        </delete>
+    </target>
+    <target depends="init, get_vanilla_minecraft_server.jar" name="build">
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin"
+            source="${source}" target="${target}" includeantruntime="false">
+            <src path="src"/>
+            <classpath refid="${ant.project.name}.classpath"/>
+        </javac>
+    </target>
+    <target depends="init" name="get_vanilla_minecraft_server.jar">
+        <get src="http://minecraft.net/download/minecraft_server.jar"
+            dest="run/minecraft_server.jar" usetimestamp="true"/>
+    </target>
+    <target depends="build" name="create_jar">
+        <jar destfile="${build_dir}/${ant.project.name}.jar">
+            <manifest>
+                <attribute name="Main-Class" value="Main"/>
+                <attribute name="Class-Path" value=". minecraft_server.jar"/>
+            </manifest>
+            <fileset dir="bin"/>
+        </jar>
+    </target>
+    <target depends="build" name='copy_dist_files'>
+        <copy includeemptydirs="false" todir="${build_dir}">
+            <fileset dir="dist_files">
+            </fileset>
+        </copy>
+    </target>
+    <target depends="copy_dist_files" name='copy_all_release_files'>
+    </target>
+    <target depends="create_jar,copy_all_release_files"
+        name="prep_files_for_archive">
+    </target>
+    <target depends="" name="dist">
+        <property name="build.number" value="00"/>
+        <antcall target="archive_files_for_dist">
+        </antcall>
+    </target>
+    <target depends="" name="realdist">
+        <buildnumber/>
+        <antcall target="archive_files_for_dist">
+        </antcall>
+    </target>
+    <target depends="prep_files_for_archive" name="archive_files_for_dist">
+        <tar destfile="${release_dir}/${ant.project.name}-v${version}-${build.number}.tar.gz"
+            basedir="${build_dir}" compression="gzip"/>
+    </target>
+    <target depends="create_jar,copy_dist_files" name='run'>
+        <copy includeemptydirs="false" todir="${run_dir}">
+            <fileset dir="${build_dir}">
+            </fileset>
+        </copy>
+    </target>
+</project>
