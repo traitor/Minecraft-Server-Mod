@@ -335,6 +335,14 @@ public class id extends ej
         return player;
     }
 
+    /**
+     * Combines the string array into a string at the specified start with the
+     * separator separating each string.
+     * @param startIndex
+     * @param string
+     * @param seperator
+     * @return
+     */
     public static String combineSplit(int startIndex, String[] string, String seperator) {
         StringBuilder builder = new StringBuilder();
         for (int i = startIndex; i < string.length; i++) {
@@ -346,6 +354,11 @@ public class id extends ej
         return builder.toString();
     }
 
+    /**
+     * Returns true if this player has control over the other player
+     * @param player
+     * @return
+     */
     public boolean hasControlOver(ea player) {
         boolean isInGroup = false;
 
@@ -362,6 +375,10 @@ public class id extends ej
         return isInGroup;
     }
 
+    /**
+     * Sends a message to the player
+     * @param msg
+     */
     public void msg(String msg) {
         b(new ba(msg));
     }

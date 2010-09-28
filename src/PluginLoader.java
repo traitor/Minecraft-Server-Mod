@@ -13,10 +13,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 
+/**
+ * PluginLoader.java - Used to load plugins, toggle them, etc.
+ * @author James
+ */
 public class PluginLoader {
 
     public enum HOOKS {
-
         LOGINCHECK,
         LOGIN,
         CHAT,
@@ -33,11 +36,18 @@ public class PluginLoader {
     private Server server;
     private PropertiesFile properties;
 
+    /**
+     * Creates a plugin loader
+     * @param server
+     */
     public PluginLoader(MinecraftServer server) {
         properties = new PropertiesFile("server.properties");
         this.server = new Server(server);
     }
 
+    /**
+     * Loads all plugins.
+     */
     public void load() {
         String[] classes = properties.getString("plugins", "").split(",");
         for (String sclass : classes) {
@@ -78,6 +88,11 @@ public class PluginLoader {
         }
     }
 
+    /**
+     * Returns the specified plugin
+     * @param name
+     * @return
+     */
     public Plugin getPlugin(String name) {
         synchronized (lock) {
             for (Plugin plugin : plugins) {
@@ -89,6 +104,10 @@ public class PluginLoader {
         return null;
     }
 
+    /**
+     * Returns a string list of plugins
+     * @return
+     */
     public String getPluginList() {
         StringBuilder sb = new StringBuilder();
         synchronized (lock) {
@@ -106,6 +125,11 @@ public class PluginLoader {
             return "Empty";
     }
 
+    /**
+     * Enables the specified plugin (Or adds and enables it)
+     * @param name
+     * @return
+     */
     public boolean enablePlugin(String name) {
         Plugin plugin = getPlugin(name);
         if (plugin != null) {
@@ -123,6 +147,10 @@ public class PluginLoader {
         return true;
     }
 
+    /**
+     * Disables specified plugin
+     * @param name
+     */
     public void disablePlugin(String name) {
         Plugin plugin = getPlugin(name);
         if (plugin != null) {
@@ -133,10 +161,20 @@ public class PluginLoader {
         }
     }
 
+    /**
+     * Returns the server
+     * @return
+     */
     public Server getServer() {
         return server;
     }
 
+    /**
+     * Calls a plugin hook.
+     * @param h
+     * @param parameters
+     * @return
+     */
     public Object callHook(HOOKS h, Object[] parameters) {
         Object toRet = false;
         synchronized (lock) {

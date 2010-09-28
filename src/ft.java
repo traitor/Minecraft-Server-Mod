@@ -142,6 +142,10 @@ public class ft {
         return new ea(this.c, this.c.e, paramString1, new in(this.c.e));
     }
 
+    /**
+     * Returns the list of bans
+     * @return
+     */
     public String getBans() {
         StringBuilder builder = new StringBuilder();
         for (int l = 0; l < this.f.size(); ++l) {
@@ -153,6 +157,10 @@ public class ft {
         return builder.toString();
     }
 
+    /**
+     * Returns the list of IP bans
+     * @return
+     */
     public String getIpBans() {
         StringBuilder builder = new StringBuilder();
         for (int l = 0; l < this.g.size(); ++l) {

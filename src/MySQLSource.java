@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 
+/**
+ * MySQLSource.java - Used for accessing users and such from a mysql database
+ * @author James
+ */
 public class MySQLSource extends DataSource {
 
     private String driver, username, password, db;
