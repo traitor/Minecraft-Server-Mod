@@ -86,7 +86,8 @@ public class PluginLoader {
                             plugin.onLogin(new Player((ea) parameters[0]));
                             break;
                         case CHAT:
-                            plugin.onChat(new Player((ea) parameters[0]), (String)parameters[1]);
+                            if (plugin.onChat(new Player((ea) parameters[0]), (String)parameters[1]))
+                                toRet = true;
                             break;
                         case COMMAND:
                             if (plugin.onCommand(new Player((ea) parameters[0]), (String[])parameters[1]))
