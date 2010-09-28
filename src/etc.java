@@ -33,7 +33,7 @@ public class etc {
     private ReloadThread reloadThread;
     private SaveAllThread saveThread;
     private DataSource dataSource;
-    private cq properties;
+    private PropertiesFile properties;
     private PluginLoader loader;
     private boolean logging = false;
 
@@ -76,9 +76,9 @@ public class etc {
 
     public final void load() {
         if (properties == null) {
-            properties = new cq(new File("server.properties"));
+            properties = new PropertiesFile("server.properties");
         } else {
-            properties.reload(new File("server.properties"));
+            properties.load();
         }
 
         try {

@@ -211,22 +211,23 @@ public class id extends ej
         }
         if (i4 > etc.getInstance().spawnProtectionSize || bool) {
             gp localgp = paramfe.a >= 0 ? new gp(paramfe.a) : null;
-            Block block = new Block(localgp != null ? localgp.c : paramfe.a, m, n, i1);
-            
-            if (paramfe.e == 0)
-                block.setY(block.getY() - 1);
-            else if(paramfe.e == 1)
-                block.setY(block.getY() + 1);
-            else if(paramfe.e == 2)
-                block.setZ(block.getZ() - 1);
-            else if(paramfe.e == 3)
-                block.setZ(block.getZ() + 1);
-            else if(paramfe.e == 4)
-                block.setX(block.getX() - 1);
-            else if(paramfe.e == 5)
-                block.setX(block.getX() + 1);
 
-            if (!(Boolean)etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.BLOCK_CREATED, new Object[] {e, block, paramfe.a})) {
+            Block blockPlaced = new Block(localgp != null ? localgp.c : paramfe.a, m, n, i1);
+            if (paramfe.e == 0)
+                blockPlaced.setY(blockPlaced.getY() - 1);
+            else if(paramfe.e == 1)
+                blockPlaced.setY(blockPlaced.getY() + 1);
+            else if(paramfe.e == 2)
+                blockPlaced.setZ(blockPlaced.getZ() - 1);
+            else if(paramfe.e == 3)
+                blockPlaced.setZ(blockPlaced.getZ() + 1);
+            else if(paramfe.e == 4)
+                blockPlaced.setX(blockPlaced.getX() - 1);
+            else if(paramfe.e == 5)
+                blockPlaced.setX(blockPlaced.getX() + 1);
+            Block blockClicked = new Block(etc.getServer().getBlockIdAt(m, n, i1), m, n, i1);
+
+            if (!(Boolean)etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.BLOCK_CREATED, new Object[] {e, blockPlaced, blockClicked, paramfe.a})) {
                 if (localgp != null) {
                     if (!etc.getInstance().isOnItemBlacklist(localgp.c) || bool) {
                         this.e.ad.a(this.e, this.d.e, localgp, m, n, i1, i2);
@@ -1049,6 +1050,24 @@ public class id extends ej
                     degreeRotation += 360.0;
                 }
                 msg("Compass: " + etc.getCompassPointForDirection(degreeRotation) + " (" + (Math.round(degreeRotation * 10) / 10.0) + ")");
+            } else if (split[0].equalsIgnoreCase("/listplugins")) {
+                msg(Colors.Rose + "Plugins" + Colors.White + ": " + etc.getInstance().getLoader().getPluginList());
+            } else if (split[0].equalsIgnoreCase("/enableplugin")) {
+                if (split.length < 2) {
+                    msg(Colors.Rose + "Correct usage is: /enableplugin [plugin]");
+                    return;
+                }
+
+                etc.getInstance().getLoader().enablePlugin(split[1]);
+                msg(Colors.Rose + "Plugin enabled.");
+            } else if (split[0].equalsIgnoreCase("/disableplugin")) {
+                if (split.length < 2) {
+                    msg(Colors.Rose + "Correct usage is: /enableplugin [plugin]");
+                    return;
+                }
+
+                etc.getInstance().getLoader().disablePlugin(split[1]);
+                msg(Colors.Rose + "Plugin disabled.");
             } else if (split[0].equalsIgnoreCase("/compass")) {
                 double degreeRotation = ((e.r - 90) % 360);
                 if (degreeRotation < 0) {

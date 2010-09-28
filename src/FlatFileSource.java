@@ -503,6 +503,8 @@ public class FlatFileSource extends DataSource {
                 writer.write("storageminecart:342\r\n");
                 writer.write("poweredminecart:343\r\n");
                 writer.write("egg:344\r\n");
+                writer.write("fishingrod:346\r\n");
+                writer.write("rod:346\r\n");
             } catch (Exception e) {
                 log.log(Level.SEVERE, "Exception while creating " + location, e);
             } finally {

@@ -25,7 +25,7 @@ public class MySQLSource extends DataSource {
     }
 
     public void initialize() {
-        cq properties = new cq(new File("mysql.properties"));
+        PropertiesFile properties = new PropertiesFile("mysql.properties");
         driver = properties.getString("driver", "com.mysql.jdbc.Driver");
         username = properties.getString("user", "root");
         password = properties.getString("pass", "root");
