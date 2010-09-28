@@ -8,26 +8,97 @@ import java.util.logging.Logger;
 
 import net.minecraft.server.*;
 
+/**
+ * etc.java - My catch-all class for a bunch of shit. If there's something you
+ * need it's probably in here.
+ * @author James
+ */
 public class etc {
 
     private static final Logger log = Logger.getLogger("Minecraft");
     private static volatile etc instance;
     private static MinecraftServer server;
     private ArrayList<String> muted = new ArrayList<String>();
+    /**
+     *
+     */
+    /**
+     *
+     */
+    /**
+     *
+     */
+    /**
+     *
+     */
+    /**
+     *
+     */
+    /**
+     *
+     */
+    /**
+     *
+     */
     public String usersLoc = "users.txt", kitsLoc = "kits.txt", homeLoc = "homes.txt", warpLoc = "warps.txt", itemLoc = "items.txt", groupLoc = "groups.txt", commandsLoc = "commands.txt";
+    /**
+     *
+     */
+    /**
+     *
+     */
     public String whitelistLoc = "whitelist.txt", reservelistLoc = "reservelist.txt";
+    /**
+     *
+     */
     public String whitelistMessage = "Not on whitelist.";
+    /**
+     *
+     */
     public String[] allowedItems = null;
+    /**
+     *
+     */
     public String[] disallowedItems = null;
+    /**
+     *
+     */
     public String[] itemSpawnBlacklist = null;
+    /**
+     *
+     */
     public String[] motd = null;
+    /**
+     *
+     */
     public boolean saveHomes = true;
+    /**
+     *
+     */
     public boolean firstLoad = true;
+    /**
+     *
+     */
     public boolean whitelistEnabled = false;
+    /**
+     *
+     */
     public int playerLimit = 20;
+    /**
+     *
+     */
     public int spawnProtectionSize = 16;
+    /**
+     *
+     */
     public long sleepTime = 30000;
+    /**
+     *
+     */
     public long saveInterval = 1800000;
+    /**
+     *
+     */
     public LinkedHashMap<String, String> commands = new LinkedHashMap<String, String>();
     private String dataSourceType;
     private ReloadThread reloadThread;
@@ -74,6 +145,9 @@ public class etc {
         load();
     }
 
+    /**
+     * Loads or reloads the mod
+     */
     public final void load() {
         if (properties == null) {
             properties = new PropertiesFile("server.properties");
@@ -116,6 +190,9 @@ public class etc {
         }
     }
 
+    /**
+     * Loads or reloads the data source
+     */
     public void loadData() {
         if (dataSourceType.equalsIgnoreCase("flatfile") && dataSource == null) {
             dataSource = new FlatFileSource();
@@ -126,6 +203,10 @@ public class etc {
         dataSource.initialize();
     }
 
+    /**
+     * Returns the instance
+     * @return
+     */
     public static etc getInstance() {
         if (instance == null) {
             instance = new etc();
@@ -134,18 +215,34 @@ public class etc {
         return instance;
     }
 
+    /**
+     * Sets the server to be used.
+     * @param s
+     */
     public static void setServer(MinecraftServer s) {
         server = s;
     }
 
+    /**
+     * Returns the minecraft server
+     * @return
+     */
     public static MinecraftServer getMCServer() {
         return server;
     }
 
+    /**
+     * Returns the minecraft server interface
+     * @return
+     */
     public static Server getServer() {
         return getInstance().getLoader().getServer();
     }
 
+    /**
+     * Returns the plugin loader
+     * @return
+     */
     public PluginLoader getLoader() {
         if (loader == null) {
             loader = new PluginLoader(server);
@@ -155,6 +252,10 @@ public class etc {
         return loader;
     }
 
+    /**
+     * Starts the save and reload thread
+     * @param paramMinecraftServer
+     */
     public void startThreads(MinecraftServer paramMinecraftServer) {
         if (saveInterval > 0 && saveThread == null) {
             saveThread = new SaveAllThread(paramMinecraftServer, saveInterval);
@@ -167,14 +268,32 @@ public class etc {
         }
     }
 
+    /**
+     * Checks to see if specified user is in the specified group
+     * @param player
+     * @param group
+     * @return
+     */
     public boolean isUserInGroup(Player player, String group) {
         return isUserInGroup(player.getName(), group);
     }
 
+    /**
+     * Checks to see if specified user is in the specified group
+     * @param e
+     * @param group
+     * @return
+     */
     public boolean isUserInGroup(ea e, String group) {
         return isUserInGroup(e.aq, group);
     }
 
+    /**
+     * Checks to see if specified user is in the specified group
+     * @param name
+     * @param group
+     * @return
+     */
     public boolean isUserInGroup(String name, String group) {
         if (group != null) {
             if (getDefaultGroup() != null) {
@@ -222,10 +341,19 @@ public class etc {
         return false;
     }
 
+    /**
+     * Returns user
+     * @param name
+     * @return user
+     */
     public User getUser(String name) {
         return dataSource.getUser(name);
     }
 
+    /**
+     * Returns the default group
+     * @return default group
+     */
     public Group getDefaultGroup() {
         Group group = dataSource.getDefaultGroup();
         if (group == null)
@@ -233,6 +361,11 @@ public class etc {
         return group;
     }
 
+    /**
+     * The user's color or prefix
+     * @param name
+     * @return color/prefix
+     */
     public String getUserColor(String name) {
         User user = getUser(name);
         if (user != null) {
@@ -251,6 +384,12 @@ public class etc {
         return def != null ? "§" + def.Prefix : "";
     }
 
+    /**
+     * Returns true if the player can use the specified command
+     * @param name
+     * @param command
+     * @return
+     */
     public boolean canUseCommand(String name, String command) {
         User user = getUser(name);
         //holy motherfuck
@@ -303,10 +442,20 @@ public class etc {
         return false;
     }
 
+    /**
+     * Returns true if the player's an administrator
+     * @param player
+     * @return
+     */
     public boolean isAdmin(ea player) {
         return isAdmin(player.aq);
     }
 
+    /**
+     * Returns true if the player's an administrator
+     * @param player
+     * @return
+     */
     public boolean isAdmin(String player) {
         User user = getUser(player);
         if (user == null) {
@@ -327,11 +476,21 @@ public class etc {
         return false;
     }
 
+    /**
+     * Returns true if the player can ignore restrictions
+     * @param player
+     * @return
+     */
     public boolean canIgnoreRestrictions(ea player) {
         return canIgnoreRestrictions(player.aq);
 
     }
 
+    /**
+     * Returns true if the player can ignore restrictions
+     * @param player
+     * @return
+     */
     public boolean canIgnoreRestrictions(String player) {
         User user = getUser(player);
         if (user == null) {
@@ -352,6 +511,12 @@ public class etc {
         return false;
     }
 
+    /**
+     * Returns false if the player can not build and can not modify chests or
+     * furnaces
+     * @param player
+     * @return
+     */
     public boolean canBuild(ea player) {
         User user = getUser(player.aq);
 
@@ -374,10 +539,20 @@ public class etc {
         return true;
     }
 
+    /**
+     * Returns true if the player is muted
+     * @param e
+     * @return
+     */
     public boolean isMuted(ea e) {
         return muted.contains(e.aq);
     }
 
+    /**
+     * Toggles mute for specified player
+     * @param e
+     * @return
+     */
     public boolean toggleMute(ea e) {
         if (muted.contains(e.aq)) {
             muted.remove(e.aq);
@@ -387,6 +562,10 @@ public class etc {
         return muted.contains(e.aq);
     }
 
+    /**
+     * Adds or modifies the home.
+     * @param home
+     */
     public void changeHome(Warp home) {
         if (dataSource.getHome(home.Name) == null) {
             dataSource.addHome(home);
@@ -395,6 +574,10 @@ public class etc {
         }
     }
 
+    /**
+     * Adds or modifies the warp
+     * @param warp
+     */
     public void setWarp(Warp warp) {
         if (dataSource.getWarp(warp.Name) == null) {
             dataSource.addWarp(warp);
@@ -403,6 +586,11 @@ public class etc {
         }
     }
 
+    /**
+     * Returns true if the item is on the blacklist
+     * @param id
+     * @return
+     */
     public boolean isOnItemBlacklist(int id) {
         for (String str : itemSpawnBlacklist) {
             if (Integer.toString(id).equalsIgnoreCase(str)) {
@@ -412,27 +600,54 @@ public class etc {
         return false;
     }
 
+    /**
+     * Returns the data source
+     * @return
+     */
     public DataSource getDataSource() {
         return dataSource;
     }
 
+    /**
+     * Returns true if we're logging commands and such
+     * @return
+     */
     public boolean isLogging() {
         return logging;
     }
 
+    /**
+     * Adds command to the /help list
+     * @param command
+     * @param description
+     */
     public void addCommand(String command, String description) {
         commands.put(command, description);
     }
 
+    /**
+     * Removes command from /help list
+     * @param command
+     */
     public void removeCommand(String command) {
         commands.remove(command);
     }
 
+    /**
+     * Toggles the whitelist (doesn't persist)
+     * @return
+     */
     public boolean toggleWhitelist() {
         whitelistEnabled = !whitelistEnabled;
         return whitelistEnabled;
     }
 
+    /**
+     * Parses a console command
+     * @param command
+     * @param server
+     * @return
+     */
     public boolean parseConsoleCommand(String command, MinecraftServer server) {
         String[] split = command.split(" ");
         boolean dontParseRegular = true;
@@ -578,6 +793,11 @@ public class etc {
         return player;
     }
 
+    /**
+     * Returns compass direction according to your rotation
+     * @param degrees
+     * @return
+     */
     public static String getCompassPointForDirection(double degrees) {
         if (0 <= degrees && degrees < 22.5) {
             return "N";

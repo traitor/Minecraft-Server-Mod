@@ -11,6 +11,10 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.logging.Level;
 
+/**
+ * FlatFileSource is for accessing users, groups and such from flat files.
+ * @author James
+ */
 public class FlatFileSource extends DataSource {
 
     public void initialize() {
