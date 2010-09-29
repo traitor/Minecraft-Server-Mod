@@ -169,7 +169,7 @@ public class id extends ej
                 return;
             }
             if (i5 > etc.getInstance().spawnProtectionSize || bool) {
-                if (!(Boolean)etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.BLOCK_DESTROYED, new Object[] {e, etc.getServer().getBlockAt(n, i1, i2)}))
+                if (!(Boolean)etc.getInstance().getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[] {e, etc.getServer().getBlockAt(n, i1, i2)}))
                     this.e.ad.a(n, i1, i2);
             }
         } else if (paramhd.e == 2) {
@@ -179,7 +179,7 @@ public class id extends ej
                 return;
             }
             if (i5 > etc.getInstance().spawnProtectionSize || bool) {
-                if (!(Boolean)etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.BLOCK_DESTROYED, new Object[] {e, etc.getServer().getBlockAt(n, i1, i2)}))
+                if (!(Boolean)etc.getInstance().getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[] {e, etc.getServer().getBlockAt(n, i1, i2)}))
                     this.e.ad.a(n, i1, i2, i3);
             }
         } else if (paramhd.e == 3) {
@@ -227,7 +227,7 @@ public class id extends ej
                 blockPlaced.setX(blockPlaced.getX() + 1);
             Block blockClicked = new Block(etc.getServer().getBlockIdAt(m, n, i1), m, n, i1);
 
-            if (!(Boolean)etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.BLOCK_CREATED, new Object[] {e, blockPlaced, blockClicked, paramfe.a})) {
+            if (!(Boolean)etc.getInstance().getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, new Object[] {e, blockPlaced, blockClicked, paramfe.a})) {
                 if (localgp != null) {
                     if (!etc.getInstance().isOnItemBlacklist(localgp.c) || bool) {
                         this.e.ad.a(this.e, this.d.e, localgp, m, n, i1, i2);
@@ -243,6 +243,7 @@ public class id extends ej
     }
 
     public void a(String paramString) {
+        etc.getInstance().getLoader().callHook(PluginLoader.Hook.DISCONNECT, new Object[] { e });
         a.info(this.e.aq + " lost connection: " + paramString);
         this.d.f.c(this.e);
         this.c = true;
@@ -302,7 +303,7 @@ public class id extends ej
                 msg(Colors.Rose + "You are currently muted.");
                 return;
             }
-            if ((Boolean)etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.CHAT, new Object[]{e, str}))
+            if ((Boolean)etc.getInstance().getLoader().callHook(PluginLoader.Hook.CHAT, new Object[]{e, str}))
                 return;
 
             String message = "<" + etc.getInstance().getUserColor(e.aq) + this.e.aq + Colors.White + "> " + str;
@@ -389,7 +390,7 @@ public class id extends ej
                 a.info("Command used by " + e.aq + " " + paramString);
             }
             String[] split = paramString.split(" ");
-            if ((Boolean)etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.COMMAND, new Object[]{e, split})) {
+            if ((Boolean)etc.getInstance().getLoader().callHook(PluginLoader.Hook.COMMAND, new Object[]{e, split})) {
                 return; //No need to go on, commands were parsed.
             }
             if (!etc.getInstance().canUseCommand(e.aq, split[0]) && !split[0].startsWith("/#")) {
@@ -465,7 +466,7 @@ public class id extends ej
 
                 String key = split[2];
                 String value = split[3];
-                User user = etc.getInstance().getUser(split[1]);
+                User user = etc.getInstance().getUser(player.aq);
                 boolean newUser = false;
 
                 if (user == null) {
@@ -823,7 +824,7 @@ public class id extends ej
                     // adds player to ban list
                     this.d.f.c(player.a.b.b().toString().split(":")[0].substring(1));
 
-                    etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.IPBAN, new Object[]{e, split.length > 2 ? split[1] : ""});
+                    etc.getInstance().getLoader().callHook(PluginLoader.Hook.IPBAN, new Object[]{e, split.length > 2 ? split[1] : ""});
 
                     a.log(Level.INFO, "IP Banning " + player.aq + " (IP: " + player.a.b.b().toString() + ")");
                     msg(Colors.Rose + "IP Banning " + player.aq + " (IP: " + player.a.b.b().toString() + ")");
@@ -853,7 +854,7 @@ public class id extends ej
                     // adds player to ban list
                     this.d.f.a(player.aq);
 
-                    etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.BAN, new Object[]{e, split.length > 2 ? split[1] : ""});
+                    etc.getInstance().getLoader().callHook(PluginLoader.Hook.BAN, new Object[]{e, split.length > 2 ? split[1] : ""});
 
                     if (split.length > 2) {
                         player.a.c("Banned by " + e.aq + ": " + combineSplit(2, split, " "));
@@ -893,7 +894,7 @@ public class id extends ej
                         return;
                     }
 
-                    etc.getInstance().getLoader().callHook(PluginLoader.HOOKS.KICK, new Object[]{e, split.length > 2 ? split[1] : ""});
+                    etc.getInstance().getLoader().callHook(PluginLoader.Hook.KICK, new Object[]{e, split.length > 2 ? split[1] : ""});
 
                     if (split.length > 2) {
                         player.a.c("Kicked by " + e.aq + ": " + combineSplit(2, split, " "));
@@ -1069,6 +1070,14 @@ public class id extends ej
                 msg("Compass: " + etc.getCompassPointForDirection(degreeRotation) + " (" + (Math.round(degreeRotation * 10) / 10.0) + ")");
             } else if (split[0].equalsIgnoreCase("/listplugins")) {
                 msg(Colors.Rose + "Plugins" + Colors.White + ": " + etc.getInstance().getLoader().getPluginList());
+            } else if (split[0].equalsIgnoreCase("/reloadplugin")) {
+                if (split.length < 2) {
+                    msg(Colors.Rose + "Correct usage is: /reloadplugin [plugin]");
+                    return;
+                }
+
+                etc.getInstance().getLoader().reload(split[1]);
+                msg(Colors.Rose + "Plugin reloaded.");
             } else if (split[0].equalsIgnoreCase("/enableplugin")) {
                 if (split.length < 2) {
                     msg(Colors.Rose + "Correct usage is: /enableplugin [plugin]");
@@ -1126,10 +1135,12 @@ public class id extends ej
         b(new ba("§7" + paramString));
     }
 
+    //get name? lol
     public String c() {
         return this.e.aq;
     }
 
+    //Update our inventory
     public void a(r paramr) {
         if (paramr.a == -1) {
             this.e.aj.a = paramr.b;
@@ -1142,12 +1153,14 @@ public class id extends ej
         }
     }
 
+    //Send inventory
     public void d() {
         this.b.a(new r(-1, this.e.aj.a));
         this.b.a(new r(-2, this.e.aj.c));
         this.b.a(new r(-3, this.e.aj.b));
     }
 
+    //Change object data (Chests, signs, furnaces, etc.)
     public void a(ib paramib) {
         if (!etc.getInstance().canBuild(e))
             return;
