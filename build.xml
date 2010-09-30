@@ -1,0 +1,38 @@
+<project name="Minecraft-Server-Mod" default="dist" basedir=".">
+	<description>
+		Minecraft-Server-Mod
+	</description>
+
+	<property name="src" location="src" />
+	<property name="build" location="build" />
+	<property name="dist" location="dist" />
+	<property name="lib" location="lib" />
+
+	<target name="init">
+		<tstamp/>
+		<mkdir dir="${build}"/>
+	</target>
+
+	<target name="minecraft-server">
+		<mkdir dir="${lib}"/>
+		<get src="http://minecraft.net/download/minecraft_server.jar" dest="${lib}/minecraft_server.jar"/>
+	</target>
+
+	<target name="compile" depends="init,minecraft-server" description="compile sources">
+		<javac srcdir="${src}" destdir="${build}" classpath="${lib}/minecraft_server.jar"/>
+	</target>
+
+	<target name="dist" depends="compile" description="package compiled files up">
+		<mkdir dir="${dist}"/>
+		<jar jarfile="${dist}/Minecraft-Server-Mod.jar" basedir="${build}" />
+	</target>
+
+	<target name="clean" description="clean build and dist">
+		<delete dir="${build}"/>
+		<delete dir="${dist}"/>
+	</target>
+
+	<target name="clean-all" description="clean everything">
+		<delete dir="${lib}"/>
+	</target>
+</project>
