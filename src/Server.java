@@ -113,6 +113,28 @@ public class Server {
     }
 
     /**
+     * Op a player.
+     */
+    public void makeOp(String player)
+    {
+        // Get the correct capitolization, and also make sure they're online
+        player = getPlayerName(player);
+        if (player != null)
+            server.f.e(player);
+    }
+
+    /**
+     * DeOp a player.
+     */
+    public void deOp(String player)
+    {
+        // Get the correct capitolization, and also make sure they're online
+        player = getPlayerName(player);
+        if (player != null)
+            server.f.f(player);
+    }
+
+    /**
      * Get the global spawn location
      * @return Location object for spawn
      */
