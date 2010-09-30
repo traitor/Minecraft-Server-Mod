@@ -1,6 +1,7 @@
 //Interface for the minecraft server
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 import net.minecraft.server.MinecraftServer;
 
 /**
@@ -78,6 +79,23 @@ public class Server {
         for (Object o : server.f.b)
             toRet.add(new Player((ea)o));
         return toRet;
+    }
+
+    /**
+     *  Get player by string name iteratively
+     * @param name Name of player to search for
+     * @return Player object or null if not found
+     */
+    public Player getPlayer(String name)
+    {
+        List<Player> list = getPlayerList();
+        Iterator<Player> i = list.iterator();
+        while(i.hasNext())
+        {
+            Player pl = i.next();
+            if (pl.getName().equalsIgnoreCase(name)) return pl;
+        }
+        return null;
     }
 
     /**
