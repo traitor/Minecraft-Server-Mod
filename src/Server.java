@@ -82,7 +82,7 @@ public class Server {
     }
 
     /**
-     *  Get player by string name iteratively
+     * Get player by string name iteratively
      * @param name Name of player to search for
      * @return Player object or null if not found
      */
