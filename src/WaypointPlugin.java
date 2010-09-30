@@ -21,7 +21,7 @@ public class WaypointPlugin extends Plugin
 	public String wpLoc = "waypoints.txt";
 	public class Waypoint {
 		public String name;
-		public Location location;
+		public Location location = new Location();
 		public Waypoint(String wp)
 		{
 			String[] locs = wp.split(" ");
