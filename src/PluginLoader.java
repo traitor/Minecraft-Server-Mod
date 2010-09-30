@@ -58,7 +58,7 @@ public class PluginLoader {
         }
     }
 
-    private void loadPlugin(String fileName) {
+    public void loadPlugin(String fileName) {
         if (getPlugin(fileName) != null)
             return; //Already exists.
 

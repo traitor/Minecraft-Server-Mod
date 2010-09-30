@@ -763,6 +763,48 @@ public class etc {
             } else {
                 log.info("Invalid operation.");
             }
+        } else if (split[0].equalsIgnoreCase("plugin")) {
+            if (split.length < 2 || split[1] == "help") {
+                log.info("usage: plugin [command] ([option], ...)");
+                log.info("Commands:");
+                log.info("load [name]         Loads named plugin");
+                log.info("unload [name]       Unloads named plugin");
+                log.info("reload [name]       Reloads named plugin");
+                log.info("list                List currently loaded plugins");
+                return true;
+            }
+            if (split[1].equalsIgnoreCase("load")) {
+                if (split.length < 3 || split[2] == "help") {
+                    log.info("usage: plugin load [name]");
+                    log.info("Loads the named plugin, assuming it can be found.");
+                    return true;
+                }
+                getLoader().loadPlugin(split[2]);
+            } else if (split[1].equalsIgnoreCase("unload")) {
+                if (split.length < 3 || split[2] == "help") {
+                    log.info("usage: plugin unload [name]");
+                    log.info("Unloads the named plugin, assuming it is currently loaded.");
+                    log.info("NOTE: This currently doesn't work right, but will in the very near future!");
+                    return true;
+                }
+                log.info("WARNING: This currently doesn't work right, but will in the very near future!");
+                getLoader().disablePlugin(split[2]);
+            } else if (split[1].equalsIgnoreCase("reload")) {
+                if (split.length < 3 || split[2] == "help") {
+                    log.info("usage: plugin reload [name]");
+                    log.info("Reloads the named plugin, loading it if it is not already in.");
+                    log.info("NOTE: This currently doesn't work right, but will in the very near future!");
+                    return true;
+                }
+                log.info("WARNING: This currently doesn't work right, but will in the very near future!");
+                getLoader().loadPlugin(split[2]);
+                getLoader().disablePlugin(split[2]);
+                getLoader().enablePlugin(split[2]);
+            } else if (split[1].equalsIgnoreCase("list")) {
+                log.info("Plugins: " + getLoader().getPluginList());
+            } else {
+                log.info("Unknown option, try plugin help");
+            }
         } else {
             dontParseRegular = false;
         }
