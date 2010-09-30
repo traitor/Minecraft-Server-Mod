@@ -98,6 +98,20 @@ public class Server {
         return null;
     }
 
+
+    /**
+     * Normalize a player name. It looks up to see if there's a player by that name on the server and then returns it with the correct capitolization as per what the actual username is
+     * @param name Player name to attempt to normalize
+     * @return Name of player, or null if the player was not found
+     */
+    public String getPlayerName(String name)
+    {
+        Player pl = getPlayer(name);
+        if (pl == null)
+            return null;
+        return pl.getName();
+    }
+
     /**
      * Get the global spawn location
      * @return Location object for spawn
