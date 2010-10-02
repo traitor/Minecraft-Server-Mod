@@ -70,6 +70,20 @@ public class Server {
     }
 
     /**
+     * Returns specified player
+     * @param name
+     * @return
+     */
+    public Player getPlayer(String name) {
+        for (Object o : server.f.b) {
+            Player ply = ((ea)o).getPlayer();
+            if (ply.getName().equalsIgnoreCase(name))
+                return ply;
+        }
+        return null;
+    }
+
+    /**
      * Returns the player list
      * @return
      */
