@@ -41,7 +41,6 @@ public class MySQLSource extends DataSource {
             log.log(Level.SEVERE, "Unable to find class " + driver, ex);
         }
 
-        loadUsers();
         loadGroups();
         loadKits();
         loadHomes();
@@ -49,48 +48,6 @@ public class MySQLSource extends DataSource {
         loadItems();
         loadWhitelist();
         loadReserveList();
-    }
-
-    public void loadUsers() {
-        synchronized (userLock) {
-            users = new ArrayList<User>();
-            Connection conn = null;
-            PreparedStatement ps = null;
-            ResultSet rs = null;
-            try {
-                conn = getConnection();
-                ps = conn.prepareStatement("SELECT * FROM users");
-                rs = ps.executeQuery();
-                while (rs.next()) {
-                    User user = new User();
-                    user.ID = rs.getInt("id");
-                    user.Name = rs.getString("name");
-                    user.Groups = rs.getString("groups").split(",");
-                    user.Commands = rs.getString("commands").split(",");
-                    user.Prefix = rs.getString("prefix");
-                    user.Administrator = rs.getBoolean("admin");
-                    user.CanModifyWorld = rs.getBoolean("canmodifyworld");
-                    user.IgnoreRestrictions = rs.getBoolean("ignoresrestrictions");
-                    user.IPs = rs.getString("ip").split(",");
-                    users.add(user);
-                }
-            } catch (SQLException ex) {
-                log.log(Level.SEVERE, "Unable to retreive users from user table", ex);
-            } finally {
-                try {
-                    if (ps != null) {
-                        ps.close();
-                    }
-                    if (rs != null) {
-                        rs.close();
-                    }
-                    if (conn != null) {
-                        conn.close();
-                    }
-                } catch (SQLException ex) {
-                }
-            }
-        }
     }
 
     public void loadGroups() {
@@ -372,28 +329,25 @@ public class MySQLSource extends DataSource {
     }
 
     //Users
-    public void addUser(User user) {
+    public void addUser(Player player) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             conn = getConnection();
             ps = conn.prepareStatement("INSERT INTO users (name, groups, prefix, commands, admin, canmodifyworld, ignoresrestrictions) VALUES (?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, user.Name);
-            ps.setString(2, id.combineSplit(0, user.Groups, ","));
-            ps.setString(3, user.Prefix);
-            ps.setString(4, id.combineSplit(0, user.Commands, ","));
-            ps.setBoolean(5, user.Administrator);
-            ps.setBoolean(6, user.CanModifyWorld);
-            ps.setBoolean(7, user.IgnoreRestrictions);
+            ps.setString(1, player.getName());
+            ps.setString(2, id.combineSplit(0, player.getGroups(), ","));
+            ps.setString(3, player.getPrefix());
+            ps.setString(4, id.combineSplit(0, player.getCommands(), ","));
+            ps.setBoolean(5, player.isAdmin());
+            ps.setBoolean(6, player.canModifyWorld());
+            ps.setBoolean(7, player.canIgnoreRestrictions());
             ps.executeUpdate();
 
             rs = ps.getGeneratedKeys();
             if (rs.next()) {
-                user.ID = rs.getInt(1);
-                synchronized (userLock) {
-                    users.add(user);
-                }
+                player.setSqlId(rs.getInt(1));
             }
         } catch (SQLException ex) {
             log.log(Level.SEVERE, "Unable to insert user into users table", ex);
@@ -413,19 +367,19 @@ public class MySQLSource extends DataSource {
         }
     }
 
-    public void modifyUser(User user) {
+    public void modifyUser(Player player) {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
             conn = getConnection();
             ps = conn.prepareStatement("UPDATE users SET groups = ?, prefix = ?, commands = ?, admin = ?, canmodifyworld = ?, ignoresrestrictions = ? WHERE id = ?");
-            ps.setString(1, id.combineSplit(0, user.Groups, ","));
-            ps.setString(2, user.Prefix);
-            ps.setString(3, id.combineSplit(0, user.Commands, ","));
-            ps.setBoolean(4, user.Administrator);
-            ps.setBoolean(5, user.CanModifyWorld);
-            ps.setBoolean(6, user.IgnoreRestrictions);
-            ps.setInt(7, user.ID);
+            ps.setString(1, id.combineSplit(0, player.getGroups(), ","));
+            ps.setString(2, player.getPrefix());
+            ps.setString(3, id.combineSplit(0, player.getCommands(), ","));
+            ps.setBoolean(4, player.isAdmin());
+            ps.setBoolean(5, player.canModifyWorld());
+            ps.setBoolean(6, player.canIgnoreRestrictions());
+            ps.setInt(7, player.getSqlId());
             ps.executeUpdate();
         } catch (SQLException ex) {
             log.log(Level.SEVERE, "Unable to update user in users table", ex);
@@ -758,5 +712,44 @@ public class MySQLSource extends DataSource {
             } catch (SQLException ex) {
             }
         }
+    }
+
+    public Player getPlayer(String name) {
+        Player player = new Player();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement("SELECT * FROM users WHERE name = ?");
+            ps.setString(1, name);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                player.setSqlId(rs.getInt("id"));
+                player.setGroups(rs.getString("groups").split(","));
+                player.setCommands(rs.getString("commands").split(","));
+                player.setPrefix(rs.getString("prefix"));
+                player.setAdmin(rs.getBoolean("admin"));
+                player.setCanModifyWorld(rs.getBoolean("canmodifyworld"));
+                player.setIgnoreRestrictions(rs.getBoolean("ignoresrestrictions"));
+                player.setIps(rs.getString("ip").split(","));
+            }
+        } catch (SQLException ex) {
+            log.log(Level.SEVERE, "Unable to retreive users from user table", ex);
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+            }
+        }
+        return player;
     }
 }

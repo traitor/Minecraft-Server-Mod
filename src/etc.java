@@ -18,87 +18,20 @@ public class etc {
     private static final Logger log = Logger.getLogger("Minecraft");
     private static volatile etc instance;
     private static MinecraftServer server;
-    private ArrayList<String> muted = new ArrayList<String>();
-    /**
-     *
-     */
-    /**
-     *
-     */
-    /**
-     *
-     */
-    /**
-     *
-     */
-    /**
-     *
-     */
-    /**
-     *
-     */
-    /**
-     *
-     */
     public String usersLoc = "users.txt", kitsLoc = "kits.txt", homeLoc = "homes.txt", warpLoc = "warps.txt", itemLoc = "items.txt", groupLoc = "groups.txt", commandsLoc = "commands.txt";
-    /**
-     *
-     */
-    /**
-     *
-     */
     public String whitelistLoc = "whitelist.txt", reservelistLoc = "reservelist.txt";
-    /**
-     *
-     */
     public String whitelistMessage = "Not on whitelist.";
-    /**
-     *
-     */
     public String[] allowedItems = null;
-    /**
-     *
-     */
     public String[] disallowedItems = null;
-    /**
-     *
-     */
     public String[] itemSpawnBlacklist = null;
-    /**
-     *
-     */
     public String[] motd = null;
-    /**
-     *
-     */
     public boolean saveHomes = true;
-    /**
-     *
-     */
     public boolean firstLoad = true;
-    /**
-     *
-     */
     public boolean whitelistEnabled = false;
-    /**
-     *
-     */
     public int playerLimit = 20;
-    /**
-     *
-     */
     public int spawnProtectionSize = 16;
-    /**
-     *
-     */
     public long sleepTime = 30000;
-    /**
-     *
-     */
     public long saveInterval = 1800000;
-    /**
-     *
-     */
     public LinkedHashMap<String, String> commands = new LinkedHashMap<String, String>();
     private String dataSourceType;
     private ReloadThread reloadThread;
@@ -141,6 +74,10 @@ public class etc {
         commands.put("/modify", "[player] [key] [value] - Type /modify for more info");
         commands.put("/whitelist", "[operation (add or remove)] [player]");
         commands.put("/reservelist", "[operation (add or remove)] [player]");
+        commands.put("/enableplugin", "[plugin] - Enables plugin");
+        commands.put("/disableplugin", "[plugin] - Disables plugin");
+        commands.put("/listplugins", "- Lists all plugins");
+        commands.put("/reloadplugin", "[plugin] - Reloads plugin");
 
         load();
     }
@@ -231,6 +168,10 @@ public class etc {
         return server;
     }
 
+    public static DataSource getDataSource() {
+        return etc.getInstance().getSource();
+    }
+
     /**
      * Returns the minecraft server interface
      * @return
@@ -269,88 +210,6 @@ public class etc {
     }
 
     /**
-     * Checks to see if specified user is in the specified group
-     * @param player
-     * @param group
-     * @return
-     */
-    public boolean isUserInGroup(Player player, String group) {
-        return isUserInGroup(player.getName(), group);
-    }
-
-    /**
-     * Checks to see if specified user is in the specified group
-     * @param e
-     * @param group
-     * @return
-     */
-    public boolean isUserInGroup(ea e, String group) {
-        return isUserInGroup(e.aq, group);
-    }
-
-    /**
-     * Checks to see if specified user is in the specified group
-     * @param name
-     * @param group
-     * @return
-     */
-    public boolean isUserInGroup(String name, String group) {
-        if (group != null) {
-            if (getDefaultGroup() != null) {
-                if (group.equalsIgnoreCase(getDefaultGroup().Name)) {
-                    return true;
-                }
-            } else {
-                log.info("There's no default group.");
-            }
-        }
-        User user = getUser(name);
-        if (user != null) {
-            for (String str : user.Groups) {
-                if (recursiveUserInGroup(dataSource.getGroup(str), group)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private boolean recursiveUserInGroup(Group g, String group) {
-        if (g == null || group == null) {
-            return false;
-        }
-
-        if (g.Name.equalsIgnoreCase(group)) {
-            return true;
-        }
-
-        if (g.InheritedGroups != null) {
-            for (String str : g.InheritedGroups) {
-                if (g.Name.equalsIgnoreCase(str)) {
-                    return true;
-                }
-
-                Group g2 = dataSource.getGroup(str);
-                if (g2 != null) {
-                    if (recursiveUserInGroup(g2, group)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Returns user
-     * @param name
-     * @return user
-     */
-    public User getUser(String name) {
-        return dataSource.getUser(name);
-    }
-
-    /**
      * Returns the default group
      * @return default group
      */
@@ -359,207 +218,6 @@ public class etc {
         if (group == null)
             log.log(Level.SEVERE, "No default group! Expect lots of errors!");
         return group;
-    }
-
-    /**
-     * The user's color or prefix
-     * @param name
-     * @return color/prefix
-     */
-    public String getUserColor(String name) {
-        User user = getUser(name);
-        if (user != null) {
-            if (user.Prefix != null) {
-                if (!user.Prefix.equals("")) {
-                    return "§" + user.Prefix;
-                }
-            }
-
-            Group group = dataSource.getGroup(user.Groups[0]);
-            if (group != null) {
-                return "§" + group.Prefix;
-            }
-        }
-        Group def = getDefaultGroup();
-        return def != null ? "§" + def.Prefix : "";
-    }
-
-    /**
-     * Returns true if the player can use the specified command
-     * @param name
-     * @param command
-     * @return
-     */
-    public boolean canUseCommand(String name, String command) {
-        User user = getUser(name);
-        //holy motherfuck
-        if (user != null) {
-            for (String str : user.Commands) {
-                if (str.equalsIgnoreCase(command)) {
-                    return true;
-                }
-            }
-
-            for (String str : user.Groups) {
-                Group g = dataSource.getGroup(str);
-                if (g != null) {
-                    if (recursiveUseCommand(g, command)) {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        Group def = getDefaultGroup();
-        if (def != null) {
-            if (recursiveUseCommand(def, command)) {
-                return true;
-            }
-        } else {
-            log.info("No default group.");
-        }
-
-        return false;
-    }
-
-    private boolean recursiveUseCommand(Group g, String command) {
-        for (String str : g.Commands) {
-            if (str.equalsIgnoreCase(command) || str.equals("*")) {
-                return true;
-            }
-        }
-
-        if (g.InheritedGroups != null) {
-            for (String str : g.InheritedGroups) {
-                Group g2 = dataSource.getGroup(str);
-                if (g2 != null) {
-                    if (recursiveUseCommand(g2, command)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Returns true if the player's an administrator
-     * @param player
-     * @return
-     */
-    public boolean isAdmin(ea player) {
-        return isAdmin(player.aq);
-    }
-
-    /**
-     * Returns true if the player's an administrator
-     * @param player
-     * @return
-     */
-    public boolean isAdmin(String player) {
-        User user = getUser(player);
-        if (user == null) {
-            return false;
-        }
-        if (user.Administrator) {
-            return true;
-        }
-
-        for (String str : user.Groups) {
-            Group group = dataSource.getGroup(str);
-            if (group != null) {
-                if (group.Administrator) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Returns true if the player can ignore restrictions
-     * @param player
-     * @return
-     */
-    public boolean canIgnoreRestrictions(ea player) {
-        return canIgnoreRestrictions(player.aq);
-
-    }
-
-    /**
-     * Returns true if the player can ignore restrictions
-     * @param player
-     * @return
-     */
-    public boolean canIgnoreRestrictions(String player) {
-        User user = getUser(player);
-        if (user == null) {
-            return false;
-        }
-        if (user.Administrator || user.IgnoreRestrictions) {
-            return true;
-        }
-
-        for (String str : user.Groups) {
-            Group group = dataSource.getGroup(str);
-            if (group != null) {
-                if (group.Administrator || group.IgnoreRestrictions) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Returns false if the player can not build and can not modify chests or
-     * furnaces
-     * @param player
-     * @return
-     */
-    public boolean canBuild(ea player) {
-        User user = getUser(player.aq);
-
-        if (user == null) {
-            return getDefaultGroup().CanModifyWorld;
-        }
-
-        if (!user.CanModifyWorld) {
-            return false;
-        }
-
-        for (String str : user.Groups) {
-            Group group = dataSource.getGroup(str);
-            if (group != null) {
-                if (!group.CanModifyWorld) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Returns true if the player is muted
-     * @param e
-     * @return
-     */
-    public boolean isMuted(ea e) {
-        return muted.contains(e.aq);
-    }
-
-    /**
-     * Toggles mute for specified player
-     * @param e
-     * @return
-     */
-    public boolean toggleMute(ea e) {
-        if (muted.contains(e.aq)) {
-            muted.remove(e.aq);
-        } else {
-            muted.add(e.aq);
-        }
-        return muted.contains(e.aq);
     }
 
     /**
@@ -604,7 +262,7 @@ public class etc {
      * Returns the data source
      * @return
      */
-    public DataSource getDataSource() {
+    public DataSource getSource() {
         return dataSource;
     }
 
@@ -667,7 +325,7 @@ public class etc {
             loadData();
             log.info("Reloaded mod");
         } else if (split[0].equalsIgnoreCase("modify")) {
-            if (split.length < 4) {
+            /*if (split.length < 4) {
                 log.info("Usage is: /modify [player] [key] [value]");
                 log.info("Keys:");
                 log.info("prefix: only the letter the color represents");
@@ -726,7 +384,7 @@ public class etc {
             } else {
                 dataSource.modifyUser(user);
             }
-            log.info("Modified user.");
+            log.info("Modified user.");*/
         } else if (split[0].equalsIgnoreCase("whitelist")) {
             if (split.length < 2) {
                 log.info("whitelist [operation (toggle, add or remove)] [player]");

@@ -214,34 +214,34 @@ public class PluginLoader {
                                     toRet = result;
                                 break;
                             case LOGIN:
-                                plugin.onLogin(new Player((ea) parameters[0]));
+                                plugin.onLogin(((ea) parameters[0]).getPlayer());
                                 break;
                             case DISCONNECT:
-                                plugin.onDisconnect(new Player((ea) parameters[0]));
+                                plugin.onDisconnect(((ea) parameters[0]).getPlayer());
                                 break;
                             case CHAT:
-                                if (plugin.onChat(new Player((ea) parameters[0]), (String)parameters[1]))
+                                if (plugin.onChat(((ea) parameters[0]).getPlayer(), (String)parameters[1]))
                                     toRet = true;
                                 break;
                             case COMMAND:
-                                if (plugin.onCommand(new Player((ea) parameters[0]), (String[])parameters[1]))
+                                if (plugin.onCommand(((ea) parameters[0]).getPlayer(), (String[])parameters[1]))
                                     toRet = true;
                                 break;
                             case BAN:
-                                plugin.onBan(new Player((ea) parameters[0]), (String)parameters[1]);
+                                plugin.onBan(((ea) parameters[0]).getPlayer(), (String)parameters[1]);
                                 break;
                             case IPBAN:
-                                plugin.onIpBan(new Player((ea) parameters[0]), (String)parameters[1]);
+                                plugin.onIpBan(((ea) parameters[0]).getPlayer(), (String)parameters[1]);
                                 break;
                             case KICK:
-                                plugin.onKick(new Player((ea) parameters[0]), (String)parameters[1]);
+                                plugin.onKick(((ea) parameters[0]).getPlayer(), (String)parameters[1]);
                                 break;
                             case BLOCK_CREATED:
-                                if (plugin.onBlockCreate(new Player((ea) parameters[0]), (Block)parameters[1], (Block)parameters[2], (Integer)parameters[3]))
+                                if (plugin.onBlockCreate(((ea) parameters[0]).getPlayer(), (Block)parameters[1], (Block)parameters[2], (Integer)parameters[3]))
                                     toRet = true;
                                 break;
                             case BLOCK_DESTROYED:
-                                if (plugin.onBlockDestroy(new Player((ea) parameters[0]), (Block)parameters[1]))
+                                if (plugin.onBlockDestroy(((ea) parameters[0]).getPlayer(), (Block)parameters[1]))
                                     toRet = true;
                                 break;
                         }

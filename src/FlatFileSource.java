@@ -18,7 +18,6 @@ import java.util.logging.Level;
 public class FlatFileSource extends DataSource {
 
     public void initialize() {
-        loadUsers();
         loadGroups();
         loadKits();
         loadHomes();
@@ -26,80 +25,6 @@ public class FlatFileSource extends DataSource {
         loadItems();
         loadWhitelist();
         loadReserveList();
-    }
-
-    public void loadUsers() {
-        String location = etc.getInstance().usersLoc;
-
-        if (!new File(location).exists()) {
-            FileWriter writer = null;
-            try {
-                writer = new FileWriter(location);
-                writer.write("#Add your users here (When adding your entry DO NOT include #!)\r\n");
-                writer.write("#The format is:\r\n");
-                writer.write("#NAME:GROUPS:ADMIN/UNRESTRICTED:COLOR:COMMANDS:IPs\r\n");
-                writer.write("#For administrative powers set admin/unrestricted to 2.\r\n");
-                writer.write("#For no restrictions and ability to give out items set it to 1.\r\n");
-                writer.write("#If you don't want the person to be able to build set it to -1.\r\n");
-                writer.write("#Admin/unrestricted, color and commands are optional.\r\n");
-                writer.write("#Examples:\r\n");
-                writer.write("#Adminfoo:admins\r\n");
-                writer.write("#Moderator39:mods:1:0:/unban\r\n");
-                writer.write("#BobTheBuilder:vip:0:d\r\n");
-            } catch (Exception e) {
-                log.log(Level.SEVERE, "Exception while creating " + location, e);
-            } finally {
-                try {
-                    if (writer != null) {
-                        writer.close();
-                    }
-                } catch (IOException e) {
-                    log.log(Level.SEVERE, "Exception while closing writer for " + location, e);
-                }
-            }
-        }
-
-        synchronized (userLock) {
-            users = new ArrayList<User>();
-            try {
-                Scanner scanner = new Scanner(new File(location));
-                while (scanner.hasNextLine()) {
-                    String line = scanner.nextLine();
-                    if (line.startsWith("#") || line.equals("") || line.startsWith("﻿")) {
-                        continue;
-                    }
-                    String[] split = line.split(":");
-
-                    User user = new User();
-                    user.Name = split[0];
-                    user.Groups = split[1].split(",");
-
-                    if (split.length >= 3) {
-                        if (split[2].equals("1")) {
-                            user.IgnoreRestrictions = true;
-                        } else if (split[2].equals("2")) {
-                            user.Administrator = true;
-                        } else if (split[2].equals("-1")) {
-                            user.CanModifyWorld = false;
-                        }
-                    }
-                    if (split.length >= 4) {
-                        user.Prefix = split[3];
-                    }
-                    if (split.length >= 5) {
-                        user.Commands = split[4].split(",");
-                    }
-                    if (split.length >= 6) {
-                        user.IPs = split[5].split(",");
-                    }
-
-                    users.add(user);
-                }
-                scanner.close();
-            } catch (Exception e) {
-                log.log(Level.SEVERE, "Exception while reading " + location + " (Are you sure you formatted it correctly?)", e);
-            }
-        }
     }
 
     public void loadGroups() {
@@ -634,42 +559,39 @@ public class FlatFileSource extends DataSource {
     }
 
     //Users
-    public void addUser(User user) {
+    public void addUser(Player player) {
         String usersLoc = etc.getInstance().usersLoc;
 
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(usersLoc, true));
             StringBuilder builder = new StringBuilder();
             //#NAME:GROUPS:ADMIN/UNRESTRICTED:COLOR:COMMANDS
-            builder.append(user.Name);
+            builder.append(player.getName());
             builder.append(":");
-            builder.append(id.combineSplit(0, user.Groups, ","));
+            builder.append(id.combineSplit(0, player.getGroups(), ","));
             builder.append(":");
-            if (user.Administrator) {
+            if (player.isAdmin()) {
                 builder.append("2");
-            } else if (user.IgnoreRestrictions) {
+            } else if (player.canIgnoreRestrictions()) {
                 builder.append("1");
-            } else if (!user.CanModifyWorld) {
+            } else if (!player.canModifyWorld()) {
                 builder.append("-1");
             } else {
                 builder.append("0");
             }
             builder.append(":");
-            builder.append(user.Prefix);
+            builder.append(player.getPrefix());
             builder.append(":");
-            builder.append(id.combineSplit(0, user.Commands, ","));
+            builder.append(id.combineSplit(0, player.getCommands(), ","));
             bw.append(builder.toString());
             bw.newLine();
             bw.close();
-            synchronized (userLock) {
-                users.add(user);
-            }
         } catch (Exception ex) {
             log.log(Level.SEVERE, "Exception while writing new user to " + usersLoc, ex);
         }
     }
 
-    public void modifyUser(User user) {
+    public void modifyUser(Player player) {
         String usersLoc = etc.getInstance().usersLoc;
 
         try {
@@ -678,27 +600,27 @@ public class FlatFileSource extends DataSource {
             StringBuilder toWrite = new StringBuilder();
             String line = "";
             while ((line = reader.readLine()) != null) {
-                if (!line.contains(user.Name)) {
+                if (!line.contains(player.getName())) {
                     toWrite.append(line).append("\r\n");
                 } else {
                     StringBuilder builder = new StringBuilder();
-                    builder.append(user.Name);
+                    builder.append(player.getName());
                     builder.append(":");
-                    builder.append(id.combineSplit(0, user.Groups, ","));
+                    builder.append(id.combineSplit(0, player.getGroups(), ","));
                     builder.append(":");
-                    if (user.Administrator) {
+                    if (player.isAdmin()) {
                         builder.append("2");
-                    } else if (user.IgnoreRestrictions) {
+                    } else if (player.canIgnoreRestrictions()) {
                         builder.append("1");
-                    } else if (!user.CanModifyWorld) {
+                    } else if (!player.canModifyWorld()) {
                         builder.append("-1");
                     } else {
                         builder.append("0");
                     }
                     builder.append(":");
-                    builder.append(user.Prefix);
+                    builder.append(player.getPrefix());
                     builder.append(":");
-                    builder.append(id.combineSplit(0, user.Commands, ","));
+                    builder.append(id.combineSplit(0, player.getCommands(), ","));
                     toWrite.append(builder.toString()).append("\r\n");
                 }
             }
@@ -707,13 +629,47 @@ public class FlatFileSource extends DataSource {
             FileWriter writer = new FileWriter(usersLoc);
             writer.write(toWrite.toString());
             writer.close();
-
-            synchronized (userLock) {
-                users.add(user);
-            }
         } catch (Exception ex) {
             log.log(Level.SEVERE, "Exception while editing user in " + usersLoc, ex);
         }
+    }
+
+    public Player getPlayer(String name) {
+        Player player = new Player();
+        String location = etc.getInstance().usersLoc;
+        try {
+            Scanner scanner = new Scanner(new File(location));
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.startsWith("#") || line.equals("") || line.startsWith("﻿")) {
+                    continue;
+                }
+                String[] split = line.split(":");
+                if (!split[0].equalsIgnoreCase(name))
+                    continue;
+                
+                player.setGroups(split[1].split(","));
+
+                if (split.length >= 3)
+                    if (split[2].equals("1"))
+                        player.setIgnoreRestrictions(true);
+                    else if (split[2].equals("2"))
+                        player.setAdmin(true);
+                    else if (split[2].equals("-1"))
+                        player.setCanModifyWorld(false);
+
+                if (split.length >= 4)
+                    player.setPrefix(split[3]);
+                if (split.length >= 5)
+                    player.setCommands(split[4].split(","));
+                if (split.length >= 6)
+                    player.setIps(split[5].split(","));
+            }
+            scanner.close();
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "Exception while reading " + location + " (Are you sure you formatted it correctly?)", e);
+        }
+        return player;
     }
 
     //Groups

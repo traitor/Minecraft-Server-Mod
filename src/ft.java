@@ -27,7 +27,7 @@ public class ft {
     public ft(MinecraftServer paramMinecraftServer) {
         this.c = paramMinecraftServer;
         this.i = paramMinecraftServer.a("banned-players.txt");
-        this.j = paramMinecraftServer.a("banned-ips.txt");
+        this.j = paramMinecraftServer.a("banned-getIps().txt");
         this.k = paramMinecraftServer.a("ops.txt");
         this.d = new hg(paramMinecraftServer);
         this.e = paramMinecraftServer.d.a("max-players", 20);
@@ -85,6 +85,9 @@ public class ft {
             paramew.b("You are banned from this server!");
             return null;
         }
+
+        ea temp = new ea(this.c, this.c.e, paramString1, new in(this.c.e));
+        Player player = temp.getPlayer();
         
         String ip = paramew.b.b().toString().split(":")[0].substring(1);
         if (this.g.contains(ip)) {
@@ -105,28 +108,26 @@ public class ft {
                 // ^ otherwise no.
             }
         }
-        if (etc.getInstance().whitelistEnabled && !(etc.getInstance().getDataSource().isUserOnWhitelist(paramString1)
-                || etc.getInstance().isAdmin(paramString1))) {
+        if (etc.getInstance().whitelistEnabled && !(etc.getDataSource().isUserOnWhitelist(paramString1)
+                || player.isAdmin())) {
             paramew.b(etc.getInstance().whitelistMessage);
             return null;
-        } else if (this.b.size() >= this.e && !(etc.getInstance().getDataSource().hasReserveList() && (etc.getInstance().isAdmin(paramString1)
-                || etc.getInstance().getDataSource().isUserOnReserveList(paramString1)))) {
+        } else if (this.b.size() >= this.e && !(etc.getDataSource().hasReserveList() && (player.isAdmin()
+                || etc.getDataSource().isUserOnReserveList(paramString1)))) {
             paramew.b("Server is full.");
             return null;
         }
-        User user = etc.getInstance().getUser(paramString1);
-        if (user != null) {
-            if (!user.IPs[0].equals("")) {
-                boolean kick = true;
-                for (int i = 0; i < user.IPs.length; i++) {
-                    if (!user.IPs[i].equals("") && ip.equals(user.IPs[i])) {
-                        kick = false;
-                    }
+        
+        if (!player.getIps()[0].equals("")) {
+            boolean kick = true;
+            for (int i = 0; i < player.getIps().length; i++) {
+                if (!player.getIps()[i].equals("") && player.getIP().equals(player.getIps()[i])) {
+                    kick = false;
                 }
-                if (kick) {
-                    paramew.b("IP doesn't match specified IP.");
-                    return null;
-                }
+            }
+            if (kick) {
+                player.kick("IP doesn't match specified IP.");
+                return null;
             }
         }
         
@@ -139,7 +140,7 @@ public class ft {
             }
         }
 
-        return new ea(this.c, this.c.e, paramString1, new in(this.c.e));
+        return temp;
     }
 
     /**

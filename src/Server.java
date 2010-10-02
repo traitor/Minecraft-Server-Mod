@@ -76,7 +76,7 @@ public class Server {
     public List<Player> getPlayerList() {
         List<Player> toRet = new ArrayList<Player>();
         for (Object o : server.f.b)
-            toRet.add(new Player((ea)o));
+            toRet.add(((ea)o).getPlayer());
         return toRet;
     }
 

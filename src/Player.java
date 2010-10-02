@@ -8,13 +8,16 @@ public class Player {
 
     private ea user;
 
-    /**
-     * Creates a player interface
-     * @param user
-     */
-    public Player(ea user) {
-        this.user = user;
-    }
+    private int id = -1;
+    private String name = "";
+    private String prefix = "";
+    private String[] commands = new String[] { "" };
+    private String[] groups = new String[] { };
+    private String[] ips = new String[] { "" };
+    private boolean ignoreRestrictions = false;
+    private boolean admin = false;
+    private boolean canModifyWorld = true;
+    private boolean muted = false;
 
     /**
      * Kicks player with the specified reason
@@ -75,19 +78,118 @@ public class Player {
     }
 
     /**
-     * Returns the actual player
+     * Returns true if the player can use the specified command
+     * @param command
      * @return
      */
-    public ea getMCUser() {
-        return user;
+    public boolean canUseCommand(String command) {
+        for (String str : commands) {
+            if (str.equalsIgnoreCase(command)) {
+                return true;
+            }
+        }
+
+        for (String str : groups) {
+            Group g = etc.getDataSource().getGroup(str);
+            if (g != null) {
+                if (recursiveUseCommand(g, command)) {
+                    return true;
+                }
+            }
+        }
+
+        Group def = etc.getInstance().getDefaultGroup();
+        if (def != null) {
+            if (recursiveUseCommand(def, command)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean recursiveUseCommand(Group g, String command) {
+        for (String str : g.Commands) {
+            if (str.equalsIgnoreCase(command) || str.equals("*")) {
+                return true;
+            }
+        }
+
+        if (g.InheritedGroups != null) {
+            for (String str : g.InheritedGroups) {
+                Group g2 = etc.getDataSource().getGroup(str);
+                if (g2 != null) {
+                    if (recursiveUseCommand(g2, command)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     /**
-     * Returns the user
+     * Checks to see if specified user is in the specified group
+     * @param group
      * @return
      */
-    public User getUser() {
-        return etc.getInstance().getUser(user.aq);
+    public boolean isInGroup(String group) {
+        if (group != null) {
+            if (etc.getInstance().getDefaultGroup() != null) {
+                if (group.equalsIgnoreCase(etc.getInstance().getDefaultGroup().Name)) {
+                    return true;
+                }
+            }
+        }
+        for (String str : groups) {
+            if (recursiveUserInGroup(etc.getDataSource().getGroup(str), group)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean recursiveUserInGroup(Group g, String group) {
+        if (g == null || group == null) {
+            return false;
+        }
+
+        if (g.Name.equalsIgnoreCase(group)) {
+            return true;
+        }
+
+        if (g.InheritedGroups != null) {
+            for (String str : g.InheritedGroups) {
+                if (g.Name.equalsIgnoreCase(str)) {
+                    return true;
+                }
+
+                Group g2 = etc.getDataSource().getGroup(str);
+                if (g2 != null) {
+                    if (recursiveUserInGroup(g2, group)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if this player has control over the other player
+     * @param player
+     * @return
+     */
+    public boolean hasControlOver(Player player) {
+        boolean isInGroup = false;
+
+        for (String str : player.getGroups()) {
+            if (isInGroup(str)) {
+                isInGroup = true;
+            }
+        }
+
+        return isInGroup;
     }
 
     /**
@@ -194,5 +296,153 @@ public class Player {
      */
     public void setRotation(float rotation) {
         user.a.a(getX(), getY(), getZ(), rotation, getPitch());
+    }
+
+    public boolean isAdmin() {
+        if (admin) {
+            return true;
+        }
+
+        for (String str : groups) {
+            Group group = etc.getDataSource().getGroup(str);
+            if (group != null) {
+                if (group.Administrator) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
+    public boolean canBuild() {
+        if (canModifyWorld) {
+            return true;
+        }
+
+        for (String str : groups) {
+            Group group = etc.getDataSource().getGroup(str);
+            if (group != null) {
+                if (group.CanModifyWorld) {
+                    return true;
+                }
+            }
+        }
+        
+        if (etc.getInstance().getDefaultGroup().CanModifyWorld)
+            return true;
+
+        return false;
+    }
+
+    public boolean canModifyWorld() {
+        return canModifyWorld;
+    }
+
+    public void setCanModifyWorld(boolean canModifyWorld) {
+        this.canModifyWorld = canModifyWorld;
+    }
+
+    public String[] getCommands() {
+        return commands;
+    }
+
+    public void setCommands(String[] commands) {
+        this.commands = commands;
+    }
+
+    public String[] getGroups() {
+        return groups;
+    }
+
+    public void setGroups(String[] groups) {
+        this.groups = groups;
+    }
+
+    public int getSqlId() {
+        return id;
+    }
+
+    public void setSqlId(int id) {
+        this.id = id;
+    }
+
+    public boolean canIgnoreRestrictions() {
+        if (admin || ignoreRestrictions) {
+            return true;
+        }
+
+        for (String str : groups) {
+            Group group = etc.getDataSource().getGroup(str);
+            if (group != null) {
+                if (group.Administrator || group.IgnoreRestrictions) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void setIgnoreRestrictions(boolean ignoreRestrictions) {
+        this.ignoreRestrictions = ignoreRestrictions;
+    }
+
+    public String[] getIps() {
+        return ips;
+    }
+
+    public void setIps(String[] ips) {
+        this.ips = ips;
+    }
+
+    public String getColor() {
+        if (prefix != null) {
+            if (!prefix.equals("")) {
+                return "§" + prefix;
+            }
+        }
+
+        Group group = etc.getDataSource().getGroup(groups[0]);
+        if (group != null) {
+            return "§" + group.Prefix;
+        }
+        Group def = etc.getInstance().getDefaultGroup();
+        return def != null ? "§" + def.Prefix : "";
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
+    public ea getUser() {
+        return user;
+    }
+
+    public void setUser(ea user) {
+        this.user = user;
+    }
+
+    /**
+     * Returns true if the player is muted
+     * @return
+     */
+    public boolean isMuted() {
+        return muted;
+    }
+
+    /**
+     * Toggles mute
+     * @return
+     */
+    public boolean toggleMute() {
+        muted = !muted;
+        return muted;
     }
 }

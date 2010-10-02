@@ -35,6 +35,10 @@ public class id extends ej
         paramea.a = this;
     }
 
+    public Player getPlayer() {
+        return e.getPlayer();
+    }
+
     public void a() {
         this.b.a();
         if (this.f++ % 20 == 0) {
@@ -76,7 +80,7 @@ public class id extends ej
                 double d4 = paramgf.d - paramgf.b;
                 if ((d4 > 1.65D) || (d4 < 0.1D)) {
                     c("Illegal stance");
-                    a.warning(this.e.aq + " had an illegal stance: " + d4);
+                    a.warning(getPlayer().getName() + " had an illegal stance: " + d4);
                 }
                 this.e.ai = paramgf.d;
             }
@@ -107,7 +111,7 @@ public class id extends ej
             int n = 0;
             if (d7 > 0.0625D) {
                 n = 1;
-                a.warning(this.e.aq + " moved wrongly!");
+                a.warning(getPlayer().getName() + " moved wrongly!");
             }
             this.e.b(d1, d2, d3, f1, f2);
 
@@ -134,7 +138,7 @@ public class id extends ej
     //Destroy function
     public void a(hd paramhd) {
         this.e.aj.a[this.e.aj.d] = this.k;
-        boolean bool = this.d.e.z = (this.d.f.g(this.e.aq) || etc.getInstance().isAdmin(e));
+        boolean bool = this.d.e.z = (this.d.f.g(getPlayer().getName()) || getPlayer().isAdmin());
         int m = 0;
         if (paramhd.e == 0) {
             m = 1;
@@ -165,7 +169,7 @@ public class id extends ej
             i5 = i4;
         }
         if (paramhd.e == 0) {
-            if (!etc.getInstance().canBuild(e)) {
+            if (!getPlayer().canBuild()) {
                 return;
             }
             if (i5 > etc.getInstance().spawnProtectionSize || bool) {
@@ -175,7 +179,7 @@ public class id extends ej
         } else if (paramhd.e == 2) {
             this.e.ad.a();
         } else if (paramhd.e == 1) {
-            if (!etc.getInstance().canBuild(e)) {
+            if (!getPlayer().canBuild()) {
                 return;
             }
             if (i5 > etc.getInstance().spawnProtectionSize || bool) {
@@ -196,10 +200,10 @@ public class id extends ej
 
     //Build function
     public void a(fe paramfe) {
-        if (!etc.getInstance().canBuild(e)) {
+        if (!getPlayer().canBuild()) {
             return;
         }
-        boolean bool = this.d.e.z = (this.d.f.g(this.e.aq) || etc.getInstance().isAdmin(e));
+        boolean bool = this.d.e.z = (this.d.f.g(getPlayer().getName()) || getPlayer().isAdmin());
         int m = paramfe.b;
         int n = paramfe.c;
         int i1 = paramfe.d;
@@ -244,7 +248,7 @@ public class id extends ej
 
     public void a(String paramString) {
         etc.getInstance().getLoader().callHook(PluginLoader.Hook.DISCONNECT, new Object[] { e });
-        a.info(this.e.aq + " lost connection: " + paramString);
+        a.info(getPlayer().getName() + " lost connection: " + paramString);
         this.d.f.c(this.e);
         this.c = true;
     }
@@ -300,20 +304,20 @@ public class id extends ej
         if (str.startsWith("/")) {
             d(str);
         } else {
-            if (etc.getInstance().isMuted(e)) {
+            if (getPlayer().isMuted()) {
                 msg(Colors.Rose + "You are currently muted.");
                 return;
             }
             if ((Boolean)etc.getInstance().getLoader().callHook(PluginLoader.Hook.CHAT, new Object[]{e, str}))
                 return;
 
-            String message = "<" + etc.getInstance().getUserColor(e.aq) + this.e.aq + Colors.White + "> " + str;
-            a.log(Level.INFO, "<" + e.aq + "> " + str);
+            String message = "<" + getPlayer().getColor() + getPlayer().getName() + Colors.White + "> " + str;
+            a.log(Level.INFO, "<" + getPlayer().getName() + "> " + str);
             this.d.f.a(new ba(message));
         }
     }
 
-    private ea match(String name) {
+    private Player match(String name) {
         ea player = null;
         boolean found = false;
         if (("`" + this.d.f.c().toUpperCase() + "`").split(name.toUpperCase()).length == 2) {
@@ -334,7 +338,7 @@ public class id extends ej
                 }
             }
         }
-        return player;
+        return player.getPlayer();
     }
 
     /**
@@ -357,27 +361,6 @@ public class id extends ej
     }
 
     /**
-     * Returns true if this player has control over the other player
-     * @param player
-     * @return
-     */
-    public boolean hasControlOver(ea player) {
-        boolean isInGroup = false;
-
-        if (etc.getInstance().getUser(player.aq) != null) {
-            for (String str : etc.getInstance().getUser(player.aq).Groups) {
-                if (etc.getInstance().isUserInGroup(e, str)) {
-                    isInGroup = true;
-                }
-            }
-        } else {
-            return true;
-        }
-
-        return isInGroup;
-    }
-
-    /**
      * Sends a message to the player
      * @param msg
      */
@@ -388,13 +371,13 @@ public class id extends ej
     private void d(String paramString) {
         try {
             if (etc.getInstance().isLogging()) {
-                a.info("Command used by " + e.aq + " " + paramString);
+                a.info("Command used by " + getPlayer().getName() + " " + paramString);
             }
             String[] split = paramString.split(" ");
             if ((Boolean)etc.getInstance().getLoader().callHook(PluginLoader.Hook.COMMAND, new Object[]{e, split})) {
                 return; //No need to go on, commands were parsed.
             }
-            if (!etc.getInstance().canUseCommand(e.aq, split[0]) && !split[0].startsWith("/#")) {
+            if (!getPlayer().canUseCommand(split[0]) && !split[0].startsWith("/#")) {
                 msg(Colors.Rose + "Unknown command.");
                 return;
             }
@@ -402,11 +385,11 @@ public class id extends ej
                 //Meh, not the greatest way, but not the worst either.
                 List<String> availableCommands = new ArrayList<String>();
                 for (Entry<String, String> entry : etc.getInstance().commands.entrySet()) {
-                    if (etc.getInstance().canUseCommand(e.aq, entry.getKey())) {
-                        if (entry.getKey().equals("/kit") && !etc.getInstance().getDataSource().hasKits()) {
+                    if (getPlayer().canUseCommand(entry.getKey())) {
+                        if (entry.getKey().equals("/kit") && !etc.getDataSource().hasKits()) {
                             continue;
                         }
-                        if (entry.getKey().equals("/listwarps") && !etc.getInstance().getDataSource().hasWarps()) {
+                        if (entry.getKey().equals("/listwarps") && !etc.getDataSource().hasWarps()) {
                             continue;
                         }
 
@@ -446,7 +429,7 @@ public class id extends ej
                 a.info("Reloaded config");
                 msg("Successfuly reloaded config");
             } else if ((split[0].equalsIgnoreCase("/modify") || split[0].equalsIgnoreCase("/mp"))) {
-                if (split.length < 4) {
+                /*if (split.length < 4) {
                     msg(Colors.Rose + "Usage is: /modify [player] [key] [value]");
                     msg(Colors.Rose + "Keys:");
                     msg(Colors.Rose + "prefix: only the letter the color represents");
@@ -501,12 +484,12 @@ public class id extends ej
                 }
 
                 if (newUser) {
-                    etc.getInstance().getDataSource().addUser(user);
+                    etc.getDataSource().addUser(user);
                 } else {
-                    etc.getInstance().getDataSource().modifyUser(user);
+                    etc.getDataSource().modifyUser(user);
                 }
                 msg(Colors.Rose + "Modified user.");
-                a.info("Modifed user " + split[1] + ". " + key + " => " + value + " by " + e.aq);
+                a.info("Modifed user " + split[1] + ". " + key + " => " + value + " by " + getPlayer().getName());*/
             } else if (split[0].equalsIgnoreCase("/whitelist")) {
                 if (split.length < 2) {
                     msg(Colors.Rose + "whitelist [operation (toggle, add or remove)] <player>");
@@ -517,10 +500,10 @@ public class id extends ej
                     msg(Colors.Rose + (etc.getInstance().toggleWhitelist() ? "Whitelist enabled" : "Whitelist disabled"));
                 } else if(split.length == 3) {
                     if (split[1].equalsIgnoreCase("add")) {
-                        etc.getInstance().getDataSource().addToWhitelist(split[2]);
+                        etc.getDataSource().addToWhitelist(split[2]);
                         msg(Colors.Rose + split[2] + " added to whitelist");
                     } else if (split[1].equalsIgnoreCase("remove")) {
-                        etc.getInstance().getDataSource().removeFromWhitelist(split[2]);
+                        etc.getDataSource().removeFromWhitelist(split[2]);
                         msg(Colors.Rose + split[2] + " removed from whitelist");
                     } else {
                         msg(Colors.Rose + "Invalid operation.");
@@ -535,10 +518,10 @@ public class id extends ej
                 }
 
                 if (split[1].equalsIgnoreCase("add")) {
-                    etc.getInstance().getDataSource().addToReserveList(split[2]);
+                    etc.getDataSource().addToReserveList(split[2]);
                     msg(Colors.Rose + split[2] + " added to reservelist");
                 } else if (split[1].equalsIgnoreCase("remove")) {
-                    etc.getInstance().getDataSource().removeFromReserveList(split[2]);
+                    etc.getDataSource().removeFromReserveList(split[2]);
                     msg(Colors.Rose + split[2] + " removed from reservelist");
                 } else {
                     msg(Colors.Rose + "Invalid operation.");
@@ -549,10 +532,10 @@ public class id extends ej
                     return;
                 }
 
-                ea player = match(split[1]);
+                Player player = match(split[1]);
 
                 if (player != null) {
-                    if (etc.getInstance().toggleMute(player)) {
+                    if (player.toggleMute()) {
                         msg(Colors.Rose + "player was muted");
                     } else {
                         msg(Colors.Rose + "player was unmuted");
@@ -565,71 +548,71 @@ public class id extends ej
                     msg(Colors.Rose + "Correct usage is: /msg [player] [message]");
                     return;
                 }
-                if (etc.getInstance().isMuted(e)) {
+                if (getPlayer().isMuted()) {
                     msg(Colors.Rose + "You are currently muted.");
                     return;
                 }
 
-                ea player = match(split[1]);
+                Player player = match(split[1]);
 
                 if (player != null) {
-                    if (player.aq.equals(e.aq)) {
+                    if (player.getName().equals(getPlayer().getName())) {
                         msg(Colors.Rose + "You can't message yourself!");
                         return;
                     }
-                    String prefix = etc.getInstance().getUserColor(e.aq);
+                    String prefix = getPlayer().getColor();
 
-                    player.a.msg("(MSG) " + prefix + "<" + e.aq + "> " + Colors.White + combineSplit(2, split, " "));
-                    msg("(MSG) " + prefix + "<" + e.aq + "> " + Colors.White + combineSplit(2, split, " "));
+                    player.sendMessage("(MSG) " + prefix + "<" + getPlayer().getName() + "> " + Colors.White + combineSplit(2, split, " "));
+                    msg("(MSG) " + prefix + "<" + getPlayer().getName() + "> " + Colors.White + combineSplit(2, split, " "));
                 } else {
                     msg(Colors.Rose + "Couldn't find player " + split[1]);
                 }
-            } else if (split[0].equalsIgnoreCase("/kit") && etc.getInstance().getDataSource().hasKits()) {
+            } else if (split[0].equalsIgnoreCase("/kit") && etc.getDataSource().hasKits()) {
                 if (split.length != 2 && split.length != 3) {
-                    msg(Colors.Rose + "Available kits" + Colors.White + ": " + etc.getInstance().getDataSource().getKitNames(e.aq));
+                    msg(Colors.Rose + "Available kits" + Colors.White + ": " + etc.getDataSource().getKitNames(getPlayer()));
                     return;
                 }
 
-                ea toGive = e;
-                if (split.length > 2 && etc.getInstance().canIgnoreRestrictions(e)) {
+                Player toGive = getPlayer();
+                if (split.length > 2 && getPlayer().canIgnoreRestrictions()) {
                     toGive = match(split[1]);
                 }
 
-                Kit kit = etc.getInstance().getDataSource().getKit(split[1]);
+                Kit kit = etc.getDataSource().getKit(split[1]);
                 if (toGive != null) {
                     if (kit != null) {
-                        if (!etc.getInstance().isUserInGroup(e, kit.Group) && !kit.Group.equals("")) {
+                        if (!getPlayer().isInGroup(kit.Group) && !kit.Group.equals("")) {
                             msg(Colors.Rose + "That kit does not exist.");
                         } else if (onlyOneUseKits.contains(kit.Name)) {
                             msg(Colors.Rose + "You can only get this kit once per login.");
-                        } else if (MinecraftServer.b.containsKey(this.e.aq + " " + kit.Name)) {
+                        } else if (MinecraftServer.b.containsKey(getPlayer().getName() + " " + kit.Name)) {
                             msg(Colors.Rose + "You can't get this kit again for a while.");
                         } else {
-                            if (!etc.getInstance().canIgnoreRestrictions(e)) {
+                            if (!getPlayer().canIgnoreRestrictions()) {
                                 if (kit.Delay >= 0) {
-                                    MinecraftServer.b.put(this.e.aq + " " + kit.Name, kit.Delay);
+                                    MinecraftServer.b.put(getPlayer().getName() + " " + kit.Name, kit.Delay);
                                 } else {
                                     onlyOneUseKits.add(kit.Name);
                                 }
                             }
 
-                            a.info(this.e.aq + " got a kit!");
-                            toGive.a.msg(Colors.Rose + "Enjoy this kit!");
+                            a.info(getPlayer().getName() + " got a kit!");
+                            toGive.sendMessage(Colors.Rose + "Enjoy this kit!");
                             for (Map.Entry<String, Integer> entry : kit.IDs.entrySet()) {
                                 try {
                                     int itemId = 0;
                                     try {
                                         itemId = Integer.parseInt(entry.getKey());
                                     } catch (NumberFormatException n) {
-                                        itemId = etc.getInstance().getDataSource().getItem(entry.getKey());
+                                        itemId = etc.getDataSource().getItem(entry.getKey());
                                     }
 
                                     int temp = kit.IDs.get(entry.getKey());
                                     do {
                                         if (temp - 64 >= 64) {
-                                            toGive.a(new gp(itemId, 64));
+                                            toGive.giveItem(itemId, 64);
                                         } else {
-                                            toGive.a(new gp(itemId, temp));
+                                            toGive.giveItem(itemId, temp);
                                         }
                                         temp -= 64;
                                     } while (temp >= 64);
@@ -651,16 +634,16 @@ public class id extends ej
                     return;
                 }
 
-                ea player = match(split[1]);
+                Player player = match(split[1]);
 
-                if (this.e.aq.equalsIgnoreCase(split[1])) {
+                if (getPlayer().getName().equalsIgnoreCase(split[1])) {
                     msg(Colors.Rose + "You're already here!");
                     return;
                 }
 
                 if (player != null) {
-                    a.info(this.e.aq + " teleported to " + player.aq);
-                    a(player.l, player.m, player.n, player.r, player.s);
+                    a.info(getPlayer().getName() + " teleported to " + player.getName());
+                    getPlayer().teleportTo(player);
                 } else {
                     msg(Colors.Rose + "Can't find user " + split[1] + ".");
                 }
@@ -670,16 +653,16 @@ public class id extends ej
                     return;
                 }
 
-                ea player = match(split[1]);
+                Player player = match(split[1]);
 
-                if (this.e.aq.equalsIgnoreCase(split[1])) {
+                if (player.getName().equalsIgnoreCase(split[1])) {
                     msg(Colors.Rose + "Wow look at that! You teleported yourself to yourself!");
                     return;
                 }
 
                 if (player != null) {
-                    a.info(this.e.aq + " teleported " + player.aq + " to their self.");
-                    player.a.a(e.l, e.m, e.n, e.r, e.s);
+                    a.info(getPlayer().getName() + " teleported " + player.getName() + " to their self.");
+                    player.teleportTo(getPlayer());
                 } else {
                     msg(Colors.Rose + "Can't find user " + split[1] + ".");
                 }
@@ -687,7 +670,7 @@ public class id extends ej
                 msg(Colors.Rose + "Player list (" + d.f.b.size() + "/" + etc.getInstance().playerLimit + "): " + Colors.White + d.f.c());
             } else if (split[0].equalsIgnoreCase("/item") || split[0].equalsIgnoreCase("/i") || split[0].equalsIgnoreCase("/give")) {
                 if (split.length < 2) {
-                    if (etc.getInstance().canIgnoreRestrictions(e)) {
+                    if (getPlayer().canIgnoreRestrictions()) {
                         msg(Colors.Rose + "Correct usage is: /item [itemid] <amount> <player> (optional)");
                     } else {
                         msg(Colors.Rose + "Correct usage is: /item [itemid] <amount>");
@@ -695,76 +678,67 @@ public class id extends ej
                     return;
                 }
 
-                ea toGive = e;
-                if (split.length == 4 && etc.getInstance().canIgnoreRestrictions(e)) {
+                Player toGive = getPlayer();
+                if (split.length == 4 && getPlayer().canIgnoreRestrictions()) {
                     toGive = match(split[3]);
                 }
 
                 if (toGive != null) {
                     try {
-                        int i2 = 0;
+                        int itemId = 0;
                         try {
-                            i2 = Integer.parseInt(split[1]);
+                            itemId = Integer.parseInt(split[1]);
                         } catch (NumberFormatException n) {
-                            i2 = etc.getInstance().getDataSource().getItem(split[1]);
+                            itemId = etc.getDataSource().getItem(split[1]);
                         }
-                        int i3 = 1;
+                        int amount = 1;
                         if (split.length > 2) {
-                            i3 = Integer.parseInt(split[2]);
+                            amount = Integer.parseInt(split[2]);
                         }
 
-                        String i2str = Integer.toString(i2);
-                        if (i3 == -1 && etc.getInstance().isAdmin(e)) {
-                            i3 = 255;
-                        } else if (i3 <= 0) {
-                            i3 = 1;
+                        String itemIdstr = Integer.toString(itemId);
+                        if (amount == -1 && getPlayer().isAdmin()) {
+                            amount = 255;
+                        } else if (amount <= 0) {
+                            amount = 1;
                         }
-                        if (i3 > 64 && !etc.getInstance().canIgnoreRestrictions(this.e)) {
-                            i3 = 64;
+                        if (amount > 64 && !getPlayer().canIgnoreRestrictions()) {
+                            amount = 64;
                         }
 
                         boolean allowedItem = false;
-                        if (!etc.getInstance().allowedItems[0].equals("") && (!etc.getInstance().canIgnoreRestrictions(this.e))) {
+                        if (!etc.getInstance().allowedItems[0].equals("") && (!getPlayer().canIgnoreRestrictions())) {
                             for (String str : etc.getInstance().allowedItems) {
-                                if (i2str.equals(str)) {
+                                if (itemIdstr.equals(str)) {
                                     allowedItem = true;
                                 }
                             }
                         } else {
                             allowedItem = true;
                         }
-                        if (!etc.getInstance().disallowedItems[0].equals("") && !etc.getInstance().canIgnoreRestrictions(this.e)) {
+                        if (!etc.getInstance().disallowedItems[0].equals("") && !getPlayer().canIgnoreRestrictions()) {
                             for (String str : etc.getInstance().disallowedItems) {
-                                if (i2str.equals(str)) {
+                                if (itemIdstr.equals(str)) {
                                     allowedItem = false;
                                 }
                             }
                         }
-                        if (i2 < ez.c.length) {
-                            if (ez.c[i2] != null && (allowedItem || etc.getInstance().canIgnoreRestrictions(this.e))) {
-                                a.log(Level.INFO, "Giving " + toGive.aq + " some " + i2);
-                                if (i3 == 255) {
-                                    toGive.a(new gp(i2, 255));
+                        if (itemId < ez.c.length) {
+                            if (ez.c[itemId] != null && (allowedItem || getPlayer().canIgnoreRestrictions())) {
+                                a.log(Level.INFO, "Giving " + toGive.getName() + " some " + itemId);
+                                if (amount == 255) {
+                                    toGive.giveItem(itemId, 255);
                                 } else {
-                                    int temp = i3;
-
-                                    do {
-                                        if (temp - 64 >= 64) {
-                                            toGive.a(new gp(i2, 64));
-                                        } else {
-                                            toGive.a(new gp(i2, temp));
-                                        }
-                                        temp -= 64;
-                                    } while (temp >= 64);
+                                    toGive.giveItem(itemId, amount);
                                 }
 
-                                if (toGive == this.e) {
+                                if (toGive.getName().equalsIgnoreCase(getPlayer().getName())) {
                                     msg(Colors.Rose + "There you go c:");
                                 } else {
                                     msg(Colors.Rose + "Gift given! :D");
-                                    toGive.a.msg(Colors.Rose + "Enjoy your gift! :D");
+                                    toGive.sendMessage(Colors.Rose + "Enjoy your gift! :D");
                                 }
-                            } else if ((!allowedItem) && (ez.c[i2] != null) && !etc.getInstance().canIgnoreRestrictions(this.e)) {
+                            } else if ((!allowedItem) && (ez.c[itemId] != null) && !getPlayer().canIgnoreRestrictions()) {
                                 msg(Colors.Rose + "You are not allowed to spawn that item.");
                             } else {
                                 msg(Colors.Rose + "No item with ID " + split[1]);
@@ -814,26 +788,26 @@ public class id extends ej
                     return;
                 }
 
-                ea player = match(split[1]);
+                Player player = match(split[1]);
 
                 if (player != null) {
-                    if (!hasControlOver(player)) {
+                    if (!getPlayer().hasControlOver(player)) {
                         msg(Colors.Rose + "You can't ban that user.");
                         return;
                     }
 
                     // adds player to ban list
-                    this.d.f.c(player.a.b.b().toString().split(":")[0].substring(1));
+                    this.d.f.c(player.getIP());
 
                     etc.getInstance().getLoader().callHook(PluginLoader.Hook.IPBAN, new Object[]{e, split.length > 2 ? split[1] : ""});
 
-                    a.log(Level.INFO, "IP Banning " + player.aq + " (IP: " + player.a.b.b().toString() + ")");
-                    msg(Colors.Rose + "IP Banning " + player.aq + " (IP: " + player.a.b.b().toString() + ")");
+                    a.log(Level.INFO, "IP Banning " + player.getName() + " (IP: " + player.getIP() + ")");
+                    msg(Colors.Rose + "IP Banning " + player.getName() + " (IP: " + player.getIP() + ")");
 
                     if (split.length > 2) {
-                        player.a.c("IP Banned by " + e.aq + ": " + combineSplit(2, split, " "));
+                        player.kick("IP Banned by " + getPlayer().getName() + ": " + combineSplit(2, split, " "));
                     } else {
-                        player.a.c("IP Banned by " + e.aq + ".");
+                        player.kick("IP Banned by " + getPlayer().getName() + ".");
                     }
                 } else {
                     msg(Colors.Rose + "Can't find user " + split[1] + ".");
@@ -844,26 +818,26 @@ public class id extends ej
                     return;
                 }
 
-                ea player = match(split[1]);
+                Player player = match(split[1]);
 
                 if (player != null) {
-                    if (!hasControlOver(player)) {
+                    if (!getPlayer().hasControlOver(player)) {
                         msg(Colors.Rose + "You can't ban that user.");
                         return;
                     }
 
                     // adds player to ban list
-                    this.d.f.a(player.aq);
+                    this.d.f.a(player.getName());
 
                     etc.getInstance().getLoader().callHook(PluginLoader.Hook.BAN, new Object[]{e, split.length > 2 ? split[1] : ""});
 
                     if (split.length > 2) {
-                        player.a.c("Banned by " + e.aq + ": " + combineSplit(2, split, " "));
+                        player.kick("Banned by " + getPlayer().getName() + ": " + combineSplit(2, split, " "));
                     } else {
-                        player.a.c("Banned by " + e.aq + ".");
+                        player.kick("Banned by " + getPlayer().getName() + ".");
                     }
-                    a.log(Level.INFO, "Banning " + player.aq);
-                    msg(Colors.Rose + "Banning " + player.aq);
+                    a.log(Level.INFO, "Banning " + player.getName());
+                    msg(Colors.Rose + "Banning " + player.getName());
                 } else {
                     msg(Colors.Rose + "Can't find user " + split[1] + ".");
                 }
@@ -887,10 +861,10 @@ public class id extends ej
                     return;
                 }
 
-                ea player = match(split[1]);
+                Player player = match(split[1]);
 
                 if (player != null) {
-                    if (!hasControlOver(player)) {
+                    if (!getPlayer().hasControlOver(player)) {
                         msg(Colors.Rose + "You can't kick that user.");
                         return;
                     }
@@ -898,62 +872,56 @@ public class id extends ej
                     etc.getInstance().getLoader().callHook(PluginLoader.Hook.KICK, new Object[]{e, split.length > 2 ? split[1] : ""});
 
                     if (split.length > 2) {
-                        player.a.c("Kicked by " + e.aq + ": " + combineSplit(2, split, " "));
+                        player.kick("Kicked by " + getPlayer().getName() + ": " + combineSplit(2, split, " "));
                     } else {
-                        player.a.c("Kicked by " + e.aq + ".");
+                        player.kick("Kicked by " + getPlayer().getName() + ".");
                     }
-                    a.log(Level.INFO, "Kicking " + player.aq);
-                    msg(Colors.Rose + "Kicking " + player.aq);
+                    a.log(Level.INFO, "Kicking " + player.getName());
+                    msg(Colors.Rose + "Kicking " + player.getName());
                 } else {
                     msg(Colors.Rose + "Can't find user " + split[1] + ".");
                 }
             } else if (split[0].equalsIgnoreCase("/me")) {
-                if (etc.getInstance().isMuted(e)) {
+                if (getPlayer().isMuted()) {
                     msg(Colors.Rose + "You are currently muted.");
                     return;
                 }
                 if (split.length == 1)
                     return;
-                String prefix = etc.getInstance().getUserColor(e.aq);
-                String paramString2 = "* " + prefix + this.e.aq + Colors.White + " " + paramString.substring(paramString.indexOf(" ")).trim();
-                a.info("* " + this.e.aq + " " + paramString.substring(paramString.indexOf(" ")).trim());
+                String prefix = getPlayer().getColor();
+                String paramString2 = "* " + prefix + getPlayer().getName() + Colors.White + " " + paramString.substring(paramString.indexOf(" ")).trim();
+                a.info("* " + getPlayer().getName() + " " + paramString.substring(paramString.indexOf(" ")).trim());
                 this.d.f.a(new ba(paramString2));
             } else if (split[0].equalsIgnoreCase("/sethome")) {
                 // player.k, player.l, player.m
                 // x, y, z
-                Location loc = new Location();
-                loc.x = e.l;
-                loc.y = e.m;
-                loc.z = e.n;
-                loc.rotX = e.r;
-                loc.rotY = e.s;
                 Warp home = new Warp();
-                home.Location = loc;
+                home.Location = getPlayer().getLocation();
                 home.Group = ""; //no group neccessary, lol.
-                home.Name = e.aq;
+                home.Name = getPlayer().getName();
                 etc.getInstance().changeHome(home);
                 msg(Colors.Rose + "Your home has been set.");
             } else if (split[0].equalsIgnoreCase("/spawn")) {
                 int m = this.d.e.d(this.d.e.n, this.d.e.p);
                 a(this.d.e.n + 0.5D, m + 1.5D, this.d.e.p + 0.5D, 0.0F, 0.0F);
             } else if (split[0].equalsIgnoreCase("/setspawn")) {
-                this.d.e.n = (int) Math.ceil(e.l);
+                this.d.e.n = (int) Math.ceil(getPlayer().getX());
                 //Too lazy to actually update this considering it's not even used anyways.
                 //this.d.e.n = (int) Math.ceil(e.m); //Not that the Y axis really matters since it tries to get the highest point iirc.
-                this.d.e.p = (int) Math.ceil(e.n);
+                this.d.e.p = (int) Math.ceil(getPlayer().getZ());
                 a.info("Spawn position changed.");
                 msg(Colors.Rose + "You have set the spawn to your current position.");
             } else if (split[0].equalsIgnoreCase("/home")) {
                 Warp home = null;
-                if (split.length > 1 && etc.getInstance().isAdmin(e)) {
-                    home = etc.getInstance().getDataSource().getHome(split[1]);
+                if (split.length > 1 && getPlayer().isAdmin()) {
+                    home = etc.getDataSource().getHome(split[1]);
                 } else {
-                    home = etc.getInstance().getDataSource().getHome(e.aq);
+                    home = etc.getDataSource().getHome(getPlayer().getName());
                 }
 
                 if (home != null) {
-                    a(home.Location.x, home.Location.y, home.Location.z, home.Location.rotX, home.Location.rotY);
-                } else if (split.length > 1 && etc.getInstance().isAdmin(e)) {
+                    getPlayer().teleportTo(home.Location);
+                } else if (split.length > 1 && getPlayer().isAdmin()) {
                     msg(Colors.Rose + "That player home does not exist");
                 } else {
                     int m = this.d.e.d(this.d.e.n, this.d.e.p);
@@ -964,21 +932,21 @@ public class id extends ej
                     msg(Colors.Rose + "Correct usage is: /warp [warpname]");
                     return;
                 }
-                ea toWarp = e;
+                Player toWarp = getPlayer();
                 Warp warp = null;
-                if (split.length == 3 && etc.getInstance().canIgnoreRestrictions(e)) {
-                    warp = etc.getInstance().getDataSource().getWarp(split[1]);
+                if (split.length == 3 && getPlayer().canIgnoreRestrictions()) {
+                    warp = etc.getDataSource().getWarp(split[1]);
                     toWarp = match(split[2]);
                 } else {
-                    warp = etc.getInstance().getDataSource().getWarp(split[1]);
+                    warp = etc.getDataSource().getWarp(split[1]);
                 }
                 if (toWarp != null) {
                     if (warp != null) {
-                        if (!etc.getInstance().isUserInGroup(e, warp.Group) && !warp.Group.equals("")) {
+                        if (!getPlayer().isInGroup(warp.Group) && !warp.Group.equals("")) {
                             msg(Colors.Rose + "Warp not found.");
                         } else {
-                            toWarp.a.a(warp.Location.x, warp.Location.y, warp.Location.z, warp.Location.rotX, warp.Location.rotY);
-                            toWarp.a.msg(Colors.Rose + "Woosh!");
+                            toWarp.teleportTo(warp.Location);
+                            toWarp.sendMessage(Colors.Rose + "Woosh!");
                         }
                     } else {
                         msg(Colors.Rose + "Warp not found");
@@ -986,29 +954,23 @@ public class id extends ej
                 } else {
                     msg(Colors.Rose + "Player not found.");
                 }
-            } else if (split[0].equalsIgnoreCase("/listwarps") && etc.getInstance().getDataSource().hasWarps()) {
+            } else if (split[0].equalsIgnoreCase("/listwarps") && etc.getDataSource().hasWarps()) {
                 if (split.length != 2 && split.length != 3) {
-                    msg(Colors.Rose + "Available warps: " + Colors.White + etc.getInstance().getDataSource().getWarpNames(e.aq));
+                    msg(Colors.Rose + "Available warps: " + Colors.White + etc.getDataSource().getWarpNames(getPlayer()));
                     return;
                 }
             } else if (split[0].equalsIgnoreCase("/setwarp")) {
                 if (split.length < 2) {
-                    if (etc.getInstance().canIgnoreRestrictions(e)) {
+                    if (getPlayer().canIgnoreRestrictions()) {
                         msg(Colors.Rose + "Correct usage is: /setwarp [warpname] [group]");
                     } else {
                         msg(Colors.Rose + "Correct usage is: /setwarp [warpname]");
                     }
                     return;
                 }
-                Location loc = new Location();
-                loc.x = e.l;
-                loc.y = e.m;
-                loc.z = e.n;
-                loc.rotX = e.r;
-                loc.rotY = e.s;
                 Warp warp = new Warp();
                 warp.Name = split[1];
-                warp.Location = loc;
+                warp.Location = getPlayer().getLocation();
                 if (split.length == 3) {
                     warp.Group = split[2];
                 } else {
@@ -1021,27 +983,27 @@ public class id extends ej
                     msg(Colors.Rose + "Correct usage is: /removewarp [warpname]");
                     return;
                 }
-                Warp warp = etc.getInstance().getDataSource().getWarp(split[1]);
+                Warp warp = etc.getDataSource().getWarp(split[1]);
                 if (warp != null) {
-                    etc.getInstance().getDataSource().removeWarp(warp);
+                    etc.getDataSource().removeWarp(warp);
                     msg(Colors.Blue + "Warp removed.");
                 } else {
                     msg(Colors.Rose + "That warp does not exist");
                 }
             } else if (split[0].equalsIgnoreCase("/lighter")) {
-                if (MinecraftServer.b.containsKey(this.e.aq + " lighter")) {
-                    a.info(this.e.aq + " failed to iron!");
+                if (MinecraftServer.b.containsKey(getPlayer().getName() + " lighter")) {
+                    a.info(getPlayer().getName() + " failed to iron!");
                     msg(Colors.Rose + "You can't create another lighter again so soon");
                 } else {
-                    if (!etc.getInstance().canIgnoreRestrictions(e)) {
-                        MinecraftServer.b.put(this.e.aq + " lighter", Integer.valueOf(6000));
+                    if (!getPlayer().canIgnoreRestrictions()) {
+                        MinecraftServer.b.put(getPlayer().getName() + " lighter", Integer.valueOf(6000));
                     }
-                    a.info(this.e.aq + " created a lighter!");
-                    this.e.a(new gp(259, 1));
+                    a.info(getPlayer().getName() + " created a lighter!");
+                    getPlayer().giveItem(259, 1);
                 }
-            } else if ((paramString.startsWith("/#")) && (this.d.f.g(this.e.aq))) {
+            } else if ((paramString.startsWith("/#")) && (this.d.f.g(getPlayer().getName()))) {
                 String str = paramString.substring(2);
-                a.info(this.e.aq + " issued server command: " + str);
+                a.info(getPlayer().getName() + " issued server command: " + str);
                 this.d.a(str, this);
             } else if (split[0].equalsIgnoreCase("/time")) {
                 if (split.length != 2) {
@@ -1061,10 +1023,11 @@ public class id extends ej
                     }
                 }
             } else if (split[0].equalsIgnoreCase("/getpos")) {
-                msg("Pos X: " + e.l + " Y: " + e.m + " Z " + e.n);
-                msg("Rotation X: " + e.r + " Y: " + e.s);
+                Player p = getPlayer();
+                msg("Pos X: " + p.getX() + " Y: " + p.getY() + " Z: " + p.getZ());
+                msg("Rotation: " + p.getRotation() + " Pitch: " + p.getPitch());
 
-                double degreeRotation = ((e.r - 90) % 360);
+                double degreeRotation = ((p.getRotation() - 90) % 360);
                 if (degreeRotation < 0) {
                     degreeRotation += 360.0;
                 }
@@ -1096,7 +1059,7 @@ public class id extends ej
                 etc.getInstance().getLoader().disablePlugin(split[1]);
                 msg(Colors.Rose + "Plugin disabled.");
             } else if (split[0].equalsIgnoreCase("/compass")) {
-                double degreeRotation = ((e.r - 90) % 360);
+                double degreeRotation = ((getPlayer().getRotation() - 90) % 360);
                 if (degreeRotation < 0) {
                     degreeRotation += 360.0;
                 }
@@ -1107,12 +1070,12 @@ public class id extends ej
                     msg(str);
                 }
             } else {
-                a.info(this.e.aq + " tried command " + paramString);
+                a.info(getPlayer().getName() + " tried command " + paramString);
                 msg(Colors.Rose + "Unknown command");
             }
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             a.log(Level.SEVERE, "Exception in command handler (Report this to hey0 unless you did something dumb like enter letters as numbers):", ex);
-            if (etc.getInstance().isAdmin(e)) {
+            if (getPlayer().isAdmin()) {
                 msg(Colors.Rose + "Exception occured. Check the server for more info.");
             }
         }
@@ -1140,7 +1103,7 @@ public class id extends ej
 
     //get name? lol
     public String c() {
-        return this.e.aq;
+        return getPlayer().getName();
     }
 
     //Update our inventory
@@ -1165,7 +1128,7 @@ public class id extends ej
 
     //Change object data (Chests, signs, furnaces, etc.)
     public void a(ib paramib) {
-        if (!etc.getInstance().canBuild(e))
+        if (!getPlayer().canBuild())
             return;
 
         as localas = this.d.e.k(paramib.a, paramib.b, paramib.c);
