@@ -30,12 +30,8 @@ public class etc {
     public boolean whitelistEnabled = false;
     public int playerLimit = 20;
     public int spawnProtectionSize = 16;
-    public long sleepTime = 30000;
-    public long saveInterval = 1800000;
     public LinkedHashMap<String, String> commands = new LinkedHashMap<String, String>();
     private String dataSourceType;
-    private ReloadThread reloadThread;
-    private SaveAllThread saveThread;
     private DataSource dataSource;
     private PropertiesFile properties;
     private PluginLoader loader;
@@ -114,8 +110,6 @@ public class etc {
                 reservelistLoc = properties.getString("reservelist-txt-location", "reservelist.txt");
             }
             spawnProtectionSize = properties.getInt("spawn-protection-size", 16);
-            sleepTime = properties.getLong("reload-interval", 30000);
-            saveInterval = properties.getLong("save-interval", 1800000);
             logging = properties.getBoolean("logging", false);
         } catch (Exception e) {
             log.log(Level.SEVERE, "Exception while reading from server.properties", e);
@@ -195,22 +189,6 @@ public class etc {
         }
 
         return loader;
-    }
-
-    /**
-     * Starts the save and reload thread
-     * @param paramMinecraftServer
-     */
-    public void startThreads(MinecraftServer paramMinecraftServer) {
-        if (saveInterval > 0 && saveThread == null) {
-            saveThread = new SaveAllThread(paramMinecraftServer, saveInterval);
-            saveThread.start();
-        }
-
-        if (sleepTime > 0 && reloadThread == null) {
-            reloadThread = new ReloadThread(sleepTime);
-            reloadThread.start();
-        }
     }
 
     /**
