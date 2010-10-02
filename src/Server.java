@@ -75,12 +75,8 @@ public class Server {
      * @return
      */
     public Player getPlayer(String name) {
-        for (Object o : server.f.b) {
-            Player ply = ((ea)o).getPlayer();
-            if (ply.getName().equalsIgnoreCase(name))
-                return ply;
-        }
-        return null;
+        ea user = server.f.h(name);
+        return user == null ? null : user.getPlayer();
     }
 
     /**
