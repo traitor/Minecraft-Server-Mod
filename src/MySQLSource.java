@@ -339,7 +339,7 @@ public class MySQLSource extends DataSource {
             ps.setString(4, id.combineSplit(0, player.getCommands(), ","));
             ps.setBoolean(5, player.getAdmin());
             ps.setBoolean(6, player.canModifyWorld());
-            ps.setBoolean(7, player.canIgnoreRestrictions());
+            ps.setBoolean(7, player.ignoreRestrictions());
             ps.executeUpdate();
 
             rs = ps.getGeneratedKeys();
@@ -375,7 +375,7 @@ public class MySQLSource extends DataSource {
             ps.setString(3, id.combineSplit(0, player.getCommands(), ","));
             ps.setBoolean(4, player.getAdmin());
             ps.setBoolean(5, player.canModifyWorld());
-            ps.setBoolean(6, player.canIgnoreRestrictions());
+            ps.setBoolean(6, player.ignoreRestrictions());
             ps.setInt(7, player.getSqlId());
             ps.executeUpdate();
         } catch (SQLException ex) {

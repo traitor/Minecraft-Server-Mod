@@ -572,7 +572,7 @@ public class FlatFileSource extends DataSource {
             builder.append(":");
             if (player.getAdmin()) {
                 builder.append("2");
-            } else if (player.canIgnoreRestrictions()) {
+            } else if (player.ignoreRestrictions()) {
                 builder.append("1");
             } else if (!player.canModifyWorld()) {
                 builder.append("-1");
@@ -610,7 +610,7 @@ public class FlatFileSource extends DataSource {
                     builder.append(":");
                     if (player.getAdmin()) {
                         builder.append("2");
-                    } else if (player.canIgnoreRestrictions()) {
+                    } else if (player.ignoreRestrictions()) {
                         builder.append("1");
                     } else if (!player.canModifyWorld()) {
                         builder.append("-1");

@@ -447,6 +447,14 @@ public class Player {
     }
 
     /**
+     * Don't use. Use canIgnoreRestrictions()
+     * @return
+     */
+    public boolean ignoreRestrictions() {
+        return ignoreRestrictions;
+    }
+
+    /**
      * Sets ignore restrictions
      * @param ignoreRestrictions
      */
