@@ -27,7 +27,7 @@ public class ft {
     public ft(MinecraftServer paramMinecraftServer) {
         this.c = paramMinecraftServer;
         this.i = paramMinecraftServer.a("banned-players.txt");
-        this.j = paramMinecraftServer.a("banned-getIps().txt");
+        this.j = paramMinecraftServer.a("banned-ips.txt");
         this.k = paramMinecraftServer.a("ops.txt");
         this.d = new hg(paramMinecraftServer);
         this.e = paramMinecraftServer.d.a("max-players", 20);
