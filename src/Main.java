@@ -25,6 +25,7 @@ public class Main {
             //derp.
         }
 
+        //My mod doesn't work with gui.
         net.minecraft.server.MinecraftServer.main(args);
     }
 

@@ -1,5 +1,3 @@
-/* Class used to store a location */
-
 /**
  * Location class. Used for passing a location to other functions and such.
  * @author James

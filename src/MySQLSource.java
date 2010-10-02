@@ -334,9 +334,9 @@ public class MySQLSource extends DataSource {
             conn = getConnection();
             ps = conn.prepareStatement("INSERT INTO users (name, groups, prefix, commands, admin, canmodifyworld, ignoresrestrictions) VALUES (?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, player.getName());
-            ps.setString(2, id.combineSplit(0, player.getGroups(), ","));
+            ps.setString(2, etc.combineSplit(0, player.getGroups(), ","));
             ps.setString(3, player.getPrefix());
-            ps.setString(4, id.combineSplit(0, player.getCommands(), ","));
+            ps.setString(4, etc.combineSplit(0, player.getCommands(), ","));
             ps.setBoolean(5, player.getAdmin());
             ps.setBoolean(6, player.canModifyWorld());
             ps.setBoolean(7, player.ignoreRestrictions());
@@ -370,9 +370,9 @@ public class MySQLSource extends DataSource {
         try {
             conn = getConnection();
             ps = conn.prepareStatement("UPDATE users SET groups = ?, prefix = ?, commands = ?, admin = ?, canmodifyworld = ?, ignoresrestrictions = ? WHERE id = ?");
-            ps.setString(1, id.combineSplit(0, player.getGroups(), ","));
+            ps.setString(1, etc.combineSplit(0, player.getGroups(), ","));
             ps.setString(2, player.getPrefix());
-            ps.setString(3, id.combineSplit(0, player.getCommands(), ","));
+            ps.setString(3, etc.combineSplit(0, player.getCommands(), ","));
             ps.setBoolean(4, player.getAdmin());
             ps.setBoolean(5, player.canModifyWorld());
             ps.setBoolean(6, player.ignoreRestrictions());

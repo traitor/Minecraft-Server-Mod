@@ -11,7 +11,7 @@ import net.minecraft.server.MinecraftServer;
 public class id extends ej
         implements ef {
 
-    public static Logger a = Logger.getLogger("Minecraft");
+    public static final Logger a = Logger.getLogger("Minecraft");
     public bb b;
     public boolean c = false;
     private MinecraftServer d;
@@ -318,49 +318,6 @@ public class id extends ej
         }
     }
 
-    private Player match(String name) {
-        ea player = null;
-        boolean found = false;
-        if (("`" + this.d.f.c().toUpperCase() + "`").split(name.toUpperCase()).length == 2) {
-            for (int i = 0; i < this.d.f.b.size() && !found; ++i) {
-                ea localea = (ea) this.d.f.b.get(i);
-                if (("`" + localea.aq.toUpperCase() + "`").split(name.toUpperCase()).length == 2) {
-                    player = localea;
-                    found = true;
-                }
-            }
-        } else if (("`" + this.d.f.c() + "`").split(name).length > 2) {
-            // Too many partial matches.
-            for (int i = 0; i < this.d.f.b.size() && !found; ++i) {
-                ea localea = (ea) this.d.f.b.get(i);
-                if (localea.aq.equalsIgnoreCase(name)) {
-                    player = localea;
-                    found = true;
-                }
-            }
-        }
-        return player.getPlayer();
-    }
-
-    /**
-     * Combines the string array into a string at the specified start with the
-     * separator separating each string.
-     * @param startIndex
-     * @param string
-     * @param seperator
-     * @return
-     */
-    public static String combineSplit(int startIndex, String[] string, String seperator) {
-        StringBuilder builder = new StringBuilder();
-        for (int i = startIndex; i < string.length; i++) {
-            builder.append(string[i]);
-            builder.append(seperator);
-        }
-        builder.deleteCharAt(builder.length() - seperator.length()); // remove the extra
-        // seperator
-        return builder.toString();
-    }
-
     /**
      * Sends a message to the player
      * @param msg
@@ -442,7 +399,7 @@ public class id extends ej
                     return;
                 }
 
-                Player player = match(split[1]);
+                Player player = etc.getServer().matchPlayer(split[1]);
 
                 if (player == null) {
                     msg(Colors.Rose + "Player does not exist.");
@@ -525,7 +482,7 @@ public class id extends ej
                     return;
                 }
 
-                Player player = match(split[1]);
+                Player player = etc.getServer().matchPlayer(split[1]);
 
                 if (player != null) {
                     if (player.toggleMute()) {
@@ -546,7 +503,7 @@ public class id extends ej
                     return;
                 }
 
-                Player player = match(split[1]);
+                Player player = etc.getServer().matchPlayer(split[1]);
 
                 if (player != null) {
                     if (player.getName().equals(getPlayer().getName())) {
@@ -555,8 +512,8 @@ public class id extends ej
                     }
                     String prefix = getPlayer().getColor();
 
-                    player.sendMessage("(MSG) " + prefix + "<" + getPlayer().getName() + "> " + Colors.White + combineSplit(2, split, " "));
-                    msg("(MSG) " + prefix + "<" + getPlayer().getName() + "> " + Colors.White + combineSplit(2, split, " "));
+                    player.sendMessage("(MSG) " + prefix + "<" + getPlayer().getName() + "> " + Colors.White + etc.combineSplit(2, split, " "));
+                    msg("(MSG) " + prefix + "<" + getPlayer().getName() + "> " + Colors.White + etc.combineSplit(2, split, " "));
                 } else {
                     msg(Colors.Rose + "Couldn't find player " + split[1]);
                 }
@@ -568,7 +525,7 @@ public class id extends ej
 
                 Player toGive = getPlayer();
                 if (split.length > 2 && getPlayer().canIgnoreRestrictions()) {
-                    toGive = match(split[1]);
+                    toGive = etc.getServer().matchPlayer(split[1]);
                 }
 
                 Kit kit = etc.getDataSource().getKit(split[1]);
@@ -599,16 +556,8 @@ public class id extends ej
                                     } catch (NumberFormatException n) {
                                         itemId = etc.getDataSource().getItem(entry.getKey());
                                     }
-
-                                    int temp = kit.IDs.get(entry.getKey());
-                                    do {
-                                        if (temp - 64 >= 64) {
-                                            toGive.giveItem(itemId, 64);
-                                        } else {
-                                            toGive.giveItem(itemId, temp);
-                                        }
-                                        temp -= 64;
-                                    } while (temp >= 64);
+                                    
+                                    toGive.giveItem(itemId, kit.IDs.get(entry.getKey()));
                                 } catch (Exception e1) {
                                     a.info("Got an exception while giving out a kit (Kit name \"" + kit.Name + "\"). Are you sure all the Ids are numbers?");
                                     msg(Colors.Rose + "The server encountered a problem while giving the kit :(");
@@ -627,7 +576,7 @@ public class id extends ej
                     return;
                 }
 
-                Player player = match(split[1]);
+                Player player = etc.getServer().matchPlayer(split[1]);
 
                 if (getPlayer().getName().equalsIgnoreCase(split[1])) {
                     msg(Colors.Rose + "You're already here!");
@@ -646,7 +595,7 @@ public class id extends ej
                     return;
                 }
 
-                Player player = match(split[1]);
+                Player player = etc.getServer().matchPlayer(split[1]);
 
                 if (player.getName().equalsIgnoreCase(split[1])) {
                     msg(Colors.Rose + "Wow look at that! You teleported yourself to yourself!");
@@ -673,7 +622,7 @@ public class id extends ej
 
                 Player toGive = getPlayer();
                 if (split.length == 4 && getPlayer().canIgnoreRestrictions()) {
-                    toGive = match(split[3]);
+                    toGive = etc.getServer().matchPlayer(split[3]);
                 }
 
                 if (toGive != null) {
@@ -690,14 +639,13 @@ public class id extends ej
                         }
 
                         String itemIdstr = Integer.toString(itemId);
-                        if (amount == -1 && getPlayer().isAdmin()) {
-                            amount = 255;
-                        } else if (amount <= 0) {
+                        if (amount <= 0 && !getPlayer().isAdmin())
                             amount = 1;
-                        }
-                        if (amount > 64 && !getPlayer().canIgnoreRestrictions()) {
+
+                        if (amount > 64 && !getPlayer().canIgnoreRestrictions())
                             amount = 64;
-                        }
+                        if (amount > 1024)
+                            amount = 1024; //16 stacks worth. More than enough.
 
                         boolean allowedItem = false;
                         if (!etc.getInstance().allowedItems[0].equals("") && (!getPlayer().canIgnoreRestrictions())) {
@@ -716,8 +664,8 @@ public class id extends ej
                                 }
                             }
                         }
-                        if (itemId < ez.c.length) {
-                            if (ez.c[itemId] != null && (allowedItem || getPlayer().canIgnoreRestrictions())) {
+                        if (Item.isValidItem(itemId)) {
+                            if (allowedItem || getPlayer().canIgnoreRestrictions()) {
                                 a.log(Level.INFO, "Giving " + toGive.getName() + " some " + itemId);
                                 if (amount == 255) {
                                     toGive.giveItem(itemId, 255);
@@ -731,10 +679,8 @@ public class id extends ej
                                     msg(Colors.Rose + "Gift given! :D");
                                     toGive.sendMessage(Colors.Rose + "Enjoy your gift! :D");
                                 }
-                            } else if ((!allowedItem) && (ez.c[itemId] != null) && !getPlayer().canIgnoreRestrictions()) {
+                            } else if (!allowedItem && !getPlayer().canIgnoreRestrictions()) {
                                 msg(Colors.Rose + "You are not allowed to spawn that item.");
-                            } else {
-                                msg(Colors.Rose + "No item with ID " + split[1]);
                             }
                         } else {
                             msg(Colors.Rose + "No item with ID " + split[1]);
@@ -781,7 +727,7 @@ public class id extends ej
                     return;
                 }
 
-                Player player = match(split[1]);
+                Player player = etc.getServer().matchPlayer(split[1]);
 
                 if (player != null) {
                     if (!getPlayer().hasControlOver(player)) {
@@ -798,7 +744,7 @@ public class id extends ej
                     msg(Colors.Rose + "IP Banning " + player.getName() + " (IP: " + player.getIP() + ")");
 
                     if (split.length > 2) {
-                        player.kick("IP Banned by " + getPlayer().getName() + ": " + combineSplit(2, split, " "));
+                        player.kick("IP Banned by " + getPlayer().getName() + ": " + etc.combineSplit(2, split, " "));
                     } else {
                         player.kick("IP Banned by " + getPlayer().getName() + ".");
                     }
@@ -811,7 +757,7 @@ public class id extends ej
                     return;
                 }
 
-                Player player = match(split[1]);
+                Player player = etc.getServer().matchPlayer(split[1]);
 
                 if (player != null) {
                     if (!getPlayer().hasControlOver(player)) {
@@ -825,7 +771,7 @@ public class id extends ej
                     etc.getInstance().getLoader().callHook(PluginLoader.Hook.BAN, new Object[]{e, split.length > 2 ? split[1] : ""});
 
                     if (split.length > 2) {
-                        player.kick("Banned by " + getPlayer().getName() + ": " + combineSplit(2, split, " "));
+                        player.kick("Banned by " + getPlayer().getName() + ": " + etc.combineSplit(2, split, " "));
                     } else {
                         player.kick("Banned by " + getPlayer().getName() + ".");
                     }
@@ -854,7 +800,7 @@ public class id extends ej
                     return;
                 }
 
-                Player player = match(split[1]);
+                Player player = etc.getServer().matchPlayer(split[1]);
 
                 if (player != null) {
                     if (!getPlayer().hasControlOver(player)) {
@@ -865,7 +811,7 @@ public class id extends ej
                     etc.getInstance().getLoader().callHook(PluginLoader.Hook.KICK, new Object[]{e, split.length > 2 ? split[1] : ""});
 
                     if (split.length > 2) {
-                        player.kick("Kicked by " + getPlayer().getName() + ": " + combineSplit(2, split, " "));
+                        player.kick("Kicked by " + getPlayer().getName() + ": " + etc.combineSplit(2, split, " "));
                     } else {
                         player.kick("Kicked by " + getPlayer().getName() + ".");
                     }
@@ -929,7 +875,7 @@ public class id extends ej
                 Warp warp = null;
                 if (split.length == 3 && getPlayer().canIgnoreRestrictions()) {
                     warp = etc.getDataSource().getWarp(split[1]);
-                    toWarp = match(split[2]);
+                    toWarp = etc.getServer().matchPlayer(split[2]);
                 } else {
                     warp = etc.getDataSource().getWarp(split[1]);
                 }
@@ -1011,7 +957,7 @@ public class id extends ej
                 } else {
                     try {
                         this.d.e.c = Long.parseLong(split[1]);
-                    } catch (NumberFormatException e) {
+                    } catch (NumberFormatException ex) {
                         msg(Colors.Rose + "Please enter numbers, not letters.");
                     }
                 }
@@ -1066,7 +1012,7 @@ public class id extends ej
                 a.info(getPlayer().getName() + " tried command " + paramString);
                 msg(Colors.Rose + "Unknown command");
             }
-        } catch (Throwable ex) {
+        } catch (Throwable ex) { //Might as well try and catch big exceptions before the server crashes from a stack overflow or something
             a.log(Level.SEVERE, "Exception in command handler (Report this to hey0 unless you did something dumb like enter letters as numbers):", ex);
             if (getPlayer().isAdmin()) {
                 msg(Colors.Rose + "Exception occured. Check the server for more info.");

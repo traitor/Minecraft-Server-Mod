@@ -4,7 +4,6 @@
  * @author James
  */
 public class Warp {
-
     /**
      * Warp ID - Used in database transactions
      */

@@ -1,7 +1,5 @@
 /* Just a general storage for all my crap */
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -319,7 +317,7 @@ public class etc {
                 return true;
             }
 
-            Player player = match(split[1], server);
+            Player player = getServer().matchPlayer(split[1]);
 
             if (player == null) {
                 log.info("Player does not exist.");
@@ -401,30 +399,6 @@ public class etc {
         return dontParseRegular;
     }
 
-    private static Player match(String name, MinecraftServer d) {
-        ea player = null;
-        boolean found = false;
-        if (("`" + d.f.c().toUpperCase() + "`").split(name.toUpperCase()).length == 2) {
-            for (int i = 0; i < d.f.b.size() && !found; ++i) {
-                ea localea = (ea) d.f.b.get(i);
-                if (("`" + localea.aq.toUpperCase() + "`").split(name.toUpperCase()).length == 2) {
-                    player = localea;
-                    found = true;
-                }
-            }
-        } else if (("`" + d.f.c() + "`").split(name).length > 2) {
-            // Too many partial matches.
-            for (int i = 0; i < d.f.b.size() && !found; ++i) {
-                ea localea = (ea) d.f.b.get(i);
-                if (localea.aq.equalsIgnoreCase(name)) {
-                    player = localea;
-                    found = true;
-                }
-            }
-        }
-        return player.getPlayer();
-    }
-
     /**
      * Returns compass direction according to your rotation
      * @param degrees
@@ -452,5 +426,24 @@ public class etc {
         } else {
             return "ERR";
         }
+    }
+
+    /**
+     * Combines the string array into a string at the specified start with the
+     * separator separating each string.
+     * @param startIndex
+     * @param string
+     * @param seperator
+     * @return
+     */
+    public static String combineSplit(int startIndex, String[] string, String seperator) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = startIndex; i < string.length; i++) {
+            builder.append(string[i]);
+            builder.append(seperator);
+        }
+        builder.deleteCharAt(builder.length() - seperator.length()); // remove the extra
+        // seperator
+        return builder.toString();
     }
 }

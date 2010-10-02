@@ -6,7 +6,6 @@
 public class Player {
 
     private ea user;
-
     private int id = -1;
     private String name = "";
     private String prefix = "";

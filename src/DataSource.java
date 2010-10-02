@@ -360,7 +360,7 @@ public abstract class DataSource {
      * @return true if reservelist
      */
     public boolean hasReserveList() {
-        synchronized (reserveList) {
+        synchronized (reserveListLock) {
             return !reserveList.isEmpty();
         }
     }
@@ -371,7 +371,7 @@ public abstract class DataSource {
      * @return
      */
     public boolean isUserOnReserveList(String user) {
-        synchronized (reserveList) {
+        synchronized (reserveListLock) {
             for (String name : reserveList) {
                 if (name.equalsIgnoreCase(user)) {
                     return true;

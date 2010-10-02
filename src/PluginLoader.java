@@ -1,13 +1,9 @@
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -68,6 +64,21 @@ public class PluginLoader {
         load(fileName);
     }
 
+    /**
+     * Reloads the specified plugin
+     * @param fileName
+     */
+    public void reloadPlugin(String fileName) {
+        /* Not sure exactly how much of this is necessary */
+        Plugin toNull = getPlugin(fileName);
+        if (toNull.isEnabled())
+            toNull.disable();
+        plugins.remove(toNull);
+        toNull = null;
+
+        load(fileName);
+    }
+
     private void load(String fileName) {
         try {
             File file = new File("plugins/" + fileName + ".jar");
@@ -94,21 +105,6 @@ public class PluginLoader {
         } catch (ClassNotFoundException ex) {
             log.log(Level.SEVERE, "Exception while loading plugin", ex);
         }
-    }
-
-    /**
-     * Reloads the specified plugin
-     * @param fileName 
-     */
-    public void reloadPlugin(String fileName) {
-        /* Not sure exactly how much of this is necessary */
-        Plugin toNull = getPlugin(fileName);
-        if (toNull.isEnabled())
-            toNull.disable();
-        plugins.remove(toNull);
-        toNull = null;
-
-        load(fileName);
     }
 
     /**
@@ -209,7 +205,7 @@ public class PluginLoader {
                     try {
                         switch (h) {
                             case LOGINCHECK:
-                                String result = (String)plugin.onLoginChecks((String) parameters[0]);
+                                String result = plugin.onLoginChecks((String) parameters[0]);
                                 if (result != null)
                                     toRet = result;
                                 break;

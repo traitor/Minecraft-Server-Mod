@@ -1,5 +1,7 @@
-/* Class of all colors so I don't waste time trying to find that damn character*/
-
+/**
+ * Class of all colors so I don't waste time trying to find that damn character
+ * @author James
+ */
 public class Colors {
     public static final String Black = "§0";
     public static final String Navy = "§1";

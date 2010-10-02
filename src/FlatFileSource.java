@@ -568,7 +568,7 @@ public class FlatFileSource extends DataSource {
             //#NAME:GROUPS:ADMIN/UNRESTRICTED:COLOR:COMMANDS
             builder.append(player.getName());
             builder.append(":");
-            builder.append(id.combineSplit(0, player.getGroups(), ","));
+            builder.append(etc.combineSplit(0, player.getGroups(), ","));
             builder.append(":");
             if (player.getAdmin()) {
                 builder.append("2");
@@ -582,7 +582,7 @@ public class FlatFileSource extends DataSource {
             builder.append(":");
             builder.append(player.getPrefix());
             builder.append(":");
-            builder.append(id.combineSplit(0, player.getCommands(), ","));
+            builder.append(etc.combineSplit(0, player.getCommands(), ","));
             bw.append(builder.toString());
             bw.newLine();
             bw.close();
@@ -606,7 +606,7 @@ public class FlatFileSource extends DataSource {
                     StringBuilder builder = new StringBuilder();
                     builder.append(player.getName());
                     builder.append(":");
-                    builder.append(id.combineSplit(0, player.getGroups(), ","));
+                    builder.append(etc.combineSplit(0, player.getGroups(), ","));
                     builder.append(":");
                     if (player.getAdmin()) {
                         builder.append("2");
@@ -620,7 +620,7 @@ public class FlatFileSource extends DataSource {
                     builder.append(":");
                     builder.append(player.getPrefix());
                     builder.append(":");
-                    builder.append(id.combineSplit(0, player.getCommands(), ","));
+                    builder.append(etc.combineSplit(0, player.getCommands(), ","));
                     toWrite.append(builder.toString()).append("\r\n");
                 }
             }
