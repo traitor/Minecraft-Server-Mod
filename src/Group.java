@@ -1,6 +1,6 @@
 
 /**
- *
+ * Group.java - Group stuff.
  * @author James
  */
 public class Group {

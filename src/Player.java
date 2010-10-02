@@ -1,6 +1,6 @@
 
 /**
- * Interface for ea - so mods don't have to update often.
+ * Player.java - Interface for ea so mods don't have to update often.
  * @author James
  */
 public class Player {

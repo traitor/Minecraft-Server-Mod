@@ -1,5 +1,3 @@
-/* Flat file data source */
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,7 +10,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 
 /**
- * FlatFileSource is for accessing users, groups and such from flat files.
+ * FlatFileSource.java - Accessing users, groups and such from flat files.
  * @author James
  */
 public class FlatFileSource extends DataSource {

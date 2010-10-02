@@ -1,5 +1,5 @@
 /**
- * Provides some way of making/editing blocks
+ * Block.java - Provides some way of making/editing blocks
  * @author James
  */
 public class Block {

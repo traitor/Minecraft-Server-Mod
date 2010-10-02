@@ -1,5 +1,3 @@
-/* Just a general storage for all my crap */
-
 import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;

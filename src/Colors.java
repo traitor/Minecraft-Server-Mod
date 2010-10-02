@@ -1,5 +1,6 @@
 /**
- * Class of all colors so I don't waste time trying to find that damn character
+ * Colors.java- Class of all colors so I don't waste time trying to find that
+ * damn character
  * @author James
  */
 public class Colors {

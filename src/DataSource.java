@@ -1,5 +1,3 @@
-/* Interface so we can either use MySQL or flat files */
-
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -7,7 +5,7 @@ import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 
 /**
- * DataSource is the abstract class for implementing new data sources.
+ * DataSource.java - Abstract class for implementing new data sources.
  * @author James
  */
 public abstract class DataSource {
