@@ -4,7 +4,7 @@
  */
 
 /**
- *
+ * Provides some way of making/editing blocks
  * @author James
  */
 public class Block {

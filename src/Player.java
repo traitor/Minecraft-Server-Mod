@@ -112,6 +112,10 @@ public class Player {
         return loc;
     }
 
+    public String getIP() {
+        return user.a.b.b().toString().split(":")[0].substring(1);
+    }
+
     /**
      * Returns the player's X
      * @return

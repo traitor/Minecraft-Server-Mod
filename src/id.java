@@ -258,6 +258,7 @@ public class id extends ej
         this.b.a(paramhp);
     }
 
+    //Player changed item in hand
     public void a(fv paramfv) {
         int m = paramfv.b;
         this.e.aj.d = (this.e.aj.a.length - 1);
@@ -1076,7 +1077,7 @@ public class id extends ej
                     return;
                 }
 
-                etc.getInstance().getLoader().reload(split[1]);
+                etc.getInstance().getLoader().reloadPlugin(split[1]);
                 msg(Colors.Rose + "Plugin reloaded.");
             } else if (split[0].equalsIgnoreCase("/enableplugin")) {
                 if (split.length < 2) {
@@ -1117,12 +1118,14 @@ public class id extends ej
         }
     }
 
+    //Arm animation
     public void a(o paramo) {
         if (paramo.b == 1) {
             this.e.z();
         }
     }
 
+    //Quitting (packet)
     public void a(io paramio) {
         this.b.a("Quitting");
     }

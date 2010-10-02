@@ -246,7 +246,7 @@ public class etc {
     public PluginLoader getLoader() {
         if (loader == null) {
             loader = new PluginLoader(server);
-            loader.load();
+            loader.loadPlugins();
         }
 
         return loader;
