@@ -1,7 +1,6 @@
-//Interface for ea - so mods don't have to update often.
 
 /**
- *
+ * Interface for ea - so mods don't have to update often.
  * @author James
  */
 public class Player {
@@ -78,7 +77,7 @@ public class Player {
     }
 
     /**
-     * Returns true if the player can use the specified command
+     * Returns true if this player can use the specified command
      * @param command
      * @return
      */
@@ -129,7 +128,7 @@ public class Player {
     }
 
     /**
-     * Checks to see if specified user is in the specified group
+     * Checks to see if this player is in the specified group
      * @param group
      * @return
      */
@@ -214,6 +213,10 @@ public class Player {
         return loc;
     }
 
+    /**
+     * Returns the IP of this player
+     * @return
+     */
     public String getIP() {
         return user.a.b.b().toString().split(":")[0].substring(1);
     }
@@ -298,6 +301,10 @@ public class Player {
         user.a.a(getX(), getY(), getZ(), rotation, getPitch());
     }
 
+    /**
+     * Returns true if this player is an admin.
+     * @return
+     */
     public boolean isAdmin() {
         if (admin) {
             return true;
@@ -314,10 +321,26 @@ public class Player {
         return false;
     }
 
+    /**
+     * Don't use this! Use isAdmin
+     * @return
+     */
+    public boolean getAdmin() {
+        return admin;
+    }
+
+    /**
+     * Sets whether or not this player is an administrator
+     * @param admin
+     */
     public void setAdmin(boolean admin) {
         this.admin = admin;
     }
 
+    /**
+     * Returns false if this player can not modify terrain, edit chests, etc.
+     * @return
+     */
     public boolean canBuild() {
         if (canModifyWorld) {
             return true;
@@ -338,38 +361,75 @@ public class Player {
         return false;
     }
 
+    /**
+     * Don't use this, use canBuild()
+     * @return
+     */
     public boolean canModifyWorld() {
         return canModifyWorld;
     }
 
+    /**
+     * Sets whether or not this player can modify the world terrain
+     * @param canModifyWorld
+     */
     public void setCanModifyWorld(boolean canModifyWorld) {
         this.canModifyWorld = canModifyWorld;
     }
 
+    /**
+     * Set allowed commands
+     * @return
+     */
     public String[] getCommands() {
         return commands;
     }
 
+    /**
+     * Sets this player's allowed commands
+     * @param commands
+     */
     public void setCommands(String[] commands) {
         this.commands = commands;
     }
 
+    /**
+     * Returns this player's groups
+     * @return
+     */
     public String[] getGroups() {
         return groups;
     }
 
+    /**
+     * Sets this player's groups
+     * @param groups
+     */
     public void setGroups(String[] groups) {
         this.groups = groups;
     }
 
+    /**
+     * Returns the sql ID.
+     * @return
+     */
     public int getSqlId() {
         return id;
     }
 
+    /**
+     * Sets the sql ID. Don't touch this.
+     * @param id
+     */
     public void setSqlId(int id) {
         this.id = id;
     }
 
+    /**
+     * If the user can ignore restrictions this will return true. Things like
+     * item amounts and such are unlimited, etc.
+     * @return
+     */
     public boolean canIgnoreRestrictions() {
         if (admin || ignoreRestrictions) {
             return true;
@@ -386,18 +446,34 @@ public class Player {
         return false;
     }
 
+    /**
+     * Sets ignore restrictions
+     * @param ignoreRestrictions
+     */
     public void setIgnoreRestrictions(boolean ignoreRestrictions) {
         this.ignoreRestrictions = ignoreRestrictions;
     }
 
+    /**
+     * Returns allowed IPs
+     * @return
+     */
     public String[] getIps() {
         return ips;
     }
 
+    /**
+     * Sets allowed IPs
+     * @param ips
+     */
     public void setIps(String[] ips) {
         this.ips = ips;
     }
 
+    /**
+     * Returns the correct color/prefix for this player
+     * @return
+     */
     public String getColor() {
         if (prefix != null) {
             if (!prefix.equals("")) {
@@ -413,18 +489,34 @@ public class Player {
         return def != null ? "§" + def.Prefix : "";
     }
 
+    /**
+     * Returns the prefix. NOTE: Don't use this, use getColor() instead.
+     * @return
+     */
     public String getPrefix() {
         return prefix;
     }
 
+    /**
+     * Sets the prefix
+     * @param prefix
+     */
     public void setPrefix(String prefix) {
         this.prefix = prefix;
     }
 
+    /**
+     * Gets the actual user class.
+     * @return
+     */
     public ea getUser() {
         return user;
     }
 
+    /**
+     * Sets the user. Don't use this.
+     * @param user
+     */
     public void setUser(ea user) {
         this.user = user;
     }

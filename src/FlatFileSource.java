@@ -570,7 +570,7 @@ public class FlatFileSource extends DataSource {
             builder.append(":");
             builder.append(id.combineSplit(0, player.getGroups(), ","));
             builder.append(":");
-            if (player.isAdmin()) {
+            if (player.getAdmin()) {
                 builder.append("2");
             } else if (player.canIgnoreRestrictions()) {
                 builder.append("1");
@@ -608,7 +608,7 @@ public class FlatFileSource extends DataSource {
                     builder.append(":");
                     builder.append(id.combineSplit(0, player.getGroups(), ","));
                     builder.append(":");
-                    if (player.isAdmin()) {
+                    if (player.getAdmin()) {
                         builder.append("2");
                     } else if (player.canIgnoreRestrictions()) {
                         builder.append("1");

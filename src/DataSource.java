@@ -69,13 +69,13 @@ public abstract class DataSource {
 
     /**
      * Adds user to the list
-     * @param user
+     * @param player
      */
     abstract public void addUser(Player player);
 
     /**
      * Modifies the provided user
-     * @param user
+     * @param player 
      */
     abstract public void modifyUser(Player player);
 

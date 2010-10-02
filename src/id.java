@@ -1,9 +1,6 @@
 
-import java.net.SocketAddress;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -35,6 +32,10 @@ public class id extends ej
         paramea.a = this;
     }
 
+    /**
+     * Returns the player for this class
+     * @return
+     */
     public Player getPlayer() {
         return e.getPlayer();
     }

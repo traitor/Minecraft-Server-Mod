@@ -168,6 +168,10 @@ public class etc {
         return server;
     }
 
+    /**
+     * Returns the data source
+     * @return
+     */
     public static DataSource getDataSource() {
         return etc.getInstance().getSource();
     }

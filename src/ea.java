@@ -36,6 +36,10 @@ public class ea extends fc {
         player.setUser(this);
     }
 
+    /**
+     * Returns the player
+     * @return
+     */
     public Player getPlayer() {
         return player;
     }

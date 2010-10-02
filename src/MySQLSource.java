@@ -340,7 +340,7 @@ public class MySQLSource extends DataSource {
             ps.setString(2, id.combineSplit(0, player.getGroups(), ","));
             ps.setString(3, player.getPrefix());
             ps.setString(4, id.combineSplit(0, player.getCommands(), ","));
-            ps.setBoolean(5, player.isAdmin());
+            ps.setBoolean(5, player.getAdmin());
             ps.setBoolean(6, player.canModifyWorld());
             ps.setBoolean(7, player.canIgnoreRestrictions());
             ps.executeUpdate();
@@ -376,7 +376,7 @@ public class MySQLSource extends DataSource {
             ps.setString(1, id.combineSplit(0, player.getGroups(), ","));
             ps.setString(2, player.getPrefix());
             ps.setString(3, id.combineSplit(0, player.getCommands(), ","));
-            ps.setBoolean(4, player.isAdmin());
+            ps.setBoolean(4, player.getAdmin());
             ps.setBoolean(5, player.canModifyWorld());
             ps.setBoolean(6, player.canIgnoreRestrictions());
             ps.setInt(7, player.getSqlId());
