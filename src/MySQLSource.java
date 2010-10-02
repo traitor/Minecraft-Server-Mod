@@ -143,7 +143,7 @@ public class MySQLSource extends DataSource {
     public void loadHomes() {
         synchronized (homeLock) {
             homes = new ArrayList<Warp>();
-            if (!etc.getInstance().saveHomes) {
+            if (!etc.getInstance().canSaveHomes()) {
                 return;
             }
             Connection conn = null;

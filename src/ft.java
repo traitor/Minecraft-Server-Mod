@@ -59,7 +59,7 @@ public class ft {
         this.c.e.a(paramea);
         this.d.a(paramea);
 
-        for (String str : etc.getInstance().motd) {
+        for (String str : etc.getInstance().getMotd()) {
             paramea.a.b(new ba(str));
         }
         etc.getInstance().getLoader().callHook(PluginLoader.Hook.LOGIN, new Object[]{paramea});
@@ -108,9 +108,9 @@ public class ft {
                 // ^ otherwise no.
             }
         }
-        if (etc.getInstance().whitelistEnabled && !(etc.getDataSource().isUserOnWhitelist(paramString1)
+        if (etc.getInstance().isWhitelistEnabled() && !(etc.getDataSource().isUserOnWhitelist(paramString1)
                 || player.isAdmin())) {
-            paramew.b(etc.getInstance().whitelistMessage);
+            paramew.b(etc.getInstance().getWhitelistMessage());
             return null;
         } else if (this.b.size() >= this.e && !(etc.getDataSource().hasReserveList() && (player.isAdmin()
                 || etc.getDataSource().isUserOnReserveList(paramString1)))) {

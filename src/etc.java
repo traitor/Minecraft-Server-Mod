@@ -16,19 +16,19 @@ public class etc {
     private static final Logger log = Logger.getLogger("Minecraft");
     private static volatile etc instance;
     private static MinecraftServer server;
-    public String usersLoc = "users.txt", kitsLoc = "kits.txt", homeLoc = "homes.txt", warpLoc = "warps.txt", itemLoc = "items.txt", groupLoc = "groups.txt", commandsLoc = "commands.txt";
-    public String whitelistLoc = "whitelist.txt", reservelistLoc = "reservelist.txt";
-    public String whitelistMessage = "Not on whitelist.";
-    public String[] allowedItems = null;
-    public String[] disallowedItems = null;
-    public String[] itemSpawnBlacklist = null;
-    public String[] motd = null;
-    public boolean saveHomes = true;
-    public boolean firstLoad = true;
-    public boolean whitelistEnabled = false;
-    public int playerLimit = 20;
-    public int spawnProtectionSize = 16;
-    public LinkedHashMap<String, String> commands = new LinkedHashMap<String, String>();
+    private String usersLoc = "users.txt", kitsLoc = "kits.txt", homeLoc = "homes.txt", warpLoc = "warps.txt", itemLoc = "items.txt", groupLoc = "groups.txt";
+    private String whitelistLoc = "whitelist.txt", reservelistLoc = "reservelist.txt";
+    private String whitelistMessage = "Not on whitelist.";
+    private String[] allowedItems = null;
+    private String[] disallowedItems = null;
+    private String[] itemSpawnBlacklist = null;
+    private String[] motd = null;
+    private boolean saveHomes = true;
+    private boolean firstLoad = true;
+    private boolean whitelistEnabled = false;
+    private int playerLimit = 20;
+    private int spawnProtectionSize = 16;
+    private LinkedHashMap<String, String> commands = new LinkedHashMap<String, String>();
     private String dataSourceType;
     private DataSource dataSource;
     private PropertiesFile properties;
@@ -445,5 +445,294 @@ public class etc {
         builder.deleteCharAt(builder.length() - seperator.length()); // remove the extra
         // seperator
         return builder.toString();
+    }
+
+    /**
+     * Returns a list of allowed items for /item
+     * @return
+     */
+    public String[] getAllowedItems() {
+        return allowedItems;
+    }
+
+    /**
+     * Returns the list of commands
+     * @return
+     */
+    public LinkedHashMap<String, String> getCommands() {
+        return commands;
+    }
+
+    /**
+     * Returns a list of disallowed items for /item
+     * @return
+     */
+    public String[] getDisallowedItems() {
+        return disallowedItems;
+    }
+
+    /**
+     * Returns the location of groups.txt
+     * @return
+     */
+    public String getGroupLocation() {
+        return groupLoc;
+    }
+
+    /**
+     * Returns the location of homes.txt
+     * @return
+     */
+    public String getHomeLocation() {
+        return homeLoc;
+    }
+
+    /**
+     * Returns the location of items.txt
+     * @return
+     */
+    public String getItemLocation() {
+        return itemLoc;
+    }
+
+    /**
+     * Returns list of banned blocks
+     * @return
+     */
+    public String[] getItemSpawnBlacklist() {
+        return itemSpawnBlacklist;
+    }
+
+    /**
+     * Returns the location of kits.txt
+     * @return
+     */
+    public String getKitsLocation() {
+        return kitsLoc;
+    }
+
+    /**
+     * Returns the MOTD.
+     * @return
+     */
+    public String[] getMotd() {
+        return motd;
+    }
+
+    /**
+     * Returns the player limit
+     * @return
+     */
+    public int getPlayerLimit() {
+        return playerLimit;
+    }
+
+    /**
+     * Returns the location of reservelist.txt
+     * @return
+     */
+    public String getReservelistLocation() {
+        return reservelistLoc;
+    }
+
+    /**
+     * Returns true if the server is saving homes
+     * @return
+     */
+    public boolean canSaveHomes() {
+        return saveHomes;
+    }
+
+    /**
+     * Returns the spawn protection size
+     * @return
+     */
+    public int getSpawnProtectionSize() {
+        return spawnProtectionSize;
+    }
+
+    /**
+     * Returns the location of users.txt
+     * @return
+     */
+    public String getUsersLocation() {
+        return usersLoc;
+    }
+
+    /**
+     * Returns the location of warps.txt
+     * @return
+     */
+    public String getWarpLocation() {
+        return warpLoc;
+    }
+
+    /**
+     * Returns true if the whitelist is enabled
+     * @return
+     */
+    public boolean isWhitelistEnabled() {
+        return whitelistEnabled;
+    }
+
+    /**
+     * Returns the location of whitelist.txt
+     * @return
+     */
+    public String getWhitelistLocation() {
+        return whitelistLoc;
+    }
+
+    /**
+     * Returns the message the kick will show if a player isn't on the whitelist
+     * @return
+     */
+    public String getWhitelistMessage() {
+        return whitelistMessage;
+    }
+
+    /**
+     * Sets the list of allowed items
+     * @param allowedItems
+     */
+    public void setAllowedItems(String[] allowedItems) {
+        this.allowedItems = allowedItems;
+    }
+
+    /**
+     * Sets the list of disallowed items
+     * @param disallowedItems
+     */
+    public void setDisallowedItems(String[] disallowedItems) {
+        this.disallowedItems = disallowedItems;
+    }
+
+    /**
+     * Sets the location of groups.txt
+     * @param groupLoc
+     */
+    public void setGroupLocation(String groupLoc) {
+        this.groupLoc = groupLoc;
+    }
+
+    /**
+     * Sets the location of homes.txt
+     * @param homeLoc
+     */
+    public void setHomeLocation(String homeLoc) {
+        this.homeLoc = homeLoc;
+    }
+
+    /**
+     * Sets the location of items.txt
+     * @param itemLoc
+     */
+    public void setItemLocation(String itemLoc) {
+        this.itemLoc = itemLoc;
+    }
+
+    /**
+     * Sets the item spawn blacklist
+     * @param itemSpawnBlacklist
+     */
+    public void setItemSpawnBlacklist(String[] itemSpawnBlacklist) {
+        this.itemSpawnBlacklist = itemSpawnBlacklist;
+    }
+
+    /**
+     * Sets the location of kits.txt
+     * @param kitsLoc
+     */
+    public void setKitsLocation(String kitsLoc) {
+        this.kitsLoc = kitsLoc;
+    }
+
+    /**
+     * If set to true the server will log all commands used.
+     * @param logging
+     */
+    public void setLogging(boolean logging) {
+        this.logging = logging;
+    }
+
+    /**
+     * Set the MOTD
+     * @param motd
+     */
+    public void setMotd(String[] motd) {
+        this.motd = motd;
+    }
+
+    /**
+     * Set the player limit
+     * @param playerLimit
+     */
+    public void setPlayerLimit(int playerLimit) {
+        this.playerLimit = playerLimit;
+    }
+
+    /**
+     * Set the location of reservelist.txt
+     * @param reservelistLoc
+     */
+    public void setReservelistLocation(String reservelistLoc) {
+        this.reservelistLoc = reservelistLoc;
+    }
+
+    /**
+     * If true the server will save homes. If false homes won't be saved and
+     * will be wiped the next server restart.
+     * @param saveHomes
+     */
+    public void setSaveHomes(boolean saveHomes) {
+        this.saveHomes = saveHomes;
+    }
+
+    /**
+     * Set the spawn protection size (def: 16)
+     * @param spawnProtectionSize
+     */
+    public void setSpawnProtectionSize(int spawnProtectionSize) {
+        this.spawnProtectionSize = spawnProtectionSize;
+    }
+
+    /**
+     * Sets the location of users.txt
+     * @param usersLoc
+     */
+    public void setUsersLocation(String usersLoc) {
+        this.usersLoc = usersLoc;
+    }
+
+    /**
+     * Sets the location of warps.txt
+     * @param warpLoc
+     */
+    public void setWarpLocation(String warpLoc) {
+        this.warpLoc = warpLoc;
+    }
+
+    /**
+     * If true the whitelist is enabled
+     * @param whitelistEnabled
+     */
+    public void setWhitelistEnabled(boolean whitelistEnabled) {
+        this.whitelistEnabled = whitelistEnabled;
+    }
+
+    /**
+     * Sets the location of whitelist.txt
+     * @param whitelistLoc
+     */
+    public void setWhitelistLocation(String whitelistLoc) {
+        this.whitelistLoc = whitelistLoc;
+    }
+
+    /**
+     * Sets the whitelist message to show when it kicks someone
+     * @param whitelistMessage
+     */
+    public void setWhitelistMessage(String whitelistMessage) {
+        this.whitelistMessage = whitelistMessage;
     }
 }

@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -173,7 +172,7 @@ public class id extends ej
             if (!getPlayer().canBuild()) {
                 return;
             }
-            if (i5 > etc.getInstance().spawnProtectionSize || bool) {
+            if (i5 > etc.getInstance().getSpawnProtectionSize() || bool) {
                 if (!(Boolean)etc.getInstance().getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[] {e, etc.getServer().getBlockAt(n, i1, i2)}))
                     this.e.ad.a(n, i1, i2);
             }
@@ -183,7 +182,7 @@ public class id extends ej
             if (!getPlayer().canBuild()) {
                 return;
             }
-            if (i5 > etc.getInstance().spawnProtectionSize || bool) {
+            if (i5 > etc.getInstance().getSpawnProtectionSize() || bool) {
                 if (!(Boolean)etc.getInstance().getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[] {e, etc.getServer().getBlockAt(n, i1, i2)}))
                     this.e.ad.a(n, i1, i2, i3);
             }
@@ -214,7 +213,7 @@ public class id extends ej
         if (i3 > i4) {
             i4 = i3;
         }
-        if (i4 > etc.getInstance().spawnProtectionSize || bool) {
+        if (i4 > etc.getInstance().getSpawnProtectionSize() || bool) {
             gp localgp = paramfe.a >= 0 ? new gp(paramfe.a) : null;
 
             Block blockPlaced = new Block(localgp != null ? localgp.c : paramfe.a, m, n, i1);
@@ -342,7 +341,7 @@ public class id extends ej
             if (split[0].equalsIgnoreCase("/help")) {
                 //Meh, not the greatest way, but not the worst either.
                 List<String> availableCommands = new ArrayList<String>();
-                for (Entry<String, String> entry : etc.getInstance().commands.entrySet()) {
+                for (Entry<String, String> entry : etc.getInstance().getCommands().entrySet()) {
                     if (getPlayer().canUseCommand(entry.getKey())) {
                         if (entry.getKey().equals("/kit") && !etc.getDataSource().hasKits()) {
                             continue;
@@ -609,7 +608,7 @@ public class id extends ej
                     msg(Colors.Rose + "Can't find user " + split[1] + ".");
                 }
             } else if (split[0].equalsIgnoreCase("/playerlist") || split[0].equalsIgnoreCase("/who")) {
-                msg(Colors.Rose + "Player list (" + d.f.b.size() + "/" + etc.getInstance().playerLimit + "): " + Colors.White + d.f.c());
+                msg(Colors.Rose + "Player list (" + d.f.b.size() + "/" + etc.getInstance().getPlayerLimit() + "): " + Colors.White + d.f.c());
             } else if (split[0].equalsIgnoreCase("/item") || split[0].equalsIgnoreCase("/i") || split[0].equalsIgnoreCase("/give")) {
                 if (split.length < 2) {
                     if (getPlayer().canIgnoreRestrictions()) {
@@ -648,8 +647,8 @@ public class id extends ej
                             amount = 1024; //16 stacks worth. More than enough.
 
                         boolean allowedItem = false;
-                        if (!etc.getInstance().allowedItems[0].equals("") && (!getPlayer().canIgnoreRestrictions())) {
-                            for (String str : etc.getInstance().allowedItems) {
+                        if (!etc.getInstance().getAllowedItems()[0].equals("") && (!getPlayer().canIgnoreRestrictions())) {
+                            for (String str : etc.getInstance().getAllowedItems()) {
                                 if (itemIdstr.equals(str)) {
                                     allowedItem = true;
                                 }
@@ -657,8 +656,8 @@ public class id extends ej
                         } else {
                             allowedItem = true;
                         }
-                        if (!etc.getInstance().disallowedItems[0].equals("") && !getPlayer().canIgnoreRestrictions()) {
-                            for (String str : etc.getInstance().disallowedItems) {
+                        if (!etc.getInstance().getDisallowedItems()[0].equals("") && !getPlayer().canIgnoreRestrictions()) {
+                            for (String str : etc.getInstance().getDisallowedItems()) {
                                 if (itemIdstr.equals(str)) {
                                     allowedItem = false;
                                 }
@@ -1005,7 +1004,7 @@ public class id extends ej
 
                 msg(Colors.Rose + "Compass: " + etc.getCompassPointForDirection(degreeRotation));
             } else if (split[0].equalsIgnoreCase("/motd")) {
-                for (String str : etc.getInstance().motd) {
+                for (String str : etc.getInstance().getMotd()) {
                     msg(str);
                 }
             } else {

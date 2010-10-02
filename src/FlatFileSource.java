@@ -28,7 +28,7 @@ public class FlatFileSource extends DataSource {
     }
 
     public void loadGroups() {
-        String location = etc.getInstance().groupLoc;
+        String location = etc.getInstance().getGroupLocation();
 
         if (!new File(location).exists()) {
             FileWriter writer = null;
@@ -107,7 +107,7 @@ public class FlatFileSource extends DataSource {
 
     public void loadKits() {
         kits = new ArrayList<Kit>();
-        String location = etc.getInstance().kitsLoc;
+        String location = etc.getInstance().getKitsLocation();
 
         if (!new File(location).exists()) {
             FileWriter writer = null;
@@ -115,7 +115,7 @@ public class FlatFileSource extends DataSource {
                 writer = new FileWriter(location);
                 writer.write("#Add your kits here. Example entry below (When adding your entry DO NOT include #!)\r\n");
                 writer.write("#miningbasics:1,2,3,4:6000\r\n");
-                writer.write("#The formats are (Find out more about groups in " + etc.getInstance().usersLoc + ":\r\n");
+                writer.write("#The formats are (Find out more about groups in " + etc.getInstance().getUsersLocation() + ":\r\n");
                 writer.write("#NAME:IDs:DELAY\r\n");
                 writer.write("#NAME:IDs:DELAY:GROUP\r\n");
                 writer.write("#6000 for delay is roughly 5 minutes.\r\n");
@@ -174,11 +174,11 @@ public class FlatFileSource extends DataSource {
     public void loadHomes() {
         synchronized (homeLock) {
             homes = new ArrayList<Warp>();
-            if (!etc.getInstance().saveHomes) {
+            if (!etc.getInstance().canSaveHomes()) {
                 return;
             }
 
-            String location = etc.getInstance().homeLoc;
+            String location = etc.getInstance().getHomeLocation();
             if (new File(location).exists()) {
                 try {
                     Scanner scanner = new Scanner(new File(location));
@@ -220,7 +220,7 @@ public class FlatFileSource extends DataSource {
     public void loadWarps() {
         synchronized (warpLock) {
             warps = new ArrayList<Warp>();
-            String location = etc.getInstance().warpLoc;
+            String location = etc.getInstance().getWarpLocation();
 
             if (new File(location).exists()) {
                 try {
@@ -262,7 +262,7 @@ public class FlatFileSource extends DataSource {
     }
 
     public void loadItems() {
-        String location = etc.getInstance().itemLoc;
+        String location = etc.getInstance().getItemLocation();
 
         if (!(new File(location).exists())) {
             FileWriter writer = null;
@@ -473,7 +473,7 @@ public class FlatFileSource extends DataSource {
     }
 
     public void loadWhitelist() {
-        String location = etc.getInstance().whitelistLoc;
+        String location = etc.getInstance().getWhitelistLocation();
 
         if (!new File(location).exists()) {
             FileWriter writer = null;
@@ -516,7 +516,7 @@ public class FlatFileSource extends DataSource {
     }
 
     public void loadReserveList() {
-        String location = etc.getInstance().reservelistLoc;
+        String location = etc.getInstance().getReservelistLocation();
 
         if (!new File(location).exists()) {
             FileWriter writer = null;
@@ -560,10 +560,10 @@ public class FlatFileSource extends DataSource {
 
     //Users
     public void addPlayer(Player player) {
-        String usersLoc = etc.getInstance().usersLoc;
+        String loc = etc.getInstance().getUsersLocation();
 
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(usersLoc, true));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(loc, true));
             StringBuilder builder = new StringBuilder();
             //#NAME:GROUPS:ADMIN/UNRESTRICTED:COLOR:COMMANDS
             builder.append(player.getName());
@@ -587,16 +587,16 @@ public class FlatFileSource extends DataSource {
             bw.newLine();
             bw.close();
         } catch (Exception ex) {
-            log.log(Level.SEVERE, "Exception while writing new user to " + usersLoc, ex);
+            log.log(Level.SEVERE, "Exception while writing new user to " + loc, ex);
         }
     }
 
     public void modifyPlayer(Player player) {
-        String usersLoc = etc.getInstance().usersLoc;
+        String loc = etc.getInstance().getUsersLocation();
 
         try {
             // Now to save...
-            BufferedReader reader = new BufferedReader(new FileReader(new File(usersLoc)));
+            BufferedReader reader = new BufferedReader(new FileReader(new File(loc)));
             StringBuilder toWrite = new StringBuilder();
             String line = "";
             while ((line = reader.readLine()) != null) {
@@ -626,16 +626,16 @@ public class FlatFileSource extends DataSource {
             }
             reader.close();
 
-            FileWriter writer = new FileWriter(usersLoc);
+            FileWriter writer = new FileWriter(loc);
             writer.write(toWrite.toString());
             writer.close();
         } catch (Exception ex) {
-            log.log(Level.SEVERE, "Exception while editing user in " + usersLoc, ex);
+            log.log(Level.SEVERE, "Exception while editing user in " + loc, ex);
         }
     }
 
     public boolean doesPlayerExist(String player) {
-        String location = etc.getInstance().usersLoc;
+        String location = etc.getInstance().getUsersLocation();
         try {
             Scanner scanner = new Scanner(new File(location));
             while (scanner.hasNextLine()) {
@@ -657,7 +657,7 @@ public class FlatFileSource extends DataSource {
 
     public Player getPlayer(String name) {
         Player player = new Player();
-        String location = etc.getInstance().usersLoc;
+        String location = etc.getInstance().getUsersLocation();
         try {
             Scanner scanner = new Scanner(new File(location));
             while (scanner.hasNextLine()) {
@@ -713,9 +713,9 @@ public class FlatFileSource extends DataSource {
 
     //Homes
     public void addHome(Warp home) {
-        String homeLoc = etc.getInstance().homeLoc;
+        String homeLoc = etc.getInstance().getHomeLocation();
         try {
-            if (etc.getInstance().saveHomes) {
+            if (etc.getInstance().canSaveHomes()) {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(homeLoc, true));
                 StringBuilder builder = new StringBuilder();
                 builder.append(home.Name);
@@ -757,10 +757,10 @@ public class FlatFileSource extends DataSource {
             homes.add(home);
         }
         FileWriter writer = null;
-        String homeLoc = etc.getInstance().homeLoc;
+        String homeLoc = etc.getInstance().getHomeLocation();
         try {
             // Now to save...
-            if (etc.getInstance().saveHomes) {
+            if (etc.getInstance().canSaveHomes()) {
                 BufferedReader reader = new BufferedReader(new FileReader(new File(homeLoc)));
                 StringBuilder toWrite = new StringBuilder();
                 String line = "";
@@ -805,7 +805,7 @@ public class FlatFileSource extends DataSource {
 
     //Warps
     public void addWarp(Warp warp) {
-        String warpLoc = etc.getInstance().warpLoc;
+        String warpLoc = etc.getInstance().getWarpLocation();
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(warpLoc, true));
             StringBuilder builder = new StringBuilder();
@@ -847,7 +847,7 @@ public class FlatFileSource extends DataSource {
             warps.add(warp);
         }
         FileWriter writer = null;
-        String warpLoc = etc.getInstance().warpLoc;
+        String warpLoc = etc.getInstance().getWarpLocation();
         try {
             // Now to save...
             BufferedReader reader = new BufferedReader(new FileReader(new File(warpLoc)));
@@ -893,7 +893,7 @@ public class FlatFileSource extends DataSource {
 
     public void removeWarp(Warp warp) {
         FileWriter writer = null;
-        String warpLoc = etc.getInstance().warpLoc;
+        String warpLoc = etc.getInstance().getWarpLocation();
         try {
             // Now to save...
             BufferedReader reader = new BufferedReader(new FileReader(new File(warpLoc)));
@@ -928,7 +928,7 @@ public class FlatFileSource extends DataSource {
     //Whitelist
     public void addToWhitelist(String name) {
         BufferedWriter bw = null;
-        String location = etc.getInstance().whitelistLoc;
+        String location = etc.getInstance().getWhitelistLocation();
         try {
             bw = new BufferedWriter(new FileWriter(location, true));
             bw.newLine();
@@ -954,7 +954,7 @@ public class FlatFileSource extends DataSource {
             whiteList.remove(name);
         }
         FileWriter writer = null;
-        String location = etc.getInstance().whitelistLoc;
+        String location = etc.getInstance().getWhitelistLocation();
 
         try {
             // Now to save...
@@ -986,7 +986,7 @@ public class FlatFileSource extends DataSource {
     //Reservelist
     public void addToReserveList(String name) {
         BufferedWriter bw = null;
-        String location = etc.getInstance().reservelistLoc;
+        String location = etc.getInstance().getReservelistLocation();
         try {
             bw = new BufferedWriter(new FileWriter(location, true));
             bw.newLine();
@@ -1012,7 +1012,7 @@ public class FlatFileSource extends DataSource {
             reserveList.remove(name);
         }
         FileWriter writer = null;
-        String location = etc.getInstance().reservelistLoc;
+        String location = etc.getInstance().getReservelistLocation();
 
         try {
             // Now to save...

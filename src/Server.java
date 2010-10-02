@@ -1,10 +1,9 @@
-//Interface for the minecraft server
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.server.MinecraftServer;
 
 /**
- * Server.java - Used for accessing server stuff.
+ * Server.java - Interface to server stuff
  * @author James
  */
 public class Server {
