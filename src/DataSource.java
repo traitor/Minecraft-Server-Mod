@@ -71,13 +71,19 @@ public abstract class DataSource {
      * Adds user to the list
      * @param player
      */
-    abstract public void addUser(Player player);
+    abstract public void addPlayer(Player player);
 
     /**
      * Modifies the provided user
      * @param player 
      */
-    abstract public void modifyUser(Player player);
+    abstract public void modifyPlayer(Player player);
+
+    /**
+     * Checks to see if the specified player exists
+     * @param player
+     */
+    abstract public boolean doesPlayerExist(String player);
 
     /**
      * Returns specified user

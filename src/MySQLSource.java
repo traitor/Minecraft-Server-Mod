@@ -1,6 +1,3 @@
-/* MySQL Data Source */
-
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -329,7 +326,7 @@ public class MySQLSource extends DataSource {
     }
 
     //Users
-    public void addUser(Player player) {
+    public void addPlayer(Player player) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -367,7 +364,7 @@ public class MySQLSource extends DataSource {
         }
     }
 
-    public void modifyUser(Player player) {
+    public void modifyPlayer(Player player) {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -394,6 +391,38 @@ public class MySQLSource extends DataSource {
             } catch (SQLException ex) {
             }
         }
+    }
+
+    public boolean doesPlayerExist(String player) {
+        boolean exists = false;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement("SELECT * FROM users WHERE name = ?");
+            ps.setString(1, player);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                exists = true;
+            }
+        } catch (SQLException ex) {
+            log.log(Level.SEVERE, "Unable to check if user exists", ex);
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+            }
+        }
+        return exists;
     }
 
     //Groups

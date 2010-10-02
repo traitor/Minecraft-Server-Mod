@@ -559,7 +559,7 @@ public class FlatFileSource extends DataSource {
     }
 
     //Users
-    public void addUser(Player player) {
+    public void addPlayer(Player player) {
         String usersLoc = etc.getInstance().usersLoc;
 
         try {
@@ -591,7 +591,7 @@ public class FlatFileSource extends DataSource {
         }
     }
 
-    public void modifyUser(Player player) {
+    public void modifyPlayer(Player player) {
         String usersLoc = etc.getInstance().usersLoc;
 
         try {
@@ -632,6 +632,27 @@ public class FlatFileSource extends DataSource {
         } catch (Exception ex) {
             log.log(Level.SEVERE, "Exception while editing user in " + usersLoc, ex);
         }
+    }
+
+    public boolean doesPlayerExist(String player) {
+        String location = etc.getInstance().usersLoc;
+        try {
+            Scanner scanner = new Scanner(new File(location));
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.startsWith("#") || line.equals("") || line.startsWith("﻿")) {
+                    continue;
+                }
+                String[] split = line.split(":");
+                if (!split[0].equalsIgnoreCase(player))
+                    continue;
+                return true;
+            }
+            scanner.close();
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "Exception while reading " + location + " (Are you sure you formatted it correctly?)", e);
+        }
+        return false;
     }
 
     public Player getPlayer(String name) {

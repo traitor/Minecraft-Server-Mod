@@ -61,7 +61,7 @@ public class etc {
         commands.put("/sethome", "- Sets your home");
         commands.put("/setspawn", "- Sets the spawn point to your position.");
         commands.put("/me", "[Message] - * hey0 says hi!");
-        commands.put("/msg", "[Player] [Message] - Sends a message to player");
+        commands.put("/log.info", "[Player] [Message] - Sends a message to player");
         commands.put("/spawn", "- Teleports you to spawn");
         commands.put("/warp", "[Warp] - Warps to the specified warp.");
         commands.put("/setwarp", "[Warp] - Sets the warp to your current position.");
@@ -329,7 +329,7 @@ public class etc {
             loadData();
             log.info("Reloaded mod");
         } else if (split[0].equalsIgnoreCase("modify")) {
-            /*if (split.length < 4) {
+            if (split.length < 4) {
                 log.info("Usage is: /modify [player] [key] [value]");
                 log.info("Keys:");
                 log.info("prefix: only the letter the color represents");
@@ -341,7 +341,7 @@ public class etc {
                 return true;
             }
 
-            ea player = match(split[1], server);
+            Player player = match(split[1], server);
 
             if (player == null) {
                 log.info("Player does not exist.");
@@ -350,45 +350,37 @@ public class etc {
 
             String key = split[2];
             String value = split[3];
-            User user = etc.getInstance().getUser(split[1]);
             boolean newUser = false;
 
-            if (user == null) {
+            if (!etc.getDataSource().doesPlayerExist(player.getName())) {
                 if (!key.equalsIgnoreCase("groups") && !key.equalsIgnoreCase("g")) {
                     log.info("When adding a new user, set their group(s) first.");
                     return true;
                 }
                 log.info("Adding new user.");
                 newUser = true;
-                user = new User();
-                user.Name = split[1];
-                user.Administrator = false;
-                user.CanModifyWorld = true;
-                user.IgnoreRestrictions = false;
-                user.Commands = new String[]{""};
-                user.Prefix = "";
             }
 
             if (key.equalsIgnoreCase("prefix") || key.equalsIgnoreCase("p")) {
-                user.Prefix = "§" + value;
+                player.setPrefix(value);
             } else if (key.equalsIgnoreCase("commands") || key.equalsIgnoreCase("c")) {
-                user.Commands = value.split(",");
+                player.setCommands(value.split(","));
             } else if (key.equalsIgnoreCase("groups") || key.equalsIgnoreCase("g")) {
-                user.Groups = value.split(",");
+                player.setGroups(value.split(","));
             } else if (key.equalsIgnoreCase("ignoresrestrictions") || key.equalsIgnoreCase("ir")) {
-                user.IgnoreRestrictions = value.equalsIgnoreCase("true") || value.equals("1");
+                player.setIgnoreRestrictions(value.equalsIgnoreCase("true") || value.equals("1"));
             } else if (key.equalsIgnoreCase("admin") || key.equalsIgnoreCase("a")) {
-                user.Administrator = value.equalsIgnoreCase("true") || value.equals("1");
+                player.setAdmin(value.equalsIgnoreCase("true") || value.equals("1"));
             } else if (key.equalsIgnoreCase("modworld") || key.equalsIgnoreCase("mw")) {
-                user.CanModifyWorld = value.equalsIgnoreCase("true") || value.equals("1");
+                player.setCanModifyWorld(value.equalsIgnoreCase("true") || value.equals("1"));
             }
 
             if (newUser) {
-                dataSource.addUser(user);
+                etc.getDataSource().addPlayer(player);
             } else {
-                dataSource.modifyUser(user);
+                etc.getDataSource().modifyPlayer(player);
             }
-            log.info("Modified user.");*/
+            log.info("Modifed user " + split[1] + ". " + key + " => " + value);
         } else if (split[0].equalsIgnoreCase("whitelist")) {
             if (split.length < 2) {
                 log.info("whitelist [operation (toggle, add or remove)] [player]");
@@ -431,7 +423,7 @@ public class etc {
         return dontParseRegular;
     }
 
-    private static ea match(String name, MinecraftServer d) {
+    private static Player match(String name, MinecraftServer d) {
         ea player = null;
         boolean found = false;
         if (("`" + d.f.c().toUpperCase() + "`").split(name.toUpperCase()).length == 2) {
@@ -452,7 +444,7 @@ public class etc {
                 }
             }
         }
-        return player;
+        return player.getPlayer();
     }
 
     /**
