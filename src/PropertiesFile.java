@@ -57,8 +57,8 @@ public final class PropertiesFile {
 
     /**
      * Returns the string value of a key
-     * @param key key - the key to use
-     * @param value value - the default value
+     * @param key the key to use
+     * @param value the default value
      * @return
      */
     public String getString(String key, String value) {

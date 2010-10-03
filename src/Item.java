@@ -1,6 +1,6 @@
 
 /**
- *
+ * Item.java - Item stuff.
  * @author James
  */
 public class Item {
