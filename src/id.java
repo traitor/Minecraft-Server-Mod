@@ -596,7 +596,7 @@ public class id extends ej
 
                 Player player = etc.getServer().matchPlayer(split[1]);
 
-                if (player.getName().equalsIgnoreCase(split[1])) {
+                if (getPlayer().getName().equalsIgnoreCase(split[1])) {
                     msg(Colors.Rose + "Wow look at that! You teleported yourself to yourself!");
                     return;
                 }

@@ -11,20 +11,20 @@ public class BanSystem {
         //source.loadBans(); etc.
     }
 
-    public void fileBan(String player) {
+    public void fileBan(Player player) {
 
     }
 
-    public void fileIpBan(String ip) {
+    public void fileIpBan(Player player) {
 
     }
 
-    public void fileTempBan(String player, int minutes, int hours, int months) {
+    public void fileTempBan(Player player, int minutes, int hours, int days) {
         //This is sort of crappy but I'm lazy.
         int timestamp = ((int) (System.currentTimeMillis() / 1000L));
         timestamp += minutes * 60;
         timestamp += hours * 60 * 60;
-        timestamp += months * 60 * 60 * 24 * 30;
+        timestamp += days * 60 * 60 * 24;
     }
 
     public boolean isBanned(String player, String ip) {
