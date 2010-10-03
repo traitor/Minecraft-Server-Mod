@@ -1,13 +1,9 @@
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,7 +45,7 @@ public class PluginLoader {
     /**
      * Loads all plugins.
      */
-    public void load() {
+    public void loadPlugins() {
         String[] classes = properties.getString("plugins", "").split(",");
         for (String sclass : classes) {
             if (sclass.equals(""))
@@ -58,10 +54,32 @@ public class PluginLoader {
         }
     }
 
+    /**
+     * Loads the specified plugin
+     * @param fileName
+     */
     public void loadPlugin(String fileName) {
         if (getPlugin(fileName) != null)
             return; //Already exists.
+        load(fileName);
+    }
 
+    /**
+     * Reloads the specified plugin
+     * @param fileName
+     */
+    public void reloadPlugin(String fileName) {
+        /* Not sure exactly how much of this is necessary */
+        Plugin toNull = getPlugin(fileName);
+        if (toNull.isEnabled())
+            toNull.disable();
+        plugins.remove(toNull);
+        toNull = null;
+
+        load(fileName);
+    }
+
+    private void load(String fileName) {
         try {
             File file = new File("plugins/" + fileName + ".jar");
             URLClassLoader child = null;
@@ -86,44 +104,6 @@ public class PluginLoader {
             }
         } catch (ClassNotFoundException ex) {
             log.log(Level.SEVERE, "Exception while loading plugin", ex);
-        }
-    }
-
-    /**
-     * Reloads the specified plugin
-     */
-    public void reload(String fileName) {
-        /* Not sure exactly how much of this is necessary */
-        Plugin toNull = getPlugin(fileName);
-        if (toNull.isEnabled())
-            toNull.disable();
-        plugins.remove(toNull);
-        toNull = null;
-
-        try {
-            File file = new File("plugins/" + fileName + ".jar");
-            URLClassLoader child = null;
-            try {
-                child = new MyClassLoader(new URL[]{file.toURL()}, this.getClass().getClassLoader());
-            } catch (MalformedURLException ex) {
-                log.log(Level.SEVERE, "Exception while loading class", ex);
-            }
-            Class c = Class.forName(fileName, true, child);
-
-            try {
-                Plugin plugin = (Plugin) c.newInstance();
-                plugin.setName(fileName);
-                plugin.enable();
-                synchronized (lock) {
-                    plugins.add(plugin);
-                }
-            } catch (InstantiationException ex) {
-                log.log(Level.SEVERE, "Exception while reloading plugin", ex);
-            } catch (IllegalAccessException ex) {
-                log.log(Level.SEVERE, "Exception while reloading plugin", ex);
-            }
-        } catch (ClassNotFoundException ex) {
-            log.log(Level.SEVERE, "Exception while reloading plugin", ex);
         }
     }
 
@@ -225,47 +205,49 @@ public class PluginLoader {
                     try {
                         switch (h) {
                             case LOGINCHECK:
-                                String result = (String)plugin.onLoginChecks((String) parameters[0]);
+                                String result = plugin.onLoginChecks((String) parameters[0]);
                                 if (result != null)
                                     toRet = result;
                                 break;
                             case LOGIN:
-                                plugin.onLogin(new Player((ea) parameters[0]));
+                                plugin.onLogin(((ea) parameters[0]).getPlayer());
                                 break;
                             case DISCONNECT:
-                                plugin.onDisconnect(new Player((ea) parameters[0]));
+                                plugin.onDisconnect(((ea) parameters[0]).getPlayer());
                                 break;
                             case CHAT:
-                                if (plugin.onChat(new Player((ea) parameters[0]), (String)parameters[1]))
+                                if (plugin.onChat(((ea) parameters[0]).getPlayer(), (String)parameters[1]))
                                     toRet = true;
                                 break;
                             case COMMAND:
-                                if (plugin.onCommand(new Player((ea) parameters[0]), (String[])parameters[1]))
+                                if (plugin.onCommand(((ea) parameters[0]).getPlayer(), (String[])parameters[1]))
                                     toRet = true;
                                 break;
                             case BAN:
-                                plugin.onBan(new Player((ea) parameters[0]), (String)parameters[1]);
+                                plugin.onBan(((ea) parameters[0]).getPlayer(), (String)parameters[1]);
                                 break;
                             case IPBAN:
-                                plugin.onIpBan(new Player((ea) parameters[0]), (String)parameters[1]);
+                                plugin.onIpBan(((ea) parameters[0]).getPlayer(), (String)parameters[1]);
                                 break;
                             case KICK:
-                                plugin.onKick(new Player((ea) parameters[0]), (String)parameters[1]);
+                                plugin.onKick(((ea) parameters[0]).getPlayer(), (String)parameters[1]);
                                 break;
                             case BLOCK_CREATED:
-                                if (plugin.onBlockCreate(new Player((ea) parameters[0]), (Block)parameters[1], (Block)parameters[2], (Integer)parameters[3]))
+                                if (plugin.onBlockCreate(((ea) parameters[0]).getPlayer(), (Block)parameters[1], (Block)parameters[2], (Integer)parameters[3]))
                                     toRet = true;
                                 break;
                             case BLOCK_DESTROYED:
-                                if (plugin.onBlockDestroy(new Player((ea) parameters[0]), (Block)parameters[1]))
+                                if (plugin.onBlockDestroy(((ea) parameters[0]).getPlayer(), (Block)parameters[1]))
                                     toRet = true;
                                 break;
                         }
                     } catch (UnsupportedOperationException ex) {
                     }
                 }
-            } catch (Throwable ex) {
-                log.log(Level.SEVERE, "Exception while calling plugin function (Outdated plugin?)", ex);
+            } catch (Exception ex) {
+                log.log(Level.SEVERE, "Exception while calling plugin function", ex);
+            } catch (Throwable ex) { //The 'exception' thrown is so severe it's not even an exception!
+                log.log(Level.SEVERE, "Throwable while calling plugin (Outdated?)", ex);
             }
         }
 

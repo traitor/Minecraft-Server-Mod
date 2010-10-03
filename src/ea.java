@@ -16,6 +16,7 @@ public class ea extends fc {
     public List ag = new LinkedList();
     public Set ah = new HashSet();
     public double ai;
+    private Player player;
 
     public ea(MinecraftServer paramMinecraftServer, dy paramdy, String paramString, in paramin) {
         super(paramdy);
@@ -30,6 +31,17 @@ public class ea extends fc {
         this.aq = paramString;
         this.ad = paramin;
         this.C = 0.0F;
+
+        player = etc.getDataSource().getPlayer(paramString);
+        player.setUser(this);
+    }
+
+    /**
+     * Returns the player
+     * @return
+     */
+    public Player getPlayer() {
+        return player;
     }
 
     public void b_() {
@@ -78,7 +90,7 @@ public class ea extends fc {
                 localObject2 = this.b.e.d(localiy.a * 16, 0, localiy.b * 16, localiy.a * 16 + 16, 128, localiy.b * 16 + 16);
                 for (int j = 0; j < ((List) localObject2).size(); j++) {
                     as localas = (as) ((List) localObject2).get(j);
-                    if (!etc.getInstance().canBuild(this) && (localas instanceof hb || localas instanceof df))
+                    if (!player.canBuild() && (localas instanceof hb || localas instanceof df))
                         continue;
                     this.a.b(new ib(localas.b, localas.c, localas.d, localas));
                 }

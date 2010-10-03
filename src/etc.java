@@ -1,7 +1,3 @@
-/* Just a general storage for all my crap */
-
-import java.io.File;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,91 +14,20 @@ public class etc {
     private static final Logger log = Logger.getLogger("Minecraft");
     private static volatile etc instance;
     private static MinecraftServer server;
-    private ArrayList<String> muted = new ArrayList<String>();
-    /**
-     *
-     */
-    /**
-     *
-     */
-    /**
-     *
-     */
-    /**
-     *
-     */
-    /**
-     *
-     */
-    /**
-     *
-     */
-    /**
-     *
-     */
-    public String usersLoc = "users.txt", kitsLoc = "kits.txt", homeLoc = "homes.txt", warpLoc = "warps.txt", itemLoc = "items.txt", groupLoc = "groups.txt", commandsLoc = "commands.txt";
-    /**
-     *
-     */
-    /**
-     *
-     */
-    public String whitelistLoc = "whitelist.txt", reservelistLoc = "reservelist.txt";
-    /**
-     *
-     */
-    public String whitelistMessage = "Not on whitelist.";
-    /**
-     *
-     */
-    public String[] allowedItems = null;
-    /**
-     *
-     */
-    public String[] disallowedItems = null;
-    /**
-     *
-     */
-    public String[] itemSpawnBlacklist = null;
-    /**
-     *
-     */
-    public String[] motd = null;
-    /**
-     *
-     */
-    public boolean saveHomes = true;
-    /**
-     *
-     */
-    public boolean firstLoad = true;
-    /**
-     *
-     */
-    public boolean whitelistEnabled = false;
-    /**
-     *
-     */
-    public int playerLimit = 20;
-    /**
-     *
-     */
-    public int spawnProtectionSize = 16;
-    /**
-     *
-     */
-    public long sleepTime = 30000;
-    /**
-     *
-     */
-    public long saveInterval = 1800000;
-    /**
-     *
-     */
-    public LinkedHashMap<String, String> commands = new LinkedHashMap<String, String>();
+    private String usersLoc = "users.txt", kitsLoc = "kits.txt", homeLoc = "homes.txt", warpLoc = "warps.txt", itemLoc = "items.txt", groupLoc = "groups.txt";
+    private String whitelistLoc = "whitelist.txt", reservelistLoc = "reservelist.txt";
+    private String whitelistMessage = "Not on whitelist.";
+    private String[] allowedItems = null;
+    private String[] disallowedItems = null;
+    private String[] itemSpawnBlacklist = null;
+    private String[] motd = null;
+    private boolean saveHomes = true;
+    private boolean firstLoad = true;
+    private boolean whitelistEnabled = false;
+    private int playerLimit = 20;
+    private int spawnProtectionSize = 16;
+    private LinkedHashMap<String, String> commands = new LinkedHashMap<String, String>();
     private String dataSourceType;
-    private ReloadThread reloadThread;
-    private SaveAllThread saveThread;
     private DataSource dataSource;
     private PropertiesFile properties;
     private PluginLoader loader;
@@ -128,7 +53,7 @@ public class etc {
         commands.put("/sethome", "- Sets your home");
         commands.put("/setspawn", "- Sets the spawn point to your position.");
         commands.put("/me", "[Message] - * hey0 says hi!");
-        commands.put("/msg", "[Player] [Message] - Sends a message to player");
+        commands.put("/log.info", "[Player] [Message] - Sends a message to player");
         commands.put("/spawn", "- Teleports you to spawn");
         commands.put("/warp", "[Warp] - Warps to the specified warp.");
         commands.put("/setwarp", "[Warp] - Sets the warp to your current position.");
@@ -141,6 +66,10 @@ public class etc {
         commands.put("/modify", "[player] [key] [value] - Type /modify for more info");
         commands.put("/whitelist", "[operation (add or remove)] [player]");
         commands.put("/reservelist", "[operation (add or remove)] [player]");
+        commands.put("/enableplugin", "[plugin] - Enables plugin");
+        commands.put("/disableplugin", "[plugin] - Disables plugin");
+        commands.put("/listplugins", "- Lists all plugins");
+        commands.put("/reloadplugin", "[plugin] - Reloads plugin");
 
         load();
     }
@@ -177,8 +106,6 @@ public class etc {
                 reservelistLoc = properties.getString("reservelist-txt-location", "reservelist.txt");
             }
             spawnProtectionSize = properties.getInt("spawn-protection-size", 16);
-            sleepTime = properties.getLong("reload-interval", 30000);
-            saveInterval = properties.getLong("save-interval", 1800000);
             logging = properties.getBoolean("logging", false);
         } catch (Exception e) {
             log.log(Level.SEVERE, "Exception while reading from server.properties", e);
@@ -232,6 +159,14 @@ public class etc {
     }
 
     /**
+     * Returns the data source
+     * @return
+     */
+    public static DataSource getDataSource() {
+        return etc.getInstance().getSource();
+    }
+
+    /**
      * Returns the minecraft server interface
      * @return
      */
@@ -246,108 +181,10 @@ public class etc {
     public PluginLoader getLoader() {
         if (loader == null) {
             loader = new PluginLoader(server);
-            loader.load();
+            loader.loadPlugins();
         }
 
         return loader;
-    }
-
-    /**
-     * Starts the save and reload thread
-     * @param paramMinecraftServer
-     */
-    public void startThreads(MinecraftServer paramMinecraftServer) {
-        if (saveInterval > 0 && saveThread == null) {
-            saveThread = new SaveAllThread(paramMinecraftServer, saveInterval);
-            saveThread.start();
-        }
-
-        if (sleepTime > 0 && reloadThread == null) {
-            reloadThread = new ReloadThread(sleepTime);
-            reloadThread.start();
-        }
-    }
-
-    /**
-     * Checks to see if specified user is in the specified group
-     * @param player
-     * @param group
-     * @return
-     */
-    public boolean isUserInGroup(Player player, String group) {
-        return isUserInGroup(player.getName(), group);
-    }
-
-    /**
-     * Checks to see if specified user is in the specified group
-     * @param e
-     * @param group
-     * @return
-     */
-    public boolean isUserInGroup(ea e, String group) {
-        return isUserInGroup(e.aq, group);
-    }
-
-    /**
-     * Checks to see if specified user is in the specified group
-     * @param name
-     * @param group
-     * @return
-     */
-    public boolean isUserInGroup(String name, String group) {
-        if (group != null) {
-            if (getDefaultGroup() != null) {
-                if (group.equalsIgnoreCase(getDefaultGroup().Name)) {
-                    return true;
-                }
-            } else {
-                log.info("There's no default group.");
-            }
-        }
-        User user = getUser(name);
-        if (user != null) {
-            for (String str : user.Groups) {
-                if (recursiveUserInGroup(dataSource.getGroup(str), group)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private boolean recursiveUserInGroup(Group g, String group) {
-        if (g == null || group == null) {
-            return false;
-        }
-
-        if (g.Name.equalsIgnoreCase(group)) {
-            return true;
-        }
-
-        if (g.InheritedGroups != null) {
-            for (String str : g.InheritedGroups) {
-                if (g.Name.equalsIgnoreCase(str)) {
-                    return true;
-                }
-
-                Group g2 = dataSource.getGroup(str);
-                if (g2 != null) {
-                    if (recursiveUserInGroup(g2, group)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Returns user
-     * @param name
-     * @return user
-     */
-    public User getUser(String name) {
-        return dataSource.getUser(name);
     }
 
     /**
@@ -359,207 +196,6 @@ public class etc {
         if (group == null)
             log.log(Level.SEVERE, "No default group! Expect lots of errors!");
         return group;
-    }
-
-    /**
-     * The user's color or prefix
-     * @param name
-     * @return color/prefix
-     */
-    public String getUserColor(String name) {
-        User user = getUser(name);
-        if (user != null) {
-            if (user.Prefix != null) {
-                if (!user.Prefix.equals("")) {
-                    return "§" + user.Prefix;
-                }
-            }
-
-            Group group = dataSource.getGroup(user.Groups[0]);
-            if (group != null) {
-                return "§" + group.Prefix;
-            }
-        }
-        Group def = getDefaultGroup();
-        return def != null ? "§" + def.Prefix : "";
-    }
-
-    /**
-     * Returns true if the player can use the specified command
-     * @param name
-     * @param command
-     * @return
-     */
-    public boolean canUseCommand(String name, String command) {
-        User user = getUser(name);
-        //holy motherfuck
-        if (user != null) {
-            for (String str : user.Commands) {
-                if (str.equalsIgnoreCase(command)) {
-                    return true;
-                }
-            }
-
-            for (String str : user.Groups) {
-                Group g = dataSource.getGroup(str);
-                if (g != null) {
-                    if (recursiveUseCommand(g, command)) {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        Group def = getDefaultGroup();
-        if (def != null) {
-            if (recursiveUseCommand(def, command)) {
-                return true;
-            }
-        } else {
-            log.info("No default group.");
-        }
-
-        return false;
-    }
-
-    private boolean recursiveUseCommand(Group g, String command) {
-        for (String str : g.Commands) {
-            if (str.equalsIgnoreCase(command) || str.equals("*")) {
-                return true;
-            }
-        }
-
-        if (g.InheritedGroups != null) {
-            for (String str : g.InheritedGroups) {
-                Group g2 = dataSource.getGroup(str);
-                if (g2 != null) {
-                    if (recursiveUseCommand(g2, command)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Returns true if the player's an administrator
-     * @param player
-     * @return
-     */
-    public boolean isAdmin(ea player) {
-        return isAdmin(player.aq);
-    }
-
-    /**
-     * Returns true if the player's an administrator
-     * @param player
-     * @return
-     */
-    public boolean isAdmin(String player) {
-        User user = getUser(player);
-        if (user == null) {
-            return false;
-        }
-        if (user.Administrator) {
-            return true;
-        }
-
-        for (String str : user.Groups) {
-            Group group = dataSource.getGroup(str);
-            if (group != null) {
-                if (group.Administrator) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Returns true if the player can ignore restrictions
-     * @param player
-     * @return
-     */
-    public boolean canIgnoreRestrictions(ea player) {
-        return canIgnoreRestrictions(player.aq);
-
-    }
-
-    /**
-     * Returns true if the player can ignore restrictions
-     * @param player
-     * @return
-     */
-    public boolean canIgnoreRestrictions(String player) {
-        User user = getUser(player);
-        if (user == null) {
-            return false;
-        }
-        if (user.Administrator || user.IgnoreRestrictions) {
-            return true;
-        }
-
-        for (String str : user.Groups) {
-            Group group = dataSource.getGroup(str);
-            if (group != null) {
-                if (group.Administrator || group.IgnoreRestrictions) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Returns false if the player can not build and can not modify chests or
-     * furnaces
-     * @param player
-     * @return
-     */
-    public boolean canBuild(ea player) {
-        User user = getUser(player.aq);
-
-        if (user == null) {
-            return getDefaultGroup().CanModifyWorld;
-        }
-
-        if (!user.CanModifyWorld) {
-            return false;
-        }
-
-        for (String str : user.Groups) {
-            Group group = dataSource.getGroup(str);
-            if (group != null) {
-                if (!group.CanModifyWorld) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Returns true if the player is muted
-     * @param e
-     * @return
-     */
-    public boolean isMuted(ea e) {
-        return muted.contains(e.aq);
-    }
-
-    /**
-     * Toggles mute for specified player
-     * @param e
-     * @return
-     */
-    public boolean toggleMute(ea e) {
-        if (muted.contains(e.aq)) {
-            muted.remove(e.aq);
-        } else {
-            muted.add(e.aq);
-        }
-        return muted.contains(e.aq);
     }
 
     /**
@@ -604,7 +240,7 @@ public class etc {
      * Returns the data source
      * @return
      */
-    public DataSource getDataSource() {
+    public DataSource getSource() {
         return dataSource;
     }
 
@@ -679,7 +315,7 @@ public class etc {
                 return true;
             }
 
-            ea player = match(split[1], server);
+            Player player = getServer().matchPlayer(split[1]);
 
             if (player == null) {
                 log.info("Player does not exist.");
@@ -688,45 +324,37 @@ public class etc {
 
             String key = split[2];
             String value = split[3];
-            User user = etc.getInstance().getUser(split[1]);
             boolean newUser = false;
 
-            if (user == null) {
+            if (!etc.getDataSource().doesPlayerExist(player.getName())) {
                 if (!key.equalsIgnoreCase("groups") && !key.equalsIgnoreCase("g")) {
                     log.info("When adding a new user, set their group(s) first.");
                     return true;
                 }
                 log.info("Adding new user.");
                 newUser = true;
-                user = new User();
-                user.Name = split[1];
-                user.Administrator = false;
-                user.CanModifyWorld = true;
-                user.IgnoreRestrictions = false;
-                user.Commands = new String[]{""};
-                user.Prefix = "";
             }
 
             if (key.equalsIgnoreCase("prefix") || key.equalsIgnoreCase("p")) {
-                user.Prefix = "§" + value;
+                player.setPrefix(value);
             } else if (key.equalsIgnoreCase("commands") || key.equalsIgnoreCase("c")) {
-                user.Commands = value.split(",");
+                player.setCommands(value.split(","));
             } else if (key.equalsIgnoreCase("groups") || key.equalsIgnoreCase("g")) {
-                user.Groups = value.split(",");
+                player.setGroups(value.split(","));
             } else if (key.equalsIgnoreCase("ignoresrestrictions") || key.equalsIgnoreCase("ir")) {
-                user.IgnoreRestrictions = value.equalsIgnoreCase("true") || value.equals("1");
+                player.setIgnoreRestrictions(value.equalsIgnoreCase("true") || value.equals("1"));
             } else if (key.equalsIgnoreCase("admin") || key.equalsIgnoreCase("a")) {
-                user.Administrator = value.equalsIgnoreCase("true") || value.equals("1");
+                player.setAdmin(value.equalsIgnoreCase("true") || value.equals("1"));
             } else if (key.equalsIgnoreCase("modworld") || key.equalsIgnoreCase("mw")) {
-                user.CanModifyWorld = value.equalsIgnoreCase("true") || value.equals("1");
+                player.setCanModifyWorld(value.equalsIgnoreCase("true") || value.equals("1"));
             }
 
             if (newUser) {
-                dataSource.addUser(user);
+                etc.getDataSource().addPlayer(player);
             } else {
-                dataSource.modifyUser(user);
+                etc.getDataSource().modifyPlayer(player);
             }
-            log.info("Modified user.");
+            log.info("Modifed user " + split[1] + ". " + key + " => " + value);
         } else if (split[0].equalsIgnoreCase("whitelist")) {
             if (split.length < 2) {
                 log.info("whitelist [operation (toggle, add or remove)] [player]");
@@ -811,30 +439,6 @@ public class etc {
         return dontParseRegular;
     }
 
-    private static ea match(String name, MinecraftServer d) {
-        ea player = null;
-        boolean found = false;
-        if (("`" + d.f.c().toUpperCase() + "`").split(name.toUpperCase()).length == 2) {
-            for (int i = 0; i < d.f.b.size() && !found; ++i) {
-                ea localea = (ea) d.f.b.get(i);
-                if (("`" + localea.aq.toUpperCase() + "`").split(name.toUpperCase()).length == 2) {
-                    player = localea;
-                    found = true;
-                }
-            }
-        } else if (("`" + d.f.c() + "`").split(name).length > 2) {
-            // Too many partial matches.
-            for (int i = 0; i < d.f.b.size() && !found; ++i) {
-                ea localea = (ea) d.f.b.get(i);
-                if (localea.aq.equalsIgnoreCase(name)) {
-                    player = localea;
-                    found = true;
-                }
-            }
-        }
-        return player;
-    }
-
     /**
      * Returns compass direction according to your rotation
      * @param degrees
@@ -862,5 +466,313 @@ public class etc {
         } else {
             return "ERR";
         }
+    }
+
+    /**
+     * Combines the string array into a string at the specified start with the
+     * separator separating each string.
+     * @param startIndex
+     * @param string
+     * @param seperator
+     * @return
+     */
+    public static String combineSplit(int startIndex, String[] string, String seperator) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = startIndex; i < string.length; i++) {
+            builder.append(string[i]);
+            builder.append(seperator);
+        }
+        builder.deleteCharAt(builder.length() - seperator.length()); // remove the extra
+        // seperator
+        return builder.toString();
+    }
+
+    /**
+     * Returns a list of allowed items for /item
+     * @return
+     */
+    public String[] getAllowedItems() {
+        return allowedItems;
+    }
+
+    /**
+     * Returns the list of commands
+     * @return
+     */
+    public LinkedHashMap<String, String> getCommands() {
+        return commands;
+    }
+
+    /**
+     * Returns a list of disallowed items for /item
+     * @return
+     */
+    public String[] getDisallowedItems() {
+        return disallowedItems;
+    }
+
+    /**
+     * Returns the location of groups.txt
+     * @return
+     */
+    public String getGroupLocation() {
+        return groupLoc;
+    }
+
+    /**
+     * Returns the location of homes.txt
+     * @return
+     */
+    public String getHomeLocation() {
+        return homeLoc;
+    }
+
+    /**
+     * Returns the location of items.txt
+     * @return
+     */
+    public String getItemLocation() {
+        return itemLoc;
+    }
+
+    /**
+     * Returns list of banned blocks
+     * @return
+     */
+    public String[] getItemSpawnBlacklist() {
+        return itemSpawnBlacklist;
+    }
+
+    /**
+     * Returns the location of kits.txt
+     * @return
+     */
+    public String getKitsLocation() {
+        return kitsLoc;
+    }
+
+    /**
+     * Returns the MOTD.
+     * @return
+     */
+    public String[] getMotd() {
+        return motd;
+    }
+
+    /**
+     * Returns the player limit
+     * @return
+     */
+    public int getPlayerLimit() {
+        return playerLimit;
+    }
+
+    /**
+     * Returns the location of reservelist.txt
+     * @return
+     */
+    public String getReservelistLocation() {
+        return reservelistLoc;
+    }
+
+    /**
+     * Returns true if the server is saving homes
+     * @return
+     */
+    public boolean canSaveHomes() {
+        return saveHomes;
+    }
+
+    /**
+     * Returns the spawn protection size
+     * @return
+     */
+    public int getSpawnProtectionSize() {
+        return spawnProtectionSize;
+    }
+
+    /**
+     * Returns the location of users.txt
+     * @return
+     */
+    public String getUsersLocation() {
+        return usersLoc;
+    }
+
+    /**
+     * Returns the location of warps.txt
+     * @return
+     */
+    public String getWarpLocation() {
+        return warpLoc;
+    }
+
+    /**
+     * Returns true if the whitelist is enabled
+     * @return
+     */
+    public boolean isWhitelistEnabled() {
+        return whitelistEnabled;
+    }
+
+    /**
+     * Returns the location of whitelist.txt
+     * @return
+     */
+    public String getWhitelistLocation() {
+        return whitelistLoc;
+    }
+
+    /**
+     * Returns the message the kick will show if a player isn't on the whitelist
+     * @return
+     */
+    public String getWhitelistMessage() {
+        return whitelistMessage;
+    }
+
+    /**
+     * Sets the list of allowed items
+     * @param allowedItems
+     */
+    public void setAllowedItems(String[] allowedItems) {
+        this.allowedItems = allowedItems;
+    }
+
+    /**
+     * Sets the list of disallowed items
+     * @param disallowedItems
+     */
+    public void setDisallowedItems(String[] disallowedItems) {
+        this.disallowedItems = disallowedItems;
+    }
+
+    /**
+     * Sets the location of groups.txt
+     * @param groupLoc
+     */
+    public void setGroupLocation(String groupLoc) {
+        this.groupLoc = groupLoc;
+    }
+
+    /**
+     * Sets the location of homes.txt
+     * @param homeLoc
+     */
+    public void setHomeLocation(String homeLoc) {
+        this.homeLoc = homeLoc;
+    }
+
+    /**
+     * Sets the location of items.txt
+     * @param itemLoc
+     */
+    public void setItemLocation(String itemLoc) {
+        this.itemLoc = itemLoc;
+    }
+
+    /**
+     * Sets the item spawn blacklist
+     * @param itemSpawnBlacklist
+     */
+    public void setItemSpawnBlacklist(String[] itemSpawnBlacklist) {
+        this.itemSpawnBlacklist = itemSpawnBlacklist;
+    }
+
+    /**
+     * Sets the location of kits.txt
+     * @param kitsLoc
+     */
+    public void setKitsLocation(String kitsLoc) {
+        this.kitsLoc = kitsLoc;
+    }
+
+    /**
+     * If set to true the server will log all commands used.
+     * @param logging
+     */
+    public void setLogging(boolean logging) {
+        this.logging = logging;
+    }
+
+    /**
+     * Set the MOTD
+     * @param motd
+     */
+    public void setMotd(String[] motd) {
+        this.motd = motd;
+    }
+
+    /**
+     * Set the player limit
+     * @param playerLimit
+     */
+    public void setPlayerLimit(int playerLimit) {
+        this.playerLimit = playerLimit;
+    }
+
+    /**
+     * Set the location of reservelist.txt
+     * @param reservelistLoc
+     */
+    public void setReservelistLocation(String reservelistLoc) {
+        this.reservelistLoc = reservelistLoc;
+    }
+
+    /**
+     * If true the server will save homes. If false homes won't be saved and
+     * will be wiped the next server restart.
+     * @param saveHomes
+     */
+    public void setSaveHomes(boolean saveHomes) {
+        this.saveHomes = saveHomes;
+    }
+
+    /**
+     * Set the spawn protection size (def: 16)
+     * @param spawnProtectionSize
+     */
+    public void setSpawnProtectionSize(int spawnProtectionSize) {
+        this.spawnProtectionSize = spawnProtectionSize;
+    }
+
+    /**
+     * Sets the location of users.txt
+     * @param usersLoc
+     */
+    public void setUsersLocation(String usersLoc) {
+        this.usersLoc = usersLoc;
+    }
+
+    /**
+     * Sets the location of warps.txt
+     * @param warpLoc
+     */
+    public void setWarpLocation(String warpLoc) {
+        this.warpLoc = warpLoc;
+    }
+
+    /**
+     * If true the whitelist is enabled
+     * @param whitelistEnabled
+     */
+    public void setWhitelistEnabled(boolean whitelistEnabled) {
+        this.whitelistEnabled = whitelistEnabled;
+    }
+
+    /**
+     * Sets the location of whitelist.txt
+     * @param whitelistLoc
+     */
+    public void setWhitelistLocation(String whitelistLoc) {
+        this.whitelistLoc = whitelistLoc;
+    }
+
+    /**
+     * Sets the whitelist message to show when it kicks someone
+     * @param whitelistMessage
+     */
+    public void setWhitelistMessage(String whitelistMessage) {
+        this.whitelistMessage = whitelistMessage;
     }
 }

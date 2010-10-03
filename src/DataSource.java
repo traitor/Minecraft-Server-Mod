@@ -1,5 +1,3 @@
-/* Interface so we can either use MySQL or flat files */
-
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -7,13 +5,12 @@ import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 
 /**
- * DataSource is the abstract class for implementing new data sources.
+ * DataSource.java - Abstract class for implementing new data sources.
  * @author James
  */
 public abstract class DataSource {
     
     protected static final Logger log = Logger.getLogger("Minecraft");
-    protected List<User> users;
     protected List<String> reserveList;
     protected List<String> whiteList;
     protected List<Group> groups;
@@ -22,7 +19,7 @@ public abstract class DataSource {
     protected List<Warp> warps;
     protected Map<String, Integer> items;
     protected MinecraftServer server;
-    protected final Object userLock = new Object(), groupLock = new Object(), kitLock = new Object();
+    protected final Object groupLock = new Object(), kitLock = new Object();
     protected final Object homeLock = new Object(), warpLock = new Object(), itemLock = new Object();
     protected final Object whiteListLock = new Object(), reserveListLock = new Object();
 
@@ -30,11 +27,6 @@ public abstract class DataSource {
      * Initializes the data source
      */
     abstract public void initialize();
-
-    /**
-     * Loads all users
-     */
-    abstract public void loadUsers();
 
     /**
      * Loads all groups
@@ -75,31 +67,29 @@ public abstract class DataSource {
 
     /**
      * Adds user to the list
-     * @param user
+     * @param player
      */
-    abstract public void addUser(User user);
+    abstract public void addPlayer(Player player);
 
     /**
      * Modifies the provided user
-     * @param user
+     * @param player 
      */
-    abstract public void modifyUser(User user);
+    abstract public void modifyPlayer(Player player);
+
+    /**
+     * Checks to see if the specified player exists
+     * @param player
+     * @return 
+     */
+    abstract public boolean doesPlayerExist(String player);
 
     /**
      * Returns specified user
      * @param name
      * @return user
      */
-    public User getUser(String name) {
-        synchronized (userLock) {
-            for (User user : users) {
-                if (user.Name.equalsIgnoreCase(name)) {
-                    return user;
-                }
-            }
-        }
-        return null;
-    }
+    abstract public Player getPlayer(String name);
 
     /**
      * Adds specified group to the list of groups
@@ -188,17 +178,17 @@ public abstract class DataSource {
     }
 
     /**
-     * Returns a list of all kits names seperated by commas
+     * Returns a list of all kits names separated by commas
      * @param player
      * @return string list of kits
      */
-    public String getKitNames(String player) {
+    public String getKitNames(Player player) {
         StringBuilder builder = new StringBuilder();
         builder.append(""); //incaseofnull
 
         synchronized (kitLock) {
             for (Kit kit : kits) {
-                if (etc.getInstance().isUserInGroup(player, kit.Group) || kit.Group.equals("")) {
+                if (player.isInGroup(kit.Group) || kit.Group.equals("")) {
                     builder.append(kit.Name).append(" ");
                 }
             }
@@ -284,13 +274,13 @@ public abstract class DataSource {
      * @param player
      * @return string list of warps
      */
-    public String getWarpNames(String player) {
+    public String getWarpNames(Player player) {
         StringBuilder builder = new StringBuilder();
         builder.append(""); //incaseofnull
 
         synchronized (warpLock) {
             for (Warp warp : warps) {
-                if (etc.getInstance().isUserInGroup(player, warp.Group) || warp.Group.equals("")) {
+                if (player.isInGroup(warp.Group) || warp.Group.equals("")) {
                     builder.append(warp.Name).append(" ");
                 }
             }
@@ -368,7 +358,7 @@ public abstract class DataSource {
      * @return true if reservelist
      */
     public boolean hasReserveList() {
-        synchronized (reserveList) {
+        synchronized (reserveListLock) {
             return !reserveList.isEmpty();
         }
     }
@@ -379,7 +369,7 @@ public abstract class DataSource {
      * @return
      */
     public boolean isUserOnReserveList(String user) {
-        synchronized (reserveList) {
+        synchronized (reserveListLock) {
             for (String name : reserveList) {
                 if (name.equalsIgnoreCase(user)) {
                     return true;
