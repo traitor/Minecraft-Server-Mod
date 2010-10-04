@@ -61,6 +61,23 @@ public class id extends ej
                 this.j = true;
             }
         }
+        if ((int)g != (int)e.l || (int)h != (int)e.m || (int)i != (int)e.n) {
+            Location from = new Location();
+            from.x = (int)g;
+            from.y = (int)h;
+            from.z = (int)i;
+            from.rotX = (int)e.r;
+            from.rotY = (int)e.s;
+
+            Location to = new Location();
+            to.x = (int)e.l;
+            to.y = (int)e.m;
+            to.z = (int)e.n;
+            to.rotX = (int)e.r;
+            to.rotY = (int)e.s;
+
+            etc.getInstance().getLoader().callHook(PluginLoader.Hook.PLAYER_MOVE, new Object[] {e, from, to});
+        }
         if (this.j) {
             this.g = this.e.l;
             this.h = this.e.m;

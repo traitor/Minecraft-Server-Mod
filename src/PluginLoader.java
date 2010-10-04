@@ -26,6 +26,7 @@ public class PluginLoader {
         BLOCK_CREATED,
         BLOCK_DESTROYED,
         DISCONNECT,
+        PLAYER_MOVE
     }
     private static final Logger log = Logger.getLogger("Minecraft");
     private static final Object lock = new Object();
@@ -240,6 +241,9 @@ public class PluginLoader {
                             case BLOCK_DESTROYED:
                                 if (plugin.onBlockDestroy(((ea) parameters[0]).getPlayer(), (Block)parameters[1]))
                                     toRet = true;
+                                break;
+                            case PLAYER_MOVE:
+                                plugin.onPlayerMove(((ea) parameters[0]).getPlayer(), (Location)parameters[1], (Location)parameters[2]);
                                 break;
                         }
                     } catch (UnsupportedOperationException ex) {
