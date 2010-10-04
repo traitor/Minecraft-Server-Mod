@@ -42,9 +42,12 @@ public abstract class Plugin {
     public String getName() { return name; }
 
     /**
-     *
+     * Called when a player moves from one block to another
+     * @param player player moving
+     * @param from previous block location
+     * @param to current block location
      */
-    public void onPlayerMove(Player p, Location from, Location to) { }
+    public void onPlayerMove(Player player, Location from, Location to) { }
 
     /**
      * Called during the early login process to check whether or not to kick the
