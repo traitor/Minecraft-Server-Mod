@@ -26,7 +26,6 @@ public class Server {
 
     public void unban(String player) {
         server.f.b(player);
-//        etc.getInstance().getLoader().callHook(PluginLoader.Hook.UNBAN, new Object[]{player});
     }
 	
     /**
@@ -35,7 +34,7 @@ public class Server {
      */
     public void banIp(Player player, String reason) {
         server.f.c(player.getIps()[0]);
-        etc.getInstance().getLoader().callHook(PluginLoader.Hook.BAN, new Object[]{player.getUser(), reason});
+        etc.getInstance().getLoader().callHook(PluginLoader.Hook.IPBAN, new Object[]{player.getUser(), reason});
     }
 
     public void unbanIp(String ip) {
@@ -156,25 +155,12 @@ public class Server {
     }
 
     /**
-     * Normalize a player name. It looks up to see if there's a player by that name on the server and then returns it with the correct capitolization as per what the actual username is
-     * @param name Player name to attempt to normalize
-     * @return Name of player, or null if the player was not found
-     */
-    public String getPlayerName(String name)
-    {
-        Player pl = getPlayer(name);
-        if (pl == null)
-            return null;
-        return pl.getName();
-    }
-
-    /**
      * Op a player.
      */
     public void makeOp(String player)
     {
         // Get the correct capitolization, and also make sure they're online
-        player = getPlayerName(player);
+        player = matchPlayer(player).getName();
         if (player != null)
             server.f.e(player);
     }
@@ -185,7 +171,7 @@ public class Server {
     public void deOp(String player)
     {
         // Get the correct capitolization, and also make sure they're online
-        player = getPlayerName(player);
+        player = matchPlayer(player).getName();
         if (player != null)
             server.f.f(player);
     }
