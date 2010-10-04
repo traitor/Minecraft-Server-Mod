@@ -487,10 +487,12 @@ public class Player {
                 return "§" + prefix;
             }
         }
-
-        Group group = etc.getDataSource().getGroup(groups[0]);
-        if (group != null) {
-            return "§" + group.Prefix;
+        if(groups.length > 0)
+        {
+            Group group = etc.getDataSource().getGroup(groups[0]);
+            if (group != null) {
+                return "§" + group.Prefix;
+            }
         }
         Group def = etc.getInstance().getDefaultGroup();
         return def != null ? "§" + def.Prefix : "";
