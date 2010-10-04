@@ -475,23 +475,6 @@ public class id extends ej
                 } else {
                     msg(Colors.Rose + "Invalid operation.");
                 }
-            } else if (split[0].equalsIgnoreCase("/mute")) {
-                if (split.length != 2) {
-                    msg(Colors.Rose + "Correct usage is: /mute [player]");
-                    return;
-                }
-
-                Player player = etc.getServer().matchPlayer(split[1]);
-
-                if (player != null) {
-                    if (player.toggleMute()) {
-                        msg(Colors.Rose + "player was muted");
-                    } else {
-                        msg(Colors.Rose + "player was unmuted");
-                    }
-                } else {
-                    msg(Colors.Rose + "Can't find player " + split[1]);
-                }
             } else if ((split[0].equalsIgnoreCase("/msg") || split[0].equalsIgnoreCase("/tell")) || split[0].equalsIgnoreCase("/m")) {
                 if (split.length < 3) {
                     msg(Colors.Rose + "Correct usage is: /msg [player] [message]");
@@ -690,135 +673,6 @@ public class id extends ej
                 } else {
                     msg(Colors.Rose + "Can't find user " + split[3]);
                 }
-            } else if (split[0].equalsIgnoreCase("/tempban")) {
-                // /tempban MINUTES HOURS DAYS
-                if (split.length == 1) {
-                    //TODO;
-                    return;
-                }
-                int minutes = 0, hours = 0, days = 0;
-                if (split.length >= 2) {
-                    minutes = Integer.parseInt(split[1]);
-                }
-                if (split.length >= 3) {
-                    hours = Integer.parseInt(split[2]);
-                }
-                if (split.length >= 4) {
-                    days = Integer.parseInt(split[3]);
-                }
-                Date date = new Date();
-                //date.
-            } else if (split[0].equalsIgnoreCase("/banlist")) {
-                byte type = 0;
-                if (split.length == 2) {
-                    if (split[1].equalsIgnoreCase("ips")) {
-                        type = 1;
-                    }
-                }
-                if (type == 0) { //Regular user bans
-                    msg(Colors.Blue + "Ban list:" + Colors.White + " " + d.f.getBans());
-                } else { //IP bans
-                    msg(Colors.Blue + "IP Ban list:" + Colors.White + " " + d.f.getBans());
-                }
-            } else if (split[0].equalsIgnoreCase("/banip")) {
-                if (split.length < 2) {
-                    msg(Colors.Rose + "Correct usage is: /banip [player] <reason> (optional) NOTE: this permabans IPs.");
-                    return;
-                }
-
-                Player player = etc.getServer().matchPlayer(split[1]);
-
-                if (player != null) {
-                    if (!getPlayer().hasControlOver(player)) {
-                        msg(Colors.Rose + "You can't ban that user.");
-                        return;
-                    }
-
-                    // adds player to ban list
-                    this.d.f.c(player.getIP());
-
-                    etc.getInstance().getLoader().callHook(PluginLoader.Hook.IPBAN, new Object[]{e, split.length > 2 ? split[1] : ""});
-
-                    a.log(Level.INFO, "IP Banning " + player.getName() + " (IP: " + player.getIP() + ")");
-                    msg(Colors.Rose + "IP Banning " + player.getName() + " (IP: " + player.getIP() + ")");
-
-                    if (split.length > 2) {
-                        player.kick("IP Banned by " + getPlayer().getName() + ": " + etc.combineSplit(2, split, " "));
-                    } else {
-                        player.kick("IP Banned by " + getPlayer().getName() + ".");
-                    }
-                } else {
-                    msg(Colors.Rose + "Can't find user " + split[1] + ".");
-                }
-            } else if (split[0].equalsIgnoreCase("/ban")) {
-                if (split.length < 2) {
-                    msg(Colors.Rose + "Correct usage is: /ban [player] <reason> (optional)");
-                    return;
-                }
-
-                Player player = etc.getServer().matchPlayer(split[1]);
-
-                if (player != null) {
-                    if (!getPlayer().hasControlOver(player)) {
-                        msg(Colors.Rose + "You can't ban that user.");
-                        return;
-                    }
-
-                    // adds player to ban list
-                    this.d.f.a(player.getName());
-
-                    etc.getInstance().getLoader().callHook(PluginLoader.Hook.BAN, new Object[]{e, split.length > 2 ? split[1] : ""});
-
-                    if (split.length > 2) {
-                        player.kick("Banned by " + getPlayer().getName() + ": " + etc.combineSplit(2, split, " "));
-                    } else {
-                        player.kick("Banned by " + getPlayer().getName() + ".");
-                    }
-                    a.log(Level.INFO, "Banning " + player.getName());
-                    msg(Colors.Rose + "Banning " + player.getName());
-                } else {
-                    msg(Colors.Rose + "Can't find user " + split[1] + ".");
-                }
-            } else if (split[0].equalsIgnoreCase("/unban")) {
-                if (split.length != 2) {
-                    msg(Colors.Rose + "Correct usage is: /unban [player]");
-                    return;
-                }
-                this.d.f.b(split[1]);
-                msg(Colors.Rose + "Unbanned " + split[1]);
-            } else if (split[0].equalsIgnoreCase("/unbanip")) {
-                if (split.length != 2) {
-                    msg(Colors.Rose + "Correct usage is: /unbanip [ip]");
-                    return;
-                }
-                this.d.f.d(split[1]);
-                msg(Colors.Rose + "Unbanned " + split[1]);
-            } else if (split[0].equalsIgnoreCase("/kick")) {
-                if (split.length < 2) {
-                    msg(Colors.Rose + "Correct usage is: /kick [player] <reason> (optional)");
-                    return;
-                }
-
-                Player player = etc.getServer().matchPlayer(split[1]);
-
-                if (player != null) {
-                    if (!getPlayer().hasControlOver(player)) {
-                        msg(Colors.Rose + "You can't kick that user.");
-                        return;
-                    }
-
-                    etc.getInstance().getLoader().callHook(PluginLoader.Hook.KICK, new Object[]{e, split.length > 2 ? split[1] : ""});
-
-                    if (split.length > 2) {
-                        player.kick("Kicked by " + getPlayer().getName() + ": " + etc.combineSplit(2, split, " "));
-                    } else {
-                        player.kick("Kicked by " + getPlayer().getName() + ".");
-                    }
-                    a.log(Level.INFO, "Kicking " + player.getName());
-                    msg(Colors.Rose + "Kicking " + player.getName());
-                } else {
-                    msg(Colors.Rose + "Can't find user " + split[1] + ".");
-                }
             } else if (split[0].equalsIgnoreCase("/me")) {
                 if (getPlayer().isMuted()) {
                     msg(Colors.Rose + "You are currently muted.");
@@ -939,10 +793,6 @@ public class id extends ej
                     a.info(getPlayer().getName() + " created a lighter!");
                     getPlayer().giveItem(259, 1);
                 }
-            } else if ((paramString.startsWith("/#")) && (this.d.f.g(getPlayer().getName()))) {
-                String str = paramString.substring(2);
-                a.info(getPlayer().getName() + " issued server command: " + str);
-                this.d.a(str, this);
             } else if (split[0].equalsIgnoreCase("/time")) {
                 if (split.length != 2) {
                     msg(Colors.Rose + "Correct usage is: /time [time|day|night]");
