@@ -19,6 +19,33 @@ public class Server {
         this.server = server;
     }
 
+    public void ban(Player player, String reason) {
+        server.f.a(player.getName());
+        etc.getInstance().getLoader().callHook(PluginLoader.Hook.BAN, new Object[]{player.getUser(), reason});
+    }
+
+    public void unban(String player) {
+        server.f.b(player);
+//        etc.getInstance().getLoader().callHook(PluginLoader.Hook.UNBAN, new Object[]{player});
+    }
+	
+    /**
+     * Bans a user by IP
+     * @param IP Address to ban
+     */
+    public void banIp(Player player, String reason) {
+        server.f.c(player.getIps()[0]);
+        etc.getInstance().getLoader().callHook(PluginLoader.Hook.BAN, new Object[]{player.getUser(), reason});
+    }
+
+    public void unbanIp(String ip) {
+        server.f.d(ip);
+    }
+
+    public String getBans() {
+        return server.f.getBans();
+    }
+
     /**
      * Uses the specified console command
      * @param command
@@ -127,24 +154,6 @@ public class Server {
             toRet.add(((ea)o).getPlayer());
         return toRet;
     }
-
-    /**
-     * Get player by string name iteratively
-     * @param name Name of player to search for
-     * @return Player object or null if not found
-     */
-    public Player getPlayer(String name)
-    {
-        List<Player> list = getPlayerList();
-        Iterator<Player> i = list.iterator();
-        while(i.hasNext())
-        {
-            Player pl = i.next();
-            if (pl.getName().equalsIgnoreCase(name)) return pl;
-        }
-        return null;
-    }
-
 
     /**
      * Normalize a player name. It looks up to see if there's a player by that name on the server and then returns it with the correct capitolization as per what the actual username is
