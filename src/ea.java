@@ -38,7 +38,7 @@ public class ea extends fc {
 
     /**
      * Returns the player
-     * @return
+     * @return player
      */
     public Player getPlayer() {
         return player;

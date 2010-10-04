@@ -579,7 +579,7 @@ public class id extends ej
 
                 Player player = etc.getServer().matchPlayer(split[1]);
 
-                if (player.getName().equalsIgnoreCase(split[1])) {
+                if (getPlayer().getName().equalsIgnoreCase(split[1])) {
                     msg(Colors.Rose + "Wow look at that! You teleported yourself to yourself!");
                     return;
                 }
@@ -856,6 +856,16 @@ public class id extends ej
             } else if (split[0].equalsIgnoreCase("/motd")) {
                 for (String str : etc.getInstance().getMotd()) {
                     msg(str);
+                }
+            } else if (split[0].equalsIgnoreCase("/spawnmob")) {
+                if (split.length == 2) {
+                    Mob mob = new Mob(split[1], getPlayer().getLocation());
+                    mob.spawn();
+                }  else if (split.length == 3) {
+                    for (int i = 0; i < Integer.parseInt(split[2]); i++) {
+                        Mob mob = new Mob(split[1], getPlayer().getLocation());
+                        mob.spawn();
+                    }
                 }
             } else {
                 a.info(getPlayer().getName() + " tried command " + paramString);

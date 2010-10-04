@@ -10,11 +10,11 @@ public class Player {
     private String name = "";
     private String prefix = "";
     private String[] commands = new String[] { "" };
-    private String[] groups = new String[] { };
+    private String[] groups = new String[] { "" };
     private String[] ips = new String[] { "" };
     private boolean ignoreRestrictions = false;
     private boolean admin = false;
-    private boolean canModifyWorld = true;
+    private boolean canModifyWorld = false;
     private boolean muted = false;
 
     /**

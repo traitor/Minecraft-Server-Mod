@@ -71,8 +71,9 @@ public class PluginLoader {
     public void reloadPlugin(String fileName) {
         /* Not sure exactly how much of this is necessary */
         Plugin toNull = getPlugin(fileName);
-        if (toNull.isEnabled())
-            toNull.disable();
+        if (toNull != null)
+            if (toNull.isEnabled())
+                toNull.disable();
         plugins.remove(toNull);
         toNull = null;
 

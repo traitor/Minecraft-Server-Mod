@@ -80,7 +80,7 @@ public abstract class DataSource {
     /**
      * Checks to see if the specified player exists
      * @param player
-     * @return 
+     * @return true if player exists
      */
     abstract public boolean doesPlayerExist(String player);
 
@@ -328,7 +328,7 @@ public abstract class DataSource {
     /**
      * Returns true if the player is on the whitelist
      * @param user
-     * @return
+     * @return true if player is on whitelist
      */
     public boolean isUserOnWhitelist(String user) {
         synchronized (whiteListLock) {
@@ -366,7 +366,7 @@ public abstract class DataSource {
     /**
      * Returns true if player is on reservelist
      * @param user
-     * @return
+     * @return true if player is on reserve list
      */
     public boolean isUserOnReserveList(String user) {
         synchronized (reserveListLock) {
