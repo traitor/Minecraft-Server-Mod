@@ -1007,6 +1007,16 @@ public class id extends ej
                 for (String str : etc.getInstance().getMotd()) {
                     msg(str);
                 }
+            } else if (split[0].equalsIgnoreCase("/spawnmob")) {
+                if (split.length == 2) {
+                    Mob mob = new Mob(split[1], getPlayer().getLocation());
+                    mob.spawn();
+                }  else if (split.length == 3) {
+                    for (int i = 0; i < Integer.parseInt(split[2]); i++) {
+                        Mob mob = new Mob(split[1], getPlayer().getLocation());
+                        mob.spawn();
+                    }
+                }
             } else {
                 a.info(getPlayer().getName() + " tried command " + paramString);
                 msg(Colors.Rose + "Unknown command");

@@ -132,7 +132,7 @@ public class Server {
      * @param block
      */
     public void setBlock(Block block) {
-        setBlockAt(block.getX(), block.getY(), block.getZ(), block.getType());
+        setBlockAt(block.getType(), block.getX(), block.getY(), block.getZ());
     }
 
     /**

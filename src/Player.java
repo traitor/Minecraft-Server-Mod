@@ -14,7 +14,7 @@ public class Player {
     private String[] ips = new String[] { "" };
     private boolean ignoreRestrictions = false;
     private boolean admin = false;
-    private boolean canModifyWorld = true;
+    private boolean canModifyWorld = false;
     private boolean muted = false;
 
     /**
