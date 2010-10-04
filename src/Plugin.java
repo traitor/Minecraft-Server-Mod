@@ -42,6 +42,11 @@ public abstract class Plugin {
     public String getName() { return name; }
 
     /**
+     *
+     */
+    public void onPlayerMove(Player p, Location from, Location to) { }
+
+    /**
      * Called during the early login process to check whether or not to kick the
      *  player
      * @param user
