@@ -412,10 +412,8 @@ public class etc {
                 if (split.length < 3 || split[2] == "help") {
                     log.info("usage: plugin unload [name]");
                     log.info("Unloads the named plugin, assuming it is currently loaded.");
-                    log.info("NOTE: This currently doesn't work right, but will in the very near future!");
                     return true;
                 }
-                log.info("WARNING: This currently doesn't work right, but will in the very near future!");
                 getLoader().disablePlugin(split[2]);
             } else if (split[1].equalsIgnoreCase("reload")) {
                 if (split.length < 3 || split[2] == "help") {
@@ -423,7 +421,6 @@ public class etc {
                     log.info("Reloads the named plugin, loading it if it is not already in.");
                     return true;
                 }
-                log.info("WARNING: This currently doesn't work right, but will in the very near future!");
                 getLoader().reloadPlugin(split[2]);
             } else if (split[1].equalsIgnoreCase("list")) {
                 log.info("Plugins: " + getLoader().getPluginList());
