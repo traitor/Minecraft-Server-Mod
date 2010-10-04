@@ -128,11 +128,26 @@ public class Server {
     }
 
     /**
+     * Get the global spawn location
+     * @return Location object for spawn
+     */
+    public Location getSpawnLocation()
+    {
+        Location spawn = new Location();
+        spawn.x = (server.e.n + 0.5D);
+        spawn.y = server.e.d(server.e.n, server.e.p) + 1.5D;
+        spawn.z = server.e.p + 0.5D;
+        spawn.rotX = 0.0F;
+        spawn.rotY = 0.0F;
+        return spawn;
+    }
+
+    /**
      * Sets the block
      * @param block
      */
     public void setBlock(Block block) {
-        setBlockAt(block.getX(), block.getY(), block.getZ(), block.getType());
+        setBlockAt(block.getType(), block.getX(), block.getY(), block.getZ());
     }
 
     /**

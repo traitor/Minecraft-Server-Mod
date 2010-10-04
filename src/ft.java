@@ -25,6 +25,8 @@ public class ft {
     private cl l;
 
     public ft(MinecraftServer paramMinecraftServer) {
+        etc.setServer(paramMinecraftServer);
+        etc.getInstance().loadData();
         this.c = paramMinecraftServer;
         this.i = paramMinecraftServer.a("banned-players.txt");
         this.j = paramMinecraftServer.a("banned-ips.txt");

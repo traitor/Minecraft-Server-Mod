@@ -14,7 +14,7 @@ public class Player {
     private String[] ips = new String[] { "" };
     private boolean ignoreRestrictions = false;
     private boolean admin = false;
-    private boolean canModifyWorld = true;
+    private boolean canModifyWorld = false;
     private boolean muted = false;
 
     /**
@@ -176,15 +176,19 @@ public class Player {
     /**
      * Returns true if this player has control over the other player
      * @param player
-     * @return
+     * @return true if player has control
      */
     public boolean hasControlOver(Player player) {
         boolean isInGroup = false;
 
         for (String str : player.getGroups()) {
-            if (isInGroup(str)) {
+            if (str.equals("") && player.getGroups().length == 1)
                 isInGroup = true;
-            }
+            else if(isInGroup(str))
+                isInGroup = true;
+            else
+                continue;
+            break;
         }
 
         return isInGroup;
@@ -487,10 +491,12 @@ public class Player {
                 return "§" + prefix;
             }
         }
-
-        Group group = etc.getDataSource().getGroup(groups[0]);
-        if (group != null) {
-            return "§" + group.Prefix;
+        if(groups.length > 0)
+        {
+            Group group = etc.getDataSource().getGroup(groups[0]);
+            if (group != null) {
+                return "§" + group.Prefix;
+            }
         }
         Group def = etc.getInstance().getDefaultGroup();
         return def != null ? "§" + def.Prefix : "";

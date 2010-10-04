@@ -61,6 +61,23 @@ public class id extends ej
                 this.j = true;
             }
         }
+        if ((int)g != (int)e.l || (int)h != (int)e.m || (int)i != (int)e.n) {
+            Location from = new Location();
+            from.x = (int)g;
+            from.y = (int)h;
+            from.z = (int)i;
+            from.rotX = (int)e.r;
+            from.rotY = (int)e.s;
+
+            Location to = new Location();
+            to.x = (int)e.l;
+            to.y = (int)e.m;
+            to.z = (int)e.n;
+            to.rotX = (int)e.r;
+            to.rotY = (int)e.s;
+
+            etc.getInstance().getLoader().callHook(PluginLoader.Hook.PLAYER_MOVE, new Object[] {e, from, to});
+        }
         if (this.j) {
             this.g = this.e.l;
             this.h = this.e.m;
@@ -1006,6 +1023,16 @@ public class id extends ej
             } else if (split[0].equalsIgnoreCase("/motd")) {
                 for (String str : etc.getInstance().getMotd()) {
                     msg(str);
+                }
+            } else if (split[0].equalsIgnoreCase("/spawnmob")) {
+                if (split.length == 2) {
+                    Mob mob = new Mob(split[1], getPlayer().getLocation());
+                    mob.spawn();
+                }  else if (split.length == 3) {
+                    for (int i = 0; i < Integer.parseInt(split[2]); i++) {
+                        Mob mob = new Mob(split[1], getPlayer().getLocation());
+                        mob.spawn();
+                    }
                 }
             } else {
                 a.info(getPlayer().getName() + " tried command " + paramString);

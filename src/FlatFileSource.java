@@ -88,8 +88,7 @@ public class FlatFileSource extends DataSource {
                     // kind of a shitty way, but whatever.
                     if (group.InheritedGroups != null) {
                         if (group.InheritedGroups[0].equalsIgnoreCase(group.Name)) {
-                            group.InheritedGroups = new String[1];
-                            group.InheritedGroups[0] = "";
+                            group.InheritedGroups = new String[] { "" };
                             group.DefaultGroup = true;
                         }
                     }
