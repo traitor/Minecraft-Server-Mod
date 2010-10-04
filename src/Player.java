@@ -176,15 +176,19 @@ public class Player {
     /**
      * Returns true if this player has control over the other player
      * @param player
-     * @return
+     * @return true if player has control
      */
     public boolean hasControlOver(Player player) {
         boolean isInGroup = false;
 
         for (String str : player.getGroups()) {
-            if (isInGroup(str)) {
+            if (str.equals("") && player.getGroups().length == 1)
                 isInGroup = true;
-            }
+            else if(isInGroup(str))
+                isInGroup = true;
+            else
+                continue;
+            break;
         }
 
         return isInGroup;
