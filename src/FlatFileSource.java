@@ -952,6 +952,9 @@ public class FlatFileSource extends DataSource {
 
     //Whitelist
     public void addToWhitelist(String name) {
+        if (isUserOnWhitelist(name))
+            return;
+        
         BufferedWriter bw = null;
         String location = etc.getInstance().getWhitelistLocation();
         try {
@@ -975,6 +978,9 @@ public class FlatFileSource extends DataSource {
     }
 
     public void removeFromWhitelist(String name) {
+        if (!isUserOnWhitelist(name))
+            return;
+
         synchronized (whiteListLock) {
             whiteList.remove(name);
         }
@@ -1010,6 +1016,8 @@ public class FlatFileSource extends DataSource {
 
     //Reservelist
     public void addToReserveList(String name) {
+        if (isUserOnReserveList(name))
+            return;
         BufferedWriter bw = null;
         String location = etc.getInstance().getReservelistLocation();
         try {
@@ -1033,6 +1041,9 @@ public class FlatFileSource extends DataSource {
     }
 
     public void removeFromReserveList(String name) {
+        if (!isUserOnReserveList(name))
+            return;
+
         synchronized (reserveListLock) {
             reserveList.remove(name);
         }

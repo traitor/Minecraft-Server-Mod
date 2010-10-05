@@ -44,6 +44,14 @@ public class ea extends fc {
         return player;
     }
 
+    /**
+     * Reloads the player
+     */
+    public void reloadPlayer() {
+        player = etc.getDataSource().getPlayer(aq);
+        player.setUser(this);
+    }
+
     public void b_() {
     }
 

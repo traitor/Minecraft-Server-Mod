@@ -184,7 +184,7 @@ public class Player {
         for (String str : player.getGroups()) {
             if (str.equals("") && player.getGroups().length == 1)
                 isInGroup = true;
-            else if(isInGroup(str))
+            else if (isInGroup(str))
                 isInGroup = true;
             else
                 continue;
@@ -203,7 +203,7 @@ public class Player {
     }
 
     /**
-     * Return's the player's current location
+     * Returns the player's current location
      * @return
      */
     public Location getLocation() {
