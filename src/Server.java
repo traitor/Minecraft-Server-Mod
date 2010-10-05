@@ -12,6 +12,13 @@ public class Server {
     private MinecraftServer server;
 
     /**
+     * Returns the running version for plugin compatibility
+     */
+    public static int version() {
+        return 111;
+    }
+
+    /**
      * Creates a server
      * @param server
      */
