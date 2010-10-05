@@ -19,6 +19,13 @@ public class Server {
         this.server = server;
     }
 
+    /**
+     * Gracefully shut down the minecraft server
+     */
+    public void stop() {
+        this.server.a();
+    }
+
     public void ban(Player player, String reason) {
         server.f.a(player.getName());
         etc.getInstance().getLoader().callHook(PluginLoader.Hook.BAN, new Object[]{player.getUser(), reason});
