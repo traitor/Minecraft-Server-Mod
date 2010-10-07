@@ -27,7 +27,7 @@ public class PluginLoader {
         BLOCK_DESTROYED,
         DISCONNECT,
         PLAYER_MOVE,
-	ARM_SWING
+        ARM_SWING
     }
     private static final Logger log = Logger.getLogger("Minecraft");
     private static final Object lock = new Object();
