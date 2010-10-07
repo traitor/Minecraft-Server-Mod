@@ -23,6 +23,35 @@ public class FlatFileSource extends DataSource {
         loadItems();
         loadWhitelist();
         loadReserveList();
+
+        String location = etc.getInstance().getUsersLocation();
+        if (!new File(location).exists()) {
+            FileWriter writer = null;
+            try {
+                writer = new FileWriter(location);
+                writer.write("#Add your users here (When adding your entry DO NOT include #!)\r\n");
+                writer.write("#The format is:\r\n");
+                writer.write("#NAME:GROUPS:ADMIN/UNRESTRICTED:COLOR:COMMANDS:IPs\r\n");
+                writer.write("#For administrative powers set admin/unrestricted to 2.\r\n");
+                writer.write("#For no restrictions and ability to give out items set it to 1.\r\n");
+                writer.write("#If you don't want the person to be able to build set it to -1.\r\n");
+                writer.write("#Admin/unrestricted, color and commands are optional.\r\n");
+                writer.write("#Examples:\r\n");
+                writer.write("#Adminfoo:admins\r\n");
+                writer.write("#Moderator39:mods:1:0:/unban\r\n");
+                writer.write("#BobTheBuilder:vip:0:d\r\n");
+            } catch (Exception e) {
+                log.log(Level.SEVERE, "Exception while creating " + location, e);
+            } finally {
+                try {
+                    if (writer != null) {
+                        writer.close();
+                    }
+                } catch (IOException e) {
+                    log.log(Level.SEVERE, "Exception while closing writer for " + location, e);
+                }
+            }
+        }
     }
 
     public void loadGroups() {
@@ -597,7 +626,7 @@ public class FlatFileSource extends DataSource {
             StringBuilder toWrite = new StringBuilder();
             String line = "";
             while ((line = reader.readLine()) != null) {
-                if (!line.contains(player.getName())) {
+                if (!line.split(":")[0].equalsIgnoreCase(player.getName())) {
                     toWrite.append(line).append("\r\n");
                 } else {
                     StringBuilder builder = new StringBuilder();
@@ -655,33 +684,6 @@ public class FlatFileSource extends DataSource {
     public Player getPlayer(String name) {
         Player player = new Player();
         String location = etc.getInstance().getUsersLocation();
-        if (!new File(location).exists()) {
-            FileWriter writer = null;
-            try {
-                writer = new FileWriter(location);
-                writer.write("#Add your users here (When adding your entry DO NOT include #!)\r\n");
-                writer.write("#The format is:\r\n");
-                writer.write("#NAME:GROUPS:ADMIN/UNRESTRICTED:COLOR:COMMANDS:IPs\r\n");
-                writer.write("#For administrative powers set admin/unrestricted to 2.\r\n");
-                writer.write("#For no restrictions and ability to give out items set it to 1.\r\n");
-                writer.write("#If you don't want the person to be able to build set it to -1.\r\n");
-                writer.write("#Admin/unrestricted, color and commands are optional.\r\n");
-                writer.write("#Examples:\r\n");
-                writer.write("#Adminfoo:admins\r\n");
-                writer.write("#Moderator39:mods:1:0:/unban\r\n");
-                writer.write("#BobTheBuilder:vip:0:d\r\n");
-            } catch (Exception e) {
-                log.log(Level.SEVERE, "Exception while creating " + location, e);
-            } finally {
-                try {
-                    if (writer != null) {
-                        writer.close();
-                    }
-                } catch (IOException e) {
-                    log.log(Level.SEVERE, "Exception while closing writer for " + location, e);
-                }
-            }
-        }
         
         try {
             Scanner scanner = new Scanner(new File(location));
@@ -790,7 +792,7 @@ public class FlatFileSource extends DataSource {
                 StringBuilder toWrite = new StringBuilder();
                 String line = "";
                 while ((line = reader.readLine()) != null) {
-                    if (!line.contains(home.Name)) {
+                    if (!line.split(":")[0].equalsIgnoreCase(home.Name)) {
                         toWrite.append(line).append("\r\n");
                     } else {
                         StringBuilder builder = new StringBuilder();
@@ -879,7 +881,7 @@ public class FlatFileSource extends DataSource {
             StringBuilder toWrite = new StringBuilder();
             String line = "";
             while ((line = reader.readLine()) != null) {
-                if (!line.contains(warp.Name)) {
+                if (!line.split(":")[0].equalsIgnoreCase(warp.Name)) {
                     toWrite.append(line).append("\r\n");
                 } else {
                     StringBuilder builder = new StringBuilder();
@@ -925,7 +927,7 @@ public class FlatFileSource extends DataSource {
             StringBuilder toWrite = new StringBuilder();
             String line = "";
             while ((line = reader.readLine()) != null) {
-                if (!line.contains(warp.Name)) {
+                if (!line.split(":")[0].equalsIgnoreCase(warp.Name)) {
                     toWrite.append(line).append("\r\n");
                 }
             }
@@ -994,7 +996,7 @@ public class FlatFileSource extends DataSource {
             StringBuilder toSave = new StringBuilder();
 
             while ((line = reader.readLine()) != null) {
-                if (!line.contains(name.toLowerCase())) {
+                if (!line.equalsIgnoreCase(name.toLowerCase())) {
                     toSave.append(line).append("\r\n");
                 }
             }
@@ -1057,7 +1059,7 @@ public class FlatFileSource extends DataSource {
             StringBuilder toSave = new StringBuilder();
 
             while ((line = reader.readLine()) != null) {
-                if (!line.contains(name.toLowerCase())) {
+                if (!line.equalsIgnoreCase(name.toLowerCase())) {
                     toSave.append(line).append("\r\n");
                 }
             }
