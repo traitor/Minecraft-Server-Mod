@@ -127,4 +127,11 @@ public abstract class Plugin {
      * @return
      */
     public boolean onBlockDestroy(Player player, Block block) { return false; }
+
+    /**
+     * Called when a player swings their arm, aka left clicks (even if no block is in front of them)
+     * @param player player swinging
+     */
+    public void onArmSwing(Player player) { }
+
 }
