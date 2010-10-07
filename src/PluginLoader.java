@@ -20,6 +20,7 @@ public class PluginLoader {
         LOGIN,
         CHAT,
         COMMAND,
+        SERVERCOMMAND,
         BAN,
         IPBAN,
         KICK,
@@ -224,6 +225,10 @@ public class PluginLoader {
                                 break;
                             case COMMAND:
                                 if (plugin.onCommand(((ea) parameters[0]).getPlayer(), (String[])parameters[1]))
+                                    toRet = true;
+                                break;
+                             case SERVERCOMMAND:
+                                if (plugin.onServerCommand((String[])parameters[0]))
                                     toRet = true;
                                 break;
                             case BAN:

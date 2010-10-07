@@ -286,6 +286,9 @@ public class etc {
      */
     public boolean parseConsoleCommand(String command, MinecraftServer server) {
         String[] split = command.split(" ");
+        if ((Boolean)loader.callHook(PluginLoader.Hook.SERVERCOMMAND, new Object[] { split }))
+            return true;
+        
         boolean dontParseRegular = true;
         if (split[0].equalsIgnoreCase("help") || split[0].equalsIgnoreCase("mod-help")) {
             if (split[0].equalsIgnoreCase("help")) {
