@@ -128,7 +128,7 @@ public class ft {
                 }
             }
             if (kick) {
-                player.kick("IP doesn't match specified IP.");
+                paramew.b("IP doesn't match specified IP.");
                 return null;
             }
         }

@@ -86,6 +86,14 @@ public abstract class Plugin {
      * @return false if you want the command to be parsed.
      */
     public boolean onCommand(Player player, String[] split) { return false; }
+
+    /**
+     * Called before the server command is parsed. Return true if you don't want
+     * the server command to be parsed by the server.
+     * @param split
+     * @return false if you want the command to be parsed.
+     */
+    public boolean onServerCommand(String[] split) { return false; }
     
     /**
      * Called when a player is banned

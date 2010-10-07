@@ -754,7 +754,7 @@ public class id extends ej
                     // adds player to ban list
                     this.d.f.c(player.getIP());
 
-                    etc.getInstance().getLoader().callHook(PluginLoader.Hook.IPBAN, new Object[]{e, split.length > 2 ? split[1] : ""});
+                    etc.getInstance().getLoader().callHook(PluginLoader.Hook.IPBAN, new Object[]{player.getUser(), split.length >= 3 ? etc.combineSplit(2, split, " ") : ""});
 
                     a.log(Level.INFO, "IP Banning " + player.getName() + " (IP: " + player.getIP() + ")");
                     msg(Colors.Rose + "IP Banning " + player.getName() + " (IP: " + player.getIP() + ")");
@@ -784,7 +784,7 @@ public class id extends ej
                     // adds player to ban list
                     this.d.f.a(player.getName());
 
-                    etc.getInstance().getLoader().callHook(PluginLoader.Hook.BAN, new Object[]{e, split.length > 2 ? split[1] : ""});
+                    etc.getInstance().getLoader().callHook(PluginLoader.Hook.BAN, new Object[]{player.getUser(), split.length >= 3 ? etc.combineSplit(2, split, " ") : ""});
 
                     if (split.length > 2) {
                         player.kick("Banned by " + getPlayer().getName() + ": " + etc.combineSplit(2, split, " "));
@@ -824,7 +824,7 @@ public class id extends ej
                         return;
                     }
 
-                    etc.getInstance().getLoader().callHook(PluginLoader.Hook.KICK, new Object[]{e, split.length > 2 ? split[1] : ""});
+                    etc.getInstance().getLoader().callHook(PluginLoader.Hook.KICK, new Object[]{player.getUser(), split.length >= 3 ? etc.combineSplit(2, split, " ") : ""});
 
                     if (split.length > 2) {
                         player.kick("Kicked by " + getPlayer().getName() + ": " + etc.combineSplit(2, split, " "));
