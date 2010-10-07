@@ -550,4 +550,13 @@ public class Player {
         muted = !muted;
         return muted;
     }
+
+    /**
+     * Returns item id in player's hand
+     * @return
+     */
+    public int getItemInHand() {
+        return user.a.getItemInHand();
+    }
+
 }
