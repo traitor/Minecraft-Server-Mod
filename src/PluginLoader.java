@@ -27,7 +27,8 @@ public class PluginLoader {
         BLOCK_CREATED,
         BLOCK_DESTROYED,
         DISCONNECT,
-        PLAYER_MOVE
+        PLAYER_MOVE,
+        ARM_SWING
     }
     private static final Logger log = Logger.getLogger("Minecraft");
     private static final Object lock = new Object();
@@ -249,6 +250,9 @@ public class PluginLoader {
                                 break;
                             case PLAYER_MOVE:
                                 plugin.onPlayerMove(((ea) parameters[0]).getPlayer(), (Location)parameters[1], (Location)parameters[2]);
+                                break;
+                            case ARM_SWING:
+                                plugin.onArmSwing(((ea) parameters[0]).getPlayer());
                                 break;
                         }
                     } catch (UnsupportedOperationException ex) {

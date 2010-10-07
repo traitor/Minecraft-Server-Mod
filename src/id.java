@@ -1049,6 +1049,7 @@ public class id extends ej
     //Arm animation
     public void a(o paramo) {
         if (paramo.b == 1) {
+            etc.getInstance().getLoader().callHook(PluginLoader.Hook.ARM_SWING, new Object[] { e });
             this.e.z();
         }
     }
