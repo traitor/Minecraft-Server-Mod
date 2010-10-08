@@ -123,12 +123,12 @@ public class ft {
         if (!player.getIps()[0].equals("")) {
             boolean kick = true;
             for (int i = 0; i < player.getIps().length; i++) {
-                if (!player.getIps()[i].equals("") && player.getIP().equals(player.getIps()[i])) {
+                if (!player.getIps()[i].equals("") && ip.equals(player.getIps()[i])) {
                     kick = false;
                 }
             }
             if (kick) {
-                player.kick("IP doesn't match specified IP.");
+                paramew.b("IP doesn't match specified IP.");
                 return null;
             }
         }

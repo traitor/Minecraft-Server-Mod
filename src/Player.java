@@ -96,10 +96,12 @@ public class Player {
             }
         }
 
-        Group def = etc.getInstance().getDefaultGroup();
-        if (def != null) {
-            if (recursiveUseCommand(def, command)) {
-                return true;
+        if (hasNoGroups()) {
+            Group def = etc.getInstance().getDefaultGroup();
+            if (def != null) {
+                if (recursiveUseCommand(def, command)) {
+                    return true;
+                }
             }
         }
 
@@ -181,10 +183,10 @@ public class Player {
     public boolean hasControlOver(Player player) {
         boolean isInGroup = false;
 
+        if (player.hasNoGroups())
+            return true;
         for (String str : player.getGroups()) {
-            if (str.equals("") && player.getGroups().length == 1)
-                isInGroup = true;
-            else if (isInGroup(str))
+            if (isInGroup(str))
                 isInGroup = true;
             else
                 continue;
@@ -357,9 +359,10 @@ public class Player {
                 }
             }
         }
-        
-        if (etc.getInstance().getDefaultGroup().CanModifyWorld)
-            return true;
+
+        if (hasNoGroups())
+            if (etc.getInstance().getDefaultGroup().CanModifyWorld)
+                return true;
 
         return false;
     }
@@ -549,5 +552,13 @@ public class Player {
     public boolean toggleMute() {
         muted = !muted;
         return muted;
+    }
+
+    public boolean hasNoGroups() {
+        if (groups.length == 0)
+            return true;
+        if (groups.length == 1)
+            return groups[0].equals("");
+        return false;
     }
 }

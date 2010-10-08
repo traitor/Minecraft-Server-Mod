@@ -20,13 +20,15 @@ public class PluginLoader {
         LOGIN,
         CHAT,
         COMMAND,
+        SERVERCOMMAND,
         BAN,
         IPBAN,
         KICK,
         BLOCK_CREATED,
         BLOCK_DESTROYED,
         DISCONNECT,
-        PLAYER_MOVE
+        PLAYER_MOVE,
+        ARM_SWING
     }
     private static final Logger log = Logger.getLogger("Minecraft");
     private static final Object lock = new Object();
@@ -225,6 +227,10 @@ public class PluginLoader {
                                 if (plugin.onCommand(((ea) parameters[0]).getPlayer(), (String[])parameters[1]))
                                     toRet = true;
                                 break;
+                             case SERVERCOMMAND:
+                                if (plugin.onServerCommand((String[])parameters[0]))
+                                    toRet = true;
+                                break;
                             case BAN:
                                 plugin.onBan(((ea) parameters[0]).getPlayer(), (String)parameters[1]);
                                 break;
@@ -244,6 +250,9 @@ public class PluginLoader {
                                 break;
                             case PLAYER_MOVE:
                                 plugin.onPlayerMove(((ea) parameters[0]).getPlayer(), (Location)parameters[1], (Location)parameters[2]);
+                                break;
+                            case ARM_SWING:
+                                plugin.onArmSwing(((ea) parameters[0]).getPlayer());
                                 break;
                         }
                     } catch (UnsupportedOperationException ex) {
