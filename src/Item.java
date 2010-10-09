@@ -5,7 +5,7 @@
  */
 public class Item {
 
-    private int itemId = 1, amount = 1;
+    private int itemId = 1, amount = 1, slot = -1;
 
     /**
      * Create an item with an id of 1 and amount of 1
@@ -21,6 +21,18 @@ public class Item {
     public Item(int itemId, int amount) {
         this.itemId = itemId;
         this.amount = amount;
+    }
+
+    /**
+     * Creates an item with specified id, amount and slot
+     * @param itemId
+     * @param amount
+     * @param slot
+     */
+    public Item(int itemId, int amount, int slot) {
+        this.itemId = itemId;
+        this.amount = amount;
+        this.slot = slot;
     }
 
     /**
@@ -64,5 +76,22 @@ public class Item {
         if (itemId < ez.c.length)
             return ez.c[itemId] != null;
         return false;
+    }
+
+    /**
+     * Returns this item's current slot. -1 if no slot is
+     * specified
+     * @return slot
+     */
+    public int getSlot() {
+        return slot;
+    }
+
+    /**
+     * Sets this item's slot
+     * @param slot
+     */
+    public void setSlot(int slot) {
+        this.slot = slot;
     }
 }

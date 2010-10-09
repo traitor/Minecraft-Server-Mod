@@ -70,6 +70,7 @@ public class etc {
         commands.put("/disableplugin", "[plugin] - Disables plugin");
         commands.put("/listplugins", "- Lists all plugins");
         commands.put("/reloadplugin", "[plugin] - Reloads plugin");
+        commands.put("/clearinventory", "- Clears your inventory");
 
         load();
     }
@@ -285,8 +286,10 @@ public class etc {
      * @return
      */
     public boolean parseConsoleCommand(String command, MinecraftServer server) {
+        if (getMCServer() == null)
+            setServer(server);
         String[] split = command.split(" ");
-        if ((Boolean)loader.callHook(PluginLoader.Hook.SERVERCOMMAND, new Object[] { split }))
+        if ((Boolean)getLoader().callHook(PluginLoader.Hook.SERVERCOMMAND, new Object[] { split }))
             return true;
         
         boolean dontParseRegular = true;
@@ -304,6 +307,9 @@ public class etc {
         } else if (split[0].equalsIgnoreCase("reload")) {
             load();
             loadData();
+            for (Player player : etc.getServer().getPlayerList())
+                    player.getUser().reloadPlayer();
+            
             log.info("Reloaded mod");
         } else if (split[0].equalsIgnoreCase("modify")) {
             if (split.length < 4) {

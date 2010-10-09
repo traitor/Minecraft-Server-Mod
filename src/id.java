@@ -32,6 +32,14 @@ public class id extends ej
     }
 
     /**
+     * Returns the item in player's hand
+     * @return
+     */
+    public int getItemInHand() {
+        return k.c;
+    }
+
+    /**
      * Returns the player for this class
      * @return
      */
@@ -400,6 +408,8 @@ public class id extends ej
             } else if (split[0].equalsIgnoreCase("/reload")) {
                 etc.getInstance().load();
                 etc.getInstance().loadData();
+                for (Player player : etc.getServer().getPlayerList())
+                    player.getUser().reloadPlayer();
                 a.info("Reloaded config");
                 msg("Successfuly reloaded config");
             } else if ((split[0].equalsIgnoreCase("/modify") || split[0].equalsIgnoreCase("/mp"))) {
@@ -594,7 +604,7 @@ public class id extends ej
 
                 Player player = etc.getServer().matchPlayer(split[1]);
 
-                if (getPlayer().getName().equalsIgnoreCase(split[1])) {
+                if (getPlayer().getName().equalsIgnoreCase(player.getName())) {
                     msg(Colors.Rose + "You're already here!");
                     return;
                 }
@@ -1033,6 +1043,21 @@ public class id extends ej
                         Mob mob = new Mob(split[1], getPlayer().getLocation());
                         mob.spawn();
                     }
+                }
+            } else if (split[0].equalsIgnoreCase("/clearinventory")) {
+                Player target = getPlayer();
+                if (split.length >= 2) {
+                    target = etc.getServer().matchPlayer(split[1]);
+                }
+                if (target != null) {
+                    Inventory inv = target.getInventory();
+                    for (int i = 0; i < 36; i++)
+                        inv.removeItem(i);
+                    inv.updateInventory();
+                    if (!target.getName().equals(getPlayer().getName()))
+                        msg(Colors.Rose + "Cleared " + target.getName() + "'s inventory.");
+                } else {
+                    msg(Colors.Rose + "Target not found");
                 }
             } else {
                 a.info(getPlayer().getName() + " tried command " + paramString);
