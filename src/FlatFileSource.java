@@ -23,6 +23,7 @@ public class FlatFileSource extends DataSource {
         loadItems();
         loadWhitelist();
         loadReserveList();
+        //loadBanList();
 
         String location = etc.getInstance().getUsersLocation();
         if (!new File(location).exists()) {
@@ -132,7 +133,6 @@ public class FlatFileSource extends DataSource {
     }
 
     public void loadKits() {
-        kits = new ArrayList<Kit>();
         String location = etc.getInstance().getKitsLocation();
 
         if (!new File(location).exists()) {
@@ -156,44 +156,47 @@ public class FlatFileSource extends DataSource {
                 }
             }
         }
-
-        try {
-            Scanner scanner = new Scanner(new File(location));
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                if (line.startsWith("#") || line.equals("")) // Skip it.
-                {
-                    continue;
-                }
-                String[] split = line.split(":");
-                String name = split[0];
-                String[] ids = split[1].split(",");
-                int delay = Integer.parseInt(split[2]);
-                String group = "";
-                if (split.length == 4) {
-                    group = split[3];
-                }
-                Kit kit = new Kit();
-                kit.Name = name;
-                kit.IDs = new HashMap<String, Integer>();
-                for (String str : ids) {
-                    String id = "";
-                    int amount = 1;
-                    if (str.contains(" ")) {
-                        id = str.split(" ")[0];
-                        amount = Integer.parseInt(str.split(" ")[1]);
-                    } else {
-                        id = str;
+        
+        synchronized (kitLock) {
+            kits = new ArrayList<Kit>();
+            try {
+                Scanner scanner = new Scanner(new File(location));
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    if (line.startsWith("#") || line.equals("")) // Skip it.
+                    {
+                        continue;
                     }
-                    kit.IDs.put(id, amount);
+                    String[] split = line.split(":");
+                    String name = split[0];
+                    String[] ids = split[1].split(",");
+                    int delay = Integer.parseInt(split[2]);
+                    String group = "";
+                    if (split.length == 4) {
+                        group = split[3];
+                    }
+                    Kit kit = new Kit();
+                    kit.Name = name;
+                    kit.IDs = new HashMap<String, Integer>();
+                    for (String str : ids) {
+                        String id = "";
+                        int amount = 1;
+                        if (str.contains(" ")) {
+                            id = str.split(" ")[0];
+                            amount = Integer.parseInt(str.split(" ")[1]);
+                        } else {
+                            id = str;
+                        }
+                        kit.IDs.put(id, amount);
+                    }
+                    kit.Delay = delay;
+                    kit.Group = group;
+                    kits.add(kit);
                 }
-                kit.Delay = delay;
-                kit.Group = group;
-                kits.add(kit);
+                scanner.close();
+            } catch (Exception e) {
+                log.log(Level.SEVERE, "Exception while reading " + location, e);
             }
-            scanner.close();
-        } catch (Exception e) {
-            log.log(Level.SEVERE, "Exception while reading " + location, e);
         }
     }
 
@@ -580,6 +583,61 @@ public class FlatFileSource extends DataSource {
                 scanner.close();
             } catch (Exception e) {
                 log.log(Level.SEVERE, "Exception while reading " + location, e);
+            }
+        }
+    }
+
+    public void loadBanList() {
+        synchronized (banLock) {
+            bans = new ArrayList<Ban>();
+
+            try {
+                Scanner scanner = new Scanner(new File("banned-players.txt"));
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    if (line.startsWith("#") || line.equals("")) // Skip it.
+                    {
+                        continue;
+                    }
+                    String[] split = line.split(":");
+                    Ban ban = new Ban();
+                    if (split.length >= 1)
+                        ban.setName(split[0]);
+                    if (split.length == 4) {
+                        ban.setIp(split[1]);
+                        ban.setReason(split[2]);
+                        ban.setTimestamp(Integer.parseInt(split[3]));
+                    }
+                    bans.add(ban);
+                }
+                scanner.close();
+            } catch (Exception e) {
+                log.log(Level.SEVERE, "Exception while reading banned-players.txt", e);
+            }
+
+            try {
+                Scanner scanner = new Scanner(new File("banned-ips.txt"));
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    if (line.startsWith("#") || line.equals("")) // Skip it.
+                    {
+                        continue;
+                    }
+                    String[] split = line.split(":");
+
+                    Ban ban = new Ban();
+                    if (split.length >= 1)
+                        ban.setIp(split[0]);
+                    if (split.length == 4) {
+                        ban.setName(split[1]);
+                        ban.setReason(split[2]);
+                        ban.setTimestamp(Integer.parseInt(split[3]));
+                    }
+                    bans.add(ban);
+                }
+                scanner.close();
+            } catch (Exception e) {
+                log.log(Level.SEVERE, "Exception while reading banned-ips.txt", e);
             }
         }
     }
@@ -1077,5 +1135,9 @@ public class FlatFileSource extends DataSource {
             } catch (IOException ex) {
             }
         }
+    }
+
+    public void modifyBan(Ban ban) {
+        
     }
 }

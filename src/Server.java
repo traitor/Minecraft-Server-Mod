@@ -192,4 +192,22 @@ public class Server {
     public int getBlockIdAt(int x, int y, int z) {
         return server.e.a(x, y, z);
     }
+
+    /**
+     * Returns the complex block at the specified location. Null
+     * if there's no complex block there.
+     * @param x x
+     * @param y y
+     * @param z z
+     * @return complex block
+     */
+    public ComplexBlock getComplexBlock(int x, int y, int z) {
+        as localas = server.e.k(x, y, z);
+        if (localas != null)
+            if (localas instanceof hb)
+                return new Chest((hb)localas);
+            if (localas instanceof ig)
+                return new Sign((ig)localas);
+        return null;
+    }
 }

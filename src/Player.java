@@ -16,6 +16,14 @@ public class Player {
     private boolean admin = false;
     private boolean canModifyWorld = false;
     private boolean muted = false;
+    private Inventory inventory;
+
+    /**
+     *
+     */
+    public Player() {
+        inventory = new Inventory(this);
+    }
 
     /**
      * Kicks player with the specified reason
@@ -47,16 +55,32 @@ public class Player {
      * @param amount
      */
     public void giveItem(int itemId, int amount) {
-        int temp = amount;
+        inventory.giveItem(itemId, amount);
+        inventory.updateInventory();
+        /*int emptySlot = inventory.getEmptySlot();
+        if (emptySlot == -1) {
+            int temp = amount;
 
-        do {
-            if (temp - 64 >= 64) {
-                user.a(new gp(itemId, 64));
+            do {
+                if (temp - 64 >= 64) {
+                    user.a(new gp(itemId, 64));
+                } else {
+                    user.a(new gp(itemId, temp));
+                }
+                temp -= 64;
+            } while (temp >= 64);
+        } else {
+            if (!inventory.hasItem(new Item(itemId, 1))) {
+                inventory.addItem(new Item(itemId, amount, emptySlot));
             } else {
-                user.a(new gp(itemId, temp));
+                Item i = inventory.getItemFromId(itemId);
+                if (i != null) {
+                    i.setAmount(i.getAmount() + amount);
+                    inventory.addItem(i);
+                }
             }
-            temp -= 64;
-        } while (temp >= 64);
+            inventory.updateInventory();
+        }*/
     }
 
     /**
@@ -554,11 +578,31 @@ public class Player {
         return muted;
     }
 
+    /**
+     * Checks to see if this player is in any groups
+     * @return true if this player is in any group
+     */
     public boolean hasNoGroups() {
         if (groups.length == 0)
             return true;
         if (groups.length == 1)
             return groups[0].equals("");
         return false;
+    }
+
+    /**
+     * Returns item id in player's hand
+     * @return
+     */
+    public int getItemInHand() {
+        return user.a.getItemInHand();
+    }
+
+    /**
+     * Returns this player's inventory
+     * @return inventory
+     */
+    public Inventory getInventory() {
+        return inventory;
     }
 }
