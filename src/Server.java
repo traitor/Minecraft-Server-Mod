@@ -203,11 +203,14 @@ public class Server {
      */
     public ComplexBlock getComplexBlock(int x, int y, int z) {
         as localas = server.e.k(x, y, z);
-        if (localas != null)
+        if (localas != null) {
             if (localas instanceof hb)
                 return new Chest((hb)localas);
-            if (localas instanceof ig)
+            else if (localas instanceof ig)
                 return new Sign((ig)localas);
+            else if (localas instanceof df)
+                return new Furnace((df)localas);
+        }
         return null;
     }
 }

@@ -1109,6 +1109,9 @@ public class id extends ej
 
     //Update our inventory
     public void a(r paramr) {
+        if (!getPlayer().canBuild())
+            return;
+        
         if (paramr.a == -1) {
             gp[] temp = this.e.aj.a;
             this.e.aj.a = paramr.b;
@@ -1139,15 +1142,19 @@ public class id extends ej
 
         as localas = this.d.e.k(paramib.a, paramib.b, paramib.c);
         if (localas != null) {
-            if (localas instanceof hb) {
-                //Chest
+            if (localas instanceof hb) { //Chest
                 hb chest = (hb) localas;
                 gp[] temp = chest.getContents();
                 localas.a(paramib.e);
                 if ((Boolean)etc.getInstance().getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[] { e, new Chest(chest) }))
                     chest.setContents(temp);
-            } else if (localas instanceof ig) {
-                //Sign
+            } else if (localas instanceof df) { //Furnace
+                df furnace = (df) localas;
+                gp[] temp = furnace.getContents();
+                localas.a(paramib.e);
+                if ((Boolean)etc.getInstance().getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[] { e, new Furnace(furnace) }))
+                    furnace.setContents(temp);
+            } else if (localas instanceof ig) { //Sign
                 ig sign = (ig) localas;
                 String[] temp = sign.e;
                 localas.a(paramib.e);

@@ -150,7 +150,7 @@ public abstract class Plugin {
     public boolean onInventoryChange(Player player) { return false; }
 
     /**
-     * Called when either a sign or chest is changed.
+     * Called when either a sign, chest or furnace is changed.
      * @param player player who changed it
      * @param complexblock block that was changed
      * @return true if you want any changes to be reverted
