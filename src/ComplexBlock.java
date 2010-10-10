@@ -3,5 +3,8 @@
  * @author James
  */
 public interface ComplexBlock {
+    /**
+     * Sends the updated block information to clients.
+     */
     public void update();
 }
