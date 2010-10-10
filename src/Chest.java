@@ -17,7 +17,7 @@ public class Chest extends ItemArray implements ComplexBlock {
         chest.c();
     }
 
-    protected gp[] getArray() {
+    public gp[] getArray() {
         return chest.getContents();
     }
 }

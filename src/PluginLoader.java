@@ -30,7 +30,8 @@ public class PluginLoader {
         PLAYER_MOVE,
         ARM_SWING,
         COMPLEX_BLOCK_CHANGE,
-        INVENTORY_CHANGE
+        INVENTORY_CHANGE,
+        COMPLEX_BLOCK_SEND,
     }
     private static final Logger log = Logger.getLogger("Minecraft");
     private static final Object lock = new Object();
@@ -262,6 +263,10 @@ public class PluginLoader {
                                 break;
                             case COMPLEX_BLOCK_CHANGE:
                                 if (plugin.onComplexBlockChange(((ea) parameters[0]).getPlayer(), (ComplexBlock) parameters[1]))
+                                    toRet = true;
+                                break;
+                            case COMPLEX_BLOCK_SEND:
+                                if (plugin.onSendComplexBlock(((ea) parameters[0]).getPlayer(), (ComplexBlock) parameters[1]))
                                     toRet = true;
                                 break;
                         }

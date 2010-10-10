@@ -100,7 +100,18 @@ public class ea extends fc {
                     as localas = (as) ((List) localObject2).get(j);
                     if (!player.canBuild() && (localas instanceof hb || localas instanceof df))
                         continue;
-                    this.a.b(new ib(localas.b, localas.c, localas.d, localas));
+                    ComplexBlock block = null;
+                    if (localas instanceof hb)
+                        block = new Chest((hb)localas);
+                    else if (localas instanceof df)
+                        block = new Furnace((df)localas);
+                    else if (localas instanceof ig)
+                        block = new Sign((ig)localas);
+                    if (block != null) {
+                        if (!(Boolean)etc.getInstance().getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, new Object[] { this, block }))
+                            this.a.b(new ib(localas.b, localas.c, localas.d, localas));
+                    } else
+                        this.a.b(new ib(localas.b, localas.c, localas.d, localas));
                 }
             }
         }

@@ -1142,7 +1142,7 @@ public class id extends ej
     public void a(ib paramib) {
         if (!getPlayer().canBuild())
             return;
-
+        
         as localas = this.d.e.k(paramib.a, paramib.b, paramib.c);
         if (localas != null) {
             if (localas instanceof hb) { //Chest

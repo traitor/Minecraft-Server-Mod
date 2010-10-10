@@ -152,8 +152,18 @@ public abstract class Plugin {
     /**
      * Called when either a sign, chest or furnace is changed.
      * @param player player who changed it
-     * @param complexblock block that was changed
+     * @param block complex block that changed
      * @return true if you want any changes to be reverted
      */
     public boolean onComplexBlockChange(Player player, ComplexBlock block) { return false; }
+
+    /**
+     * Called when either a sign, chest or furnace is sent to a
+     * player
+     * @param player player who the block is being sent to
+     * @param block complex block that's being sent
+     * @return true if you want the chest, furnace or sign to be
+     * empty
+     */
+    public boolean onSendComplexBlock(Player player, ComplexBlock block) { return false; }
 }

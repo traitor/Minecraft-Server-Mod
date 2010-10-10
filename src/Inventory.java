@@ -3,9 +3,21 @@
  * @author James
  */
 public class Inventory extends ItemArray {
+    /**
+     * The type of inventory to use
+     */
     public enum Type {
+        /**
+         * Regular inventory
+         */
         Inventory,
+        /**
+         * The small, 2x2 crafting table
+         */
         CraftingTable,
+        /**
+         * The player's equipment
+         */
         Equipment
     }
     private ea user;
@@ -14,6 +26,7 @@ public class Inventory extends ItemArray {
     /**
      * Creates an interface for this player's inventory
      * @param player
+     * @param type
      */
     public Inventory(Player player, Type type) {
         this.user = player.getUser();
@@ -77,7 +90,7 @@ public class Inventory extends ItemArray {
         user.a.d();
     }
 
-    protected gp[] getArray() {
+    public gp[] getArray() {
         switch (type) {
             case Inventory: return user.aj.a;
             case CraftingTable: return user.aj.c;

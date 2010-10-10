@@ -138,11 +138,18 @@ public abstract class ItemArray {
         return false;
     }
 
+    /**
+     * Clears the contents
+     */
     public void clearContents() {
         for (int i = 0; getArray().length > i; i++) {
             getArray()[i] = null;
         }
     }
 
-    protected abstract gp[] getArray();
+    /**
+     * Gets the actual item array
+     * @return item array
+     */
+    public abstract gp[] getArray();
 }
