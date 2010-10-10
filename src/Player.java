@@ -16,13 +16,13 @@ public class Player {
     private boolean admin = false;
     private boolean canModifyWorld = false;
     private boolean muted = false;
-    private Inventory inventory;
+    private Inventory inventory, craftingTable, equipment;
 
     /**
      *
      */
     public Player() {
-        inventory = new Inventory(this);
+        
     }
 
     /**
@@ -559,6 +559,9 @@ public class Player {
      */
     public void setUser(ea user) {
         this.user = user;
+        this.inventory = new Inventory(this, Inventory.Type.Inventory);
+        this.craftingTable = new Inventory(this, Inventory.Type.CraftingTable);
+        this.equipment = new Inventory(this, Inventory.Type.Equipment);
     }
 
     /**
@@ -604,5 +607,21 @@ public class Player {
      */
     public Inventory getInventory() {
         return inventory;
+    }
+
+    /**
+     * Returns this player's crafting table (2x2)
+     * @return inventory
+     */
+    public Inventory getCraftingTable() {
+        return craftingTable;
+    }
+
+    /**
+     * Returns this player's equipment
+     * @return inventory
+     */
+    public Inventory getEquipment() {
+        return equipment;
     }
 }

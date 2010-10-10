@@ -22,6 +22,7 @@ public class id extends ej
     private boolean j = true;
     private gp k = null;
     private List<String> onlyOneUseKits = new ArrayList<String>();
+    private static final int COMMANDS_PER_PAGE = 7;
 
     public id(MinecraftServer paramMinecraftServer, bb parambb, ea paramea) {
         this.d = paramMinecraftServer;
@@ -36,7 +37,9 @@ public class id extends ej
      * @return
      */
     public int getItemInHand() {
-        return k.c;
+        if (k != null) //Check to see if we are even holding anything
+            return k.c;
+        return -1;
     }
 
     /**
@@ -350,6 +353,16 @@ public class id extends ej
         b(new ba(msg));
     }
 
+    /**
+     * The number of pages needed to display available commands
+     * @param availableCommands
+     * @return
+     */
+    private Integer getNumberOfHelpCommandPages(List<String> availableCommands) {
+        return (int) Math.ceil((double) availableCommands.size()
+                / (double) COMMANDS_PER_PAGE);
+    }
+
     private void d(String paramString) {
         try {
             if (etc.getInstance().isLogging()) {
@@ -379,31 +392,28 @@ public class id extends ej
                     }
                 }
 
-                msg(Colors.Blue + "Available commands (Page " + (split.length == 2 ? split[1] : "1") + " of " + (int) Math.ceil((double) availableCommands.size() / (double) 7) + ") [] = required <> = optional:");
-                if (split.length == 2) {
-                    try {
-                        int amount = Integer.parseInt(split[1]);
-
-                        if (amount > 0) {
-                            amount = (amount - 1) * 7;
-                        } else {
-                            amount = 0;
-                        }
-
-                        for (int i = amount; i < amount + 7; i++) {
-                            if (availableCommands.size() > i) {
-                                msg(Colors.Rose + availableCommands.get(i));
-                            }
-                        }
-                    } catch (NumberFormatException ex) {
-                        msg(Colors.Rose + "Not a valid page number.");
+                String page_no = (split.length > 1 ? split[1] : "1");
+                try {
+                    int amount = Integer.parseInt(page_no);
+                    if ((amount > getNumberOfHelpCommandPages(availableCommands))
+                            || (amount < 1)) {
+                        throw new NumberFormatException();
                     }
-                } else {
-                    for (int i = 0; i < 7; i++) {
-                        if (availableCommands.size() > i) {
-                            msg(Colors.Rose + availableCommands.get(i));
-                        }
+
+                    msg(Colors.Blue + "Available commands (Page " + amount
+                            + " of "
+                            + getNumberOfHelpCommandPages(availableCommands)
+                            + ") [] = required <> = optional:");
+                    if (amount > 0) {
+                        amount = (amount - 1) * COMMANDS_PER_PAGE;
                     }
+                    for (int i = amount; i < (getNumberOfHelpCommandPages(availableCommands) == 1 ? availableCommands
+                            .size()
+                            : amount + COMMANDS_PER_PAGE); i++) {
+                        msg(Colors.Rose + availableCommands.get(i));
+                    }
+                } catch (NumberFormatException ex) {
+                    msg(Colors.Rose + "Not a valid page number.");
                 }
             } else if (split[0].equalsIgnoreCase("/reload")) {
                 etc.getInstance().load();
@@ -1051,8 +1061,11 @@ public class id extends ej
                 }
                 if (target != null) {
                     Inventory inv = target.getInventory();
-                    for (int i = 0; i < 36; i++)
-                        inv.removeItem(i);
+                    inv.clearContents();
+                    inv = target.getCraftingTable();
+                    inv.clearContents();
+                    inv = target.getEquipment();
+                    inv.clearContents();
                     inv.updateInventory();
                     if (!target.getName().equals(getPlayer().getName()))
                         msg(Colors.Rose + "Cleared " + target.getName() + "'s inventory.");
@@ -1099,8 +1112,16 @@ public class id extends ej
 
     //Update our inventory
     public void a(r paramr) {
+        if (!getPlayer().canBuild())
+            return;
+        
         if (paramr.a == -1) {
+            gp[] temp = this.e.aj.a;
             this.e.aj.a = paramr.b;
+            if ((Boolean)etc.getInstance().getLoader().callHook(PluginLoader.Hook.INVENTORY_CHANGE, new Object[] { e })) {
+                this.e.aj.a = temp;
+                getPlayer().getInventory().updateInventory();
+            }
         }
         if (paramr.a == -2) {
             this.e.aj.c = paramr.b;
@@ -1124,7 +1145,25 @@ public class id extends ej
 
         as localas = this.d.e.k(paramib.a, paramib.b, paramib.c);
         if (localas != null) {
-            localas.a(paramib.e);
+            if (localas instanceof hb) { //Chest
+                hb chest = (hb) localas;
+                gp[] temp = chest.getContents();
+                localas.a(paramib.e);
+                if ((Boolean)etc.getInstance().getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[] { e, new Chest(chest) }))
+                    chest.setContents(temp);
+            } else if (localas instanceof df) { //Furnace
+                df furnace = (df) localas;
+                gp[] temp = furnace.getContents();
+                localas.a(paramib.e);
+                if ((Boolean)etc.getInstance().getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[] { e, new Furnace(furnace) }))
+                    furnace.setContents(temp);
+            } else if (localas instanceof ig) { //Sign
+                ig sign = (ig) localas;
+                String[] temp = sign.e;
+                localas.a(paramib.e);
+                if ((Boolean)etc.getInstance().getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[] { e, new Sign(sign) }))
+                    sign.e = temp;
+            }
             localas.c();
         }
     }

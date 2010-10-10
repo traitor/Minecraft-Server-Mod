@@ -28,7 +28,9 @@ public class PluginLoader {
         BLOCK_DESTROYED,
         DISCONNECT,
         PLAYER_MOVE,
-        ARM_SWING
+        ARM_SWING,
+        COMPLEX_BLOCK_CHANGE,
+        INVENTORY_CHANGE
     }
     private static final Logger log = Logger.getLogger("Minecraft");
     private static final Object lock = new Object();
@@ -253,6 +255,14 @@ public class PluginLoader {
                                 break;
                             case ARM_SWING:
                                 plugin.onArmSwing(((ea) parameters[0]).getPlayer());
+                                break;
+                            case INVENTORY_CHANGE:
+                                if (plugin.onInventoryChange(((ea) parameters[0]).getPlayer()))
+                                    toRet = true;
+                                break;
+                            case COMPLEX_BLOCK_CHANGE:
+                                if (plugin.onComplexBlockChange(((ea) parameters[0]).getPlayer(), (ComplexBlock) parameters[1]))
+                                    toRet = true;
                                 break;
                         }
                     } catch (UnsupportedOperationException ex) {
