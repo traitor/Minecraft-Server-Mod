@@ -22,7 +22,7 @@ public class Player {
      *
      */
     public Player() {
-        inventory = new Inventory(this);
+        
     }
 
     /**
@@ -559,6 +559,7 @@ public class Player {
      */
     public void setUser(ea user) {
         this.user = user;
+        this.inventory = new Inventory(this);
     }
 
     /**

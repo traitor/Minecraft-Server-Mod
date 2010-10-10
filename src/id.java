@@ -36,7 +36,9 @@ public class id extends ej
      * @return
      */
     public int getItemInHand() {
-        return k.c;
+        if (k != null) //Check to see if we are even holding anything
+            return k.c;
+        return -1;
     }
 
     /**
@@ -1100,7 +1102,12 @@ public class id extends ej
     //Update our inventory
     public void a(r paramr) {
         if (paramr.a == -1) {
+            gp[] temp = this.e.aj.a;
             this.e.aj.a = paramr.b;
+            if ((Boolean)etc.getInstance().getLoader().callHook(PluginLoader.Hook.INVENTORY_CHANGE, new Object[] { e })) {
+                this.e.aj.a = temp;
+                getPlayer().getInventory().updateInventory();
+            }
         }
         if (paramr.a == -2) {
             this.e.aj.c = paramr.b;
@@ -1124,7 +1131,21 @@ public class id extends ej
 
         as localas = this.d.e.k(paramib.a, paramib.b, paramib.c);
         if (localas != null) {
-            localas.a(paramib.e);
+            if (localas instanceof hb) {
+                //Chest
+                hb chest = (hb) localas;
+                gp[] temp = chest.getContents();
+                localas.a(paramib.e);
+                if ((Boolean)etc.getInstance().getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[] { e, new Chest(chest) }))
+                    chest.setContents(temp);
+            } else if (localas instanceof ig) {
+                //Sign
+                ig sign = (ig) localas;
+                String[] temp = sign.e;
+                localas.a(paramib.e);
+                if ((Boolean)etc.getInstance().getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[] { e, new Sign(sign) }))
+                    sign.e = temp;
+            }
             localas.c();
         }
     }

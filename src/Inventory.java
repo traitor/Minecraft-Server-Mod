@@ -4,6 +4,7 @@
  */
 public class Inventory {
     private Player player;
+    private ea user;
 
     /**
      * Creates an interface for this player's inventory
@@ -11,6 +12,7 @@ public class Inventory {
      */
     public Inventory(Player player) {
         this.player = player;
+        this.user = player.getUser();
     }
 
     /**
@@ -54,9 +56,9 @@ public class Inventory {
         if (temp > 0) { //If the inventory's full it'll drop the rest on the ground.
             do {
                 if (temp - 64 >= 64) {
-                    player.getUser().a(new gp(itemId, 64));
+                    user.a(new gp(itemId, 64));
                 } else {
-                    player.getUser().a(new gp(itemId, temp));
+                    user.a(new gp(itemId, temp));
                 }
                 temp -= 64;
             } while (temp > 0);
@@ -76,13 +78,13 @@ public class Inventory {
         int slot = item.getSlot();
         if (slot < 37 && slot >= 0) {
             if (item.getAmount() <= 0)
-                player.getUser().ad.a.aj.a[slot] = null;
+                user.aj.a[slot] = null;
             else if(Item.isValidItem(item.getItemId()))
-                player.getUser().ad.a.aj.a[slot] = new gp(item.getItemId(), item.getAmount());
+                user.aj.a[slot] = new gp(item.getItemId(), item.getAmount());
         } else if (slot == -1) {
             int newSlot = getEmptySlot();
             if (newSlot != -1) {
-                player.getUser().ad.a.aj.a[newSlot] = new gp(item.getItemId(), item.getAmount());
+                user.aj.a[newSlot] = new gp(item.getItemId(), item.getAmount());
                 item.setSlot(newSlot);
             }
         }
@@ -95,8 +97,8 @@ public class Inventory {
      */
     public Item getItemFromSlot(int slot) {
         if (slot < 37 && slot >= 0)
-            if (player.getUser().ad.a.aj.a[slot] != null)
-                return new Item(player.getUser().ad.a.aj.a[slot].c, player.getUser().ad.a.aj.a[slot].a, slot);
+            if (user.aj.a[slot] != null)
+                return new Item(user.aj.a[slot].c, user.aj.a[slot].a, slot);
         return null;
     }
 
@@ -106,11 +108,11 @@ public class Inventory {
      * @return item
      */
     public Item getItemFromId(int id) {
-        for (int i = 0; player.getUser().ad.a.aj.a.length > i; i++) {
-            if (player.getUser().ad.a.aj.a[i] == null)
+        for (int i = 0; user.aj.a.length > i; i++) {
+            if (user.aj.a[i] == null)
                 continue;
-            if (player.getUser().ad.a.aj.a[i].c == id)
-                return new Item(player.getUser().ad.a.aj.a[i].c, player.getUser().ad.a.aj.a[i].a, i);
+            if (user.aj.a[i].c == id)
+                return new Item(user.aj.a[i].c, user.aj.a[i].a, i);
         }
         return null;
     }
@@ -122,11 +124,11 @@ public class Inventory {
      * @return item
      */
     public Item getItemFromId(int id, int maxAmount) {
-        for (int i = 0; player.getUser().ad.a.aj.a.length > i; i++) {
-            if (player.getUser().ad.a.aj.a[i] == null)
+        for (int i = 0; user.aj.a.length > i; i++) {
+            if (user.aj.a[i] == null)
                 continue;
-            if (player.getUser().ad.a.aj.a[i].c == id && player.getUser().ad.a.aj.a[i].a <= maxAmount)
-                return new Item(player.getUser().ad.a.aj.a[i].c, player.getUser().ad.a.aj.a[i].a, i);
+            if (user.aj.a[i].c == id && user.aj.a[i].a <= maxAmount)
+                return new Item(user.aj.a[i].c, user.aj.a[i].a, i);
         }
         return null;
     }
@@ -136,8 +138,8 @@ public class Inventory {
      * @return nearest empty slot
      */
     public int getEmptySlot() {
-        for (int i = 0; player.getUser().ad.a.aj.a.length > i; i++) {
-            if (player.getUser().ad.a.aj.a[i] != null)
+        for (int i = 0; user.aj.a.length > i; i++) {
+            if (user.aj.a[i] != null)
                 continue;
             return i;
         }
@@ -150,7 +152,7 @@ public class Inventory {
      */
     public void removeItem(int slot) {
         if (slot < 37 && slot >= 0)
-            player.getUser().ad.a.aj.a[slot] = null;
+            user.aj.a[slot] = null;
     }
 
     /**
@@ -161,17 +163,17 @@ public class Inventory {
     public void removeItem(Item item) {
         int amount = item.getAmount();
         int itemId = item.getItemId();
-        for (int i = 0; player.getUser().ad.a.aj.a.length > i; i++) {
-            if (player.getUser().ad.a.aj.a[i] == null)
+        for (int i = 0; user.aj.a.length > i; i++) {
+            if (user.aj.a[i] == null)
                 continue;
-            if (player.getUser().ad.a.aj.a[i].c == itemId) {
-                int tempAmount = player.getUser().ad.a.aj.a[i].a;
+            if (user.aj.a[i].c == itemId) {
+                int tempAmount = user.aj.a[i].a;
                 tempAmount -= amount;
                 if (tempAmount <= 0) {
-                    amount -= player.getUser().ad.a.aj.a[i].a;
-                    player.getUser().ad.a.aj.a[i] = null;
+                    amount -= user.aj.a[i].a;
+                    user.aj.a[i] = null;
                 } else {
-                    player.getUser().ad.a.aj.a[i].a = tempAmount;
+                    user.aj.a[i].a = tempAmount;
                 }
                 if (amount <= 0)
                     return;
@@ -188,11 +190,11 @@ public class Inventory {
      * @return
      */
     public boolean hasItem(int itemId, int minimum, int maximum) {
-        for (int i = 0; player.getUser().ad.a.aj.a.length > i; i++)
-            if (player.getUser().ad.a.aj.a[i] != null)
-                if (player.getUser().ad.a.aj.a[i].c == itemId &&
-                    player.getUser().ad.a.aj.a[i].a >= minimum &&
-                    player.getUser().ad.a.aj.a[i].a <= maximum)
+        for (int i = 0; user.aj.a.length > i; i++)
+            if (user.aj.a[i] != null)
+                if (user.aj.a[i].c == itemId &&
+                    user.aj.a[i].a >= minimum &&
+                    user.aj.a[i].a <= maximum)
                     return true;
         return false;
     }
@@ -201,6 +203,6 @@ public class Inventory {
      * Sends the edited inventory to the client.
      */
     public void updateInventory() {
-        player.getUser().a.d();
+        user.a.d();
     }
 }
