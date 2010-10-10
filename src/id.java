@@ -1061,8 +1061,11 @@ public class id extends ej
                 }
                 if (target != null) {
                     Inventory inv = target.getInventory();
-                    for (int i = 0; i < 36; i++)
-                        inv.removeItem(i);
+                    inv.clearContents();
+                    inv = target.getCraftingTable();
+                    inv.clearContents();
+                    inv = target.getEquipment();
+                    inv.clearContents();
                     inv.updateInventory();
                     if (!target.getName().equals(getPlayer().getName()))
                         msg(Colors.Rose + "Cleared " + target.getName() + "'s inventory.");
