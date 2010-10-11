@@ -291,6 +291,8 @@ public class etc {
         String[] split = command.split(" ");
         if ((Boolean)getLoader().callHook(PluginLoader.Hook.SERVERCOMMAND, new Object[] { split }))
             return true;
+        if (split.length == 0)
+            return false;
         
         boolean dontParseRegular = true;
         if (split[0].equalsIgnoreCase("help") || split[0].equalsIgnoreCase("mod-help")) {
