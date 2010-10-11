@@ -1048,7 +1048,7 @@ public class id extends ej
                 }
             } else if (split[0].equalsIgnoreCase("/clearinventory")) {
                 Player target = getPlayer();
-                if (split.length >= 2) {
+                if (split.length >= 2 && getPlayer().isAdmin()) {
                     target = etc.getServer().matchPlayer(split[1]);
                 }
                 if (target != null) {
