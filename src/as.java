@@ -70,7 +70,7 @@ public class as {
             else if (localas instanceof ig)
                 block = new Sign((ig)localas);
             if (block != null) {
-                if (!(Boolean)etc.getInstance().getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, new Object[] { player.getUser(), block }))
+                if (!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, new Object[] { player.getUser(), block }))
                     player.getUser().a.b.a(new ib(this.b, this.c, this.d, this));
                 else if (localas instanceof hb)
                     player.getUser().a.b.a(new ib(this.b, this.c, this.d, new hb()));

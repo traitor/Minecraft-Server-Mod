@@ -174,18 +174,20 @@ public class etc {
     public static Server getServer() {
         return getInstance().getLoader().getServer();
     }
-
+    
     /**
      * Returns the plugin loader
      * @return
      */
-    public PluginLoader getLoader() {
-        if (loader == null) {
-            loader = new PluginLoader(server);
-            loader.loadPlugins();
+    public static PluginLoader getLoader() {
+        etc instance = getInstance();
+        
+        if (instance.loader == null) {
+        	instance.loader = new PluginLoader(server);
+        	instance.loader.loadPlugins();
         }
 
-        return loader;
+        return instance.loader;
     }
 
     /**

@@ -64,7 +64,7 @@ public class ft {
         for (String str : etc.getInstance().getMotd()) {
             paramea.a.b(new ba(str));
         }
-        etc.getInstance().getLoader().callHook(PluginLoader.Hook.LOGIN, new Object[]{paramea});
+        etc.getLoader().callHook(PluginLoader.Hook.LOGIN, new Object[]{paramea});
     }
 
     public void b(ea paramea) {
@@ -133,7 +133,7 @@ public class ft {
             }
         }
         
-        Object obj = etc.getInstance().getLoader().callHook(PluginLoader.Hook.LOGINCHECK, new Object[]{paramString1});
+        Object obj = etc.getLoader().callHook(PluginLoader.Hook.LOGINCHECK, new Object[]{paramString1});
         if (obj instanceof String) {
             String result = (String)obj;
             if (result != null && !result.equals("")) {

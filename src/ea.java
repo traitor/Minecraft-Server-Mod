@@ -108,7 +108,7 @@ public class ea extends fc {
                     else if (localas instanceof ig)
                         block = new Sign((ig)localas);
                     if (block != null) {
-                        if (!(Boolean)etc.getInstance().getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, new Object[] { this, block }))
+                        if (!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, new Object[] { this, block }))
                             this.a.b(new ib(localas.b, localas.c, localas.d, localas));
                     } else
                         this.a.b(new ib(localas.b, localas.c, localas.d, localas));

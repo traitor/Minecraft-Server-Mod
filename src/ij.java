@@ -171,7 +171,7 @@ public class ij
     boolean loaded = false;
     public boolean a() {
         if (!loaded) {
-            etc.getInstance().getLoader();
+            etc.getLoader();
             loaded = true;
         }
         

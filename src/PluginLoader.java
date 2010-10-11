@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.EnumMap;
 import net.minecraft.server.MinecraftServer;
 
 /**
@@ -32,10 +33,12 @@ public class PluginLoader {
         COMPLEX_BLOCK_CHANGE,
         INVENTORY_CHANGE,
         COMPLEX_BLOCK_SEND,
+        NUM_HOOKS
     }
     private static final Logger log = Logger.getLogger("Minecraft");
     private static final Object lock = new Object();
     private List<Plugin> plugins = new ArrayList<Plugin>();
+    private List< List<PluginRegisteredListener> > listeners = new ArrayList< List<PluginRegisteredListener> >();
     private Server server;
     private PropertiesFile properties;
 
@@ -46,6 +49,9 @@ public class PluginLoader {
     public PluginLoader(MinecraftServer server) {
         properties = new PropertiesFile("server.properties");
         this.server = new Server(server);
+        
+        for (int h = 0; h < Hook.NUM_HOOKS.ordinal(); ++h)
+        	listeners.add( new ArrayList<PluginRegisteredListener>() );
     }
 
     /**
@@ -80,7 +86,13 @@ public class PluginLoader {
         if (toNull != null)
             if (toNull.isEnabled())
                 toNull.disable();
-        plugins.remove(toNull);
+        synchronized (lock) {
+	        plugins.remove(toNull);
+	        for ( List<PluginRegisteredListener> regListeners : listeners )
+	        	for ( PluginRegisteredListener reg : regListeners )
+	        		if ( reg.getPlugin() == toNull )
+	        			regListeners.remove(reg);
+        }
         toNull = null;
 
         load(fileName);
@@ -103,6 +115,7 @@ public class PluginLoader {
                 plugin.enable();
                 synchronized (lock) {
                     plugins.add(plugin);
+                    plugin.initialize();
                 }
             } catch (InstantiationException ex) {
                 log.log(Level.SEVERE, "Exception while loading plugin", ex);
@@ -205,6 +218,80 @@ public class PluginLoader {
         Object toRet = false;
         synchronized (lock) {
             try {
+            	List<PluginRegisteredListener> registeredListeners = listeners.get( h.ordinal() );
+            	
+            	for (PluginRegisteredListener regListener : registeredListeners) {
+                    if (!regListener.getPlugin().isEnabled())
+                        continue;
+                    
+                    PluginListener listener = regListener.getListener();
+                    
+                    try {
+                        switch (h) {
+                            case LOGINCHECK:
+                                String result = listener.onLoginChecks((String) parameters[0]);
+                                if (result != null)
+                                    toRet = result;
+                                break;
+                            case LOGIN:
+                            	listener.onLogin(((ea) parameters[0]).getPlayer());
+                                break;
+                            case DISCONNECT:
+                            	listener.onDisconnect(((ea) parameters[0]).getPlayer());
+                                break;
+                            case CHAT:
+                                if (listener.onChat(((ea) parameters[0]).getPlayer(), (String)parameters[1]))
+                                    toRet = true;
+                                break;
+                            case COMMAND:
+                                if (listener.onCommand(((ea) parameters[0]).getPlayer(), (String[])parameters[1]))
+                                    toRet = true;
+                                break;
+                             case SERVERCOMMAND:
+                                if (listener.onConsoleCommand((String[])parameters[0]))
+                                    toRet = true;
+                                break;
+                            case BAN:
+                            	listener.onBan(((ea) parameters[0]).getPlayer(), ((ea) parameters[1]).getPlayer(), (String)parameters[2]);
+                                break;
+                            case IPBAN:
+                            	listener.onIpBan(((ea) parameters[0]).getPlayer(), ((ea) parameters[1]).getPlayer(), (String)parameters[2]);
+                                break;
+                            case KICK:
+                            	listener.onKick(((ea) parameters[0]).getPlayer(), ((ea) parameters[1]).getPlayer(), (String)parameters[2]);
+                                break;
+                            case BLOCK_CREATED:
+                                if (listener.onBlockCreate(((ea) parameters[0]).getPlayer(), (Block)parameters[1], (Block)parameters[2], (Integer)parameters[3]))
+                                    toRet = true;
+                                break;
+                            case BLOCK_DESTROYED:
+                                if (listener.onBlockDestroy(((ea) parameters[0]).getPlayer(), (Block)parameters[1]))
+                                    toRet = true;
+                                break;
+                            case PLAYER_MOVE:
+                            	listener.onPlayerMove(((ea) parameters[0]).getPlayer(), (Location)parameters[1], (Location)parameters[2]);
+                                break;
+                            case ARM_SWING:
+                            	listener.onArmSwing(((ea) parameters[0]).getPlayer());
+                                break;
+                            case INVENTORY_CHANGE:
+                                if (listener.onInventoryChange(((ea) parameters[0]).getPlayer()))
+                                    toRet = true;
+                                break;
+                            case COMPLEX_BLOCK_CHANGE:
+                                if (listener.onComplexBlockChange(((ea) parameters[0]).getPlayer(), (ComplexBlock) parameters[1]))
+                                    toRet = true;
+                                break;
+                            case COMPLEX_BLOCK_SEND:
+                                if (listener.onSendComplexBlock(((ea) parameters[0]).getPlayer(), (ComplexBlock) parameters[1]))
+                                    toRet = true;
+                                break;
+                        }
+                    } catch (UnsupportedOperationException ex) {
+                    }
+                }
+
+                // Legacy Plugins
                 for (Plugin plugin : plugins) {
                     if (!plugin.isEnabled())
                         continue;
@@ -235,13 +322,13 @@ public class PluginLoader {
                                     toRet = true;
                                 break;
                             case BAN:
-                                plugin.onBan(((ea) parameters[0]).getPlayer(), (String)parameters[1]);
+                                plugin.onBan(((ea) parameters[1]).getPlayer(), (String)parameters[2]);
                                 break;
                             case IPBAN:
-                                plugin.onIpBan(((ea) parameters[0]).getPlayer(), (String)parameters[1]);
+                                plugin.onIpBan(((ea) parameters[1]).getPlayer(), (String)parameters[2]);
                                 break;
                             case KICK:
-                                plugin.onKick(((ea) parameters[0]).getPlayer(), (String)parameters[1]);
+                                plugin.onKick(((ea) parameters[1]).getPlayer(), (String)parameters[2]);
                                 break;
                             case BLOCK_CREATED:
                                 if (plugin.onBlockCreate(((ea) parameters[0]).getPlayer(), (Block)parameters[1], (Block)parameters[2], (Integer)parameters[3]))
@@ -281,5 +368,40 @@ public class PluginLoader {
         }
 
         return toRet;
+    }
+    
+    /**
+     * Calls a plugin hook.
+     * @param h
+     * @param parameters
+     * @return
+     */
+    public PluginRegisteredListener addListener(Hook hook, PluginListener listener, Plugin plugin, PluginListener.Priority priorityEnum) {
+    	int priority = priorityEnum.ordinal();
+    	PluginRegisteredListener reg = new PluginRegisteredListener(hook, listener, plugin, priority);
+    	
+        synchronized (lock) {
+	    	List<PluginRegisteredListener> regListeners = listeners.get( hook.ordinal() );
+
+	    	int pos = 0;
+	    	for (PluginRegisteredListener other : regListeners)
+	    	{
+	    		if ( other.GetPriority() < priority )
+	    			break;
+	   			++pos;
+	    	}
+	    	
+	    	regListeners.add(pos, reg);
+        }
+    	
+    	return reg;
+    }
+    
+    public void removeListener(PluginRegisteredListener reg)
+    {
+        List<PluginRegisteredListener> regListeners = listeners.get( reg.getHook().ordinal() );
+        synchronized (lock) {
+        	regListeners.remove(reg);
+        }
     }
 }
