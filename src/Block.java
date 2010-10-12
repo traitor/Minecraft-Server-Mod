@@ -16,21 +16,21 @@ public class Block {
          */
         Bottom(0),
         /**
-         * The left (X-wise) of the block
+         * The left (Z-wise) of the block (Faces west)
          */
-        Left(4),
+        Left(3),
         /**
-         * The right (X-wise) of the block
+         * The right (Z-wise) of the block (Faces east)
          */
-        Right(5),
+        Right(2),
         /**
-         * The front (Z-wise) of the block
+         * The front (X-wise) of the block (Faces south)
          */
-        Front(3),
+        Front(5),
         /**
-         * The back (Z-wise) of the block
+         * The back (X-wise) of the block (Faces north)
          */
-        Back(2);
+        Back(4);
 
         private final int id;
         private Face(int id) { this.id = id; }
