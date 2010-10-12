@@ -199,20 +199,18 @@ public class id extends ej
             if (!getPlayer().canBuild()) {
                 return;
             }
-            if (i5 > etc.getInstance().getSpawnProtectionSize() || bool) {
+            if (i5 > etc.getInstance().getSpawnProtectionSize() || bool)
                 if (!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[] {e, etc.getServer().getBlockAt(n, i1, i2)}))
                     this.e.ad.a(n, i1, i2);
-            }
         } else if (paramhd.e == 2) {
             this.e.ad.a();
         } else if (paramhd.e == 1) {
             if (!getPlayer().canBuild()) {
                 return;
             }
-            if (i5 > etc.getInstance().getSpawnProtectionSize() || bool) {
+            if (i5 > etc.getInstance().getSpawnProtectionSize() || bool)
                 if (!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[] {e, etc.getServer().getBlockAt(n, i1, i2)}))
                     this.e.ad.a(n, i1, i2, i3);
-            }
         } else if (paramhd.e == 3) {
             double d2 = this.e.l - (n + 0.5D);
             double d3 = this.e.m - (i1 + 0.5D);

@@ -17,6 +17,7 @@ import net.minecraft.server.MinecraftServer;
 public class PluginLoader {
 
     public enum Hook {
+
         LOGINCHECK,
         LOGIN,
         CHAT,
@@ -38,7 +39,7 @@ public class PluginLoader {
     private static final Logger log = Logger.getLogger("Minecraft");
     private static final Object lock = new Object();
     private List<Plugin> plugins = new ArrayList<Plugin>();
-    private List< List<PluginRegisteredListener> > listeners = new ArrayList< List<PluginRegisteredListener> >();
+    private List<List<PluginRegisteredListener>> listeners = new ArrayList<List<PluginRegisteredListener>>();
     private Server server;
     private PropertiesFile properties;
 
@@ -49,9 +50,10 @@ public class PluginLoader {
     public PluginLoader(MinecraftServer server) {
         properties = new PropertiesFile("server.properties");
         this.server = new Server(server);
-        
-        for (int h = 0; h < Hook.NUM_HOOKS.ordinal(); ++h)
-        	listeners.add( new ArrayList<PluginRegisteredListener>() );
+
+        for (int h = 0; h < Hook.NUM_HOOKS.ordinal(); ++h) {
+            listeners.add(new ArrayList<PluginRegisteredListener>());
+        }
     }
 
     /**
@@ -60,8 +62,9 @@ public class PluginLoader {
     public void loadPlugins() {
         String[] classes = properties.getString("plugins", "").split(",");
         for (String sclass : classes) {
-            if (sclass.equals(""))
+            if (sclass.equals("")) {
                 continue;
+            }
             loadPlugin(sclass);
         }
     }
@@ -71,8 +74,9 @@ public class PluginLoader {
      * @param fileName
      */
     public void loadPlugin(String fileName) {
-        if (getPlugin(fileName) != null)
+        if (getPlugin(fileName) != null) {
             return; //Already exists.
+        }
         load(fileName);
     }
 
@@ -83,15 +87,20 @@ public class PluginLoader {
     public void reloadPlugin(String fileName) {
         /* Not sure exactly how much of this is necessary */
         Plugin toNull = getPlugin(fileName);
-        if (toNull != null)
-            if (toNull.isEnabled())
+        if (toNull != null) {
+            if (toNull.isEnabled()) {
                 toNull.disable();
+            }
+        }
         synchronized (lock) {
-	        plugins.remove(toNull);
-	        for ( List<PluginRegisteredListener> regListeners : listeners )
-	        	for ( PluginRegisteredListener reg : regListeners )
-	        		if ( reg.getPlugin() == toNull )
-	        			regListeners.remove(reg);
+            plugins.remove(toNull);
+            for (List<PluginRegisteredListener> regListeners : listeners) {
+                for (PluginRegisteredListener reg : regListeners) {
+                    if (reg.getPlugin() == toNull) {
+                        regListeners.remove(reg);
+                    }
+                }
+            }
         }
         toNull = null;
 
@@ -158,10 +167,11 @@ public class PluginLoader {
             }
         }
         String str = sb.toString();
-        if (str.length() > 1)
+        if (str.length() > 1) {
             return str.substring(0, str.length() - 1);
-        else
+        } else {
             return "Empty";
+        }
     }
 
     /**
@@ -178,10 +188,11 @@ public class PluginLoader {
             }
         } else { //New plugin, perhaps?
             File file = new File("plugins/" + name + ".jar");
-            if (file.exists())
+            if (file.exists()) {
                 loadPlugin(name);
-            else
+            } else {
                 return false;
+            }
         }
         return true;
     }
@@ -218,73 +229,83 @@ public class PluginLoader {
         Object toRet = false;
         synchronized (lock) {
             try {
-            	List<PluginRegisteredListener> registeredListeners = listeners.get( h.ordinal() );
-            	
-            	for (PluginRegisteredListener regListener : registeredListeners) {
-                    if (!regListener.getPlugin().isEnabled())
+                List<PluginRegisteredListener> registeredListeners = listeners.get(h.ordinal());
+
+                for (PluginRegisteredListener regListener : registeredListeners) {
+                    if (!regListener.getPlugin().isEnabled()) {
                         continue;
-                    
+                    }
+
                     PluginListener listener = regListener.getListener();
-                    
+
                     try {
                         switch (h) {
                             case LOGINCHECK:
                                 String result = listener.onLoginChecks((String) parameters[0]);
-                                if (result != null)
+                                if (result != null) {
                                     toRet = result;
+                                }
                                 break;
                             case LOGIN:
-                            	listener.onLogin(((ea) parameters[0]).getPlayer());
+                                listener.onLogin(((ea) parameters[0]).getPlayer());
                                 break;
                             case DISCONNECT:
-                            	listener.onDisconnect(((ea) parameters[0]).getPlayer());
+                                listener.onDisconnect(((ea) parameters[0]).getPlayer());
                                 break;
                             case CHAT:
-                                if (listener.onChat(((ea) parameters[0]).getPlayer(), (String)parameters[1]))
+                                if (listener.onChat(((ea) parameters[0]).getPlayer(), (String) parameters[1])) {
                                     toRet = true;
+                                }
                                 break;
                             case COMMAND:
-                                if (listener.onCommand(((ea) parameters[0]).getPlayer(), (String[])parameters[1]))
+                                if (listener.onCommand(((ea) parameters[0]).getPlayer(), (String[]) parameters[1])) {
                                     toRet = true;
+                                }
                                 break;
-                             case SERVERCOMMAND:
-                                if (listener.onConsoleCommand((String[])parameters[0]))
+                            case SERVERCOMMAND:
+                                if (listener.onConsoleCommand((String[]) parameters[0])) {
                                     toRet = true;
+                                }
                                 break;
                             case BAN:
-                            	listener.onBan(((ea) parameters[0]).getPlayer(), ((ea) parameters[1]).getPlayer(), (String)parameters[2]);
+                                listener.onBan(((ea) parameters[0]).getPlayer(), ((ea) parameters[1]).getPlayer(), (String) parameters[2]);
                                 break;
                             case IPBAN:
-                            	listener.onIpBan(((ea) parameters[0]).getPlayer(), ((ea) parameters[1]).getPlayer(), (String)parameters[2]);
+                                listener.onIpBan(((ea) parameters[0]).getPlayer(), ((ea) parameters[1]).getPlayer(), (String) parameters[2]);
                                 break;
                             case KICK:
-                            	listener.onKick(((ea) parameters[0]).getPlayer(), ((ea) parameters[1]).getPlayer(), (String)parameters[2]);
+                                listener.onKick(((ea) parameters[0]).getPlayer(), ((ea) parameters[1]).getPlayer(), (String) parameters[2]);
                                 break;
                             case BLOCK_CREATED:
-                                if (listener.onBlockCreate(((ea) parameters[0]).getPlayer(), (Block)parameters[1], (Block)parameters[2], (Integer)parameters[3]))
+                                if (listener.onBlockCreate(((ea) parameters[0]).getPlayer(), (Block) parameters[1], (Block) parameters[2], (Integer) parameters[3])) {
                                     toRet = true;
+                                }
                                 break;
                             case BLOCK_DESTROYED:
-                                if (listener.onBlockDestroy(((ea) parameters[0]).getPlayer(), (Block)parameters[1]))
+                                if (listener.onBlockDestroy(((ea) parameters[0]).getPlayer(), (Block) parameters[1])) {
                                     toRet = true;
+                                }
                                 break;
                             case PLAYER_MOVE:
-                            	listener.onPlayerMove(((ea) parameters[0]).getPlayer(), (Location)parameters[1], (Location)parameters[2]);
+                                listener.onPlayerMove(((ea) parameters[0]).getPlayer(), (Location) parameters[1], (Location) parameters[2]);
                                 break;
                             case ARM_SWING:
-                            	listener.onArmSwing(((ea) parameters[0]).getPlayer());
+                                listener.onArmSwing(((ea) parameters[0]).getPlayer());
                                 break;
                             case INVENTORY_CHANGE:
-                                if (listener.onInventoryChange(((ea) parameters[0]).getPlayer()))
+                                if (listener.onInventoryChange(((ea) parameters[0]).getPlayer())) {
                                     toRet = true;
+                                }
                                 break;
                             case COMPLEX_BLOCK_CHANGE:
-                                if (listener.onComplexBlockChange(((ea) parameters[0]).getPlayer(), (ComplexBlock) parameters[1]))
+                                if (listener.onComplexBlockChange(((ea) parameters[0]).getPlayer(), (ComplexBlock) parameters[1])) {
                                     toRet = true;
+                                }
                                 break;
                             case COMPLEX_BLOCK_SEND:
-                                if (listener.onSendComplexBlock(((ea) parameters[0]).getPlayer(), (ComplexBlock) parameters[1]))
+                                if (listener.onSendComplexBlock(((ea) parameters[0]).getPlayer(), (ComplexBlock) parameters[1])) {
                                     toRet = true;
+                                }
                                 break;
                         }
                     } catch (UnsupportedOperationException ex) {
@@ -293,15 +314,17 @@ public class PluginLoader {
 
                 // Legacy Plugins
                 for (Plugin plugin : plugins) {
-                    if (!plugin.isEnabled())
+                    if (!plugin.isEnabled() || plugin.getUsesListeners()) {
                         continue;
-                    
+                    }
+
                     try {
                         switch (h) {
                             case LOGINCHECK:
                                 String result = plugin.onLoginChecks((String) parameters[0]);
-                                if (result != null)
+                                if (result != null) {
                                     toRet = result;
+                                }
                                 break;
                             case LOGIN:
                                 plugin.onLogin(((ea) parameters[0]).getPlayer());
@@ -310,51 +333,59 @@ public class PluginLoader {
                                 plugin.onDisconnect(((ea) parameters[0]).getPlayer());
                                 break;
                             case CHAT:
-                                if (plugin.onChat(((ea) parameters[0]).getPlayer(), (String)parameters[1]))
+                                if (plugin.onChat(((ea) parameters[0]).getPlayer(), (String) parameters[1])) {
                                     toRet = true;
+                                }
                                 break;
                             case COMMAND:
-                                if (plugin.onCommand(((ea) parameters[0]).getPlayer(), (String[])parameters[1]))
+                                if (plugin.onCommand(((ea) parameters[0]).getPlayer(), (String[]) parameters[1])) {
                                     toRet = true;
+                                }
                                 break;
-                             case SERVERCOMMAND:
-                                if (plugin.onServerCommand((String[])parameters[0]))
+                            case SERVERCOMMAND:
+                                if (plugin.onServerCommand((String[]) parameters[0])) {
                                     toRet = true;
+                                }
                                 break;
                             case BAN:
-                                plugin.onBan(((ea) parameters[1]).getPlayer(), (String)parameters[2]);
+                                plugin.onBan(((ea) parameters[1]).getPlayer(), (String) parameters[2]);
                                 break;
                             case IPBAN:
-                                plugin.onIpBan(((ea) parameters[1]).getPlayer(), (String)parameters[2]);
+                                plugin.onIpBan(((ea) parameters[1]).getPlayer(), (String) parameters[2]);
                                 break;
                             case KICK:
-                                plugin.onKick(((ea) parameters[1]).getPlayer(), (String)parameters[2]);
+                                plugin.onKick(((ea) parameters[1]).getPlayer(), (String) parameters[2]);
                                 break;
                             case BLOCK_CREATED:
-                                if (plugin.onBlockCreate(((ea) parameters[0]).getPlayer(), (Block)parameters[1], (Block)parameters[2], (Integer)parameters[3]))
+                                if (plugin.onBlockCreate(((ea) parameters[0]).getPlayer(), (Block) parameters[1], (Block) parameters[2], (Integer) parameters[3])) {
                                     toRet = true;
+                                }
                                 break;
                             case BLOCK_DESTROYED:
-                                if (plugin.onBlockDestroy(((ea) parameters[0]).getPlayer(), (Block)parameters[1]))
+                                if (plugin.onBlockDestroy(((ea) parameters[0]).getPlayer(), (Block) parameters[1])) {
                                     toRet = true;
+                                }
                                 break;
                             case PLAYER_MOVE:
-                                plugin.onPlayerMove(((ea) parameters[0]).getPlayer(), (Location)parameters[1], (Location)parameters[2]);
+                                plugin.onPlayerMove(((ea) parameters[0]).getPlayer(), (Location) parameters[1], (Location) parameters[2]);
                                 break;
                             case ARM_SWING:
                                 plugin.onArmSwing(((ea) parameters[0]).getPlayer());
                                 break;
                             case INVENTORY_CHANGE:
-                                if (plugin.onInventoryChange(((ea) parameters[0]).getPlayer()))
+                                if (plugin.onInventoryChange(((ea) parameters[0]).getPlayer())) {
                                     toRet = true;
+                                }
                                 break;
                             case COMPLEX_BLOCK_CHANGE:
-                                if (plugin.onComplexBlockChange(((ea) parameters[0]).getPlayer(), (ComplexBlock) parameters[1]))
+                                if (plugin.onComplexBlockChange(((ea) parameters[0]).getPlayer(), (ComplexBlock) parameters[1])) {
                                     toRet = true;
+                                }
                                 break;
                             case COMPLEX_BLOCK_SEND:
-                                if (plugin.onSendComplexBlock(((ea) parameters[0]).getPlayer(), (ComplexBlock) parameters[1]))
+                                if (plugin.onSendComplexBlock(((ea) parameters[0]).getPlayer(), (ComplexBlock) parameters[1])) {
                                     toRet = true;
+                                }
                                 break;
                         }
                     } catch (UnsupportedOperationException ex) {
@@ -369,7 +400,7 @@ public class PluginLoader {
 
         return toRet;
     }
-    
+
     /**
      * Calls a plugin hook.
      * @param h
@@ -377,31 +408,31 @@ public class PluginLoader {
      * @return
      */
     public PluginRegisteredListener addListener(Hook hook, PluginListener listener, Plugin plugin, PluginListener.Priority priorityEnum) {
-    	int priority = priorityEnum.ordinal();
-    	PluginRegisteredListener reg = new PluginRegisteredListener(hook, listener, plugin, priority);
-    	
-        synchronized (lock) {
-	    	List<PluginRegisteredListener> regListeners = listeners.get( hook.ordinal() );
+        plugin.setUsesListeners();
+        int priority = priorityEnum.ordinal();
+        PluginRegisteredListener reg = new PluginRegisteredListener(hook, listener, plugin, priority);
 
-	    	int pos = 0;
-	    	for (PluginRegisteredListener other : regListeners)
-	    	{
-	    		if ( other.GetPriority() < priority )
-	    			break;
-	   			++pos;
-	    	}
-	    	
-	    	regListeners.add(pos, reg);
-        }
-    	
-    	return reg;
-    }
-    
-    public void removeListener(PluginRegisteredListener reg)
-    {
-        List<PluginRegisteredListener> regListeners = listeners.get( reg.getHook().ordinal() );
         synchronized (lock) {
-        	regListeners.remove(reg);
+            List<PluginRegisteredListener> regListeners = listeners.get(hook.ordinal());
+
+            int pos = 0;
+            for (PluginRegisteredListener other : regListeners) {
+                if (other.GetPriority() < priority) {
+                    break;
+                }
+                ++pos;
+            }
+
+            regListeners.add(pos, reg);
+        }
+
+        return reg;
+    }
+
+    public void removeListener(PluginRegisteredListener reg) {
+        List<PluginRegisteredListener> regListeners = listeners.get(reg.getHook().ordinal());
+        synchronized (lock) {
+            regListeners.remove(reg);
         }
     }
 }

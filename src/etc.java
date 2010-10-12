@@ -53,7 +53,7 @@ public class etc {
         commands.put("/sethome", "- Sets your home");
         commands.put("/setspawn", "- Sets the spawn point to your position.");
         commands.put("/me", "[Message] - * hey0 says hi!");
-        commands.put("/log.info", "[Player] [Message] - Sends a message to player");
+        commands.put("/msg", "[Player] [Message] - Sends a message to player");
         commands.put("/spawn", "- Teleports you to spawn");
         commands.put("/warp", "[Warp] - Warps to the specified warp.");
         commands.put("/setwarp", "[Warp] - Sets the warp to your current position.");

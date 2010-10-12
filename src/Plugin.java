@@ -5,6 +5,7 @@
 public abstract class Plugin {
     private String name = "";
     private boolean enabled = true;
+    private boolean usesListeners;
 
     /**
      * Enables the plugin
@@ -45,6 +46,10 @@ public abstract class Plugin {
      * @return
      */
     public void initialize() { }
+
+    public boolean getUsesListeners() { return usesListeners; }
+    
+    public void setUsesListeners() { usesListeners = true; }
 
      /**
      * Called when a player moves from one block to another

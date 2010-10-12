@@ -34,6 +34,18 @@ public class Sign implements ComplexBlock {
         return "";
     }
 
+    public int getX() {
+        return sign.b;
+    }
+
+    public int getY() {
+        return sign.c;
+    }
+
+    public int getZ() {
+        return sign.d;
+    }
+
     public void update() {
         sign.c();
     }

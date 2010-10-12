@@ -12,6 +12,18 @@ public class Chest extends ItemArray implements ComplexBlock {
     public Chest(hb chest) {
         this.chest = chest;
     }
+
+    public int getX() {
+        return chest.b;
+    }
+
+    public int getY() {
+        return chest.c;
+    }
+
+    public int getZ() {
+        return chest.d;
+    }
     
     public void update() {
         chest.c();

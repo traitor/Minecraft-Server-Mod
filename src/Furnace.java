@@ -13,6 +13,18 @@ public class Furnace extends ItemArray implements ComplexBlock {
         this.furnace = furnace;
     }
 
+    public int getX() {
+        return furnace.b;
+    }
+
+    public int getY() {
+        return furnace.c;
+    }
+
+    public int getZ() {
+        return furnace.d;
+    }
+
     public void update() {
         furnace.c();
     }

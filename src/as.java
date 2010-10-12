@@ -70,14 +70,21 @@ public class as {
             else if (localas instanceof ig)
                 block = new Sign((ig)localas);
             if (block != null) {
-                if (!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, new Object[] { player.getUser(), block }))
+                if (!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, new Object[] { player.getUser(), block })) {
                     player.getUser().a.b.a(new ib(this.b, this.c, this.d, this));
-                else if (localas instanceof hb)
-                    player.getUser().a.b.a(new ib(this.b, this.c, this.d, new hb()));
-                else if (localas instanceof df)
-                    player.getUser().a.b.a(new ib(this.b, this.c, this.d, new df()));
-                else if (localas instanceof ig)
-                   player.getUser().a.b.a(new ib(this.b, this.c, this.d, new ig()));
+                } else {
+                    as toSend = null;
+                    if (localas instanceof hb)
+                        toSend = new hb();
+                    else if (localas instanceof df)
+                        toSend = new df();
+                    else if (localas instanceof ig)
+                        toSend = new ig();
+                    toSend.b = b;
+                    toSend.c = c;
+                    toSend.d = d;
+                    player.getUser().a.b.a(new ib(this.b, this.c, this.d, toSend));
+                }
             } else
                 player.getUser().a.b.a(new ib(this.b, this.c, this.d, this));
         }
