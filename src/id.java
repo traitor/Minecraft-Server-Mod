@@ -693,11 +693,7 @@ public class id extends ej
                         if (Item.isValidItem(itemId)) {
                             if (allowedItem || getPlayer().canIgnoreRestrictions()) {
                                 a.log(Level.INFO, "Giving " + toGive.getName() + " some " + itemId);
-                                if (amount == 255) {
-                                    toGive.giveItem(itemId, 255);
-                                } else {
-                                    toGive.giveItem(itemId, amount);
-                                }
+                                toGive.giveItem(itemId, amount);
 
                                 if (toGive.getName().equalsIgnoreCase(getPlayer().getName())) {
                                     msg(Colors.Rose + "There you go c:");

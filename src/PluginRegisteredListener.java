@@ -10,7 +10,7 @@ public class PluginRegisteredListener {
     private int priority;
 
     /**
-     * 
+     * Creates a register listener class for calling later.
      * @param h The hook this registered listener is for
      * @param l The plugin listener itself
      * @param p The plugin itself

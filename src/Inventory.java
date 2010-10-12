@@ -40,6 +40,13 @@ public class Inventory extends ItemArray {
      * @param amount
      */
     public void giveItem(int itemId, int amount) {
+        if (amount == -1) {
+            int emptySlot = getEmptySlot();
+            addItem(new Item(itemId, 255, emptySlot));
+            System.out.println("A");
+            return;
+        }
+
         int temp = amount;
         do {
             int amountToAdd = temp >= 64 ? 64 : temp;
