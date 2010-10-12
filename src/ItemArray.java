@@ -108,8 +108,8 @@ public abstract class ItemArray {
             if (getArray()[i].c == itemId) {
                 int tempAmount = getArray()[i].a;
                 tempAmount -= amount;
+                amount -= getArray()[i].a;
                 if (tempAmount <= 0) {
-                    amount -= getArray()[i].a;
                     getArray()[i] = null;
                 } else {
                     getArray()[i].a = tempAmount;
