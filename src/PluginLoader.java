@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.EnumMap;
+import java.util.Iterator;
 import net.minecraft.server.MinecraftServer;
 
 /**
@@ -95,10 +96,10 @@ public class PluginLoader {
         synchronized (lock) {
             plugins.remove(toNull);
             for (List<PluginRegisteredListener> regListeners : listeners) {
-                for (PluginRegisteredListener reg : regListeners) {
-                    if (reg.getPlugin() == toNull) {
-                        regListeners.remove(reg);
-                    }
+                Iterator<PluginRegisteredListener> iter = regListeners.iterator();
+                while (iter.hasNext()) {
+                    if (iter.next().getPlugin() == toNull)
+                        iter.remove();
                 }
             }
         }
