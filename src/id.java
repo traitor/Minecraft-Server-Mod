@@ -255,6 +255,7 @@ public class id extends ej
             else if(paramfe.e == 5)
                 blockPlaced.setX(blockPlaced.getX() + 1);
             Block blockClicked = new Block(etc.getServer().getBlockIdAt(m, n, i1), m, n, i1);
+            blockClicked.setFaceClicked(Block.Face.fromId(paramfe.e));
 
             if (!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, new Object[] {e, blockPlaced, blockClicked, paramfe.a})) {
                 if (localgp != null) {

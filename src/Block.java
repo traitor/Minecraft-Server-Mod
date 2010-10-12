@@ -3,7 +3,55 @@
  * @author James
  */
 public class Block {
+    /**
+     * Face - Used for what face of the block was clicked
+     */
+    public enum Face {
+        /**
+         * The top of the block
+         */
+        Top(1),
+        /**
+         * The bottom of the block
+         */
+        Bottom(0),
+        /**
+         * The left (X-wise) of the block
+         */
+        Left(4),
+        /**
+         * The right (X-wise) of the block
+         */
+        Right(5),
+        /**
+         * The front (Z-wise) of the block
+         */
+        Front(3),
+        /**
+         * The back (Z-wise) of the block
+         */
+        Back(2);
+
+        private final int id;
+        private Face(int id) { this.id = id; }
+
+        /**
+         * Returns a Face according to the specified ID
+         * @param id id of face
+         * @return face
+         */
+        public static Face fromId(final int id) {
+            for (Face e : Face.values()) {
+                if (e.id == id) {
+                    return e;
+                }
+            }
+            return null;
+        }
+    }
+    
     private int type, x, y, z;
+    private Face faceClicked;
 
     /**
      * Create a block with a type or x, y and z.
@@ -87,5 +135,22 @@ public class Block {
      */
     public void setZ(int z) {
         this.z = z;
+    }
+
+    /**
+     * If this block was clicked, this will return the face
+     * that was clicked.
+     * @return face clicked
+     */
+    public Face getFaceClicked() {
+        return faceClicked;
+    }
+
+    /**
+     * Sets the face that was clicked
+     * @param faceClicked face clicked
+     */
+    public void setFaceClicked(Face faceClicked) {
+        this.faceClicked = faceClicked;
     }
 }
