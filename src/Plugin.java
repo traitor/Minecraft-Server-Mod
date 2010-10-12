@@ -43,12 +43,18 @@ public abstract class Plugin {
 
     /**
      * Plugin is loaded and may now register hooks
-     * @return
      */
     public void initialize() { }
 
+    /**
+     * Returns whether or not this plugin uses listeners
+     * @return uses listeners
+     */
     public boolean getUsesListeners() { return usesListeners; }
     
+    /**
+     * Sets uses listeners to true.
+     */
     public void setUsesListeners() { usesListeners = true; }
 
      /**

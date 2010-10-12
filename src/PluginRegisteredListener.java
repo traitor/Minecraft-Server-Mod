@@ -9,6 +9,13 @@ public class PluginRegisteredListener {
     private Plugin plugin;
     private int priority;
 
+    /**
+     * 
+     * @param h The hook this registered listener is for
+     * @param l The plugin listener itself
+     * @param p The plugin itself
+     * @param pri The priority of this listener
+     */
     public PluginRegisteredListener(PluginLoader.Hook h, PluginListener l, Plugin p, int pri) {
         hook = h;
         listener = l;
@@ -16,19 +23,35 @@ public class PluginRegisteredListener {
         priority = pri;
     }
 
+    /**
+     * Returns the hook for this listener
+     * @return hook
+     */
     public PluginLoader.Hook getHook() {
         return hook;
     }
 
+    /**
+     * Returns the listener
+     * @return listener
+     */
     public PluginListener getListener() {
         return listener;
     }
 
+    /**
+     * Returns this listener's plugin
+     * @return plugin
+     */
     public Plugin getPlugin() {
         return plugin;
     }
 
-    public int GetPriority() {
+    /**
+     * Returns this listener's priority
+     * @return priority
+     */
+    public int getPriority() {
         return priority;
     }
 }

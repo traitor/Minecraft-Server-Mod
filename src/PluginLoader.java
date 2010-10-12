@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -7,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.EnumMap;
 import java.util.Iterator;
 import net.minecraft.server.MinecraftServer;
 
@@ -16,25 +14,77 @@ import net.minecraft.server.MinecraftServer;
  * @author James
  */
 public class PluginLoader {
-
+    /**
+     * Hook - Used for adding a listener to listen on specific hooks
+     */
     public enum Hook {
-
+        /**
+         * Calls onLoginChecks
+         */
         LOGINCHECK,
+        /**
+         * Calls onLogin
+         */
         LOGIN,
+        /**
+         * Calls onChat
+         */
         CHAT,
+        /**
+         * Calls onCommand
+         */
         COMMAND,
+        /**
+         * Calls onConsoleCommand
+         */
         SERVERCOMMAND,
+        /**
+         * Calls onBan
+         */
         BAN,
+        /**
+         * Calls onIpBan
+         */
         IPBAN,
+        /**
+         * Calls onKick
+         */
         KICK,
+        /**
+         * Calls onBlockCreate
+         */
         BLOCK_CREATED,
+        /**
+         * Calls onBlockDestroy
+         */
         BLOCK_DESTROYED,
+        /**
+         * Calls onDisconnect
+         */
         DISCONNECT,
+        /**
+         * Calls onPlayerMove
+         */
         PLAYER_MOVE,
+        /**
+         * Calls onArmSwing
+         */
         ARM_SWING,
+        /**
+         * Calls onComplexBlockChange
+         */
         COMPLEX_BLOCK_CHANGE,
+        /**
+         * Calls onInventoryChange
+         */
         INVENTORY_CHANGE,
+        /**
+         * Calls onSendComplexBlock
+         */
         COMPLEX_BLOCK_SEND,
+        /**
+         * Unused.
+         */
         NUM_HOOKS
     }
     private static final Logger log = Logger.getLogger("Minecraft");
@@ -46,7 +96,7 @@ public class PluginLoader {
 
     /**
      * Creates a plugin loader
-     * @param server
+     * @param server server to use
      */
     public PluginLoader(MinecraftServer server) {
         properties = new PropertiesFile("server.properties");
@@ -72,7 +122,7 @@ public class PluginLoader {
 
     /**
      * Loads the specified plugin
-     * @param fileName
+     * @param fileName file name of plugin to load
      */
     public void loadPlugin(String fileName) {
         if (getPlugin(fileName) != null) {
@@ -83,7 +133,7 @@ public class PluginLoader {
 
     /**
      * Reloads the specified plugin
-     * @param fileName
+     * @param fileName file name of plugin to reload
      */
     public void reloadPlugin(String fileName) {
         /* Not sure exactly how much of this is necessary */
@@ -139,8 +189,8 @@ public class PluginLoader {
 
     /**
      * Returns the specified plugin
-     * @param name
-     * @return
+     * @param name name of plugin
+     * @return plugin
      */
     public Plugin getPlugin(String name) {
         synchronized (lock) {
@@ -155,7 +205,7 @@ public class PluginLoader {
 
     /**
      * Returns a string list of plugins
-     * @return
+     * @return String of plugins
      */
     public String getPluginList() {
         StringBuilder sb = new StringBuilder();
@@ -177,8 +227,8 @@ public class PluginLoader {
 
     /**
      * Enables the specified plugin (Or adds and enables it)
-     * @param name
-     * @return
+     * @param name name of plugin to enable
+     * @return whether or not this plugin was enabled
      */
     public boolean enablePlugin(String name) {
         Plugin plugin = getPlugin(name);
@@ -200,7 +250,7 @@ public class PluginLoader {
 
     /**
      * Disables specified plugin
-     * @param name
+     * @param name name of the plugin to disable
      */
     public void disablePlugin(String name) {
         Plugin plugin = getPlugin(name);
@@ -214,7 +264,7 @@ public class PluginLoader {
 
     /**
      * Returns the server
-     * @return
+     * @return server
      */
     public Server getServer() {
         return server;
@@ -222,9 +272,9 @@ public class PluginLoader {
 
     /**
      * Calls a plugin hook.
-     * @param h
-     * @param parameters
-     * @return
+     * @param h Hook to call
+     * @param parameters Parameters of call
+     * @return Object returned by call
      */
     public Object callHook(Hook h, Object[] parameters) {
         Object toRet = false;
@@ -404,9 +454,11 @@ public class PluginLoader {
 
     /**
      * Calls a plugin hook.
-     * @param h
-     * @param parameters
-     * @return
+     * @param hook The hook to call on
+     * @param listener The listener to use when calling
+     * @param plugin The plugin of this listener
+     * @param priorityEnum The priority of this listener
+     * @return PluginRegisteredListener
      */
     public PluginRegisteredListener addListener(Hook hook, PluginListener listener, Plugin plugin, PluginListener.Priority priorityEnum) {
         plugin.setUsesListeners();
@@ -418,7 +470,7 @@ public class PluginLoader {
 
             int pos = 0;
             for (PluginRegisteredListener other : regListeners) {
-                if (other.GetPriority() < priority) {
+                if (other.getPriority() < priority) {
                     break;
                 }
                 ++pos;
@@ -430,6 +482,10 @@ public class PluginLoader {
         return reg;
     }
 
+    /**
+     * Removes the specified listener from the list of listeners
+     * @param reg listener to remove
+     */
     public void removeListener(PluginRegisteredListener reg) {
         List<PluginRegisteredListener> regListeners = listeners.get(reg.getHook().ordinal());
         synchronized (lock) {

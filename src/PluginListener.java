@@ -3,12 +3,27 @@
  * @author Maine
  */
 public abstract class PluginListener {
+    /**
+     * Priority - Used for priority for plugin listeners
+     */
     public enum Priority
     {
-            CRITICAL,	//	Highly critical for hooks that absolutely must occur before any others.  Use carefully.
-            HIGH,		//	May block/interrupt/undo the action, but prefer MEDIUM
-            MEDIUM,		//	Preferred priority for blocking/interrupting/undoing the action
-            LOW			//	Must not block/interrupt/undo the action
+        /**
+         * Highly critical for hooks that absolutely must occur before any others.  Use carefully.
+         */
+        CRITICAL,
+        /**
+         * May block/interrupt/undo the action, but prefer MEDIUM
+         */
+        HIGH,
+        /**
+         * Preferred priority for blocking/interrupting/undoing the action
+         */
+        MEDIUM,
+        /**
+         * Must not block/interrupt/undo the action
+         */
+        LOW
     }
 
     /**

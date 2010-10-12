@@ -180,7 +180,7 @@ public class HitBlox {
 
     /**
      * Sets current block type id
-     * @return Block
+     * @param type
      */
     public void setCurBlock(int type) {
         if (getCurBlock() != null) {
@@ -198,7 +198,7 @@ public class HitBlox {
 
     /**
      * Sets previous block type id
-     * @return Block
+     * @param type
      */
     public void setLastBlock(int type) {
         if (getLastBlock() != null) {
