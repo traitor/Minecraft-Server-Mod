@@ -43,7 +43,6 @@ public class Inventory extends ItemArray {
         if (amount == -1) {
             int emptySlot = getEmptySlot();
             addItem(new Item(itemId, 255, emptySlot));
-            System.out.println("A");
             return;
         }
 
