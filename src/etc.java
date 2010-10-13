@@ -174,18 +174,20 @@ public class etc {
     public static Server getServer() {
         return getInstance().getLoader().getServer();
     }
-
+    
     /**
      * Returns the plugin loader
      * @return
      */
-    public PluginLoader getLoader() {
-        if (loader == null) {
-            loader = new PluginLoader(server);
-            loader.loadPlugins();
+    public static PluginLoader getLoader() {
+        etc instance = getInstance();
+        
+        if (instance.loader == null) {
+        	instance.loader = new PluginLoader(server);
+        	instance.loader.loadPlugins();
         }
 
-        return loader;
+        return instance.loader;
     }
 
     /**
@@ -291,6 +293,8 @@ public class etc {
         String[] split = command.split(" ");
         if ((Boolean)getLoader().callHook(PluginLoader.Hook.SERVERCOMMAND, new Object[] { split }))
             return true;
+        if (split.length == 0)
+            return false;
         
         boolean dontParseRegular = true;
         if (split[0].equalsIgnoreCase("help") || split[0].equalsIgnoreCase("mod-help")) {
@@ -304,6 +308,9 @@ public class etc {
             log.info("modify        Type modify for more info");
             log.info("whitelist     Type whitelist for more info");
             log.info("reservelist   Type reservelist for more info");
+            log.info("listplugins   Lists all plugins");
+            log.info("enableplugin  Enables a plugin");
+            log.info("disableplugin Disables a plugin");
         } else if (split[0].equalsIgnoreCase("reload")) {
             load();
             loadData();
@@ -400,6 +407,32 @@ public class etc {
             } else {
                 log.info("Invalid operation.");
             }
+        } else if (split[0].equalsIgnoreCase("listplugins")) {
+            log.info("Plugins: " + etc.getLoader().getPluginList());
+        } else if (split[0].equalsIgnoreCase("reloadplugin")) {
+            if (split.length < 2) {
+                log.info("Correct usage is: reloadplugin [plugin]");
+                return true;
+            }
+
+            etc.getLoader().reloadPlugin(split[1]);
+            log.info("Plugin reloaded.");
+        } else if (split[0].equalsIgnoreCase("enableplugin")) {
+            if (split.length < 2) {
+                log.info("Correct usage is: enableplugin [plugin]");
+                return true;
+            }
+
+            etc.getLoader().enablePlugin(split[1]);
+            log.info("Plugin enabled.");
+        } else if (split[0].equalsIgnoreCase("disableplugin")) {
+            if (split.length < 2) {
+                log.info("Correct usage is: enableplugin [plugin]");
+                return true;
+            }
+
+            etc.getLoader().disablePlugin(split[1]);
+            log.info("Plugin disabled.");
         } else {
             dontParseRegular = false;
         }

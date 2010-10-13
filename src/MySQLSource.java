@@ -69,6 +69,9 @@ public class MySQLSource extends DataSource {
                     group.InheritedGroups = rs.getString("inheritedgroups").split(",");
                     group.Name = rs.getString("name");
                     group.Prefix = rs.getString("prefix");
+                    if (group.InheritedGroups.length == 1)
+                        if (group.InheritedGroups[0].equalsIgnoreCase(group.Name))
+                            group.InheritedGroups = new String[] { "" };
                     groups.add(group);
                 }
             } catch (SQLException ex) {

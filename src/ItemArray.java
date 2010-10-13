@@ -108,8 +108,8 @@ public abstract class ItemArray {
             if (getArray()[i].c == itemId) {
                 int tempAmount = getArray()[i].a;
                 tempAmount -= amount;
+                amount -= getArray()[i].a;
                 if (tempAmount <= 0) {
-                    amount -= getArray()[i].a;
                     getArray()[i] = null;
                 } else {
                     getArray()[i].a = tempAmount;
@@ -138,11 +138,18 @@ public abstract class ItemArray {
         return false;
     }
 
+    /**
+     * Clears the contents
+     */
     public void clearContents() {
         for (int i = 0; getArray().length > i; i++) {
             getArray()[i] = null;
         }
     }
 
-    protected abstract gp[] getArray();
+    /**
+     * Gets the actual item array
+     * @return item array
+     */
+    public abstract gp[] getArray();
 }

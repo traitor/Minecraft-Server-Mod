@@ -9,9 +9,9 @@ public class Player {
     private int id = -1;
     private String name = "";
     private String prefix = "";
-    private String[] commands = new String[] { "" };
-    private String[] groups = new String[] { "" };
-    private String[] ips = new String[] { "" };
+    private String[] commands = new String[]{""};
+    private String[] groups = new String[]{""};
+    private String[] ips = new String[]{""};
     private boolean ignoreRestrictions = false;
     private boolean admin = false;
     private boolean canModifyWorld = false;
@@ -22,7 +22,6 @@ public class Player {
      *
      */
     public Player() {
-        
     }
 
     /**
@@ -57,10 +56,26 @@ public class Player {
     public void giveItem(int itemId, int amount) {
         inventory.giveItem(itemId, amount);
         inventory.updateInventory();
-        /*int emptySlot = inventory.getEmptySlot();
-        if (emptySlot == -1) {
-            int temp = amount;
+    }
 
+    /**
+     * Gives the player this item by dropping it in front of them
+     * @param item
+     */
+    public void giveItemDrop(Item item) {
+        giveItemDrop(item.getItemId(), item.getAmount());
+    }
+
+    /**
+     * Gives the player this item by dropping it in front of them
+     * @param itemId
+     * @param amount
+     */
+    public void giveItemDrop(int itemId, int amount) {
+        if (amount == -1) {
+            user.a(new gp(itemId, 255));
+        } else {
+            int temp = amount;
             do {
                 if (temp - 64 >= 64) {
                     user.a(new gp(itemId, 64));
@@ -68,19 +83,8 @@ public class Player {
                     user.a(new gp(itemId, temp));
                 }
                 temp -= 64;
-            } while (temp >= 64);
-        } else {
-            if (!inventory.hasItem(new Item(itemId, 1))) {
-                inventory.addItem(new Item(itemId, amount, emptySlot));
-            } else {
-                Item i = inventory.getItemFromId(itemId);
-                if (i != null) {
-                    i.setAmount(i.getAmount() + amount);
-                    inventory.addItem(i);
-                }
-            }
-            inventory.updateInventory();
-        }*/
+            } while (temp > 0);
+        }
     }
 
     /**
@@ -207,13 +211,15 @@ public class Player {
     public boolean hasControlOver(Player player) {
         boolean isInGroup = false;
 
-        if (player.hasNoGroups())
+        if (player.hasNoGroups()) {
             return true;
+        }
         for (String str : player.getGroups()) {
-            if (isInGroup(str))
+            if (isInGroup(str)) {
                 isInGroup = true;
-            else
+            } else {
                 continue;
+            }
             break;
         }
 
@@ -384,9 +390,11 @@ public class Player {
             }
         }
 
-        if (hasNoGroups())
-            if (etc.getInstance().getDefaultGroup().CanModifyWorld)
+        if (hasNoGroups()) {
+            if (etc.getInstance().getDefaultGroup().CanModifyWorld) {
                 return true;
+            }
+        }
 
         return false;
     }
@@ -518,8 +526,7 @@ public class Player {
                 return "§" + prefix;
             }
         }
-        if(groups.length > 0)
-        {
+        if (groups.length > 0) {
             Group group = etc.getDataSource().getGroup(groups[0]);
             if (group != null) {
                 return "§" + group.Prefix;
@@ -586,10 +593,12 @@ public class Player {
      * @return true if this player is in any group
      */
     public boolean hasNoGroups() {
-        if (groups.length == 0)
+        if (groups.length == 0) {
             return true;
-        if (groups.length == 1)
+        }
+        if (groups.length == 1) {
             return groups[0].equals("");
+        }
         return false;
     }
 
