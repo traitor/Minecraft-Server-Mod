@@ -33,6 +33,15 @@ public abstract class PluginListener {
      * @param to current block location
      */
     public void onPlayerMove(Player player, Location from, Location to) { }
+	
+    /**
+     * Called when a player teleports from one location to another
+     * @param player player moving
+     * @param from previous block location
+     * @param to current block location
+     * @return false if you want the player to teleport.
+     */
+    public boolean onTeleport(Player player, Location from, Location to) { return false; }
 
     /**
      * Called during the early login process to check whether or not to kick the
