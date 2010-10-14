@@ -83,6 +83,10 @@ public class PluginLoader {
          */
         COMPLEX_BLOCK_SEND,
         /**
+         * Calls onTeleport
+         */
+        TELEPORT,
+        /**
          * Unused.
          */
         NUM_HOOKS
@@ -355,6 +359,11 @@ public class PluginLoader {
                                 break;
                             case COMPLEX_BLOCK_SEND:
                                 if (listener.onSendComplexBlock(((ea) parameters[0]).getPlayer(), (ComplexBlock) parameters[1])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case TELEPORT:
+                                if (listener.onTeleport(((ea) parameters[0]).getPlayer(), (Location) parameters[1], (Location) parameters[2])) {
                                     toRet = true;
                                 }
                                 break;

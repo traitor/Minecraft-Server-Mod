@@ -154,6 +154,14 @@ public class id extends ej
     }
 
     public void a(double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat1, float paramFloat2) {
+        Location from = new Location();
+        from.x = paramDouble1;
+        from.y = paramDouble2;
+        from.z = paramDouble3;
+        from.rotX = paramFloat1;
+        from.rotY = paramFloat2;
+        if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.TELEPORT, new Object[] {e, from, e.getPlayer().getLocation()}))
+            return;
         this.j = false;
         this.g = paramDouble1;
         this.h = paramDouble2;
