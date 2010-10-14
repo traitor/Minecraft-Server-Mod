@@ -7,6 +7,7 @@ public class Block {
      * Face - Used for what face of the block was clicked
      */
     public enum Face {
+
         /**
          * The top of the block
          */
@@ -31,9 +32,11 @@ public class Block {
          * The back (X-wise) of the block (Faces north)
          */
         Back(4);
-
         private final int id;
-        private Face(int id) { this.id = id; }
+
+        private Face(int id) {
+            this.id = id;
+        }
 
         /**
          * Returns a Face according to the specified ID
@@ -49,20 +52,23 @@ public class Block {
             return null;
         }
     }
-    
     private int type, x, y, z;
     private Face faceClicked;
+    private int status;
 
     /**
-     * Create a block with a type or x, y and z.
+     * Create a block with no type, x, y or z.
      */
-    public Block() { }
+    public Block() {
+    }
 
     /**
      * Creates a block of specified type
      * @param type
      */
-    public Block(int type) { this.type = type; }
+    public Block(int type) {
+        this.type = type;
+    }
 
     /**
      * Creates a block of specified type and specified x, y and z
@@ -71,7 +77,12 @@ public class Block {
      * @param y
      * @param z
      */
-    public Block(int type, int x, int y, int z) { this.type = type; this.x = x; this.y = y; this.z = z; };
+    public Block(int type, int x, int y, int z) {
+        this.type = type;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
 
     /**
      * Type of block
@@ -152,5 +163,24 @@ public class Block {
      */
     public void setFaceClicked(Face faceClicked) {
         this.faceClicked = faceClicked;
+    }
+
+    /**
+     * Returns the destruction status of this block.
+     * @return 0 = Started Digging, 1 = Digging, 2 = Stopped digging, 3 = Block broken.
+     * Note: You have to return false for onBlockDestroy for all of these (except 2) to prevent the
+     * block from being destroyed. Returning false just on block broken will not work. Another note
+     * is that 0 is called often, far less than 1 but is still called. Good for toggling something.
+     */
+    public int getStatus() {
+        return status;
+    }
+
+    /**
+     * Sets the current destruction status of this block.
+     * @param status
+     */
+    public void setStatus(int status) {
+        this.status = status;
     }
 }
