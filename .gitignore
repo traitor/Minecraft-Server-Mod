@@ -1,4 +1,5 @@
-run/
-dist/
-build/
-
+/nbproject/private
+/run
+/dist
+/build
+/lib/minecraft_server.jar
