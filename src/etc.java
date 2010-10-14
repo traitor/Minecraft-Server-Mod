@@ -32,6 +32,7 @@ public class etc {
     private PropertiesFile properties;
     private PluginLoader loader;
     private boolean logging = false;
+    private boolean showUnknownCommand = true;
 
     private etc() {
         commands.put("/help", "[Page] - Shows a list of commands. 7 per page.");
@@ -108,6 +109,7 @@ public class etc {
             }
             spawnProtectionSize = properties.getInt("spawn-protection-size", 16);
             logging = properties.getBoolean("logging", false);
+            showUnknownCommand = properties.getBoolean("show-unknown-command", true);
         } catch (Exception e) {
             log.log(Level.SEVERE, "Exception while reading from server.properties", e);
             // Just in case...
@@ -172,7 +174,7 @@ public class etc {
      * @return
      */
     public static Server getServer() {
-        return getInstance().getLoader().getServer();
+        return etc.getLoader().getServer();
     }
     
     /**
@@ -180,8 +182,6 @@ public class etc {
      * @return
      */
     public static PluginLoader getLoader() {
-        etc instance = getInstance();
-        
         if (instance.loader == null) {
         	instance.loader = new PluginLoader(server);
         	instance.loader.loadPlugins();
@@ -774,5 +774,22 @@ public class etc {
      */
     public void setWhitelistMessage(String whitelistMessage) {
         this.whitelistMessage = whitelistMessage;
+    }
+
+    /**
+     * Returns true if "Unknown command" is shown to a player when
+     * they enter an unknown command (For wrappers and such)
+     * @return show unknown command
+     */
+    public boolean showUnknownCommand() {
+        return showUnknownCommand;
+    }
+
+    /**
+     * Sets whether or not to show "Unknown command" to players.
+     * @param showUnknownCommand whether or not to show it
+     */
+    public void setShowUnknownCommand(boolean showUnknownCommand) {
+        this.showUnknownCommand = showUnknownCommand;
     }
 }
