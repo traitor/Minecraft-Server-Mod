@@ -160,7 +160,7 @@ public class id extends ej
         from.z = paramDouble3;
         from.rotX = paramFloat1;
         from.rotY = paramFloat2;
-        if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.TELEPORT, new Object[] {e, from, e.getPlayer().getLocation()}))
+        if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.TELEPORT, new Object[] {e, e.getPlayer().getLocation(), from}))
             return;
         this.j = false;
         this.g = paramDouble1;
