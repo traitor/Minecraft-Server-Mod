@@ -2,9 +2,17 @@
  * Mob.java - Interface for mobs
  * @author James
  */
-public class Mob {
-    private String mob = "Chicken", mob2 = null;
-    private Location location;
+public class Mob extends BaseEntity {
+    private gh mob = null;
+
+    /**
+     * Creates a mob interface
+     * @param mob name of mob
+     */
+    public Mob(String mob) {
+        this.mob = (gh) gr.a(mob, etc.getMCServer().e);
+        this.entity = this.mob;
+    }
 
     /**
      * Creates a mob interface
@@ -12,43 +20,51 @@ public class Mob {
      * @param location location of mob
      */
     public Mob(String mob, Location location) {
-        this.mob = mob;
-        this.location = location;
+        this.mob = (gh) gr.a(mob, etc.getMCServer().e);
+        this.entity = this.mob;
+        teleportTo(location);
     }
 
     /**
      * Creates a mob interface
      * @param mob name of mob
-     * @param location location to spawn mob
-     * @param rider rider will ride the mob
      */
-    public Mob(String mob, Location location, String rider) {
+    public Mob(gh mob) {
         this.mob = mob;
-        this.location = location;
-        this.mob2 = rider;
+        this.entity = this.mob;
     }
 
     /**
-     * Spawns the mob
+     * Spawns this mob
      */
     public void spawn() {
-        if (!isValid(mob))
-            return;
+        spawn(null);
+    }
 
+    /**
+     * Spawns this mob with a rider
+     * @param rider
+     */
+    public void spawn(Mob rider) {
         dy localdy = etc.getMCServer().e;
-        is localis = (is) gr.a(mob, localdy); // (is) gr.a(split[1], etc.getMCServer().e);// (is) c.getConstructor(new Class[]{dy.class}).newInstance(new Object[]{paramdy});
 
-        localis.c(location.x + 0.5f, location.y, location.z + 0.5f, location.rotX, 0f);
-        localdy.a(localis);
+        mob.c(getX() + 0.5f, getY(), getZ() + 0.5f, getRotation(), 0f);
+        localdy.a(mob);
 
-        if (mob2 != null) {
-            if (!isValid(mob2))
-                return;
-            is localek = (is) gr.a(mob2, localdy);
-            localek.c(location.x, location.y, location.z, localis.r, 0f);
-            localdy.a(localek);
-            localek.e(localis);
+        if (rider != null) {
+            gh mob2 = rider.getMob();
+            mob2.c(getX(), getY(), getZ(), getRotation(), 0f);
+            localdy.a(mob2);
+            mob2.e(mob);
         }
+    }
+
+    /**
+     * Returns the actual mob
+     * @return
+     */
+    public gh getMob() {
+        return mob;
     }
 
     /**

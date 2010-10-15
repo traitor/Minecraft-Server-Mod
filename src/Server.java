@@ -128,6 +128,18 @@ public class Server {
     }
 
     /**
+     * Returns the list of mobs in all open chunks
+     * @return
+     */
+    public List<Mob> getMobList() {
+        List<Mob> toRet = new ArrayList<Mob>();
+        for (Object o : server.e.a)
+            if (o instanceof gh)
+                toRet.add(new Mob((gh) o));
+        return toRet;
+    }
+
+    /**
      * Get the global spawn location
      * @return Location object for spawn
      */
