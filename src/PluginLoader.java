@@ -186,7 +186,7 @@ public class PluginLoader {
             } catch (IllegalAccessException ex) {
                 log.log(Level.SEVERE, "Exception while loading plugin", ex);
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (Throwable ex) {
             log.log(Level.SEVERE, "Exception while loading plugin", ex);
         }
     }
