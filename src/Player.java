@@ -1,9 +1,8 @@
-
 /**
  * Player.java - Interface for ea so mods don't have to update often.
  * @author James
  */
-public class Player {
+public class Player extends BaseEntity {
 
     private ea user;
     private int id = -1;
@@ -85,22 +84,6 @@ public class Player {
                 temp -= 64;
             } while (temp > 0);
         }
-    }
-
-    /**
-     * Teleports to the other player
-     * @param player
-     */
-    public void teleportTo(Player player) {
-        user.a.a(player.getX(), player.getY(), player.getZ(), player.getRotation(), player.getPitch());
-    }
-
-    /**
-     * Teleports to the provided location
-     * @param location
-     */
-    public void teleportTo(Location location) {
-        user.a.a(location.x, location.y, location.z, location.rotX, location.rotY);
     }
 
     /**
@@ -254,86 +237,6 @@ public class Player {
      */
     public String getIP() {
         return user.a.b.b().toString().split(":")[0].substring(1);
-    }
-
-    /**
-     * Returns the player's X
-     * @return
-     */
-    public double getX() {
-        return user.l;
-    }
-
-    /**
-     * Sets the player's X
-     * @param x
-     */
-    public void setX(double x) {
-        user.a.a(x, getY(), getZ(), getRotation(), getPitch());
-    }
-
-    /**
-     * Returns the player's Y
-     * @return
-     */
-    public double getY() {
-        return user.m;
-    }
-
-    /**
-     * Sets the player's Y
-     * @param y
-     */
-    public void setY(double y) {
-        user.a.a(getX(), y, getZ(), getRotation(), getPitch());
-    }
-
-    /**
-     * Returns the player's Z
-     * @return
-     */
-    public double getZ() {
-        return user.n;
-    }
-
-    /**
-     * Sets the player's Z
-     * @param z
-     */
-    public void setZ(double z) {
-        user.a.a(getX(), getY(), z, getRotation(), getPitch());
-    }
-
-    /**
-     * Returns the player's pitch
-     * @return
-     */
-    public float getPitch() {
-        return user.s;
-    }
-
-    /**
-     * Sets the player's pitch
-     * @param pitch
-     */
-    public void setPitch(float pitch) {
-        user.a.a(getX(), getY(), getZ(), getRotation(), pitch);
-    }
-
-    /**
-     * Returns the player's rotation
-     * @return
-     */
-    public float getRotation() {
-        return user.r;
-    }
-
-    /**
-     * Sets the player's rotation
-     * @param rotation
-     */
-    public void setRotation(float rotation) {
-        user.a.a(getX(), getY(), getZ(), rotation, getPitch());
     }
 
     /**
@@ -566,10 +469,25 @@ public class Player {
      */
     public void setUser(ea user) {
         this.user = user;
+        this.entity = user;
         this.inventory = new Inventory(this, Inventory.Type.Inventory);
         this.craftingTable = new Inventory(this, Inventory.Type.CraftingTable);
         this.equipment = new Inventory(this, Inventory.Type.Equipment);
     }
+
+    public void teleportTo(double x, double y, double z, float rotation, float pitch) {
+        user.a.a(x, y, z, rotation, pitch);
+    }
+
+    /**
+     * This doesn't work and only screws things up.
+     * @param health
+     */
+    public void setHealth(int health) {
+        //Do nothing. Setting health fucks shit up on the server.
+    }
+
+
 
     /**
      * Returns true if the player is muted

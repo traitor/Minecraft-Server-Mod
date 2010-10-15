@@ -167,7 +167,7 @@ public class PluginLoader {
             File file = new File("plugins/" + fileName + ".jar");
             URLClassLoader child = null;
             try {
-                child = new MyClassLoader(new URL[]{file.toURL()}, this.getClass().getClassLoader());
+                child = new MyClassLoader(new URL[]{file.toURI().toURL()}, this.getClass().getClassLoader());
             } catch (MalformedURLException ex) {
                 log.log(Level.SEVERE, "Exception while loading class", ex);
             }
