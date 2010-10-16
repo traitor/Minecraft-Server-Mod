@@ -311,6 +311,7 @@ public class etc {
             log.info("listplugins   Lists all plugins");
             log.info("enableplugin  Enables a plugin");
             log.info("disableplugin Disables a plugin");
+            log.info("reloadplugin  Reloads a plugin");
         } else if (split[0].equalsIgnoreCase("reload")) {
             load();
             loadData();
