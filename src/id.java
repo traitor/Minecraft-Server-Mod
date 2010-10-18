@@ -1059,6 +1059,15 @@ public class id extends ej
                     msg(str);
                 }
             } else if (split[0].equalsIgnoreCase("/spawnmob")) {
+                if (split.length == 1) {
+                    msg(Colors.Rose + "Correct usage is: /spawnmob [name] <amount>");
+                    return;
+                }
+                if (!Mob.isValid(split[1])) {
+                    msg(Colors.Rose + "Invalid mob. Name has to start with a capital like so: Pig");
+                    return;
+                }
+
                 if (split.length == 2) {
                     Mob mob = new Mob(split[1], getPlayer().getLocation());
                     mob.spawn();
