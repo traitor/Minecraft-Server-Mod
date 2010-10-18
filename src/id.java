@@ -1095,6 +1095,8 @@ public class id extends ej
                 } else {
                     msg(Colors.Rose + "Target not found");
                 }
+            } else if (split[0].equalsIgnoreCase("/version")) {
+                msg(Colors.Gold + "Hey0 Server Mod Build " + etc.getInstance().getVersion());
             } else {
                 a.info(getPlayer().getName() + " tried command " + paramString);
                 if (etc.getInstance().showUnknownCommand())

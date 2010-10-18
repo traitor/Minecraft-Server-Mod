@@ -47,7 +47,7 @@ public class Server {
     /**
      * Check to see if your timer has expired yet.
      * @param uniqueString unique identifier
-     * @return true if timer has expired
+     * @return false if timer has expired
      */
     public boolean isTimerExpired(String uniqueString) {
         return MinecraftServer.b.containsKey(uniqueString);
@@ -159,6 +159,7 @@ public class Server {
      * @param block
      */
     public void setBlock(Block block) {
+        setBlockData(block.getX(), block.getY(), block.getZ(), block.getData());
         setBlockAt(block.getType(), block.getX(), block.getY(), block.getZ());
     }
 
@@ -170,7 +171,36 @@ public class Server {
      * @return block
      */
     public Block getBlockAt(int x, int y, int z) {
-        return new Block(getBlockIdAt(x, y, z), x, y, z);
+        return new Block(getBlockIdAt(x, y, z), x, y, z, getBlockData(x, y, z));
+    }
+
+    /**
+     * Returns the block data at the specified coordinates
+     * @param x x
+     * @param y y
+     * @param z z
+     * @return block data
+     */
+    public int getBlockData(int x, int y, int z) {
+        return server.e.b(x, y, z);
+    }
+
+    /**
+     * Sets the block data at the specified coordinates
+     * @param x x
+     * @param y y
+     * @param z z
+     * @param data data
+     * @return true if it was successful
+     */
+    public boolean setBlockData(int x, int y, int z, int data) {
+        boolean toRet = server.e.c(x, y, z, data);
+        etc.getMCServer().f.a(new et(x, y, z, etc.getMCServer().e));
+        ComplexBlock block = getComplexBlock(x, y, z);
+        if (block != null) {
+            block.update();
+        }
+        return toRet;
     }
 
     /**
