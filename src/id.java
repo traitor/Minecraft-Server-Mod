@@ -953,6 +953,10 @@ public class id extends ej
                     }
                     return;
                 }
+                if (split[1].contains(":")) {
+                    msg("You can't set a warp with \":\" in its name");
+                    return;
+                }
                 Warp warp = new Warp();
                 warp.Name = split[1];
                 warp.Location = getPlayer().getLocation();

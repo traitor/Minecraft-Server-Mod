@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 /**
  * Player.java - Interface for ea so mods don't have to update often.
  * @author James
@@ -9,7 +10,7 @@ public class Player extends BaseEntity {
     private String name = "";
     private String prefix = "";
     private String[] commands = new String[]{""};
-    private String[] groups = new String[]{""};
+    private ArrayList<String> groups = new ArrayList<String>();
     private String[] ips = new String[]{""};
     private boolean ignoreRestrictions = false;
     private boolean admin = false;
@@ -339,7 +340,9 @@ public class Player extends BaseEntity {
      * @return
      */
     public String[] getGroups() {
-        return groups;
+	String[] strGroups = new String[groups.size()];
+	groups.toArray(strGroups);
+        return strGroups;
     }
 
     /**
@@ -347,7 +350,14 @@ public class Player extends BaseEntity {
      * @param groups
      */
     public void setGroups(String[] groups) {
-        this.groups = groups;
+        this.groups.clear();
+        for (String s: groups)
+            if (s.length() > 0)
+                this.groups.add(s);
+    }
+
+    public void addGroup(String group) {
+        this.groups.add(group);
     }
 
     /**
@@ -429,8 +439,8 @@ public class Player extends BaseEntity {
                 return "§" + prefix;
             }
         }
-        if (groups.length > 0) {
-            Group group = etc.getDataSource().getGroup(groups[0]);
+        if (groups.size() > 0) {
+            Group group = etc.getDataSource().getGroup(groups.get(0));
             if (group != null) {
                 return "§" + group.Prefix;
             }
@@ -511,11 +521,11 @@ public class Player extends BaseEntity {
      * @return true if this player is in any group
      */
     public boolean hasNoGroups() {
-        if (groups.length == 0) {
+        if (groups.size() == 0) {
             return true;
         }
-        if (groups.length == 1) {
-            return groups[0].equals("");
+        if (groups.size() == 1) {
+            return groups.get(0).equals("");
         }
         return false;
     }
