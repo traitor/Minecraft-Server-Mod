@@ -83,9 +83,9 @@ public class HitBlox {
         rot_x = (player_loc.rotX + 90) % 360;
         rot_y = player_loc.rotY * -1;
 
-        target_x = (int) (player_loc.x);
-        target_y = (int) (player_loc.y + view_height);
-        target_z = (int) (player_loc.z);
+        target_x = (int)Math.floor(player_loc.x);
+        target_y = (int)Math.floor(player_loc.y + view_height);
+        target_z = (int)Math.floor(player_loc.z);
         last_x = target_x;
         last_y = target_y;
         last_z = target_z;
@@ -152,9 +152,9 @@ public class HitBlox {
             x_offset = (h_length * Math.cos(Math.toRadians(rot_x)));
             z_offset = (h_length * Math.sin(Math.toRadians(rot_x)));
 
-            target_x = (int) (x_offset + player_loc.x);
-            target_y = (int) (y_offset + player_loc.y + view_height);
-            target_z = (int) (z_offset + player_loc.z);
+            target_x = (int)Math.floor(x_offset + player_loc.x);
+            target_y = (int)Math.floor(y_offset + player_loc.y + view_height);
+            target_z = (int)Math.floor(z_offset + player_loc.z);
 
 
         } while ((length <= range) && ((target_x == last_x) && (target_y == last_y) && (target_z == last_z)));

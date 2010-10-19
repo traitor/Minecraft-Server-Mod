@@ -71,20 +71,20 @@ public class id extends ej
                 this.j = true;
             }
         }
-        if ((int)g != (int)e.l || (int)h != (int)e.m || (int)i != (int)e.n) {
+        if ((int)Math.floor(g) != (int)Math.floor(e.l) || (int)Math.floor(h) != (int)Math.floor(e.m) || (int)Math.floor(i) != (int)Math.floor(e.n)) {
             Location from = new Location();
-            from.x = (int)g;
-            from.y = (int)h;
-            from.z = (int)i;
-            from.rotX = (int)e.r;
-            from.rotY = (int)e.s;
+            from.x = (int)Math.floor(g);
+            from.y = (int)Math.floor(h);
+            from.z = (int)Math.floor(i);
+            from.rotX = e.r;
+            from.rotY = e.s;
 
             Location to = new Location();
-            to.x = (int)e.l;
-            to.y = (int)e.m;
-            to.z = (int)e.n;
-            to.rotX = (int)e.r;
-            to.rotY = (int)e.s;
+            to.x = (int)Math.floor(e.l);
+            to.y = (int)Math.floor(e.m);
+            to.z = (int)Math.floor(e.n);
+            to.rotX = e.r;
+            to.rotY = e.s;
 
             etc.getLoader().callHook(PluginLoader.Hook.PLAYER_MOVE, new Object[] {e, from, to});
         }
