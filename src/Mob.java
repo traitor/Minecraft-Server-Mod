@@ -60,6 +60,27 @@ public class Mob extends BaseEntity {
     }
 
     /**
+     * Returns this mob's name
+     * @return name
+     */
+    public String getName() {
+        return gr.b(mob);
+    }
+
+    /**
+     * Drops this mob's loot. Automatically called if health is set to 0.
+     */
+    public void dropLoot() {
+        mob.f(null);
+    }
+
+    public void setHealth(int health) {
+        super.setHealth(health);
+        if (health <= 0)
+            dropLoot();
+    }
+
+    /**
      * Returns the actual mob
      * @return
      */

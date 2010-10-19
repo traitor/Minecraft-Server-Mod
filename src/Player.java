@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+
 /**
  * Player.java - Interface for ea so mods don't have to update often.
  * @author James
@@ -7,7 +8,6 @@ public class Player extends BaseEntity {
 
     private ea user;
     private int id = -1;
-    private String name = "";
     private String prefix = "";
     private String[] commands = new String[]{""};
     private ArrayList<String> groups = new ArrayList<String>();
@@ -19,7 +19,7 @@ public class Player extends BaseEntity {
     private Inventory inventory, craftingTable, equipment;
 
     /**
-     *
+     * Creates a player interface
      */
     public Player() {
     }
@@ -356,6 +356,10 @@ public class Player extends BaseEntity {
                 this.groups.add(s);
     }
 
+    /**
+     * Adds the player to the specified group
+     * @param group group to add player to
+     */
     public void addGroup(String group) {
         this.groups.add(group);
     }
@@ -521,7 +525,7 @@ public class Player extends BaseEntity {
      * @return true if this player is in any group
      */
     public boolean hasNoGroups() {
-        if (groups.size() == 0) {
+        if (groups.isEmpty()) {
             return true;
         }
         if (groups.size() == 1) {

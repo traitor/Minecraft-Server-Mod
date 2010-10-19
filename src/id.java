@@ -71,20 +71,20 @@ public class id extends ej
                 this.j = true;
             }
         }
-        if ((int)g != (int)e.l || (int)h != (int)e.m || (int)i != (int)e.n) {
+        if ((int)Math.floor(g) != (int)Math.floor(e.l) || (int)Math.floor(h) != (int)Math.floor(e.m) || (int)Math.floor(i) != (int)Math.floor(e.n)) {
             Location from = new Location();
-            from.x = (int)g;
-            from.y = (int)h;
-            from.z = (int)i;
-            from.rotX = (int)e.r;
-            from.rotY = (int)e.s;
+            from.x = (int)Math.floor(g);
+            from.y = (int)Math.floor(h);
+            from.z = (int)Math.floor(i);
+            from.rotX = e.r;
+            from.rotY = e.s;
 
             Location to = new Location();
-            to.x = (int)e.l;
-            to.y = (int)e.m;
-            to.z = (int)e.n;
-            to.rotX = (int)e.r;
-            to.rotY = (int)e.s;
+            to.x = (int)Math.floor(e.l);
+            to.y = (int)Math.floor(e.m);
+            to.z = (int)Math.floor(e.n);
+            to.rotX = e.r;
+            to.rotY = e.s;
 
             etc.getLoader().callHook(PluginLoader.Hook.PLAYER_MOVE, new Object[] {e, from, to});
         }
@@ -1059,6 +1059,15 @@ public class id extends ej
                     msg(str);
                 }
             } else if (split[0].equalsIgnoreCase("/spawnmob")) {
+                if (split.length == 1) {
+                    msg(Colors.Rose + "Correct usage is: /spawnmob [name] <amount>");
+                    return;
+                }
+                if (!Mob.isValid(split[1])) {
+                    msg(Colors.Rose + "Invalid mob. Name has to start with a capital like so: Pig");
+                    return;
+                }
+
                 if (split.length == 2) {
                     Mob mob = new Mob(split[1], getPlayer().getLocation());
                     mob.spawn();
@@ -1086,6 +1095,8 @@ public class id extends ej
                 } else {
                     msg(Colors.Rose + "Target not found");
                 }
+            } else if (split[0].equalsIgnoreCase("/version")) {
+                msg(Colors.Gold + "Hey0 Server Mod Build " + etc.getInstance().getVersion());
             } else {
                 a.info(getPlayer().getName() + " tried command " + paramString);
                 if (etc.getInstance().showUnknownCommand())

@@ -54,7 +54,7 @@ public class Block {
     }
     private int type, x, y, z;
     private Face faceClicked;
-    private int status;
+    private int status, data;
 
     /**
      * Create a block with no type, x, y or z.
@@ -82,6 +82,22 @@ public class Block {
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    /**
+     * Creates a block of specified type and specified x, y and z
+     * @param type Type of block
+     * @param x
+     * @param y
+     * @param z
+     * @param data
+     */
+    public Block(int type, int x, int y, int z, int data) {
+        this.type = type;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.data = data;
     }
 
     /**
@@ -182,5 +198,28 @@ public class Block {
      */
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    /**
+     * Returns this block's data
+     * @return
+     */
+    public int getData() {
+        return data;
+    }
+
+    /**
+     * Sets this block's data
+     * @param data
+     */
+    public void setData(int data) {
+        this.data = data;
+    }
+
+    /**
+     * Updates this block to the server.
+     */
+    public void update() {
+        etc.getServer().setBlock(this);
     }
 }
