@@ -39,7 +39,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </target>
     <target name="-pre-compile">
         <get src="http://minecraft.net/download/minecraft_server.jar"
-            dest="lib/minecraft_server.jar" usetimestamp="true"/>
+            dest="minecraft_server.jar" usetimestamp="true"/>
     </target>
     <!--
     There exist several targets which are by default empty and which can be

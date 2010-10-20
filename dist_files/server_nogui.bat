@@ -1,3 +1,3 @@
 @echo off
-java -Xms1024M -Xmx1024M -jar Minecraft-Server-Mod.jar nogui
+java -Xms1024M -Xmx1024M -jar Minecraft_Mod.jar nogui
 pause
