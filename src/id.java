@@ -170,6 +170,7 @@ public class id extends ej
         this.e.a.b(new dq(paramDouble1, paramDouble2 + 1.620000004768372D, paramDouble2, paramDouble3, paramFloat1, paramFloat2, false));
     }
 
+    int x, y, z, type;
     //Destroy function
     public void a(hd paramhd) {
         this.e.aj.a[this.e.aj.d] = this.k;
@@ -210,6 +211,10 @@ public class id extends ej
             if (i5 > etc.getInstance().getSpawnProtectionSize() || bool) {
                 Block block = etc.getServer().getBlockAt(n, i1, i2);
                 block.setStatus(0); //Started digging
+                x = block.getX();
+                y = block.getY();
+                z = block.getZ();
+                type = block.getType();
                 if (!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[] {e, block}))
                     this.e.ad.a(n, i1, i2);
             }
@@ -230,9 +235,7 @@ public class id extends ej
                     this.e.ad.a(n, i1, i2, i3);
             }
         } else if (paramhd.e == 3) {
-            Block block = etc.getServer().getBlockAt(n, i1, i2);
-            block.setStatus(3); //Block broken
-            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[] {e, block});
+            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[] {e, new Block(type, x, y, z)});
 
             double d2 = this.e.l - (n + 0.5D);
             double d3 = this.e.m - (i1 + 0.5D);

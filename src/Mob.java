@@ -3,15 +3,12 @@
  * @author James
  */
 public class Mob extends BaseEntity {
-    private gh mob = null;
-
     /**
      * Creates a mob interface
      * @param mob name of mob
      */
     public Mob(String mob) {
-        this.mob = (gh) gr.a(mob, etc.getMCServer().e);
-        this.entity = this.mob;
+        this.entity = (is) gr.a(mob, etc.getMCServer().e);
     }
 
     /**
@@ -20,8 +17,7 @@ public class Mob extends BaseEntity {
      * @param location location of mob
      */
     public Mob(String mob, Location location) {
-        this.mob = (gh) gr.a(mob, etc.getMCServer().e);
-        this.entity = this.mob;
+        this.entity = (is) gr.a(mob, etc.getMCServer().e);
         teleportTo(location);
     }
 
@@ -30,8 +26,7 @@ public class Mob extends BaseEntity {
      * @param mob name of mob
      */
     public Mob(gh mob) {
-        this.mob = mob;
-        this.entity = this.mob;
+        this.entity = mob;
     }
 
     /**
@@ -48,14 +43,14 @@ public class Mob extends BaseEntity {
     public void spawn(Mob rider) {
         dy localdy = etc.getMCServer().e;
 
-        mob.c(getX() + 0.5f, getY(), getZ() + 0.5f, getRotation(), 0f);
-        localdy.a(mob);
+        entity.c(getX() + 0.5f, getY(), getZ() + 0.5f, getRotation(), 0f);
+        localdy.a(entity);
 
         if (rider != null) {
-            gh mob2 = rider.getMob();
+            is mob2 = rider.getMob();
             mob2.c(getX(), getY(), getZ(), getRotation(), 0f);
             localdy.a(mob2);
-            mob2.e(mob);
+            mob2.e(entity);
         }
     }
 
@@ -64,14 +59,14 @@ public class Mob extends BaseEntity {
      * @return name
      */
     public String getName() {
-        return gr.b(mob);
+        return gr.b(entity);
     }
 
     /**
      * Drops this mob's loot. Automatically called if health is set to 0.
      */
     public void dropLoot() {
-        mob.f(null);
+        entity.f(null);
     }
 
     public void setHealth(int health) {
@@ -84,8 +79,8 @@ public class Mob extends BaseEntity {
      * Returns the actual mob
      * @return
      */
-    public gh getMob() {
-        return mob;
+    public is getMob() {
+        return entity;
     }
 
     /**
