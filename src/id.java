@@ -440,59 +440,123 @@ public class id extends ej
                 a.info("Reloaded config");
                 msg("Successfuly reloaded config");
             } else if ((split[0].equalsIgnoreCase("/modify") || split[0].equalsIgnoreCase("/mp"))) {
-                if (split.length < 4) {
-                    msg(Colors.Rose + "Usage is: /modify [player] [key] [value]");
-                    msg(Colors.Rose + "Keys:");
-                    msg(Colors.Rose + "prefix: only the letter the color represents");
-                    msg(Colors.Rose + "commands: list seperated by comma");
-                    msg(Colors.Rose + "groups: list seperated by comma");
-                    msg(Colors.Rose + "ignoresrestrictions: true or false");
-                    msg(Colors.Rose + "admin: true or false");
-                    msg(Colors.Rose + "modworld: true or false");
-                    return;
-                }
-
-                Player player = etc.getServer().matchPlayer(split[1]);
-
-                if (player == null) {
-                    msg(Colors.Rose + "Player does not exist.");
-                    return;
-                }
-
-                String key = split[2];
-                String value = split[3];
-                boolean newUser = false;
-
-                if (!etc.getDataSource().doesPlayerExist(player.getName())) {
-                    if (!key.equalsIgnoreCase("groups") && !key.equalsIgnoreCase("g")) {
-                        msg(Colors.Rose + "When adding a new user, set their group(s) first.");
+            	if (split.length > 2 && split[2].contains(":")) {
+            		for (int i=3; i<split.length; i++) {
+            			if (!split[i].contains(":")) {
+            				msg(Colors.Rose + "Usage is: /modify [player] [key] [value]");
+                        msg(Colors.Rose + "Keys:");
+                        msg(Colors.Rose + "prefix: only the letter the color represents");
+                        msg(Colors.Rose + "commands: list seperated by comma");
+                        msg(Colors.Rose + "groups: list seperated by comma");
+                        msg(Colors.Rose + "ignoresrestrictions: true or false");
+                        msg(Colors.Rose + "admin: true or false");
+                        msg(Colors.Rose + "modworld: true or false");
                         return;
-                    }
-                    msg(Colors.Rose + "Adding new user.");
-                    newUser = true;
-                }
-
-                if (key.equalsIgnoreCase("prefix") || key.equalsIgnoreCase("p")) {
-                    player.setPrefix(value);
-                } else if (key.equalsIgnoreCase("commands") || key.equalsIgnoreCase("c")) {
-                    player.setCommands(value.split(","));
-                } else if (key.equalsIgnoreCase("groups") || key.equalsIgnoreCase("g")) {
-                    player.setGroups(value.split(","));
-                } else if (key.equalsIgnoreCase("ignoresrestrictions") || key.equalsIgnoreCase("ir")) {
-                    player.setIgnoreRestrictions(value.equalsIgnoreCase("true") || value.equals("1"));
-                } else if (key.equalsIgnoreCase("admin") || key.equalsIgnoreCase("a")) {
-                    player.setAdmin(value.equalsIgnoreCase("true") || value.equals("1"));
-                } else if (key.equalsIgnoreCase("modworld") || key.equalsIgnoreCase("mw")) {
-                    player.setCanModifyWorld(value.equalsIgnoreCase("true") || value.equals("1"));
-                }
-
-                if (newUser) {
-                    etc.getDataSource().addPlayer(player);
-                } else {
-                    etc.getDataSource().modifyPlayer(player);
-                }
-                msg(Colors.Rose + "Modified user.");
-                a.info("Modifed user " + split[1] + ". " + key + " => " + value + " by " + getPlayer().getName());
+            			}
+            		}
+            		
+            		Player player = etc.getServer().matchPlayer(split[1]);
+            		
+	                if (player == null) {
+	                    msg(Colors.Rose + "Player does not exist.");
+	                    return;
+	                }
+	                
+	                for (int i=2; i<split.length; i++) {
+	               	 if (split[i].split(":").length != 2) {
+	               		 msg("This key:value pair is deformed... "+split[i]);
+	               		 return;
+	               	 }
+	               	 String key = split[i].split(":")[0];
+		                String value = split[i].split(":")[1];
+		                boolean newUser = false;
+		
+		                if (!etc.getDataSource().doesPlayerExist(player.getName())) {
+		                    if (!key.equalsIgnoreCase("groups") && !key.equalsIgnoreCase("g")) {
+		                        msg(Colors.Rose + "When adding a new user, set their group(s) first.");
+		                        return;
+		                    }
+		                    msg(Colors.Rose + "Adding new user.");
+		                    newUser = true;
+		                }
+		
+		                if (key.equalsIgnoreCase("prefix") || key.equalsIgnoreCase("p")) {
+		                    player.setPrefix(value);
+		                } else if (key.equalsIgnoreCase("commands") || key.equalsIgnoreCase("c")) {
+		                    player.setCommands(value.split(","));
+		                } else if (key.equalsIgnoreCase("groups") || key.equalsIgnoreCase("g")) {
+		                    player.setGroups(value.split(","));
+		                } else if (key.equalsIgnoreCase("ignoresrestrictions") || key.equalsIgnoreCase("ir")) {
+		                    player.setIgnoreRestrictions(value.equalsIgnoreCase("true") || value.equals("1"));
+		                } else if (key.equalsIgnoreCase("admin") || key.equalsIgnoreCase("a")) {
+		                    player.setAdmin(value.equalsIgnoreCase("true") || value.equals("1"));
+		                } else if (key.equalsIgnoreCase("modworld") || key.equalsIgnoreCase("mw")) {
+		                    player.setCanModifyWorld(value.equalsIgnoreCase("true") || value.equals("1"));
+		                }
+		
+		                if (newUser) {
+		                    etc.getDataSource().addPlayer(player);
+		                } else {
+		                    etc.getDataSource().modifyPlayer(player);
+		                }
+		                a.info("Modifed user " + split[1] + ". " + key + " => " + value + " by " + getPlayer().getName());
+	                }
+	                msg(Colors.Rose + "Modified user.");
+            	} else {
+	                if (split.length < 4) {
+	                    msg(Colors.Rose + "Usage is: /modify [player] [key] [value]");
+	                    msg(Colors.Rose + "Keys:");
+	                    msg(Colors.Rose + "prefix: only the letter the color represents");
+	                    msg(Colors.Rose + "commands: list seperated by comma");
+	                    msg(Colors.Rose + "groups: list seperated by comma");
+	                    msg(Colors.Rose + "ignoresrestrictions: true or false");
+	                    msg(Colors.Rose + "admin: true or false");
+	                    msg(Colors.Rose + "modworld: true or false");
+	                    return;
+	                }
+	
+	                Player player = etc.getServer().matchPlayer(split[1]);
+	
+	                if (player == null) {
+	                    msg(Colors.Rose + "Player does not exist.");
+	                    return;
+	                }
+	
+	                String key = split[2];
+	                String value = split[3];
+	                boolean newUser = false;
+	
+	                if (!etc.getDataSource().doesPlayerExist(player.getName())) {
+	                    if (!key.equalsIgnoreCase("groups") && !key.equalsIgnoreCase("g")) {
+	                        msg(Colors.Rose + "When adding a new user, set their group(s) first.");
+	                        return;
+	                    }
+	                    msg(Colors.Rose + "Adding new user.");
+	                    newUser = true;
+	                }
+	
+	                if (key.equalsIgnoreCase("prefix") || key.equalsIgnoreCase("p")) {
+	                    player.setPrefix(value);
+	                } else if (key.equalsIgnoreCase("commands") || key.equalsIgnoreCase("c")) {
+	                    player.setCommands(value.split(","));
+	                } else if (key.equalsIgnoreCase("groups") || key.equalsIgnoreCase("g")) {
+	                    player.setGroups(value.split(","));
+	                } else if (key.equalsIgnoreCase("ignoresrestrictions") || key.equalsIgnoreCase("ir")) {
+	                    player.setIgnoreRestrictions(value.equalsIgnoreCase("true") || value.equals("1"));
+	                } else if (key.equalsIgnoreCase("admin") || key.equalsIgnoreCase("a")) {
+	                    player.setAdmin(value.equalsIgnoreCase("true") || value.equals("1"));
+	                } else if (key.equalsIgnoreCase("modworld") || key.equalsIgnoreCase("mw")) {
+	                    player.setCanModifyWorld(value.equalsIgnoreCase("true") || value.equals("1"));
+	                }
+	
+	                if (newUser) {
+	                    etc.getDataSource().addPlayer(player);
+	                } else {
+	                    etc.getDataSource().modifyPlayer(player);
+	                }
+	                msg(Colors.Rose + "Modified user.");
+	                a.info("Modifed user " + split[1] + ". " + key + " => " + value + " by " + getPlayer().getName());
+            	}
             } else if (split[0].equalsIgnoreCase("/whitelist")) {
                 if (split.length < 2) {
                     msg(Colors.Rose + "whitelist [operation (toggle, add or remove)] <player>");
