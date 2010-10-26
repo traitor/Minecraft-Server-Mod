@@ -1164,7 +1164,7 @@ public class id extends ej
                     Mob mob = new Mob(split[1], getPlayer().getLocation());
                     mob.spawn();
                 } else if (split.length == 3) {
-		    try {
+                		try {
                 				int mobnumber = Integer.parseInt(split[2]);
                 				for (int i = 0; i < mobnumber; i++) {
                 						mob.spawn();
