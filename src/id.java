@@ -1176,26 +1176,26 @@ public class id extends ej
                     		msg(Colors.Rose + "Invalid mob name or number of mobs.");
                     		msg(Colors.Rose + "Mob names have to start with a capital like so: Pig");
                     	} else {
-                    			Mob mob = new Mob(split[1], getPlayer().getLocation());
-                    			mob.spawn(new Mob(split[2]));
+                    		Mob mob = new Mob(split[1], getPlayer().getLocation());
+                    		mob.spawn(new Mob(split[2]));
                     	}
                     }
                 }
                 
                 if (split.length == 4) {
                     try {
-                				int mobnumber = Integer.parseInt(split[3]);
-                				if(!Mob.isValid(split[2])) {
-                						msg(Colors.Rose + "Invalid rider. Name has to start with a capital like so: Pig");
-                				} else {
-                						for (int i = 0; i < mobnumber; i++) {
-                								Mob mob = new Mob(split[1], getPlayer().getLocation());
-                								mob.spawn(new Mob(split[2]));
-                						}
-                				}
-                		} catch (NumberFormatException nfe) {
-                				msg(Colors.Rose + "Invalid number of mobs.");
-                		}
+                    	int mobnumber = Integer.parseInt(split[3]);
+                    	if(!Mob.isValid(split[2])) {
+                    		msg(Colors.Rose + "Invalid rider. Name has to start with a capital like so: Pig");
+                    	} else {
+                    		for (int i = 0; i < mobnumber; i++) {
+                    			Mob mob = new Mob(split[1], getPlayer().getLocation());
+                    			mob.spawn(new Mob(split[2]));
+                    		}
+                    	}
+                    } catch (NumberFormatException nfe) {
+                    	msg(Colors.Rose + "Invalid number of mobs.");
+                    }
                 }
             } else if (split[0].equalsIgnoreCase("/clearinventory")) {
                 Player target = getPlayer();
