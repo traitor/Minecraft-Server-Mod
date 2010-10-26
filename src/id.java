@@ -1179,7 +1179,7 @@ public class id extends ej
                             mob.spawn(new Mob(split[2]));
                         }
                     }
-				} else if (split.length == 4) {
+                } else if (split.length == 4) {
                     try {
                         int mobnumber = Integer.parseInt(split[3]);
                         if(!Mob.isValid(split[2])) {
