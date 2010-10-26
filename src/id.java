@@ -1183,7 +1183,7 @@ public class id extends ej
                 }
                 
                 if (split.length == 4) {
-                		try {
+                	try {
                 				int mobnumber = Integer.parseInt(split[3]);
                 				if(!Mob.isValid(split[2])) {
                 						msg(Colors.Rose + "Invalid rider. Name has to start with a capital like so: Pig");
