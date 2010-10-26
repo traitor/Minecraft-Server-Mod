@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,7 +38,9 @@ public class id extends ej
      */
     public int getItemInHand() {
         if (k != null) //Check to see if we are even holding anything
+        {
             return k.c;
+        }
         return -1;
     }
 
@@ -71,22 +74,22 @@ public class id extends ej
                 this.j = true;
             }
         }
-        if ((int)Math.floor(g) != (int)Math.floor(e.l) || (int)Math.floor(h) != (int)Math.floor(e.m) || (int)Math.floor(i) != (int)Math.floor(e.n)) {
+        if ((int) Math.floor(g) != (int) Math.floor(e.l) || (int) Math.floor(h) != (int) Math.floor(e.m) || (int) Math.floor(i) != (int) Math.floor(e.n)) {
             Location from = new Location();
-            from.x = (int)Math.floor(g);
-            from.y = (int)Math.floor(h);
-            from.z = (int)Math.floor(i);
+            from.x = (int) Math.floor(g);
+            from.y = (int) Math.floor(h);
+            from.z = (int) Math.floor(i);
             from.rotX = e.r;
             from.rotY = e.s;
 
             Location to = new Location();
-            to.x = (int)Math.floor(e.l);
-            to.y = (int)Math.floor(e.m);
-            to.z = (int)Math.floor(e.n);
+            to.x = (int) Math.floor(e.l);
+            to.y = (int) Math.floor(e.m);
+            to.z = (int) Math.floor(e.n);
             to.rotX = e.r;
             to.rotY = e.s;
 
-            etc.getLoader().callHook(PluginLoader.Hook.PLAYER_MOVE, new Object[] {e, from, to});
+            etc.getLoader().callHook(PluginLoader.Hook.PLAYER_MOVE, new Object[]{e, from, to});
         }
         if (this.j) {
             this.g = this.e.l;
@@ -160,8 +163,9 @@ public class id extends ej
         from.z = paramDouble3;
         from.rotX = paramFloat1;
         from.rotY = paramFloat2;
-        if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.TELEPORT, new Object[] {e, e.getPlayer().getLocation(), from}))
+        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.TELEPORT, new Object[]{e, e.getPlayer().getLocation(), from})) {
             return;
+        }
         this.j = false;
         this.g = paramDouble1;
         this.h = paramDouble2;
@@ -169,9 +173,9 @@ public class id extends ej
         this.e.b(paramDouble1, paramDouble2, paramDouble3, paramFloat1, paramFloat2);
         this.e.a.b(new dq(paramDouble1, paramDouble2 + 1.620000004768372D, paramDouble2, paramDouble3, paramFloat1, paramFloat2, false));
     }
-
     int x, y, z, type;
     //Destroy function
+
     public void a(hd paramhd) {
         this.e.aj.a[this.e.aj.d] = this.k;
         boolean bool = this.d.e.z = (this.d.f.g(getPlayer().getName()) || getPlayer().isAdmin());
@@ -215,13 +219,14 @@ public class id extends ej
                 y = block.getY();
                 z = block.getZ();
                 type = block.getType();
-                if (!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[] {e, block}))
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[]{e, block})) {
                     this.e.ad.a(n, i1, i2);
+                }
             }
         } else if (paramhd.e == 2) {
             Block block = etc.getServer().getBlockAt(n, i1, i2);
             block.setStatus(2); //Stopped digging
-            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[] {e, block});
+            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[]{e, block});
 
             this.e.ad.a();
         } else if (paramhd.e == 1) {
@@ -231,13 +236,14 @@ public class id extends ej
             if (i5 > etc.getInstance().getSpawnProtectionSize() || bool) {
                 Block block = etc.getServer().getBlockAt(n, i1, i2);
                 block.setStatus(1); //Digging
-                if (!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[] {e, block}))
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[]{e, block})) {
                     this.e.ad.a(n, i1, i2, i3);
+                }
             }
         } else if (paramhd.e == 3) {
-        	Block block = new Block(type, x, y, z);
-        	block.setStatus(3);
-            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[] {e, block});
+            Block block = new Block(type, x, y, z);
+            block.setStatus(3);
+            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[]{e, block});
 
             double d2 = this.e.l - (n + 0.5D);
             double d3 = this.e.m - (i1 + 0.5D);
@@ -269,22 +275,23 @@ public class id extends ej
             gp localgp = paramfe.a >= 0 ? new gp(paramfe.a) : null;
 
             Block blockPlaced = new Block(localgp != null ? localgp.c : paramfe.a, m, n, i1);
-            if (paramfe.e == 0)
+            if (paramfe.e == 0) {
                 blockPlaced.setY(blockPlaced.getY() - 1);
-            else if(paramfe.e == 1)
+            } else if (paramfe.e == 1) {
                 blockPlaced.setY(blockPlaced.getY() + 1);
-            else if(paramfe.e == 2)
+            } else if (paramfe.e == 2) {
                 blockPlaced.setZ(blockPlaced.getZ() - 1);
-            else if(paramfe.e == 3)
+            } else if (paramfe.e == 3) {
                 blockPlaced.setZ(blockPlaced.getZ() + 1);
-            else if(paramfe.e == 4)
+            } else if (paramfe.e == 4) {
                 blockPlaced.setX(blockPlaced.getX() - 1);
-            else if(paramfe.e == 5)
+            } else if (paramfe.e == 5) {
                 blockPlaced.setX(blockPlaced.getX() + 1);
+            }
             Block blockClicked = new Block(etc.getServer().getBlockIdAt(m, n, i1), m, n, i1);
             blockClicked.setFaceClicked(Block.Face.fromId(paramfe.e));
 
-            if (!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, new Object[] {e, blockPlaced, blockClicked, paramfe.a})) {
+            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, new Object[]{e, blockPlaced, blockClicked, paramfe.a})) {
                 if (localgp != null) {
                     if (!etc.getInstance().isOnItemBlacklist(localgp.c) || bool) {
                         this.e.ad.a(this.e, this.d.e, localgp, m, n, i1, i2);
@@ -300,7 +307,7 @@ public class id extends ej
     }
 
     public void a(String paramString) {
-        etc.getLoader().callHook(PluginLoader.Hook.DISCONNECT, new Object[] { e });
+        etc.getLoader().callHook(PluginLoader.Hook.DISCONNECT, new Object[]{e});
         a.info(getPlayer().getName() + " lost connection: " + paramString);
         this.d.f.c(this.e);
         this.c = true;
@@ -361,8 +368,9 @@ public class id extends ej
                 msg(Colors.Rose + "You are currently muted.");
                 return;
             }
-            if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.CHAT, new Object[]{e, str}))
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.CHAT, new Object[]{e, str})) {
                 return;
+            }
 
             String message = "<" + getPlayer().getColor() + getPlayer().getName() + Colors.White + "> " + str;
             a.log(Level.INFO, "<" + getPlayer().getName() + "> " + str);
@@ -384,12 +392,13 @@ public class id extends ej
                 a.info("Command used by " + getPlayer().getName() + " " + paramString);
             }
             String[] split = paramString.split(" ");
-            if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.COMMAND, new Object[]{e, split})) {
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMMAND, new Object[]{e, split})) {
                 return; //No need to go on, commands were parsed.
             }
             if (!getPlayer().canUseCommand(split[0]) && !split[0].startsWith("/#")) {
-                if (etc.getInstance().showUnknownCommand())
+                if (etc.getInstance().showUnknownCommand()) {
                     msg(Colors.Rose + "Unknown command.");
+                }
                 return;
             }
             if (split[0].equalsIgnoreCase("/help")) {
@@ -437,15 +446,77 @@ public class id extends ej
             } else if (split[0].equalsIgnoreCase("/reload")) {
                 etc.getInstance().load();
                 etc.getInstance().loadData();
-                for (Player player : etc.getServer().getPlayerList())
+                for (Player player : etc.getServer().getPlayerList()) {
                     player.getUser().reloadPlayer();
+                }
                 a.info("Reloaded config");
                 msg("Successfuly reloaded config");
             } else if ((split[0].equalsIgnoreCase("/modify") || split[0].equalsIgnoreCase("/mp"))) {
-            	if (split.length > 2 && split[2].contains(":")) {
-            		for (int i=3; i<split.length; i++) {
-            			if (!split[i].contains(":")) {
-            				msg(Colors.Rose + "Usage is: /modify [player] [key] [value]");
+                if (split.length > 2 && split[2].contains(":")) {
+                    for (int i = 3; i < split.length; i++) {
+                        if (!split[i].contains(":")) {
+                            msg(Colors.Rose + "Usage is: /modify [player] [key] [value]");
+                            msg(Colors.Rose + "Keys:");
+                            msg(Colors.Rose + "prefix: only the letter the color represents");
+                            msg(Colors.Rose + "commands: list seperated by comma");
+                            msg(Colors.Rose + "groups: list seperated by comma");
+                            msg(Colors.Rose + "ignoresrestrictions: true or false");
+                            msg(Colors.Rose + "admin: true or false");
+                            msg(Colors.Rose + "modworld: true or false");
+                            return;
+                        }
+                    }
+
+                    Player player = etc.getServer().matchPlayer(split[1]);
+
+                    if (player == null) {
+                        msg(Colors.Rose + "Player does not exist.");
+                        return;
+                    }
+
+                    for (int i = 2; i < split.length; i++) {
+                        if (split[i].split(":").length != 2) {
+                            msg("This key:value pair is deformed... " + split[i]);
+                            return;
+                        }
+                        String key = split[i].split(":")[0];
+                        String value = split[i].split(":")[1];
+                        boolean newUser = false;
+
+                        if (!etc.getDataSource().doesPlayerExist(player.getName())) {
+                            if (!key.equalsIgnoreCase("groups") && !key.equalsIgnoreCase("g")) {
+                                msg(Colors.Rose + "When adding a new user, set their group(s) first.");
+                                return;
+                            }
+                            msg(Colors.Rose + "Adding new user.");
+                            newUser = true;
+                        }
+
+                        if (key.equalsIgnoreCase("prefix") || key.equalsIgnoreCase("p")) {
+                            player.setPrefix(value);
+                        } else if (key.equalsIgnoreCase("commands") || key.equalsIgnoreCase("c")) {
+                            player.setCommands(value.split(","));
+                        } else if (key.equalsIgnoreCase("groups") || key.equalsIgnoreCase("g")) {
+                            player.setGroups(value.split(","));
+                        } else if (key.equalsIgnoreCase("ignoresrestrictions") || key.equalsIgnoreCase("ir")) {
+                            player.setIgnoreRestrictions(value.equalsIgnoreCase("true") || value.equals("1"));
+                        } else if (key.equalsIgnoreCase("admin") || key.equalsIgnoreCase("a")) {
+                            player.setAdmin(value.equalsIgnoreCase("true") || value.equals("1"));
+                        } else if (key.equalsIgnoreCase("modworld") || key.equalsIgnoreCase("mw")) {
+                            player.setCanModifyWorld(value.equalsIgnoreCase("true") || value.equals("1"));
+                        }
+
+                        if (newUser) {
+                            etc.getDataSource().addPlayer(player);
+                        } else {
+                            etc.getDataSource().modifyPlayer(player);
+                        }
+                        a.info("Modifed user " + split[1] + ". " + key + " => " + value + " by " + getPlayer().getName());
+                    }
+                    msg(Colors.Rose + "Modified user.");
+                } else {
+                    if (split.length < 4) {
+                        msg(Colors.Rose + "Usage is: /modify [player] [key] [value]");
                         msg(Colors.Rose + "Keys:");
                         msg(Colors.Rose + "prefix: only the letter the color represents");
                         msg(Colors.Rose + "commands: list seperated by comma");
@@ -454,111 +525,50 @@ public class id extends ej
                         msg(Colors.Rose + "admin: true or false");
                         msg(Colors.Rose + "modworld: true or false");
                         return;
-            			}
-            		}
-            		
-            		Player player = etc.getServer().matchPlayer(split[1]);
-            		
-	                if (player == null) {
-	                    msg(Colors.Rose + "Player does not exist.");
-	                    return;
-	                }
-	                
-	                for (int i=2; i<split.length; i++) {
-	               	 if (split[i].split(":").length != 2) {
-	               		 msg("This key:value pair is deformed... "+split[i]);
-	               		 return;
-	               	 }
-	               	 String key = split[i].split(":")[0];
-		                String value = split[i].split(":")[1];
-		                boolean newUser = false;
-		
-		                if (!etc.getDataSource().doesPlayerExist(player.getName())) {
-		                    if (!key.equalsIgnoreCase("groups") && !key.equalsIgnoreCase("g")) {
-		                        msg(Colors.Rose + "When adding a new user, set their group(s) first.");
-		                        return;
-		                    }
-		                    msg(Colors.Rose + "Adding new user.");
-		                    newUser = true;
-		                }
-		
-		                if (key.equalsIgnoreCase("prefix") || key.equalsIgnoreCase("p")) {
-		                    player.setPrefix(value);
-		                } else if (key.equalsIgnoreCase("commands") || key.equalsIgnoreCase("c")) {
-		                    player.setCommands(value.split(","));
-		                } else if (key.equalsIgnoreCase("groups") || key.equalsIgnoreCase("g")) {
-		                    player.setGroups(value.split(","));
-		                } else if (key.equalsIgnoreCase("ignoresrestrictions") || key.equalsIgnoreCase("ir")) {
-		                    player.setIgnoreRestrictions(value.equalsIgnoreCase("true") || value.equals("1"));
-		                } else if (key.equalsIgnoreCase("admin") || key.equalsIgnoreCase("a")) {
-		                    player.setAdmin(value.equalsIgnoreCase("true") || value.equals("1"));
-		                } else if (key.equalsIgnoreCase("modworld") || key.equalsIgnoreCase("mw")) {
-		                    player.setCanModifyWorld(value.equalsIgnoreCase("true") || value.equals("1"));
-		                }
-		
-		                if (newUser) {
-		                    etc.getDataSource().addPlayer(player);
-		                } else {
-		                    etc.getDataSource().modifyPlayer(player);
-		                }
-		                a.info("Modifed user " + split[1] + ". " + key + " => " + value + " by " + getPlayer().getName());
-	                }
-	                msg(Colors.Rose + "Modified user.");
-            	} else {
-	                if (split.length < 4) {
-	                    msg(Colors.Rose + "Usage is: /modify [player] [key] [value]");
-	                    msg(Colors.Rose + "Keys:");
-	                    msg(Colors.Rose + "prefix: only the letter the color represents");
-	                    msg(Colors.Rose + "commands: list seperated by comma");
-	                    msg(Colors.Rose + "groups: list seperated by comma");
-	                    msg(Colors.Rose + "ignoresrestrictions: true or false");
-	                    msg(Colors.Rose + "admin: true or false");
-	                    msg(Colors.Rose + "modworld: true or false");
-	                    return;
-	                }
-	
-	                Player player = etc.getServer().matchPlayer(split[1]);
-	
-	                if (player == null) {
-	                    msg(Colors.Rose + "Player does not exist.");
-	                    return;
-	                }
-	
-	                String key = split[2];
-	                String value = split[3];
-	                boolean newUser = false;
-	
-	                if (!etc.getDataSource().doesPlayerExist(player.getName())) {
-	                    if (!key.equalsIgnoreCase("groups") && !key.equalsIgnoreCase("g")) {
-	                        msg(Colors.Rose + "When adding a new user, set their group(s) first.");
-	                        return;
-	                    }
-	                    msg(Colors.Rose + "Adding new user.");
-	                    newUser = true;
-	                }
-	
-	                if (key.equalsIgnoreCase("prefix") || key.equalsIgnoreCase("p")) {
-	                    player.setPrefix(value);
-	                } else if (key.equalsIgnoreCase("commands") || key.equalsIgnoreCase("c")) {
-	                    player.setCommands(value.split(","));
-	                } else if (key.equalsIgnoreCase("groups") || key.equalsIgnoreCase("g")) {
-	                    player.setGroups(value.split(","));
-	                } else if (key.equalsIgnoreCase("ignoresrestrictions") || key.equalsIgnoreCase("ir")) {
-	                    player.setIgnoreRestrictions(value.equalsIgnoreCase("true") || value.equals("1"));
-	                } else if (key.equalsIgnoreCase("admin") || key.equalsIgnoreCase("a")) {
-	                    player.setAdmin(value.equalsIgnoreCase("true") || value.equals("1"));
-	                } else if (key.equalsIgnoreCase("modworld") || key.equalsIgnoreCase("mw")) {
-	                    player.setCanModifyWorld(value.equalsIgnoreCase("true") || value.equals("1"));
-	                }
-	
-	                if (newUser) {
-	                    etc.getDataSource().addPlayer(player);
-	                } else {
-	                    etc.getDataSource().modifyPlayer(player);
-	                }
-	                msg(Colors.Rose + "Modified user.");
-	                a.info("Modifed user " + split[1] + ". " + key + " => " + value + " by " + getPlayer().getName());
-            	}
+                    }
+
+                    Player player = etc.getServer().matchPlayer(split[1]);
+
+                    if (player == null) {
+                        msg(Colors.Rose + "Player does not exist.");
+                        return;
+                    }
+
+                    String key = split[2];
+                    String value = split[3];
+                    boolean newUser = false;
+
+                    if (!etc.getDataSource().doesPlayerExist(player.getName())) {
+                        if (!key.equalsIgnoreCase("groups") && !key.equalsIgnoreCase("g")) {
+                            msg(Colors.Rose + "When adding a new user, set their group(s) first.");
+                            return;
+                        }
+                        msg(Colors.Rose + "Adding new user.");
+                        newUser = true;
+                    }
+
+                    if (key.equalsIgnoreCase("prefix") || key.equalsIgnoreCase("p")) {
+                        player.setPrefix(value);
+                    } else if (key.equalsIgnoreCase("commands") || key.equalsIgnoreCase("c")) {
+                        player.setCommands(value.split(","));
+                    } else if (key.equalsIgnoreCase("groups") || key.equalsIgnoreCase("g")) {
+                        player.setGroups(value.split(","));
+                    } else if (key.equalsIgnoreCase("ignoresrestrictions") || key.equalsIgnoreCase("ir")) {
+                        player.setIgnoreRestrictions(value.equalsIgnoreCase("true") || value.equals("1"));
+                    } else if (key.equalsIgnoreCase("admin") || key.equalsIgnoreCase("a")) {
+                        player.setAdmin(value.equalsIgnoreCase("true") || value.equals("1"));
+                    } else if (key.equalsIgnoreCase("modworld") || key.equalsIgnoreCase("mw")) {
+                        player.setCanModifyWorld(value.equalsIgnoreCase("true") || value.equals("1"));
+                    }
+
+                    if (newUser) {
+                        etc.getDataSource().addPlayer(player);
+                    } else {
+                        etc.getDataSource().modifyPlayer(player);
+                    }
+                    msg(Colors.Rose + "Modified user.");
+                    a.info("Modifed user " + split[1] + ". " + key + " => " + value + " by " + getPlayer().getName());
+                }
             } else if (split[0].equalsIgnoreCase("/whitelist")) {
                 if (split.length < 2) {
                     msg(Colors.Rose + "whitelist [operation (toggle, add or remove)] <player>");
@@ -567,7 +577,7 @@ public class id extends ej
 
                 if (split[1].equalsIgnoreCase("toggle")) {
                     msg(Colors.Rose + (etc.getInstance().toggleWhitelist() ? "Whitelist enabled" : "Whitelist disabled"));
-                } else if(split.length == 3) {
+                } else if (split.length == 3) {
                     if (split[1].equalsIgnoreCase("add")) {
                         etc.getDataSource().addToWhitelist(split[2]);
                         msg(Colors.Rose + split[2] + " added to whitelist");
@@ -675,7 +685,7 @@ public class id extends ej
                                     } catch (NumberFormatException n) {
                                         itemId = etc.getDataSource().getItem(entry.getKey());
                                     }
-                                    
+
                                     toGive.giveItem(itemId, kit.IDs.get(entry.getKey()));
                                 } catch (Exception e1) {
                                     a.info("Got an exception while giving out a kit (Kit name \"" + kit.Name + "\"). Are you sure all the Ids are numbers?");
@@ -702,7 +712,7 @@ public class id extends ej
                         msg(Colors.Rose + "You're already here!");
                         return;
                     }
-                    
+
                     a.info(getPlayer().getName() + " teleported to " + player.getName());
                     getPlayer().teleportTo(player);
                 } else {
@@ -758,14 +768,16 @@ public class id extends ej
                         }
 
                         String itemIdstr = Integer.toString(itemId);
-                        if (amount <= 0 && !getPlayer().isAdmin())
+                        if (amount <= 0 && !getPlayer().isAdmin()) {
                             amount = 1;
+                        }
 
-                        if (amount > 64 && !getPlayer().canIgnoreRestrictions())
+                        if (amount > 64 && !getPlayer().canIgnoreRestrictions()) {
                             amount = 64;
-                        if (amount > 1024)
+                        }
+                        if (amount > 1024) {
                             amount = 1024; //16 stacks worth. More than enough.
-
+                        }
                         boolean allowedItem = false;
                         if (!etc.getInstance().getAllowedItems()[0].equals("") && (!getPlayer().canIgnoreRestrictions())) {
                             for (String str : etc.getInstance().getAllowedItems()) {
@@ -940,8 +952,9 @@ public class id extends ej
                     msg(Colors.Rose + "You are currently muted.");
                     return;
                 }
-                if (split.length == 1)
+                if (split.length == 1) {
                     return;
+                }
                 String prefix = getPlayer().getColor();
                 String paramString2 = "* " + prefix + getPlayer().getName() + Colors.White + " " + paramString.substring(paramString.indexOf(" ")).trim();
                 a.info("* " + getPlayer().getName() + " " + paramString.substring(paramString.indexOf(" ")).trim());
@@ -1065,30 +1078,30 @@ public class id extends ej
                 this.d.a(str, this);
             } else if (split[0].equalsIgnoreCase("/time")) {
                 if (split.length == 2) {
-	                if (split[1].equalsIgnoreCase("day")) {
-	               	 etc.getServer().setRelativeTime(0);
-	                } else if (split[1].equalsIgnoreCase("night")) {
-	               	 etc.getServer().setRelativeTime(13000);
-	                } else if (split[1].equalsIgnoreCase("check")) {
-	               	 msg(Colors.Rose + "The time is "+etc.getServer().getRelativeTime()+"! (RAW: "+etc.getServer().getTime()+")");
-	                } else {
-							try {
-								etc.getServer().setRelativeTime(Long.parseLong(split[1]));
-							} catch (NumberFormatException ex) {
-								msg(Colors.Rose + "Please enter numbers, not letters.");
-							}
-	                }
+                    if (split[1].equalsIgnoreCase("day")) {
+                        etc.getServer().setRelativeTime(0);
+                    } else if (split[1].equalsIgnoreCase("night")) {
+                        etc.getServer().setRelativeTime(13000);
+                    } else if (split[1].equalsIgnoreCase("check")) {
+                        msg(Colors.Rose + "The time is " + etc.getServer().getRelativeTime() + "! (RAW: " + etc.getServer().getTime() + ")");
+                    } else {
+                        try {
+                            etc.getServer().setRelativeTime(Long.parseLong(split[1]));
+                        } catch (NumberFormatException ex) {
+                            msg(Colors.Rose + "Please enter numbers, not letters.");
+                        }
+                    }
                 } else if (split.length == 3) {
-               	 if (split[1].equalsIgnoreCase("raw")) {
-	               	 try {
-	                	  	etc.getServer().setTime(Long.parseLong(split[2]));
-	                  } catch (NumberFormatException ex) {
-	                      msg(Colors.Rose + "Please enter numbers, not letters.");
-	                  }
-	                }
+                    if (split[1].equalsIgnoreCase("raw")) {
+                        try {
+                            etc.getServer().setTime(Long.parseLong(split[2]));
+                        } catch (NumberFormatException ex) {
+                            msg(Colors.Rose + "Please enter numbers, not letters.");
+                        }
+                    }
                 } else {
-               	 msg(Colors.Rose + "Correct usage is: /time [time|'day|night|check|raw'] (rawtime)");
-                   return;
+                    msg(Colors.Rose + "Correct usage is: /time [time|'day|night|check|raw'] (rawtime)");
+                    return;
                 }
             } else if (split[0].equalsIgnoreCase("/getpos")) {
                 Player p = getPlayer();
@@ -1150,7 +1163,7 @@ public class id extends ej
                 if (split.length == 2) {
                     Mob mob = new Mob(split[1], getPlayer().getLocation());
                     mob.spawn();
-                }  else if (split.length == 3) {
+                } else if (split.length == 3) {
                     for (int i = 0; i < Integer.parseInt(split[2]); i++) {
                         Mob mob = new Mob(split[1], getPlayer().getLocation());
                         mob.spawn();
@@ -1169,8 +1182,9 @@ public class id extends ej
                     inv = target.getEquipment();
                     inv.clearContents();
                     inv.updateInventory();
-                    if (!target.getName().equals(getPlayer().getName()))
+                    if (!target.getName().equals(getPlayer().getName())) {
                         msg(Colors.Rose + "Cleared " + target.getName() + "'s inventory.");
+                    }
                 } else {
                     msg(Colors.Rose + "Target not found");
                 }
@@ -1178,8 +1192,9 @@ public class id extends ej
                 msg(Colors.Gold + "Hey0 Server Mod Build " + etc.getInstance().getVersion());
             } else {
                 a.info(getPlayer().getName() + " tried command " + paramString);
-                if (etc.getInstance().showUnknownCommand())
+                if (etc.getInstance().showUnknownCommand()) {
                     msg(Colors.Rose + "Unknown command");
+                }
             }
         } catch (Throwable ex) { //Might as well try and catch big exceptions before the server crashes from a stack overflow or something
             a.log(Level.SEVERE, "Exception in command handler (Report this to hey0 unless you did something dumb like enter letters as numbers):", ex);
@@ -1192,7 +1207,7 @@ public class id extends ej
     //Arm animation
     public void a(o paramo) {
         if (paramo.b == 1) {
-            etc.getLoader().callHook(PluginLoader.Hook.ARM_SWING, new Object[] { e });
+            etc.getLoader().callHook(PluginLoader.Hook.ARM_SWING, new Object[]{e});
             this.e.z();
         }
     }
@@ -1217,13 +1232,14 @@ public class id extends ej
 
     //Update our inventory
     public void a(r paramr) {
-        if (!getPlayer().canBuild())
+        if (!getPlayer().canBuild()) {
             return;
-        
+        }
+
         if (paramr.a == -1) {
             gp[] temp = this.e.aj.a;
             this.e.aj.a = paramr.b;
-            if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_CHANGE, new Object[] { e })) {
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_CHANGE, new Object[]{e})) {
                 this.e.aj.a = temp;
                 getPlayer().getInventory().updateInventory();
             }
@@ -1245,29 +1261,33 @@ public class id extends ej
 
     //Change object data (Chests, signs, furnaces, etc.)
     public void a(ib paramib) {
-        if (!getPlayer().canBuild())
+        if (!getPlayer().canBuild()) {
             return;
-        
+        }
+
         as localas = this.d.e.k(paramib.a, paramib.b, paramib.c);
         if (localas != null) {
             if (localas instanceof hb) { //Chest
                 hb chest = (hb) localas;
                 gp[] temp = chest.getContents();
                 localas.a(paramib.e);
-                if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[] { e, new Chest(chest) }))
+                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[]{e, new Chest(chest)})) {
                     chest.setContents(temp);
+                }
             } else if (localas instanceof df) { //Furnace
                 df furnace = (df) localas;
                 gp[] temp = furnace.getContents();
                 localas.a(paramib.e);
-                if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[] { e, new Furnace(furnace) }))
+                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[]{e, new Furnace(furnace)})) {
                     furnace.setContents(temp);
+                }
             } else if (localas instanceof ig) { //Sign
                 ig sign = (ig) localas;
                 String[] temp = sign.e;
                 localas.a(paramib.e);
-                if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[] { e, new Sign(sign) }))
+                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[]{e, new Sign(sign)})) {
                     sign.e = temp;
+                }
             }
             localas.c();
         }

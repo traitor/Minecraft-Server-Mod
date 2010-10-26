@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.server.MinecraftServer;
@@ -58,18 +59,20 @@ public class Server {
      * @return time server time
      */
     public long getTime() {
-       return server.e.c;
+        return server.e.c;
     }
-    
+
     /**
      * Returns current server time (0-24000)
      * @return time server time
      */
     public long getRelativeTime() {
-   	 long time = (server.e.c % 24000);
-   	 if (time < 0) // Java modulus is stupid.
-   		 time += 24000;
-       return time;
+        long time = (server.e.c % 24000);
+        // Java modulus is stupid.
+        if (time < 0) {
+            time += 24000;
+        }
+        return time;
     }
 
     /**
@@ -77,18 +80,20 @@ public class Server {
      * @param time time (-2^63 to 2^63-1)
      */
     public void setTime(long time) {
-       server.e.c = time;
+        server.e.c = time;
     }
-    
+
     /**
      * Sets the current server time
      * @param time time (0-24000)
      */
     public void setRelativeTime(long time) {
-       long margin = (time - server.e.c) % 24000;
-       if (margin < 0) // Java modulus is stupid.
- 			margin += 24000;
-       server.e.c += margin;
+        long margin = (time - server.e.c) % 24000;
+        // Java modulus is stupid.
+        if (margin < 0) {
+            margin += 24000;
+        }
+        server.e.c += margin;
     }
 
     /**
@@ -144,8 +149,9 @@ public class Server {
      */
     public List<Player> getPlayerList() {
         List<Player> toRet = new ArrayList<Player>();
-        for (Object o : server.f.b)
-            toRet.add(((ea)o).getPlayer());
+        for (Object o : server.f.b) {
+            toRet.add(((ea) o).getPlayer());
+        }
         return toRet;
     }
 
@@ -155,9 +161,11 @@ public class Server {
      */
     public List<Mob> getMobList() {
         List<Mob> toRet = new ArrayList<Mob>();
-        for (Object o : server.e.a)
-            if (o instanceof gh)
+        for (Object o : server.e.a) {
+            if (o instanceof gh) {
                 toRet.add(new Mob((gh) o));
+            }
+        }
         return toRet;
     }
 
@@ -165,8 +173,7 @@ public class Server {
      * Get the global spawn location
      * @return Location object for spawn
      */
-    public Location getSpawnLocation()
-    {
+    public Location getSpawnLocation() {
         Location spawn = new Location();
         spawn.x = (server.e.n + 0.5D);
         spawn.y = server.e.d(server.e.n, server.e.p) + 1.5D;
@@ -268,12 +275,13 @@ public class Server {
     public ComplexBlock getComplexBlock(int x, int y, int z) {
         as localas = server.e.k(x, y, z);
         if (localas != null) {
-            if (localas instanceof hb)
-                return new Chest((hb)localas);
-            else if (localas instanceof ig)
-                return new Sign((ig)localas);
-            else if (localas instanceof df)
-                return new Furnace((df)localas);
+            if (localas instanceof hb) {
+                return new Chest((hb) localas);
+            } else if (localas instanceof ig) {
+                return new Sign((ig) localas);
+            } else if (localas instanceof df) {
+                return new Furnace((df) localas);
+            }
         }
         return null;
     }
