@@ -1155,13 +1155,13 @@ public class id extends ej
                     msg(Colors.Rose + "Correct usage is: /spawnmob [name] <amount>");
                     return;
                 } else if (split.length == 2) {
-                	if (!Mob.isValid(split[1])) {
-                		msg(Colors.Rose + "Invalid mob. Name has to start with a capital like so: Pig");
-                		return;
-                	} else {
-                		Mob mob = new Mob(split[1], getPlayer().getLocation());
-                		mob.spawn();
-                	}
+                    if (!Mob.isValid(split[1])) {
+                	msg(Colors.Rose + "Invalid mob. Name has to start with a capital like so: Pig");
+                	return;
+                    } else {
+                	Mob mob = new Mob(split[1], getPlayer().getLocation());
+                	mob.spawn();
+                    }
                 } else if (split.length == 3) {
                     for (int i = 0; i < Integer.parseInt(split[2]); i++) {
                         Mob mob = new Mob(split[1], getPlayer().getLocation());
