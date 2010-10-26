@@ -1082,8 +1082,8 @@ public class id extends ej
                    		for (int i = 0; i < mobnumber; i++) {
                      		Mob mob = new Mob(split[1], getPlayer().getLocation());
                         	mob.spawn();
-                    	}
-                	}
+                        							}
+                        					}
                 	catch (NumberFormatException nfe) {
                 		if(!Mob.isValid(split[2])) {
                 			msg(Colors.Rose + "Invalid mob name or number of mobs.");
@@ -1111,7 +1111,7 @@ public class id extends ej
                 	
                 }
             } else if (split[0].equalsIgnoreCase("/clearinventory")) {
-                Player target = getPlayer();
+            	Player target = getPlayer();
                 if (split.length >= 2 && getPlayer().isAdmin()) {
                     target = etc.getServer().matchPlayer(split[1]);
                 }
