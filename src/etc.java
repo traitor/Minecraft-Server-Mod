@@ -65,7 +65,7 @@ public class etc {
         commands.put("/removewarp", "[Warp] - Removes the specified warp.");
         commands.put("/getpos", "- Displays your current position.");
         commands.put("/compass", "- Gives you a compass reading.");
-        commands.put("/time", "[Time|day|night] - Changes time");
+        commands.put("/time", "[time|'day|night|check|raw'] (rawtime) - Changes or checks the time");
         commands.put("/lighter", "- Gives you a lighter for lighting furnaces");
         commands.put("/motd", "- Displays the MOTD");
         commands.put("/modify", "[player] [key] [value] - Type /modify for more info");

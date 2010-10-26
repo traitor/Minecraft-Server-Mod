@@ -54,19 +54,41 @@ public class Server {
     }
 
     /**
-     * Returns current server time (0-24000)
+     * Returns actual server time (-2^63 to 2^63-1)
      * @return time server time
      */
     public long getTime() {
-        return server.e.c;
+       return server.e.c;
+    }
+    
+    /**
+     * Returns current server time (0-24000)
+     * @return time server time
+     */
+    public long getRelativeTime() {
+   	 long time = (server.e.c % 24000);
+   	 if (time < 0) // Java modulus is stupid.
+   		 time += 24000;
+       return time;
     }
 
+    /**
+     * Sets the actual server time
+     * @param time time (-2^63 to 2^63-1)
+     */
+    public void setTime(long time) {
+       server.e.c = time;
+    }
+    
     /**
      * Sets the current server time
      * @param time time (0-24000)
      */
-    public void setTime(long time) {
-        server.e.c = time;
+    public void setRelativeTime(long time) {
+       long margin = (time - server.e.c) % 24000;
+       if (margin < 0) // Java modulus is stupid.
+ 			margin += 24000;
+       server.e.c += margin;
     }
 
     /**

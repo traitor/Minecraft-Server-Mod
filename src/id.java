@@ -1062,21 +1062,31 @@ public class id extends ej
                 a.info(getPlayer().getName() + " issued server command: " + str);
                 this.d.a(str, this);
             } else if (split[0].equalsIgnoreCase("/time")) {
-                if (split.length != 2) {
-                    msg(Colors.Rose + "Correct usage is: /time [time|day|night]");
-                    return;
-                }
-
-                if (split[1].equalsIgnoreCase("day")) {
-                    this.d.e.c = 0;
-                } else if (split[1].equalsIgnoreCase("night")) {
-                    this.d.e.c = 13000;
+                if (split.length == 2) {
+	                if (split[1].equalsIgnoreCase("day")) {
+	               	 etc.getServer().setRelativeTime(0);
+	                } else if (split[1].equalsIgnoreCase("night")) {
+	               	 etc.getServer().setRelativeTime(13000);
+	                } else if (split[1].equalsIgnoreCase("check")) {
+	               	 msg(Colors.Rose + "The time is "+etc.getServer().getRelativeTime()+"! (RAW: "+etc.getServer().getTime()+")");
+	                } else {
+							try {
+								etc.getServer().setRelativeTime(Long.parseLong(split[1]));
+							} catch (NumberFormatException ex) {
+								msg(Colors.Rose + "Please enter numbers, not letters.");
+							}
+	                }
+                } else if (split.length == 3) {
+               	 if (split[1].equalsIgnoreCase("raw")) {
+	               	 try {
+	                	  	etc.getServer().setTime(Long.parseLong(split[2]));
+	                  } catch (NumberFormatException ex) {
+	                      msg(Colors.Rose + "Please enter numbers, not letters.");
+	                  }
+	                }
                 } else {
-                    try {
-                        this.d.e.c = Long.parseLong(split[1]);
-                    } catch (NumberFormatException ex) {
-                        msg(Colors.Rose + "Please enter numbers, not letters.");
-                    }
+               	 msg(Colors.Rose + "Correct usage is: /time [time|'day|night|check|raw'] (rawtime)");
+                   return;
                 }
             } else if (split[0].equalsIgnoreCase("/getpos")) {
                 Player p = getPlayer();
