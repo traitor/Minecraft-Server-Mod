@@ -1166,7 +1166,7 @@ public class id extends ej
                 }
                 
                 if (split.length == 3) {
-                		try {
+                	try {
                 				int mobnumber = Integer.parseInt(split[2]);
                 				for (int i = 0; i < mobnumber; i++) {
                 						mob.spawn();
