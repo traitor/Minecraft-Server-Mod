@@ -235,8 +235,8 @@ public class id extends ej
                     this.e.ad.a(n, i1, i2, i3);
             }
         } else if (paramhd.e == 3) {
-        	Block block = new Block(type, x, y, z);
-        	block.setStatus(3);
+        		Block block = new Block(type, x, y, z);
+        		block.setStatus(3);
             etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[] {e, block});
 
             double d2 = this.e.l - (n + 0.5D);
