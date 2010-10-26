@@ -1193,7 +1193,7 @@ public class id extends ej
                     } catch (NumberFormatException nfe) {
                         msg(Colors.Rose + "Invalid number of mobs.");
                     }
-				}
+                }
             } else if (split[0].equalsIgnoreCase("/clearinventory")) {
                 Player target = getPlayer();
                 if (split.length >= 2 && getPlayer().isAdmin()) {
