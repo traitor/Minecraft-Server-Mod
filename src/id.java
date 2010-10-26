@@ -1154,6 +1154,8 @@ public class id extends ej
                 if (split.length == 1) {
                     msg(Colors.Rose + "Correct usage is: /spawnmob [name] <amount>");
                     return;
+                    		//2 tabs
+                        //4 spaces
                 }
                 if (!Mob.isValid(split[1])) {
                     msg(Colors.Rose + "Invalid mob. Name has to start with a capital like so: Pig");
