@@ -1166,12 +1166,12 @@ public class id extends ej
                 }
                 
                 if (split.length == 3) {
-                	try {
-                				int mobnumber = Integer.parseInt(split[2]);
-                				for (int i = 0; i < mobnumber; i++) {
-                						mob.spawn();
-                				}
-                		} catch (NumberFormatException nfe) {
+                    try {
+                    	int mobnumber = Integer.parseInt(split[2]);
+                    	for (int i = 0; i < mobnumber; i++) {
+                    		mob.spawn();
+                    	}
+                    } catch (NumberFormatException nfe) {
                 				if(!Mob.isValid(split[2])) {
                 						msg(Colors.Rose + "Invalid mob name or number of mobs.");
                 						msg(Colors.Rose + "Mob names have to start with a capital like so: Pig");
