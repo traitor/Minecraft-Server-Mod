@@ -1167,7 +1167,7 @@ public class id extends ej
                 		try {
                 				int mobnumber = Integer.parseInt(split[2]);
                 				for (int i = 0; i < mobnumber; i++) {
-                					mob.spawn();
+                						mob.spawn();
                 				}
                 		} catch (NumberFormatException nfe) {
                 				if(!Mob.isValid(split[2])) {
