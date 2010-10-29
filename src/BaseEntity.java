@@ -6,6 +6,14 @@ public class BaseEntity {
     is entity;
 
     /**
+     * Returns the ID for this mob
+     * @return id
+     */
+    public int getId() {
+        return entity.c;
+    }
+
+    /**
      * Teleports to the provided location
      * @param x
      * @param rotation

@@ -115,8 +115,8 @@ public class ft {
                 || player.isAdmin())) {
             paramew.b(etc.getInstance().getWhitelistMessage());
             return null;
-        } else if (this.b.size() >= this.e && !(etc.getDataSource().hasReserveList() && (player.isAdmin()
-                || etc.getDataSource().isUserOnReserveList(paramString1)))) {
+        } else if (this.b.size() >= this.e &&
+                !(player.isAdmin() || etc.getDataSource().isUserOnReserveList(paramString1))) {
             paramew.b("Server is full.");
             return null;
         }

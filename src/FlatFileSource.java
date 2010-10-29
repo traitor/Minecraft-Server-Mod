@@ -21,8 +21,6 @@ public class FlatFileSource extends DataSource {
         loadHomes();
         loadWarps();
         loadItems();
-        loadWhitelist();
-        loadReserveList();
         //loadBanList();
 
         String location = etc.getInstance().getUsersLocation();
@@ -501,92 +499,6 @@ public class FlatFileSource extends DataSource {
         }
     }
 
-    public void loadWhitelist() {
-        String location = etc.getInstance().getWhitelistLocation();
-
-        if (!new File(location).exists()) {
-            FileWriter writer = null;
-            try {
-                writer = new FileWriter(location);
-                writer.write("#Add your whitelisted users here (When adding your entry DO NOT include #!)\r\n");
-            } catch (Exception e) {
-                log.log(Level.SEVERE, "Exception while creating " + location, e);
-            } finally {
-                try {
-                    if (writer != null) {
-                        writer.close();
-                    }
-                } catch (IOException e) {
-                    log.log(Level.SEVERE, "Exception while closing writer for " + location, e);
-                }
-            }
-        }
-
-        synchronized (whiteListLock) {
-            whiteList = new ArrayList<String>();
-            try {
-                Scanner scanner = new Scanner(new File(location));
-                while (scanner.hasNextLine()) {
-                    String line = scanner.nextLine();
-                    if (line.startsWith("#")) {
-                        continue;
-                    }
-                    if (line.equals("")) {
-                        continue;
-                    }
-
-                    whiteList.add(line);
-                }
-                scanner.close();
-            } catch (Exception e) {
-                log.log(Level.SEVERE, "Exception while reading " + location, e);
-            }
-        }
-    }
-
-    public void loadReserveList() {
-        String location = etc.getInstance().getReservelistLocation();
-
-        if (!new File(location).exists()) {
-            FileWriter writer = null;
-            try {
-                writer = new FileWriter(location);
-                writer.write("#Add your reserve list users here (When adding your entry DO NOT include #!)\r\n");
-            } catch (Exception e) {
-                log.log(Level.SEVERE, "Exception while creating " + location, e);
-            } finally {
-                try {
-                    if (writer != null) {
-                        writer.close();
-                    }
-                } catch (IOException e) {
-                    log.log(Level.SEVERE, "Exception while closing writer for " + location, e);
-                }
-            }
-        }
-
-        synchronized (reserveListLock) {
-            reserveList = new ArrayList<String>();
-            try {
-                Scanner scanner = new Scanner(new File(location));
-                while (scanner.hasNextLine()) {
-                    String line = scanner.nextLine();
-                    if (line.startsWith("#")) {
-                        continue;
-                    }
-                    if (line.equals("")) {
-                        continue;
-                    }
-
-                    reserveList.add(line);
-                }
-                scanner.close();
-            } catch (Exception e) {
-                log.log(Level.SEVERE, "Exception while reading " + location, e);
-            }
-        }
-    }
-
     public void loadBanList() {
         synchronized (banLock) {
             bans = new ArrayList<Ban>();
@@ -1021,10 +933,6 @@ public class FlatFileSource extends DataSource {
             bw = new BufferedWriter(new FileWriter(location, true));
             bw.newLine();
             bw.append(name);
-
-            synchronized (whiteListLock) {
-                whiteList.add(name);
-            }
         } catch (Exception e2) {
             log.log(Level.SEVERE, "Exception while writing new user to " + location, e2);
         } finally {
@@ -1040,10 +948,7 @@ public class FlatFileSource extends DataSource {
     public void removeFromWhitelist(String name) {
         if (!isUserOnWhitelist(name))
             return;
-
-        synchronized (whiteListLock) {
-            whiteList.remove(name);
-        }
+        
         FileWriter writer = null;
         String location = etc.getInstance().getWhitelistLocation();
 
@@ -1084,10 +989,6 @@ public class FlatFileSource extends DataSource {
             bw = new BufferedWriter(new FileWriter(location, true));
             bw.newLine();
             bw.append(name);
-
-            synchronized (whiteListLock) {
-                reserveList.add(name);
-            }
         } catch (Exception e2) {
             log.log(Level.SEVERE, "Exception while writing new user to " + location, e2);
         } finally {
@@ -1103,10 +1004,7 @@ public class FlatFileSource extends DataSource {
     public void removeFromReserveList(String name) {
         if (!isUserOnReserveList(name))
             return;
-
-        synchronized (reserveListLock) {
-            reserveList.remove(name);
-        }
+        
         FileWriter writer = null;
         String location = etc.getInstance().getReservelistLocation();
 
@@ -1137,7 +1035,47 @@ public class FlatFileSource extends DataSource {
         }
     }
 
+    public boolean isUserOnWhitelist(String user) {
+        String location = etc.getInstance().getWhitelistLocation();
+
+        try {
+            Scanner scanner = new Scanner(new File(location));
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.startsWith("#") || line.equals("") || line.startsWith("﻿")) {
+                    continue;
+                }
+                if (line.contains(user))
+                    return true;
+            }
+            scanner.close();
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "Exception while reading " + location, e);
+        }
+        return false;
+    }
+
+    public boolean isUserOnReserveList(String user) {
+        String location = etc.getInstance().getReservelistLocation();
+
+        try {
+            Scanner scanner = new Scanner(new File(location));
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.startsWith("#") || line.equals("") || line.startsWith("﻿")) {
+                    continue;
+                }
+                if (line.contains(user))
+                    return true;
+            }
+            scanner.close();
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "Exception while reading " + location, e);
+        }
+        return false;
+    }
+
     public void modifyBan(Ban ban) {
-        
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

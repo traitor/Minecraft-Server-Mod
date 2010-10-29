@@ -490,6 +490,7 @@ public class id extends ej
                             }
                             msg(Colors.Rose + "Adding new user.");
                             newUser = true;
+                            player.setCanModifyWorld(true);
                         }
 
                         if (key.equalsIgnoreCase("prefix") || key.equalsIgnoreCase("p")) {
@@ -1233,6 +1234,10 @@ public class id extends ej
     //Update our inventory
     public void a(r paramr) {
         if (!getPlayer().canBuild()) {
+            getPlayer().getInventory().clearContents();
+            getPlayer().getCraftingTable().clearContents();
+            getPlayer().getEquipment().clearContents();
+            getPlayer().getInventory().updateInventory();
             return;
         }
 

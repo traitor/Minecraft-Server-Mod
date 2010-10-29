@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -14,18 +15,15 @@ import net.minecraft.server.MinecraftServer;
 public abstract class DataSource {
 
     protected static final Logger log = Logger.getLogger("Minecraft");
-    protected List<String> reserveList;
-    protected List<String> whiteList;
-    protected List<Group> groups;
-    protected List<Kit> kits;
-    protected List<Warp> homes;
-    protected List<Warp> warps;
-    protected List<Ban> bans;
-    protected Map<String, Integer> items;
+    protected List<Group> groups = new ArrayList<Group>();
+    protected List<Kit> kits = new ArrayList<Kit>();
+    protected List<Warp> homes = new ArrayList<Warp>();
+    protected List<Warp> warps = new ArrayList<Warp>();
+    protected List<Ban> bans = new ArrayList<Ban>();
+    protected Map<String, Integer> items = new HashMap<String, Integer>();
     protected MinecraftServer server;
     protected final Object groupLock = new Object(), kitLock = new Object(), banLock = new Object();
     protected final Object homeLock = new Object(), warpLock = new Object(), itemLock = new Object();
-    protected final Object whiteListLock = new Object(), reserveListLock = new Object();
 
     /**
      * Initializes the data source
@@ -56,16 +54,6 @@ public abstract class DataSource {
      * Loads all items
      */
     abstract public void loadItems();
-
-    /**
-     * Loads the whitelist
-     */
-    abstract public void loadWhitelist();
-
-    /**
-     * Loads the reservelist
-     */
-    abstract public void loadReserveList();
 
     /**
      * Loads the ban list
@@ -347,13 +335,12 @@ public abstract class DataSource {
     abstract public void removeFromWhitelist(String name);
 
     /**
-     * returns true if there is a whitelist
-     * @return true if whitelist
+     * Returns true if whitelist is enabled
+     * @return true if whitelist is enabled
+     * @deprecated use etc.getInstance().isWhitelistEnabled() instead
      */
-    public boolean hasWhitelist() {
-        synchronized (whiteListLock) {
-            return !whiteList.isEmpty();
-        }
+    @Deprecated public boolean hasWhitelist() {
+        return etc.getInstance().isWhitelistEnabled();
     }
 
     /**
@@ -361,16 +348,7 @@ public abstract class DataSource {
      * @param user
      * @return true if player is on whitelist
      */
-    public boolean isUserOnWhitelist(String user) {
-        synchronized (whiteListLock) {
-            for (String name : whiteList) {
-                if (name.equalsIgnoreCase(user)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+    abstract public boolean isUserOnWhitelist(String user);
 
     /**
      * Adds player to reservelist
@@ -385,30 +363,11 @@ public abstract class DataSource {
     abstract public void removeFromReserveList(String name);
 
     /**
-     * Returns true if there is a reservelist
-     * @return true if reservelist
-     */
-    public boolean hasReserveList() {
-        synchronized (reserveListLock) {
-            return !reserveList.isEmpty();
-        }
-    }
-
-    /**
      * Returns true if player is on reservelist
      * @param user
      * @return true if player is on reserve list
      */
-    public boolean isUserOnReserveList(String user) {
-        synchronized (reserveListLock) {
-            for (String name : reserveList) {
-                if (name.equalsIgnoreCase(user)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+    abstract public boolean isUserOnReserveList(String user);
 
     /**
      * Adds or modifies specified ban

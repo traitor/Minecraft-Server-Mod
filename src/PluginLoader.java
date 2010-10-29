@@ -171,7 +171,7 @@ public class PluginLoader {
             } catch (MalformedURLException ex) {
                 log.log(Level.SEVERE, "Exception while loading class", ex);
             }
-            Class c = Class.forName(fileName, true, child);
+            Class c = child.loadClass(fileName);
 
             Plugin plugin = (Plugin) c.newInstance();
             plugin.setName(fileName);
