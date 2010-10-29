@@ -36,7 +36,7 @@ public class etc {
     private PluginLoader loader;
     private boolean logging = false;
     private boolean showUnknownCommand = true;
-    private int version = 122;
+    private int version = 1; //Version is meant to be loaded from the file, this stays as 1.
 
     private etc() {
         commands.put("/help", "[Page] - Shows a list of commands. 7 per page.");
