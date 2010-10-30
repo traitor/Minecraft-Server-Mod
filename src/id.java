@@ -1275,10 +1275,20 @@ public class id extends ej
             }
         }
         if (paramr.a == -2) {
+            gp[] temp = this.e.aj.c;
             this.e.aj.c = paramr.b;
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.EQUIPMENT_CHANGE, new Object[]{e})) {
+                this.e.aj.c = temp;
+                getPlayer().getInventory().updateInventory();
+            }
         }
         if (paramr.a == -3) {
+            gp[] temp = this.e.aj.b;
             this.e.aj.b = paramr.b;
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.CRAFTINVENTORY_CHANGE, new Object[]{e})) {
+                this.e.aj.b = temp;
+                getPlayer().getInventory().updateInventory();
+            }
         }
     }
 

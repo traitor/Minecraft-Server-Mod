@@ -79,6 +79,14 @@ public class PluginLoader {
          */
         INVENTORY_CHANGE,
         /**
+         * Calls onCraftInventoryChange
+         */
+        CRAFTINVENTORY_CHANGE,
+        /**
+         * Calls onEquipmentChange
+         */
+        EQUIPMENT_CHANGE,
+        /**
          * Calls onSendComplexBlock
          */
         COMPLEX_BLOCK_SEND,
@@ -343,6 +351,16 @@ public class PluginLoader {
                                 break;
                             case INVENTORY_CHANGE:
                                 if (listener.onInventoryChange(((ea) parameters[0]).getPlayer())) {
+                                    toRet = true;
+                                }
+                                break;
+                            case CRAFTINVENTORY_CHANGE:
+                                if (listener.onCraftInventoryChange(((ea) parameters[0]).getPlayer())) {
+                                    toRet = true;
+                                }
+                                break;
+                            case EQUIPMENT_CHANGE:
+                                if (listener.onEquipmentChange(((ea) parameters[0]).getPlayer())) {
                                     toRet = true;
                                 }
                                 break;

@@ -1,6 +1,9 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,6 +40,7 @@ public class etc {
     private boolean logging = false;
     private boolean showUnknownCommand = true;
     private int version = 1; //Version is meant to be loaded from the file, this stays as 1.
+    private String driver, username, password, db;
 
     private etc() {
         commands.put("/help", "[Page] - Shows a list of commands. 7 per page.");
@@ -110,6 +114,12 @@ public class etc {
                 groupLoc = properties.getString("group-txt-location", "groups.txt");
                 whitelistLoc = properties.getString("whitelist-txt-location", "whitelist.txt");
                 reservelistLoc = properties.getString("reservelist-txt-location", "reservelist.txt");
+            } else {
+                PropertiesFile sql = new PropertiesFile("mysql.properties");
+                driver = sql.getString("driver", "com.mysql.jdbc.Driver");
+                username = sql.getString("user", "root");
+                password = sql.getString("pass", "root");
+                db = sql.getString("db", "jdbc:mysql://localhost:3306/minecraft");
             }
             spawnProtectionSize = properties.getInt("spawn-protection-size", 16);
             logging = properties.getBoolean("logging", false);
@@ -813,5 +823,22 @@ public class etc {
      */
     public int getVersion() {
         return version;
+    }
+
+    private Connection _getSQLConnection() {
+        try {
+            return DriverManager.getConnection(db + "?autoReconnect=true&user=" + username + "&password=" + password);
+        } catch (SQLException ex) {
+            log.log(Level.SEVERE, "Unable to retreive connection", ex);
+        }
+        return null;
+    }
+
+    /**
+     * Returns a SQL connection
+     * @return sql connection
+     */
+    public static Connection getSQLConnection() {
+        return getInstance()._getSQLConnection();
     }
 }

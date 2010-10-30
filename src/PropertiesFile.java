@@ -56,6 +56,24 @@ public final class PropertiesFile {
     }
 
     /**
+     * Checks to see if this key exists
+     * @param key the key to check
+     * @return true if key exists
+     */
+    public boolean keyExists(String key) {
+        return this.properties.containsKey(key);
+    }
+
+    /**
+     * Returns the string value of the key
+     * @param key key to retrieve value from
+     * @return value
+     */
+    public String getString(String key) {
+        return this.properties.getProperty(key);
+    }
+
+    /**
      * Returns the string value of a key
      * @param key the key to use
      * @param value the default value
@@ -77,6 +95,15 @@ public final class PropertiesFile {
     public void setString(String key, String value) {
         properties.setProperty(key, value);
         save();
+    }
+
+    /**
+     * Returns the int value of the key
+     * @param key key to retrieve value from
+     * @return value
+     */
+    public int getInt(String key) {
+        return Integer.parseInt(properties.getProperty(key));
     }
 
     /**
@@ -104,6 +131,15 @@ public final class PropertiesFile {
     }
 
     /**
+     * Returns the long value of the key
+     * @param key key to retrieve value from
+     * @return value
+     */
+    public long getLong(String key) {
+        return Long.parseLong(properties.getProperty(key));
+    }
+
+    /**
      * Returns the long value of a key
      * @param key
      * @param value
@@ -125,6 +161,15 @@ public final class PropertiesFile {
     public void setLong(String key, long value) {
         properties.setProperty(key, String.valueOf(value));
         save();
+    }
+
+    /**
+     * Returns the boolean value of the key
+     * @param key key to retrieve value from
+     * @return value
+     */
+    public boolean getBoolean(String key) {
+        return Boolean.parseBoolean(properties.getProperty(key));
     }
 
     /**
