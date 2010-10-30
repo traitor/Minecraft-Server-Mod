@@ -1234,6 +1234,7 @@ public class jc extends ex
 
     public void a(p paramp) {
         if (paramp.b == 1) {
+            etc.getLoader().callHook(PluginLoader.Hook.ARM_SWING, new Object[]{e});
             this.e.E();
         }
     }
@@ -1255,14 +1256,37 @@ public class jc extends ex
     }
 
     public void a(s params) {
+        if (!getPlayer().canBuild()) {
+            getPlayer().getInventory().clearContents();
+            getPlayer().getCraftingTable().clearContents();
+            getPlayer().getEquipment().clearContents();
+            getPlayer().getInventory().updateInventory();
+            return;
+        }
+
         if (params.a == -1) {
+            hh[] temp = this.e.ak.a;
             this.e.ak.a = params.b;
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_CHANGE, new Object[]{e})) {
+                this.e.ak.a = temp;
+                getPlayer().getInventory().updateInventory();
+            }
         }
         if (params.a == -2) {
+            hh[] temp = this.e.ak.c;
             this.e.ak.c = params.b;
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.EQUIPMENT_CHANGE, new Object[]{e})) {
+                this.e.ak.c = temp;
+                getPlayer().getInventory().updateInventory();
+            }
         }
         if (params.a == -3) {
+            hh[] temp = this.e.ak.b;
             this.e.ak.b = params.b;
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.CRAFTINVENTORY_CHANGE, new Object[]{e})) {
+                this.e.ak.b = temp;
+                getPlayer().getInventory().updateInventory();
+            }
         }
     }
 
@@ -1283,11 +1307,33 @@ public class jc extends ex
             return;
         }
 
+        if (!getPlayer().canBuild()) {
+            return;
+        }
+
         av localav = this.d.e.k(paramja.a, paramja.b, paramja.c);
         if (localav != null) {
-            try {
+            if (localav instanceof hv) { //Chest
+                hv chest = (hv) localav;
+                hh[] temp = chest.getContents();
                 localav.a(paramja.e);
-            } catch (Exception localException) {
+                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[]{e, new Chest(chest)})) {
+                    chest.setContents(temp);
+                }
+            } else if (localav instanceof dr) { //Furnace
+                dr furnace = (dr) localav;
+                hh[] temp = furnace.getContents();
+                localav.a(paramja.e);
+                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[]{e, new Furnace(furnace)})) {
+                    furnace.setContents(temp);
+                }
+            } else if (localav instanceof jg) { //Sign
+                jg sign = (jg) localav;
+                String[] temp = sign.e;
+                localav.a(paramja.e);
+                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[]{e, new Sign(sign)})) {
+                    sign.e = temp;
+                }
             }
             localav.c();
         }

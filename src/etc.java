@@ -449,7 +449,7 @@ public class etc {
             log.info("Plugin enabled.");
         } else if (split[0].equalsIgnoreCase("disableplugin")) {
             if (split.length < 2) {
-                log.info("Correct usage is: enableplugin [plugin]");
+                log.info("Correct usage is: disbleplugin [plugin]");
                 return true;
             }
 

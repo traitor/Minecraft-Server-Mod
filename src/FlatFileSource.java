@@ -51,6 +51,24 @@ public class FlatFileSource extends DataSource {
                 }
             }
         }
+        location = etc.getInstance().getWhitelistLocation();
+        if (!new File(location).exists()) {
+            FileWriter writer = null;
+            try {
+                writer = new FileWriter(location);
+                writer.write("#Whitelist. Add your users here\r\n");
+            } catch (Exception e) {
+                log.log(Level.SEVERE, "Exception while creating " + location, e);
+            } finally {
+                try {
+                    if (writer != null) {
+                        writer.close();
+                    }
+                } catch (IOException e) {
+                    log.log(Level.SEVERE, "Exception while closing writer for " + location, e);
+                }
+            }
+        }
     }
 
     public void loadGroups() {
