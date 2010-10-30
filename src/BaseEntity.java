@@ -3,14 +3,14 @@
  * @author James
  */
 public class BaseEntity {
-    is entity;
+    jt entity;
 
     /**
      * Returns the ID for this mob
      * @return id
      */
     public int getId() {
-        return entity.c;
+        return entity.g;
     }
 
     /**
@@ -46,7 +46,7 @@ public class BaseEntity {
      * @return
      */
     public double getX() {
-        return entity.l;
+        return entity.p;
     }
 
     /**
@@ -62,7 +62,7 @@ public class BaseEntity {
      * @return
      */
     public double getY() {
-        return entity.m;
+        return entity.q;
     }
 
     /**
@@ -78,7 +78,7 @@ public class BaseEntity {
      * @return
      */
     public double getZ() {
-        return entity.n;
+        return entity.r;
     }
 
     /**
@@ -94,7 +94,7 @@ public class BaseEntity {
      * @return
      */
     public float getPitch() {
-        return entity.s;
+        return entity.w;
     }
 
     /**
@@ -110,7 +110,7 @@ public class BaseEntity {
      * @return
      */
     public float getRotation() {
-        return entity.r;
+        return entity.v;
     }
 
     /**
@@ -126,7 +126,7 @@ public class BaseEntity {
      * @return
      */
     public int getHealth() {
-        return entity.aM;
+        return entity.aP;
     }
 
     /**
@@ -134,6 +134,6 @@ public class BaseEntity {
      * @param health
      */
     public void setHealth(int health) {
-        entity.aM = health;
+        entity.aP = health;
     }
 }

@@ -1,17 +1,17 @@
 
-public class df extends as
-        implements iw {
+public class dr extends av
+        implements jx {
 
-    private gp[] e = new gp[3];
+    private hh[] e = new hh[3];
     private int f = 0;
     private int g = 0;
     private int h = 0;
 
-    public gp[] getContents() {
+    public hh[] getContents() {
         return e;
     }
 
-    public void setContents(gp[] e) {
+    public void setContents(hh[] e) {
         this.e = e;
     }
 
@@ -19,43 +19,43 @@ public class df extends as
         return this.e.length;
     }
 
-    public gp a(int paramInt) {
+    public hh a(int paramInt) {
         return this.e[paramInt];
     }
 
-    public void a(s params) {
-        super.a(params);
-        dm localdm = params.k("Items");
-        this.e = new gp[a()];
-        for (int i = 0; i < localdm.b(); i++) {
-            s locals = (s) localdm.a(i);
-            int j = locals.b("Slot");
+    public void a(t paramt) {
+        super.a(paramt);
+        dy localdy = paramt.k("Items");
+        this.e = new hh[a()];
+        for (int i = 0; i < localdy.b(); i++) {
+            t localt = (t) localdy.a(i);
+            int j = localt.b("Slot");
             if ((j < 0) || (j >= this.e.length)) {
                 continue;
             }
-            this.e[j] = new gp(locals);
+            this.e[j] = new hh(localt);
         }
 
-        this.f = params.c("BurnTime");
-        this.h = params.c("CookTime");
+        this.f = paramt.c("BurnTime");
+        this.h = paramt.c("CookTime");
         this.g = a(this.e[1]);
     }
 
-    public void b(s params) {
-        super.b(params);
-        params.a("BurnTime", (short) this.f);
-        params.a("CookTime", (short) this.h);
-        dm localdm = new dm();
+    public void b(t paramt) {
+        super.b(paramt);
+        paramt.a("BurnTime", (short) this.f);
+        paramt.a("CookTime", (short) this.h);
+        dy localdy = new dy();
 
         for (int i = 0; i < this.e.length; i++) {
             if (this.e[i] != null) {
-                s locals = new s();
-                locals.a("Slot", (byte) i);
-                this.e[i].a(locals);
-                localdm.a(locals);
+                t localt = new t();
+                localt.a("Slot", (byte) i);
+                this.e[i].a(localt);
+                localdy.a(localt);
             }
         }
-        params.a("Items", localdm);
+        paramt.a("Items", localdy);
     }
 
     public int d() {
@@ -73,7 +73,7 @@ public class df extends as
             this.f -= 1;
         }
 
-        if (!this.a.x) {
+        if (!this.a.z) {
             if ((this.f == 0) && (g())) {
                 this.g = (this.f = a(this.e[1]));
                 if (this.f > 0) {
@@ -100,7 +100,7 @@ public class df extends as
 
             if (i != (this.f > 0 ? 1 : 0)) {
                 j = 1;
-                dv.a(this.f > 0, this.a, this.b, this.c, this.d);
+                eh.a(this.f > 0, this.a, this.b, this.c, this.d);
             }
         }
 
@@ -113,7 +113,7 @@ public class df extends as
         if (this.e[0] == null) {
             return false;
         }
-        int i = b(this.e[0].a().aS);
+        int i = b(this.e[0].a().aW);
         if (i < 0) {
             return false;
         }
@@ -126,7 +126,7 @@ public class df extends as
         if ((this.e[2].a < d()) && (this.e[2].a < this.e[2].b())) {
             return true;
         }
-        return this.e[2].a < ez.c[i].a();
+        return this.e[2].a < fq.c[i].a();
     }
 
     public void f() {
@@ -134,9 +134,9 @@ public class df extends as
             return;
         }
 
-        int i = b(this.e[0].a().aS);
+        int i = b(this.e[0].a().aW);
         if (this.e[2] == null) {
-            this.e[2] = new gp(i, 1);
+            this.e[2] = new hh(i, 1);
         } else if (this.e[2].c == i) {
             this.e[2].a += 1;
         }
@@ -148,49 +148,52 @@ public class df extends as
     }
 
     private int b(int paramInt) {
-        if (paramInt == ff.I.bc) {
-            return ez.m.aS;
+        if (paramInt == fw.I.bi) {
+            return fq.m.aW;
         }
-        if (paramInt == ff.H.bc) {
-            return ez.n.aS;
+        if (paramInt == fw.H.bi) {
+            return fq.n.aW;
         }
-        if (paramInt == ff.ax.bc) {
-            return ez.l.aS;
+        if (paramInt == fw.ax.bi) {
+            return fq.l.aW;
         }
-        if (paramInt == ff.F.bc) {
-            return ff.N.bc;
+        if (paramInt == fw.F.bi) {
+            return fw.N.bi;
         }
-        if (paramInt == ez.ao.aS) {
-            return ez.ap.aS;
+        if (paramInt == fq.ao.aW) {
+            return fq.ap.aW;
         }
-        if (paramInt == ff.x.bc) {
-            return ff.u.bc;
+        if (paramInt == fq.aS.aW) {
+            return fq.aT.aW;
         }
-        if (paramInt == ez.aG.aS) {
-            return ez.aF.aS;
+        if (paramInt == fw.x.bi) {
+            return fw.u.bi;
+        }
+        if (paramInt == fq.aG.aW) {
+            return fq.aF.aW;
         }
         return -1;
     }
 
-    private int a(gp paramgp) {
-        if (paramgp == null) {
+    private int a(hh paramhh) {
+        if (paramhh == null) {
             return 0;
         }
-        int i = paramgp.a().aS;
+        int i = paramhh.a().aW;
 
-        if ((i < 256) && (ff.n[i].bn == iq.c)) {
+        if ((i < 256) && (fw.n[i].bt == jr.c)) {
             return 300;
         }
 
-        if (i == ez.B.aS) {
+        if (i == fq.B.aW) {
             return 100;
         }
 
-        if (i == ez.k.aS) {
+        if (i == fq.k.aW) {
             return 1600;
         }
 
-        if (i == ez.aw.aS) {
+        if (i == fq.aw.aW) {
             return 20000;
         }
 

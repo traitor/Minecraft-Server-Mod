@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 
 /**
- * Player.java - Interface for ea so mods don't have to update often.
+ * Player.java - Interface for eo so mods don't have to update often.
  * @author James
  */
 public class Player extends BaseEntity {
 
-    private ea user;
+    private eo user;
     private int id = -1;
     private String prefix = "";
     private String[] commands = new String[]{""};
@@ -73,14 +73,14 @@ public class Player extends BaseEntity {
      */
     public void giveItemDrop(int itemId, int amount) {
         if (amount == -1) {
-            user.a(new gp(itemId, 255));
+            user.a(new hh(itemId, 255));
         } else {
             int temp = amount;
             do {
                 if (temp - 64 >= 64) {
-                    user.a(new gp(itemId, 64));
+                    user.a(new hh(itemId, 64));
                 } else {
-                    user.a(new gp(itemId, temp));
+                    user.a(new hh(itemId, temp));
                 }
                 temp -= 64;
             } while (temp > 0);
@@ -215,7 +215,7 @@ public class Player extends BaseEntity {
      * @return
      */
     public String getName() {
-        return user.aq;
+        return user.ar;
     }
 
     /**
@@ -473,7 +473,7 @@ public class Player extends BaseEntity {
      * Gets the actual user class.
      * @return
      */
-    public ea getUser() {
+    public eo getUser() {
         return user;
     }
 
@@ -481,7 +481,7 @@ public class Player extends BaseEntity {
      * Sets the user. Don't use this.
      * @param user
      */
-    public void setUser(ea user) {
+    public void setUser(eo user) {
         this.user = user;
         this.entity = user;
         this.inventory = new Inventory(this, Inventory.Type.Inventory);

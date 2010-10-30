@@ -3,13 +3,13 @@
  * @author James
  */
 public class Furnace extends ItemArray implements ComplexBlock {
-    private df furnace;
+    private dr furnace;
 
     /**
      * Creates a furnace interface
      * @param furnace
      */
-    public Furnace(df furnace) {
+    public Furnace(dr furnace) {
         this.furnace = furnace;
     }
 
@@ -29,7 +29,7 @@ public class Furnace extends ItemArray implements ComplexBlock {
         furnace.c();
     }
 
-    public gp[] getArray() {
+    public hh[] getArray() {
         return furnace.getContents();
     }
 }

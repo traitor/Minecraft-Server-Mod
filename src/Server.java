@@ -59,7 +59,7 @@ public class Server {
      * @return time server time
      */
     public long getTime() {
-        return server.e.c;
+        return server.e.e;
     }
 
     /**
@@ -67,7 +67,7 @@ public class Server {
      * @return time server time
      */
     public long getRelativeTime() {
-        long time = (server.e.c % 24000);
+        long time = (server.e.e % 24000);
         // Java modulus is stupid.
         if (time < 0) {
             time += 24000;
@@ -80,7 +80,7 @@ public class Server {
      * @param time time (-2^63 to 2^63-1)
      */
     public void setTime(long time) {
-        server.e.c = time;
+        server.e.e = time;
     }
 
     /**
@@ -88,12 +88,12 @@ public class Server {
      * @param time time (0-24000)
      */
     public void setRelativeTime(long time) {
-        long margin = (time - server.e.c) % 24000;
+        long margin = (time - server.e.e) % 24000;
         // Java modulus is stupid.
         if (margin < 0) {
             margin += 24000;
         }
-        server.e.c += margin;
+        server.e.e += margin;
     }
 
     /**
@@ -110,22 +110,22 @@ public class Server {
      * @return
      */
     public Player matchPlayer(String name) {
-        ea player = null;
+        eo player = null;
         boolean found = false;
         if (("`" + server.f.c().toUpperCase() + "`").split(name.toUpperCase()).length == 2) {
             for (int i = 0; i < server.f.b.size() && !found; ++i) {
-                ea localea = (ea) server.f.b.get(i);
-                if (("`" + localea.aq.toUpperCase() + "`").split(name.toUpperCase()).length == 2) {
-                    player = localea;
+                eo localeo = (eo) server.f.b.get(i);
+                if (("`" + localeo.ar.toUpperCase() + "`").split(name.toUpperCase()).length == 2) {
+                    player = localeo;
                     found = true;
                 }
             }
         } else if (("`" + server.f.c() + "`").split(name).length > 2) {
             // Too many partial matches.
             for (int i = 0; i < server.f.b.size() && !found; ++i) {
-                ea localea = (ea) server.f.b.get(i);
-                if (localea.aq.equalsIgnoreCase(name)) {
-                    player = localea;
+                eo localeo = (eo) server.f.b.get(i);
+                if (localeo.ar.equalsIgnoreCase(name)) {
+                    player = localeo;
                     found = true;
                 }
             }
@@ -139,7 +139,7 @@ public class Server {
      * @return
      */
     public Player getPlayer(String name) {
-        ea user = server.f.h(name);
+        eo user = server.f.h(name);
         return user == null ? null : user.getPlayer();
     }
 
@@ -150,7 +150,7 @@ public class Server {
     public List<Player> getPlayerList() {
         List<Player> toRet = new ArrayList<Player>();
         for (Object o : server.f.b) {
-            toRet.add(((ea) o).getPlayer());
+            toRet.add(((eo) o).getPlayer());
         }
         return toRet;
     }
@@ -161,9 +161,9 @@ public class Server {
      */
     public List<Mob> getMobList() {
         List<Mob> toRet = new ArrayList<Mob>();
-        for (Object o : server.e.a) {
-            if (o instanceof gh) {
-                toRet.add(new Mob((gh) o));
+        for (Object o : server.e.b) {
+            if (o instanceof gz) {
+                toRet.add(new Mob((gz) o));
             }
         }
         return toRet;
@@ -175,9 +175,9 @@ public class Server {
      */
     public Location getSpawnLocation() {
         Location spawn = new Location();
-        spawn.x = (server.e.n + 0.5D);
-        spawn.y = server.e.d(server.e.n, server.e.p) + 1.5D;
-        spawn.z = server.e.p + 0.5D;
+        spawn.x = (server.e.m + 0.5D);
+        spawn.y = server.e.d(server.e.m, server.e.o) + 1.5D;
+        spawn.z = server.e.o + 0.5D;
         spawn.rotX = 0.0F;
         spawn.rotY = 0.0F;
         return spawn;
@@ -224,7 +224,7 @@ public class Server {
      */
     public boolean setBlockData(int x, int y, int z, int data) {
         boolean toRet = server.e.c(x, y, z, data);
-        etc.getMCServer().f.a(new et(x, y, z, etc.getMCServer().e));
+        etc.getMCServer().f.a(new fi(x, y, z, etc.getMCServer().e));
         ComplexBlock block = getComplexBlock(x, y, z);
         if (block != null) {
             block.update();
@@ -273,14 +273,14 @@ public class Server {
      * @return complex block
      */
     public ComplexBlock getComplexBlock(int x, int y, int z) {
-        as localas = server.e.k(x, y, z);
-        if (localas != null) {
-            if (localas instanceof hb) {
-                return new Chest((hb) localas);
-            } else if (localas instanceof ig) {
-                return new Sign((ig) localas);
-            } else if (localas instanceof df) {
-                return new Furnace((df) localas);
+        av localav = server.e.k(x, y, z);
+        if (localav != null) {
+            if (localav instanceof hv) {
+                return new Chest((hv) localav);
+            } else if (localav instanceof jg) {
+                return new Sign((jg) localav);
+            } else if (localav instanceof dr) {
+                return new Furnace((dr) localav);
             }
         }
         return null;

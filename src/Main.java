@@ -25,7 +25,11 @@ public class Main {
         }
 
         //My mod doesn't work with gui.
-        net.minecraft.server.MinecraftServer.main(args);
+        try {
+            net.minecraft.server.MinecraftServer.main(args);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
     }
 
     public static boolean checkForUpdate() {

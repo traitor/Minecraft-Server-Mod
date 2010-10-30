@@ -8,7 +8,7 @@ public class Mob extends BaseEntity {
      * @param mob name of mob
      */
     public Mob(String mob) {
-        this.entity = (is) gr.a(mob, etc.getMCServer().e);
+        this.entity = (jt) hj.a(mob, etc.getMCServer().e);
     }
 
     /**
@@ -17,7 +17,7 @@ public class Mob extends BaseEntity {
      * @param location location of mob
      */
     public Mob(String mob, Location location) {
-        this.entity = (is) gr.a(mob, etc.getMCServer().e);
+        this.entity = (jt) hj.a(mob, etc.getMCServer().e);
         teleportTo(location);
     }
 
@@ -25,7 +25,7 @@ public class Mob extends BaseEntity {
      * Creates a mob interface
      * @param mob name of mob
      */
-    public Mob(gh mob) {
+    public Mob(gz mob) {
         this.entity = mob;
     }
 
@@ -41,15 +41,15 @@ public class Mob extends BaseEntity {
      * @param rider
      */
     public void spawn(Mob rider) {
-        dy localdy = etc.getMCServer().e;
+        el localel = etc.getMCServer().e;
 
         entity.c(getX() + 0.5f, getY(), getZ() + 0.5f, getRotation(), 0f);
-        localdy.a(entity);
+        localel.a(entity);
 
         if (rider != null) {
-            is mob2 = rider.getMob();
+            jt mob2 = rider.getMob();
             mob2.c(getX(), getY(), getZ(), getRotation(), 0f);
-            localdy.a(mob2);
+            localel.a(mob2);
             mob2.e(entity);
         }
     }
@@ -59,7 +59,7 @@ public class Mob extends BaseEntity {
      * @return name
      */
     public String getName() {
-        return gr.b(entity);
+        return hj.b(entity);
     }
 
     /**
@@ -79,7 +79,7 @@ public class Mob extends BaseEntity {
      * Returns the actual mob
      * @return
      */
-    public is getMob() {
+    public jt getMob() {
         return entity;
     }
 
@@ -91,6 +91,6 @@ public class Mob extends BaseEntity {
     public static boolean isValid(String mob) {
         if (mob == null)
             return false;
-        return gr.a(mob, etc.getMCServer().e) instanceof is;
+        return hj.a(mob, etc.getMCServer().e) instanceof jt;
     }
 }

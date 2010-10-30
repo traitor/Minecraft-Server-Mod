@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import net.minecraft.server.MinecraftServer;
 
-public class bn extends Thread {
+public class bw extends Thread {
     private MinecraftServer server;
 
-    public bn(MinecraftServer paramMinecraftServer) {
+    public bw(MinecraftServer paramMinecraftServer) {
         this.server = paramMinecraftServer;
     }
 

@@ -3,13 +3,13 @@
  * @author James
  */
 public class Chest extends ItemArray implements ComplexBlock {
-    private hb chest;
+    private hv chest;
 
     /**
      * Creates a chest interface
      * @param chest
      */
-    public Chest(hb chest) {
+    public Chest(hv chest) {
         this.chest = chest;
     }
 
@@ -29,7 +29,7 @@ public class Chest extends ItemArray implements ComplexBlock {
         chest.c();
     }
 
-    public gp[] getArray() {
+    public hh[] getArray() {
         return chest.getContents();
     }
 }
