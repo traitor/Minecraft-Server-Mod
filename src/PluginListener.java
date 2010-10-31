@@ -43,6 +43,13 @@ public abstract class PluginListener {
      */
     public boolean onTeleport(Player player, Location from, Location to) { return false; }
 
+	 /**
+     * Called when a player has stood within an active portal for the timeout period
+     * @param player player in portal
+     * @return false if you want the player to use the portal.
+     */
+    public boolean onPortal(Player player) { return false; }
+	
     /**
      * Called during the early login process to check whether or not to kick the
      *  player

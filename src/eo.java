@@ -144,9 +144,13 @@ public class eo extends ft {
 			// Hanging out in a portal, time to go
 			this.portalTicks = 1.0F;
 			this.portalCount = 10;
-			//this.bm.A.a("portal.travel", 1.0F, this.aV.nextFloat() * 0.4F + 0.8F); // Play that funky music right
-			//this.bm.k(); // Lets MOVE!
-			player.sendMessage("You're in a portal!");
+			//this.bm.A.a("portal.travel", 1.0F, this.aV.nextFloat() * 0.4F + 0.8F); // Play that funky music ri-iiiight
+			if (!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.PORTAL, new Object[] { this }))
+			{
+				//this.bm.k(); // Lets MOVE!
+				player.sendMessage("You're in a portal!");
+			}
+			
 		  }
 		  this.inAPortal = false;
 		} else {
@@ -185,12 +189,11 @@ public class eo extends ft {
     }
 	
 	public void C() {
-		//System.out.println("in a portal, bitches!");
 		if (this.portalCount > 0) { // Look at your inventory
 		  this.portalCount = 10; // Now back to me
 		  return;
 		}
 
-		this.inAPortal = true; // I'm in a portal
+		this.inAPortal = true; // I'm in a portal!
 	}
 }

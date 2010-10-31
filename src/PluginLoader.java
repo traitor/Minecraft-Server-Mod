@@ -94,6 +94,10 @@ public class PluginLoader {
          * Calls onTeleport
          */
         TELEPORT,
+		/**
+         * Calls onPortal
+         */
+		PORTAL,
         /**
          * Unused.
          */
@@ -376,6 +380,11 @@ public class PluginLoader {
                                 break;
                             case TELEPORT:
                                 if (listener.onTeleport(((eo) parameters[0]).getPlayer(), (Location) parameters[1], (Location) parameters[2])) {
+                                    toRet = true;
+                                }
+                                break;
+							case PORTAL:
+                                if (listener.onPortal(((eo) parameters[0]).getPlayer())) {
                                     toRet = true;
                                 }
                                 break;
