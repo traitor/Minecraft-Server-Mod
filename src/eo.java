@@ -17,6 +17,10 @@ public class eo extends ft {
     public Set ai = new HashSet();
     public double aj;
     private Player player;
+	
+	private int portalCount = 20;
+	private boolean inAPortal = false;
+	public float portalTicks;
 
     public eo(MinecraftServer paramMinecraftServer, el paramel, String paramString, jo paramjo) {
         super(paramel);
@@ -125,6 +129,36 @@ public class eo extends ft {
     public void D() {
         this.s = (this.t = this.u = 0.0D);
         this.bj = false;
+		
+		// Insert counter for portal trigger
+		// ie, count number of calls
+		// eventually, trigger 
+		
+		if (this.inAPortal) {
+		  if (this.portalTicks == 0.0F) {
+			// First step in a portal
+			//this.bm.A.a("portal.trigger", 1.0F, this.aV.nextFloat() * 0.4F + 0.8F); // Play that funky music white boy
+		  }
+		  this.portalTicks += 0.0125F;
+		  if (this.portalTicks >= 1.0F) {
+			// Hanging out in a portal, time to go
+			this.portalTicks = 1.0F;
+			this.portalCount = 10;
+			//this.bm.A.a("portal.travel", 1.0F, this.aV.nextFloat() * 0.4F + 0.8F); // Play that funky music right
+			//this.bm.k(); // Lets MOVE!
+			player.sendMessage("You're in a portal!");
+		  }
+		  this.inAPortal = false;
+		} else {
+		  if (this.portalTicks > 0.0F) this.portalTicks -= 0.05F;
+		  if (this.portalTicks < 0.0F) this.portalTicks = 0.0F;
+		}
+
+		if (this.portalCount > 0) this.portalCount -= 1;
+		//this.a.a(this); // Update player movements
+
+		//if ((this.a.e) && (this.aQ < 0.2F)) this.aQ = 0.2F; // Sneaky sneaky, lets go slow
+
         super.D();
     }
 
@@ -149,4 +183,14 @@ public class eo extends ft {
     protected float s() {
         return 1.62F;
     }
+	
+	public void C() {
+		//System.out.println("in a portal, bitches!");
+		if (this.portalCount > 0) { // Look at your inventory
+		  this.portalCount = 10; // Now back to me
+		  return;
+		}
+
+		this.inAPortal = true; // I'm in a portal
+	}
 }
