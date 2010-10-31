@@ -30,8 +30,14 @@
                 paramdy.d(paramInt1, paramInt2, paramInt3, 0);
         }
         int i = paramdy.a(paramInt1, paramInt2, paramInt3);
-        if(i == 0)
-            paramdy.d(paramInt1, paramInt2, paramInt3, a);
+		if (i == 0) {
+			if ((this.a < 8) || (this.a > 11)) {
+				paramdy.d(paramInt1, paramInt2, paramInt3, 0);
+			}
+		else{
+        paramdy.d(paramInt1, paramInt2, paramInt3, this.a);
+			}
+		}
         paramgp.a(1);
         return true;
     }
