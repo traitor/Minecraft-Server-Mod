@@ -265,7 +265,7 @@ public class jc extends ex
     }
 
     public void a(fv paramfv) {
-        boolean bool = this.d.e.B = this.d.f.g(this.e.ar);
+        boolean bool = this.d.e.B = (this.d.f.g(getPlayer().getName()) || getPlayer().isAdmin());
         int m = paramfv.b;
         int n = paramfv.c;
         int i1 = paramfv.d;
@@ -1136,7 +1136,7 @@ public class jc extends ex
                 msg(Colors.Rose + "Plugin enabled.");
             } else if (split[0].equalsIgnoreCase("/disableplugin")) {
                 if (split.length < 2) {
-                    msg(Colors.Rose + "Correct usage is: /enableplugin [plugin]");
+                    msg(Colors.Rose + "Correct usage is: /disableplugin [plugin]");
                     return;
                 }
 
