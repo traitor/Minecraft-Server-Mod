@@ -28,6 +28,7 @@ public class etc {
     private String[] itemSpawnBlacklist = null;
     private String[] motd = null;
     private boolean saveHomes = true;
+    private boolean blockFire = false;
     private boolean firstLoad = true;
     private boolean whitelistEnabled = false;
     private int playerLimit = 20;
@@ -103,6 +104,7 @@ public class etc {
             motd = properties.getString("motd", "Type /help for a list of commands.").split("@");
             playerLimit = properties.getInt("max-players", 20);
             saveHomes = properties.getBoolean("save-homes", true);
+            blockFire = properties.getBoolean("disable-lighter-fire", false);
             whitelistEnabled = properties.getBoolean("whitelist", false);
             whitelistMessage = properties.getString("whitelist-message", "Not on whitelist.");
             if (dataSourceType.equalsIgnoreCase("flatfile")) {
@@ -605,6 +607,14 @@ public class etc {
      */
     public boolean canSaveHomes() {
         return saveHomes;
+    }
+    
+    /**
+     * Returns true if the server allows lighters to work.
+     * @return true if server allows lighters to work.
+     */
+    public boolean blockFire() {
+        return blockFire;
     }
 
     /**
