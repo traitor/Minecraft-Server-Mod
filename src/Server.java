@@ -187,9 +187,9 @@ public class Server {
      * Sets the block
      * @param block
      */
-    public void setBlock(Block block) {
-        setBlockData(block.getX(), block.getY(), block.getZ(), block.getData());
-        setBlockAt(block.getType(), block.getX(), block.getY(), block.getZ());
+    public boolean setBlock(Block block) {
+        setBlockData(block.getX(), block.getY(), block.getZ(), block.getData())
+        return setBlockAt(block.getType(), block.getX(), block.getY(), block.getZ());
     }
 
     /**
@@ -239,8 +239,8 @@ public class Server {
      * @param y
      * @param z
      */
-    public void setBlockAt(int blockType, int x, int y, int z) {
-        server.e.d(x, y, z, blockType);
+    public boolean setBlockAt(int blockType, int x, int y, int z) {
+        return server.e.d(x, y, z, blockType);
     }
 
     /**
