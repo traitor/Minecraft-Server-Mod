@@ -13,7 +13,7 @@ public class ch extends dv
     public ch(el el1, float f, float f1, float f2)
     {
         this(el1);
-        a(f, f1, f2);
+        a((double)f, (double)f1, (double)f2);
         float f3 = (float)(Math.random() * 3.1415927410125732D * 2D);
         s = -hb.a((f3 * 3.141593F) / 180F) * 0.02F;
         t = 0.20000000298023224D;
