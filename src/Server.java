@@ -188,7 +188,7 @@ public class Server {
      * @param block
      */
     public boolean setBlock(Block block) {
-        setBlockData(block.getX(), block.getY(), block.getZ(), block.getData())
+        setBlockData(block.getX(), block.getY(), block.getZ(), block.getData());
         return setBlockAt(block.getType(), block.getX(), block.getY(), block.getZ());
     }
 
