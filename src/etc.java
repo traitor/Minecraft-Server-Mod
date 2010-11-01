@@ -20,7 +20,7 @@ public class etc {
     private static final Logger log = Logger.getLogger("Minecraft");
     private static volatile etc instance;
     private static MinecraftServer server;
-    private String usersLoc = "users.txt", kitsLoc = "kits.txt", homeLoc = "homes.txt", warpLoc = "warps.txt", itemLoc = "items.txt", groupLoc = "groups.txt";
+    private String usersLoc = "users.txt", kitsLoc = "kits.txt", homeLoc = "homes.txt", warpLoc = "warps.txt", portalLoc = "portals.txt", itemLoc = "items.txt", groupLoc = "groups.txt";
     private String whitelistLoc = "whitelist.txt", reservelistLoc = "reservelist.txt";
     private String whitelistMessage = "Not on whitelist.";
     private String[] allowedItems = null;
@@ -244,6 +244,18 @@ public class etc {
             dataSource.addWarp(warp);
         } else {
             dataSource.changeWarp(warp);
+        }
+    }
+    
+    /**
+     * Adds or modifies the portal
+     * @param portal
+     */
+    public void setPortal(Portal portal) {
+        if (dataSource.getPortal(portal.Name) == null) {
+            dataSource.addPortal(portal);
+        } else {
+            dataSource.changePortal(portal);
         }
     }
 
@@ -631,6 +643,14 @@ public class etc {
      */
     public String getWarpLocation() {
         return warpLoc;
+    }
+
+    /**
+     * Returns the location of portals.txt
+     * @return
+     */
+    public String getPortalLocation() {
+        return portalLoc;
     }
 
     /**

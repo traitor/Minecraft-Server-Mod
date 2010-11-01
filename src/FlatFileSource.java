@@ -20,6 +20,7 @@ public class FlatFileSource extends DataSource {
         loadKits();
         loadHomes();
         loadWarps();
+        loadPortals();
         loadItems();
         //loadBanList();
 
@@ -297,6 +298,53 @@ public class FlatFileSource extends DataSource {
                             warp.Group = "";
                         }
                         warps.add(warp);
+                    }
+                    scanner.close();
+                } catch (Exception e) {
+                    log.log(Level.SEVERE, "Exception while reading " + location, e);
+                }
+            }
+        }
+    }
+
+    public void loadPortals() {
+        synchronized (portalLock) {
+            portals = new ArrayList<Portal>();
+            String location = etc.getInstance().getPortalLocation();
+
+            if (new File(location).exists()) {
+                try {
+                    Scanner scanner = new Scanner(new File(location));
+                    while (scanner.hasNextLine()) {
+                        String line = scanner.nextLine();
+                        if (line.startsWith("#") || line.equals("")) {
+                            continue;
+                        }
+                        String[] split = line.split(":");
+                        if (split.length < 4) {
+                            continue;
+                        }
+
+                        Location loc1 = new Location();
+                        loc1.x = Double.parseDouble(split[1]);
+                        loc1.y = Double.parseDouble(split[2]);
+                        loc1.z = Double.parseDouble(split[3]);
+                        
+                        Location loc2 = new Location();
+                        loc2.x = Double.parseDouble(split[4]);
+                        loc2.y = Double.parseDouble(split[5]);
+                        loc2.z = Double.parseDouble(split[6]);
+                        
+                        Portal portal = new Portal(split[0]);
+                        //!TODO! Add label if given
+                        portal.loc1 = loc1;
+                        portal.loc2 = loc2;
+                        if (split.length >= 8) {
+                            portal.Group = split[7];
+                        } else {
+                            portal.Group = "";
+                        }
+                        portals.add(portal);
                     }
                     scanner.close();
                 } catch (Exception e) {
@@ -937,6 +985,133 @@ public class FlatFileSource extends DataSource {
 
         synchronized (warpLock) {
             warps.remove(warp);
+        }
+    }
+
+
+    //Portals
+    public void addPortal(Portal portal) {
+        String portalLoc = etc.getInstance().getPortalLocation();
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(portalLoc, true));
+            StringBuilder builder = new StringBuilder();
+            builder.append(portal.Name);
+            builder.append(":");
+            builder.append(portal.loc1.x);
+            builder.append(":");
+            builder.append(portal.loc1.y);
+            builder.append(":");
+            builder.append(portal.loc1.z);
+            builder.append(":");
+            builder.append(portal.loc2.x);
+            builder.append(":");
+            builder.append(portal.loc2.y);
+            builder.append(":");
+            builder.append(portal.loc2.z);
+            builder.append(":");
+            builder.append(portal.Group);
+            bw.append(builder.toString());
+            bw.newLine();
+            bw.close();
+            synchronized (portalLock) {
+                portals.add(portal);
+            }
+        } catch (Exception e2) {
+            log.log(Level.SEVERE, "Exception while writing new portal to " + portalLoc, e2);
+        }
+    }
+
+    public void changePortal(Portal portal) {
+        synchronized (portalLock) {
+            Portal toRem = null;
+            for (Portal h : portals) {
+                if (h.Name.equalsIgnoreCase(portal.Name)) {
+                    toRem = h;
+                }
+            }
+            if (toRem != null) {
+                portals.remove(toRem);
+            }
+            portals.add(portal);
+        }
+        FileWriter writer = null;
+        String portalLoc = etc.getInstance().getPortalLocation();
+        try {
+            // Now to save...
+            BufferedReader reader = new BufferedReader(new FileReader(new File(portalLoc)));
+            StringBuilder toWrite = new StringBuilder();
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                if (!line.split(":")[0].equalsIgnoreCase(portal.Name)) {
+                    toWrite.append(line).append("\r\n");
+                } else {
+                    StringBuilder builder = new StringBuilder();
+                    builder.append(portal.Name);
+                    builder.append(":");
+                    builder.append(portal.loc1.x);
+                    builder.append(":");
+                    builder.append(portal.loc1.y);
+                    builder.append(":");
+                    builder.append(portal.loc1.z);
+                    builder.append(":");
+                    builder.append(portal.loc2.x);
+                    builder.append(":");
+                    builder.append(portal.loc2.y);
+                    builder.append(":");
+                    builder.append(portal.loc2.z);
+                    builder.append(":");
+                    builder.append(portal.Group);
+                    toWrite.append(builder.toString()).append("\r\n");
+                }
+            }
+            reader.close();
+
+            writer = new FileWriter(portalLoc);
+            writer.write(toWrite.toString());
+            writer.close();
+        } catch (Exception e1) {
+            log.log(Level.SEVERE, "Exception while editing portal in " + portalLoc, e1);
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException ex) {
+            }
+        }
+    }
+
+    public void removePortal(Portal portal) {
+        FileWriter writer = null;
+        String portalLoc = etc.getInstance().getPortalLocation();
+        try {
+            // Now to save...
+            BufferedReader reader = new BufferedReader(new FileReader(new File(portalLoc)));
+            StringBuilder toWrite = new StringBuilder();
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                if (!line.split(":")[0].equalsIgnoreCase(portal.Name)) {
+                    toWrite.append(line).append("\r\n");
+                }
+            }
+            reader.close();
+
+            writer = new FileWriter(portalLoc);
+            writer.write(toWrite.toString());
+            writer.close();
+        } catch (Exception e1) {
+            log.log(Level.SEVERE, "Exception while delete portal from " + portalLoc, e1);
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException ex) {
+            }
+        }
+
+        synchronized (portalLock) {
+            portals.remove(portal);
         }
     }
 

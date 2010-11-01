@@ -20,7 +20,7 @@ public class eo extends ft {
 	
 	private int portalCount = 20;
 	private boolean inAPortal = false;
-	public float portalTicks;
+    public float portalTicks;
 
     public eo(MinecraftServer paramMinecraftServer, el paramel, String paramString, jo paramjo) {
         super(paramel);
@@ -145,10 +145,13 @@ public class eo extends ft {
 			this.portalTicks = 1.0F;
 			this.portalCount = 10;
 			//this.bm.A.a("portal.travel", 1.0F, this.aV.nextFloat() * 0.4F + 0.8F); // Play that funky music ri-iiiight
-			if (!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.PORTAL, new Object[] { this }))
+			if (!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.PORTALWARP, new Object[] { this, etc.getDataSource().getPortal((int)this.p,(int)this.q,(int)this.r)}))
 			{
 				//this.bm.k(); // Lets MOVE!
 				player.sendMessage("You're in a portal!");
+                player.sendMessage("Location: "+this.p+","+this.q+","+this.r);
+                Block block = etc.getServer().getBlockAt((int)Math.floor(this.p), (int)Math.floor(this.q), (int)Math.floor(this.r));
+                System.out.println("blocktype: "+block.getType());
 			}
 			
 		  }

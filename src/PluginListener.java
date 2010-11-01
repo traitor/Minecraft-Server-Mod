@@ -46,9 +46,24 @@ public abstract class PluginListener {
 	 /**
      * Called when a player has stood within an active portal for the timeout period
      * @param player player in portal
+     * @param portal portal
      * @return false if you want the player to use the portal.
      */
-    public boolean onPortal(Player player) { return false; }
+    public boolean onPortalWarp(Player player, Portal portal) { return false; }
+	
+	/**
+     * Called when a player has lit a portal to open it
+     * @param portal portal
+     * @return false if you want the portal to be opened
+     */
+    public boolean onPortalCreate(Portal portal) { return false; }
+	
+	/**
+     * Called when a player has collapsed a portal
+     * @param portal portal
+     * @return false if you want the portal to collapse
+     */
+    public boolean onPortalDestroy(Portal portal) { return false; }
 	
     /**
      * Called during the early login process to check whether or not to kick the

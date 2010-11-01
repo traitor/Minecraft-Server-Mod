@@ -19,11 +19,13 @@ public abstract class DataSource {
     protected List<Kit> kits = new ArrayList<Kit>();
     protected List<Warp> homes = new ArrayList<Warp>();
     protected List<Warp> warps = new ArrayList<Warp>();
+	protected List<Portal> portals = new ArrayList<Portal>();
     protected List<Ban> bans = new ArrayList<Ban>();
     protected Map<String, Integer> items = new HashMap<String, Integer>();
     protected MinecraftServer server;
     protected final Object groupLock = new Object(), kitLock = new Object(), banLock = new Object();
     protected final Object homeLock = new Object(), warpLock = new Object(), itemLock = new Object();
+    protected final Object portalLock = new Object();
 
     /**
      * Initializes the data source
@@ -49,6 +51,11 @@ public abstract class DataSource {
      * Loads all warps
      */
     abstract public void loadWarps();
+
+    /**
+     * Loads all portals
+     */
+    abstract public void loadPortals();
 
     /**
      * Loads all items
@@ -282,6 +289,56 @@ public abstract class DataSource {
         }
 
         return builder.toString();
+    }
+
+    /**
+     * Adds portal to list of portals
+     * @param portal
+     */
+    abstract public void addPortal(Portal portal);
+
+    /**
+     * Modifies portal
+     * @param portal
+     */
+    abstract public void changePortal(Portal portal);
+
+    /**
+     * Removes portal from list of portals
+     * @param portal
+     */
+    abstract public void removePortal(Portal portal);
+
+    /**
+     * Returns specified portal
+     * @param name
+     * @return portal
+     */
+    public Portal getPortal(String name) {
+        synchronized (portalLock) {
+            for (Portal portal : portals) {
+                if (portal.Name.equalsIgnoreCase(name) || portal.Label.equalsIgnoreCase(name)) {
+                    return portal;
+                }
+            }
+        }
+        return new Portal(name);
+    }
+    
+    /**
+     * Returns specified portal
+     * @param intX, intY, intZ
+     * @return portal
+     */
+    public Portal getPortal(int x, int y, int z) {
+        synchronized (portalLock) {
+            for (Portal portal : portals) {
+                if (portal.containsLoc(x,y,z)) {
+                    return portal;
+                }
+            }
+        }
+        return null;
     }
 
     /**

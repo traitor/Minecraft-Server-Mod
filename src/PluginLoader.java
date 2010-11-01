@@ -95,9 +95,17 @@ public class PluginLoader {
          */
         TELEPORT,
 		/**
-         * Calls onPortal
+         * Calls onPortalWarp
          */
-		PORTAL,
+		PORTALWARP,
+		/**
+         * Calls onPortalCreate
+         */
+		PORTALCREATE,
+		/**
+         * Calls onPortalDestroy
+         */
+		PORTALDESTROY,
         /**
          * Unused.
          */
@@ -383,8 +391,18 @@ public class PluginLoader {
                                     toRet = true;
                                 }
                                 break;
-							case PORTAL:
-                                if (listener.onPortal(((eo) parameters[0]).getPlayer())) {
+							case PORTALWARP:
+                                if (listener.onPortalWarp(((eo) parameters[0]).getPlayer(), (Portal) parameters[1])) {
+                                    toRet = true;
+                                }
+                                break;
+							case PORTALCREATE:
+                                if (listener.onPortalCreate((Portal) parameters[0])) {
+                                    toRet = true;
+                                }
+                                break;
+							case PORTALDESTROY:
+                                if (listener.onPortalDestroy((Portal) parameters[0])) {
                                     toRet = true;
                                 }
                                 break;
