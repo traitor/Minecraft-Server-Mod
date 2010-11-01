@@ -43,7 +43,7 @@
             </fileset>
         </delete>
     </target>
-    <target depends="init" name="build">
+    <target depends="init, get_vanilla_minecraft_server.jar" name="build">
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin"
             source="${source}" target="${target}" includeantruntime="false" encoding="UTF-8">
             <src path="src"/>
