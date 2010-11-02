@@ -162,6 +162,14 @@ public abstract class PluginListener {
     public boolean onEquipmentChange(Player player) { return false; }
 
     /**
+     * Called when a player drops an item.
+     * @param player player who dropped the item
+     * @param item item that was dropped
+     * @return true if you don't want the dropped item to be spawned in the world
+     */
+    public boolean onItemDrop(Player player, Item item) { return false; }
+
+    /**
      * Called when either a sign, chest or furnace is changed.
      * @param player player who changed it
      * @param block complex block that changed
