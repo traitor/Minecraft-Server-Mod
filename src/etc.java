@@ -46,7 +46,7 @@ public class etc {
         commands.put("/help", "[Page] - Shows a list of commands. 7 per page.");
         commands.put("/playerlist", "- Shows a list of players");
         commands.put("/reload", "- Reloads config");
-        commands.put("/listbans", "<IP or bans> - Gives a list of bans");
+        commands.put("/banlist", "<IP or bans> - Gives a list of bans");
         commands.put("/banip", "[Player] <Reason> - Bans the player's IP");
         commands.put("/unbanip", "[IP] - Unbans the IP");
         commands.put("/ban", "[Player] <Reason> - Bans the player");
