@@ -20,6 +20,14 @@ public class Server {
     }
 
     /**
+     * Sends a message to all users
+     * @param msg Message text to send
+     */
+    public void messageAll(String msg) {
+        this.server.f.a(new be(msg));
+    }
+
+    /**
      * Uses the specified console command
      * @param command
      */
