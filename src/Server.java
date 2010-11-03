@@ -20,6 +20,14 @@ public class Server {
     }
 
     /**
+     * Sends a message to all users
+     * @param msg Message text to send
+     */
+    public void messageAll(String msg) {
+        this.server.f.a(new be(msg));
+    }
+
+    /**
      * Uses the specified console command
      * @param command
      */
@@ -176,7 +184,7 @@ public class Server {
     public Location getSpawnLocation() {
         Location spawn = new Location();
         spawn.x = (server.e.m + 0.5D);
-        spawn.y = server.e.d(server.e.m, server.e.o) + 1.5D;
+        spawn.y = server.e.e(this.server.e.m, this.server.e.o) + 1.5D;
         spawn.z = server.e.o + 0.5D;
         spawn.rotX = 0.0F;
         spawn.rotY = 0.0F;

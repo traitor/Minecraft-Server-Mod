@@ -3,7 +3,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -104,7 +103,6 @@ public class PluginLoader {
     private static final Object lock = new Object();
     private List<Plugin> plugins = new ArrayList<Plugin>();
     private List<List<PluginRegisteredListener>> listeners = new ArrayList<List<PluginRegisteredListener>>();
-    private HashMap<String, PluginInterface> customListeners = new HashMap<String, PluginInterface>();
     private Server server;
     private PropertiesFile properties;
 
@@ -395,31 +393,6 @@ public class PluginLoader {
         return toRet;
     }
 
-    public Object callCustomHook(String name, Object[] parameters) {
-        Object toRet = false;
-        synchronized (lock) {
-            try {
-                PluginInterface listener = customListeners.get(name);
-
-                if (listener == null) {
-                    log.log(Level.SEVERE, "Cannot find custom hook: " + name);
-                    return false;
-                }
-
-                String msg = listener.checkParameters(parameters);
-                if (msg != null) {
-                    log.log(Level.SEVERE, msg);
-                    return false;
-                }
-
-                toRet = listener.run(parameters);
-            } catch (Exception ex) {
-                log.log(Level.SEVERE, "Exception while calling custom plugin function", ex);
-            }
-        }
-        return toRet;
-    }
-
     /**
      * Calls a plugin hook.
      * @param hook The hook to call on
@@ -449,16 +422,6 @@ public class PluginLoader {
         return reg;
     }
 
-    public void addCustomListener(PluginInterface listener) {
-        synchronized (lock) {
-            if (customListeners.get(listener.getName()) != null) {
-                log.log(Level.SEVERE, "Replacing existing listener: " + listener.getName());
-            }
-            customListeners.put(listener.getName(), listener);
-            log.info("Registered custom hook: " + listener.getName());
-        }
-    }
-
     /**
      * Removes the specified listener from the list of listeners
      * @param reg listener to remove
@@ -467,12 +430,6 @@ public class PluginLoader {
         List<PluginRegisteredListener> regListeners = listeners.get(reg.getHook().ordinal());
         synchronized (lock) {
             regListeners.remove(reg);
-        }
-    }
-
-    public void removeCustomListener(String name) {
-        synchronized (lock) {
-            customListeners.remove(name);
         }
     }
 }

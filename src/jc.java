@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -343,12 +342,14 @@ public class jc extends ex
         double d1 = paramk.b / 32.0D;
         double d2 = paramk.c / 32.0D;
         double d3 = paramk.d / 32.0D;
-        gf localgf = new gf(this.d.e, d1, d2, d3, new hh(paramk.h, paramk.i));
-        localgf.s = (paramk.e / 128.0D);
-        localgf.t = (paramk.f / 128.0D);
-        localgf.u = (paramk.g / 128.0D);
-        localgf.c = 10;
-        this.d.e.a(localgf);
+        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_DROP, new Object[]{e, new Item(paramk.h, paramk.i)})) {
+            gf localgf = new gf(this.d.e, d1, d2, d3, new hh(paramk.h, paramk.i));
+            localgf.s = (paramk.e / 128.0D);
+            localgf.t = (paramk.f / 128.0D);
+            localgf.u = (paramk.g / 128.0D);
+            localgf.c = 10;
+            this.d.e.a(localgf);
+        }
     }
 
     public void a(be parambe) {
@@ -851,7 +852,7 @@ public class jc extends ex
                 if (type == 0) { //Regular user bans
                     msg(Colors.Blue + "Ban list:" + Colors.White + " " + d.f.getBans());
                 } else { //IP bans
-                    msg(Colors.Blue + "IP Ban list:" + Colors.White + " " + d.f.getBans());
+                    msg(Colors.Blue + "IP Ban list:" + Colors.White + " " + d.f.getIpBans());
                 }
             } else if (split[0].equalsIgnoreCase("/banip")) {
                 if (split.length < 2) {
@@ -910,7 +911,10 @@ public class jc extends ex
                     a.log(Level.INFO, "Banning " + player.getName());
                     msg(Colors.Rose + "Banning " + player.getName());
                 } else {
-                    msg(Colors.Rose + "Can't find user " + split[1] + ".");
+                    //msg(Colors.Rose + "Can't find user " + split[1] + ".");
+                    this.d.f.a(split[1]);
+                    a.log(Level.INFO, "Banning " + split[1]);
+                    msg(Colors.Rose + "Banning " + split[1]);
                 }
             } else if (split[0].equalsIgnoreCase("/unban")) {
                 if (split.length != 2) {
