@@ -87,6 +87,10 @@ public class PluginLoader {
          */
         EQUIPMENT_CHANGE,
         /**
+         * Calls onItemDrop
+         */
+        ITEM_DROP,
+        /**
          * Calls onSendComplexBlock
          */
         COMPLEX_BLOCK_SEND,
@@ -361,6 +365,11 @@ public class PluginLoader {
                                 break;
                             case EQUIPMENT_CHANGE:
                                 if (listener.onEquipmentChange(((eo) parameters[0]).getPlayer())) {
+                                    toRet = true;
+                                }
+                                break;
+                            case ITEM_DROP:
+                                if (listener.onItemDrop(((eo) parameters[0]).getPlayer(), (Item) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
