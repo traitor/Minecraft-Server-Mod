@@ -1,4 +1,3 @@
-
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,10 +24,12 @@ public class eo extends ft {
         int j = paramel.o;
         int k = paramel.n;
 
+        int radius = etc.getInstance().getSpawnRadius();
+
         if (!paramel.q.c) {
-            i += this.V.nextInt(20) - 10;
+            i += this.V.nextInt(radius*2) - radius;
             k = paramel.e(i, j);
-            j += this.V.nextInt(20) - 10;
+            j += this.V.nextInt(radius*2) - radius;
         }
         c(i + 0.5D, k, j + 0.5D, 0.0F, 0.0F);
         this.b = paramMinecraftServer;
