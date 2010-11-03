@@ -32,6 +32,7 @@ public class etc {
     private boolean whitelistEnabled = false;
     private int playerLimit = 20;
     private int spawnProtectionSize = 16;
+    private int spawnRadius = 10;
     private LinkedHashMap<String, String> commands = new LinkedHashMap<String, String>();
     private String dataSourceType;
     private DataSource dataSource;
@@ -122,6 +123,7 @@ public class etc {
                 db = sql.getString("db", "jdbc:mysql://localhost:3306/minecraft");
             }
             spawnProtectionSize = properties.getInt("spawn-protection-size", 16);
+            spawnRadius = properties.getInt("spawn-radius", 10);
             logging = properties.getBoolean("logging", false);
             showUnknownCommand = properties.getBoolean("show-unknown-command", true);
             URL url = this.getClass().getResource("/version.txt");
@@ -613,6 +615,14 @@ public class etc {
      */
     public int getSpawnProtectionSize() {
         return spawnProtectionSize;
+    }
+
+    /**
+     * Returns the spawn radius
+     * @return
+     */
+    public int getSpawnRadius() {
+        return spawnRadius;
     }
 
     /**
