@@ -134,6 +134,14 @@ public abstract class PluginListener {
     public boolean onBlockDestroy(Player player, Block block) { return false; }
 
     /**
+     * Called when a person actually breaks the block.
+     * @param player
+     * @param block
+     * @return
+     */
+    public boolean onBlockBreak(Player player, Block block) { return false; }
+
+    /**
      * Called when a player swings their arm, aka left clicks (even if no block is in front of them)
      * @param player player swinging
      */
