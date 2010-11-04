@@ -1083,7 +1083,7 @@ public class FlatFileSource extends DataSource {
                 if (line.startsWith("#") || line.equals("") || line.startsWith("﻿")) {
                     continue;
                 }
-                if (line.contains(user))
+                if (line.equalsIgnoreCase(user))
                     return true;
             }
             scanner.close();
