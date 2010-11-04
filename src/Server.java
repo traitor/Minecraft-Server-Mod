@@ -292,4 +292,12 @@ public class Server {
         }
         return null;
     }
+
+    public void dropItem(Location loc, int itemId) {
+        dropItem(loc.x, loc.y, loc.z, itemId);
+    }
+
+    public void dropItem(double x, double y, double z, int itemId) {
+        server.e.a(new gf(server.e, x, y, z, new hh(fw.n[itemId])));
+    }
 }
