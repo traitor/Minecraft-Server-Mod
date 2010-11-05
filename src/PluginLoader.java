@@ -99,6 +99,10 @@ public class PluginLoader {
          * Calls onTeleport
          */
         TELEPORT,
+		/**
+         * Calls onBlockBreak
+         */
+		BLOCK_BROKEN,
         /**
          * Unused.
          */
@@ -387,6 +391,11 @@ public class PluginLoader {
                                 break;
                             case TELEPORT:
                                 if (listener.onTeleport(((eo) parameters[0]).getPlayer(), (Location) parameters[1], (Location) parameters[2])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case BLOCK_BROKEN:
+                                if (listener.onBlockBreak(((eo) parameters[0]).getPlayer(), (Block) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
