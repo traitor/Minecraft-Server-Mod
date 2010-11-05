@@ -22,7 +22,6 @@ public class jo {
             Block block = etc.getServer().getBlockAt(paramInt1, paramInt2, paramInt3);
             if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, new Object[]{(eo) a, block})) {
                 c(paramInt1, paramInt2, paramInt3);
-                ((eo) a).getPlayer().sendMessage("Instant destruction");
             }
         }
     }
