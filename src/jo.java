@@ -19,7 +19,11 @@ public class jo {
             fw.n[j].b(this.b, paramInt1, paramInt2, paramInt3, this.a);
         }
         if ((j > 0) && (fw.n[j].a(this.a) >= 1.0F)) {
-            c(paramInt1, paramInt2, paramInt3);
+            Block block = etc.getServer().getBlockAt(paramInt1, paramInt2, paramInt3);
+            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, new Object[]{(eo) a, block})) {
+                c(paramInt1, paramInt2, paramInt3);
+                ((eo) a).getPlayer().sendMessage("Instant destruction");
+            }
         }
     }
         
