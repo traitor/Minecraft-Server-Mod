@@ -184,7 +184,7 @@ public class Server {
     public Location getSpawnLocation() {
         Location spawn = new Location();
         spawn.x = (server.e.m + 0.5D);
-        spawn.y = server.e.d(server.e.m, server.e.o) + 1.5D;
+        spawn.y = server.e.e(this.server.e.m, this.server.e.o) + 1.5D;
         spawn.z = server.e.o + 0.5D;
         spawn.rotX = 0.0F;
         spawn.rotY = 0.0F;
@@ -291,5 +291,13 @@ public class Server {
             }
         }
         return null;
+    }
+
+    public void dropItem(Location loc, int itemId) {
+        dropItem(loc.x, loc.y, loc.z, itemId);
+    }
+
+    public void dropItem(double x, double y, double z, int itemId) {
+        server.e.a(new gf(server.e, x, y, z, new hh(fw.n[itemId])));
     }
 }

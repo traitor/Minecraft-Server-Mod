@@ -134,6 +134,14 @@ public abstract class PluginListener {
     public boolean onBlockDestroy(Player player, Block block) { return false; }
 
     /**
+     * Called when a person actually breaks the block.
+     * @param player
+     * @param block
+     * @return
+     */
+    public boolean onBlockBreak(Player player, Block block) { return false; }
+
+    /**
      * Called when a player swings their arm, aka left clicks (even if no block is in front of them)
      * @param player player swinging
      */
@@ -160,6 +168,14 @@ public abstract class PluginListener {
      * @return true if you want any changes to be reverted
      */
     public boolean onEquipmentChange(Player player) { return false; }
+
+    /**
+     * Called when a player drops an item.
+     * @param player player who dropped the item
+     * @param item item that was dropped
+     * @return true if you don't want the dropped item to be spawned in the world
+     */
+    public boolean onItemDrop(Player player, Item item) { return false; }
 
     /**
      * Called when either a sign, chest or furnace is changed.

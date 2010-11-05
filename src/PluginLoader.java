@@ -87,6 +87,10 @@ public class PluginLoader {
          */
         EQUIPMENT_CHANGE,
         /**
+         * Calls onItemDrop
+         */
+        ITEM_DROP,
+        /**
          * Calls onSendComplexBlock
          */
         COMPLEX_BLOCK_SEND,
@@ -94,6 +98,10 @@ public class PluginLoader {
          * Calls onTeleport
          */
         TELEPORT,
+		/**
+         * Calls onBlockBreak
+         */
+		BLOCK_BROKEN,
         /**
          * Unused.
          */
@@ -364,6 +372,11 @@ public class PluginLoader {
                                     toRet = true;
                                 }
                                 break;
+                            case ITEM_DROP:
+                                if (listener.onItemDrop(((eo) parameters[0]).getPlayer(), (Item) parameters[1])) {
+                                    toRet = true;
+                                }
+                                break;
                             case COMPLEX_BLOCK_CHANGE:
                                 if (listener.onComplexBlockChange(((eo) parameters[0]).getPlayer(), (ComplexBlock) parameters[1])) {
                                     toRet = true;
@@ -376,6 +389,11 @@ public class PluginLoader {
                                 break;
                             case TELEPORT:
                                 if (listener.onTeleport(((eo) parameters[0]).getPlayer(), (Location) parameters[1], (Location) parameters[2])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case BLOCK_BROKEN:
+                                if (listener.onBlockBreak(((eo) parameters[0]).getPlayer(), (Block) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
