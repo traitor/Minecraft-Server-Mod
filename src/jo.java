@@ -21,6 +21,7 @@ public class jo {
         if ((j > 0) && (fw.n[j].a(this.a) >= 1.0F)) {
             c(paramInt1, paramInt2, paramInt3);
         }
+    }
         
         public void a() {
             this.d = 0.0F;
