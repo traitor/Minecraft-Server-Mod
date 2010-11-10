@@ -73,8 +73,8 @@ public class Item {
      * @return
      */
     public static boolean isValidItem(int itemId) {
-        if (itemId < fq.c.length)
-            return fq.c[itemId] != null;
+        if (itemId < fh.c.length)
+            return fh.c[itemId] != null;
         return false;
     }
 
