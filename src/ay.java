@@ -56,9 +56,40 @@ public class ay
     return localay;
   }
 
-  public void c()
-  {
-    this.a.b(this.b, this.c, this.d, this);
+  public void c() {
+      /*this.a.b(this.b, this.c, this.d, this);*/
+      //Hacky... but it works at least.
+      for (Player player : etc.getServer().getPlayerList()) {
+          ay localay = this;
+          ComplexBlock block = null;
+          if (localay instanceof hx) {
+              block = new Chest((hx) localay);
+          } else if (localay instanceof ds) {
+              block = new Furnace((ds) localay);
+          } else if (localay instanceof ji) {
+              block = new Sign((ji) localay);
+          }
+          if (block != null) {
+              if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, new Object[]{player.getUser(), block})) {
+                  player.getUser().a.b.a(new jc(this.b, this.c, this.d, this));
+              } else {
+                  ay toSend = null;
+                  if (localay instanceof hx) {
+                      toSend = new hx();
+                  } else if (localay instanceof ds) {
+                      toSend = new ds();
+                  } else if (localay instanceof ji) {
+                      toSend = new ji();
+                  }
+                  toSend.b = b;
+                  toSend.c = c;
+                  toSend.d = d;
+                  player.getUser().a.b.a(new jc(this.b, this.c, this.d, toSend));
+              }
+          } else {
+              player.getUser().a.b.a(new jc(this.b, this.c, this.d, this));
+          }
+      }
   }
 
   static
