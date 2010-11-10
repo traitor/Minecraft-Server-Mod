@@ -3,7 +3,7 @@
  * @author James
  */
 public class BaseEntity {
-    jt entity;
+    jv entity;
 
     /**
      * Returns the ID for this mob
