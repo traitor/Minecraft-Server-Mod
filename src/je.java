@@ -291,9 +291,9 @@ public class je extends ey implements eu {
 			if (i3 > i4)
 				i4 = i3;
 			if ((i4 > etc.getInstance().getSpawnProtectionSize()) || (bool)) {
-				hj localhj2 = paramfx.a >= 0 ? new hj(paramfx.a) : null;
-				
-				Block blockPlaced = new Block(localhj2 != null ? localhj2.c : localhj2.a, m, n, i1);
+	            hj localhj = paramfx.a >= 0 ? new hj(paramfx.a) : null;
+	            Block blockPlaced = new Block(localhj != null ? localhj.c : paramfx.a, m, n, i1);
+	            
 	            if (paramfx.e == 0) {
 	                blockPlaced.setY(blockPlaced.getY() - 1);
 	            } else if (paramfx.e == 1) {
@@ -311,13 +311,13 @@ public class je extends ey implements eu {
 	            blockClicked.setFaceClicked(Block.Face.fromId(paramfx.e));
 	            
 	            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, new Object[]{e, blockPlaced, blockClicked, paramfx.a})) {
-	            	if(localhj2 != null){
-	            		if (!etc.getInstance().isOnItemBlacklist(localhj2.c) || bool) 
-	            			this.e.c.a(this.e, this.d.e, localhj2, m, n, i1, i2);
+	            	if(localhj != null){
+	            		if (!etc.getInstance().isOnItemBlacklist(localhj.c) || bool) 
+	            			this.e.c.a(this.e, this.d.e, localhj, m, n, i1, i2);
 	            	}
 	            	// is this right ?
 	            	else
-	            		this.e.c.a(this.e, this.d.e, localhj2, m, n, i1, i2);
+	            		this.e.c.a(this.e, this.d.e, localhj, m, n, i1, i2);
 	            }
 			}
 
