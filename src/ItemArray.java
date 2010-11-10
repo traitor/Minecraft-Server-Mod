@@ -1,5 +1,5 @@
 /**
- * ItemArray.java - Interface to hh[] so I don't have to copy+paste
+ * ItemArray.java - Interface to jh[] so I don't have to copy+paste
  * this a bunch of times
  * @author James
  */
