@@ -24,7 +24,7 @@ public class Server {
      * @param msg Message text to send
      */
     public void messageAll(String msg) {
-        this.server.f.a(new be(msg));
+        this.server.f.a(new bg(msg));
     }
 
     /**
@@ -118,11 +118,11 @@ public class Server {
      * @return
      */
     public Player matchPlayer(String name) {
-        eo player = null;
+        ep player = null;
         boolean found = false;
         if (("`" + server.f.c().toUpperCase() + "`").split(name.toUpperCase()).length == 2) {
             for (int i = 0; i < server.f.b.size() && !found; ++i) {
-                eo localeo = (eo) server.f.b.get(i);
+                ep localeo = (ep) server.f.b.get(i);
                 if (("`" + localeo.ar.toUpperCase() + "`").split(name.toUpperCase()).length == 2) {
                     player = localeo;
                     found = true;
@@ -131,7 +131,7 @@ public class Server {
         } else if (("`" + server.f.c() + "`").split(name).length > 2) {
             // Too many partial matches.
             for (int i = 0; i < server.f.b.size() && !found; ++i) {
-                eo localeo = (eo) server.f.b.get(i);
+                ep localeo = (ep) server.f.b.get(i);
                 if (localeo.ar.equalsIgnoreCase(name)) {
                     player = localeo;
                     found = true;
@@ -147,7 +147,7 @@ public class Server {
      * @return
      */
     public Player getPlayer(String name) {
-        eo user = server.f.h(name);
+        ep user = server.f.h(name);
         return user == null ? null : user.getPlayer();
     }
 
@@ -158,7 +158,7 @@ public class Server {
     public List<Player> getPlayerList() {
         List<Player> toRet = new ArrayList<Player>();
         for (Object o : server.f.b) {
-            toRet.add(((eo) o).getPlayer());
+            toRet.add(((ep) o).getPlayer());
         }
         return toRet;
     }
@@ -170,8 +170,8 @@ public class Server {
     public List<Mob> getMobList() {
         List<Mob> toRet = new ArrayList<Mob>();
         for (Object o : server.e.b) {
-            if (o instanceof gz) {
-                toRet.add(new Mob((gz) o));
+            if (o instanceof hb) {
+                toRet.add(new Mob((hb) o));
             }
         }
         return toRet;
@@ -231,7 +231,7 @@ public class Server {
      */
     public boolean setBlockData(int x, int y, int z, int data) {
         boolean toRet = server.e.c(x, y, z, data);
-        etc.getMCServer().f.a(new fi(x, y, z, etc.getMCServer().e));
+        etc.getMCServer().f.a(new fj(x, y, z, etc.getMCServer().e));
         ComplexBlock block = getComplexBlock(x, y, z);
         if (block != null) {
             block.update();
@@ -280,14 +280,14 @@ public class Server {
      * @return complex block
      */
     public ComplexBlock getComplexBlock(int x, int y, int z) {
-        av localav = server.e.k(x, y, z);
+        ay localav = server.e.k(x, y, z);
         if (localav != null) {
-            if (localav instanceof hv) {
-                return new Chest((hv) localav);
-            } else if (localav instanceof jg) {
-                return new Sign((jg) localav);
-            } else if (localav instanceof dr) {
-                return new Furnace((dr) localav);
+            if (localav instanceof hx) {
+                return new Chest((hx) localav);
+            } else if (localav instanceof ji) {
+                return new Sign((ji) localav);
+            } else if (localav instanceof ds) {
+                return new Furnace((ds) localav);
             }
         }
         return null;
@@ -298,6 +298,9 @@ public class Server {
     }
 
     public void dropItem(double x, double y, double z, int itemId) {
-        server.e.a(new gf(server.e, x, y, z, new hh(fw.n[itemId])));
+    	if(itemId < 256)
+    		server.e.a(new gh(server.e, x, y, z, new hj(fy.m[itemId])));
+    	else
+    		server.e.a(new gh(server.e, x, y, z, new hj(itemId,1)));
     }
 }
