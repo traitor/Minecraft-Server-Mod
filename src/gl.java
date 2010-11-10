@@ -87,7 +87,7 @@ public class gl {
             return null;
         }
 
-        eo temp = new eo(this.c, this.c.e, paramString1, new jo(this.c.e));
+        eo temp = new eo(this.c, this.c.e, paramString1, new jq(this.c.e));
         Player player = temp.getPlayer();
 
         String ip = paramfn.b.b().toString().split(":")[0].substring(1);
