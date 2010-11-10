@@ -41,6 +41,10 @@ public class etc {
     private boolean showUnknownCommand = true;
     private int version = 1; //Version is meant to be loaded from the file, this stays as 1.
     private String driver, username, password, db;
+    
+    private boolean autoUpdateMCServer;
+
+
 
     private etc() {
         commands.put("/help", "[Page] - Shows a list of commands. 7 per page.");
@@ -105,6 +109,7 @@ public class etc {
             saveHomes = properties.getBoolean("save-homes", true);
             whitelistEnabled = properties.getBoolean("whitelist", false);
             whitelistMessage = properties.getString("whitelist-message", "Not on whitelist.");
+            autoUpdateMCServer = properties.getBoolean("autoupdate-minecraft_server", true);
             if (dataSourceType.equalsIgnoreCase("flatfile")) {
                 usersLoc = properties.getString("admintxtlocation", "users.txt");
                 kitsLoc = properties.getString("kitstxtlocation", "kits.txt");
@@ -840,5 +845,21 @@ public class etc {
      */
     public static Connection getSQLConnection() {
         return getInstance()._getSQLConnection();
+    }
+    
+    /**
+     * Returns if the server should try and update minecraft_server.jar automatically
+     * @return
+     */
+    public boolean isAutoUpdateMCServer() {
+        return autoUpdateMCServer;
+    }
+
+    /**
+     * Set if the server should try and update minecraft_server.jar automatically
+     * @param autoUpdateMCServer
+     */
+    public void setAutoUpdateMCServer(boolean autoUpdateMCServer) {
+        this.autoUpdateMCServer = autoUpdateMCServer;
     }
 }
