@@ -3,13 +3,13 @@
  * @author James
  */
 public class Sign implements ComplexBlock {
-    private jg sign;
+    private ji sign;
 
     /**
      * Creates a sign interface
      * @param sign
      */
-    public Sign(jg sign) {
+    public Sign(ji sign) {
         this.sign = sign;
     }
 
