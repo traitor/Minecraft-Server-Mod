@@ -20,7 +20,7 @@ public class Inventory extends ItemArray {
          */
         Equipment
     }
-    private eo user;
+    private ep user;
     private Type type;
 
     /**
@@ -92,12 +92,12 @@ public class Inventory extends ItemArray {
         user.a.d();
     }
 
-    public hh[] getArray() {
+    public hj[] getArray() {
         switch (type) {
             case Inventory: return user.ak.a;
             case CraftingTable: return user.ak.c;
             case Equipment: return user.ak.b;
         }
-        return new hh[0];
+        return new hj[0];
     }
 }
