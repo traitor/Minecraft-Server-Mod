@@ -143,6 +143,40 @@ public class gn {
         return new ep(this.c, this.c.e, paramString1, new jq(this.c.e));
     }
 
+    /**
+     * Returns the list of bans
+     * @return
+     */
+    public String getBans() {
+        StringBuilder builder = new StringBuilder();
+        int l = 0;
+        for (Object o : f) {
+            if (l > 0) {
+                builder.append(", ");
+            }
+            builder.append(o);
+            l++;
+        }
+        return builder.toString();
+    }
+
+    /**
+     * Returns the list of IP bans
+     * @return
+     */
+    public String getIpBans() {
+        StringBuilder builder = new StringBuilder();
+        int l = 0;
+        for (Object o : g) {
+            if (l > 0) {
+                builder.append(", ");
+            }
+            builder.append(o);
+            l++;
+        }
+        return builder.toString();
+    }
+
     public void b() {
         this.d.a();
     }
