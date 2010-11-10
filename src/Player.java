@@ -6,7 +6,7 @@ import java.util.ArrayList;
  */
 public class Player extends BaseEntity {
 
-    private eo user;
+    private ep user;
     private int id = -1;
     private String prefix = "";
     private String[] commands = new String[]{""};
@@ -73,14 +73,14 @@ public class Player extends BaseEntity {
      */
     public void giveItemDrop(int itemId, int amount) {
         if (amount == -1) {
-            user.a(new hh(itemId, 255));
+            user.a(new hj(itemId, 255));
         } else {
             int temp = amount;
             do {
                 if (temp - 64 >= 64) {
-                    user.a(new hh(itemId, 64));
+                    user.a(new hj(itemId, 64));
                 } else {
-                    user.a(new hh(itemId, temp));
+                    user.a(new hj(itemId, temp));
                 }
                 temp -= 64;
             } while (temp > 0);
@@ -473,7 +473,7 @@ public class Player extends BaseEntity {
      * Gets the actual user class.
      * @return
      */
-    public eo getUser() {
+    public ep getUser() {
         return user;
     }
 
@@ -481,7 +481,7 @@ public class Player extends BaseEntity {
      * Sets the user. Don't use this.
      * @param user
      */
-    public void setUser(eo user) {
+    public void setUser(ep user) {
         this.user = user;
         this.entity = user;
         this.inventory = new Inventory(this, Inventory.Type.Inventory);
