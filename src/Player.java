@@ -364,6 +364,10 @@ public class Player extends BaseEntity {
         this.groups.add(group);
     }
 
+    public void removeGroup(String group) {
+        this.groups.remove(group);
+    }
+
     /**
      * Returns the sql ID.
      * @return

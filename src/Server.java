@@ -294,10 +294,18 @@ public class Server {
     }
 
     public void dropItem(Location loc, int itemId) {
-        dropItem(loc.x, loc.y, loc.z, itemId);
+        dropItem(loc.x, loc.y, loc.z, itemId, 1);
     }
 
     public void dropItem(double x, double y, double z, int itemId) {
-        server.e.a(new gf(server.e, x, y, z, new hh(fw.n[itemId])));
+        dropItem(x, y, z, itemId, 1);
+    }
+
+    public void dropItem(Location loc, int itemId, int quantity) {
+        dropItem(loc.x, loc.y, loc.z, itemId, quantity);
+    }
+
+    public void dropItem(double x, double y, double z, int itemId, int quantity) {
+        server.e.a(new gf(server.e, x, y, z, new hh(fw.n[itemId], quantity)));
     }
 }
