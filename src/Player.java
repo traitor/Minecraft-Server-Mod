@@ -1,12 +1,14 @@
+
 import java.util.ArrayList;
 
 /**
  * Player.java - Interface for eo so mods don't have to update often.
+ * 
  * @author James
  */
 public class Player extends BaseEntity {
 
-    private eo user;
+    private ep user;
     private int id = -1;
     private String prefix = "";
     private String[] commands = new String[]{""};
@@ -26,6 +28,7 @@ public class Player extends BaseEntity {
 
     /**
      * Kicks player with the specified reason
+     * 
      * @param reason
      */
     public void kick(String reason) {
@@ -34,6 +37,7 @@ public class Player extends BaseEntity {
 
     /**
      * Sends a message to the player
+     * 
      * @param message
      */
     public void sendMessage(String message) {
@@ -42,6 +46,7 @@ public class Player extends BaseEntity {
 
     /**
      * Gives an item to the player
+     * 
      * @param item
      */
     public void giveItem(Item item) {
@@ -50,6 +55,7 @@ public class Player extends BaseEntity {
 
     /**
      * Gives an item to the player
+     * 
      * @param itemId
      * @param amount
      */
@@ -60,6 +66,7 @@ public class Player extends BaseEntity {
 
     /**
      * Gives the player this item by dropping it in front of them
+     * 
      * @param item
      */
     public void giveItemDrop(Item item) {
@@ -68,19 +75,20 @@ public class Player extends BaseEntity {
 
     /**
      * Gives the player this item by dropping it in front of them
+     * 
      * @param itemId
      * @param amount
      */
     public void giveItemDrop(int itemId, int amount) {
         if (amount == -1) {
-            user.a(new hh(itemId, 255));
+            user.a(new hj(itemId, 255));
         } else {
             int temp = amount;
             do {
                 if (temp - 64 >= 64) {
-                    user.a(new hh(itemId, 64));
+                    user.a(new hj(itemId, 64));
                 } else {
-                    user.a(new hh(itemId, temp));
+                    user.a(new hj(itemId, temp));
                 }
                 temp -= 64;
             } while (temp > 0);
@@ -89,6 +97,7 @@ public class Player extends BaseEntity {
 
     /**
      * Returns true if this player can use the specified command
+     * 
      * @param command
      * @return
      */
@@ -142,6 +151,7 @@ public class Player extends BaseEntity {
 
     /**
      * Checks to see if this player is in the specified group
+     * 
      * @param group
      * @return
      */
@@ -189,6 +199,7 @@ public class Player extends BaseEntity {
 
     /**
      * Returns true if this player has control over the other player
+     * 
      * @param player
      * @return true if player has control
      */
@@ -212,6 +223,7 @@ public class Player extends BaseEntity {
 
     /**
      * Returns the player's name
+     * 
      * @return
      */
     public String getName() {
@@ -220,6 +232,7 @@ public class Player extends BaseEntity {
 
     /**
      * Returns the player's current location
+     * 
      * @return
      */
     public Location getLocation() {
@@ -234,6 +247,7 @@ public class Player extends BaseEntity {
 
     /**
      * Returns the IP of this player
+     * 
      * @return
      */
     public String getIP() {
@@ -242,6 +256,7 @@ public class Player extends BaseEntity {
 
     /**
      * Returns true if this player is an admin.
+     * 
      * @return
      */
     public boolean isAdmin() {
@@ -262,6 +277,7 @@ public class Player extends BaseEntity {
 
     /**
      * Don't use this! Use isAdmin
+     * 
      * @return
      */
     public boolean getAdmin() {
@@ -270,6 +286,7 @@ public class Player extends BaseEntity {
 
     /**
      * Sets whether or not this player is an administrator
+     * 
      * @param admin
      */
     public void setAdmin(boolean admin) {
@@ -278,6 +295,7 @@ public class Player extends BaseEntity {
 
     /**
      * Returns false if this player can not modify terrain, edit chests, etc.
+     * 
      * @return
      */
     public boolean canBuild() {
@@ -305,6 +323,7 @@ public class Player extends BaseEntity {
 
     /**
      * Don't use this, use canBuild()
+     * 
      * @return
      */
     public boolean canModifyWorld() {
@@ -313,6 +332,7 @@ public class Player extends BaseEntity {
 
     /**
      * Sets whether or not this player can modify the world terrain
+     * 
      * @param canModifyWorld
      */
     public void setCanModifyWorld(boolean canModifyWorld) {
@@ -321,6 +341,7 @@ public class Player extends BaseEntity {
 
     /**
      * Set allowed commands
+     * 
      * @return
      */
     public String[] getCommands() {
@@ -329,6 +350,7 @@ public class Player extends BaseEntity {
 
     /**
      * Sets this player's allowed commands
+     * 
      * @param commands
      */
     public void setCommands(String[] commands) {
@@ -337,35 +359,46 @@ public class Player extends BaseEntity {
 
     /**
      * Returns this player's groups
+     * 
      * @return
      */
     public String[] getGroups() {
-	String[] strGroups = new String[groups.size()];
-	groups.toArray(strGroups);
+        String[] strGroups = new String[groups.size()];
+        groups.toArray(strGroups);
         return strGroups;
     }
 
     /**
      * Sets this player's groups
+     * 
      * @param groups
      */
     public void setGroups(String[] groups) {
         this.groups.clear();
-        for (String s: groups)
-            if (s.length() > 0)
+        for (String s : groups) {
+            if (s.length() > 0) {
                 this.groups.add(s);
+            }
+        }
     }
 
     /**
      * Adds the player to the specified group
-     * @param group group to add player to
+     * 
+     * @param group
+     *            group to add player to
      */
     public void addGroup(String group) {
         this.groups.add(group);
     }
 
+    public void removeGroup(String group) {
+        this.groups.remove(group);
+    }
+
     /**
      * Returns the sql ID.
+     * 
      * @return
      */
     public int getSqlId() {
@@ -374,6 +407,7 @@ public class Player extends BaseEntity {
 
     /**
      * Sets the sql ID. Don't touch this.
+     * 
      * @param id
      */
     public void setSqlId(int id) {
@@ -383,6 +417,7 @@ public class Player extends BaseEntity {
     /**
      * If the user can ignore restrictions this will return true. Things like
      * item amounts and such are unlimited, etc.
+     * 
      * @return
      */
     public boolean canIgnoreRestrictions() {
@@ -403,6 +438,7 @@ public class Player extends BaseEntity {
 
     /**
      * Don't use. Use canIgnoreRestrictions()
+     * 
      * @return
      */
     public boolean ignoreRestrictions() {
@@ -411,6 +447,7 @@ public class Player extends BaseEntity {
 
     /**
      * Sets ignore restrictions
+     * 
      * @param ignoreRestrictions
      */
     public void setIgnoreRestrictions(boolean ignoreRestrictions) {
@@ -419,6 +456,7 @@ public class Player extends BaseEntity {
 
     /**
      * Returns allowed IPs
+     * 
      * @return
      */
     public String[] getIps() {
@@ -427,6 +465,7 @@ public class Player extends BaseEntity {
 
     /**
      * Sets allowed IPs
+     * 
      * @param ips
      */
     public void setIps(String[] ips) {
@@ -435,6 +474,7 @@ public class Player extends BaseEntity {
 
     /**
      * Returns the correct color/prefix for this player
+     * 
      * @return
      */
     public String getColor() {
@@ -455,6 +495,7 @@ public class Player extends BaseEntity {
 
     /**
      * Returns the prefix. NOTE: Don't use this, use getColor() instead.
+     * 
      * @return
      */
     public String getPrefix() {
@@ -463,6 +504,7 @@ public class Player extends BaseEntity {
 
     /**
      * Sets the prefix
+     * 
      * @param prefix
      */
     public void setPrefix(String prefix) {
@@ -471,17 +513,19 @@ public class Player extends BaseEntity {
 
     /**
      * Gets the actual user class.
+     * 
      * @return
      */
-    public eo getUser() {
+    public ep getUser() {
         return user;
     }
 
     /**
      * Sets the user. Don't use this.
+     * 
      * @param user
      */
-    public void setUser(eo user) {
+    public void setUser(ep user) {
         this.user = user;
         this.entity = user;
         this.inventory = new Inventory(this, Inventory.Type.Inventory);
@@ -495,16 +539,16 @@ public class Player extends BaseEntity {
 
     /**
      * This doesn't work and only screws things up.
+     * 
      * @param health
      */
     public void setHealth(int health) {
-        //Do nothing. Setting health fucks shit up on the server.
+        // Do nothing. Setting health fucks shit up on the server.
     }
-
-
 
     /**
      * Returns true if the player is muted
+     * 
      * @return
      */
     public boolean isMuted() {
@@ -513,6 +557,7 @@ public class Player extends BaseEntity {
 
     /**
      * Toggles mute
+     * 
      * @return
      */
     public boolean toggleMute() {
@@ -522,6 +567,7 @@ public class Player extends BaseEntity {
 
     /**
      * Checks to see if this player is in any groups
+     * 
      * @return true if this player is in any group
      */
     public boolean hasNoGroups() {
@@ -536,6 +582,7 @@ public class Player extends BaseEntity {
 
     /**
      * Returns item id in player's hand
+     * 
      * @return
      */
     public int getItemInHand() {
@@ -544,6 +591,7 @@ public class Player extends BaseEntity {
 
     /**
      * Returns this player's inventory
+     * 
      * @return inventory
      */
     public Inventory getInventory() {
@@ -552,6 +600,7 @@ public class Player extends BaseEntity {
 
     /**
      * Returns this player's crafting table (2x2)
+     * 
      * @return inventory
      */
     public Inventory getCraftingTable() {
@@ -560,6 +609,7 @@ public class Player extends BaseEntity {
 
     /**
      * Returns this player's equipment
+     * 
      * @return inventory
      */
     public Inventory getEquipment() {

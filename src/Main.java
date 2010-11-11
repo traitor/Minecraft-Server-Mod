@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,10 +22,10 @@ public class Main {
 
         if (checkForUpdate()) {
             System.out.println("Update found.");
-            //derp.
+            // derp.
         }
 
-        //My mod doesn't work with gui.
+        // My mod doesn't work with gui.
         try {
             net.minecraft.server.MinecraftServer.main(args);
         } catch (Throwable t) {
