@@ -5,6 +5,7 @@ import net.minecraft.server.MinecraftServer;
 
 /**
  * Server.java - Interface to server stuff
+ * 
  * @author James
  */
 public class Server {
@@ -13,6 +14,7 @@ public class Server {
 
     /**
      * Creates a server
+     * 
      * @param server
      */
     public Server(MinecraftServer server) {
@@ -21,14 +23,17 @@ public class Server {
 
     /**
      * Sends a message to all users
-     * @param msg Message text to send
+     * 
+     * @param msg
+     *            Message text to send
      */
     public void messageAll(String msg) {
-        this.server.f.a(new be(msg));
+        this.server.f.a(new bg(msg));
     }
 
     /**
      * Uses the specified console command
+     * 
      * @param command
      */
     public void useConsoleCommand(String command) {
@@ -37,8 +42,11 @@ public class Server {
 
     /**
      * Uses the specified console command
-     * @param command command to use
-     * @param player player to use command as
+     * 
+     * @param command
+     *            command to use
+     * @param player
+     *            player to use command as
      */
     public void useConsoleCommand(String command, Player player) {
         server.a(command, player.getUser().a);
@@ -46,8 +54,11 @@ public class Server {
 
     /**
      * Starts a timer using the built-in timer system.
-     * @param uniqueString must be unique identifier for this timer
-     * @param time time till it expires (6000 roughly equals 5 minutes)
+     * 
+     * @param uniqueString
+     *            must be unique identifier for this timer
+     * @param time
+     *            time till it expires (6000 roughly equals 5 minutes)
      */
     public void setTimer(String uniqueString, int time) {
         MinecraftServer.b.put(uniqueString, time);
@@ -55,7 +66,9 @@ public class Server {
 
     /**
      * Check to see if your timer has expired yet.
-     * @param uniqueString unique identifier
+     * 
+     * @param uniqueString
+     *            unique identifier
      * @return false if timer has expired
      */
     public boolean isTimerExpired(String uniqueString) {
@@ -64,6 +77,7 @@ public class Server {
 
     /**
      * Returns actual server time (-2^63 to 2^63-1)
+     * 
      * @return time server time
      */
     public long getTime() {
@@ -72,6 +86,7 @@ public class Server {
 
     /**
      * Returns current server time (0-24000)
+     * 
      * @return time server time
      */
     public long getRelativeTime() {
@@ -85,7 +100,9 @@ public class Server {
 
     /**
      * Sets the actual server time
-     * @param time time (-2^63 to 2^63-1)
+     * 
+     * @param time
+     *            time (-2^63 to 2^63-1)
      */
     public void setTime(long time) {
         server.e.e = time;
@@ -93,7 +110,9 @@ public class Server {
 
     /**
      * Sets the current server time
-     * @param time time (0-24000)
+     * 
+     * @param time
+     *            time (0-24000)
      */
     public void setRelativeTime(long time) {
         long margin = (time - server.e.e) % 24000;
@@ -106,6 +125,7 @@ public class Server {
 
     /**
      * Returns the actual Minecraft Server
+     * 
      * @return
      */
     public MinecraftServer getMCServer() {
@@ -114,15 +134,16 @@ public class Server {
 
     /**
      * Tries to match a character's name.
+     * 
      * @param name
      * @return
      */
     public Player matchPlayer(String name) {
-        eo player = null;
+        ep player = null;
         boolean found = false;
         if (("`" + server.f.c().toUpperCase() + "`").split(name.toUpperCase()).length == 2) {
             for (int i = 0; i < server.f.b.size() && !found; ++i) {
-                eo localeo = (eo) server.f.b.get(i);
+                ep localeo = (ep) server.f.b.get(i);
                 if (("`" + localeo.ar.toUpperCase() + "`").split(name.toUpperCase()).length == 2) {
                     player = localeo;
                     found = true;
@@ -131,7 +152,7 @@ public class Server {
         } else if (("`" + server.f.c() + "`").split(name).length > 2) {
             // Too many partial matches.
             for (int i = 0; i < server.f.b.size() && !found; ++i) {
-                eo localeo = (eo) server.f.b.get(i);
+                ep localeo = (ep) server.f.b.get(i);
                 if (localeo.ar.equalsIgnoreCase(name)) {
                     player = localeo;
                     found = true;
@@ -143,35 +164,38 @@ public class Server {
 
     /**
      * Returns specified player
+     * 
      * @param name
      * @return
      */
     public Player getPlayer(String name) {
-        eo user = server.f.h(name);
+        ep user = server.f.h(name);
         return user == null ? null : user.getPlayer();
     }
 
     /**
      * Returns the player list
+     * 
      * @return
      */
     public List<Player> getPlayerList() {
         List<Player> toRet = new ArrayList<Player>();
         for (Object o : server.f.b) {
-            toRet.add(((eo) o).getPlayer());
+            toRet.add(((ep) o).getPlayer());
         }
         return toRet;
     }
 
     /**
      * Returns the list of mobs in all open chunks
+     * 
      * @return
      */
     public List<Mob> getMobList() {
         List<Mob> toRet = new ArrayList<Mob>();
         for (Object o : server.e.b) {
-            if (o instanceof gz) {
-                toRet.add(new Mob((gz) o));
+            if (o instanceof hb) {
+                toRet.add(new Mob((hb) o));
             }
         }
         return toRet;
@@ -179,6 +203,7 @@ public class Server {
 
     /**
      * Get the global spawn location
+     * 
      * @return Location object for spawn
      */
     public Location getSpawnLocation() {
@@ -193,6 +218,7 @@ public class Server {
 
     /**
      * Sets the block
+     * 
      * @param block
      */
     public boolean setBlock(Block block) {
@@ -201,6 +227,7 @@ public class Server {
 
     /**
      * Returns the block at the specified location
+     * 
      * @param x
      * @param y
      * @param z
@@ -212,9 +239,13 @@ public class Server {
 
     /**
      * Returns the block data at the specified coordinates
-     * @param x x
-     * @param y y
-     * @param z z
+     * 
+     * @param x
+     *            x
+     * @param y
+     *            y
+     * @param z
+     *            z
      * @return block data
      */
     public int getBlockData(int x, int y, int z) {
@@ -223,15 +254,20 @@ public class Server {
 
     /**
      * Sets the block data at the specified coordinates
-     * @param x x
-     * @param y y
-     * @param z z
-     * @param data data
+     * 
+     * @param x
+     *            x
+     * @param y
+     *            y
+     * @param z
+     *            z
+     * @param data
+     *            data
      * @return true if it was successful
      */
     public boolean setBlockData(int x, int y, int z, int data) {
         boolean toRet = server.e.c(x, y, z, data);
-        etc.getMCServer().f.a(new fi(x, y, z, etc.getMCServer().e));
+        etc.getMCServer().f.a(new fj(x, y, z, etc.getMCServer().e));
         ComplexBlock block = getComplexBlock(x, y, z);
         if (block != null) {
             block.update();
@@ -241,6 +277,7 @@ public class Server {
 
     /**
      * Sets the block type at the specified location
+     * 
      * @param blockType
      * @param x
      * @param y
@@ -252,6 +289,7 @@ public class Server {
 
     /**
      * Returns the highest block Y
+     * 
      * @param x
      * @param z
      * @return highest block altitude
@@ -262,6 +300,7 @@ public class Server {
 
     /**
      * Returns the block type at the specified location
+     * 
      * @param x
      * @param y
      * @param z
@@ -272,32 +311,48 @@ public class Server {
     }
 
     /**
-     * Returns the complex block at the specified location. Null
-     * if there's no complex block there.
-     * @param x x
-     * @param y y
-     * @param z z
+     * Returns the complex block at the specified location. Null if there's no
+     * complex block there.
+     * 
+     * @param x
+     *            x
+     * @param y
+     *            y
+     * @param z
+     *            z
      * @return complex block
      */
     public ComplexBlock getComplexBlock(int x, int y, int z) {
-        av localav = server.e.k(x, y, z);
+        ay localav = server.e.k(x, y, z);
         if (localav != null) {
-            if (localav instanceof hv) {
-                return new Chest((hv) localav);
-            } else if (localav instanceof jg) {
-                return new Sign((jg) localav);
-            } else if (localav instanceof dr) {
-                return new Furnace((dr) localav);
+            if (localav instanceof hx) {
+                return new Chest((hx) localav);
+            } else if (localav instanceof ji) {
+                return new Sign((ji) localav);
+            } else if (localav instanceof ds) {
+                return new Furnace((ds) localav);
             }
         }
         return null;
     }
 
     public void dropItem(Location loc, int itemId) {
-        dropItem(loc.x, loc.y, loc.z, itemId);
+        dropItem(loc.x, loc.y, loc.z, itemId, 1);
     }
 
     public void dropItem(double x, double y, double z, int itemId) {
-        server.e.a(new gf(server.e, x, y, z, new hh(fw.n[itemId])));
+        dropItem(x, y, z, itemId, 1);
+    }
+
+    public void dropItem(Location loc, int itemId, int quantity) {
+        dropItem(loc.x, loc.y, loc.z, itemId, quantity);
+    }
+
+    public void dropItem(double x, double y, double z, int itemId, int quantity) {
+        if (itemId < 256) {
+            server.e.a(new gh(server.e, x, y, z, new hj(fy.m[itemId])));
+        } else {
+            server.e.a(new gh(server.e, x, y, z, new hj(itemId, 1)));
+        }
     }
 }

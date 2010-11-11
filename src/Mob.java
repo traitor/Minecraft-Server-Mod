@@ -1,31 +1,41 @@
+
 /**
  * Mob.java - Interface for mobs
+ * 
  * @author James
  */
 public class Mob extends BaseEntity {
+
     /**
      * Creates a mob interface
-     * @param mob name of mob
+     * 
+     * @param mob
+     *            name of mob
      */
     public Mob(String mob) {
-        this.entity = (jt) hj.a(mob, etc.getMCServer().e);
+        this.entity = (jv) hl.a(mob, etc.getMCServer().e);
     }
 
     /**
      * Creates a mob interface
-     * @param mob name of mob
-     * @param location location of mob
+     * 
+     * @param mob
+     *            name of mob
+     * @param location
+     *            location of mob
      */
     public Mob(String mob, Location location) {
-        this.entity = (jt) hj.a(mob, etc.getMCServer().e);
+        this.entity = (jv) hl.a(mob, etc.getMCServer().e);
         teleportTo(location);
     }
 
     /**
      * Creates a mob interface
-     * @param mob name of mob
+     * 
+     * @param mob
+     *            name of mob
      */
-    public Mob(gz mob) {
+    public Mob(hb mob) {
         this.entity = mob;
     }
 
@@ -38,28 +48,30 @@ public class Mob extends BaseEntity {
 
     /**
      * Spawns this mob with a rider
+     * 
      * @param rider
      */
     public void spawn(Mob rider) {
-        el localel = etc.getMCServer().e;
+        em localem = etc.getMCServer().e;
 
         entity.c(getX() + 0.5f, getY(), getZ() + 0.5f, getRotation(), 0f);
-        localel.a(entity);
+        localem.a(entity);
 
         if (rider != null) {
-            jt mob2 = rider.getMob();
+            jv mob2 = rider.getMob();
             mob2.c(getX(), getY(), getZ(), getRotation(), 0f);
-            localel.a(mob2);
+            localem.a(mob2);
             mob2.e(entity);
         }
     }
 
     /**
      * Returns this mob's name
+     * 
      * @return name
      */
     public String getName() {
-        return hj.b(entity);
+        return hl.b(entity);
     }
 
     /**
@@ -71,26 +83,31 @@ public class Mob extends BaseEntity {
 
     public void setHealth(int health) {
         super.setHealth(health);
-        if (health <= 0)
+        if (health <= 0) {
             dropLoot();
+        }
     }
 
     /**
      * Returns the actual mob
+     * 
      * @return
      */
-    public jt getMob() {
+    public jv getMob() {
         return entity;
     }
 
     /**
      * Checks to see if the mob is a valid mob
-     * @param mob the mob to check
+     * 
+     * @param mob
+     *            the mob to check
      * @return true of mob is valid
      */
     public static boolean isValid(String mob) {
-        if (mob == null)
+        if (mob == null) {
             return false;
-        return hj.a(mob, etc.getMCServer().e) instanceof jt;
+        }
+        return hl.a(mob, etc.getMCServer().e) instanceof jv;
     }
 }

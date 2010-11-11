@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -11,13 +12,16 @@ import net.minecraft.server.MinecraftServer;
 
 /**
  * PluginLoader.java - Used to load plugins, toggle them, etc.
+ * 
  * @author James
  */
 public class PluginLoader {
+
     /**
      * Hook - Used for adding a listener to listen on specific hooks
      */
     public enum Hook {
+
         /**
          * Calls onLoginChecks
          */
@@ -98,10 +102,10 @@ public class PluginLoader {
          * Calls onTeleport
          */
         TELEPORT,
-		/**
+        /**
          * Calls onBlockBreak
          */
-		BLOCK_BROKEN,
+        BLOCK_BROKEN,
         /**
          * Unused.
          */
@@ -116,7 +120,9 @@ public class PluginLoader {
 
     /**
      * Creates a plugin loader
-     * @param server server to use
+     * 
+     * @param server
+     *            server to use
      */
     public PluginLoader(MinecraftServer server) {
         properties = new PropertiesFile("server.properties");
@@ -142,18 +148,22 @@ public class PluginLoader {
 
     /**
      * Loads the specified plugin
-     * @param fileName file name of plugin to load
+     * 
+     * @param fileName
+     *            file name of plugin to load
      */
     public void loadPlugin(String fileName) {
         if (getPlugin(fileName) != null) {
-            return; //Already exists.
+            return; // Already exists.
         }
         load(fileName);
     }
 
     /**
      * Reloads the specified plugin
-     * @param fileName file name of plugin to reload
+     * 
+     * @param fileName
+     *            file name of plugin to reload
      */
     public void reloadPlugin(String fileName) {
         /* Not sure exactly how much of this is necessary */
@@ -168,8 +178,9 @@ public class PluginLoader {
             for (List<PluginRegisteredListener> regListeners : listeners) {
                 Iterator<PluginRegisteredListener> iter = regListeners.iterator();
                 while (iter.hasNext()) {
-                    if (iter.next().getPlugin() == toNull)
+                    if (iter.next().getPlugin() == toNull) {
                         iter.remove();
+                    }
                 }
             }
         }
@@ -203,7 +214,9 @@ public class PluginLoader {
 
     /**
      * Returns the specified plugin
-     * @param name name of plugin
+     * 
+     * @param name
+     *            name of plugin
      * @return plugin
      */
     public Plugin getPlugin(String name) {
@@ -219,6 +232,7 @@ public class PluginLoader {
 
     /**
      * Returns a string list of plugins
+     * 
      * @return String of plugins
      */
     public String getPluginList() {
@@ -241,7 +255,9 @@ public class PluginLoader {
 
     /**
      * Enables the specified plugin (Or adds and enables it)
-     * @param name name of plugin to enable
+     * 
+     * @param name
+     *            name of plugin to enable
      * @return whether or not this plugin was enabled
      */
     public boolean enablePlugin(String name) {
@@ -251,7 +267,7 @@ public class PluginLoader {
                 plugin.toggleEnabled();
                 plugin.enable();
             }
-        } else { //New plugin, perhaps?
+        } else { // New plugin, perhaps?
             File file = new File("plugins/" + name + ".jar");
             if (file.exists()) {
                 loadPlugin(name);
@@ -264,7 +280,9 @@ public class PluginLoader {
 
     /**
      * Disables specified plugin
-     * @param name name of the plugin to disable
+     * 
+     * @param name
+     *            name of the plugin to disable
      */
     public void disablePlugin(String name) {
         Plugin plugin = getPlugin(name);
@@ -278,6 +296,7 @@ public class PluginLoader {
 
     /**
      * Returns the server
+     * 
      * @return server
      */
     public Server getServer() {
@@ -286,8 +305,11 @@ public class PluginLoader {
 
     /**
      * Calls a plugin hook.
-     * @param h Hook to call
-     * @param parameters Parameters of call
+     * 
+     * @param h
+     *            Hook to call
+     * @param parameters
+     *            Parameters of call
      * @return Object returned by call
      */
     public Object callHook(Hook h, Object[] parameters) {
@@ -312,18 +334,18 @@ public class PluginLoader {
                                 }
                                 break;
                             case LOGIN:
-                                listener.onLogin(((eo) parameters[0]).getPlayer());
+                                listener.onLogin(((ep) parameters[0]).getPlayer());
                                 break;
                             case DISCONNECT:
-                                listener.onDisconnect(((eo) parameters[0]).getPlayer());
+                                listener.onDisconnect(((ep) parameters[0]).getPlayer());
                                 break;
                             case CHAT:
-                                if (listener.onChat(((eo) parameters[0]).getPlayer(), (String) parameters[1])) {
+                                if (listener.onChat(((ep) parameters[0]).getPlayer(), (String) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
                             case COMMAND:
-                                if (listener.onCommand(((eo) parameters[0]).getPlayer(), (String[]) parameters[1])) {
+                                if (listener.onCommand(((ep) parameters[0]).getPlayer(), (String[]) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
@@ -333,67 +355,67 @@ public class PluginLoader {
                                 }
                                 break;
                             case BAN:
-                                listener.onBan(((eo) parameters[0]).getPlayer(), ((eo) parameters[1]).getPlayer(), (String) parameters[2]);
+                                listener.onBan(((ep) parameters[0]).getPlayer(), ((ep) parameters[1]).getPlayer(), (String) parameters[2]);
                                 break;
                             case IPBAN:
-                                listener.onIpBan(((eo) parameters[0]).getPlayer(), ((eo) parameters[1]).getPlayer(), (String) parameters[2]);
+                                listener.onIpBan(((ep) parameters[0]).getPlayer(), ((ep) parameters[1]).getPlayer(), (String) parameters[2]);
                                 break;
                             case KICK:
-                                listener.onKick(((eo) parameters[0]).getPlayer(), ((eo) parameters[1]).getPlayer(), (String) parameters[2]);
+                                listener.onKick(((ep) parameters[0]).getPlayer(), ((ep) parameters[1]).getPlayer(), (String) parameters[2]);
                                 break;
                             case BLOCK_CREATED:
-                                if (listener.onBlockCreate(((eo) parameters[0]).getPlayer(), (Block) parameters[1], (Block) parameters[2], (Integer) parameters[3])) {
+                                if (listener.onBlockCreate(((ep) parameters[0]).getPlayer(), (Block) parameters[1], (Block) parameters[2], (Integer) parameters[3])) {
                                     toRet = true;
                                 }
                                 break;
                             case BLOCK_DESTROYED:
-                                if (listener.onBlockDestroy(((eo) parameters[0]).getPlayer(), (Block) parameters[1])) {
+                                if (listener.onBlockDestroy(((ep) parameters[0]).getPlayer(), (Block) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
                             case PLAYER_MOVE:
-                                listener.onPlayerMove(((eo) parameters[0]).getPlayer(), (Location) parameters[1], (Location) parameters[2]);
+                                listener.onPlayerMove(((ep) parameters[0]).getPlayer(), (Location) parameters[1], (Location) parameters[2]);
                                 break;
                             case ARM_SWING:
-                                listener.onArmSwing(((eo) parameters[0]).getPlayer());
+                                listener.onArmSwing(((ep) parameters[0]).getPlayer());
                                 break;
                             case INVENTORY_CHANGE:
-                                if (listener.onInventoryChange(((eo) parameters[0]).getPlayer())) {
+                                if (listener.onInventoryChange(((ep) parameters[0]).getPlayer())) {
                                     toRet = true;
                                 }
                                 break;
                             case CRAFTINVENTORY_CHANGE:
-                                if (listener.onCraftInventoryChange(((eo) parameters[0]).getPlayer())) {
+                                if (listener.onCraftInventoryChange(((ep) parameters[0]).getPlayer())) {
                                     toRet = true;
                                 }
                                 break;
                             case EQUIPMENT_CHANGE:
-                                if (listener.onEquipmentChange(((eo) parameters[0]).getPlayer())) {
+                                if (listener.onEquipmentChange(((ep) parameters[0]).getPlayer())) {
                                     toRet = true;
                                 }
                                 break;
                             case ITEM_DROP:
-                                if (listener.onItemDrop(((eo) parameters[0]).getPlayer(), (Item) parameters[1])) {
+                                if (listener.onItemDrop(((ep) parameters[0]).getPlayer(), (Item) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
                             case COMPLEX_BLOCK_CHANGE:
-                                if (listener.onComplexBlockChange(((eo) parameters[0]).getPlayer(), (ComplexBlock) parameters[1])) {
+                                if (listener.onComplexBlockChange(((ep) parameters[0]).getPlayer(), (ComplexBlock) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
                             case COMPLEX_BLOCK_SEND:
-                                if (listener.onSendComplexBlock(((eo) parameters[0]).getPlayer(), (ComplexBlock) parameters[1])) {
+                                if (listener.onSendComplexBlock(((ep) parameters[0]).getPlayer(), (ComplexBlock) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
                             case TELEPORT:
-                                if (listener.onTeleport(((eo) parameters[0]).getPlayer(), (Location) parameters[1], (Location) parameters[2])) {
+                                if (listener.onTeleport(((ep) parameters[0]).getPlayer(), (Location) parameters[1], (Location) parameters[2])) {
                                     toRet = true;
                                 }
                                 break;
                             case BLOCK_BROKEN:
-                                if (listener.onBlockBreak(((eo) parameters[0]).getPlayer(), (Block) parameters[1])) {
+                                if (listener.onBlockBreak(((ep) parameters[0]).getPlayer(), (Block) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
@@ -403,7 +425,8 @@ public class PluginLoader {
                 }
             } catch (Exception ex) {
                 log.log(Level.SEVERE, "Exception while calling plugin function", ex);
-            } catch (Throwable ex) { //The 'exception' thrown is so severe it's not even an exception!
+            } catch (Throwable ex) { // The 'exception' thrown is so severe it's
+                // not even an exception!
                 log.log(Level.SEVERE, "Throwable while calling plugin (Outdated?)", ex);
             }
         }
@@ -413,10 +436,15 @@ public class PluginLoader {
 
     /**
      * Calls a plugin hook.
-     * @param hook The hook to call on
-     * @param listener The listener to use when calling
-     * @param plugin The plugin of this listener
-     * @param priorityEnum The priority of this listener
+     * 
+     * @param hook
+     *            The hook to call on
+     * @param listener
+     *            The listener to use when calling
+     * @param plugin
+     *            The plugin of this listener
+     * @param priorityEnum
+     *            The priority of this listener
      * @return PluginRegisteredListener
      */
     public PluginRegisteredListener addListener(Hook hook, PluginListener listener, Plugin plugin, PluginListener.Priority priorityEnum) {
@@ -442,7 +470,9 @@ public class PluginLoader {
 
     /**
      * Removes the specified listener from the list of listeners
-     * @param reg listener to remove
+     * 
+     * @param reg
+     *            listener to remove
      */
     public void removeListener(PluginRegisteredListener reg) {
         List<PluginRegisteredListener> regListeners = listeners.get(reg.getHook().ordinal());

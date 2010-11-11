@@ -1,12 +1,17 @@
+
 /**
- * BaseEntity.java - Class for accessing things that all entities share - X, Y, Z, health.
+ * BaseEntity.java - Class for accessing things that all entities share - X, Y,
+ * Z, health.
+ * 
  * @author James
  */
 public class BaseEntity {
-    jt entity;
+
+    jv entity;
 
     /**
      * Returns the ID for this mob
+     * 
      * @return id
      */
     public int getId() {
@@ -15,6 +20,7 @@ public class BaseEntity {
 
     /**
      * Teleports to the provided location
+     * 
      * @param x
      * @param rotation
      * @param y
@@ -27,7 +33,9 @@ public class BaseEntity {
 
     /**
      * Teleports to the other entity
-     * @param ent entity to teleport to
+     * 
+     * @param ent
+     *            entity to teleport to
      */
     public void teleportTo(BaseEntity ent) {
         teleportTo(ent.getX(), ent.getY(), ent.getZ(), ent.getRotation(), ent.getPitch());
@@ -35,7 +43,9 @@ public class BaseEntity {
 
     /**
      * Teleports to the provided location
-     * @param location location to teleport to
+     * 
+     * @param location
+     *            location to teleport to
      */
     public void teleportTo(Location location) {
         teleportTo(location.x, location.y, location.z, location.rotX, location.rotY);
@@ -43,6 +53,7 @@ public class BaseEntity {
 
     /**
      * Returns the entity's X
+     * 
      * @return
      */
     public double getX() {
@@ -51,6 +62,7 @@ public class BaseEntity {
 
     /**
      * Sets the entity's X
+     * 
      * @param x
      */
     public void setX(double x) {
@@ -59,6 +71,7 @@ public class BaseEntity {
 
     /**
      * Returns the entity's Y
+     * 
      * @return
      */
     public double getY() {
@@ -67,6 +80,7 @@ public class BaseEntity {
 
     /**
      * Sets the entity's Y
+     * 
      * @param y
      */
     public void setY(double y) {
@@ -75,6 +89,7 @@ public class BaseEntity {
 
     /**
      * Returns the entity's Z
+     * 
      * @return
      */
     public double getZ() {
@@ -83,6 +98,7 @@ public class BaseEntity {
 
     /**
      * Sets the entity's Z
+     * 
      * @param z
      */
     public void setZ(double z) {
@@ -91,6 +107,7 @@ public class BaseEntity {
 
     /**
      * Returns the entity's pitch
+     * 
      * @return
      */
     public float getPitch() {
@@ -99,6 +116,7 @@ public class BaseEntity {
 
     /**
      * Sets the entity's pitch
+     * 
      * @param pitch
      */
     public void setPitch(float pitch) {
@@ -107,6 +125,7 @@ public class BaseEntity {
 
     /**
      * Returns the entity's rotation
+     * 
      * @return
      */
     public float getRotation() {
@@ -115,6 +134,7 @@ public class BaseEntity {
 
     /**
      * Sets the entity's rotation
+     * 
      * @param rotation
      */
     public void setRotation(float rotation) {
@@ -123,6 +143,7 @@ public class BaseEntity {
 
     /**
      * Returns this entity's health
+     * 
      * @return
      */
     public int getHealth() {
@@ -131,6 +152,7 @@ public class BaseEntity {
 
     /**
      * Sets this entity's health
+     * 
      * @param health
      */
     public void setHealth(int health) {

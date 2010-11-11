@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 /**
  * PropertiesFile.java - Used for accessing and creating .properties files
+ * 
  * @author James
  */
 public final class PropertiesFile {
@@ -19,6 +20,7 @@ public final class PropertiesFile {
 
     /**
      * Creates or opens a properties file using specified filename
+     * 
      * @param fileName
      */
     public PropertiesFile(String fileName) {
@@ -57,7 +59,9 @@ public final class PropertiesFile {
 
     /**
      * Checks to see if this key exists
-     * @param key the key to check
+     * 
+     * @param key
+     *            the key to check
      * @return true if key exists
      */
     public boolean keyExists(String key) {
@@ -66,7 +70,9 @@ public final class PropertiesFile {
 
     /**
      * Returns the string value of the key
-     * @param key key to retrieve value from
+     * 
+     * @param key
+     *            key to retrieve value from
      * @return value
      */
     public String getString(String key) {
@@ -75,8 +81,11 @@ public final class PropertiesFile {
 
     /**
      * Returns the string value of a key
-     * @param key the key to use
-     * @param value the default value
+     * 
+     * @param key
+     *            the key to use
+     * @param value
+     *            the default value
      * @return
      */
     public String getString(String key, String value) {
@@ -89,6 +98,7 @@ public final class PropertiesFile {
 
     /**
      * Sets the key
+     * 
      * @param key
      * @param value
      */
@@ -99,7 +109,9 @@ public final class PropertiesFile {
 
     /**
      * Returns the int value of the key
-     * @param key key to retrieve value from
+     * 
+     * @param key
+     *            key to retrieve value from
      * @return value
      */
     public int getInt(String key) {
@@ -108,6 +120,7 @@ public final class PropertiesFile {
 
     /**
      * Returns the int value of a key
+     * 
      * @param key
      * @param value
      * @return
@@ -122,6 +135,7 @@ public final class PropertiesFile {
 
     /**
      * Sets the key
+     * 
      * @param key
      * @param value
      */
@@ -132,7 +146,9 @@ public final class PropertiesFile {
 
     /**
      * Returns the long value of the key
-     * @param key key to retrieve value from
+     * 
+     * @param key
+     *            key to retrieve value from
      * @return value
      */
     public long getLong(String key) {
@@ -141,6 +157,7 @@ public final class PropertiesFile {
 
     /**
      * Returns the long value of a key
+     * 
      * @param key
      * @param value
      * @return
@@ -155,6 +172,7 @@ public final class PropertiesFile {
 
     /**
      * Sets a key
+     * 
      * @param key
      * @param value
      */
@@ -165,7 +183,9 @@ public final class PropertiesFile {
 
     /**
      * Returns the boolean value of the key
-     * @param key key to retrieve value from
+     * 
+     * @param key
+     *            key to retrieve value from
      * @return value
      */
     public boolean getBoolean(String key) {
@@ -174,6 +194,7 @@ public final class PropertiesFile {
 
     /**
      * Returns the boolean value of a key
+     * 
      * @param key
      * @param value
      * @return
@@ -188,6 +209,7 @@ public final class PropertiesFile {
 
     /**
      * Sets a key
+     * 
      * @param key
      * @param value
      */

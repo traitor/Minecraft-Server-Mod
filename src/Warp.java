@@ -2,9 +2,11 @@
 /**
  * Warp.java - Contains the stuff for a warp (Name, location, etc.). Also used
  * for homes.
+ * 
  * @author James
  */
 public class Warp {
+
     /**
      * Warp ID - Used in database transactions
      */

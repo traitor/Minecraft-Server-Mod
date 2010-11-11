@@ -11,12 +11,12 @@ import java.util.Set;
 import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 
-public class gl {
+public class gn {
 
     public static Logger a = Logger.getLogger("Minecraft");
     public List b = new ArrayList();
     private MinecraftServer c;
-    private ia d;
+    private ic d;
     private int e;
     private Set f = new HashSet();
     private Set g = new HashSet();
@@ -24,9 +24,9 @@ public class gl {
     private File i;
     private File j;
     private File k;
-    private cw l;
+    private cx l;
 
-    public gl(MinecraftServer paramMinecraftServer) {
+    public gn(MinecraftServer paramMinecraftServer) {
         etc.setServer(paramMinecraftServer);
         etc.getInstance().loadData();
         a.info("Hey0 Server Mod Build " + etc.getInstance().getVersion());
@@ -34,7 +34,7 @@ public class gl {
         this.i = paramMinecraftServer.a("banned-players.txt");
         this.j = paramMinecraftServer.a("banned-ips.txt");
         this.k = paramMinecraftServer.a("ops.txt");
-        this.d = new ia(paramMinecraftServer);
+        this.d = new ic(paramMinecraftServer);
         this.e = paramMinecraftServer.d.a("max-players", 20);
         e();
         g();
@@ -44,78 +44,76 @@ public class gl {
         j();
     }
 
-    public void a(es parames) {
-        this.l = new cw(new File(parames.t, "players"));
+    public void a(et paramet) {
+        this.l = new cx(new File(paramet.t, "players"));
     }
 
     public int a() {
         return this.d.b();
     }
 
-    public void a(eo parameo) {
-        this.b.add(parameo);
-        this.l.b(parameo);
+    public void a(ep paramep) {
+        this.b.add(paramep);
+        this.l.b(paramep);
 
-        this.c.e.A.d((int) parameo.p >> 4, (int) parameo.r >> 4);
+        this.c.e.A.d((int) paramep.p >> 4, (int) paramep.r >> 4);
 
-        while (this.c.e.a(parameo, parameo.z).size() != 0) {
-            parameo.a(parameo.p, parameo.q + 1.0D, parameo.r);
+        while (this.c.e.a(paramep, paramep.z).size() != 0) {
+            paramep.a(paramep.p, paramep.q + 1.0D, paramep.r);
         }
-        this.c.e.a(parameo);
-        this.d.a(parameo);
+        this.c.e.a(paramep);
+        this.d.a(paramep);
 
         for (String str : etc.getInstance().getMotd()) {
-            parameo.a.b(new be(str));
+            paramep.a.b(new bg(str));
         }
-        etc.getLoader().callHook(PluginLoader.Hook.LOGIN, new Object[]{parameo});
+        etc.getLoader().callHook(PluginLoader.Hook.LOGIN, new Object[]{paramep});
     }
 
-    public void b(eo parameo) {
-        this.d.c(parameo);
+    public void b(ep paramep) {
+        this.d.c(paramep);
     }
 
-    public void c(eo parameo) {
-        this.d.b(parameo);
-        this.l.a(parameo);
-        this.c.e.d(parameo);
-        this.b.remove(parameo);
+    public void c(ep paramep) {
+        this.d.b(paramep);
+        this.l.a(paramep);
+        this.c.e.d(paramep);
+        this.b.remove(paramep);
     }
 
-    public eo a(fn paramfn, String paramString1, String paramString2) {
+    public ep a(fo paramfo, String paramString1, String paramString2) {
         if (this.f.contains(paramString1.trim().toLowerCase())) {
-            paramfn.b("You are banned from this server!");
+            paramfo.b("You are banned from this server!");
             return null;
         }
 
-        eo temp = new eo(this.c, this.c.e, paramString1, new jo(this.c.e));
+        ep temp = new ep(this.c, this.c.e, paramString1, new jq(this.c.e));
         Player player = temp.getPlayer();
 
-        String ip = paramfn.b.b().toString().split(":")[0].substring(1);
+        String ip = paramfo.b.b().toString().split(":")[0].substring(1);
         if (this.g.contains(ip)) {
-            paramfn.b("Your IP address is banned from this server!");
+            paramfo.b("Your IP address is banned from this server!");
             return null;
         }
-        for (int i = 0; i < this.b.size(); ++i) {
-            eo localea = (eo) this.b.get(i);
-            if (localea.ar.equalsIgnoreCase(paramString1)) {
-                String ip2 = localea.a.b.b().toString().split(":")[0].substring(1);
+        for (int i = 0; i < this.b.size(); i++) {
+            ep localep = (ep) this.b.get(i);
+            if (localep.ar.equalsIgnoreCase(paramString1)) {
+                String ip2 = localep.a.b.b().toString().split(":")[0].substring(1);
 
                 // perhaps they timed out since they're coming from the same IP
                 if (ip2.equals(ip)) {
-                    localea.a.b("You logged in from another location.");
+                    localep.a.b("You logged in from another location.");
                 } else {
-                    paramfn.b("You are currently logged in.");
+                    paramfo.b("You are currently logged in.");
                 }
                 // ^ otherwise no.
             }
         }
-        if (etc.getInstance().isWhitelistEnabled() && !(etc.getDataSource().isUserOnWhitelist(paramString1)
-                || player.isAdmin())) {
-            paramfn.b(etc.getInstance().getWhitelistMessage());
+        if (etc.getInstance().isWhitelistEnabled() && !(etc.getDataSource().isUserOnWhitelist(paramString1) || player.isAdmin())) {
+            paramfo.b(etc.getInstance().getWhitelistMessage());
             return null;
-        } else if (this.b.size() >= this.e &&
-                !(player.isAdmin() || etc.getDataSource().isUserOnReserveList(paramString1))) {
-            paramfn.b("Server is full.");
+        } else if (this.b.size() >= this.e && !(player.isAdmin() || etc.getDataSource().isUserOnReserveList(paramString1))) {
+            paramfo.b("Server is full.");
             return null;
         }
 
@@ -127,25 +125,26 @@ public class gl {
                 }
             }
             if (kick) {
-                paramfn.b("IP doesn't match specified IP.");
+                paramfo.b("IP doesn't match specified IP.");
                 return null;
             }
         }
 
         Object obj = etc.getLoader().callHook(PluginLoader.Hook.LOGINCHECK, new Object[]{paramString1});
         if (obj instanceof String) {
-            String result = (String)obj;
+            String result = (String) obj;
             if (result != null && !result.equals("")) {
-                paramfn.b(result);
+                paramfo.b(result);
                 return null;
             }
         }
 
-        return temp;
+        return new ep(this.c, this.c.e, paramString1, new jq(this.c.e));
     }
 
     /**
      * Returns the list of bans
+     * 
      * @return
      */
     public String getBans() {
@@ -163,6 +162,7 @@ public class gl {
 
     /**
      * Returns the list of IP bans
+     * 
      * @return
      */
     public String getIpBans() {
@@ -186,10 +186,10 @@ public class gl {
         this.d.a(paramInt1, paramInt2, paramInt3);
     }
 
-    public void a(im paramim) {
+    public void a(io paramio) {
         for (int m = 0; m < this.b.size(); m++) {
-            eo localeo = (eo) this.b.get(m);
-            localeo.a.b(paramim);
+            ep localep = (ep) this.b.get(m);
+            localep.a.b(paramio);
         }
     }
 
@@ -199,7 +199,7 @@ public class gl {
             if (m > 0) {
                 str = str + ", ";
             }
-            str = str + ((eo) this.b.get(m)).ar;
+            str = str + ((ep) this.b.get(m)).ar;
         }
         return str;
     }
@@ -316,49 +316,49 @@ public class gl {
         return this.h.contains(paramString.trim().toLowerCase());
     }
 
-    public eo h(String paramString) {
+    public ep h(String paramString) {
         for (int m = 0; m < this.b.size(); m++) {
-            eo localeo = (eo) this.b.get(m);
-            if (localeo.ar.equalsIgnoreCase(paramString)) {
-                return localeo;
+            ep localep = (ep) this.b.get(m);
+            if (localep.ar.equalsIgnoreCase(paramString)) {
+                return localep;
             }
         }
         return null;
     }
 
     public void a(String paramString1, String paramString2) {
-        eo localeo = h(paramString1);
-        if (localeo != null) {
-            localeo.a.b(new be(paramString2));
+        ep localep = h(paramString1);
+        if (localep != null) {
+            localep.a.b(new bg(paramString2));
         }
     }
 
     public void i(String paramString) {
-        be localbe = new be(paramString);
+        bg localbg = new bg(paramString);
         for (int m = 0; m < this.b.size(); m++) {
-            eo localeo = (eo) this.b.get(m);
-            if (g(localeo.ar)) {
-                localeo.a.b(localbe);
+            ep localep = (ep) this.b.get(m);
+            if (g(localep.ar)) {
+                localep.a.b(localbg);
             }
         }
     }
 
-    public boolean a(String paramString, im paramim) {
-        eo localeo = h(paramString);
-        if (localeo != null) {
-            localeo.a.b(paramim);
+    public boolean a(String paramString, io paramio) {
+        ep localep = h(paramString);
+        if (localep != null) {
+            localep.a.b(paramio);
             return true;
         }
         return false;
     }
 
-    public void a(int paramInt1, int paramInt2, int paramInt3, av paramav) {
-        this.d.a(new ja(paramInt1, paramInt2, paramInt3, paramav), paramInt1, paramInt2, paramInt3);
+    public void a(int paramInt1, int paramInt2, int paramInt3, ay paramay) {
+        this.d.a(new jc(paramInt1, paramInt2, paramInt3, paramay), paramInt1, paramInt2, paramInt3);
     }
 
     public void d() {
         for (int m = 0; m < this.b.size(); m++) {
-            this.l.a((eo) this.b.get(m));
+            this.l.a((ep) this.b.get(m));
         }
     }
 }
