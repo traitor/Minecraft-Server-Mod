@@ -1,3 +1,4 @@
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,13 +9,14 @@ import java.util.Map;
 import java.util.Set;
 
 public class jl implements bt {
-    private Set  a = new HashSet();
-    private jp   b;
-    private bt   c;
-    private av   d;
-    private Map  e = new HashMap();
+
+    private Set a = new HashSet();
+    private jp b;
+    private bt c;
+    private av d;
+    private Map e = new HashMap();
     private List f = new ArrayList();
-    private et   g;
+    private et g;
 
     public jl(et paramet, av paramav, bt parambt) {
         this.b = new jp(paramet, new byte[32768], 0, 0);
@@ -35,8 +37,9 @@ public class jl implements bt {
         int i = paramInt1 * 16 + 8 - this.g.m;
         int j = paramInt2 * 16 + 8 - this.g.o;
         int k = 20;
-        if ((i < -k) || (i > k) || (j < -k) || (j > k))
+        if ((i < -k) || (i > k) || (j < -k) || (j > k)) {
             this.a.add(new ju(paramInt1, paramInt2));
+        }
     }
 
     public jp d(int paramInt1, int paramInt2) {
@@ -47,9 +50,9 @@ public class jl implements bt {
         if (localjp == null) {
             localjp = e(paramInt1, paramInt2);
             if (localjp == null) {
-                if (this.c == null)
+                if (this.c == null) {
                     localjp = this.b;
-                else {
+                } else {
                     localjp = this.c.b(paramInt1, paramInt2);
                 }
 
@@ -63,14 +66,18 @@ public class jl implements bt {
                 localjp.d();
             }
 
-            if ((!localjp.n) && (a(paramInt1 + 1, paramInt2 + 1)) && (a(paramInt1, paramInt2 + 1)) && (a(paramInt1 + 1, paramInt2)))
+            if ((!localjp.n) && (a(paramInt1 + 1, paramInt2 + 1)) && (a(paramInt1, paramInt2 + 1)) && (a(paramInt1 + 1, paramInt2))) {
                 a(this, paramInt1, paramInt2);
-            if ((a(paramInt1 - 1, paramInt2)) && (!b(paramInt1 - 1, paramInt2).n) && (a(paramInt1 - 1, paramInt2 + 1)) && (a(paramInt1, paramInt2 + 1)) && (a(paramInt1 - 1, paramInt2)))
+            }
+            if ((a(paramInt1 - 1, paramInt2)) && (!b(paramInt1 - 1, paramInt2).n) && (a(paramInt1 - 1, paramInt2 + 1)) && (a(paramInt1, paramInt2 + 1)) && (a(paramInt1 - 1, paramInt2))) {
                 a(this, paramInt1 - 1, paramInt2);
-            if ((a(paramInt1, paramInt2 - 1)) && (!b(paramInt1, paramInt2 - 1).n) && (a(paramInt1 + 1, paramInt2 - 1)) && (a(paramInt1, paramInt2 - 1)) && (a(paramInt1 + 1, paramInt2)))
+            }
+            if ((a(paramInt1, paramInt2 - 1)) && (!b(paramInt1, paramInt2 - 1).n) && (a(paramInt1 + 1, paramInt2 - 1)) && (a(paramInt1, paramInt2 - 1)) && (a(paramInt1 + 1, paramInt2))) {
                 a(this, paramInt1, paramInt2 - 1);
-            if ((a(paramInt1 - 1, paramInt2 - 1)) && (!b(paramInt1 - 1, paramInt2 - 1).n) && (a(paramInt1 - 1, paramInt2 - 1)) && (a(paramInt1, paramInt2 - 1)) && (a(paramInt1 - 1, paramInt2)))
+            }
+            if ((a(paramInt1 - 1, paramInt2 - 1)) && (!b(paramInt1 - 1, paramInt2 - 1).n) && (a(paramInt1 - 1, paramInt2 - 1)) && (a(paramInt1, paramInt2 - 1)) && (a(paramInt1 - 1, paramInt2))) {
                 a(this, paramInt1 - 1, paramInt2 - 1);
+            }
 
         }
 
@@ -92,8 +99,9 @@ public class jl implements bt {
     }
 
     private jp e(int paramInt1, int paramInt2) {
-        if (this.d == null)
+        if (this.d == null) {
             return null;
+        }
         try {
             jp localjp = this.d.a(this.g, paramInt1, paramInt2);
             if (localjp != null) {
@@ -107,8 +115,9 @@ public class jl implements bt {
     }
 
     private void a(jp paramjp) {
-        if (this.d == null)
+        if (this.d == null) {
             return;
+        }
         try {
             this.d.b(this.g, paramjp);
         } catch (Exception localException) {
@@ -117,8 +126,9 @@ public class jl implements bt {
     }
 
     private void b(jp paramjp) {
-        if (this.d == null)
+        if (this.d == null) {
             return;
+        }
         // try {
         paramjp.s = this.g.e;
         this.d.a(this.g, paramjp);
@@ -143,26 +153,35 @@ public class jl implements bt {
         int i = 0;
         for (int j = 0; j < this.f.size(); j++) {
             jp localjp = (jp) this.f.get(j);
-            if ((paramBoolean) && (!localjp.p))
+            if ((paramBoolean) && (!localjp.p)) {
                 a(localjp);
+            }
             if (localjp.a(paramBoolean)) {
                 b(localjp);
                 localjp.o = false;
                 i++;
-                if ((i == 2) && (!paramBoolean))
+                if ((i == 2) && (!paramBoolean)) {
                     return false;
+                }
             }
         }
 
         if (paramBoolean) {
-            if (this.d == null)
+            if (this.d == null) {
                 return true;
+            }
             this.d.b();
         }
         return true;
     }
+    
+    boolean loaded = false;
 
     public boolean a() {
+        if (!loaded) {
+            etc.getLoader();
+            loaded = true;
+        }
         if (!this.g.C) {
             for (int i = 0; i < 16; i++) {
                 if (!this.a.isEmpty()) {
@@ -179,8 +198,9 @@ public class jl implements bt {
                 }
             }
 
-            if (this.d != null)
+            if (this.d != null) {
                 this.d.a();
+            }
         }
         return this.c.a();
     }

@@ -1,9 +1,11 @@
+
 /**
  * Chest.java - Interface to chests.
  * 
  * @author James
  */
 public class Chest extends ItemArray implements ComplexBlock {
+
     private hx chest;
 
     /**

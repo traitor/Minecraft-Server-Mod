@@ -1,3 +1,4 @@
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -8,16 +9,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class io {
+
     private static Map a = new HashMap();
     private static Map b = new HashMap();
-
-    public boolean     j = false;
+    public boolean j = false;
 
     static void a(int paramInt, Class paramClass) {
-        if (a.containsKey(Integer.valueOf(paramInt)))
+        if (a.containsKey(Integer.valueOf(paramInt))) {
             throw new IllegalArgumentException("Duplicate packet id:" + paramInt);
-        if (b.containsKey(paramClass))
+        }
+        if (b.containsKey(paramClass)) {
             throw new IllegalArgumentException("Duplicate packet class:" + paramClass);
+        }
         a.put(Integer.valueOf(paramInt), paramClass);
         b.put(paramClass, Integer.valueOf(paramInt));
     }
@@ -25,8 +28,9 @@ public abstract class io {
     public static io a(int paramInt) {
         try {
             Class localClass = (Class) a.get(Integer.valueOf(paramInt));
-            if (localClass == null)
+            if (localClass == null) {
                 return null;
+            }
             return (io) localClass.newInstance();
         } catch (Exception localException) {
             localException.printStackTrace();
@@ -41,12 +45,14 @@ public abstract class io {
 
     public static io b(DataInputStream paramDataInputStream) throws IOException {
         int i = paramDataInputStream.read();
-        if (i == -1)
+        if (i == -1) {
             return null;
+        }
 
         io localio = a(i);
-        if (localio == null)
+        if (localio == null) {
             throw new IOException("Bad packet id " + i);
+        }
         localio.a(paramDataInputStream);
         return localio;
     }

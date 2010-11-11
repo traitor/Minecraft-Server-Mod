@@ -1,13 +1,16 @@
+
 /**
  * Inventory.java - Interface to player inventories
  * 
  * @author James
  */
 public class Inventory extends ItemArray {
+
     /**
      * The type of inventory to use
      */
     public enum Type {
+
         /**
          * Regular inventory
          */
@@ -21,8 +24,7 @@ public class Inventory extends ItemArray {
          */
         Equipment
     }
-
-    private ep   user;
+    private ep user;
     private Type type;
 
     /**
@@ -46,10 +48,11 @@ public class Inventory extends ItemArray {
     public void giveItem(int itemId, int amount) {
         if (amount == -1) {
             int emptySlot = getEmptySlot();
-            if (emptySlot == -1)
+            if (emptySlot == -1) {
                 user.getPlayer().giveItemDrop(itemId, -1);
-            else
+            } else {
                 addItem(new Item(itemId, 255, emptySlot));
+            }
             return;
         }
 
@@ -80,7 +83,9 @@ public class Inventory extends ItemArray {
 
             int emptySlot = getEmptySlot();
             if (emptySlot == -1) // No empty slots
+            {
                 break;
+            }
             addItem(new Item(itemId, amountToAdd, emptySlot));
             temp -= 64;
         } while (temp > 0);

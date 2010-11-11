@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -15,10 +16,12 @@ import net.minecraft.server.MinecraftServer;
  * @author James
  */
 public class PluginLoader {
+
     /**
      * Hook - Used for adding a listener to listen on specific hooks
      */
     public enum Hook {
+
         /**
          * Calls onLoginChecks
          */
@@ -108,13 +111,12 @@ public class PluginLoader {
          */
         NUM_HOOKS
     }
-
-    private static final Logger                  log       = Logger.getLogger("Minecraft");
-    private static final Object                  lock      = new Object();
-    private List<Plugin>                         plugins   = new ArrayList<Plugin>();
+    private static final Logger log = Logger.getLogger("Minecraft");
+    private static final Object lock = new Object();
+    private List<Plugin> plugins = new ArrayList<Plugin>();
     private List<List<PluginRegisteredListener>> listeners = new ArrayList<List<PluginRegisteredListener>>();
-    private Server                               server;
-    private PropertiesFile                       properties;
+    private Server server;
+    private PropertiesFile properties;
 
     /**
      * Creates a plugin loader
@@ -176,8 +178,9 @@ public class PluginLoader {
             for (List<PluginRegisteredListener> regListeners : listeners) {
                 Iterator<PluginRegisteredListener> iter = regListeners.iterator();
                 while (iter.hasNext()) {
-                    if (iter.next().getPlugin() == toNull)
+                    if (iter.next().getPlugin() == toNull) {
                         iter.remove();
+                    }
                 }
             }
         }
@@ -191,7 +194,7 @@ public class PluginLoader {
             File file = new File("plugins/" + fileName + ".jar");
             URLClassLoader child = null;
             try {
-                child = new MyClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
+                child = new MyClassLoader(new URL[]{file.toURI().toURL()}, Thread.currentThread().getContextClassLoader());
             } catch (MalformedURLException ex) {
                 log.log(Level.SEVERE, "Exception while loading class", ex);
             }

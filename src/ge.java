@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
@@ -6,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ge {
+
     public static Logger a = Logger.getLogger("Minecraft");
 
     public static void a() {

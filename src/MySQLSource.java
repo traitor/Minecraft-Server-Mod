@@ -1,3 +1,4 @@
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,9 +45,11 @@ public class MySQLSource extends DataSource {
                     group.InheritedGroups = rs.getString("inheritedgroups").split(",");
                     group.Name = rs.getString("name");
                     group.Prefix = rs.getString("prefix");
-                    if (group.InheritedGroups.length == 1)
-                        if (group.InheritedGroups[0].equalsIgnoreCase(group.Name))
-                            group.InheritedGroups = new String[] { "" };
+                    if (group.InheritedGroups.length == 1) {
+                        if (group.InheritedGroups[0].equalsIgnoreCase(group.Name)) {
+                            group.InheritedGroups = new String[]{""};
+                        }
+                    }
                     groups.add(group);
                 }
             } catch (SQLException ex) {
@@ -554,8 +557,9 @@ public class MySQLSource extends DataSource {
 
     // Whitelist
     public void addToWhitelist(String name) {
-        if (isUserOnWhitelist(name))
+        if (isUserOnWhitelist(name)) {
             return;
+        }
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -580,8 +584,9 @@ public class MySQLSource extends DataSource {
     }
 
     public void removeFromWhitelist(String name) {
-        if (!isUserOnWhitelist(name))
+        if (!isUserOnWhitelist(name)) {
             return;
+        }
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -607,8 +612,9 @@ public class MySQLSource extends DataSource {
 
     // Reservelist
     public void addToReserveList(String name) {
-        if (isUserOnReserveList(name))
+        if (isUserOnReserveList(name)) {
             return;
+        }
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -633,8 +639,9 @@ public class MySQLSource extends DataSource {
     }
 
     public void removeFromReserveList(String name) {
-        if (!isUserOnReserveList(name))
+        if (!isUserOnReserveList(name)) {
             return;
+        }
 
         Connection conn = null;
         PreparedStatement ps = null;

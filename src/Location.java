@@ -1,9 +1,11 @@
+
 /**
  * Location.java - Used for passing a location to other functions and such.
  * 
  * @author James
  */
 public class Location {
+
     /**
      * Creates a location
      */
@@ -39,7 +41,6 @@ public class Location {
         this.rotX = rotation;
         this.rotY = pitch;
     }
-
     /**
      * X location
      */
@@ -55,9 +56,9 @@ public class Location {
     /**
      * Rotation
      */
-    public float  rotX;
+    public float rotX;
     /**
      * Pitch
      */
-    public float  rotY;
+    public float rotY;
 }

@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -18,29 +19,29 @@ import net.minecraft.server.*;
  */
 public class etc {
 
-    private static final Logger           log                 = Logger.getLogger("Minecraft");
-    private static volatile etc           instance;
-    private static MinecraftServer        server;
-    private String                        usersLoc            = "users.txt", kitsLoc = "kits.txt", homeLoc = "homes.txt", warpLoc = "warps.txt", itemLoc = "items.txt", groupLoc = "groups.txt";
-    private String                        whitelistLoc        = "whitelist.txt", reservelistLoc = "reservelist.txt";
-    private String                        whitelistMessage    = "Not on whitelist.";
-    private String[]                      allowedItems        = null;
-    private String[]                      disallowedItems     = null;
-    private String[]                      itemSpawnBlacklist  = null;
-    private String[]                      motd                = null;
-    private boolean                       saveHomes           = true;
-    private boolean                       firstLoad           = true;
-    private boolean                       whitelistEnabled    = false;
-    private int                           playerLimit         = 20;
-    private int                           spawnProtectionSize = 16;
-    private LinkedHashMap<String, String> commands            = new LinkedHashMap<String, String>();
-    private String                        dataSourceType;
-    private DataSource                    dataSource;
-    private PropertiesFile                properties;
-    private PluginLoader                  loader;
-    private boolean                       logging             = false;
-    private boolean                       showUnknownCommand  = true;
-    private int                           version             = 1;                                                                                                                              // Version
+    private static final Logger log = Logger.getLogger("Minecraft");
+    private static volatile etc instance;
+    private static MinecraftServer server;
+    private String usersLoc = "users.txt", kitsLoc = "kits.txt", homeLoc = "homes.txt", warpLoc = "warps.txt", itemLoc = "items.txt", groupLoc = "groups.txt";
+    private String whitelistLoc = "whitelist.txt", reservelistLoc = "reservelist.txt";
+    private String whitelistMessage = "Not on whitelist.";
+    private String[] allowedItems = null;
+    private String[] disallowedItems = null;
+    private String[] itemSpawnBlacklist = null;
+    private String[] motd = null;
+    private boolean saveHomes = true;
+    private boolean firstLoad = true;
+    private boolean whitelistEnabled = false;
+    private int playerLimit = 20;
+    private int spawnProtectionSize = 16;
+    private LinkedHashMap<String, String> commands = new LinkedHashMap<String, String>();
+    private String dataSourceType;
+    private DataSource dataSource;
+    private PropertiesFile properties;
+    private PluginLoader loader;
+    private boolean logging = false;
+    private boolean showUnknownCommand = true;
+    private int version = 1;                                                                                                                              // Version
     // is
     // meant
     // to
@@ -53,7 +54,7 @@ public class etc {
     // stays
     // as
     // 1.
-    private String                        driver, username, password, db;
+    private String driver, username, password, db;
 
     private etc() {
         commands.put("/help", "[Page] - Shows a list of commands. 7 per page.");
@@ -146,10 +147,10 @@ public class etc {
         } catch (Exception e) {
             log.log(Level.SEVERE, "Exception while reading from server.properties", e);
             // Just in case...
-            disallowedItems = new String[] { "" };
-            allowedItems = new String[] { "" };
-            itemSpawnBlacklist = new String[] { "" };
-            motd = new String[] { "Type /help for a list of commands." };
+            disallowedItems = new String[]{""};
+            allowedItems = new String[]{""};
+            itemSpawnBlacklist = new String[]{""};
+            motd = new String[]{"Type /help for a list of commands."};
         }
     }
 
@@ -236,8 +237,9 @@ public class etc {
      */
     public Group getDefaultGroup() {
         Group group = dataSource.getDefaultGroup();
-        if (group == null)
+        if (group == null) {
             log.log(Level.SEVERE, "No default group! Expect lots of errors!");
+        }
         return group;
     }
 
@@ -337,13 +339,16 @@ public class etc {
      * @return
      */
     public boolean parseConsoleCommand(String command, MinecraftServer server) {
-        if (getMCServer() == null)
+        if (getMCServer() == null) {
             setServer(server);
+        }
         String[] split = command.split(" ");
-        if ((Boolean) getLoader().callHook(PluginLoader.Hook.SERVERCOMMAND, new Object[] { split }))
+        if ((Boolean) getLoader().callHook(PluginLoader.Hook.SERVERCOMMAND, new Object[]{split})) {
             return true;
-        if (split.length == 0)
+        }
+        if (split.length == 0) {
             return false;
+        }
 
         boolean dontParseRegular = true;
         if (split[0].equalsIgnoreCase("help") || split[0].equalsIgnoreCase("mod-help")) {
@@ -365,8 +370,9 @@ public class etc {
         } else if (split[0].equalsIgnoreCase("reload")) {
             load();
             loadData();
-            for (Player player : etc.getServer().getPlayerList())
+            for (Player player : etc.getServer().getPlayerList()) {
                 player.getUser().reloadPlayer();
+            }
 
             log.info("Reloaded mod");
         } else if (split[0].equalsIgnoreCase("modify")) {

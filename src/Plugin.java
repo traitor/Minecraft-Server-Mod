@@ -1,10 +1,12 @@
+
 /**
  * Plugin.java - Extend this to create your own plugins.
  * 
  * @author James
  */
 public abstract class Plugin {
-    private String  name    = "";
+
+    private String name = "";
     private boolean enabled = true;
     private boolean usesListeners;
 

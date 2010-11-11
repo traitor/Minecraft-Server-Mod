@@ -1,18 +1,21 @@
+
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ay {
+
     private static Map e = new HashMap();
     private static Map f = new HashMap();
-    public em          a;
-    public int         b;
-    public int         c;
-    public int         d;
+    public em a;
+    public int b;
+    public int c;
+    public int d;
 
     private static void a(Class paramClass, String paramString) {
-        if (f.containsKey(paramString))
+        if (f.containsKey(paramString)) {
             throw new IllegalArgumentException("Duplicate id: " + paramString);
+        }
         e.put(paramString, paramClass);
         f.put(paramClass, paramString);
     }
@@ -41,14 +44,15 @@ public class ay {
         ay localay = null;
         try {
             Class localClass = (Class) e.get(paramv.h("id"));
-            if (localClass != null)
+            if (localClass != null) {
                 localay = (ay) localClass.newInstance();
+            }
         } catch (Exception localException) {
             localException.printStackTrace();
         }
-        if (localay != null)
+        if (localay != null) {
             localay.a(paramv);
-        else {
+        } else {
             System.out.println("Skipping TileEntity with id " + paramv.h("id"));
         }
         return localay;
@@ -68,7 +72,7 @@ public class ay {
                 block = new Sign((ji) localay);
             }
             if (block != null) {
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, new Object[] { player.getUser(), block })) {
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, new Object[]{player.getUser(), block})) {
                     player.getUser().a.b.a(new jc(this.b, this.c, this.d, this));
                 } else {
                     ay toSend = null;

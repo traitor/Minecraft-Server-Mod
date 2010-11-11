@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 
 /**
@@ -7,17 +8,17 @@ import java.util.ArrayList;
  */
 public class Player extends BaseEntity {
 
-    private ep                user;
-    private int               id                 = -1;
-    private String            prefix             = "";
-    private String[]          commands           = new String[] { "" };
-    private ArrayList<String> groups             = new ArrayList<String>();
-    private String[]          ips                = new String[] { "" };
-    private boolean           ignoreRestrictions = false;
-    private boolean           admin              = false;
-    private boolean           canModifyWorld     = false;
-    private boolean           muted              = false;
-    private Inventory         inventory, craftingTable, equipment;
+    private ep user;
+    private int id = -1;
+    private String prefix = "";
+    private String[] commands = new String[]{""};
+    private ArrayList<String> groups = new ArrayList<String>();
+    private String[] ips = new String[]{""};
+    private boolean ignoreRestrictions = false;
+    private boolean admin = false;
+    private boolean canModifyWorld = false;
+    private boolean muted = false;
+    private Inventory inventory, craftingTable, equipment;
 
     /**
      * Creates a player interface
@@ -374,9 +375,11 @@ public class Player extends BaseEntity {
      */
     public void setGroups(String[] groups) {
         this.groups.clear();
-        for (String s : groups)
-            if (s.length() > 0)
+        for (String s : groups) {
+            if (s.length() > 0) {
                 this.groups.add(s);
+            }
+        }
     }
 
     /**

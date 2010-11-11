@@ -1,3 +1,4 @@
+
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -6,15 +7,16 @@ import java.util.Set;
 import net.minecraft.server.MinecraftServer;
 
 public class ep extends fv {
-    public je              a;
+
+    public je a;
     public MinecraftServer b;
-    public jq              c;
-    public double          d;
-    public double          e;
-    public List            f  = new LinkedList();
-    public Set             ai = new HashSet();
-    public double          aj;
-    private Player         player;
+    public jq c;
+    public double d;
+    public double e;
+    public List f = new LinkedList();
+    public Set ai = new HashSet();
+    public double aj;
+    private Player player;
 
     public ep(MinecraftServer paramMinecraftServer, em paramem, String paramString, jq paramjq) {
         super(paramem);
@@ -89,10 +91,12 @@ public class ep extends fv {
         if (localObject1 != null) {
             int i = 0;
 
-            if (d1 < 1024.0D)
+            if (d1 < 1024.0D) {
                 i = 1;
-            if (this.a.b() < 2)
+            }
+            if (this.a.b() < 2) {
                 i = 1;
+            }
 
             if (i != 0) {
                 this.f.remove(localObject1);
@@ -100,20 +104,24 @@ public class ep extends fv {
                 localObject2 = this.b.e.d(localObject1.a * 16, 0, localObject1.b * 16, localObject1.a * 16 + 16, 128, localObject1.b * 16 + 16);
                 for (int j = 0; j < ((List) localObject2).size(); j++) {
                     ay localay = (ay) ((List) localObject2).get(j);
-                    if (!player.canBuild() && (localay instanceof hx || localay instanceof ds))
+                    if (!player.canBuild() && (localay instanceof hx || localay instanceof ds)) {
                         continue;
+                    }
                     ComplexBlock block = null;
-                    if (localay instanceof hx)
+                    if (localay instanceof hx) {
                         block = new Chest((hx) localay);
-                    else if (localay instanceof ds)
+                    } else if (localay instanceof ds) {
                         block = new Furnace((ds) localay);
-                    else if (localay instanceof ji)
+                    } else if (localay instanceof ji) {
                         block = new Sign((ji) localay);
+                    }
                     if (block != null) {
-                        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, new Object[] { this, block }))
+                        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, new Object[]{this, block})) {
                             this.a.b(new jc(localay.b, localay.c, localay.d, localay));
-                    } else
+                        }
+                    } else {
                         this.a.b(new jc(localay.b, localay.c, localay.d, localay));
+                    }
                 }
             }
         }

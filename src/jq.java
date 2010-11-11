@@ -1,13 +1,15 @@
+
 public class jq {
-    private em    b;
-    public fv     a;
+
+    private em b;
+    public fv a;
     private float c;
     private float d = 0.0F;
-    private int   e = 0;
+    private int e = 0;
     private float f = 0.0F;
-    private int   g;
-    private int   h;
-    private int   i;
+    private int g;
+    private int h;
+    private int i;
 
     public jq(em paramel) {
         this.b = paramel;
@@ -15,12 +17,13 @@ public class jq {
 
     public void a(int paramInt1, int paramInt2, int paramInt3) {
         int j = this.b.a(paramInt1, paramInt2, paramInt3);
-        if ((j > 0) && (this.d == 0.0F))
+        if ((j > 0) && (this.d == 0.0F)) {
             fy.m[j].b(this.b, paramInt1, paramInt2, paramInt3, this.a);
+        }
 
         if ((j > 0) && (fy.m[j].a(this.a) >= 1.0F)) {
             Block block = etc.getServer().getBlockAt(paramInt1, paramInt2, paramInt3);
-            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, new Object[] { (ep) a, block })) {
+            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, new Object[]{(ep) a, block})) {
                 c(paramInt1, paramInt2, paramInt3);
             }
         }
@@ -38,15 +41,16 @@ public class jq {
         }
         if ((paramInt1 == this.g) && (paramInt2 == this.h) && (paramInt3 == this.i)) {
             int j = this.b.a(paramInt1, paramInt2, paramInt3);
-            if (j == 0)
+            if (j == 0) {
                 return;
+            }
 
             fy localfy = fy.m[j];
             this.d += localfy.a(this.a);
             this.f += 1.0F;
             if (this.d >= 1.0F) {
                 Block block = etc.getServer().getBlockAt(paramInt1, paramInt2, paramInt3);
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, new Object[] { (ep) a, block })) {
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, new Object[]{(ep) a, block})) {
                     c(paramInt1, paramInt2, paramInt3);
                 }
                 this.d = 0.0F;
@@ -109,11 +113,13 @@ public class jq {
     public boolean a(fv paramft, em paramem, hj paramhh, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         int j = paramem.a(paramInt1, paramInt2, paramInt3);
 
-        if ((j > 0) && (fy.m[j].a(paramem, paramInt1, paramInt2, paramInt3, paramft)))
+        if ((j > 0) && (fy.m[j].a(paramem, paramInt1, paramInt2, paramInt3, paramft))) {
             return true;
+        }
 
-        if (paramhh == null)
+        if (paramhh == null) {
             return false;
+        }
 
         return paramhh.a(paramft, paramem, paramInt1, paramInt2, paramInt3, paramInt4);
     }

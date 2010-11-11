@@ -1,8 +1,10 @@
+
 public class ds extends ay implements jz {
+
     private hj[] e = new hj[3];
-    private int  f = 0;
-    private int  g = 0;
-    private int  h = 0;
+    private int f = 0;
+    private int g = 0;
+    private int h = 0;
 
     public hj[] getContents() {
         return e;
@@ -27,8 +29,9 @@ public class ds extends ay implements jz {
         for (int i = 0; i < localea.b(); i++) {
             v localv = (v) localea.a(i);
             int j = localv.b("Slot");
-            if ((j < 0) || (j >= this.e.length))
+            if ((j < 0) || (j >= this.e.length)) {
                 continue;
+            }
 
             this.e[j] = new hj(localv);
         }
@@ -77,8 +80,9 @@ public class ds extends ay implements jz {
                     j = 1;
                     if (this.e[1] != null) {
                         this.e[1].a -= 1;
-                        if (this.e[1].a == 0)
+                        if (this.e[1].a == 0) {
                             this.e[1] = null;
+                        }
                     }
                 }
             }
@@ -100,63 +104,81 @@ public class ds extends ay implements jz {
             }
         }
 
-        if (j != 0)
+        if (j != 0) {
             c();
+        }
     }
 
     private boolean g() {
-        if (this.e[0] == null)
+        if (this.e[0] == null) {
             return false;
+        }
         int i = b(this.e[0].a().aW);
-        if (i < 0)
+        if (i < 0) {
             return false;
-        if (this.e[2] == null)
+        }
+        if (this.e[2] == null) {
             return true;
-        if (this.e[2].c != i)
+        }
+        if (this.e[2].c != i) {
             return false;
-        if ((this.e[2].a < d()) && (this.e[2].a < this.e[2].b()))
+        }
+        if ((this.e[2].a < d()) && (this.e[2].a < this.e[2].b())) {
             return true;
+        }
         return this.e[2].a < fs.c[i].a();
     }
 
     public void f() {
-        if (!g())
+        if (!g()) {
             return;
+        }
 
         int i = b(this.e[0].a().aW);
-        if (this.e[2] == null)
+        if (this.e[2] == null) {
             this.e[2] = new hj(i, 1);
-        else if (this.e[2].c == i)
+        } else if (this.e[2].c == i) {
             this.e[2].a += 1;
+        }
 
         this.e[0].a -= 1;
-        if (this.e[0].a <= 0)
+        if (this.e[0].a <= 0) {
             this.e[0] = null;
+        }
     }
 
     private int b(int paramInt) {
-        if (paramInt == fy.H.bh)
+        if (paramInt == fy.H.bh) {
             return fs.m.aW;
-        if (paramInt == fy.G.bh)
+        }
+        if (paramInt == fy.G.bh) {
             return fs.n.aW;
-        if (paramInt == fy.aw.bh)
+        }
+        if (paramInt == fy.aw.bh) {
             return fs.l.aW;
-        if (paramInt == fy.E.bh)
+        }
+        if (paramInt == fy.E.bh) {
             return fy.M.bh;
-        if (paramInt == fs.ao.aW)
+        }
+        if (paramInt == fs.ao.aW) {
             return fs.ap.aW;
-        if (paramInt == fs.aS.aW)
+        }
+        if (paramInt == fs.aS.aW) {
             return fs.aT.aW;
-        if (paramInt == fy.w.bh)
+        }
+        if (paramInt == fy.w.bh) {
             return fy.t.bh;
-        if (paramInt == fs.aG.aW)
+        }
+        if (paramInt == fs.aG.aW) {
             return fs.aF.aW;
+        }
         return -1;
     }
 
     private int a(hj paramhj) {
-        if (paramhj == null)
+        if (paramhj == null) {
             return 0;
+        }
         int i = paramhj.a().aW;
 
         if ((i < 256) && (fy.m[i].bs == jt.c)) {
@@ -167,11 +189,13 @@ public class ds extends ay implements jz {
             return 100;
         }
 
-        if (i == fs.k.aW)
+        if (i == fs.k.aW) {
             return 1600;
+        }
 
-        if (i == fs.aw.aW)
+        if (i == fs.aw.aW) {
             return 20000;
+        }
 
         return 0;
     }

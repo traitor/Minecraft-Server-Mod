@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.server.MinecraftServer;
@@ -340,7 +341,6 @@ public class Server {
     }
 
     public void dropItem(double x, double y, double z, int itemId) {
-<<<<<<< HEAD
         dropItem(x, y, z, itemId, 1);
     }
 
@@ -349,12 +349,10 @@ public class Server {
     }
 
     public void dropItem(double x, double y, double z, int itemId, int quantity) {
-        server.e.a(new gf(server.e, x, y, z, new hh(fw.n[itemId], quantity)));
-=======
-        if (itemId < 256)
+        if (itemId < 256) {
             server.e.a(new gh(server.e, x, y, z, new hj(fy.m[itemId])));
-        else
+        } else {
             server.e.a(new gh(server.e, x, y, z, new hj(itemId, 1)));
->>>>>>> debf5302b437e049ac277dba60da055cd01bf55f
+        }
     }
 }

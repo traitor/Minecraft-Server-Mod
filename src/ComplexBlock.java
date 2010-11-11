@@ -1,9 +1,11 @@
+
 /**
  * ComplexBlock.java - Interface for complex blocks like chests and signs
  * 
  * @author James
  */
 public interface ComplexBlock {
+
     /**
      * Returns the X coordinates of this block
      * 

@@ -1,3 +1,4 @@
+
 /**
  * ItemArray.java - Interface to jh[] so I don't have to copy+paste this a bunch
  * of times
@@ -5,6 +6,7 @@
  * @author James
  */
 public abstract class ItemArray {
+
     /**
      * Adds the specified item. If the item doesn't have a slot, it will get the
      * nearest available slot. If amount is equal to 0, it will delete the item
@@ -14,15 +16,17 @@ public abstract class ItemArray {
      *            item to add
      */
     public void addItem(Item item) {
-        if (item == null)
+        if (item == null) {
             return;
+        }
 
         int slot = item.getSlot();
         if (slot < getArray().length && slot >= 0) {
-            if (item.getAmount() <= 0)
+            if (item.getAmount() <= 0) {
                 getArray()[slot] = null;
-            else if (Item.isValidItem(item.getItemId()))
+            } else if (Item.isValidItem(item.getItemId())) {
                 getArray()[slot] = new hj(item.getItemId(), item.getAmount());
+            }
         } else if (slot == -1) {
             int newSlot = getEmptySlot();
             if (newSlot != -1) {
@@ -40,9 +44,11 @@ public abstract class ItemArray {
      * @return item
      */
     public Item getItemFromSlot(int slot) {
-        if (slot < getArray().length && slot >= 0)
-            if (getArray()[slot] != null)
+        if (slot < getArray().length && slot >= 0) {
+            if (getArray()[slot] != null) {
                 return new Item(getArray()[slot].c, getArray()[slot].a, slot);
+            }
+        }
         return null;
     }
 
@@ -54,10 +60,12 @@ public abstract class ItemArray {
      */
     public Item getItemFromId(int id) {
         for (int i = 0; getArray().length > i; i++) {
-            if (getArray()[i] == null)
+            if (getArray()[i] == null) {
                 continue;
-            if (getArray()[i].c == id)
+            }
+            if (getArray()[i].c == id) {
                 return new Item(getArray()[i].c, getArray()[i].a, i);
+            }
         }
         return null;
     }
@@ -71,10 +79,12 @@ public abstract class ItemArray {
      */
     public Item getItemFromId(int id, int maxAmount) {
         for (int i = 0; getArray().length > i; i++) {
-            if (getArray()[i] == null)
+            if (getArray()[i] == null) {
                 continue;
-            if (getArray()[i].c == id && getArray()[i].a <= maxAmount)
+            }
+            if (getArray()[i].c == id && getArray()[i].a <= maxAmount) {
                 return new Item(getArray()[i].c, getArray()[i].a, i);
+            }
         }
         return null;
     }
@@ -86,8 +96,9 @@ public abstract class ItemArray {
      */
     public int getEmptySlot() {
         for (int i = 0; getArray().length > i; i++) {
-            if (getArray()[i] != null)
+            if (getArray()[i] != null) {
                 continue;
+            }
             return i;
         }
         return -1;
@@ -100,8 +111,9 @@ public abstract class ItemArray {
      *            slot to remove item from
      */
     public void removeItem(int slot) {
-        if (slot < getArray().length && slot >= 0)
+        if (slot < getArray().length && slot >= 0) {
             getArray()[slot] = null;
+        }
     }
 
     /**
@@ -115,8 +127,9 @@ public abstract class ItemArray {
         int amount = item.getAmount();
         int itemId = item.getItemId();
         for (int i = 0; getArray().length > i; i++) {
-            if (getArray()[i] == null)
+            if (getArray()[i] == null) {
                 continue;
+            }
             if (getArray()[i].c == itemId) {
                 int tempAmount = getArray()[i].a;
                 tempAmount -= amount;
@@ -126,8 +139,9 @@ public abstract class ItemArray {
                 } else {
                     getArray()[i].a = tempAmount;
                 }
-                if (amount <= 0)
+                if (amount <= 0) {
                     return;
+                }
             }
         }
     }
@@ -142,10 +156,13 @@ public abstract class ItemArray {
      * @return
      */
     public boolean hasItem(int itemId, int minimum, int maximum) {
-        for (int i = 0; getArray().length > i; i++)
-            if (getArray()[i] != null)
-                if (getArray()[i].c == itemId && getArray()[i].a >= minimum && getArray()[i].a <= maximum)
+        for (int i = 0; getArray().length > i; i++) {
+            if (getArray()[i] != null) {
+                if (getArray()[i].c == itemId && getArray()[i].a >= minimum && getArray()[i].a <= maximum) {
                     return true;
+                }
+            }
+        }
         return false;
     }
 

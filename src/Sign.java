@@ -1,9 +1,11 @@
+
 /**
  * Sign.java - Interface to signs
  * 
  * @author James
  */
 public class Sign implements ComplexBlock {
+
     private ji sign;
 
     /**
@@ -24,8 +26,9 @@ public class Sign implements ComplexBlock {
      *            text
      */
     public void setText(int index, String text) {
-        if (index >= 0 && sign.e.length > index)
+        if (index >= 0 && sign.e.length > index) {
             sign.e[index] = text;
+        }
     }
 
     /**
@@ -36,8 +39,9 @@ public class Sign implements ComplexBlock {
      * @return text
      */
     public String getText(int index) {
-        if (index >= 0 && sign.e.length > index)
+        if (index >= 0 && sign.e.length > index) {
             return sign.e[index];
+        }
         return "";
     }
 

@@ -1,9 +1,11 @@
+
 /**
  * Furnace.java - Interface for furnaces
  * 
  * @author James
  */
 public class Furnace extends ItemArray implements ComplexBlock {
+
     private ds furnace;
 
     /**

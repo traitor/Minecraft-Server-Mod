@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -11,18 +12,19 @@ import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 
 public class gn {
-    public static Logger    a = Logger.getLogger("Minecraft");
-    public List             b = new ArrayList();
+
+    public static Logger a = Logger.getLogger("Minecraft");
+    public List b = new ArrayList();
     private MinecraftServer c;
-    private ic              d;
-    private int             e;
-    private Set             f = new HashSet();
-    private Set             g = new HashSet();
-    private Set             h = new HashSet();
-    private File            i;
-    private File            j;
-    private File            k;
-    private cx              l;
+    private ic d;
+    private int e;
+    private Set f = new HashSet();
+    private Set g = new HashSet();
+    private Set h = new HashSet();
+    private File i;
+    private File j;
+    private File k;
+    private cx l;
 
     public gn(MinecraftServer paramMinecraftServer) {
         etc.setServer(paramMinecraftServer);
@@ -65,7 +67,7 @@ public class gn {
         for (String str : etc.getInstance().getMotd()) {
             paramep.a.b(new bg(str));
         }
-        etc.getLoader().callHook(PluginLoader.Hook.LOGIN, new Object[] { paramep });
+        etc.getLoader().callHook(PluginLoader.Hook.LOGIN, new Object[]{paramep});
     }
 
     public void b(ep paramep) {
@@ -128,7 +130,7 @@ public class gn {
             }
         }
 
-        Object obj = etc.getLoader().callHook(PluginLoader.Hook.LOGINCHECK, new Object[] { paramString1 });
+        Object obj = etc.getLoader().callHook(PluginLoader.Hook.LOGINCHECK, new Object[]{paramString1});
         if (obj instanceof String) {
             String result = (String) obj;
             if (result != null && !result.equals("")) {
@@ -194,8 +196,9 @@ public class gn {
     public String c() {
         String str = "";
         for (int m = 0; m < this.b.size(); m++) {
-            if (m > 0)
+            if (m > 0) {
                 str = str + ", ";
+            }
             str = str + ((ep) this.b.get(m)).ar;
         }
         return str;
@@ -325,16 +328,18 @@ public class gn {
 
     public void a(String paramString1, String paramString2) {
         ep localep = h(paramString1);
-        if (localep != null)
+        if (localep != null) {
             localep.a.b(new bg(paramString2));
+        }
     }
 
     public void i(String paramString) {
         bg localbg = new bg(paramString);
         for (int m = 0; m < this.b.size(); m++) {
             ep localep = (ep) this.b.get(m);
-            if (g(localep.ar))
+            if (g(localep.ar)) {
                 localep.a.b(localbg);
+            }
         }
     }
 
@@ -352,7 +357,8 @@ public class gn {
     }
 
     public void d() {
-        for (int m = 0; m < this.b.size(); m++)
+        for (int m = 0; m < this.b.size(); m++) {
             this.l.a((ep) this.b.get(m));
+        }
     }
 }

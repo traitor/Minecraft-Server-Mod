@@ -1,3 +1,4 @@
+
 /**
  * PluginRegisteredListener - Stores the registered listeners
  * 
@@ -6,9 +7,9 @@
 public class PluginRegisteredListener {
 
     private PluginLoader.Hook hook;
-    private PluginListener    listener;
-    private Plugin            plugin;
-    private int               priority;
+    private PluginListener listener;
+    private Plugin plugin;
+    private int priority;
 
     /**
      * Creates a register listener class for calling later.

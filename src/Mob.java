@@ -1,9 +1,11 @@
+
 /**
  * Mob.java - Interface for mobs
  * 
  * @author James
  */
 public class Mob extends BaseEntity {
+
     /**
      * Creates a mob interface
      * 
@@ -81,8 +83,9 @@ public class Mob extends BaseEntity {
 
     public void setHealth(int health) {
         super.setHealth(health);
-        if (health <= 0)
+        if (health <= 0) {
             dropLoot();
+        }
     }
 
     /**
@@ -102,8 +105,9 @@ public class Mob extends BaseEntity {
      * @return true of mob is valid
      */
     public static boolean isValid(String mob) {
-        if (mob == null)
+        if (mob == null) {
             return false;
+        }
         return hl.a(mob, etc.getMCServer().e) instanceof jv;
     }
 }

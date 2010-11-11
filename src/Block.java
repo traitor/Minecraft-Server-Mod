@@ -1,9 +1,11 @@
+
 /**
  * Block.java - Provides some way of making/editing blocks
  * 
  * @author James
  */
 public class Block {
+
     /**
      * Face - Used for what face of the block was clicked
      */
@@ -55,10 +57,9 @@ public class Block {
             return null;
         }
     }
-
-    private int  type, x, y, z;
+    private int type, x, y, z;
     private Face faceClicked;
-    private int  status, data;
+    private int status, data;
 
     /**
      * Create a block with no type, x, y or z.
@@ -204,7 +205,7 @@ public class Block {
      * Returns the destruction status of this block.
      * 
      * @return 0 = Started Digging, 1 = Digging, 2 = Stopped digging, 3 = Block
-     *         broken. Note: You have to return false for onBlockDestroy for all
+     *         broken. Note: You have to return true for onBlockDestroy for all
      *         of these (except 2) to prevent the block from being destroyed.
      *         Returning false just on block broken will not work. Another note
      *         is that 0 is called often, far less than 1 but is still called.

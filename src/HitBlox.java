@@ -1,3 +1,4 @@
+
 /**
  * HitBlox.java - Class for getting blocks along line of sight
  * 
@@ -18,15 +19,15 @@
  * 
  * @author Ho0ber
  */
-
 public class HitBlox {
+
     private Location player_loc;
-    private double   rot_x, rot_y, view_height;
-    private double   length, h_length, step;
-    private int      range;
-    private double   x_offset, y_offset, z_offset;
-    private int      last_x, last_y, last_z;
-    private int      target_x, target_y, target_z, target_type;
+    private double rot_x, rot_y, view_height;
+    private double length, h_length, step;
+    private int range;
+    private double x_offset, y_offset, z_offset;
+    private int last_x, last_y, last_z;
+    private int target_x, target_y, target_z, target_type;
 
     /**
      * Constructor requiring player, uses default values
@@ -100,8 +101,7 @@ public class HitBlox {
      * @return Block
      */
     public Block getTargetBlock() {
-        while ((getNextBlock() != null) && (getCurBlock().getType() == 0))
-            ;
+        while ((getNextBlock() != null) && (getCurBlock().getType() == 0));
         return getCurBlock();
     }
 
@@ -111,8 +111,7 @@ public class HitBlox {
      * @param type
      */
     public void setTargetBlock(int type) {
-        while ((getNextBlock() != null) && (getCurBlock().getType() == 0))
-            ;
+        while ((getNextBlock() != null) && (getCurBlock().getType() == 0));
         if (getCurBlock() != null) {
             etc.getServer().setBlockAt(type, target_x, target_y, target_z);
         }
@@ -125,8 +124,7 @@ public class HitBlox {
      * @return Block
      */
     public Block getFaceBlock() {
-        while ((getNextBlock() != null) && (getCurBlock().getType() == 0))
-            ;
+        while ((getNextBlock() != null) && (getCurBlock().getType() == 0));
         if (getCurBlock() != null) {
             return null;
         } else {
@@ -140,8 +138,7 @@ public class HitBlox {
      * @param type
      */
     public void setFaceBlock(int type) {
-        while ((getNextBlock() != null) && (getCurBlock().getType() == 0))
-            ;
+        while ((getNextBlock() != null) && (getCurBlock().getType() == 0));
         if (getCurBlock() != null) {
             etc.getServer().setBlockAt(type, last_x, last_y, last_z);
         }

@@ -1,3 +1,4 @@
+
 /**
  * PluginListener.java - Extend this and register it to listen to specific
  * hooks.
@@ -5,10 +6,12 @@
  * @author Maine
  */
 public abstract class PluginListener {
+
     /**
      * Priority - Used for priority for plugin listeners
      */
     public enum Priority {
+
         /**
          * Highly critical for hooks that absolutely must occur before any
          * others. Use carefully.

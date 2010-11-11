@@ -1,3 +1,4 @@
+
 /**
  * BanSystem.java - Handles all ban related things.
  * 
@@ -12,7 +13,6 @@ public class BanSystem {
      *            player to ban
      */
     public void fileBan(Player player) {
-
     }
 
     /**
@@ -22,7 +22,6 @@ public class BanSystem {
      *            player to IP ban
      */
     public void fileIpBan(Player player) {
-
     }
 
     /**

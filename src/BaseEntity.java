@@ -1,3 +1,4 @@
+
 /**
  * BaseEntity.java - Class for accessing things that all entities share - X, Y,
  * Z, health.
@@ -5,6 +6,7 @@
  * @author James
  */
 public class BaseEntity {
+
     jv entity;
 
     /**

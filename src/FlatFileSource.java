@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -135,7 +136,7 @@ public class FlatFileSource extends DataSource {
                     // kind of a shitty way, but whatever.
                     if (group.InheritedGroups != null) {
                         if (group.InheritedGroups[0].equalsIgnoreCase(group.Name)) {
-                            group.InheritedGroups = new String[] { "" };
+                            group.InheritedGroups = new String[]{""};
                             group.DefaultGroup = true;
                         }
                     }
@@ -532,8 +533,9 @@ public class FlatFileSource extends DataSource {
                     }
                     String[] split = line.split(":");
                     Ban ban = new Ban();
-                    if (split.length >= 1)
+                    if (split.length >= 1) {
                         ban.setName(split[0]);
+                    }
                     if (split.length == 4) {
                         ban.setIp(split[1]);
                         ban.setReason(split[2]);
@@ -557,8 +559,9 @@ public class FlatFileSource extends DataSource {
                     String[] split = line.split(":");
 
                     Ban ban = new Ban();
-                    if (split.length >= 1)
+                    if (split.length >= 1) {
                         ban.setIp(split[0]);
+                    }
                     if (split.length == 4) {
                         ban.setName(split[1]);
                         ban.setReason(split[2]);
@@ -659,8 +662,9 @@ public class FlatFileSource extends DataSource {
                     continue;
                 }
                 String[] split = line.split(":");
-                if (!split[0].equalsIgnoreCase(player))
+                if (!split[0].equalsIgnoreCase(player)) {
                     continue;
+                }
                 return true;
             }
             scanner.close();
@@ -682,25 +686,31 @@ public class FlatFileSource extends DataSource {
                     continue;
                 }
                 String[] split = line.split(":");
-                if (!split[0].equalsIgnoreCase(name))
+                if (!split[0].equalsIgnoreCase(name)) {
                     continue;
+                }
 
                 player.setGroups(split[1].split(","));
 
-                if (split.length >= 3)
-                    if (split[2].equals("1"))
+                if (split.length >= 3) {
+                    if (split[2].equals("1")) {
                         player.setIgnoreRestrictions(true);
-                    else if (split[2].equals("2"))
+                    } else if (split[2].equals("2")) {
                         player.setAdmin(true);
-                    else if (split[2].equals("-1"))
+                    } else if (split[2].equals("-1")) {
                         player.setCanModifyWorld(false);
+                    }
+                }
 
-                if (split.length >= 4)
+                if (split.length >= 4) {
                     player.setPrefix(split[3]);
-                if (split.length >= 5)
+                }
+                if (split.length >= 5) {
                     player.setCommands(split[4].split(","));
-                if (split.length >= 6)
+                }
+                if (split.length >= 6) {
                     player.setIps(split[5].split(","));
+                }
             }
             scanner.close();
         } catch (Exception e) {
@@ -943,8 +953,9 @@ public class FlatFileSource extends DataSource {
 
     // Whitelist
     public void addToWhitelist(String name) {
-        if (isUserOnWhitelist(name))
+        if (isUserOnWhitelist(name)) {
             return;
+        }
 
         BufferedWriter bw = null;
         String location = etc.getInstance().getWhitelistLocation();
@@ -965,8 +976,9 @@ public class FlatFileSource extends DataSource {
     }
 
     public void removeFromWhitelist(String name) {
-        if (!isUserOnWhitelist(name))
+        if (!isUserOnWhitelist(name)) {
             return;
+        }
 
         FileWriter writer = null;
         String location = etc.getInstance().getWhitelistLocation();
@@ -1000,8 +1012,9 @@ public class FlatFileSource extends DataSource {
 
     // Reservelist
     public void addToReserveList(String name) {
-        if (isUserOnReserveList(name))
+        if (isUserOnReserveList(name)) {
             return;
+        }
         BufferedWriter bw = null;
         String location = etc.getInstance().getReservelistLocation();
         try {
@@ -1021,8 +1034,9 @@ public class FlatFileSource extends DataSource {
     }
 
     public void removeFromReserveList(String name) {
-        if (!isUserOnReserveList(name))
+        if (!isUserOnReserveList(name)) {
             return;
+        }
 
         FileWriter writer = null;
         String location = etc.getInstance().getReservelistLocation();
@@ -1064,8 +1078,9 @@ public class FlatFileSource extends DataSource {
                 if (line.startsWith("#") || line.equals("") || line.startsWith("﻿")) {
                     continue;
                 }
-                if (line.equalsIgnoreCase(user))
+                if (line.equalsIgnoreCase(user)) {
                     return true;
+                }
             }
             scanner.close();
         } catch (Exception e) {
@@ -1084,8 +1099,9 @@ public class FlatFileSource extends DataSource {
                 if (line.startsWith("#") || line.equals("") || line.startsWith("﻿")) {
                     continue;
                 }
-                if (line.equalsIgnoreCase(user))
+                if (line.equalsIgnoreCase(user)) {
                     return true;
+                }
             }
             scanner.close();
         } catch (Exception e) {

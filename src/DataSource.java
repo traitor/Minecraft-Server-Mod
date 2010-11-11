@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -14,16 +15,16 @@ import net.minecraft.server.MinecraftServer;
  */
 public abstract class DataSource {
 
-    protected static final Logger  log    = Logger.getLogger("Minecraft");
-    protected List<Group>          groups = new ArrayList<Group>();
-    protected List<Kit>            kits   = new ArrayList<Kit>();
-    protected List<Warp>           homes  = new ArrayList<Warp>();
-    protected List<Warp>           warps  = new ArrayList<Warp>();
-    protected List<Ban>            bans   = new ArrayList<Ban>();
-    protected Map<String, Integer> items  = new HashMap<String, Integer>();
-    protected MinecraftServer      server;
-    protected final Object         groupLock = new Object(), kitLock = new Object(), banLock = new Object();
-    protected final Object         homeLock  = new Object(), warpLock = new Object(), itemLock = new Object();
+    protected static final Logger log = Logger.getLogger("Minecraft");
+    protected List<Group> groups = new ArrayList<Group>();
+    protected List<Kit> kits = new ArrayList<Kit>();
+    protected List<Warp> homes = new ArrayList<Warp>();
+    protected List<Warp> warps = new ArrayList<Warp>();
+    protected List<Ban> bans = new ArrayList<Ban>();
+    protected Map<String, Integer> items = new HashMap<String, Integer>();
+    protected MinecraftServer server;
+    protected final Object groupLock = new Object(), kitLock = new Object(), banLock = new Object();
+    protected final Object homeLock = new Object(), warpLock = new Object(), itemLock = new Object();
 
     /**
      * Initializes the data source

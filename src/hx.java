@@ -1,4 +1,6 @@
+
 public class hx extends ay implements jz {
+
     private hj[] e = new hj[36];
 
     public hj[] getContents() {
@@ -19,8 +21,9 @@ public class hx extends ay implements jz {
 
     public void a(int paramInt, hj paramhj) {
         this.e[paramInt] = paramhj;
-        if ((paramhj != null) && (paramhj.a > d()))
+        if ((paramhj != null) && (paramhj.a > d())) {
             paramhj.a = d();
+        }
         c();
     }
 
@@ -31,8 +34,9 @@ public class hx extends ay implements jz {
         for (int i = 0; i < localea.b(); i++) {
             v localv = (v) localea.a(i);
             int j = localv.b("Slot") & 0xFF;
-            if ((j < 0) || (j >= this.e.length))
+            if ((j < 0) || (j >= this.e.length)) {
                 continue;
+            }
             this.e[j] = new hj(localv);
         }
     }
