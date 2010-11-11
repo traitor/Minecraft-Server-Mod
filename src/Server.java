@@ -139,27 +139,28 @@ public class Server {
      * @return
      */
     public Player matchPlayer(String name) {
-        ep player = null;
-        boolean found = false;
-        if (("`" + server.f.c().toUpperCase() + "`").split(name.toUpperCase()).length == 2) {
-            for (int i = 0; i < server.f.b.size() && !found; ++i) {
-                ep localeo = (ep) server.f.b.get(i);
-                if (("`" + localeo.ar.toUpperCase() + "`").split(name.toUpperCase()).length == 2) {
-                    player = localeo;
-                    found = true;
-                }
+        Player lastPlayer = null;
+        name = name.toLowerCase();
+
+        for (Object player: server.f.b) {
+            String playerName = ((ep) player).ar;
+
+            if (playerName.toLowerCase().equals(name)) {
+                // Perfect match found
+                lastPlayer = ((ep) player).getPlayer();
+                break;
             }
-        } else if (("`" + server.f.c() + "`").split(name).length > 2) {
-            // Too many partial matches.
-            for (int i = 0; i < server.f.b.size() && !found; ++i) {
-                ep localeo = (ep) server.f.b.get(i);
-                if (localeo.ar.equalsIgnoreCase(name)) {
-                    player = localeo;
-                    found = true;
+            if (playerName.toLowerCase().indexOf(name.toLowerCase()) != -1) {
+                // Partial match
+                if (lastPlayer != null) {
+                    // Found multiple
+                    return null;
                 }
+                lastPlayer = ((ep) player).getPlayer();
             }
         }
-        return player != null ? player.getPlayer() : null;
+
+        return lastPlayer;
     }
 
     /**
