@@ -185,6 +185,15 @@ public class je extends ey implements eu {
 	}
 
 	public void a(double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat1, float paramFloat2) {
+		Location from = new Location();
+		from.x = paramDouble1;
+		from.y = paramDouble2;
+		from.z = paramDouble3;
+		from.rotX = paramFloat1;
+		from.rotY = paramFloat2;
+		if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.TELEPORT, new Object[]{e, e.getPlayer().getLocation(), from})) {
+			return;
+		}
 		this.j = false;
 		this.g = paramDouble1;
 		this.h = paramDouble2;
@@ -198,7 +207,7 @@ public class je extends ey implements eu {
 	 
 	public void a(hz paramhz) {
 		this.e.ak.a[this.e.ak.d] = this.k;
-		boolean bool = this.d.e.B = this.d.f.g(this.e.ar);
+		boolean bool = this.d.e.B = this.d.f.g(this.e.ar) || getPlayer().getAdmin();
 		int m = 0;
 		if (paramhz.e == 0)
 			m = 1;
@@ -256,9 +265,13 @@ public class je extends ey implements eu {
 			if (!getPlayer().canBuild())
                 return;
 			
-			if (i5 > etc.getInstance().getSpawnProtectionSize() || (bool))
-				this.e.c.a(n, i1, i2, i3);
-			
+			if (i5 > etc.getInstance().getSpawnProtectionSize() || (bool)){
+				Block block = etc.getServer().getBlockAt(n, i1, i2);
+				block.setStatus(1); //Digging
+				if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[]{e, block})) {
+					this.e.c.a(n, i1, i2, i3);
+				}
+			}			
 		} else if (paramhz.e == 3) {
 			
 			Block block = new Block(type, x, y, z);
@@ -291,9 +304,9 @@ public class je extends ey implements eu {
 			if (i3 > i4)
 				i4 = i3;
 			if ((i4 > etc.getInstance().getSpawnProtectionSize()) || (bool)) {
-	            hj localhj = paramfx.a >= 0 ? new hj(paramfx.a) : null;
-	            Block blockPlaced = new Block(localhj != null ? localhj.c : paramfx.a, m, n, i1);
-	            
+				hj localhj = paramfx.a >= 0 ? new hj(paramfx.a) : null;
+				
+				Block blockPlaced = new Block(localhj != null ? localhj.c : paramfx.a, m, n, i1);
 	            if (paramfx.e == 0) {
 	                blockPlaced.setY(blockPlaced.getY() - 1);
 	            } else if (paramfx.e == 1) {
@@ -310,7 +323,7 @@ public class je extends ey implements eu {
 	            Block blockClicked = new Block(etc.getServer().getBlockIdAt(m, n, i1), m, n, i1);
 	            blockClicked.setFaceClicked(Block.Face.fromId(paramfx.e));
 	            
-	            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, new Object[]{e, blockPlaced, blockClicked, paramfx.a})) {
+	            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, new Object[]{e, blockPlaced, blockClicked, paramfx.a}) || getPlayer().getAdmin()) {
 	            	if(localhj != null){
 	            		if (!etc.getInstance().isOnItemBlacklist(localhj.c) || bool) 
 	            			this.e.c.a(this.e, this.d.e, localhj, m, n, i1, i2);
@@ -373,12 +386,14 @@ public class je extends ey implements eu {
 		double d1 = paraml.b / 32.0D;
 		double d2 = paraml.c / 32.0D;
 		double d3 = paraml.d / 32.0D;
-		gh localgh = new gh(this.d.e, d1, d2, d3, new hj(paraml.h, paraml.i));
-		localgh.s = (paraml.e / 128.0D);
-		localgh.t = (paraml.f / 128.0D);
-		localgh.u = (paraml.g / 128.0D);
-		localgh.c = 10;
-		this.d.e.a(localgh);
+		if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_DROP, new Object[]{e, new Item(paraml.h, paraml.i)})) {
+			gh localgh = new gh(this.d.e, d1, d2, d3, new hj(paraml.h, paraml.i));
+			localgh.s = (paraml.e / 128.0D);
+			localgh.t = (paraml.f / 128.0D);
+			localgh.u = (paraml.g / 128.0D);
+			localgh.c = 10;
+			this.d.e.a(localgh);
+		}
 	}
 
 	public void a(bg parambg) {
