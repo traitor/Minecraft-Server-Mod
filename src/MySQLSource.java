@@ -802,6 +802,14 @@ public class MySQLSource extends DataSource {
             } catch (SQLException ex) {
             }
         }
+        if (toRet || user.charAt(0) == '@')
+            return toRet;
+        Player pl = getPlayer(user);
+        String[] groups = pl.getGroups();
+        for (int i = 0; i < groups.length; ++i) {
+            if (isUserOnReserveList("@" + groups[i]))
+                return true;
+        }
         return toRet;
     }
 

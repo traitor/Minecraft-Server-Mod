@@ -1070,7 +1070,7 @@ public class FlatFileSource extends DataSource {
 
     public boolean isUserOnWhitelist(String user) {
         String location = etc.getInstance().getWhitelistLocation();
-
+        Player player = getPlayer(user);
         try {
             Scanner scanner = new Scanner(new File(location));
             while (scanner.hasNextLine()) {
@@ -1078,6 +1078,8 @@ public class FlatFileSource extends DataSource {
                 if (line.startsWith("#") || line.equals("") || line.startsWith("﻿")) {
                     continue;
                 }
+                if (line.startsWith("@") && player.isInGroup(line.substring(1)))
+                    return true;
                 if (line.equalsIgnoreCase(user)) {
                     return true;
                 }
@@ -1091,7 +1093,7 @@ public class FlatFileSource extends DataSource {
 
     public boolean isUserOnReserveList(String user) {
         String location = etc.getInstance().getReservelistLocation();
-
+        Player player = getPlayer(user);
         try {
             Scanner scanner = new Scanner(new File(location));
             while (scanner.hasNextLine()) {
@@ -1099,6 +1101,8 @@ public class FlatFileSource extends DataSource {
                 if (line.startsWith("#") || line.equals("") || line.startsWith("﻿")) {
                     continue;
                 }
+                if (line.startsWith("@") && player.isInGroup(line.substring(1)))
+                    return true;
                 if (line.equalsIgnoreCase(user)) {
                     return true;
                 }
