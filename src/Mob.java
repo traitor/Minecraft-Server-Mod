@@ -1,11 +1,14 @@
 /**
  * Mob.java - Interface for mobs
+ * 
  * @author James
  */
 public class Mob extends BaseEntity {
     /**
      * Creates a mob interface
-     * @param mob name of mob
+     * 
+     * @param mob
+     *            name of mob
      */
     public Mob(String mob) {
         this.entity = (jv) hl.a(mob, etc.getMCServer().e);
@@ -13,8 +16,11 @@ public class Mob extends BaseEntity {
 
     /**
      * Creates a mob interface
-     * @param mob name of mob
-     * @param location location of mob
+     * 
+     * @param mob
+     *            name of mob
+     * @param location
+     *            location of mob
      */
     public Mob(String mob, Location location) {
         this.entity = (jv) hl.a(mob, etc.getMCServer().e);
@@ -23,7 +29,9 @@ public class Mob extends BaseEntity {
 
     /**
      * Creates a mob interface
-     * @param mob name of mob
+     * 
+     * @param mob
+     *            name of mob
      */
     public Mob(hb mob) {
         this.entity = mob;
@@ -38,6 +46,7 @@ public class Mob extends BaseEntity {
 
     /**
      * Spawns this mob with a rider
+     * 
      * @param rider
      */
     public void spawn(Mob rider) {
@@ -56,6 +65,7 @@ public class Mob extends BaseEntity {
 
     /**
      * Returns this mob's name
+     * 
      * @return name
      */
     public String getName() {
@@ -77,6 +87,7 @@ public class Mob extends BaseEntity {
 
     /**
      * Returns the actual mob
+     * 
      * @return
      */
     public jv getMob() {
@@ -85,7 +96,9 @@ public class Mob extends BaseEntity {
 
     /**
      * Checks to see if the mob is a valid mob
-     * @param mob the mob to check
+     * 
+     * @param mob
+     *            the mob to check
      * @return true of mob is valid
      */
     public static boolean isValid(String mob) {

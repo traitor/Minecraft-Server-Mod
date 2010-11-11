@@ -8,13 +8,13 @@ import java.util.Map;
 import java.util.Set;
 
 public class jl implements bt {
-    private Set a = new HashSet();
-    private jp b;
-    private bt c;
-    private av d;
-    private Map e = new HashMap();
+    private Set  a = new HashSet();
+    private jp   b;
+    private bt   c;
+    private av   d;
+    private Map  e = new HashMap();
     private List f = new ArrayList();
-    private et g;
+    private et   g;
 
     public jl(et paramet, av paramav, bt parambt) {
         this.b = new jp(paramet, new byte[32768], 0, 0);
@@ -120,11 +120,12 @@ public class jl implements bt {
         if (this.d == null)
             return;
         // try {
-            paramjp.s = this.g.e;
-            this.d.a(this.g, paramjp);
-        /* } catch (IOException localIOException) {
-            localIOException.printStackTrace();
-        } */
+        paramjp.s = this.g.e;
+        this.d.a(this.g, paramjp);
+        /*
+         * } catch (IOException localIOException) {
+         * localIOException.printStackTrace(); }
+         */
     }
 
     public void a(bt parambt, int paramInt1, int paramInt2) {

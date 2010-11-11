@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -10,20 +9,21 @@ import net.minecraft.server.MinecraftServer;
 
 /**
  * DataSource.java - Abstract class for implementing new data sources.
+ * 
  * @author James
  */
 public abstract class DataSource {
 
-    protected static final Logger log = Logger.getLogger("Minecraft");
-    protected List<Group> groups = new ArrayList<Group>();
-    protected List<Kit> kits = new ArrayList<Kit>();
-    protected List<Warp> homes = new ArrayList<Warp>();
-    protected List<Warp> warps = new ArrayList<Warp>();
-    protected List<Ban> bans = new ArrayList<Ban>();
-    protected Map<String, Integer> items = new HashMap<String, Integer>();
-    protected MinecraftServer server;
-    protected final Object groupLock = new Object(), kitLock = new Object(), banLock = new Object();
-    protected final Object homeLock = new Object(), warpLock = new Object(), itemLock = new Object();
+    protected static final Logger  log    = Logger.getLogger("Minecraft");
+    protected List<Group>          groups = new ArrayList<Group>();
+    protected List<Kit>            kits   = new ArrayList<Kit>();
+    protected List<Warp>           homes  = new ArrayList<Warp>();
+    protected List<Warp>           warps  = new ArrayList<Warp>();
+    protected List<Ban>            bans   = new ArrayList<Ban>();
+    protected Map<String, Integer> items  = new HashMap<String, Integer>();
+    protected MinecraftServer      server;
+    protected final Object         groupLock = new Object(), kitLock = new Object(), banLock = new Object();
+    protected final Object         homeLock  = new Object(), warpLock = new Object(), itemLock = new Object();
 
     /**
      * Initializes the data source
@@ -62,18 +62,21 @@ public abstract class DataSource {
 
     /**
      * Adds user to the list
+     * 
      * @param player
      */
     abstract public void addPlayer(Player player);
 
     /**
      * Modifies the provided user
-     * @param player 
+     * 
+     * @param player
      */
     abstract public void modifyPlayer(Player player);
 
     /**
      * Checks to see if the specified player exists
+     * 
      * @param player
      * @return true if player exists
      */
@@ -81,6 +84,7 @@ public abstract class DataSource {
 
     /**
      * Returns specified user
+     * 
      * @param name
      * @return user
      */
@@ -88,18 +92,21 @@ public abstract class DataSource {
 
     /**
      * Adds specified group to the list of groups
+     * 
      * @param group
      */
     abstract public void addGroup(Group group);
 
     /**
      * Modifies group
+     * 
      * @param group
      */
     abstract public void modifyGroup(Group group);
 
     /**
      * Returns specified group
+     * 
      * @param name
      * @return group
      */
@@ -121,6 +128,7 @@ public abstract class DataSource {
 
     /**
      * Returns the default group
+     * 
      * @return default group
      */
     public Group getDefaultGroup() {
@@ -136,18 +144,21 @@ public abstract class DataSource {
 
     /**
      * Adds kit to list of kits
+     * 
      * @param kit
      */
     abstract public void addKit(Kit kit);
 
     /**
      * Modifies kit
+     * 
      * @param kit
      */
     abstract public void modifyKit(Kit kit);
 
     /**
      * Returns specified kit
+     * 
      * @param name
      * @return kit
      */
@@ -164,6 +175,7 @@ public abstract class DataSource {
 
     /**
      * Returns true if there are any kits
+     * 
      * @return true if there are kits
      */
     public boolean hasKits() {
@@ -174,12 +186,13 @@ public abstract class DataSource {
 
     /**
      * Returns a list of all kits names separated by commas
+     * 
      * @param player
      * @return string list of kits
      */
     public String getKitNames(Player player) {
         StringBuilder builder = new StringBuilder();
-        builder.append(""); //incaseofnull
+        builder.append(""); // incaseofnull
 
         synchronized (kitLock) {
             for (Kit kit : kits) {
@@ -194,18 +207,21 @@ public abstract class DataSource {
 
     /**
      * Adds home to list of homes
+     * 
      * @param home
      */
     abstract public void addHome(Warp home);
 
     /**
      * Modifies home
+     * 
      * @param home
      */
     abstract public void changeHome(Warp home);
 
     /**
      * Returns specified home
+     * 
      * @param name
      * @return home
      */
@@ -222,24 +238,28 @@ public abstract class DataSource {
 
     /**
      * Adds warp to list of warps
+     * 
      * @param warp
      */
     abstract public void addWarp(Warp warp);
 
     /**
      * Modifies warp
+     * 
      * @param warp
      */
     abstract public void changeWarp(Warp warp);
 
     /**
      * Removes warp from list of warps
+     * 
      * @param warp
      */
     abstract public void removeWarp(Warp warp);
 
     /**
      * Returns specified warp
+     * 
      * @param name
      * @return warp
      */
@@ -256,6 +276,7 @@ public abstract class DataSource {
 
     /**
      * Returns true if there are any warps
+     * 
      * @return true if there are warps
      */
     public boolean hasWarps() {
@@ -266,12 +287,13 @@ public abstract class DataSource {
 
     /**
      * Returns a string containing all warp names the player has access to
+     * 
      * @param player
      * @return string list of warps
      */
     public String getWarpNames(Player player) {
         StringBuilder builder = new StringBuilder();
-        builder.append(""); //incaseofnull
+        builder.append(""); // incaseofnull
 
         synchronized (warpLock) {
             for (Warp warp : warps) {
@@ -286,6 +308,7 @@ public abstract class DataSource {
 
     /**
      * Returns item id corresponding to item name
+     * 
      * @param name
      * @return item id
      */
@@ -300,7 +323,9 @@ public abstract class DataSource {
 
     /**
      * Returns the name of the item corresponding to the ID
-     * @param id id of item
+     * 
+     * @param id
+     *            id of item
      * @return name of item
      */
     public String getItem(int id) {
@@ -316,6 +341,7 @@ public abstract class DataSource {
 
     /**
      * Returns an unmodifiable map of items
+     * 
      * @return unmodifiable map of items
      */
     public Map<String, Integer> getItems() {
@@ -324,27 +350,32 @@ public abstract class DataSource {
 
     /**
      * Adds player to whitelist
+     * 
      * @param name
      */
     abstract public void addToWhitelist(String name);
 
     /**
      * Removes player from whitelist
+     * 
      * @param name
      */
     abstract public void removeFromWhitelist(String name);
 
     /**
      * Returns true if whitelist is enabled
+     * 
      * @return true if whitelist is enabled
      * @deprecated use etc.getInstance().isWhitelistEnabled() instead
      */
-    @Deprecated public boolean hasWhitelist() {
+    @Deprecated
+    public boolean hasWhitelist() {
         return etc.getInstance().isWhitelistEnabled();
     }
 
     /**
      * Returns true if the player is on the whitelist
+     * 
      * @param user
      * @return true if player is on whitelist
      */
@@ -352,18 +383,21 @@ public abstract class DataSource {
 
     /**
      * Adds player to reservelist
+     * 
      * @param name
      */
     abstract public void addToReserveList(String name);
 
     /**
      * Removes player from reservelist
+     * 
      * @param name
      */
     abstract public void removeFromReserveList(String name);
 
     /**
      * Returns true if player is on reservelist
+     * 
      * @param user
      * @return true if player is on reserve list
      */
@@ -371,14 +405,19 @@ public abstract class DataSource {
 
     /**
      * Adds or modifies specified ban
-     * @param ban Ban to add or modify
+     * 
+     * @param ban
+     *            Ban to add or modify
      */
     abstract public void modifyBan(Ban ban);
 
     /**
      * Checks to see if this player or IP is on the ban list
-     * @param player Player name
-     * @param ip IP Address
+     * 
+     * @param player
+     *            Player name
+     * @param ip
+     *            IP Address
      * @return true if either name or IP is on the ban list
      */
     public boolean isOnBanList(String player, String ip) {
@@ -394,8 +433,11 @@ public abstract class DataSource {
 
     /**
      * Retrieves the ban details
-     * @param player Player name
-     * @param ip IP Address
+     * 
+     * @param player
+     *            Player name
+     * @param ip
+     *            IP Address
      * @return the ban
      */
     public Ban getBan(String player, String ip) {

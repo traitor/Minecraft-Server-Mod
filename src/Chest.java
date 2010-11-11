@@ -1,5 +1,6 @@
 /**
  * Chest.java - Interface to chests.
+ * 
  * @author James
  */
 public class Chest extends ItemArray implements ComplexBlock {
@@ -7,6 +8,7 @@ public class Chest extends ItemArray implements ComplexBlock {
 
     /**
      * Creates a chest interface
+     * 
      * @param chest
      */
     public Chest(hx chest) {
@@ -24,7 +26,7 @@ public class Chest extends ItemArray implements ComplexBlock {
     public int getZ() {
         return chest.d;
     }
-    
+
     public void update() {
         chest.c();
     }

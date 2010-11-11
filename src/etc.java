@@ -13,34 +13,47 @@ import net.minecraft.server.*;
 /**
  * etc.java - My catch-all class for a bunch of shit. If there's something you
  * need it's probably in here.
+ * 
  * @author James
  */
 public class etc {
 
-    private static final Logger log = Logger.getLogger("Minecraft");
-    private static volatile etc instance;
-    private static MinecraftServer server;
-    private String usersLoc = "users.txt", kitsLoc = "kits.txt", homeLoc = "homes.txt", warpLoc = "warps.txt", itemLoc = "items.txt", groupLoc = "groups.txt";
-    private String whitelistLoc = "whitelist.txt", reservelistLoc = "reservelist.txt";
-    private String whitelistMessage = "Not on whitelist.";
-    private String[] allowedItems = null;
-    private String[] disallowedItems = null;
-    private String[] itemSpawnBlacklist = null;
-    private String[] motd = null;
-    private boolean saveHomes = true;
-    private boolean firstLoad = true;
-    private boolean whitelistEnabled = false;
-    private int playerLimit = 20;
-    private int spawnProtectionSize = 16;
-    private LinkedHashMap<String, String> commands = new LinkedHashMap<String, String>();
-    private String dataSourceType;
-    private DataSource dataSource;
-    private PropertiesFile properties;
-    private PluginLoader loader;
-    private boolean logging = false;
-    private boolean showUnknownCommand = true;
-    private int version = 1; //Version is meant to be loaded from the file, this stays as 1.
-    private String driver, username, password, db;
+    private static final Logger           log                 = Logger.getLogger("Minecraft");
+    private static volatile etc           instance;
+    private static MinecraftServer        server;
+    private String                        usersLoc            = "users.txt", kitsLoc = "kits.txt", homeLoc = "homes.txt", warpLoc = "warps.txt", itemLoc = "items.txt", groupLoc = "groups.txt";
+    private String                        whitelistLoc        = "whitelist.txt", reservelistLoc = "reservelist.txt";
+    private String                        whitelistMessage    = "Not on whitelist.";
+    private String[]                      allowedItems        = null;
+    private String[]                      disallowedItems     = null;
+    private String[]                      itemSpawnBlacklist  = null;
+    private String[]                      motd                = null;
+    private boolean                       saveHomes           = true;
+    private boolean                       firstLoad           = true;
+    private boolean                       whitelistEnabled    = false;
+    private int                           playerLimit         = 20;
+    private int                           spawnProtectionSize = 16;
+    private LinkedHashMap<String, String> commands            = new LinkedHashMap<String, String>();
+    private String                        dataSourceType;
+    private DataSource                    dataSource;
+    private PropertiesFile                properties;
+    private PluginLoader                  loader;
+    private boolean                       logging             = false;
+    private boolean                       showUnknownCommand  = true;
+    private int                           version             = 1;                                                                                                                              // Version
+    // is
+    // meant
+    // to
+    // be
+    // loaded
+    // from
+    // the
+    // file,
+    // this
+    // stays
+    // as
+    // 1.
+    private String                        driver, username, password, db;
 
     private etc() {
         commands.put("/help", "[Page] - Shows a list of commands. 7 per page.");
@@ -127,16 +140,16 @@ public class etc {
             URL url = this.getClass().getResource("/version.txt");
             if (url != null) {
                 InputStreamReader ins = new InputStreamReader(url.openStream());
-                BufferedReader bufferedReader = new BufferedReader( ins );
+                BufferedReader bufferedReader = new BufferedReader(ins);
                 version = Integer.parseInt(bufferedReader.readLine());
             }
         } catch (Exception e) {
             log.log(Level.SEVERE, "Exception while reading from server.properties", e);
             // Just in case...
-            disallowedItems = new String[]{""};
-            allowedItems = new String[]{""};
-            itemSpawnBlacklist = new String[]{""};
-            motd = new String[]{"Type /help for a list of commands."};
+            disallowedItems = new String[] { "" };
+            allowedItems = new String[] { "" };
+            itemSpawnBlacklist = new String[] { "" };
+            motd = new String[] { "Type /help for a list of commands." };
         }
     }
 
@@ -155,6 +168,7 @@ public class etc {
 
     /**
      * Returns the instance
+     * 
      * @return
      */
     public static etc getInstance() {
@@ -167,6 +181,7 @@ public class etc {
 
     /**
      * Sets the server to be used.
+     * 
      * @param s
      */
     public static void setServer(MinecraftServer s) {
@@ -175,6 +190,7 @@ public class etc {
 
     /**
      * Returns the minecraft server
+     * 
      * @return
      */
     public static MinecraftServer getMCServer() {
@@ -183,6 +199,7 @@ public class etc {
 
     /**
      * Returns the data source
+     * 
      * @return
      */
     public static DataSource getDataSource() {
@@ -191,20 +208,22 @@ public class etc {
 
     /**
      * Returns the minecraft server interface
+     * 
      * @return
      */
     public static Server getServer() {
         return etc.getLoader().getServer();
     }
-    
+
     /**
      * Returns the plugin loader
+     * 
      * @return
      */
     public static PluginLoader getLoader() {
         if (instance.loader == null) {
-        	instance.loader = new PluginLoader(server);
-        	instance.loader.loadPlugins();
+            instance.loader = new PluginLoader(server);
+            instance.loader.loadPlugins();
         }
 
         return instance.loader;
@@ -212,6 +231,7 @@ public class etc {
 
     /**
      * Returns the default group
+     * 
      * @return default group
      */
     public Group getDefaultGroup() {
@@ -223,6 +243,7 @@ public class etc {
 
     /**
      * Adds or modifies the home.
+     * 
      * @param home
      */
     public void changeHome(Warp home) {
@@ -235,6 +256,7 @@ public class etc {
 
     /**
      * Adds or modifies the warp
+     * 
      * @param warp
      */
     public void setWarp(Warp warp) {
@@ -247,6 +269,7 @@ public class etc {
 
     /**
      * Returns true if the item is on the blacklist
+     * 
      * @param id
      * @return
      */
@@ -261,6 +284,7 @@ public class etc {
 
     /**
      * Returns the data source
+     * 
      * @return
      */
     public DataSource getSource() {
@@ -269,6 +293,7 @@ public class etc {
 
     /**
      * Returns true if we're logging commands and such
+     * 
      * @return
      */
     public boolean isLogging() {
@@ -277,6 +302,7 @@ public class etc {
 
     /**
      * Adds command to the /help list
+     * 
      * @param command
      * @param description
      */
@@ -286,6 +312,7 @@ public class etc {
 
     /**
      * Removes command from /help list
+     * 
      * @param command
      */
     public void removeCommand(String command) {
@@ -294,6 +321,7 @@ public class etc {
 
     /**
      * Toggles the whitelist (doesn't persist)
+     * 
      * @return
      */
     public boolean toggleWhitelist() {
@@ -303,6 +331,7 @@ public class etc {
 
     /**
      * Parses a console command
+     * 
      * @param command
      * @param server
      * @return
@@ -311,11 +340,11 @@ public class etc {
         if (getMCServer() == null)
             setServer(server);
         String[] split = command.split(" ");
-        if ((Boolean)getLoader().callHook(PluginLoader.Hook.SERVERCOMMAND, new Object[] { split }))
+        if ((Boolean) getLoader().callHook(PluginLoader.Hook.SERVERCOMMAND, new Object[] { split }))
             return true;
         if (split.length == 0)
             return false;
-        
+
         boolean dontParseRegular = true;
         if (split[0].equalsIgnoreCase("help") || split[0].equalsIgnoreCase("mod-help")) {
             if (split[0].equalsIgnoreCase("help")) {
@@ -337,8 +366,8 @@ public class etc {
             load();
             loadData();
             for (Player player : etc.getServer().getPlayerList())
-                    player.getUser().reloadPlayer();
-            
+                player.getUser().reloadPlayer();
+
             log.info("Reloaded mod");
         } else if (split[0].equalsIgnoreCase("modify")) {
             if (split.length < 4) {
@@ -401,7 +430,7 @@ public class etc {
 
             if (split[1].equalsIgnoreCase("toggle")) {
                 log.info(toggleWhitelist() ? "Whitelist enabled" : "Whitelist disabled");
-            } else if(split.length == 3) {
+            } else if (split.length == 3) {
                 if (split[1].equalsIgnoreCase("add")) {
                     dataSource.addToWhitelist(split[2]);
                     log.info(split[2] + " added to whitelist");
@@ -465,6 +494,7 @@ public class etc {
 
     /**
      * Returns compass direction according to your rotation
+     * 
      * @param degrees
      * @return
      */
@@ -495,6 +525,7 @@ public class etc {
     /**
      * Combines the string array into a string at the specified start with the
      * separator separating each string.
+     * 
      * @param startIndex
      * @param string
      * @param seperator
@@ -506,13 +537,16 @@ public class etc {
             builder.append(string[i]);
             builder.append(seperator);
         }
-        builder.deleteCharAt(builder.length() - seperator.length()); // remove the extra
+        builder.deleteCharAt(builder.length() - seperator.length()); // remove
+        // the
+        // extra
         // seperator
         return builder.toString();
     }
 
     /**
      * Returns a list of allowed items for /item
+     * 
      * @return list of allowed items
      */
     public String[] getAllowedItems() {
@@ -521,6 +555,7 @@ public class etc {
 
     /**
      * Returns the list of commands
+     * 
      * @return
      */
     public LinkedHashMap<String, String> getCommands() {
@@ -529,6 +564,7 @@ public class etc {
 
     /**
      * Returns a list of disallowed items for /item
+     * 
      * @return
      */
     public String[] getDisallowedItems() {
@@ -537,6 +573,7 @@ public class etc {
 
     /**
      * Returns the location of groups.txt
+     * 
      * @return
      */
     public String getGroupLocation() {
@@ -545,6 +582,7 @@ public class etc {
 
     /**
      * Returns the location of homes.txt
+     * 
      * @return
      */
     public String getHomeLocation() {
@@ -553,6 +591,7 @@ public class etc {
 
     /**
      * Returns the location of items.txt
+     * 
      * @return
      */
     public String getItemLocation() {
@@ -561,6 +600,7 @@ public class etc {
 
     /**
      * Returns list of banned blocks
+     * 
      * @return
      */
     public String[] getItemSpawnBlacklist() {
@@ -569,6 +609,7 @@ public class etc {
 
     /**
      * Returns the location of kits.txt
+     * 
      * @return
      */
     public String getKitsLocation() {
@@ -577,6 +618,7 @@ public class etc {
 
     /**
      * Returns the MOTD.
+     * 
      * @return
      */
     public String[] getMotd() {
@@ -585,6 +627,7 @@ public class etc {
 
     /**
      * Returns the player limit
+     * 
      * @return
      */
     public int getPlayerLimit() {
@@ -593,6 +636,7 @@ public class etc {
 
     /**
      * Returns the location of reservelist.txt
+     * 
      * @return
      */
     public String getReservelistLocation() {
@@ -601,6 +645,7 @@ public class etc {
 
     /**
      * Returns true if the server is saving homes
+     * 
      * @return true if server can save homes
      */
     public boolean canSaveHomes() {
@@ -609,6 +654,7 @@ public class etc {
 
     /**
      * Returns the spawn protection size
+     * 
      * @return
      */
     public int getSpawnProtectionSize() {
@@ -617,6 +663,7 @@ public class etc {
 
     /**
      * Returns the location of users.txt
+     * 
      * @return
      */
     public String getUsersLocation() {
@@ -625,6 +672,7 @@ public class etc {
 
     /**
      * Returns the location of warps.txt
+     * 
      * @return
      */
     public String getWarpLocation() {
@@ -633,6 +681,7 @@ public class etc {
 
     /**
      * Returns true if the whitelist is enabled
+     * 
      * @return
      */
     public boolean isWhitelistEnabled() {
@@ -641,6 +690,7 @@ public class etc {
 
     /**
      * Returns the location of whitelist.txt
+     * 
      * @return
      */
     public String getWhitelistLocation() {
@@ -649,6 +699,7 @@ public class etc {
 
     /**
      * Returns the message the kick will show if a player isn't on the whitelist
+     * 
      * @return
      */
     public String getWhitelistMessage() {
@@ -657,6 +708,7 @@ public class etc {
 
     /**
      * Sets the list of allowed items
+     * 
      * @param allowedItems
      */
     public void setAllowedItems(String[] allowedItems) {
@@ -665,6 +717,7 @@ public class etc {
 
     /**
      * Sets the list of disallowed items
+     * 
      * @param disallowedItems
      */
     public void setDisallowedItems(String[] disallowedItems) {
@@ -673,6 +726,7 @@ public class etc {
 
     /**
      * Sets the location of groups.txt
+     * 
      * @param groupLoc
      */
     public void setGroupLocation(String groupLoc) {
@@ -681,6 +735,7 @@ public class etc {
 
     /**
      * Sets the location of homes.txt
+     * 
      * @param homeLoc
      */
     public void setHomeLocation(String homeLoc) {
@@ -689,6 +744,7 @@ public class etc {
 
     /**
      * Sets the location of items.txt
+     * 
      * @param itemLoc
      */
     public void setItemLocation(String itemLoc) {
@@ -697,6 +753,7 @@ public class etc {
 
     /**
      * Sets the item spawn blacklist
+     * 
      * @param itemSpawnBlacklist
      */
     public void setItemSpawnBlacklist(String[] itemSpawnBlacklist) {
@@ -705,6 +762,7 @@ public class etc {
 
     /**
      * Sets the location of kits.txt
+     * 
      * @param kitsLoc
      */
     public void setKitsLocation(String kitsLoc) {
@@ -713,6 +771,7 @@ public class etc {
 
     /**
      * If set to true the server will log all commands used.
+     * 
      * @param logging
      */
     public void setLogging(boolean logging) {
@@ -721,6 +780,7 @@ public class etc {
 
     /**
      * Set the MOTD
+     * 
      * @param motd
      */
     public void setMotd(String[] motd) {
@@ -729,6 +789,7 @@ public class etc {
 
     /**
      * Set the player limit
+     * 
      * @param playerLimit
      */
     public void setPlayerLimit(int playerLimit) {
@@ -737,6 +798,7 @@ public class etc {
 
     /**
      * Set the location of reservelist.txt
+     * 
      * @param reservelistLoc
      */
     public void setReservelistLocation(String reservelistLoc) {
@@ -746,6 +808,7 @@ public class etc {
     /**
      * If true the server will save homes. If false homes won't be saved and
      * will be wiped the next server restart.
+     * 
      * @param saveHomes
      */
     public void setSaveHomes(boolean saveHomes) {
@@ -754,6 +817,7 @@ public class etc {
 
     /**
      * Set the spawn protection size (def: 16)
+     * 
      * @param spawnProtectionSize
      */
     public void setSpawnProtectionSize(int spawnProtectionSize) {
@@ -762,6 +826,7 @@ public class etc {
 
     /**
      * Sets the location of users.txt
+     * 
      * @param usersLoc
      */
     public void setUsersLocation(String usersLoc) {
@@ -770,6 +835,7 @@ public class etc {
 
     /**
      * Sets the location of warps.txt
+     * 
      * @param warpLoc
      */
     public void setWarpLocation(String warpLoc) {
@@ -778,6 +844,7 @@ public class etc {
 
     /**
      * If true the whitelist is enabled
+     * 
      * @param whitelistEnabled
      */
     public void setWhitelistEnabled(boolean whitelistEnabled) {
@@ -786,6 +853,7 @@ public class etc {
 
     /**
      * Sets the location of whitelist.txt
+     * 
      * @param whitelistLoc
      */
     public void setWhitelistLocation(String whitelistLoc) {
@@ -794,6 +862,7 @@ public class etc {
 
     /**
      * Sets the whitelist message to show when it kicks someone
+     * 
      * @param whitelistMessage
      */
     public void setWhitelistMessage(String whitelistMessage) {
@@ -801,8 +870,9 @@ public class etc {
     }
 
     /**
-     * Returns true if "Unknown command" is shown to a player when
-     * they enter an unknown command (For wrappers and such)
+     * Returns true if "Unknown command" is shown to a player when they enter an
+     * unknown command (For wrappers and such)
+     * 
      * @return show unknown command
      */
     public boolean showUnknownCommand() {
@@ -811,7 +881,9 @@ public class etc {
 
     /**
      * Sets whether or not to show "Unknown command" to players.
-     * @param showUnknownCommand whether or not to show it
+     * 
+     * @param showUnknownCommand
+     *            whether or not to show it
      */
     public void setShowUnknownCommand(boolean showUnknownCommand) {
         this.showUnknownCommand = showUnknownCommand;
@@ -819,6 +891,7 @@ public class etc {
 
     /**
      * Return the current build of the mod
+     * 
      * @return build/version
      */
     public int getVersion() {
@@ -836,6 +909,7 @@ public class etc {
 
     /**
      * Returns a SQL connection
+     * 
      * @return sql connection
      */
     public static Connection getSQLConnection() {

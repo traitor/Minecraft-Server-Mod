@@ -9,6 +9,7 @@ import java.util.logging.Level;
 
 /**
  * MySQLSource.java - Used for accessing users and such from a mysql database
+ * 
  * @author James
  */
 public class MySQLSource extends DataSource {
@@ -19,7 +20,7 @@ public class MySQLSource extends DataSource {
         loadHomes();
         loadWarps();
         loadItems();
-        //loadBanList();
+        // loadBanList();
     }
 
     public void loadGroups() {
@@ -239,7 +240,7 @@ public class MySQLSource extends DataSource {
         }
     }
 
-    //Users
+    // Users
     public void addPlayer(Player player) {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -339,7 +340,7 @@ public class MySQLSource extends DataSource {
         return exists;
     }
 
-    //Groups
+    // Groups
     public void addGroup(Group group) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -348,7 +349,7 @@ public class MySQLSource extends DataSource {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    //Kits
+    // Kits
     public void addKit(Kit kit) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -357,7 +358,7 @@ public class MySQLSource extends DataSource {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    //Homes
+    // Homes
     public void addHome(Warp home) {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -441,7 +442,7 @@ public class MySQLSource extends DataSource {
         }
     }
 
-    //Warps
+    // Warps
     public void addWarp(Warp warp) {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -551,11 +552,11 @@ public class MySQLSource extends DataSource {
         }
     }
 
-    //Whitelist
+    // Whitelist
     public void addToWhitelist(String name) {
         if (isUserOnWhitelist(name))
             return;
-        
+
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -581,7 +582,7 @@ public class MySQLSource extends DataSource {
     public void removeFromWhitelist(String name) {
         if (!isUserOnWhitelist(name))
             return;
-        
+
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -604,11 +605,11 @@ public class MySQLSource extends DataSource {
         }
     }
 
-    //Reservelist
+    // Reservelist
     public void addToReserveList(String name) {
         if (isUserOnReserveList(name))
             return;
-        
+
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -634,7 +635,7 @@ public class MySQLSource extends DataSource {
     public void removeFromReserveList(String name) {
         if (!isUserOnReserveList(name))
             return;
-        
+
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -695,7 +696,7 @@ public class MySQLSource extends DataSource {
         }
         return player;
     }
-    
+
     public void loadBanList() {
         synchronized (banLock) {
             bans = new ArrayList<Ban>();
@@ -796,7 +797,7 @@ public class MySQLSource extends DataSource {
         }
         return toRet;
     }
-    
+
     public void modifyBan(Ban ban) {
         throw new UnsupportedOperationException("Not supported yet.");
     }

@@ -26,7 +26,7 @@ public class ge {
             a.log(Level.WARNING, "Failed to log to server.log", localException);
         }
 
-        //Keep these files logged.
+        // Keep these files logged.
         File log = new File("logs");
         try {
             if (!log.exists()) {

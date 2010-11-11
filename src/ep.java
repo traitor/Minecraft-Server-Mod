@@ -6,15 +6,15 @@ import java.util.Set;
 import net.minecraft.server.MinecraftServer;
 
 public class ep extends fv {
-    public je a;
+    public je              a;
     public MinecraftServer b;
-    public jq c;
-    public double d;
-    public double e;
-    public List f = new LinkedList();
-    public Set ai = new HashSet();
-    public double aj;
-    private Player player;
+    public jq              c;
+    public double          d;
+    public double          e;
+    public List            f  = new LinkedList();
+    public Set             ai = new HashSet();
+    public double          aj;
+    private Player         player;
 
     public ep(MinecraftServer paramMinecraftServer, em paramem, String paramString, jq paramjq) {
         super(paramem);
@@ -42,6 +42,7 @@ public class ep extends fv {
 
     /**
      * Returns the player
+     * 
      * @return player
      */
     public Player getPlayer() {
@@ -55,7 +56,7 @@ public class ep extends fv {
         player = etc.getDataSource().getPlayer(ar);
         player.setUser(this);
     }
-    
+
     public void b_() {
     }
 
@@ -80,7 +81,7 @@ public class ep extends fv {
             localObject2 = (kc) this.f.get(i);
             double d2 = ((kc) localObject2).a(this);
             if ((i == 0) || (d2 < d1)) {
-                localObject1 = (kc)localObject2;
+                localObject1 = (kc) localObject2;
                 d1 = ((kc) localObject2).a(this);
             }
         }
@@ -103,13 +104,13 @@ public class ep extends fv {
                         continue;
                     ComplexBlock block = null;
                     if (localay instanceof hx)
-                        block = new Chest((hx)localay);
+                        block = new Chest((hx) localay);
                     else if (localay instanceof ds)
-                        block = new Furnace((ds)localay);
+                        block = new Furnace((ds) localay);
                     else if (localay instanceof ji)
-                        block = new Sign((ji)localay);
+                        block = new Sign((ji) localay);
                     if (block != null) {
-                        if (!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, new Object[] { this, block }))
+                        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, new Object[] { this, block }))
                             this.a.b(new jc(localay.b, localay.c, localay.d, localay));
                     } else
                         this.a.b(new jc(localay.b, localay.c, localay.d, localay));

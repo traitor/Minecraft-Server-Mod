@@ -11,18 +11,18 @@ import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 
 public class gn {
-    public static Logger a = Logger.getLogger("Minecraft");
-    public List b = new ArrayList();
+    public static Logger    a = Logger.getLogger("Minecraft");
+    public List             b = new ArrayList();
     private MinecraftServer c;
-    private ic d;
-    private int e;
-    private Set f = new HashSet();
-    private Set g = new HashSet();
-    private Set h = new HashSet();
-    private File i;
-    private File j;
-    private File k;
-    private cx l;
+    private ic              d;
+    private int             e;
+    private Set             f = new HashSet();
+    private Set             g = new HashSet();
+    private Set             h = new HashSet();
+    private File            i;
+    private File            j;
+    private File            k;
+    private cx              l;
 
     public gn(MinecraftServer paramMinecraftServer) {
         etc.setServer(paramMinecraftServer);
@@ -54,7 +54,6 @@ public class gn {
         this.b.add(paramep);
         this.l.b(paramep);
 
-
         this.c.e.A.d((int) paramep.p >> 4, (int) paramep.r >> 4);
 
         while (this.c.e.a(paramep, paramep.z).size() != 0) {
@@ -66,7 +65,7 @@ public class gn {
         for (String str : etc.getInstance().getMotd()) {
             paramep.a.b(new bg(str));
         }
-        etc.getLoader().callHook(PluginLoader.Hook.LOGIN, new Object[]{paramep});
+        etc.getLoader().callHook(PluginLoader.Hook.LOGIN, new Object[] { paramep });
     }
 
     public void b(ep paramep) {
@@ -108,16 +107,14 @@ public class gn {
                 // ^ otherwise no.
             }
         }
-        if (etc.getInstance().isWhitelistEnabled() && !(etc.getDataSource().isUserOnWhitelist(paramString1)
-                || player.isAdmin())) {
+        if (etc.getInstance().isWhitelistEnabled() && !(etc.getDataSource().isUserOnWhitelist(paramString1) || player.isAdmin())) {
             paramfo.b(etc.getInstance().getWhitelistMessage());
             return null;
-        } else if (this.b.size() >= this.e &&
-                !(player.isAdmin() || etc.getDataSource().isUserOnReserveList(paramString1))) {
+        } else if (this.b.size() >= this.e && !(player.isAdmin() || etc.getDataSource().isUserOnReserveList(paramString1))) {
             paramfo.b("Server is full.");
             return null;
         }
-        
+
         if (!player.getIps()[0].equals("")) {
             boolean kick = true;
             for (int i = 0; i < player.getIps().length; i++) {
@@ -131,20 +128,21 @@ public class gn {
             }
         }
 
-        Object obj = etc.getLoader().callHook(PluginLoader.Hook.LOGINCHECK, new Object[]{paramString1});
+        Object obj = etc.getLoader().callHook(PluginLoader.Hook.LOGINCHECK, new Object[] { paramString1 });
         if (obj instanceof String) {
-            String result = (String)obj;
+            String result = (String) obj;
             if (result != null && !result.equals("")) {
                 paramfo.b(result);
                 return null;
             }
         }
-        
+
         return new ep(this.c, this.c.e, paramString1, new jq(this.c.e));
     }
 
     /**
      * Returns the list of bans
+     * 
      * @return
      */
     public String getBans() {
@@ -162,6 +160,7 @@ public class gn {
 
     /**
      * Returns the list of IP bans
+     * 
      * @return
      */
     public String getIpBans() {

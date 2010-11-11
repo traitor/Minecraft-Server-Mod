@@ -11,6 +11,7 @@ import java.util.logging.Level;
 
 /**
  * FlatFileSource.java - Accessing users, groups and such from flat files.
+ * 
  * @author James
  */
 public class FlatFileSource extends DataSource {
@@ -21,7 +22,7 @@ public class FlatFileSource extends DataSource {
         loadHomes();
         loadWarps();
         loadItems();
-        //loadBanList();
+        // loadBanList();
 
         String location = etc.getInstance().getUsersLocation();
         if (!new File(location).exists()) {
@@ -172,7 +173,7 @@ public class FlatFileSource extends DataSource {
                 }
             }
         }
-        
+
         synchronized (kitLock) {
             kits = new ArrayList<Kit>();
             try {
@@ -572,14 +573,14 @@ public class FlatFileSource extends DataSource {
         }
     }
 
-    //Users
+    // Users
     public void addPlayer(Player player) {
         String loc = etc.getInstance().getUsersLocation();
 
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(loc, true));
             StringBuilder builder = new StringBuilder();
-            //#NAME:GROUPS:ADMIN/UNRESTRICTED:COLOR:COMMANDS
+            // #NAME:GROUPS:ADMIN/UNRESTRICTED:COLOR:COMMANDS
             builder.append(player.getName());
             builder.append(":");
             builder.append(etc.combineSplit(0, player.getGroups(), ","));
@@ -672,7 +673,7 @@ public class FlatFileSource extends DataSource {
     public Player getPlayer(String name) {
         Player player = new Player();
         String location = etc.getInstance().getUsersLocation();
-        
+
         try {
             Scanner scanner = new Scanner(new File(location));
             while (scanner.hasNextLine()) {
@@ -683,7 +684,7 @@ public class FlatFileSource extends DataSource {
                 String[] split = line.split(":");
                 if (!split[0].equalsIgnoreCase(name))
                     continue;
-                
+
                 player.setGroups(split[1].split(","));
 
                 if (split.length >= 3)
@@ -708,7 +709,7 @@ public class FlatFileSource extends DataSource {
         return player;
     }
 
-    //Groups
+    // Groups
     public void addGroup(Group group) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -717,7 +718,7 @@ public class FlatFileSource extends DataSource {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    //Kits
+    // Kits
     public void addKit(Kit kit) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -726,7 +727,7 @@ public class FlatFileSource extends DataSource {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    //Homes
+    // Homes
     public void addHome(Warp home) {
         String homeLoc = etc.getInstance().getHomeLocation();
         try {
@@ -818,7 +819,7 @@ public class FlatFileSource extends DataSource {
         }
     }
 
-    //Warps
+    // Warps
     public void addWarp(Warp warp) {
         String warpLoc = etc.getInstance().getWarpLocation();
         try {
@@ -940,11 +941,11 @@ public class FlatFileSource extends DataSource {
         }
     }
 
-    //Whitelist
+    // Whitelist
     public void addToWhitelist(String name) {
         if (isUserOnWhitelist(name))
             return;
-        
+
         BufferedWriter bw = null;
         String location = etc.getInstance().getWhitelistLocation();
         try {
@@ -966,7 +967,7 @@ public class FlatFileSource extends DataSource {
     public void removeFromWhitelist(String name) {
         if (!isUserOnWhitelist(name))
             return;
-        
+
         FileWriter writer = null;
         String location = etc.getInstance().getWhitelistLocation();
 
@@ -997,7 +998,7 @@ public class FlatFileSource extends DataSource {
         }
     }
 
-    //Reservelist
+    // Reservelist
     public void addToReserveList(String name) {
         if (isUserOnReserveList(name))
             return;
@@ -1022,7 +1023,7 @@ public class FlatFileSource extends DataSource {
     public void removeFromReserveList(String name) {
         if (!isUserOnReserveList(name))
             return;
-        
+
         FileWriter writer = null;
         String location = etc.getInstance().getReservelistLocation();
 

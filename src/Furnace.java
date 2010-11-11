@@ -1,5 +1,6 @@
 /**
  * Furnace.java - Interface for furnaces
+ * 
  * @author James
  */
 public class Furnace extends ItemArray implements ComplexBlock {
@@ -7,6 +8,7 @@ public class Furnace extends ItemArray implements ComplexBlock {
 
     /**
      * Creates a furnace interface
+     * 
      * @param furnace
      */
     public Furnace(ds furnace) {
