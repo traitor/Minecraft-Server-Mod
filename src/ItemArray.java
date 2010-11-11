@@ -1,14 +1,17 @@
 /**
- * ItemArray.java - Interface to hh[] so I don't have to copy+paste
- * this a bunch of times
+ * ItemArray.java - Interface to jh[] so I don't have to copy+paste this a bunch
+ * of times
+ * 
  * @author James
  */
 public abstract class ItemArray {
     /**
-     * Adds the specified item. If the item doesn't have a slot,
-     * it will get the nearest available slot. If amount is equal
-     * to 0, it will delete the item if a slot is specified.
-     * @param item item to add
+     * Adds the specified item. If the item doesn't have a slot, it will get the
+     * nearest available slot. If amount is equal to 0, it will delete the item
+     * if a slot is specified.
+     * 
+     * @param item
+     *            item to add
      */
     public void addItem(Item item) {
         if (item == null)
@@ -18,12 +21,12 @@ public abstract class ItemArray {
         if (slot < getArray().length && slot >= 0) {
             if (item.getAmount() <= 0)
                 getArray()[slot] = null;
-            else if(Item.isValidItem(item.getItemId()))
-                getArray()[slot] = new hh(item.getItemId(), item.getAmount());
+            else if (Item.isValidItem(item.getItemId()))
+                getArray()[slot] = new hj(item.getItemId(), item.getAmount());
         } else if (slot == -1) {
             int newSlot = getEmptySlot();
             if (newSlot != -1) {
-                getArray()[newSlot] = new hh(item.getItemId(), item.getAmount());
+                getArray()[newSlot] = new hj(item.getItemId(), item.getAmount());
                 item.setSlot(newSlot);
             }
         }
@@ -31,7 +34,9 @@ public abstract class ItemArray {
 
     /**
      * Retrieves from the slot
-     * @param slot slot to get item from
+     * 
+     * @param slot
+     *            slot to get item from
      * @return item
      */
     public Item getItemFromSlot(int slot) {
@@ -43,6 +48,7 @@ public abstract class ItemArray {
 
     /**
      * Retrieves from the slot
+     * 
      * @param id
      * @return item
      */
@@ -58,6 +64,7 @@ public abstract class ItemArray {
 
     /**
      * Retrieves from the slot
+     * 
      * @param id
      * @param maxAmount
      * @return item
@@ -74,6 +81,7 @@ public abstract class ItemArray {
 
     /**
      * Gets the nearest empty slot. -1 if there's no empty slots
+     * 
      * @return nearest empty slot
      */
     public int getEmptySlot() {
@@ -87,7 +95,9 @@ public abstract class ItemArray {
 
     /**
      * Removes the item from the slot
-     * @param slot slot to remove item from
+     * 
+     * @param slot
+     *            slot to remove item from
      */
     public void removeItem(int slot) {
         if (slot < getArray().length && slot >= 0)
@@ -95,9 +105,11 @@ public abstract class ItemArray {
     }
 
     /**
-     * Removes the item. No slot needed, it will go through the
-     * inventory until the amount specified is removed.
-     * @param item item id and amount to remove
+     * Removes the item. No slot needed, it will go through the inventory until
+     * the amount specified is removed.
+     * 
+     * @param item
+     *            item id and amount to remove
      */
     public void removeItem(Item item) {
         int amount = item.getAmount();
@@ -121,8 +133,9 @@ public abstract class ItemArray {
     }
 
     /**
-     * Checks to see if this getArray() has one slot that has the item id
-     * and equal or more to the amount.
+     * Checks to see if this getArray() has one slot that has the item id and
+     * equal or more to the amount.
+     * 
      * @param itemId
      * @param minimum
      * @param maximum
@@ -131,9 +144,7 @@ public abstract class ItemArray {
     public boolean hasItem(int itemId, int minimum, int maximum) {
         for (int i = 0; getArray().length > i; i++)
             if (getArray()[i] != null)
-                if (getArray()[i].c == itemId &&
-                    getArray()[i].a >= minimum &&
-                    getArray()[i].a <= maximum)
+                if (getArray()[i].c == itemId && getArray()[i].a >= minimum && getArray()[i].a <= maximum)
                     return true;
         return false;
     }
@@ -149,7 +160,8 @@ public abstract class ItemArray {
 
     /**
      * Gets the actual item array
+     * 
      * @return item array
      */
-    public abstract hh[] getArray();
+    public abstract hj[] getArray();
 }

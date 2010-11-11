@@ -1,5 +1,6 @@
 /**
  * Inventory.java - Interface to player inventories
+ * 
  * @author James
  */
 public class Inventory extends ItemArray {
@@ -20,11 +21,13 @@ public class Inventory extends ItemArray {
          */
         Equipment
     }
-    private eo user;
+
+    private ep   user;
     private Type type;
 
     /**
      * Creates an interface for this player's inventory
+     * 
      * @param player
      * @param type
      */
@@ -34,8 +37,9 @@ public class Inventory extends ItemArray {
     }
 
     /**
-     * Gives this player an item. If the inventory is full
-     * some will drop on the ground.
+     * Gives this player an item. If the inventory is full some will drop on the
+     * ground.
+     * 
      * @param itemId
      * @param amount
      */
@@ -52,8 +56,9 @@ public class Inventory extends ItemArray {
         int temp = amount;
         do {
             int amountToAdd = temp >= 64 ? 64 : temp;
-            
-            if (hasItem(itemId, 1, 63)) { //Do we already have an item we can add to?
+
+            if (hasItem(itemId, 1, 63)) { // Do we already have an item we can
+                // add to?
                 Item i = getItemFromId(itemId, 63);
                 if (i != null) {
                     if (amountToAdd == 64) {
@@ -74,13 +79,14 @@ public class Inventory extends ItemArray {
             }
 
             int emptySlot = getEmptySlot();
-            if (emptySlot == -1) //No empty slots
+            if (emptySlot == -1) // No empty slots
                 break;
             addItem(new Item(itemId, amountToAdd, emptySlot));
             temp -= 64;
         } while (temp > 0);
-        
-        if (temp > 0) { //If the inventory's full it'll drop the rest on the ground.
+
+        if (temp > 0) { // If the inventory's full it'll drop the rest on the
+            // ground.
             user.getPlayer().giveItemDrop(itemId, temp);
         }
     }
@@ -92,12 +98,15 @@ public class Inventory extends ItemArray {
         user.a.d();
     }
 
-    public hh[] getArray() {
+    public hj[] getArray() {
         switch (type) {
-            case Inventory: return user.ak.a;
-            case CraftingTable: return user.ak.c;
-            case Equipment: return user.ak.b;
+            case Inventory:
+                return user.ak.a;
+            case CraftingTable:
+                return user.ak.c;
+            case Equipment:
+                return user.ak.b;
         }
-        return new hh[0];
+        return new hj[0];
     }
 }

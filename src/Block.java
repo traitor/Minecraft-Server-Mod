@@ -1,5 +1,6 @@
 /**
  * Block.java - Provides some way of making/editing blocks
+ * 
  * @author James
  */
 public class Block {
@@ -40,7 +41,9 @@ public class Block {
 
         /**
          * Returns a Face according to the specified ID
-         * @param id id of face
+         * 
+         * @param id
+         *            id of face
          * @return face
          */
         public static Face fromId(final int id) {
@@ -52,9 +55,10 @@ public class Block {
             return null;
         }
     }
-    private int type, x, y, z;
+
+    private int  type, x, y, z;
     private Face faceClicked;
-    private int status, data;
+    private int  status, data;
 
     /**
      * Create a block with no type, x, y or z.
@@ -64,6 +68,7 @@ public class Block {
 
     /**
      * Creates a block of specified type
+     * 
      * @param type
      */
     public Block(int type) {
@@ -72,7 +77,9 @@ public class Block {
 
     /**
      * Creates a block of specified type and specified x, y and z
-     * @param type Type of block
+     * 
+     * @param type
+     *            Type of block
      * @param x
      * @param y
      * @param z
@@ -86,7 +93,9 @@ public class Block {
 
     /**
      * Creates a block of specified type and specified x, y and z
-     * @param type Type of block
+     * 
+     * @param type
+     *            Type of block
      * @param x
      * @param y
      * @param z
@@ -102,6 +111,7 @@ public class Block {
 
     /**
      * Type of block
+     * 
      * @return type
      */
     public int getType() {
@@ -110,6 +120,7 @@ public class Block {
 
     /**
      * Set type of block
+     * 
      * @param type
      */
     public void setType(int type) {
@@ -118,6 +129,7 @@ public class Block {
 
     /**
      * Gets X location
+     * 
      * @return x
      */
     public int getX() {
@@ -126,6 +138,7 @@ public class Block {
 
     /**
      * Sets X location
+     * 
      * @param x
      */
     public void setX(int x) {
@@ -134,6 +147,7 @@ public class Block {
 
     /**
      * Gets Y location
+     * 
      * @return y
      */
     public int getY() {
@@ -142,6 +156,7 @@ public class Block {
 
     /**
      * Sets Y location
+     * 
      * @param y
      */
     public void setY(int y) {
@@ -150,6 +165,7 @@ public class Block {
 
     /**
      * Gets Z location
+     * 
      * @return z
      */
     public int getZ() {
@@ -158,6 +174,7 @@ public class Block {
 
     /**
      * Sets Z location
+     * 
      * @param z
      */
     public void setZ(int z) {
@@ -165,8 +182,8 @@ public class Block {
     }
 
     /**
-     * If this block was clicked, this will return the face
-     * that was clicked.
+     * If this block was clicked, this will return the face that was clicked.
+     * 
      * @return face clicked
      */
     public Face getFaceClicked() {
@@ -175,7 +192,9 @@ public class Block {
 
     /**
      * Sets the face that was clicked
-     * @param faceClicked face clicked
+     * 
+     * @param faceClicked
+     *            face clicked
      */
     public void setFaceClicked(Face faceClicked) {
         this.faceClicked = faceClicked;
@@ -183,10 +202,13 @@ public class Block {
 
     /**
      * Returns the destruction status of this block.
-     * @return 0 = Started Digging, 1 = Digging, 2 = Stopped digging, 3 = Block broken.
-     * Note: You have to return false for onBlockDestroy for all of these (except 2) to prevent the
-     * block from being destroyed. Returning false just on block broken will not work. Another note
-     * is that 0 is called often, far less than 1 but is still called. Good for toggling something.
+     * 
+     * @return 0 = Started Digging, 1 = Digging, 2 = Stopped digging, 3 = Block
+     *         broken. Note: You have to return false for onBlockDestroy for all
+     *         of these (except 2) to prevent the block from being destroyed.
+     *         Returning false just on block broken will not work. Another note
+     *         is that 0 is called often, far less than 1 but is still called.
+     *         Good for toggling something.
      */
     public int getStatus() {
         return status;
@@ -194,6 +216,7 @@ public class Block {
 
     /**
      * Sets the current destruction status of this block.
+     * 
      * @param status
      */
     public void setStatus(int status) {
@@ -202,6 +225,7 @@ public class Block {
 
     /**
      * Returns this block's data
+     * 
      * @return
      */
     public int getData() {
@@ -210,6 +234,7 @@ public class Block {
 
     /**
      * Sets this block's data
+     * 
      * @param data
      */
     public void setData(int data) {

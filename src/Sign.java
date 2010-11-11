@@ -1,22 +1,27 @@
 /**
  * Sign.java - Interface to signs
+ * 
  * @author James
  */
 public class Sign implements ComplexBlock {
-    private jg sign;
+    private ji sign;
 
     /**
      * Creates a sign interface
+     * 
      * @param sign
      */
-    public Sign(jg sign) {
+    public Sign(ji sign) {
         this.sign = sign;
     }
 
     /**
      * Sets the line of text at specified index
-     * @param index line
-     * @param text text
+     * 
+     * @param index
+     *            line
+     * @param text
+     *            text
      */
     public void setText(int index, String text) {
         if (index >= 0 && sign.e.length > index)
@@ -25,7 +30,9 @@ public class Sign implements ComplexBlock {
 
     /**
      * Returns the line of text
-     * @param index line of text
+     * 
+     * @param index
+     *            line of text
      * @return text
      */
     public String getText(int index) {
