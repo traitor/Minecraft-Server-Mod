@@ -3,9 +3,11 @@ import java.util.Map;
 
 /**
  * Kit.java - Contains the stuff for a kit.
+ * 
  * @author James
  */
 public class Kit {
+
     /**
      * Kit ID - Used in database transactions
      */
