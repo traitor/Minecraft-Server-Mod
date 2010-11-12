@@ -208,7 +208,7 @@ public class je extends ey implements eu {
     // Destroy function
     public void a(hz paramhz) {
         this.e.ak.a[this.e.ak.d] = this.k;
-        boolean bool = this.d.e.B = this.d.f.g(this.e.ar) || getPlayer().getAdmin();
+        boolean bool = this.d.e.B = (this.d.f.g(this.e.ar) || getPlayer().isAdmin());
         int m = 0;
         if (paramhz.e == 0) {
             m = 1;
@@ -239,7 +239,6 @@ public class je extends ey implements eu {
             i5 = i4;
         }
         if (paramhz.e == 0) {
-
             if (!getPlayer().canBuild()) {
                 return;
             }
@@ -257,14 +256,12 @@ public class je extends ey implements eu {
             }
 
         } else if (paramhz.e == 2) {
-
             Block block = etc.getServer().getBlockAt(n, i1, i2);
             block.setStatus(2); // Stopped digging
             etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[]{e, block});
 
             this.e.c.a();
         } else if (paramhz.e == 1) {
-
             if (!getPlayer().canBuild()) {
                 return;
             }
@@ -277,7 +274,6 @@ public class je extends ey implements eu {
                 }
             }
         } else if (paramhz.e == 3) {
-
             Block block = new Block(type, x, y, z);
             block.setStatus(3);
             etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[]{e, block});
@@ -294,7 +290,7 @@ public class je extends ey implements eu {
     }
 
     public void a(fx paramfx) {
-        boolean bool = this.d.e.B = this.d.f.g(getPlayer().getName()) || getPlayer().isAdmin();
+        boolean bool = this.d.e.B = (this.d.f.g(getPlayer().getName()) || getPlayer().isAdmin());
         if (paramfx.e == 255) {
             hj localhj1 = paramfx.a >= 0 ? new hj(paramfx.a) : null;
             this.e.c.a(this.e, this.d.e, localhj1);
@@ -328,7 +324,7 @@ public class je extends ey implements eu {
                 Block blockClicked = new Block(etc.getServer().getBlockIdAt(m, n, i1), m, n, i1);
                 blockClicked.setFaceClicked(Block.Face.fromId(paramfx.e));
 
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, new Object[]{e, blockPlaced, blockClicked, paramfx.a}) || getPlayer().getAdmin()) {
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, new Object[]{e, blockPlaced, blockClicked, paramfx.a})) {
                     if (localhj != null) {
                         if (!etc.getInstance().isOnItemBlacklist(localhj.c) || bool) {
                             this.e.c.a(this.e, this.d.e, localhj, m, n, i1, i2);
