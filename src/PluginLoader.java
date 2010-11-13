@@ -3,6 +3,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -120,9 +121,21 @@ public class PluginLoader {
          */
         EXPLODE,
         /**
+         * Calls onVerificationCheck
+         */
+        VERIFICATION_CHECK,
+        /**
+         * Calls onNameVerification
+         */
+        NAME_VERIFICATION,
+        /**
+         * Calls onNameResolution
+         */
+        NAME_RESOLUTION,
+        /**
          * Unused.
          */
-        NUM_HOOKS
+        NUM_HOOKS,
     }
     private static final Logger log = Logger.getLogger("Minecraft");
     private static final Object lock = new Object();
@@ -331,7 +344,7 @@ public class PluginLoader {
      * @return Object returned by call
      */
     public Object callHook(Hook h, Object[] parameters) {
-        Object toRet = false;
+        Object toRet = h == Hook.NAME_RESOLUTION ? null : false;
         synchronized (lock) {
             try {
                 List<PluginRegisteredListener> registeredListeners = listeners.get(h.ordinal());
@@ -450,6 +463,22 @@ public class PluginLoader {
                             case EXPLODE:
                                 if (listener.onExplode((Block) parameters[0])) {
                                     toRet = true;
+                                }
+                                break;
+                            case VERIFICATION_CHECK:
+                                if (listener.onVerificationCheck((InetAddress) parameters[0])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case NAME_VERIFICATION:
+                                if (listener.onNameVerification((String) parameters[0], (String) parameters[1], (InetAddress) parameters[2])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case NAME_RESOLUTION:
+                                String name = listener.onNameResolution(((ep) parameters[0]).getPlayer());
+                                if (name != null) {
+                                    toRet = name;
                                 }
                                 break;
                         }

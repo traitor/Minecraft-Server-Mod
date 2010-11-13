@@ -53,6 +53,14 @@ public class gn {
     }
 
     public void a(ep paramep) {
+        String newName = (String)etc.getLoader().callHook(PluginLoader.Hook.NAME_RESOLUTION, new Object[] {paramep});
+        if (newName != null) {
+            System.out.println("NEW NAME: " + newName);
+            paramep.ar = newName;
+        } else {
+            System.out.println("NO NEW NAME: " + newName);
+        }
+        
         this.b.add(paramep);
         this.l.b(paramep);
 

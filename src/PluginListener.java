@@ -1,3 +1,4 @@
+import java.net.InetAddress;
 
 /**
  * PluginListener.java - Extend this and register it to listen to specific
@@ -320,5 +321,42 @@ public abstract class PluginListener {
      */
     public boolean onFlow(Block block) {
         return false;
+    }
+
+    /**
+     * Called when the server considers whether to perform verification.
+     * 
+     * @param address
+     *          player's address
+     * @return
+     */
+    public boolean onVerificationCheck(InetAddress address) {
+        return false;
+    }
+
+    /**
+     * Called on name verification. Return true to override.
+     *
+     * @param name
+     *          player's name
+     * @param serverID
+     *         server ID
+     * @param address
+     *         address
+     * @return true to allow pass through
+     */
+    public boolean onNameVerification(String name, String serverID, InetAddress address) {
+        return false;
+    }
+
+    /**
+     * Allow overriding a player's name.
+     * 
+     * @param player
+     *          player
+     * @return a String to change a player's name
+     */
+    public String onNameResolution(Player player) {
+        return null;
     }
 }
