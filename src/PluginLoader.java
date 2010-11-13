@@ -108,6 +108,18 @@ public class PluginLoader {
          */
         BLOCK_BROKEN,
         /**
+         * Calls onIgnite
+         */
+        IGNITE,
+        /**
+         * Calls onFlow
+         */
+        FLOW,
+        /**
+         * Calls onExplode
+         */
+        EXPLODE,
+        /**
          * Unused.
          */
         NUM_HOOKS
@@ -418,6 +430,21 @@ public class PluginLoader {
                                 break;
                             case BLOCK_BROKEN:
                                 if (listener.onBlockBreak(((ep) parameters[0]).getPlayer(), (Block) parameters[1])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case FLOW:
+                                if (listener.onFlow((Block) parameters[0])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case IGNITE:
+                                if (listener.onIgnite((Block) parameters[0], (parameters[1] == null ? null : ((ep) parameters[1]).getPlayer()))) {
+                                    toRet = true;
+                                }
+                                break;
+                            case EXPLODE:
+                                if (listener.onExplode((Block) parameters[0])) {
                                     toRet = true;
                                 }
                                 break;
