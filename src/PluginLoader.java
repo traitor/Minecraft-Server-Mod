@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -107,6 +108,18 @@ public class PluginLoader {
          */
         BLOCK_BROKEN,
         /**
+         * Calls onIgnite
+         */
+        IGNITE,
+        /**
+         * Calls onFlow
+         */
+        FLOW,
+        /**
+         * Calls onExplode
+         */
+        EXPLODE,
+        /**
          * Unused.
          */
         NUM_HOOKS
@@ -115,6 +128,7 @@ public class PluginLoader {
     private static final Object lock = new Object();
     private List<Plugin> plugins = new ArrayList<Plugin>();
     private List<List<PluginRegisteredListener>> listeners = new ArrayList<List<PluginRegisteredListener>>();
+    private HashMap<String, PluginInterface> customListeners = new HashMap<String, PluginInterface>();
     private Server server;
     private PropertiesFile properties;
 
@@ -423,6 +437,21 @@ public class PluginLoader {
                                     toRet = true;
                                 }
                                 break;
+                            case FLOW:
+                                if (listener.onFlow((Block) parameters[0])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case IGNITE:
+                                if (listener.onIgnite((Block) parameters[0], (parameters[1] == null ? null : ((ep) parameters[1]).getPlayer()))) {
+                                    toRet = true;
+                                }
+                                break;
+                            case EXPLODE:
+                                if (listener.onExplode((Block) parameters[0])) {
+                                    toRet = true;
+                                }
+                                break;
                         }
                     } catch (UnsupportedOperationException ex) {
                     }
@@ -435,6 +464,31 @@ public class PluginLoader {
             }
         }
 
+        return toRet;
+    }
+
+    public Object callCustomHook(String name, Object[] parameters) {
+        Object toRet = false;
+        synchronized (lock) {
+            try {
+                PluginInterface listener = customListeners.get(name);
+
+                if (listener == null) {
+                    log.log(Level.SEVERE, "Cannot find custom hook: " + name);
+                    return false;
+                }
+
+                String msg = listener.checkParameters(parameters);
+                if (msg != null) {
+                    log.log(Level.SEVERE, msg);
+                    return false;
+                }
+
+                toRet = listener.run(parameters);
+            } catch (Exception ex) {
+                log.log(Level.SEVERE, "Exception while calling custom plugin function", ex);
+            }
+        }
         return toRet;
     }
 
@@ -472,6 +526,16 @@ public class PluginLoader {
         return reg;
     }
 
+    public void addCustomListener(PluginInterface listener) {
+        synchronized (lock) {
+            if (customListeners.get(listener.getName()) != null) {
+                log.log(Level.SEVERE, "Replacing existing listener: " + listener.getName());
+            }
+            customListeners.put(listener.getName(), listener);
+            log.info("Registered custom hook: " + listener.getName());
+        }
+    }
+
     /**
      * Removes the specified listener from the list of listeners
      * 
@@ -482,6 +546,12 @@ public class PluginLoader {
         List<PluginRegisteredListener> regListeners = listeners.get(reg.getHook().ordinal());
         synchronized (lock) {
             regListeners.remove(reg);
+        }
+    }
+
+    public void removeCustomListener(String name) {
+        synchronized (lock) {
+            customListeners.remove(name);
         }
     }
 }
