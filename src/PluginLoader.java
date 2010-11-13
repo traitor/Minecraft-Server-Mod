@@ -142,7 +142,7 @@ public class PluginLoader {
             if (sclass.equals("")) {
                 continue;
             }
-            loadPlugin(sclass);
+            loadPlugin(sclass.trim());
         }
     }
 
@@ -192,6 +192,10 @@ public class PluginLoader {
     private void load(String fileName) {
         try {
             File file = new File("plugins/" + fileName + ".jar");
+            if (!file.exists()) {
+                log.log(Level.SEVERE, "Failed to find plugin file: plugins/" + fileName + ".jar. Please ensure the file exists");
+                return;
+            }
             URLClassLoader child = null;
             try {
                 child = new MyClassLoader(new URL[]{file.toURI().toURL()}, Thread.currentThread().getContextClassLoader());
