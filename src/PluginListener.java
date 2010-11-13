@@ -312,11 +312,16 @@ public abstract class PluginListener {
 
     /*
      * Called when lava wants to flow to a certain block.
-     *
+     * block status represents the type that wants to flow.
+     * (10 & 11 for lava and 8 & 9 for water)
+     * 
      * @param block
-     *          block that the lava wants to flow to.
+     *          the block beneath where the substance wants to flow to.
      *
-     * @return true if you dont want the lava to flow.
+     * for example:
+     * lava want to flow to block x,y,z then the param block is the block x,y-1,z.
+     *
+     * @return true if you dont want the substance to flow.
      */
     public boolean onFlow(Block block) {
         return false;

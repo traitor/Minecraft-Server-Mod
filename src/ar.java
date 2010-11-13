@@ -21,7 +21,9 @@ public class ar extends cy {
     public void a(em paramem, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
         //lava flow prevention
         Block block = new Block(paramem.a(paramInt1, paramInt2 - 1, paramInt3), paramInt1, paramInt2 - 1, paramInt3);
-        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{block})) {
+        //change the status of the block to the type that is trying to flow ( 10 / 11 for lava).
+        block.setStatus(this.bh);
+        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{block})) {
             return;
         }
 
