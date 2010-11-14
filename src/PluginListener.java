@@ -330,7 +330,7 @@ public abstract class PluginListener {
      *          player's address
      * @return
      */
-    public boolean onVerificationCheck(InetAddress address) {
+    public boolean shouldIgnoreVerification(InetAddress address) {
         return false;
     }
 
@@ -352,11 +352,11 @@ public abstract class PluginListener {
     /**
      * Allow overriding a player's name.
      * 
-     * @param player
-     *          player
+     * @param name
+     * @param address
      * @return a String to change a player's name
      */
-    public String onNameResolution(Player player) {
+    public String onNameResolution(String name, InetAddress address) {
         return null;
     }
 }

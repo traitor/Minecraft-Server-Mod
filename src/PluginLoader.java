@@ -466,7 +466,7 @@ public class PluginLoader {
                                 }
                                 break;
                             case VERIFICATION_CHECK:
-                                if (listener.onVerificationCheck((InetAddress) parameters[0])) {
+                                if (listener.shouldIgnoreVerification((InetAddress) parameters[0])) {
                                     toRet = true;
                                 }
                                 break;
@@ -476,7 +476,7 @@ public class PluginLoader {
                                 }
                                 break;
                             case NAME_RESOLUTION:
-                                String name = listener.onNameResolution(((ep) parameters[0]).getPlayer());
+                                String name = listener.onNameResolution((String) parameters[0], (InetAddress) parameters[1]);
                                 if (name != null) {
                                     toRet = name;
                                 }

@@ -1,8 +1,3 @@
-// Decompiled by DJ v3.10.10.93 Copyright 2007 Atanas Neshkov  Date: 11/13/2010 12:08:55 PM
-// Home Page: http://members.fortunecity.com/neshkov/dj.html  http://www.neshkov.com/dj.html - Check often for new version!
-// Decompiler options: packimports(3) nonlb
-// Source File Name:   SourceFile
-
 import java.io.IOException;
 import java.net.Socket;
 import java.net.InetAddress;
@@ -12,6 +7,7 @@ import net.minecraft.server.MinecraftServer;
 
 public class fo extends ey {
     public InetAddress addr;
+    public String overiddenName = null;
 
     public fo(MinecraftServer minecraftserver, Socket socket, String s) {
         c = false;
@@ -30,7 +26,7 @@ public class fo extends ey {
             h = null;
         }
         if(f++ == 600)
-            b("Took too long to log in");
+            b(etc.getInstance().getTookTooLongMessage());
         else
             b.a();
     }
@@ -57,7 +53,8 @@ public class fo extends ey {
             b("Outdated client!");
             return;
         }
-        if(!e.l || (Boolean)etc.getLoader().callHook(PluginLoader.Hook.VERIFICATION_CHECK, new Object[] { addr }))
+        overiddenName = (String)etc.getLoader().callHook(PluginLoader.Hook.NAME_RESOLUTION, new Object[] {ad1.b, addr});
+        if(!e.l || overiddenName != null)
             b(ad1);
         else
             (new dq(this, ad1)).start();

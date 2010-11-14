@@ -14,23 +14,19 @@ public class dq extends Thread {
 
     public void run() {
         try {
-            String serverID = access1(b);
-            System.out.println("name: " + a.b);
-            System.out.println("serverID: " + serverID);
-            System.out.println("addr: " + b.addr);
+            String serverID = fo.a(b);
             boolean res = (Boolean)etc.getLoader().callHook(PluginLoader.Hook.NAME_VERIFICATION, new Object[] { a.b, serverID, b.addr });
             if (res) {
-                b.b(a);
+                fo.a(b, a);
                 return;
             }
             URL url = new URL("http://www.minecraft.net/game/checkserver.jsp?user=" + a.b + "&serverId=" + serverID);
-            System.out.println(url.toString());
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
             String reply = reader.readLine();
             reader.close();
             System.out.println("THE REPLY IS " + reply);
             if (reply.equals("YES")) {
-                b.b(a);
+                fo.a(b, a);
             } else {
                 b.b("Failed to verify username!");
             }

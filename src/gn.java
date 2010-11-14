@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -8,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 
@@ -53,14 +53,6 @@ public class gn {
     }
 
     public void a(ep paramep) {
-        String newName = (String)etc.getLoader().callHook(PluginLoader.Hook.NAME_RESOLUTION, new Object[] {paramep});
-        if (newName != null) {
-            System.out.println("NEW NAME: " + newName);
-            paramep.ar = newName;
-        } else {
-            System.out.println("NO NEW NAME: " + newName);
-        }
-        
         this.b.add(paramep);
         this.l.b(paramep);
 
@@ -90,6 +82,12 @@ public class gn {
     }
 
     public ep a(fo paramfo, String paramString1, String paramString2) {
+        String newName = paramfo.overiddenName;
+        if (newName != null) {
+            a.log(Level.INFO, "Name change: " + paramString1 + " -> " + newName);
+            paramString1 = newName;
+        }
+        
         if (this.f.contains(paramString1.trim().toLowerCase())) {
             paramfo.b("You are banned from this server!");
             return null;

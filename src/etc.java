@@ -38,6 +38,7 @@ public class etc {
     private String dataSourceType;
     private DataSource dataSource;
     private PropertiesFile properties;
+    private String verifTookTooLongMessage;
     private PluginLoader loader;
     private boolean logging = false;
     private boolean showUnknownCommand = true;
@@ -138,6 +139,7 @@ public class etc {
             spawnProtectionSize = properties.getInt("spawn-protection-size", 16);
             logging = properties.getBoolean("logging", false);
             showUnknownCommand = properties.getBoolean("show-unknown-command", true);
+            verifTookTooLongMessage = properties.getString("took-too-long-message", "Took too long to log in");
             URL url = this.getClass().getResource("/version.txt");
             if (url != null) {
                 InputStreamReader ins = new InputStreamReader(url.openStream());
@@ -151,6 +153,7 @@ public class etc {
             allowedItems = new String[]{""};
             itemSpawnBlacklist = new String[]{""};
             motd = new String[]{"Type /help for a list of commands."};
+            verifTookTooLongMessage = "Took too long to log in";
         }
     }
 
@@ -920,5 +923,12 @@ public class etc {
      */
     public static Connection getSQLConnection() {
         return getInstance()._getSQLConnection();
+    }
+
+    /**
+     * @return the verifTookTooLongMessage
+     */
+    public String getTookTooLongMessage() {
+        return verifTookTooLongMessage;
     }
 }
