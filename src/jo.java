@@ -102,7 +102,12 @@ public class jo extends fy {
         if (paramRandom.nextInt(paramInt4) < i) {
             int j = paramem.a(paramInt1, paramInt2, paramInt3) == fy.am.bh ? 1 : 0;
             if (paramRandom.nextInt(2) == 0) {
-                paramem.d(paramInt1, paramInt2, paramInt3, this.bh);
+                //VERY SLOW dynamic spreading of fire.
+                Block block = new Block(paramem.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
+                block.setStatus(3);
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, new Object[]{block, null})) {
+                   paramem.d(paramInt1, paramInt2, paramInt3, this.bh);
+                }
             } else {
                 paramem.d(paramInt1, paramInt2, paramInt3, 0);
             }
