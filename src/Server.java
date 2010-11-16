@@ -352,6 +352,8 @@ public class Server {
                 return new Sign((ji) localav);
             } else if (localav instanceof ds) {
                 return new Furnace((ds) localav);
+            } else if (localav instanceof ce) {
+            	return new MobSpawner((ce) localav);
             }
         }
         return null;
