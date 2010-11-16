@@ -958,7 +958,7 @@ public class je extends ey implements eu {
                     }
 
                     // adds player to ban list
-                    this.d.f.a(player.getName());
+                    etc.getServer().ban(player.getName());
 
                     etc.getLoader().callHook(PluginLoader.Hook.BAN, new Object[]{getPlayer().getUser(), player.getUser(), split.length >= 3 ? etc.combineSplit(2, split, " ") : ""});
 
@@ -971,7 +971,7 @@ public class je extends ey implements eu {
                     msg(Colors.Rose + "Banning " + player.getName());
                 } else {
                     // msg(Colors.Rose + "Can't find user " + split[1] + ".");
-                    this.d.f.a(split[1]);
+                    etc.getServer().ban(split[1]);
                     a.log(Level.INFO, "Banning " + split[1]);
                     msg(Colors.Rose + "Banning " + split[1]);
                 }
@@ -980,7 +980,7 @@ public class je extends ey implements eu {
                     msg(Colors.Rose + "Correct usage is: /unban [player]");
                     return;
                 }
-                this.d.f.b(split[1]);
+                etc.getServer().unban(split[1]);
                 msg(Colors.Rose + "Unbanned " + split[1]);
             } else if (split[0].equalsIgnoreCase("/unbanip")) {
                 if (split.length != 2) {

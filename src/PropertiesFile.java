@@ -39,10 +39,19 @@ public final class PropertiesFile {
      * Loads, or reloads, the properties file
      */
     public void load() {
+    	FileInputStream fis = null;
         try {
-            properties.load(new FileInputStream(fileName));
+            properties.load(fis = new FileInputStream(fileName));
         } catch (IOException ex) {
             log.log(Level.SEVERE, "Unable to load " + fileName, ex);
+        } finally {
+        	try {
+        		if (fis != null) {
+        			fis.close();
+        		}
+        	} catch (IOException ex) {
+        		log.log(Level.SEVERE, "Unable to free resources from load function.", ex);
+        	}
         }
     }
 
@@ -50,10 +59,19 @@ public final class PropertiesFile {
      * Saves the properties file
      */
     public void save() {
+    	FileOutputStream fos = null;
         try {
-            properties.store(new FileOutputStream(fileName), "Minecraft Properties File");
+            properties.store(fos = new FileOutputStream(fileName), "Minecraft Properties File");
         } catch (IOException ex) {
             log.log(Level.SEVERE, "Unable to save " + fileName, ex);
+        } finally {
+        	try {
+        		if (fos != null) {
+        			fos.close();
+        		}
+        	} catch (IOException ex) {
+        		log.log(Level.SEVERE, "Unable to free resources from save function.", ex);
+        	}
         }
     }
 
