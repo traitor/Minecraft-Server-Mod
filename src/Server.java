@@ -32,6 +32,26 @@ public class Server {
     }
 
     /**
+     * Bans specified player
+     *
+     * @param player Name of the player to ban
+     *
+     */
+    public void ban(String player, String reason) {
+        this.server.f.a(player);
+    }
+
+    /**
+     * Unbans specified user
+     *
+     * @param player Player name to unban
+     *
+     */
+    public void unban(String player) {
+        this.server.f.b(player);
+    }
+
+    /**
      * Uses the specified console command
      * 
      * @param command
