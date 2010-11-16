@@ -326,4 +326,12 @@ public abstract class PluginListener {
     public boolean onFlow(Block block) {
         return false;
     }
+    
+    /**
+     * @param mob Mob attempting to spawn.
+     * @return true if you dont want mob to spawn.
+     */
+    public boolean onMobSpawn(Mob mob) {
+    	return false;
+    }
 }

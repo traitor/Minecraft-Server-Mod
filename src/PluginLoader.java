@@ -120,6 +120,10 @@ public class PluginLoader {
          */
         EXPLODE,
         /**
+         * Calls onMobSpawn
+         */
+        MOB_SPAWN,
+        /**
          * Unused.
          */
         NUM_HOOKS
@@ -449,6 +453,11 @@ public class PluginLoader {
                                 break;
                             case EXPLODE:
                                 if (listener.onExplode((Block) parameters[0])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case MOB_SPAWN:
+                                if (listener.onMobSpawn((Mob) parameters[0])) {
                                     toRet = true;
                                 }
                                 break;
