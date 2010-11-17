@@ -37,7 +37,7 @@ public class Server {
      * @param player Name of the player to ban
      *
      */
-    public void ban(String player, String reason) {
+    public void ban(String player) {
         this.server.f.a(player);
     }
 
@@ -352,6 +352,8 @@ public class Server {
                 return new Sign((ji) localav);
             } else if (localav instanceof ds) {
                 return new Furnace((ds) localav);
+            } else if (localav instanceof ce) {
+            	return new MobSpawner((ce) localav);
             }
         }
         return null;

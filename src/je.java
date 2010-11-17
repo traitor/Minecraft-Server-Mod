@@ -1281,6 +1281,18 @@ public class je extends ey implements eu {
                 } else {
                     msg(Colors.Rose + "Target not found");
                 }
+            } else if (split[0].equals("/mspawn")) {
+                if (split.length != 2) {
+                    getPlayer().sendMessage(Colors.Rose + "You must specify what to change the mob spawner to.");
+                    return;
+                }
+                HitBlox hb = new HitBlox(getPlayer());
+                Block block = hb.getTargetBlock();
+		if (block.getType() == 52) { // mob spawner
+                    block.setSpawnData(split[1]);
+                } else {
+                    getPlayer().sendMessage(Colors.Rose + "You are not targeting a mob spawner.");
+                }
             } else if (split[0].equalsIgnoreCase("/version")) {
                 msg(Colors.Gold + "Hey0 Server Mod Build " + etc.getInstance().getVersion());
             } else {
