@@ -296,7 +296,7 @@ public class gn {
             }
             localBufferedReader.close();
         } catch (Exception localException) {
-            a.warning("Failed to load ip ban list: " + localException);
+            a.warning("Failed to load ops list: " + localException);
         }
     }
 
@@ -308,7 +308,7 @@ public class gn {
             }
             localPrintWriter.close();
         } catch (Exception localException) {
-            a.warning("Failed to save ip ban list: " + localException);
+            a.warning("Failed to save ops list: " + localException);
         }
     }
 
