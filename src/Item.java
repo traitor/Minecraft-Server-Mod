@@ -38,6 +38,11 @@ public class Item {
         this.slot = slot;
     }
 
+    public Item(hj hj) {
+        itemId = hj.c;
+        amount = hj.a;
+    }
+
     /**
      * Returns the item id
      * 

@@ -36,4 +36,22 @@ public class Furnace extends ItemArray implements ComplexBlock {
     public hj[] getArray() {
         return furnace.getContents();
     }
+    public int getContentSize() {
+        return furnace.a();
+    }
+    public void setArray(hj[] contents){
+        furnace.setContents(contents);
+    }
+    public Item[] getContents() {
+        Item[] rt = new Item[getContentSize()];
+        for(int i = 0; i < getContentSize();i++)
+            rt[i] = new Item(getArray()[i]);
+
+        return rt;
+    }
+    public void setContents(Item[] contents) {
+        hj[] newcontents = new hj[getContentSize()];
+        for(int i = 0; i < getContentSize();i++)
+            newcontents[i] = new hj(contents[i].getItemId(),contents[i].getAmount());
+    }
 }
