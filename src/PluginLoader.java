@@ -466,7 +466,7 @@ public class PluginLoader {
                                 }
                                 break;
                             case VERIFICATION_CHECK:
-                                if (listener.shouldIgnoreVerification((InetAddress) parameters[0])) {
+                                if (listener.shouldIgnoreVerification((String) parameters[0], (InetAddress) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;

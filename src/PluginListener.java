@@ -335,7 +335,7 @@ public abstract class PluginListener {
      *          player's address
      * @return
      */
-    public boolean shouldIgnoreVerification(InetAddress address) {
+    public boolean shouldIgnoreVerification(String name, InetAddress address) {
         return false;
     }
 

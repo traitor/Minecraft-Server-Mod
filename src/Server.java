@@ -42,6 +42,16 @@ public class Server {
     }
 
     /**
+     * Bans specified player
+     *
+     * @param player Name of the player to ban
+     *
+     */
+    public void ban(String player) {
+        this.server.f.a(player);
+    }
+
+    /**
      * Unbans specified user
      *
      * @param player Player name to unban

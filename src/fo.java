@@ -39,7 +39,7 @@ public class fo extends ey {
     }
 
     public void a(f f1) {
-        if(e.l && !(Boolean)etc.getLoader().callHook(PluginLoader.Hook.VERIFICATION_CHECK, new Object[] { addr })) {
+        if(e.l && !(Boolean)etc.getLoader().callHook(PluginLoader.Hook.VERIFICATION_CHECK, new Object[] { f1.a, addr })) {
             i = Long.toHexString(d.nextLong());
             b.a(new f(i));
         } else {
