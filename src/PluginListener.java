@@ -326,12 +326,25 @@ public abstract class PluginListener {
     public boolean onFlow(Block blockFrom,Block blockTo) {
         return false;
     }
-    
+
     /**
      * @param mob Mob attempting to spawn.
      * @return true if you dont want mob to spawn.
      */
     public boolean onMobSpawn(Mob mob) {
+    	return false;
+    }
+
+    /**
+     * Called when the game is checking the physics for a certain block.
+     * This method is called frequently and often every time a block nearby is
+     * changed.
+     * Currently the only supported block is Portal.
+     *
+     * @param block Block which requires special physics
+     * @return true if you do want to stop the default physics for this block
+     */
+    public boolean onBlockSpecialPhysics(Block block) {
     	return false;
     }
 }
