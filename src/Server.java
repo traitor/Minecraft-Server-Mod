@@ -372,10 +372,6 @@ public class Server {
     }
 
     public void dropItem(double x, double y, double z, int itemId, int quantity) {
-        if (itemId < 256) {
-            server.e.a(new gh(server.e, x, y, z, new hj(fy.m[itemId])));
-        } else {
-            server.e.a(new gh(server.e, x, y, z, new hj(itemId, 1)));
-        }
+        server.e.a(new gh(server.e, x, y, z, new hj(itemId, quantity)));
     }
 }
