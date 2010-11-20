@@ -324,7 +324,7 @@ public class je extends ey implements eu {
                 Block blockClicked = new Block(etc.getServer().getBlockIdAt(m, n, i1), m, n, i1);
                 blockClicked.setFaceClicked(Block.Face.fromId(paramfx.e));
 
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, new Object[]{e, blockPlaced, blockClicked, paramfx.a})) {
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, new Object[]{e, blockPlaced, blockClicked, paramfx.a}) && getPlayer().canBuild()) {
                     if (localhj != null) {
                         if (!etc.getInstance().isOnItemBlacklist(localhj.c) || bool) {
                             this.e.c.a(this.e, this.d.e, localhj, m, n, i1, i2);
@@ -1416,21 +1416,24 @@ public class je extends ey implements eu {
                 hx chest = (hx) localay;
                 hj[] temp = chest.getContents();
                 localay.a(paramjc.e);
-                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[]{e, new Chest(chest)})) {
+                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[]{e, new Chest(chest)}) || !e.getPlayer().canBuild()) {
+                    e.getPlayer().getInventory().updateInventory();
                     chest.setContents(temp);
                 }
             } else if (localay instanceof ds) { // Furnace
                 ds furnace = (ds) localay;
                 hj[] temp = furnace.getContents();
                 localay.a(paramjc.e);
-                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[]{e, new Furnace(furnace)})) {
+                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[]{e, new Furnace(furnace)}) || !e.getPlayer().canBuild()) {
+                    e.getPlayer().getInventory().updateInventory();
                     furnace.setContents(temp);
                 }
             } else if (localay instanceof ji) { // Sign
                 ji sign = (ji) localay;
                 String[] temp = sign.e;
                 localay.a(paramjc.e);
-                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[]{e, new Sign(sign)})) {
+                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[]{e, new Sign(sign)}) || !e.getPlayer().canBuild()) {
+                    e.getPlayer().getInventory().updateInventory();
                     sign.e = temp;
                 }
             }

@@ -19,13 +19,9 @@ public class ar extends cy {
     }
 
     public void a(em paramem, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
-        //lava flow prevention
-        Block block = new Block(paramem.a(paramInt1, paramInt2 - 1, paramInt3), paramInt1, paramInt2 - 1, paramInt3);
-        //change the status of the block to the type that is trying to flow ( 10 / 11 for lava).
-        block.setStatus(this.bh);
-        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{block})) {
-            return;
-        }
+
+        Block blockFrom = new Block(this.bh, paramInt1, paramInt2, paramInt3);
+        
 
         int i = g(paramem, paramInt1, paramInt2, paramInt3);
 
@@ -84,12 +80,17 @@ public class ar extends cy {
             i(paramem, paramInt1, paramInt2, paramInt3);
         }
         if (l(paramem, paramInt1, paramInt2 - 1, paramInt3)) {
-            if (i >= 8) {
-                paramem.b(paramInt1, paramInt2 - 1, paramInt3, this.bh, i);
-            } else {
-                paramem.b(paramInt1, paramInt2 - 1, paramInt3, this.bh, i + 8);
+            // downwards flow.
+            Block blockTo = new Block(0, paramInt1, paramInt2 - 1, paramInt3);
+            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo})) {
+                if (i >= 8) {
+                    paramem.b(paramInt1, paramInt2 - 1, paramInt3, this.bh, i);
+                } else {
+                    paramem.b(paramInt1, paramInt2 - 1, paramInt3, this.bh, i + 8);
+                }
             }
         } else if ((i >= 0) && ((i == 0) || (k(paramem, paramInt1, paramInt2 - 1, paramInt3)))) {
+            //sidewards flow.
             boolean[] arrayOfBoolean = j(paramem, paramInt1, paramInt2, paramInt3);
             int i1 = i + j;
             if (i >= 8) {
@@ -99,16 +100,28 @@ public class ar extends cy {
                 return;
             }
             if (arrayOfBoolean[0] != false) {
-                f(paramem, paramInt1 - 1, paramInt2, paramInt3, i1);
+                
+                Block blockTo = new Block(0, paramInt1 - 1, paramInt2, paramInt3);
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo})) 
+                    f(paramem, paramInt1 - 1, paramInt2, paramInt3, i1);
             }
             if (arrayOfBoolean[1] != false) {
-                f(paramem, paramInt1 + 1, paramInt2, paramInt3, i1);
+                
+                Block blockTo = new Block(0, paramInt1 + 1, paramInt2, paramInt3);
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo})) 
+                    f(paramem, paramInt1 + 1, paramInt2, paramInt3, i1);
             }
             if (arrayOfBoolean[2] != false) {
-                f(paramem, paramInt1, paramInt2, paramInt3 - 1, i1);
+                
+                Block blockTo = new Block(0, paramInt1, paramInt2, paramInt3 - 1);
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo})) 
+                    f(paramem, paramInt1, paramInt2, paramInt3 - 1, i1);
             }
             if (arrayOfBoolean[3] != false) {
-                f(paramem, paramInt1, paramInt2, paramInt3 + 1, i1);
+                
+                Block blockTo = new Block(0, paramInt1, paramInt2, paramInt3 + 1);
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo})) 
+                    f(paramem, paramInt1, paramInt2, paramInt3 + 1, i1);
             }
         }
     }
