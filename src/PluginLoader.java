@@ -124,9 +124,9 @@ public class PluginLoader {
          */
         MOB_SPAWN,
         /**
-         * Calls onBlockSpecialPhysics
+         * Calls onBlockPhysics
          */
-        BLOCK_SPECIAL_PHYSICS,
+        BLOCK_PHYSICS,
         /**
          * Unused.
          */
@@ -465,8 +465,8 @@ public class PluginLoader {
                                     toRet = true;
                                 }
                                 break;
-                            case BLOCK_SPECIAL_PHYSICS:
-                                if (listener.onBlockSpecialPhysics((Block) parameters[0])) {
+                            case BLOCK_PHYSICS:
+                                if (listener.onBlockPhysics((Block) parameters[0], (Boolean) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;

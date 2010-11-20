@@ -337,14 +337,15 @@ public abstract class PluginListener {
 
     /**
      * Called when the game is checking the physics for a certain block.
-     * This method is called frequently and often every time a block nearby is
-     * changed.
-     * Currently the only supported block is Portal.
+     * This method is called frequently whenever a nearby block is changed,
+     * or if the block has just been placed.
+     * Currently the only supported blocks are sand, gravel and portals.
      *
      * @param block Block which requires special physics
+     * @param boolean true if this block has just been placed
      * @return true if you do want to stop the default physics for this block
      */
-    public boolean onBlockSpecialPhysics(Block block) {
+    public boolean onBlockPhysics(Block block, boolean placed) {
     	return false;
     }
 }

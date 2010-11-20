@@ -16,6 +16,7 @@ public class ai extends ht // Portal blocks (id=90)
 
     public void a(iq iq1, int i, int j, int k)
     {
+        if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Object[] {new Block(bh, i, j, k), true})) return;
         if(iq1.a(i - 1, j, k) == bh || iq1.a(i + 1, j, k) == bh)
         {
             float f = 0.5F;
@@ -84,7 +85,7 @@ public class ai extends ht // Portal blocks (id=90)
 
     public void b(em em1, int i, int j, int k, int l)
     {
-        if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.BLOCK_SPECIAL_PHYSICS, new Object[] {new Block(l, i, j, k)})) return;
+        if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Object[] {new Block(l, i, j, k), false})) return;
         int i1 = 0;
         int j1 = 1;
         if(em1.a(i - 1, j, k) == bh || em1.a(i + 1, j, k) == bh)

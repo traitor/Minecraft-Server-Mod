@@ -10,13 +10,13 @@ public class fr extends fy // Sand blocks (+ gravel inherits)
 
     public void e(em em1, int i, int j, int k)
     {
-        if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.BLOCK_SPECIAL_PHYSICS, new Object[] {new Block(bh, i, j, k)})) return;
+        if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Object[] {new Block(bh, i, j, k), true})) return;
         em1.h(i, j, k, bh);
     }
 
     public void b(em em1, int i, int j, int k, int l)
     {
-        if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.BLOCK_SPECIAL_PHYSICS, new Object[] {new Block(bh, i, j, k)})) return;
+        if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Object[] {new Block(l, i, j, k), false})) return;
         em1.h(i, j, k, bh);
     }
 
