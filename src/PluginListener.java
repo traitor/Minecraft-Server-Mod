@@ -256,6 +256,19 @@ public abstract class PluginListener {
     }
 
     /**
+     * Called when a player picks up an item.
+     * 
+     * @param player
+     *            player who picked up the item
+     * @param item
+     *            item that was picked up
+     * @return true if you want to leave the item where it was
+     */
+    public boolean onItemPickUp(Player player, Item item) {
+        return false;
+    }
+
+    /**
      * Called when either a sign, chest or furnace is changed.
      * 
      * @param player
