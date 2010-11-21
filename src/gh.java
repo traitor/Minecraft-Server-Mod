@@ -155,7 +155,7 @@ public class gh extends dw
 
     public void a(v v1)
     {
-        v1.a("Health", (byte)f);
+        v1.a("Health", (short)(byte)f);
         v1.a("Age", (short)b);
         v1.a("Item", a.a(new v()));
     }
