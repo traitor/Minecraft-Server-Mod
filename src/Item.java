@@ -6,7 +6,7 @@
  */
 public class Item {
 
-    private int itemId = 1, amount = 1, slot = -1, health = 0;
+    private int itemId = 1, amount = 1, slot = -1, damage = 0;
 
     /**
      * Create an item with an id of 1 and amount of 1
@@ -39,18 +39,18 @@ public class Item {
     }
 
     /**
-     * Creates an item with specified id, amount, slot and health
+     * Creates an item with specified id, amount, slot and damage
      *
      * @param itemId
      * @param amount
      * @param slot
-     * @param health
+     * @param damage
      */
     public Item(int itemId, int amount, int slot, int health) {
         this.itemId = itemId;
         this.amount = amount;
         this.slot = slot;
-        this.health = health;
+        this.damage = health;
     }
 
     /**
@@ -121,20 +121,28 @@ public class Item {
     }
 
     /**
-     * Returns this item's current health
+     * Returns this item's current damage (0-50)
+     *
+     * 0 is unbreakable
+     * 1 is 100% health
+     * 50 is 0% health
      * 
-     * @return health
+     * @return damage
      */
-    public int getHealth() {
-        return health;
+    public int getDamage() {
+        return damage;
     }
 
     /**
-     * Sets this item's health
+     * Sets this item's damage (0-50)
      * 
-     * @param health
+     * 0 is unbreakable
+     * 1 is 100% health
+     * 50 is 0% health
+     * 
+     * @param damage
      */
-    public void setHealth(int health) {
-        this.health = health;
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 }

@@ -4,7 +4,7 @@ import java.util.logging.Logger;
 
 public class l extends io
 {
-    private int health = 0;
+    private int damage = 0;
 
     public l()
     {
@@ -21,7 +21,7 @@ public class l extends io
         e = (byte)(int)(gh1.s * 128D);
         f = (byte)(int)(gh1.t * 128D);
         g = (byte)(int)(gh1.u * 128D);
-        health = gh1.getHealth();
+        damage = gh1.getDamage();
     }
 
     public void a(DataInputStream datainputstream)
@@ -68,8 +68,8 @@ public class l extends io
         return 22;
     }
 
-    public int getHealth() {
-        return health;
+    public int getDamage() {
+        return damage;
     }
 
     public int a;

@@ -168,12 +168,12 @@ public class gh extends dw
         a = new hj(v2);
     }
 
-    public int getHealth() {
+    public int getDamage() {
         return f;
     }
 
-    public void setHealth(int health) {
-        f = health;
+    public void setDamage(int damage) {
+        f = damage;
     }
 
     public void b(fv fv1)
@@ -184,7 +184,7 @@ public class gh extends dw
         if(c == 0 && fv1.ak.a(a))
         {
             Item item = new Item(a.c, a.a);
-            item.setHealth(a.d);
+            item.setDamage(a.d);
             if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_PICK_UP, new Object[]{fv1, item})) {
                 if (f > 0) a.d = f;
                 l.a(this, "random.pop", 0.2F, ((V.nextFloat() - V.nextFloat()) * 0.7F + 1.0F) * 2.0F);

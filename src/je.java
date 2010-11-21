@@ -400,7 +400,7 @@ public class je extends ey implements eu {
         if (item == null) item = new Item(paraml.h, paraml.i);
 
         if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_DROP, new Object[]{e, item})) {
-            gh localgh = new gh(this.d.e, d1, d2, d3, new hj(paraml.h, paraml.i, item.getHealth()));
+            gh localgh = new gh(this.d.e, d1, d2, d3, new hj(paraml.h, paraml.i, item.getDamage()));
             localgh.s = (paraml.e / 128.0D);
             localgh.t = (paraml.f / 128.0D);
             localgh.u = (paraml.g / 128.0D);
