@@ -162,7 +162,14 @@ public class gh extends dw
 
     public void b(v v1)
     {
-        f = v1.c("Health") & 0xff;
+        try {
+            f = v1.c("Health") & 0xff;
+        }
+        catch (ClassCastException ex) {
+            v1.a("Health", (short)0);
+            f = 0;
+        }
+        
         b = v1.c("Age");
         v v2 = v1.j("Item");
         a = new hj(v2);
