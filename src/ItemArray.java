@@ -64,7 +64,7 @@ public abstract class ItemArray {
                 continue;
             }
             if (getArray()[i].c == id) {
-                return new Item(getArray()[i].c, getArray()[i].a, i);
+                return new Item(getArray()[i].c, getArray()[i].a, i, getArray()[i].d);
             }
         }
         return null;

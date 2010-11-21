@@ -394,8 +394,13 @@ public class je extends ey implements eu {
         double d1 = paraml.b / 32.0D;
         double d2 = paraml.c / 32.0D;
         double d3 = paraml.d / 32.0D;
-        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_DROP, new Object[]{e, new Item(paraml.h, paraml.i)})) {
-            gh localgh = new gh(this.d.e, d1, d2, d3, new hj(paraml.h, paraml.i));
+
+        Item item = e.getPlayer().getInventory().getItemFromId(paraml.h);
+
+        if (item == null) item = new Item(paraml.h, paraml.i);
+
+        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_DROP, new Object[]{e, item})) {
+            gh localgh = new gh(this.d.e, d1, d2, d3, new hj(paraml.h, paraml.i, item.getHealth()));
             localgh.s = (paraml.e / 128.0D);
             localgh.t = (paraml.f / 128.0D);
             localgh.u = (paraml.g / 128.0D);

@@ -6,7 +6,7 @@
  */
 public class Item {
 
-    private int itemId = 1, amount = 1, slot = -1;
+    private int itemId = 1, amount = 1, slot = -1, health = 0;
 
     /**
      * Create an item with an id of 1 and amount of 1
@@ -36,6 +36,21 @@ public class Item {
         this.itemId = itemId;
         this.amount = amount;
         this.slot = slot;
+    }
+
+    /**
+     * Creates an item with specified id, amount, slot and health
+     *
+     * @param itemId
+     * @param amount
+     * @param slot
+     * @param health
+     */
+    public Item(int itemId, int amount, int slot, int health) {
+        this.itemId = itemId;
+        this.amount = amount;
+        this.slot = slot;
+        this.health = health;
     }
 
     /**
@@ -103,5 +118,23 @@ public class Item {
      */
     public void setSlot(int slot) {
         this.slot = slot;
+    }
+
+    /**
+     * Returns this item's current health
+     * 
+     * @return health
+     */
+    public int getHealth() {
+        return health;
+    }
+
+    /**
+     * Sets this item's health
+     * 
+     * @param health
+     */
+    public void setHealth(int health) {
+        this.health = health;
     }
 }
