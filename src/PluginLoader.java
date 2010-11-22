@@ -96,6 +96,10 @@ public class PluginLoader {
          */
         ITEM_DROP,
         /**
+         * Calls onItemPickUp
+         */
+        ITEM_PICK_UP,
+        /**
          * Calls onSendComplexBlock
          */
         COMPLEX_BLOCK_SEND,
@@ -418,6 +422,11 @@ public class PluginLoader {
                                 break;
                             case ITEM_DROP:
                                 if (listener.onItemDrop(((ep) parameters[0]).getPlayer(), (Item) parameters[1])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case ITEM_PICK_UP:
+                                if (listener.onItemPickUp(((ep) parameters[0]).getPlayer(), (Item) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
