@@ -124,6 +124,10 @@ public class PluginLoader {
          */
         MOB_SPAWN,
         /**
+         * Calls onRedstoneChange
+         */
+        REDSTONE_CHANGE,
+        /**
          * Unused.
          */
         NUM_HOOKS
@@ -460,6 +464,9 @@ public class PluginLoader {
                                 if (listener.onMobSpawn((Mob) parameters[0])) {
                                     toRet = true;
                                 }
+                                break;
+                            case REDSTONE_CHANGE:
+                                listener.onRedstoneChange((Block) parameters[0], (Integer) parameters[1], (Integer) parameters[2]);
                                 break;
                         }
                     } catch (UnsupportedOperationException ex) {
