@@ -372,6 +372,12 @@ public class Server {
     }
 
     public void dropItem(double x, double y, double z, int itemId, int quantity) {
-        server.e.a(new gh(server.e, x, y, z, new hj(itemId, quantity)));
+        double d1 = server.e.l.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d2 = server.e.l.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d3 = server.e.l.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+
+        gh localgh = new gh(server.e, x + d1, y + d2, z + d3, new hj(itemId, quantity));
+        localgh.c = 10;
+        server.e.a(localgh);
     }
 }
