@@ -14,8 +14,20 @@ import java.util.logging.Level;
  * @author James
  */
 public class MySQLSource extends DataSource {
-
+	  
+	  private String table_groups,table_users,table_items,table_kits,table_warps,table_homes,table_reservelist,table_whitelist,table_bans;
+    
     public void initialize() {
+    	PropertiesFile properties = new PropertiesFile("mysql.properties");
+        table_groups = properties.getString("groups", "groups");
+        table_users = properties.getString("users", "users");
+        table_items = properties.getString("items", "items");
+        table_kits = properties.getString("kits", "kits");
+        table_warps = properties.getString("warps", "warps");
+        table_homes = properties.getString("homes", "homes");
+        table_reservelist = properties.getString("reservelist", "reservelist");
+        table_whitelist = properties.getString("whitelist", "whitelist");
+        table_bans = properties.getString("bans", "bans");
         loadGroups();
         loadKits();
         loadHomes();
@@ -32,7 +44,7 @@ public class MySQLSource extends DataSource {
             try {
                 conn = etc.getSQLConnection();
                 groups = new ArrayList<Group>();
-                ps = conn.prepareStatement("SELECT * FROM groups");
+                ps = conn.prepareStatement("SELECT * FROM "+table_groups);
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     Group group = new Group();
@@ -79,7 +91,7 @@ public class MySQLSource extends DataSource {
             try {
                 conn = etc.getSQLConnection();
                 kits = new ArrayList<Kit>();
-                ps = conn.prepareStatement("SELECT * FROM kits");
+                ps = conn.prepareStatement("SELECT * FROM "+table_kits);
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     Kit kit = new Kit();
@@ -133,7 +145,7 @@ public class MySQLSource extends DataSource {
             try {
                 conn = etc.getSQLConnection();
                 homes = new ArrayList<Warp>();
-                ps = conn.prepareStatement("SELECT * FROM homes");
+                ps = conn.prepareStatement("SELECT * FROM "+table_homes);
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     Location location = new Location();
@@ -176,7 +188,7 @@ public class MySQLSource extends DataSource {
             try {
                 conn = etc.getSQLConnection();
                 warps = new ArrayList<Warp>();
-                ps = conn.prepareStatement("SELECT * FROM warps");
+                ps = conn.prepareStatement("SELECT * FROM "+table_warps);
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     Location location = new Location();
@@ -219,7 +231,7 @@ public class MySQLSource extends DataSource {
             try {
                 conn = etc.getSQLConnection();
                 items = new HashMap<String, Integer>();
-                ps = conn.prepareStatement("SELECT * FROM items");
+                ps = conn.prepareStatement("SELECT * FROM "+table_items);
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     items.put(rs.getString("name"), rs.getInt("itemid"));
@@ -250,7 +262,7 @@ public class MySQLSource extends DataSource {
         ResultSet rs = null;
         try {
             conn = etc.getSQLConnection();
-            ps = conn.prepareStatement("INSERT INTO users (name, groups, prefix, commands, admin, canmodifyworld, ignoresrestrictions) VALUES (?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            ps = conn.prepareStatement("INSERT INTO "+table_users+" (name, groups, prefix, commands, admin, canmodifyworld, ignoresrestrictions) VALUES (?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, player.getName());
             ps.setString(2, etc.combineSplit(0, player.getGroups(), ","));
             ps.setString(3, player.getPrefix());
@@ -287,7 +299,7 @@ public class MySQLSource extends DataSource {
         PreparedStatement ps = null;
         try {
             conn = etc.getSQLConnection();
-            ps = conn.prepareStatement("UPDATE users SET groups = ?, prefix = ?, commands = ?, admin = ?, canmodifyworld = ?, ignoresrestrictions = ? WHERE id = ?");
+            ps = conn.prepareStatement("UPDATE "+table_users+" SET groups = ?, prefix = ?, commands = ?, admin = ?, canmodifyworld = ?, ignoresrestrictions = ? WHERE id = ?");
             ps.setString(1, etc.combineSplit(0, player.getGroups(), ","));
             ps.setString(2, player.getPrefix());
             ps.setString(3, etc.combineSplit(0, player.getCommands(), ","));
@@ -318,7 +330,7 @@ public class MySQLSource extends DataSource {
         ResultSet rs = null;
         try {
             conn = etc.getSQLConnection();
-            ps = conn.prepareStatement("SELECT * FROM users WHERE name = ?");
+            ps = conn.prepareStatement("SELECT * FROM "+table_users+" WHERE name = ?");
             ps.setString(1, player);
             rs = ps.executeQuery();
             if (rs.next()) {
@@ -368,7 +380,7 @@ public class MySQLSource extends DataSource {
         ResultSet rs = null;
         try {
             conn = etc.getSQLConnection();
-            ps = conn.prepareStatement("INSERT INTO homes (name, x, y, z, rotX, rotY, `group`) VALUES(?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            ps = conn.prepareStatement("INSERT INTO "+table_homes+" (name, x, y, z, rotX, rotY, `group`) VALUES(?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, home.Name);
             ps.setDouble(2, home.Location.x);
             ps.setDouble(3, home.Location.y);
@@ -408,7 +420,7 @@ public class MySQLSource extends DataSource {
         PreparedStatement ps = null;
         try {
             conn = etc.getSQLConnection();
-            ps = conn.prepareStatement("UPDATE homes SET x = ?, y = ?, z = ?, rotX = ?, rotY = ?, `group` = ? WHERE name = ?");
+            ps = conn.prepareStatement("UPDATE "+table_homes+" SET x = ?, y = ?, z = ?, rotX = ?, rotY = ?, `group` = ? WHERE name = ?");
             ps.setDouble(1, home.Location.x);
             ps.setDouble(2, home.Location.y);
             ps.setDouble(3, home.Location.z);
@@ -452,7 +464,7 @@ public class MySQLSource extends DataSource {
         ResultSet rs = null;
         try {
             conn = etc.getSQLConnection();
-            ps = conn.prepareStatement("INSERT INTO warps (name, x, y, z, rotX, rotY, `group`) VALUES(?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            ps = conn.prepareStatement("INSERT INTO "+table_warps+" (name, x, y, z, rotX, rotY, `group`) VALUES(?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, warp.Name);
             ps.setDouble(2, warp.Location.x);
             ps.setDouble(3, warp.Location.y);
@@ -492,7 +504,7 @@ public class MySQLSource extends DataSource {
         PreparedStatement ps = null;
         try {
             conn = etc.getSQLConnection();
-            ps = conn.prepareStatement("UPDATE warps SET x = ?, y = ?, z = ?, rotX = ?, rotY = ?, `group` = ? WHERE name = ?");
+            ps = conn.prepareStatement("UPDATE "+table_warps+" SET x = ?, y = ?, z = ?, rotX = ?, rotY = ?, `group` = ? WHERE name = ?");
             ps.setDouble(1, warp.Location.x);
             ps.setDouble(2, warp.Location.y);
             ps.setDouble(3, warp.Location.z);
@@ -534,7 +546,7 @@ public class MySQLSource extends DataSource {
         PreparedStatement ps = null;
         try {
             conn = etc.getSQLConnection();
-            ps = conn.prepareStatement("DELETE FROM warps WHERE id = ?");
+            ps = conn.prepareStatement("DELETE FROM "+table_warps+" WHERE id = ?");
             ps.setDouble(1, warp.ID);
             ps.executeUpdate();
         } catch (SQLException ex) {
@@ -565,7 +577,7 @@ public class MySQLSource extends DataSource {
         PreparedStatement ps = null;
         try {
             conn = etc.getSQLConnection();
-            ps = conn.prepareStatement("INSERT INTO whitelist VALUES(?)");
+            ps = conn.prepareStatement("INSERT INTO "+table_whitelist+" VALUES(?)");
             ps.setString(1, name);
             ps.executeUpdate();
         } catch (SQLException ex) {
@@ -592,7 +604,7 @@ public class MySQLSource extends DataSource {
         PreparedStatement ps = null;
         try {
             conn = etc.getSQLConnection();
-            ps = conn.prepareStatement("DELETE FROM whitelist WHERE name = ?");
+            ps = conn.prepareStatement("DELETE FROM "+table_whitelist+" WHERE name = ?");
             ps.setString(1, name);
             ps.executeUpdate();
         } catch (SQLException ex) {
@@ -620,7 +632,7 @@ public class MySQLSource extends DataSource {
         PreparedStatement ps = null;
         try {
             conn = etc.getSQLConnection();
-            ps = conn.prepareStatement("INSERT INTO reservelist VALUES(?)");
+            ps = conn.prepareStatement("INSERT INTO "+table_reservelist+" VALUES(?)");
             ps.setString(1, name);
             ps.executeUpdate();
         } catch (SQLException ex) {
@@ -647,7 +659,7 @@ public class MySQLSource extends DataSource {
         PreparedStatement ps = null;
         try {
             conn = etc.getSQLConnection();
-            ps = conn.prepareStatement("DELETE FROM reservelist WHERE name = ?");
+            ps = conn.prepareStatement("DELETE FROM "+table_reservelist+" WHERE name = ?");
             ps.setString(1, name);
             ps.executeUpdate();
         } catch (SQLException ex) {
@@ -672,7 +684,7 @@ public class MySQLSource extends DataSource {
         ResultSet rs = null;
         try {
             conn = etc.getSQLConnection();
-            ps = conn.prepareStatement("SELECT * FROM users WHERE name = ?");
+            ps = conn.prepareStatement("SELECT * FROM "+table_users+" WHERE name = ?");
             ps.setString(1, name);
             rs = ps.executeQuery();
             if (rs.next()) {
@@ -712,7 +724,7 @@ public class MySQLSource extends DataSource {
             ResultSet rs = null;
             try {
                 conn = etc.getSQLConnection();
-                ps = conn.prepareStatement("SELECT * FROM bans");
+                ps = conn.prepareStatement("SELECT * FROM "+table_bans);
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     Ban ban = new Ban();
@@ -748,7 +760,7 @@ public class MySQLSource extends DataSource {
         ResultSet rs = null;
         try {
             conn = etc.getSQLConnection();
-            ps = conn.prepareStatement("SELECT * FROM whitelist WHERE name = ?");
+            ps = conn.prepareStatement("SELECT * FROM "+table_whitelist+" WHERE name = ?");
             ps.setString(1, user);
             rs = ps.executeQuery();
             if (rs.next()) {
@@ -780,7 +792,7 @@ public class MySQLSource extends DataSource {
         ResultSet rs = null;
         try {
             conn = etc.getSQLConnection();
-            ps = conn.prepareStatement("SELECT * FROM reservelist WHERE name = ?");
+            ps = conn.prepareStatement("SELECT * FROM "+table_reservelist+" WHERE name = ?");
             ps.setString(1, user);
             rs = ps.executeQuery();
             if (rs.next()) {

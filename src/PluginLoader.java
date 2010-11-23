@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -95,6 +96,10 @@ public class PluginLoader {
          */
         ITEM_DROP,
         /**
+         * Calls onItemPickUp
+         */
+        ITEM_PICK_UP,
+        /**
          * Calls onSendComplexBlock
          */
         COMPLEX_BLOCK_SEND,
@@ -107,6 +112,22 @@ public class PluginLoader {
          */
         BLOCK_BROKEN,
         /**
+         * Calls onIgnite
+         */
+        IGNITE,
+        /**
+         * Calls onFlow
+         */
+        FLOW,
+        /**
+         * Calls onExplode
+         */
+        EXPLODE,
+        /**
+         * Calls onMobSpawn
+         */
+        MOB_SPAWN,
+        /**
          * Unused.
          */
         NUM_HOOKS
@@ -115,6 +136,7 @@ public class PluginLoader {
     private static final Object lock = new Object();
     private List<Plugin> plugins = new ArrayList<Plugin>();
     private List<List<PluginRegisteredListener>> listeners = new ArrayList<List<PluginRegisteredListener>>();
+    private HashMap<String, PluginInterface> customListeners = new HashMap<String, PluginInterface>();
     private Server server;
     private PropertiesFile properties;
 
@@ -142,7 +164,7 @@ public class PluginLoader {
             if (sclass.equals("")) {
                 continue;
             }
-            loadPlugin(sclass);
+            loadPlugin(sclass.trim());
         }
     }
 
@@ -192,6 +214,10 @@ public class PluginLoader {
     private void load(String fileName) {
         try {
             File file = new File("plugins/" + fileName + ".jar");
+            if (!file.exists()) {
+                log.log(Level.SEVERE, "Failed to find plugin file: plugins/" + fileName + ".jar. Please ensure the file exists");
+                return;
+            }
             URLClassLoader child = null;
             try {
                 child = new MyClassLoader(new URL[]{file.toURI().toURL()}, Thread.currentThread().getContextClassLoader());
@@ -399,6 +425,11 @@ public class PluginLoader {
                                     toRet = true;
                                 }
                                 break;
+                            case ITEM_PICK_UP:
+                                if (listener.onItemPickUp(((ep) parameters[0]).getPlayer(), (Item) parameters[1])) {
+                                    toRet = true;
+                                }
+                                break;
                             case COMPLEX_BLOCK_CHANGE:
                                 if (listener.onComplexBlockChange(((ep) parameters[0]).getPlayer(), (ComplexBlock) parameters[1])) {
                                     toRet = true;
@@ -419,6 +450,26 @@ public class PluginLoader {
                                     toRet = true;
                                 }
                                 break;
+                            case FLOW:
+                                if (listener.onFlow((Block) parameters[0],(Block) parameters[1])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case IGNITE:
+                                if (listener.onIgnite((Block) parameters[0], (parameters[1] == null ? null : ((ep) parameters[1]).getPlayer()))) {
+                                    toRet = true;
+                                }
+                                break;
+                            case EXPLODE:
+                                if (listener.onExplode((Block) parameters[0])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case MOB_SPAWN:
+                                if (listener.onMobSpawn((Mob) parameters[0])) {
+                                    toRet = true;
+                                }
+                                break;
                         }
                     } catch (UnsupportedOperationException ex) {
                     }
@@ -431,6 +482,31 @@ public class PluginLoader {
             }
         }
 
+        return toRet;
+    }
+
+    public Object callCustomHook(String name, Object[] parameters) {
+        Object toRet = false;
+        synchronized (lock) {
+            try {
+                PluginInterface listener = customListeners.get(name);
+
+                if (listener == null) {
+                    log.log(Level.SEVERE, "Cannot find custom hook: " + name);
+                    return false;
+                }
+
+                String msg = listener.checkParameters(parameters);
+                if (msg != null) {
+                    log.log(Level.SEVERE, msg);
+                    return false;
+                }
+
+                toRet = listener.run(parameters);
+            } catch (Exception ex) {
+                log.log(Level.SEVERE, "Exception while calling custom plugin function", ex);
+            }
+        }
         return toRet;
     }
 
@@ -468,6 +544,16 @@ public class PluginLoader {
         return reg;
     }
 
+    public void addCustomListener(PluginInterface listener) {
+        synchronized (lock) {
+            if (customListeners.get(listener.getName()) != null) {
+                log.log(Level.SEVERE, "Replacing existing listener: " + listener.getName());
+            }
+            customListeners.put(listener.getName(), listener);
+            log.info("Registered custom hook: " + listener.getName());
+        }
+    }
+
     /**
      * Removes the specified listener from the list of listeners
      * 
@@ -478,6 +564,12 @@ public class PluginLoader {
         List<PluginRegisteredListener> regListeners = listeners.get(reg.getHook().ordinal());
         synchronized (lock) {
             regListeners.remove(reg);
+        }
+    }
+
+    public void removeCustomListener(String name) {
+        synchronized (lock) {
+            customListeners.remove(name);
         }
     }
 }

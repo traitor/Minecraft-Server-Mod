@@ -114,6 +114,8 @@ public class ep extends fv {
                         block = new Furnace((ds) localay);
                     } else if (localay instanceof ji) {
                         block = new Sign((ji) localay);
+                    } else if (localay instanceof ce) {
+                        block = new MobSpawner((ce)localay);
                     }
                     if (block != null) {
                         if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, new Object[]{this, block})) {

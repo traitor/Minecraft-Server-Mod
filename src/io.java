@@ -113,7 +113,7 @@ public abstract class io {
         a(51, dl.class); // Map chunk
         a(52, ie.class); // Multi-block change
         a(53, fj.class); // Block change
-        a(59, jc.class); // ?
+        a(59, jc.class); // complex block send/receive
 
         a(255, jr.class); // Kick/disconnect
     }
