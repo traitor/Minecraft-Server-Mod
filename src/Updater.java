@@ -68,14 +68,19 @@ public class Updater {
      * @param autoUpdate If set to true, the updater will try to apply updates automatically as they are found.
      */
     public void addFileToUpdate(final String filename, final String location, final boolean autoUpdate) {
+    	// first make sure we haven't added this file before
+        if(!handles.containsKey(filename)){
+        	ScheduledFuture<?> handle;
+            final Runnable updateFile = new Runnable(){
+                @Override
+    			public void run() { updateFile(filename, location, autoUpdate);}
+            };
+        	handle = scheduler.scheduleAtFixedRate(updateFile, initialDelay, period, timeUnits);
+        	handles.put(filename, handle);
+        } else {
+        	log.log(Level.WARNING, filename+" has already been queued for updating.");
+        }
         
-        ScheduledFuture<?> handle;
-        final Runnable updateFile = new Runnable(){
-            @Override
-			public void run() { updateFile(filename, location, autoUpdate);}
-        };
-        handle = scheduler.scheduleAtFixedRate(updateFile, initialDelay, period, timeUnits);
-        handles.put(filename, handle);
     }
 
 
