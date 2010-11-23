@@ -17,8 +17,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-/** Registers and regularly checks (every hour) for updates.
+/** Regularly check (every hour) for updates for registered files.
  * @author Cogito
+ *
+ */
+/**
+ * @author Andrew
  *
  */
 public class Updater {
@@ -30,14 +34,19 @@ public class Updater {
     private long initialDelay;
     private long period;
     private TimeUnit timeUnits;
-
-
 	private Map<URL, Long> lastModified;
 
     public Updater() {
         this(0, 1, TimeUnit.HOURS);
     }
     
+    /**
+     * Allows for files to be checked for updates at regular intervals.
+     * 
+     * @param initialDelay how long to wait before the first check.
+     * @param period how often each check should occur.
+     * @param timeUnits the unit of time that initialDelay and period are measured in.
+     */
     public Updater(long initialDelay, long period, TimeUnit timeUnits) {
         super();
         scheduler = Executors.newScheduledThreadPool(1);
@@ -55,19 +64,15 @@ public class Updater {
      * update has been downloaded.
      * 
      * @param filename The name of the local file to check for updates.
-     * @param location A url where to look for the update. 
+     * @param location Where to look for the update, as a URL string. 
      * @param autoUpdate If set to true, the updater will try to apply updates automatically as they are found.
-     */
-    /**
-     * @param filename
-     * @param location
-     * @param autoUpdate
      */
     public void addFileToUpdate(final String filename, final String location, final boolean autoUpdate) {
         
         ScheduledFuture<?> handle;
         final Runnable updateFile = new Runnable(){
-            public void run() { updateFile(filename, location, autoUpdate);}
+            @Override
+			public void run() { updateFile(filename, location, autoUpdate);}
         };
         handle = scheduler.scheduleAtFixedRate(updateFile, initialDelay, period, timeUnits);
         handles.put(filename, handle);
@@ -76,14 +81,14 @@ public class Updater {
 
     /**
      * Checks for a new version of the given file.
-     * If the local file does not exist, it will be created. Otherwise, the
+     * If the local file does not exist, it will be created. If the file needs updating, the
      * the update is downloaded, and applied if autoUpdate is true.
      * 
      * @param filename The name of the local file to check for updates.
      * @param location A url where to look for the update. 
      * @param autoUpdate If set to true, the updater will try to apply updates automatically as they are found.
      */
-    protected void updateFile(String filename, String location, boolean autoUpdate) {
+    private void updateFile(String filename, String location, boolean autoUpdate) {
         try {
             File oldfile = new File(filename);
             File newfile = new File(filename+".new");
@@ -92,13 +97,15 @@ public class Updater {
                 // The file doesn't exist, download it.
                 System.out.println(filename+" not found, downloading...");
                 this.downloadFile(oldfile, url);
-                lastModified.put(url, getLastModified(url)); // store the last modified time
                 log.info("Finished downloading "+filename+" from "+location);        
             } else {
                 // Check for updated file.
                 log.info("Checking for new version of "+filename+" at "+location);
-                if(this.lastModified.containsKey(url) && 
-                		(this.lastModified.get(url) < this.getLastModified(url))){
+                if(!this.lastModified.containsKey(url)){
+                	// assume the last modified field of the file can be used
+                	this.lastModified.put(url, oldfile.lastModified());
+                }
+                if(this.lastModified.get(url) < this.getLastModified(url)){
                 	// if there is a new version, download it.
                 	downloadFile(newfile, url);
         		    if(autoUpdate){
@@ -110,6 +117,8 @@ public class Updater {
         		        // otherwise, print a message
         		        log.log(Level.WARNING, filename+" has been downloaded and is ready to be updated.");
         		    }
+                } else {
+                	log.info(filename + " is up-to-date.");
                 }
                 
                 
@@ -123,7 +132,7 @@ public class Updater {
         }
     }
 
-	protected void downloadFile(File file, URL url) throws IOException {
+	private void downloadFile(File file, URL url) throws IOException {
 		ReadableByteChannel rbc = Channels.newChannel(url.openStream());
         FileOutputStream fos = new FileOutputStream(file);
         fos.getChannel().transferFrom(rbc, 0, 1 << 24);
@@ -152,16 +161,24 @@ public class Updater {
     public void setTimeUnits(TimeUnit timeUnits) {
         this.timeUnits = timeUnits;
     }
-
+    
+    
+    /**
+     * Find the last modified header for the given URL
+     * 
+     * @param url the URL to check when last modified
+     * @return the precise time the file at the given URL was modified, given in milliseconds since the epoch
+     */
     public long getLastModified(URL url){
-          try {
+    	long value;
+		try {
 			URLConnection conn = url.openConnection();
-			long value = conn.getLastModified();
-			return value;
+			value = conn.getLastModified();
 		} catch (IOException e) {
 			log.info("Could not open connection to "+url.toString()+" while checking for new version.");
+			value = -1;
 		}
-		return -1;
+		return value;
     }
 
 }
