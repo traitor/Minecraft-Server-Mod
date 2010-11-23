@@ -177,7 +177,7 @@ public class gh extends dw
         {
             Item item = new Item(a.c, a.a);
             if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_PICK_UP, new Object[]{fv1, item})) {
-                if (f > 0) a.d = f;
+                //if (f > 0) a.d = f;
                 l.a(this, "random.pop", 0.2F, ((V.nextFloat() - V.nextFloat()) * 0.7F + 1.0F) * 2.0F);
                 fv1.c(this, i);
                 l();
