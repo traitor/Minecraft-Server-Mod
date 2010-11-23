@@ -95,7 +95,7 @@ public class Updater {
             URL url = new URL(location);
             if(!oldfile.exists()) {
                 // The file doesn't exist, download it.
-                System.out.println(filename+" not found, downloading...");
+                log.info(filename+" not found, downloading...");
                 this.downloadFile(oldfile, url);
                 log.info("Finished downloading "+filename+" from "+location);        
             } else {
