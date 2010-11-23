@@ -1,25 +1,57 @@
-
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
+import java.util.logging.Level;
 import net.minecraft.server.MinecraftServer;
+
 
 /**
  * Server.java - Interface to server stuff
  * 
  * @author James
  */
-public class Server {
+public class Server implements Runnable {
 
-    private MinecraftServer server;
-
+	private static Server instance_;
+	private static MinecraftServer server;
+	private static Object synchronizeObject = new Object();
+	private static final Vector<Runnable> eventQueue = new Vector<Runnable>();
+	
+	private Server(MinecraftServer s) {
+		server = s;
+	}
+	
     /**
-     * Creates a server
+     * Attaches a Server to a MinecraftServer
      * 
      * @param server
      */
-    public Server(MinecraftServer server) {
-        this.server = server;
-    }
+	public static Server attachTo(MinecraftServer s) {
+		if (instance_ == null) {
+			synchronized(synchronizeObject) {
+				if (instance_ == null) {
+					instance_ = new Server(s);
+				}
+			}
+		}
+		
+		return instance_;
+	}
+
+
+    /**
+     * Fetches the Server instance. Returns NULL if it is not attached to an MC-server.
+     * 
+     * @param server
+     */
+	public static Server getInstance() {
+		return instance_;
+	}
+
+   
 
     /**
      * Sends a message to all users
@@ -286,26 +318,39 @@ public class Server {
      *            data
      * @return true if it was successful
      */
-    public boolean setBlockData(int x, int y, int z, int data) {
-        boolean toRet = server.e.c(x, y, z, data);
-        etc.getMCServer().f.a(new fj(x, y, z, etc.getMCServer().e));
-        ComplexBlock block = getComplexBlock(x, y, z);
-        if (block != null) {
-            block.update();
-        }
-        return toRet;
-    }
+	public boolean setBlockData(final int x, final int y, final int z, final int data) {
+    	synchronized(synchronizeObject) {
+	    	eventQueue.add(new Runnable() {
+	    		public void run() {
+				    server.e.c(x, y, z, data);
+				    etc.getMCServer().f.a(new fj(x, y, z, etc.getMCServer().e));
+				    ComplexBlock block = getComplexBlock(x, y, z);
+				    if (block != null) {
+				        block.update();
+				    }
+	    		}
+	    	});
+    	}
+    	return true;
+	 }
 
-    /**
-     * Sets the block type at the specified location
-     * 
-     * @param blockType
-     * @param x
-     * @param y
-     * @param z
-     */
-    public boolean setBlockAt(int blockType, int x, int y, int z) {
-        return server.e.d(x, y, z, blockType);
+	/**
+	 * Sets the block type at the specified location
+	 * 
+	 * @param blockType
+	 * @param x
+	 * @param y
+	 * @param z
+	 */
+    public boolean setBlockAt(final int blockType, final int x, final int y, final int z) {
+    	synchronized(synchronizeObject) {
+	    	eventQueue.add(new Runnable() {
+	    		public void run() {
+	    			server.e.d(x, y, z, blockType);
+	    		}
+	    	});
+    	}
+    	return true;
     }
 
     /**
@@ -371,13 +416,139 @@ public class Server {
         dropItem(loc.x, loc.y, loc.z, itemId, quantity);
     }
 
-    public void dropItem(double x, double y, double z, int itemId, int quantity) {
-        double d1 = server.e.l.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
-        double d2 = server.e.l.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
-        double d3 = server.e.l.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
-
-        gh localgh = new gh(server.e, x + d1, y + d2, z + d3, new hj(itemId, quantity));
-        localgh.c = 10;
-        server.e.a(localgh);
+    public void dropItem(final double x, final double y, final double z, 
+    		final int itemId, final int quantity) {
+    	synchronized(synchronizeObject) {
+	    	eventQueue.add(new Runnable() {
+	    		public void run() {
+	    			server.e.a(new gh(server.e, x, y, z, new hj(itemId, quantity)));
+	    		}
+	    	});
+    	}
     }
+    
+    
+    /**
+     * Overloads parts of the default MinecraftServer loop, to allow processing 
+     * of an event queue.  
+     * 
+     * Note: The event queue is meant for Runnables containing code that has to be 
+     * executed from the Server Thread.
+     * 
+     */
+	public void run() {
+		// Access h(), g(), d() and 'n' from MineCraftServer.java using reflection.
+		Class<?> minecraftServer;
+		Method d = null, h = null, g = null; 
+		Field n = null;
+		
+		try {
+			minecraftServer = Class.forName("net.minecraft.server.MinecraftServer");
+			n = minecraftServer.getDeclaredField("n");
+			d = minecraftServer.getDeclaredMethod("d");
+			h = minecraftServer.getDeclaredMethod("h");
+			g = minecraftServer.getDeclaredMethod("g");
+			
+			n.setAccessible(true);
+			h.setAccessible(true);
+			d.setAccessible(true);
+			g.setAccessible(true);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+
+		try {
+			if ((Boolean) d.invoke(server)) {
+				long l1 = System.currentTimeMillis();
+				long l2 = 0L;
+				while (n.getBoolean(server)) {
+					long l3 = System.currentTimeMillis();
+					long l4 = l3 - l1;
+					
+					if (l4 > 2000L) {
+						MinecraftServer.a.warning("Can't keep up! Did the system time change, or is the server overloaded?");
+							l4 = 2000L;
+						}
+						if (l4 < 0L) {
+							MinecraftServer.a.warning("Time ran backwards! Did the system time change?");
+							l4 = 0L;
+						}
+						l2 += l4;
+						l1 = l3;
+	
+						while (l2 > 50L) {
+							l2 -= 50L;
+							
+							// Here might not be the best place for this but it works...
+							synchronized(synchronizeObject) {
+								for(Iterator<Runnable> it = eventQueue.iterator(); it.hasNext();) {
+									it.next().run();
+									it.remove();
+								}
+							}
+							
+							h.invoke(server);
+						}
+						
+						Thread.sleep(1L);
+					}
+				} else {
+					while (n.getBoolean(server)) {
+						server.b();
+						try {
+							Thread.sleep(10L);
+						} catch (InterruptedException localInterruptedException1) {
+							localInterruptedException1.printStackTrace();
+						}
+					}
+				}
+		} catch (Exception localException) {
+			localException.printStackTrace();
+			MinecraftServer.a.log(Level.SEVERE, "Unexpected exception", localException);
+			try {
+				while (n.getBoolean(server)) {
+					server.b();
+					try {
+						Thread.sleep(10L);
+					} catch (InterruptedException localInterruptedException2) {
+						localInterruptedException2.printStackTrace();
+					}
+				}
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		} finally {
+			try {
+				g.invoke(server);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			try {
+				minecraftServer = Class.forName("net.minecraft.server.MinecraftServer");
+				Field serverG = minecraftServer.getDeclaredField("g");
+				serverG.setAccessible(true);
+				serverG.set(server, true);
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchFieldException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.exit(0);
+		}
+	}
 }

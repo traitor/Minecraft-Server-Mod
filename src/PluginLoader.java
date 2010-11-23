@@ -148,7 +148,7 @@ public class PluginLoader {
      */
     public PluginLoader(MinecraftServer server) {
         properties = new PropertiesFile("server.properties");
-        this.server = new Server(server);
+        this.server = Server.getInstance();
 
         for (int h = 0; h < Hook.NUM_HOOKS.ordinal(); ++h) {
             listeners.add(new ArrayList<PluginRegisteredListener>());
