@@ -1,14 +1,15 @@
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
 
 public class Main {
 
+
     public static void main(String[] args) throws IOException {
+        Updater updater = new Updater();
+        updater.addFileToUpdate("minecraft_server.jar", 
+                "http://minecraft.net/download/minecraft_server.jar",
+                false);
+        /*
         if (!new File("minecraft_server.jar").exists()) {
             System.out.println("minecraft_server.jar not found, downloading...");
 
@@ -24,7 +25,8 @@ public class Main {
             System.out.println("Update found.");
             // derp.
         }
-
+         */
+        System.out.println("Starting server"); 
         // My mod doesn't work with gui.
         try {
             net.minecraft.server.MinecraftServer.main(args);
