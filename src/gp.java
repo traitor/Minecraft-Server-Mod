@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -14,7 +16,7 @@ public class gp {
     public static Logger a = Logger.getLogger("Minecraft");
     public List b = new ArrayList();
     private MinecraftServer c;
-    private if d;
+    private Object d;
     private int e;
     private Set f = new HashSet();
     private Set g = new HashSet();
@@ -24,6 +26,8 @@ public class gp {
     private File k;
     private cy l;
 
+    private Method if_a, if_a1, if_a2, if_a3, if_b, if_b2, if_c;
+
     public gp(MinecraftServer paramMinecraftServer) {
         etc.setServer(paramMinecraftServer);
         etc.getInstance().loadData();
@@ -32,7 +36,41 @@ public class gp {
         this.i = paramMinecraftServer.a("banned-players.txt");
         this.j = paramMinecraftServer.a("banned-ips.txt");
         this.k = paramMinecraftServer.a("ops.txt");
-        this.d = new if(paramMinecraftServer);
+
+        // Create an object of class 'if'.
+        try {
+            Class<?> reallyIf = Class.forName("if");
+            Constructor<?> ct = reallyIf.getConstructor(MinecraftServer.class);
+            d = ct.newInstance(paramMinecraftServer);
+
+            Class<?> aParamTypes[] = {ir.class, Integer.TYPE, Integer.TYPE, Integer.TYPE};
+            if_a = reallyIf.getMethod("a", aParamTypes);
+            if_a.setAccessible(true);
+
+            Class<?> a1ParamTypes[] = {Integer.TYPE, Integer.TYPE, Integer.TYPE};
+            if_a1 = reallyIf.getMethod("a", a1ParamTypes);
+            if_a1.setAccessible(true);
+
+            if_a2 = reallyIf.getMethod("a", null);
+            if_a2.setAccessible(true);
+
+            if_a3 = reallyIf.getMethod("a", er.class);
+            if_a3.setAccessible(true);
+
+            if_b = reallyIf.getMethod("b", null);
+            if_b.setAccessible(true);
+
+            if_b2 = reallyIf.getMethod("b", er.class);
+            if_b2.setAccessible(true);
+
+            if_c = reallyIf.getMethod("c", er.class);
+            if_c.setAccessible(true);
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
         this.e = paramMinecraftServer.d.a("max-players", 20);
         e();
         g();
@@ -47,7 +85,15 @@ public class gp {
     }
 
     public int a() {
-        return this.d.b();
+        int p = 0;
+        try {
+            p = (Integer) if_b.invoke(d);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return p;
     }
 
     public void a(er paramer) {
@@ -60,21 +106,35 @@ public class gp {
             paramer.a(paramer.p, paramer.q + 1.0D, paramer.r);
         }
         this.c.e.a(paramer);
-        this.d.a(paramer);
-        
+        try {
+            if_a3.invoke(d, paramer);
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
         // Login
         for (String str : etc.getInstance().getMotd()) {
             paramer.a.b(new bh(str));
         }
-        etc.getLoader().callHook(PluginLoader.Hook.LOGIN, new Object[]{paramep});
+        etc.getLoader().callHook(PluginLoader.Hook.LOGIN, new Object[]{paramer});
     }
 
     public void b(er paramer) {
-        this.d.c(paramer);
+        try {
+            if_c.invoke(d, paramer);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     public void c(er paramer) {
-        this.d.b(paramer);
+        try {
+            this.if_b2.invoke(d, paramer);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
         this.l.a(paramer);
         this.c.e.d(paramer);
         this.b.remove(paramer);
@@ -85,7 +145,7 @@ public class gp {
             paramfq.b("You are banned from this server!");
             return null;
         }
-        
+
         er temp = new er(this.c, this.c.e, paramString1, new jt(this.c.e));
         Player player = temp.getPlayer();
 
@@ -114,7 +174,7 @@ public class gp {
             paramfq.b("Server is full.");
             return null;
         }
-        
+
         if (!player.getIps()[0].equals("")) {
             boolean kick = true;
             for (int i = 0; i < player.getIps().length; i++) {
@@ -138,7 +198,7 @@ public class gp {
         }
         return new er(this.c, this.c.e, paramString1, new jt(this.c.e));
     }
-    
+
     /**
      * Returns the list of bans
      * 
@@ -175,13 +235,23 @@ public class gp {
         return builder.toString();
     }
 
-
     public void b() {
-        this.d.a();
+        try {
+            this.if_a2.invoke(d);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     public void a(int paramInt1, int paramInt2, int paramInt3) {
-        this.d.a(paramInt1, paramInt2, paramInt3);
+        Object args[] = {paramInt1, paramInt2, paramInt3};
+        try {
+            this.if_a1.invoke(d, args);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     public void a(ir paramir) {
@@ -351,7 +421,13 @@ public class gp {
     }
 
     public void a(int paramInt1, int paramInt2, int paramInt3, ay paramay) {
-        this.d.a(new jf(paramInt1, paramInt2, paramInt3, paramay), paramInt1, paramInt2, paramInt3);
+        Object args[] = {new jf(paramInt1, paramInt2, paramInt3, paramay), paramInt1, paramInt2, paramInt3};
+        try {
+            if_a.invoke(d, args);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     public void d() {
