@@ -136,6 +136,10 @@ public class PluginLoader {
          */
         HEALTH_CHANGE,
         /**
+         * Calls onRedstoneChange
+         */
+        REDSTONE_CHANGE,
+        /**
          * Unused.
          */
         NUM_HOOKS
