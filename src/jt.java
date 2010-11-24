@@ -1,8 +1,6 @@
-
-public class jq {
-
-    private em b;
-    public fv a;
+public class jt {
+    private eo b;
+    public fx a;
     private float c;
     private float d = 0.0F;
     private int e = 0;
@@ -11,19 +9,18 @@ public class jq {
     private int h;
     private int i;
 
-    public jq(em paramel) {
-        this.b = paramel;
+    public jt(eo parameo) {
+        this.b = parameo;
     }
 
     public void a(int paramInt1, int paramInt2, int paramInt3) {
         int j = this.b.a(paramInt1, paramInt2, paramInt3);
         if ((j > 0) && (this.d == 0.0F)) {
-            fy.m[j].b(this.b, paramInt1, paramInt2, paramInt3, this.a);
+            ga.m[j].b(this.b, paramInt1, paramInt2, paramInt3, this.a);
         }
-
-        if ((j > 0) && (fy.m[j].a(this.a) >= 1.0F)) {
+        if ((j > 0) && (ga.m[j].a(this.a) >= 1.0F)) {
             Block block = etc.getServer().getBlockAt(paramInt1, paramInt2, paramInt3);
-            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, new Object[]{(ep) a, block})) {
+            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, new Object[]{(er) a, block})) {
                 c(paramInt1, paramInt2, paramInt3);
             }
         }
@@ -44,13 +41,15 @@ public class jq {
             if (j == 0) {
                 return;
             }
+            ga localga = ga.m[j];
 
-            fy localfy = fy.m[j];
-            this.d += localfy.a(this.a);
+            this.d += localga.a(this.a);
+
             this.f += 1.0F;
+
             if (this.d >= 1.0F) {
                 Block block = etc.getServer().getBlockAt(paramInt1, paramInt2, paramInt3);
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, new Object[]{(ep) a, block})) {
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, new Object[]{(er) a, block})) {
                     c(paramInt1, paramInt2, paramInt3);
                 }
                 this.d = 0.0F;
@@ -69,11 +68,11 @@ public class jq {
     }
 
     public boolean b(int paramInt1, int paramInt2, int paramInt3) {
-        fy localfy = fy.m[this.b.a(paramInt1, paramInt2, paramInt3)];
+        ga localga = ga.m[this.b.a(paramInt1, paramInt2, paramInt3)];
         int j = this.b.b(paramInt1, paramInt2, paramInt3);
         boolean bool = this.b.d(paramInt1, paramInt2, paramInt3, 0);
-        if ((localfy != null) && (bool)) {
-            localfy.a(this.b, paramInt1, paramInt2, paramInt3, j);
+        if ((localga != null) && (bool)) {
+            localga.a(this.b, paramInt1, paramInt2, paramInt3, j);
         }
         return bool;
     }
@@ -83,44 +82,42 @@ public class jq {
         int k = this.b.b(paramInt1, paramInt2, paramInt3);
         boolean bool = b(paramInt1, paramInt2, paramInt3);
 
-        hj localhj = this.a.G();
-        if (localhj != null) {
-            localhj.a(j, paramInt1, paramInt2, paramInt3);
-            if (localhj.a == 0) {
-                localhj.a(this.a);
-                this.a.H();
+        hl localhl = this.a.I();
+        if (localhl != null) {
+            localhl.a(j, paramInt1, paramInt2, paramInt3);
+            if (localhl.a == 0) {
+                localhl.a(this.a);
+                this.a.J();
             }
         }
-        if ((bool) && (this.a.b(fy.m[j]))) {
-            fy.m[j].a_(this.b, paramInt1, paramInt2, paramInt3, k);
+        if ((bool) && (this.a.b(ga.m[j]))) {
+            ga.m[j].a_(this.b, paramInt1, paramInt2, paramInt3, k);
         }
         return bool;
     }
 
-    public boolean a(fv paramfv, em paramem, hj paramhj) {
-        int j = paramhj.a;
-        hj localhj = paramhj.a(paramem, paramfv);
-        if ((localhj != paramhj) || ((localhj != null) && (localhj.a != j))) {
-            paramfv.ak.a[paramfv.ak.d] = localhj;
-            if (localhj.a == 0) {
-                paramfv.ak.a[paramfv.ak.d] = null;
+    public boolean a(fx paramfx, eo parameo, hl paramhl) {
+        int j = paramhl.a;
+        hl localhl = paramhl.a(parameo, paramfx);
+        if ((localhl != paramhl) || ((localhl != null) && (localhl.a != j))) {
+            paramfx.al.a[paramfx.al.d] = localhl;
+            if (localhl.a == 0) {
+                paramfx.al.a[paramfx.al.d] = null;
             }
             return true;
         }
         return false;
     }
 
-    public boolean a(fv paramft, em paramem, hj paramhh, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        int j = paramem.a(paramInt1, paramInt2, paramInt3);
-
-        if ((j > 0) && (fy.m[j].a(paramem, paramInt1, paramInt2, paramInt3, paramft))) {
+    public boolean a(fx paramfx, eo parameo, hl paramhl, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+        int j = parameo.a(paramInt1, paramInt2, paramInt3);
+        if ((j > 0) && (ga.m[j].a(parameo, paramInt1, paramInt2, paramInt3, paramfx))) {
             return true;
         }
 
-        if (paramhh == null) {
+        if (paramhl == null) {
             return false;
         }
-
-        return paramhh.a(paramft, paramem, paramInt1, paramInt2, paramInt3, paramInt4);
+        return paramhl.a(paramfx, parameo, paramInt1, paramInt2, paramInt3, paramInt4);
     }
 }

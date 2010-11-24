@@ -3,6 +3,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -96,6 +97,10 @@ public class PluginLoader {
          */
         ITEM_DROP,
         /**
+         * Calls onItemPickUp
+         */
+        ITEM_PICK_UP,
+        /**
          * Calls onSendComplexBlock
          */
         COMPLEX_BLOCK_SEND,
@@ -120,9 +125,25 @@ public class PluginLoader {
          */
         EXPLODE,
         /**
+         * Calls onMobSpawn
+         */
+        MOB_SPAWN,
+        /**
+         * Calls onVerificationCheck
+         */
+        VERIFICATION_CHECK,
+        /**
+         * Calls onNameVerification
+         */
+        NAME_VERIFICATION,
+        /**
+         * Calls onNameResolution
+         */
+        NAME_RESOLUTION,
+        /**
          * Unused.
          */
-        NUM_HOOKS
+        NUM_HOOKS,
     }
     private static final Logger log = Logger.getLogger("Minecraft");
     private static final Object lock = new Object();
@@ -331,7 +352,7 @@ public class PluginLoader {
      * @return Object returned by call
      */
     public Object callHook(Hook h, Object[] parameters) {
-        Object toRet = false;
+        Object toRet = h == Hook.NAME_RESOLUTION ? null : false;
         synchronized (lock) {
             try {
                 List<PluginRegisteredListener> registeredListeners = listeners.get(h.ordinal());
@@ -352,18 +373,18 @@ public class PluginLoader {
                                 }
                                 break;
                             case LOGIN:
-                                listener.onLogin(((ep) parameters[0]).getPlayer());
+                                listener.onLogin(((er) parameters[0]).getPlayer());
                                 break;
                             case DISCONNECT:
-                                listener.onDisconnect(((ep) parameters[0]).getPlayer());
+                                listener.onDisconnect(((er) parameters[0]).getPlayer());
                                 break;
                             case CHAT:
-                                if (listener.onChat(((ep) parameters[0]).getPlayer(), (String) parameters[1])) {
+                                if (listener.onChat(((er) parameters[0]).getPlayer(), (String) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
                             case COMMAND:
-                                if (listener.onCommand(((ep) parameters[0]).getPlayer(), (String[]) parameters[1])) {
+                                if (listener.onCommand(((er) parameters[0]).getPlayer(), (String[]) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
@@ -373,83 +394,109 @@ public class PluginLoader {
                                 }
                                 break;
                             case BAN:
-                                listener.onBan(((ep) parameters[0]).getPlayer(), ((ep) parameters[1]).getPlayer(), (String) parameters[2]);
+                                listener.onBan(((er) parameters[0]).getPlayer(), ((er) parameters[1]).getPlayer(), (String) parameters[2]);
                                 break;
                             case IPBAN:
-                                listener.onIpBan(((ep) parameters[0]).getPlayer(), ((ep) parameters[1]).getPlayer(), (String) parameters[2]);
+                                listener.onIpBan(((er) parameters[0]).getPlayer(), ((er) parameters[1]).getPlayer(), (String) parameters[2]);
                                 break;
                             case KICK:
-                                listener.onKick(((ep) parameters[0]).getPlayer(), ((ep) parameters[1]).getPlayer(), (String) parameters[2]);
+                                listener.onKick(((er) parameters[0]).getPlayer(), ((er) parameters[1]).getPlayer(), (String) parameters[2]);
                                 break;
                             case BLOCK_CREATED:
-                                if (listener.onBlockCreate(((ep) parameters[0]).getPlayer(), (Block) parameters[1], (Block) parameters[2], (Integer) parameters[3])) {
+                                if (listener.onBlockCreate(((er) parameters[0]).getPlayer(), (Block) parameters[1], (Block) parameters[2], (Integer) parameters[3])) {
                                     toRet = true;
                                 }
                                 break;
                             case BLOCK_DESTROYED:
-                                if (listener.onBlockDestroy(((ep) parameters[0]).getPlayer(), (Block) parameters[1])) {
+                                if (listener.onBlockDestroy(((er) parameters[0]).getPlayer(), (Block) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
                             case PLAYER_MOVE:
-                                listener.onPlayerMove(((ep) parameters[0]).getPlayer(), (Location) parameters[1], (Location) parameters[2]);
+                                listener.onPlayerMove(((er) parameters[0]).getPlayer(), (Location) parameters[1], (Location) parameters[2]);
                                 break;
                             case ARM_SWING:
-                                listener.onArmSwing(((ep) parameters[0]).getPlayer());
+                                listener.onArmSwing(((er) parameters[0]).getPlayer());
                                 break;
                             case INVENTORY_CHANGE:
-                                if (listener.onInventoryChange(((ep) parameters[0]).getPlayer())) {
+                                if (listener.onInventoryChange(((er) parameters[0]).getPlayer())) {
                                     toRet = true;
                                 }
                                 break;
                             case CRAFTINVENTORY_CHANGE:
-                                if (listener.onCraftInventoryChange(((ep) parameters[0]).getPlayer())) {
+                                if (listener.onCraftInventoryChange(((er) parameters[0]).getPlayer())) {
                                     toRet = true;
                                 }
                                 break;
                             case EQUIPMENT_CHANGE:
-                                if (listener.onEquipmentChange(((ep) parameters[0]).getPlayer())) {
+                                if (listener.onEquipmentChange(((er) parameters[0]).getPlayer())) {
                                     toRet = true;
                                 }
                                 break;
                             case ITEM_DROP:
-                                if (listener.onItemDrop(((ep) parameters[0]).getPlayer(), (Item) parameters[1])) {
+                                if (listener.onItemDrop(((er) parameters[0]).getPlayer(), (Item) parameters[1])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case ITEM_PICK_UP:
+                                if (listener.onItemPickUp(((er) parameters[0]).getPlayer(), (Item) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
                             case COMPLEX_BLOCK_CHANGE:
-                                if (listener.onComplexBlockChange(((ep) parameters[0]).getPlayer(), (ComplexBlock) parameters[1])) {
+                                if (listener.onComplexBlockChange(((er) parameters[0]).getPlayer(), (ComplexBlock) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
                             case COMPLEX_BLOCK_SEND:
-                                if (listener.onSendComplexBlock(((ep) parameters[0]).getPlayer(), (ComplexBlock) parameters[1])) {
+                                if (listener.onSendComplexBlock(((er) parameters[0]).getPlayer(), (ComplexBlock) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
                             case TELEPORT:
-                                if (listener.onTeleport(((ep) parameters[0]).getPlayer(), (Location) parameters[1], (Location) parameters[2])) {
+                                if (listener.onTeleport(((er) parameters[0]).getPlayer(), (Location) parameters[1], (Location) parameters[2])) {
                                     toRet = true;
                                 }
                                 break;
                             case BLOCK_BROKEN:
-                                if (listener.onBlockBreak(((ep) parameters[0]).getPlayer(), (Block) parameters[1])) {
+                                if (listener.onBlockBreak(((er) parameters[0]).getPlayer(), (Block) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
                             case FLOW:
-                                if (listener.onFlow((Block) parameters[0])) {
+                                if (listener.onFlow((Block) parameters[0],(Block) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
                             case IGNITE:
-                                if (listener.onIgnite((Block) parameters[0], (parameters[1] == null ? null : ((ep) parameters[1]).getPlayer()))) {
+                                if (listener.onIgnite((Block) parameters[0], (parameters[1] == null ? null : ((er) parameters[1]).getPlayer()))) {
                                     toRet = true;
                                 }
                                 break;
                             case EXPLODE:
                                 if (listener.onExplode((Block) parameters[0])) {
                                     toRet = true;
+                                }
+                                break;
+                            case MOB_SPAWN:
+                                if (listener.onMobSpawn((Mob) parameters[0])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case VERIFICATION_CHECK:
+                                if (listener.shouldIgnoreVerification((String) parameters[0], (InetAddress) parameters[1])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case NAME_VERIFICATION:
+                                if (listener.onNameVerification((String) parameters[0], (String) parameters[1], (InetAddress) parameters[2])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case NAME_RESOLUTION:
+                                String name = listener.onNameResolution((String) parameters[0], (InetAddress) parameters[1]);
+                                if (name != null) {
+                                    toRet = name;
                                 }
                                 break;
                         }

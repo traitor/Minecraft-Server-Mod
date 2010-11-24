@@ -1,39 +1,38 @@
-
-public class ds extends ay implements jz {
-
-    private hj[] e = new hj[3];
+public class dt extends ay implements kc {
+    private hl[] e = new hl[3];
     private int f = 0;
     private int g = 0;
     private int h = 0;
 
-    public hj[] getContents() {
+    public hl[] getContents() {
         return e;
     }
 
-    public void setContents(hj[] e) {
+    public void setContents(hl[] e) {
         this.e = e;
     }
-
+    @Override
     public int a() {
         return this.e.length;
     }
 
-    public hj a(int paramInt) {
+    @Override
+    public hl a(int paramInt) {
         return this.e[paramInt];
     }
 
+    @Override
     public void a(v paramv) {
         super.a(paramv);
-        ea localea = paramv.k("Items");
-        this.e = new hj[a()];
-        for (int i = 0; i < localea.b(); i++) {
-            v localv = (v) localea.a(i);
+        eb localeb = paramv.k("Items");
+        this.e = new hl[a()];
+        for (int i = 0; i < localeb.b(); i++) {
+            v localv = (v) localeb.a(i);
             int j = localv.b("Slot");
             if ((j < 0) || (j >= this.e.length)) {
                 continue;
             }
-
-            this.e[j] = new hj(localv);
+            this.e[j] = new hl(localv);
         }
 
         this.f = paramv.c("BurnTime");
@@ -41,21 +40,22 @@ public class ds extends ay implements jz {
         this.g = a(this.e[1]);
     }
 
+    @Override
     public void b(v paramv) {
         super.b(paramv);
         paramv.a("BurnTime", (short) this.f);
         paramv.a("CookTime", (short) this.h);
-        ea localea = new ea();
+        eb localeb = new eb();
 
         for (int i = 0; i < this.e.length; i++) {
             if (this.e[i] != null) {
                 v localv = new v();
                 localv.a("Slot", (byte) i);
                 this.e[i].a(localv);
-                localea.a(localv);
+                localeb.a(localv);
             }
         }
-        paramv.a("Items", localea);
+        paramv.a("Items", localeb);
     }
 
     public int d() {
@@ -66,6 +66,7 @@ public class ds extends ay implements jz {
         return this.f > 0;
     }
 
+    @Override
     public void b() {
         int i = this.f > 0 ? 1 : 0;
         int j = 0;
@@ -100,7 +101,7 @@ public class ds extends ay implements jz {
 
             if (i != (this.f > 0 ? 1 : 0)) {
                 j = 1;
-                ei.a(this.f > 0, this.a, this.b, this.c, this.d);
+                ek.a(this.f > 0, this.a, this.b, this.c, this.d);
             }
         }
 
@@ -126,7 +127,7 @@ public class ds extends ay implements jz {
         if ((this.e[2].a < d()) && (this.e[2].a < this.e[2].b())) {
             return true;
         }
-        return this.e[2].a < fs.c[i].a();
+        return this.e[2].a < fu.c[i].a();
     }
 
     public void f() {
@@ -136,7 +137,7 @@ public class ds extends ay implements jz {
 
         int i = b(this.e[0].a().aW);
         if (this.e[2] == null) {
-            this.e[2] = new hj(i, 1);
+            this.e[2] = new hl(i, 1);
         } else if (this.e[2].c == i) {
             this.e[2].a += 1;
         }
@@ -148,52 +149,52 @@ public class ds extends ay implements jz {
     }
 
     private int b(int paramInt) {
-        if (paramInt == fy.H.bh) {
-            return fs.m.aW;
+        if (paramInt == ga.H.bh) {
+            return fu.m.aW;
         }
-        if (paramInt == fy.G.bh) {
-            return fs.n.aW;
+        if (paramInt == ga.G.bh) {
+            return fu.n.aW;
         }
-        if (paramInt == fy.aw.bh) {
-            return fs.l.aW;
+        if (paramInt == ga.aw.bh) {
+            return fu.l.aW;
         }
-        if (paramInt == fy.E.bh) {
-            return fy.M.bh;
+        if (paramInt == ga.E.bh) {
+            return ga.M.bh;
         }
-        if (paramInt == fs.ao.aW) {
-            return fs.ap.aW;
+        if (paramInt == fu.ao.aW) {
+            return fu.ap.aW;
         }
-        if (paramInt == fs.aS.aW) {
-            return fs.aT.aW;
+        if (paramInt == fu.aS.aW) {
+            return fu.aT.aW;
         }
-        if (paramInt == fy.w.bh) {
-            return fy.t.bh;
+        if (paramInt == ga.w.bh) {
+            return ga.t.bh;
         }
-        if (paramInt == fs.aG.aW) {
-            return fs.aF.aW;
+        if (paramInt == fu.aG.aW) {
+            return fu.aF.aW;
         }
         return -1;
     }
 
-    private int a(hj paramhj) {
-        if (paramhj == null) {
+    private int a(hl paramhl) {
+        if (paramhl == null) {
             return 0;
         }
-        int i = paramhj.a().aW;
+        int i = paramhl.a().aW;
 
-        if ((i < 256) && (fy.m[i].bs == jt.c)) {
+        if ((i < 256) && (ga.m[i].bs == jw.c)) {
             return 300;
         }
 
-        if (i == fs.B.aW) {
+        if (i == fu.B.aW) {
             return 100;
         }
 
-        if (i == fs.k.aW) {
+        if (i == fu.k.aW) {
             return 1600;
         }
 
-        if (i == fs.aw.aW) {
+        if (i == fu.aw.aW) {
             return 20000;
         }
 

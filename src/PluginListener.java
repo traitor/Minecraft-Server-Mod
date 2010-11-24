@@ -1,3 +1,4 @@
+import java.net.InetAddress;
 
 /**
  * PluginListener.java - Extend this and register it to listen to specific
@@ -256,6 +257,20 @@ public abstract class PluginListener {
     }
 
     /**
+     * Called when a player picks up an item.
+     *
+     * @param player
+     *            player who picked up the item
+     * @param item
+     *            item that was picked up
+     * @return true if you want to leave the item where it was
+     */
+    public boolean onItemPickUp(Player player, Item item) {
+        return false;
+    }
+
+
+    /**
      * Called when either a sign, chest or furnace is changed.
      * 
      * @param player
@@ -311,14 +326,64 @@ public abstract class PluginListener {
     }
 
     /*
-     * Called when lava wants to flow to a certain block.
+     * Called when fluid wants to flow to a certain block.
+     * (10 & 11 for lava and 8 & 9 for water)
+     * 
+     * @param blockFrom
+     *              the block where the fluid came from.
+     *              (blocktype = fluid type)
+     * @param blockTo
+     *              the block where fluid wants to flow to.
      *
-     * @param block
-     *          block that the lava wants to flow to.
      *
-     * @return true if you dont want the lava to flow.
+     * @return true if you dont want the substance to flow.
      */
-    public boolean onFlow(Block block) {
+    public boolean onFlow(Block blockFrom,Block blockTo) {
         return false;
+    }
+    
+    /**
+     * @param mob Mob attempting to spawn.
+     * @return true if you dont want mob to spawn.
+     */
+    public boolean onMobSpawn(Mob mob) {
+    	return false;
+    }
+
+    /**
+     * Called when the server considers whether to perform verification.
+     * 
+     * @param address
+     *          player's address
+     * @return
+     */
+    public boolean shouldIgnoreVerification(String name, InetAddress address) {
+        return false;
+    }
+
+    /**
+     * Called on name verification. Return true to override.
+     *
+     * @param name
+     *          player's name
+     * @param serverID
+     *         server ID
+     * @param address
+     *         address
+     * @return true to allow pass through
+     */
+    public boolean onNameVerification(String name, String serverID, InetAddress address) {
+        return false;
+    }
+
+    /**
+     * Allow overriding a player's name.
+     * 
+     * @param name
+     * @param address
+     * @return a String to change a player's name
+     */
+    public String onNameResolution(String name, InetAddress address) {
+        return null;
     }
 }

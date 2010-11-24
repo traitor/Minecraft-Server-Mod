@@ -28,7 +28,27 @@ public class Server {
      *            Message text to send
      */
     public void messageAll(String msg) {
-        this.server.f.a(new bg(msg));
+        this.server.f.a(new bh(msg));
+    }
+
+    /**
+     * Bans specified player
+     *
+     * @param player Name of the player to ban
+     *
+     */
+    public void ban(String player) {
+        this.server.f.a(player);
+    }
+
+    /**
+     * Unbans specified user
+     *
+     * @param player Player name to unban
+     *
+     */
+    public void unban(String player) {
+        this.server.f.b(player);
     }
 
     /**
@@ -143,11 +163,11 @@ public class Server {
         name = name.toLowerCase();
 
         for (Object player: server.f.b) {
-            String playerName = ((ep) player).ar;
+            String playerName = ((er) player).as;
 
             if (playerName.toLowerCase().equals(name)) {
                 // Perfect match found
-                lastPlayer = ((ep) player).getPlayer();
+                lastPlayer = ((er) player).getPlayer();
                 break;
             }
             if (playerName.toLowerCase().indexOf(name.toLowerCase()) != -1) {
@@ -156,7 +176,7 @@ public class Server {
                     // Found multiple
                     return null;
                 }
-                lastPlayer = ((ep) player).getPlayer();
+                lastPlayer = ((er) player).getPlayer();
             }
         }
 
@@ -170,7 +190,7 @@ public class Server {
      * @return
      */
     public Player getPlayer(String name) {
-        ep user = server.f.h(name);
+        er user = server.f.h(name);
         return user == null ? null : user.getPlayer();
     }
 
@@ -182,7 +202,7 @@ public class Server {
     public List<Player> getPlayerList() {
         List<Player> toRet = new ArrayList<Player>();
         for (Object o : server.f.b) {
-            toRet.add(((ep) o).getPlayer());
+            toRet.add(((er) o).getPlayer());
         }
         return toRet;
     }
@@ -195,8 +215,8 @@ public class Server {
     public List<Mob> getMobList() {
         List<Mob> toRet = new ArrayList<Mob>();
         for (Object o : server.e.b) {
-            if (o instanceof hb) {
-                toRet.add(new Mob((hb) o));
+            if (o instanceof hd) {
+                toRet.add(new Mob((hd) o));
             }
         }
         return toRet;
@@ -268,7 +288,7 @@ public class Server {
      */
     public boolean setBlockData(int x, int y, int z, int data) {
         boolean toRet = server.e.c(x, y, z, data);
-        etc.getMCServer().f.a(new fj(x, y, z, etc.getMCServer().e));
+        etc.getMCServer().f.a(new fl(x, y, z, etc.getMCServer().e));
         ComplexBlock block = getComplexBlock(x, y, z);
         if (block != null) {
             block.update();
@@ -326,12 +346,14 @@ public class Server {
     public ComplexBlock getComplexBlock(int x, int y, int z) {
         ay localav = server.e.k(x, y, z);
         if (localav != null) {
-            if (localav instanceof hx) {
-                return new Chest((hx) localav);
-            } else if (localav instanceof ji) {
-                return new Sign((ji) localav);
-            } else if (localav instanceof ds) {
-                return new Furnace((ds) localav);
+            if (localav instanceof ia) {
+                return new Chest((ia) localav);
+            } else if (localav instanceof jl) {
+                return new Sign((jl) localav);
+            } else if (localav instanceof dt) {
+                return new Furnace((dt) localav);
+            } else if (localav instanceof cf) {
+            	return new MobSpawner((cf) localav);
             }
         }
         return null;
@@ -350,10 +372,12 @@ public class Server {
     }
 
     public void dropItem(double x, double y, double z, int itemId, int quantity) {
-        if (itemId < 256) {
-            server.e.a(new gh(server.e, x, y, z, new hj(fy.m[itemId])));
-        } else {
-            server.e.a(new gh(server.e, x, y, z, new hj(itemId, 1)));
-        }
+        double d1 = server.e.l.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d2 = server.e.l.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d3 = server.e.l.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+
+        gj localgj = new gj(server.e, x + d1, y + d2, z + d3, new hl(itemId, quantity));
+        localgj.c = 10;
+        server.e.a(localgj);
     }
 }
