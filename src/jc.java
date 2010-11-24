@@ -33,7 +33,7 @@ public class jc extends fu {
             Block block = new Block(paramInt1, paramInt2, paramInt3, 0);
             block.setStatus(2);
             //fire lighter check
-            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, new Object[]{block , (ep) paramfx })) {
+            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, new Object[]{block , (er) paramfx })) {
                 //create fire effects ? (probably this)
                 parameo.a(paramInt1 + 0.5D, paramInt2 + 0.5D, paramInt3 + 0.5D, "fire.ignite", 1.0F, b.nextFloat() * 0.4F + 0.8F);
                 //set the block type to fire.
