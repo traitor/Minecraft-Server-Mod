@@ -1,9 +1,11 @@
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import net.minecraft.server.MinecraftServer;
 
 public class bz extends Thread {
+
     private MinecraftServer server;
 
     public bz(MinecraftServer paramMinecraftServer) {

@@ -129,6 +129,10 @@ public class PluginLoader {
          */
         MOB_SPAWN,
         /**
+         * Calls onRedstoneChange
+         */
+        REDSTONE_CHANGE,
+        /**
          * Calls onVerificationCheck
          */
         VERIFICATION_CHECK,
@@ -353,6 +357,11 @@ public class PluginLoader {
      */
     public Object callHook(Hook h, Object[] parameters) {
         Object toRet = h == Hook.NAME_RESOLUTION ? null : false;
+
+        if (h == Hook.REDSTONE_CHANGE) {
+            toRet = (Integer) parameters[2];
+        }
+
         synchronized (lock) {
             try {
                 List<PluginRegisteredListener> registeredListeners = listeners.get(h.ordinal());
@@ -482,6 +491,9 @@ public class PluginLoader {
                                 if (listener.onMobSpawn((Mob) parameters[0])) {
                                     toRet = true;
                                 }
+                                break;
+                            case REDSTONE_CHANGE:
+                                toRet = listener.onRedstoneChange((Block) parameters[0], (Integer) parameters[1], (Integer) toRet);
                                 break;
                             case VERIFICATION_CHECK:
                                 if (listener.shouldIgnoreVerification((String) parameters[0], (InetAddress) parameters[1])) {

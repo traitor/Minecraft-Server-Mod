@@ -349,6 +349,25 @@ public abstract class PluginListener {
     public boolean onMobSpawn(Mob mob) {
     	return false;
     }
+    /*
+     * Called whenever a redstone source (wire, switch, torch) changes its
+     * current.
+     *
+     * Standard values for wires are 0 for no current, and 14 for a strong current.
+     * Default behaviour for redstone wire is to lower the current by one every
+     * block.
+     *
+     * For other blocks which provide a source of redstone current, the current
+     * value will be 1 or 0 for on and off respectively.
+     *
+     * @param redstone Block of redstone which has just changed in current
+     * @param oldLevel the old current
+     * @param newLevel the new current
+     * @return the new current to use (newLevel to leave as-is)
+     */
+    public int onRedstoneChange(Block block, int oldLevel, int newLevel) {
+        return newLevel;
+    }
 
     /**
      * Called when the server considers whether to perform verification.
