@@ -116,6 +116,25 @@ public abstract class ItemArray {
         }
     }
 
+    public void setSlot(Item item, int slot) {
+        setSlot(item.getItemId(), item.getAmount(), slot);
+    }
+    /**
+     * Replaces the slot with the item inputted.
+     *
+     * @param itemId
+     *              item id of the item to put into the slot.
+     * @param amount
+     *              amount of the item to put into the slot.
+     * @param slot
+     *          the id of the slot.
+     */
+    public void setSlot(int itemId, int amount, int slot) {
+        if (slot < getArray().length && slot >= 0) {
+            getArray()[slot] = new hj(itemId, (amount > 64 ? 64 : amount));
+        }
+    }
+    
     /**
      * Removes the item. No slot needed, it will go through the inventory until
      * the amount specified is removed.
