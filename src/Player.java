@@ -1,5 +1,14 @@
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import net.minecraft.server.MinecraftServer;
 
 /**
  * Player.java - Interface for eo so mods don't have to update often.
@@ -8,7 +17,8 @@ import java.util.ArrayList;
  */
 public class Player extends BaseEntity {
 
-    private ep user;
+    public static Logger log = Logger.getLogger("Minecraft");
+    private er user;
     private int id = -1;
     private String prefix = "";
     private String[] commands = new String[]{""};
@@ -19,6 +29,8 @@ public class Player extends BaseEntity {
     private boolean canModifyWorld = false;
     private boolean muted = false;
     private Inventory inventory, craftingTable, equipment;
+    private List<String> onlyOneUseKits = new ArrayList<String>();
+    private Pattern badChatPattern = Pattern.compile("[^ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ\\[\\\\\\]^_'abcdefghijklmnopqrstuvwxyz{|}~\u2302\u00C7\u00FC\u00E9\u00E2\u00E4\u00E0\u00E5\u00E7\u00EA\u00EB\u00E8\u00EF\u00EE\u00EC\u00C4\u00C5\u00C9\u00E6\u00C6\u00F4\u00F6\u00F2\u00FB\u00F9\u00FF\u00D6\u00DC\u00F8\u00A3\u00D8\u00D7\u0192\u00E1\u00ED\u00F3\u00FA\u00F1\u00D1\u00AA\u00BA\u00BF\u00AE\u00AC\u00BD\u00BC\u00A1\u00AB\u00BB]");
 
     /**
      * Creates a player interface
@@ -52,7 +64,905 @@ public class Player extends BaseEntity {
     public void giveItem(Item item) {
         giveItem(item.getItemId(), item.getAmount());
     }
+    
+    /**
+     * Makes player send message.
+     * 
+     * @param message
+     */
+    public void chat(String message){
+        if (message.length() > 100) {
+            user.a.c("Chat message too long");
+            return;
+        }
+        message = message.trim();
+        Matcher m = badChatPattern.matcher(message);
+        if (m.find()) {
+            user.a.c("Illegal characters '" + m.group() + "' hex: " + Integer.toHexString(message.charAt(m.start())) + " in chat");
+            return;
+        }
+        if (message.startsWith("/")) {
+            command(message);
+        } else {
+            if (isMuted()) {
+                sendMessage(Colors.Rose + "You are currently muted.");
+                return;
+            }
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.CHAT, new Object[]{user, message})) {
+                return;
+            }
 
+            String chat = "<" + getColor() + getName() + Colors.White + "> " + message;
+            log.log(Level.INFO, "<" + getName() + "> " + message);
+            etc.getServer().messageAll(chat);
+        }
+    }
+    /**
+     * Makes player use command.
+     * 
+     * @param command
+     * 
+     */
+    public void command(String command){
+         try {
+            if (etc.getInstance().isLogging()) {
+                log.info("Command used by " + getName() + " " + command);
+            }
+            String[] split = command.split(" ");
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMMAND, new Object[]{user, split})) {
+                return; // No need to go on, commands were parsed.
+            }
+            if (!canUseCommand(split[0]) && !split[0].startsWith("/#")) {
+                if (etc.getInstance().showUnknownCommand()) {
+                    sendMessage(Colors.Rose + "Unknown command.");
+                }
+                return;
+            }
+            if (split[0].equalsIgnoreCase("/help")) {
+                // Meh, not the greatest way, but not the worst either.
+                List<String> availableCommands = new ArrayList<String>();
+                for (Entry<String, String> entry : etc.getInstance().getCommands().entrySet()) {
+                    if (canUseCommand(entry.getKey())) {
+                        if (entry.getKey().equals("/kit") && !etc.getDataSource().hasKits()) {
+                            continue;
+                        }
+                        if (entry.getKey().equals("/listwarps") && !etc.getDataSource().hasWarps()) {
+                            continue;
+                        }
+
+                        availableCommands.add(entry.getKey() + " " + entry.getValue());
+                    }
+                }
+
+                sendMessage(Colors.Blue + "Available commands (Page " + (split.length == 2 ? split[1] : "1") + " of " + (int) Math.ceil((double) availableCommands.size() / (double) 7) + ") [] = required <> = optional:");
+                if (split.length == 2) {
+                    try {
+                        int amount = Integer.parseInt(split[1]);
+
+                        if (amount > 0) {
+                            amount = (amount - 1) * 7;
+                        } else {
+                            amount = 0;
+                        }
+
+                        for (int i = amount; i < amount + 7; i++) {
+                            if (availableCommands.size() > i) {
+                                sendMessage(Colors.Rose + availableCommands.get(i));
+                            }
+                        }
+                    } catch (NumberFormatException ex) {
+                        sendMessage(Colors.Rose + "Not a valid page number.");
+                    }
+                } else {
+                    for (int i = 0; i < 7; i++) {
+                        if (availableCommands.size() > i) {
+                            sendMessage(Colors.Rose + availableCommands.get(i));
+                        }
+                    }
+                }
+            } else if (split[0].equalsIgnoreCase("/reload")) {
+                etc.getInstance().load();
+                etc.getInstance().loadData();
+                for (Player player : etc.getServer().getPlayerList()) {
+                    player.getUser().reloadPlayer();
+                }
+                log.info("Reloaded config");
+                sendMessage("Successfuly reloaded config");
+            } else if ((split[0].equalsIgnoreCase("/modify") || split[0].equalsIgnoreCase("/mp"))) {
+                if (split.length > 2 && split[2].contains(":")) {
+                    for (int i = 3; i < split.length; i++) {
+                        if (!split[i].contains(":")) {
+                            sendMessage(Colors.Rose + "Usage is: /modify [player] [key] [value]");
+                            sendMessage(Colors.Rose + "Keys:");
+                            sendMessage(Colors.Rose + "prefix: only the letter the color represents");
+                            sendMessage(Colors.Rose + "commands: list seperated by comma");
+                            sendMessage(Colors.Rose + "groups: list seperated by comma");
+                            sendMessage(Colors.Rose + "ignoresrestrictions: true or false");
+                            sendMessage(Colors.Rose + "admin: true or false");
+                            sendMessage(Colors.Rose + "modworld: true or false");
+                            return;
+                        }
+                    }
+
+                    Player player = etc.getServer().matchPlayer(split[1]);
+
+                    if (player == null) {
+                        sendMessage(Colors.Rose + "Player does not exist.");
+                        return;
+                    }
+
+                    for (int i = 2; i < split.length; i++) {
+                        if (split[i].split(":").length != 2) {
+                            sendMessage("This key:value pair is deformed... " + split[i]);
+                            return;
+                        }
+                        String key = split[i].split(":")[0];
+                        String value = split[i].split(":")[1];
+                        boolean newUser = false;
+
+                        if (!etc.getDataSource().doesPlayerExist(player.getName())) {
+                            if (!key.equalsIgnoreCase("groups") && !key.equalsIgnoreCase("g")) {
+                                sendMessage(Colors.Rose + "When adding a new user, set their group(s) first.");
+                                return;
+                            }
+                            sendMessage(Colors.Rose + "Adding new user.");
+                            newUser = true;
+                            player.setCanModifyWorld(true);
+                        }
+
+                        if (key.equalsIgnoreCase("prefix") || key.equalsIgnoreCase("p")) {
+                            player.setPrefix(value);
+                        } else if (key.equalsIgnoreCase("commands") || key.equalsIgnoreCase("c")) {
+                            player.setCommands(value.split(","));
+                        } else if (key.equalsIgnoreCase("groups") || key.equalsIgnoreCase("g")) {
+                            player.setGroups(value.split(","));
+                        } else if (key.equalsIgnoreCase("ignoresrestrictions") || key.equalsIgnoreCase("ir")) {
+                            player.setIgnoreRestrictions(value.equalsIgnoreCase("true") || value.equals("1"));
+                        } else if (key.equalsIgnoreCase("admin") || key.equalsIgnoreCase("a")) {
+                            player.setAdmin(value.equalsIgnoreCase("true") || value.equals("1"));
+                        } else if (key.equalsIgnoreCase("modworld") || key.equalsIgnoreCase("mw")) {
+                            player.setCanModifyWorld(value.equalsIgnoreCase("true") || value.equals("1"));
+                        }
+
+                        if (newUser) {
+                            etc.getDataSource().addPlayer(player);
+                        } else {
+                            etc.getDataSource().modifyPlayer(player);
+                        }
+                        log.info("Modifed user " + split[1] + ". " + key + " => " + value + " by " + getName());
+                    }
+                    sendMessage(Colors.Rose + "Modified user.");
+                } else {
+                    if (split.length < 4) {
+                        sendMessage(Colors.Rose + "Usage is: /modify [player] [key] [value]");
+                        sendMessage(Colors.Rose + "Keys:");
+                        sendMessage(Colors.Rose + "prefix: only the letter the color represents");
+                        sendMessage(Colors.Rose + "commands: list seperated by comma");
+                        sendMessage(Colors.Rose + "groups: list seperated by comma");
+                        sendMessage(Colors.Rose + "ignoresrestrictions: true or false");
+                        sendMessage(Colors.Rose + "admin: true or false");
+                        sendMessage(Colors.Rose + "modworld: true or false");
+                        return;
+                    }
+
+                    Player player = etc.getServer().matchPlayer(split[1]);
+
+                    if (player == null) {
+                        sendMessage(Colors.Rose + "Player does not exist.");
+                        return;
+                    }
+
+                    String key = split[2];
+                    String value = split[3];
+                    boolean newUser = false;
+
+                    if (!etc.getDataSource().doesPlayerExist(player.getName())) {
+                        if (!key.equalsIgnoreCase("groups") && !key.equalsIgnoreCase("g")) {
+                            sendMessage(Colors.Rose + "When adding a new user, set their group(s) first.");
+                            return;
+                        }
+                        sendMessage(Colors.Rose + "Adding new user.");
+                        newUser = true;
+                    }
+
+                    if (key.equalsIgnoreCase("prefix") || key.equalsIgnoreCase("p")) {
+                        player.setPrefix(value);
+                    } else if (key.equalsIgnoreCase("commands") || key.equalsIgnoreCase("c")) {
+                        player.setCommands(value.split(","));
+                    } else if (key.equalsIgnoreCase("groups") || key.equalsIgnoreCase("g")) {
+                        player.setGroups(value.split(","));
+                    } else if (key.equalsIgnoreCase("ignoresrestrictions") || key.equalsIgnoreCase("ir")) {
+                        player.setIgnoreRestrictions(value.equalsIgnoreCase("true") || value.equals("1"));
+                    } else if (key.equalsIgnoreCase("admin") || key.equalsIgnoreCase("a")) {
+                        player.setAdmin(value.equalsIgnoreCase("true") || value.equals("1"));
+                    } else if (key.equalsIgnoreCase("modworld") || key.equalsIgnoreCase("mw")) {
+                        player.setCanModifyWorld(value.equalsIgnoreCase("true") || value.equals("1"));
+                    }
+
+                    if (newUser) {
+                        etc.getDataSource().addPlayer(player);
+                    } else {
+                        etc.getDataSource().modifyPlayer(player);
+                    }
+                    sendMessage(Colors.Rose + "Modified user.");
+                    log.info("Modifed user " + split[1] + ". " + key + " => " + value + " by " + getName());
+                }
+            } else if (split[0].equalsIgnoreCase("/whitelist")) {
+                if (split.length < 2) {
+                    sendMessage(Colors.Rose + "whitelist [operation (toggle, add or remove)] <player>");
+                    return;
+                }
+
+                if (split[1].equalsIgnoreCase("toggle")) {
+                    sendMessage(Colors.Rose + (etc.getInstance().toggleWhitelist() ? "Whitelist enabled" : "Whitelist disabled"));
+                } else if (split.length == 3) {
+                    if (split[1].equalsIgnoreCase("add")) {
+                        etc.getDataSource().addToWhitelist(split[2]);
+                        sendMessage(Colors.Rose + split[2] + " added to whitelist");
+                    } else if (split[1].equalsIgnoreCase("remove")) {
+                        etc.getDataSource().removeFromWhitelist(split[2]);
+                        sendMessage(Colors.Rose + split[2] + " removed from whitelist");
+                    } else {
+                        sendMessage(Colors.Rose + "Invalid operation.");
+                    }
+                } else {
+                    sendMessage(Colors.Rose + "Invalid operation.");
+                }
+            } else if (split[0].equalsIgnoreCase("/reservelist")) {
+                if (split.length != 3) {
+                    sendMessage(Colors.Rose + "reservelist [operation (add or remove)] [player]");
+                    return;
+                }
+
+                if (split[1].equalsIgnoreCase("add")) {
+                    etc.getDataSource().addToReserveList(split[2]);
+                    sendMessage(Colors.Rose + split[2] + " added to reservelist");
+                } else if (split[1].equalsIgnoreCase("remove")) {
+                    etc.getDataSource().removeFromReserveList(split[2]);
+                    sendMessage(Colors.Rose + split[2] + " removed from reservelist");
+                } else {
+                    sendMessage(Colors.Rose + "Invalid operation.");
+                }
+            } else if (split[0].equalsIgnoreCase("/mute")) {
+                if (split.length != 2) {
+                    sendMessage(Colors.Rose + "Correct usage is: /mute [player]");
+                    return;
+                }
+
+                Player player = etc.getServer().matchPlayer(split[1]);
+
+                if (player != null) {
+                    if (player.toggleMute()) {
+                        sendMessage(Colors.Rose + "player was muted");
+                    } else {
+                        sendMessage(Colors.Rose + "player was unmuted");
+                    }
+                } else {
+                    sendMessage(Colors.Rose + "Can't find player " + split[1]);
+                }
+            } else if ((split[0].equalsIgnoreCase("/msg") || split[0].equalsIgnoreCase("/tell")) || split[0].equalsIgnoreCase("/m")) {
+                if (split.length < 3) {
+                    sendMessage(Colors.Rose + "Correct usage is: /msg [player] [message]");
+                    return;
+                }
+                if (isMuted()) {
+                    sendMessage(Colors.Rose + "You are currently muted.");
+                    return;
+                }
+
+                Player player = etc.getServer().matchPlayer(split[1]);
+
+                if (player != null) {
+                    if (player.getName().equals(getName())) {
+                        sendMessage(Colors.Rose + "You can't message yourself!");
+                        return;
+                    }
+                    String prefix = getColor();
+
+                    player.sendMessage("(MSG) " + prefix + "<" + getName() + "> " + Colors.White + etc.combineSplit(2, split, " "));
+                    sendMessage("(MSG) " + prefix + "<" + getName() + "> " + Colors.White + etc.combineSplit(2, split, " "));
+                } else {
+                    sendMessage(Colors.Rose + "Couldn't find player " + split[1]);
+                }
+            } else if (split[0].equalsIgnoreCase("/kit") && etc.getDataSource().hasKits()) {
+                if (split.length != 2 && split.length != 3) {
+                    sendMessage(Colors.Rose + "Available kits" + Colors.White + ": " + etc.getDataSource().getKitNames(this));
+                    return;
+                }
+
+                Player toGive = this;
+                if (split.length > 2 && canIgnoreRestrictions()) {
+                    toGive = etc.getServer().matchPlayer(split[1]);
+                }
+
+                Kit kit = etc.getDataSource().getKit(split[1]);
+                if (toGive != null) {
+                    if (kit != null) {
+                        if (!isInGroup(kit.Group) && !kit.Group.equals("")) {
+                            sendMessage(Colors.Rose + "That kit does not exist.");
+                        } else if (onlyOneUseKits.contains(kit.Name)) {
+                            sendMessage(Colors.Rose + "You can only get this kit once per login.");
+                        } else if (MinecraftServer.b.containsKey(getName() + " " + kit.Name)) {
+                            sendMessage(Colors.Rose + "You can't get this kit again for a while.");
+                        } else {
+                            if (!canIgnoreRestrictions()) {
+                                if (kit.Delay >= 0) {
+                                    MinecraftServer.b.put(getName() + " " + kit.Name, kit.Delay);
+                                } else {
+                                    onlyOneUseKits.add(kit.Name);
+                                }
+                            }
+
+                            log.info(getName() + " got a kit!");
+                            toGive.sendMessage(Colors.Rose + "Enjoy this kit!");
+                            for (Map.Entry<String, Integer> entry : kit.IDs.entrySet()) {
+                                try {
+                                    int itemId = 0;
+                                    try {
+                                        itemId = Integer.parseInt(entry.getKey());
+                                    } catch (NumberFormatException n) {
+                                        itemId = etc.getDataSource().getItem(entry.getKey());
+                                    }
+
+                                    toGive.giveItem(itemId, kit.IDs.get(entry.getKey()));
+                                } catch (Exception e1) {
+                                    log.info("Got an exception while giving out a kit (Kit name \"" + kit.Name + "\"). Are you sure all the Ids are numbers?");
+                                    sendMessage(Colors.Rose + "The server encountered a problem while giving the kit :(");
+                                }
+                            }
+                        }
+                    } else {
+                        sendMessage(Colors.Rose + "That kit does not exist.");
+                    }
+                } else {
+                    sendMessage(Colors.Rose + "That user does not exist.");
+                }
+            } else if (split[0].equalsIgnoreCase("/tp")) {
+                if (split.length < 2) {
+                    sendMessage(Colors.Rose + "Correct usage is: /tp [player]");
+                    return;
+                }
+
+                Player player = etc.getServer().matchPlayer(split[1]);
+
+                if (player != null) {
+                    if (getName().equalsIgnoreCase(player.getName())) {
+                        sendMessage(Colors.Rose + "You're already here!");
+                        return;
+                    }
+
+                    log.info(getName() + " teleported to " + player.getName());
+                    teleportTo(player);
+                } else {
+                    sendMessage(Colors.Rose + "Can't find user " + split[1] + ".");
+                }
+            } else if ((split[0].equalsIgnoreCase("/tphere") || split[0].equalsIgnoreCase("/s"))) {
+                if (split.length < 2) {
+                    sendMessage(Colors.Rose + "Correct usage is: /tphere [player]");
+                    return;
+                }
+
+                Player player = etc.getServer().matchPlayer(split[1]);
+
+                if (player != null) {
+                    if (getName().equalsIgnoreCase(player.getName())) {
+                        sendMessage(Colors.Rose + "Wow look at that! You teleported yourself to yourself!");
+                        return;
+                    }
+
+                    log.info(getName() + " teleported " + player.getName() + " to their self.");
+                    player.teleportTo(this);
+                } else {
+                    sendMessage(Colors.Rose + "Can't find user " + split[1] + ".");
+                }
+            } else if (split[0].equalsIgnoreCase("/playerlist") || split[0].equalsIgnoreCase("/who")) {
+                sendMessage(Colors.Rose + "Player list (" + etc.getMCServer().f.b.size() + "/" + etc.getInstance().getPlayerLimit() + "): " + Colors.White + etc.getMCServer().f.c());
+            } else if (split[0].equalsIgnoreCase("/item") || split[0].equalsIgnoreCase("/i") || split[0].equalsIgnoreCase("/give")) {
+                if (split.length < 2) {
+                    if (canIgnoreRestrictions()) {
+                        sendMessage(Colors.Rose + "Correct usage is: /item [itemid] <amount> <player> (optional)");
+                    } else {
+                        sendMessage(Colors.Rose + "Correct usage is: /item [itemid] <amount>");
+                    }
+                    return;
+                }
+
+                Player toGive = this;
+                if (split.length == 4 && canIgnoreRestrictions()) {
+                    toGive = etc.getServer().matchPlayer(split[3]);
+                }
+
+                if (toGive != null) {
+                    try {
+                        int itemId = 0;
+                        try {
+                            itemId = Integer.parseInt(split[1]);
+                        } catch (NumberFormatException n) {
+                            itemId = etc.getDataSource().getItem(split[1]);
+                        }
+                        int amount = 1;
+                        if (split.length > 2) {
+                            amount = Integer.parseInt(split[2]);
+                        }
+
+                        String itemIdstr = Integer.toString(itemId);
+                        if (amount <= 0 && !isAdmin()) {
+                            amount = 1;
+                        }
+
+                        if (amount > 64 && !canIgnoreRestrictions()) {
+                            amount = 64;
+                        }
+                        if (amount > 1024) {
+                            amount = 1024; // 16 stacks worth. More than enough.
+                        }
+                        boolean allowedItem = false;
+                        if (!etc.getInstance().getAllowedItems()[0].equals("") && (!canIgnoreRestrictions())) {
+                            for (String str : etc.getInstance().getAllowedItems()) {
+                                if (itemIdstr.equals(str)) {
+                                    allowedItem = true;
+                                }
+                            }
+                        } else {
+                            allowedItem = true;
+                        }
+                        if (!etc.getInstance().getDisallowedItems()[0].equals("") && !canIgnoreRestrictions()) {
+                            for (String str : etc.getInstance().getDisallowedItems()) {
+                                if (itemIdstr.equals(str)) {
+                                    allowedItem = false;
+                                }
+                            }
+                        }
+                        if (Item.isValidItem(itemId)) {
+                            if (allowedItem || canIgnoreRestrictions()) {
+                                log.log(Level.INFO, "Giving " + toGive.getName() + " some " + itemId);
+                                toGive.giveItem(itemId, amount);
+
+                                if (toGive.getName().equalsIgnoreCase(getName())) {
+                                    sendMessage(Colors.Rose + "There you go c:");
+                                } else {
+                                    sendMessage(Colors.Rose + "Gift given! :D");
+                                    toGive.sendMessage(Colors.Rose + "Enjoy your gift! :D");
+                                }
+                            } else if (!allowedItem && !canIgnoreRestrictions()) {
+                                sendMessage(Colors.Rose + "You are not allowed to spawn that item.");
+                            }
+                        } else {
+                            sendMessage(Colors.Rose + "No item with ID " + split[1]);
+                        }
+                    } catch (NumberFormatException localNumberFormatException) {
+                        sendMessage(Colors.Rose + "Improper ID and/or amount.");
+                    }
+                } else {
+                    sendMessage(Colors.Rose + "Can't find user " + split[3]);
+                }
+            } else if (split[0].equalsIgnoreCase("/tempban")) {
+                // /tempban MINUTES HOURS DAYS
+                if (split.length == 1) {
+                    // TODO;
+                    return;
+                }
+                int minutes = 0, hours = 0, days = 0;
+                if (split.length >= 2) {
+                    minutes = Integer.parseInt(split[1]);
+                }
+                if (split.length >= 3) {
+                    hours = Integer.parseInt(split[2]);
+                }
+                if (split.length >= 4) {
+                    days = Integer.parseInt(split[3]);
+                }
+                Date date = new Date();
+                // date.
+            } else if (split[0].equalsIgnoreCase("/banlist")) {
+                byte type = 0;
+                if (split.length == 2) {
+                    if (split[1].equalsIgnoreCase("ips")) {
+                        type = 1;
+                    }
+                }
+                if (type == 0) { // Regular user bans
+                    sendMessage(Colors.Blue + "Ban list:" + Colors.White + " " + etc.getMCServer().f.getBans());
+                } else { // IP bans
+                    sendMessage(Colors.Blue + "IP Ban list:" + Colors.White + " " + etc.getMCServer().f.getIpBans());
+                }
+            } else if (split[0].equalsIgnoreCase("/banip")) {
+                if (split.length < 2) {
+                    sendMessage(Colors.Rose + "Correct usage is: /banip [player] <reason> (optional) NOTE: this permabans IPs.");
+                    return;
+                }
+
+                Player player = etc.getServer().matchPlayer(split[1]);
+
+                if (player != null) {
+                    if (!hasControlOver(player)) {
+                        sendMessage(Colors.Rose + "You can't ban that user.");
+                        return;
+                    }
+
+                    // adds player to ban list
+                    etc.getMCServer().f.c(player.getIP());
+
+                    etc.getLoader().callHook(PluginLoader.Hook.IPBAN, new Object[]{getUser(), player.getUser(), split.length >= 3 ? etc.combineSplit(2, split, " ") : ""});
+
+                    log.log(Level.INFO, "IP Banning " + player.getName() + " (IP: " + player.getIP() + ")");
+                    sendMessage(Colors.Rose + "IP Banning " + player.getName() + " (IP: " + player.getIP() + ")");
+
+                    if (split.length > 2) {
+                        player.kick("IP Banned by " + getName() + ": " + etc.combineSplit(2, split, " "));
+                    } else {
+                        player.kick("IP Banned by " + getName() + ".");
+                    }
+                } else {
+                    sendMessage(Colors.Rose + "Can't find user " + split[1] + ".");
+                }
+            } else if (split[0].equalsIgnoreCase("/ban")) {
+                if (split.length < 2) {
+                    sendMessage(Colors.Rose + "Correct usage is: /ban [player] <reason> (optional)");
+                    return;
+                }
+
+                Player player = etc.getServer().matchPlayer(split[1]);
+
+                if (player != null) {
+                    if (!hasControlOver(player)) {
+                        sendMessage(Colors.Rose + "You can't ban that user.");
+                        return;
+                    }
+
+                    // adds player to ban list
+                    etc.getServer().ban(player.getName());
+
+                    etc.getLoader().callHook(PluginLoader.Hook.BAN, new Object[]{getUser(), player.getUser(), split.length >= 3 ? etc.combineSplit(2, split, " ") : ""});
+
+                    if (split.length > 2) {
+                        player.kick("Banned by " + getName() + ": " + etc.combineSplit(2, split, " "));
+                    } else {
+                        player.kick("Banned by " + getName() + ".");
+                    }
+                    log.log(Level.INFO, "Banning " + player.getName());
+                    sendMessage(Colors.Rose + "Banning " + player.getName());
+                } else {
+                    // sendMessage(Colors.Rose + "Can't find user " + split[1] + ".");
+                    etc.getServer().ban(split[1]);
+                    log.log(Level.INFO, "Banning " + split[1]);
+                    sendMessage(Colors.Rose + "Banning " + split[1]);
+                }
+            } else if (split[0].equalsIgnoreCase("/unban")) {
+                if (split.length != 2) {
+                    sendMessage(Colors.Rose + "Correct usage is: /unban [player]");
+                    return;
+                }
+                etc.getServer().unban(split[1]);
+                sendMessage(Colors.Rose + "Unbanned " + split[1]);
+            } else if (split[0].equalsIgnoreCase("/unbanip")) {
+                if (split.length != 2) {
+                    sendMessage(Colors.Rose + "Correct usage is: /unbanip [ip]");
+                    return;
+                }
+                etc.getMCServer().f.d(split[1]);
+                sendMessage(Colors.Rose + "Unbanned " + split[1]);
+            } else if (split[0].equalsIgnoreCase("/kick")) {
+                if (split.length < 2) {
+                    sendMessage(Colors.Rose + "Correct usage is: /kick [player] <reason> (optional)");
+                    return;
+                }
+
+                Player player = etc.getServer().matchPlayer(split[1]);
+
+                if (player != null) {
+                    if (!hasControlOver(player)) {
+                        sendMessage(Colors.Rose + "You can't kick that user.");
+                        return;
+                    }
+
+                    etc.getLoader().callHook(PluginLoader.Hook.KICK, new Object[]{getUser(), player.getUser(), split.length >= 3 ? etc.combineSplit(2, split, " ") : ""});
+
+                    if (split.length > 2) {
+                        player.kick("Kicked by " + getName() + ": " + etc.combineSplit(2, split, " "));
+                    } else {
+                        player.kick("Kicked by " + getName() + ".");
+                    }
+                    log.log(Level.INFO, "Kicking " + player.getName());
+                    sendMessage(Colors.Rose + "Kicking " + player.getName());
+                } else {
+                    sendMessage(Colors.Rose + "Can't find user " + split[1] + ".");
+                }
+            } else if (split[0].equalsIgnoreCase("/me")) {
+                if (isMuted()) {
+                    sendMessage(Colors.Rose + "You are currently muted.");
+                    return;
+                }
+                if (split.length == 1) {
+                    return;
+                }
+                String prefix = getColor();
+                String paramString2 = "* " + prefix + getName() + Colors.White + " " + command.substring(command.indexOf(" ")).trim();
+                log.info("* " + getName() + " " + command.substring(command.indexOf(" ")).trim());
+                etc.getServer().messageAll(paramString2);
+            } else if (split[0].equalsIgnoreCase("/sethome")) {
+                // player.k, player.l, player.m
+                // x, y, z
+                Warp home = new Warp();
+                home.Location = getLocation();
+                home.Group = ""; // no group neccessary, lol.
+                home.Name = getName();
+                etc.getInstance().changeHome(home);
+                sendMessage(Colors.Rose + "Your home has been set.");
+            } else if (split[0].equalsIgnoreCase("/spawn")) {
+                teleportTo(etc.getServer().getSpawnLocation());
+            } else if (split[0].equalsIgnoreCase("/setspawn")) {
+                etc.getMCServer().e.m = (int) Math.ceil(getX());
+                etc.getMCServer().e.o = (int) Math.ceil(getZ());
+                // Too lazy to actually update this considering it's not even
+                // used anyways.
+                // this.d.e.n = (int) Math.ceil(e.m); //Not that the Y axis
+                // really matters since it tries to get the highest point iirc.
+                
+                log.info("Spawn position changed.");
+                sendMessage(Colors.Rose + "You have set the spawn to your current position.");
+            } else if (split[0].equalsIgnoreCase("/home")) {
+                Warp home = null;
+                if (split.length > 1 && isAdmin()) {
+                    home = etc.getDataSource().getHome(split[1]);
+                } else {
+                    home = etc.getDataSource().getHome(getName());
+                }
+
+                if (home != null) {
+                    teleportTo(home.Location);
+                } else if (split.length > 1 && isAdmin()) {
+                    sendMessage(Colors.Rose + "That player home does not exist");
+                } else {
+                    teleportTo(etc.getServer().getSpawnLocation());
+                }
+            } else if (split[0].equalsIgnoreCase("/warp")) {
+                if (split.length < 2) {
+                    sendMessage(Colors.Rose + "Correct usage is: /warp [warpname]");
+                    return;
+                }
+                Player toWarp = this;
+                Warp warp = null;
+                if (split.length == 3 && canIgnoreRestrictions()) {
+                    warp = etc.getDataSource().getWarp(split[1]);
+                    toWarp = etc.getServer().matchPlayer(split[2]);
+                } else {
+                    warp = etc.getDataSource().getWarp(split[1]);
+                }
+                if (toWarp != null) {
+                    if (warp != null) {
+                        if (!isInGroup(warp.Group) && !warp.Group.equals("")) {
+                            sendMessage(Colors.Rose + "Warp not found.");
+                        } else {
+                            toWarp.teleportTo(warp.Location);
+                            toWarp.sendMessage(Colors.Rose + "Woosh!");
+                        }
+                    } else {
+                        sendMessage(Colors.Rose + "Warp not found");
+                    }
+                } else {
+                    sendMessage(Colors.Rose + "Player not found.");
+                }
+            } else if (split[0].equalsIgnoreCase("/listwarps") && etc.getDataSource().hasWarps()) {
+                if (split.length != 2 && split.length != 3) {
+                    sendMessage(Colors.Rose + "Available warps: " + Colors.White + etc.getDataSource().getWarpNames(this));
+                    return;
+                }
+            } else if (split[0].equalsIgnoreCase("/setwarp")) {
+                if (split.length < 2) {
+                    if (canIgnoreRestrictions()) {
+                        sendMessage(Colors.Rose + "Correct usage is: /setwarp [warpname] [group]");
+                    } else {
+                        sendMessage(Colors.Rose + "Correct usage is: /setwarp [warpname]");
+                    }
+                    return;
+                }
+                if (split[1].contains(":")) {
+                    sendMessage("You can't set a warp with \":\" in its name");
+                    return;
+                }
+                Warp warp = new Warp();
+                warp.Name = split[1];
+                warp.Location = getLocation();
+                if (split.length == 3) {
+                    warp.Group = split[2];
+                } else {
+                    warp.Group = "";
+                }
+                etc.getInstance().setWarp(warp);
+                sendMessage(Colors.Rose + "Created warp point " + split[1] + ".");
+            } else if (split[0].equalsIgnoreCase("/removewarp")) {
+                if (split.length < 2) {
+                    sendMessage(Colors.Rose + "Correct usage is: /removewarp [warpname]");
+                    return;
+                }
+                Warp warp = etc.getDataSource().getWarp(split[1]);
+                if (warp != null) {
+                    etc.getDataSource().removeWarp(warp);
+                    sendMessage(Colors.Blue + "Warp removed.");
+                } else {
+                    sendMessage(Colors.Rose + "That warp does not exist");
+                }
+            } else if (split[0].equalsIgnoreCase("/lighter")) {
+                if (MinecraftServer.b.containsKey(getName() + " lighter")) {
+                    log.info(getName() + " failed to iron!");
+                    sendMessage(Colors.Rose + "You can't create another lighter again so soon");
+                } else {
+                    if (!canIgnoreRestrictions()) {
+                        MinecraftServer.b.put(getName() + " lighter", Integer.valueOf(6000));
+                    }
+                    log.info(getName() + " created a lighter!");
+                    giveItem(259, 1);
+                }
+            } else if ((command.startsWith("/#")) && (etc.getMCServer().f.g(getName()))) {
+                String str = command.substring(2);
+                log.info(getName() + " issued server command: " + str);
+                etc.getMCServer().a(str, user.a);
+            } else if (split[0].equalsIgnoreCase("/time")) {
+                if (split.length == 2) {
+                    if (split[1].equalsIgnoreCase("day")) {
+                        etc.getServer().setRelativeTime(0);
+                    } else if (split[1].equalsIgnoreCase("night")) {
+                        etc.getServer().setRelativeTime(13000);
+                    } else if (split[1].equalsIgnoreCase("check")) {
+                        sendMessage(Colors.Rose + "The time is " + etc.getServer().getRelativeTime() + "! (RAW: " + etc.getServer().getTime() + ")");
+                    } else {
+                        try {
+                            etc.getServer().setRelativeTime(Long.parseLong(split[1]));
+                        } catch (NumberFormatException ex) {
+                            sendMessage(Colors.Rose + "Please enter numbers, not letters.");
+                        }
+                    }
+                } else if (split.length == 3) {
+                    if (split[1].equalsIgnoreCase("raw")) {
+                        try {
+                            etc.getServer().setTime(Long.parseLong(split[2]));
+                        } catch (NumberFormatException ex) {
+                            sendMessage(Colors.Rose + "Please enter numbers, not letters.");
+                        }
+                    }
+                } else {
+                    sendMessage(Colors.Rose + "Correct usage is: /time [time|'day|night|check|raw'] (rawtime)");
+                    return;
+                }
+            } else if (split[0].equalsIgnoreCase("/getpos")) {
+                sendMessage("Pos X: " + getX() + " Y: " + getY() + " Z: " + getZ());
+                sendMessage("Rotation: " + getRotation() + " Pitch: " + getPitch());
+
+                double degreeRotation = ((getRotation() - 90) % 360);
+                if (degreeRotation < 0) {
+                    degreeRotation += 360.0;
+                }
+                sendMessage("Compass: " + etc.getCompassPointForDirection(degreeRotation) + " (" + (Math.round(degreeRotation * 10) / 10.0) + ")");
+            } else if (split[0].equalsIgnoreCase("/listplugins")) {
+                sendMessage(Colors.Rose + "Plugins" + Colors.White + ": " + etc.getLoader().getPluginList());
+            } else if (split[0].equalsIgnoreCase("/reloadplugin")) {
+                if (split.length < 2) {
+                    sendMessage(Colors.Rose + "Correct usage is: /reloadplugin [plugin]");
+                    return;
+                }
+
+                etc.getLoader().reloadPlugin(split[1]);
+                sendMessage(Colors.Rose + "Plugin reloaded.");
+            } else if (split[0].equalsIgnoreCase("/enableplugin")) {
+                if (split.length < 2) {
+                    sendMessage(Colors.Rose + "Correct usage is: /enableplugin [plugin]");
+                    return;
+                }
+
+                etc.getLoader().enablePlugin(split[1]);
+                sendMessage(Colors.Rose + "Plugin enabled.");
+            } else if (split[0].equalsIgnoreCase("/disableplugin")) {
+                if (split.length < 2) {
+                    sendMessage(Colors.Rose + "Correct usage is: /disableplugin [plugin]");
+                    return;
+                }
+
+                etc.getLoader().disablePlugin(split[1]);
+                sendMessage(Colors.Rose + "Plugin disabled.");
+            } else if (split[0].equalsIgnoreCase("/compass")) {
+                double degreeRotation = ((getRotation() - 90) % 360);
+                if (degreeRotation < 0) {
+                    degreeRotation += 360.0;
+                }
+
+                sendMessage(Colors.Rose + "Compass: " + etc.getCompassPointForDirection(degreeRotation));
+            } else if (split[0].equalsIgnoreCase("/motd")) {
+                for (String str : etc.getInstance().getMotd()) {
+                    sendMessage(str);
+                }
+            } else if (split[0].equalsIgnoreCase("/spawnmob")) {
+                if (split.length == 1) {
+                    sendMessage(Colors.Rose + "Correct usage is: /spawnmob [name] <amount>");
+                    return;
+                }
+                if (!Mob.isValid(split[1])) {
+                    sendMessage(Colors.Rose + "Invalid mob. Name has to start with a capital like so: Pig");
+                    return;
+                }
+
+                if (split.length == 2) {
+                    Mob mob = new Mob(split[1], getLocation());
+                    mob.spawn();
+                } else if (split.length == 3) {
+                    try {
+                        int mobnumber = Integer.parseInt(split[2]);
+                        for (int i = 0; i < mobnumber; i++) {
+                            Mob mob = new Mob(split[1], getLocation());
+                            mob.spawn();
+                        }
+                    } catch (NumberFormatException nfe) {
+                        if (!Mob.isValid(split[2])) {
+                            sendMessage(Colors.Rose + "Invalid mob name or number of mobs.");
+                            sendMessage(Colors.Rose + "Mob names have to start with a capital like so: Pig");
+                        } else {
+                            Mob mob = new Mob(split[1], getLocation());
+                            mob.spawn(new Mob(split[2]));
+                        }
+                    }
+                } else if (split.length == 4) {
+                    try {
+                        int mobnumber = Integer.parseInt(split[3]);
+                        if (!Mob.isValid(split[2])) {
+                            sendMessage(Colors.Rose + "Invalid rider. Name has to start with a capital like so: Pig");
+                        } else {
+                            for (int i = 0; i < mobnumber; i++) {
+                                Mob mob = new Mob(split[1], getLocation());
+                                mob.spawn(new Mob(split[2]));
+                            }
+                        }
+                    } catch (NumberFormatException nfe) {
+                        sendMessage(Colors.Rose + "Invalid number of mobs.");
+                    }
+                }
+            } else if (split[0].equalsIgnoreCase("/clearinventory")) {
+                Player target = this;
+                if (split.length >= 2 && isAdmin()) {
+                    target = etc.getServer().matchPlayer(split[1]);
+                }
+                if (target != null) {
+                    Inventory inv = target.getInventory();
+                    inv.clearContents();
+                    inv = target.getCraftingTable();
+                    inv.clearContents();
+                    inv = target.getEquipment();
+                    inv.clearContents();
+                    inv.updateInventory();
+                    if (!target.getName().equals(getName())) {
+                        sendMessage(Colors.Rose + "Cleared " + target.getName() + "'s inventory.");
+                    }
+                } else {
+                    sendMessage(Colors.Rose + "Target not found");
+                }
+            } else if (split[0].equals("/mspawn")) {
+                if (split.length != 2) {
+                    sendMessage(Colors.Rose + "You must specify what to change the mob spawner to.");
+                    return;
+                }
+                HitBlox hb = new HitBlox(this);
+                Block block = hb.getTargetBlock();
+		if (block.getType() == 52) { // mob spawner
+                    block.setSpawnData(split[1]);
+                } else {
+                    sendMessage(Colors.Rose + "You are not targeting a mob spawner.");
+                }
+            } else if (split[0].equalsIgnoreCase("/version")) {
+                sendMessage(Colors.Gold + "Hey0 Server Mod Build " + etc.getInstance().getVersion());
+            } else {
+                log.info(getName() + " tried command " + command);
+                if (etc.getInstance().showUnknownCommand()) {
+                    sendMessage(Colors.Rose + "Unknown command");
+                }
+            }
+        } catch (Throwable ex) { // Might as well try and catch big exceptions
+            // before the server crashes from a stack
+            // overflow or something
+            log.log(Level.SEVERE, "Exception in command handler (Report this to hey0 unless you did something dumb like enter letters as numbers):", ex);
+            if (isAdmin()) {
+                sendMessage(Colors.Rose + "Exception occured. Check the server for more info.");
+            }
+        }
+    }
     /**
      * Gives an item to the player
      * 
@@ -81,14 +991,14 @@ public class Player extends BaseEntity {
      */
     public void giveItemDrop(int itemId, int amount) {
         if (amount == -1) {
-            user.a(new hj(itemId, 255));
+            user.a(new hl(itemId, 255));
         } else {
             int temp = amount;
             do {
                 if (temp - 64 >= 64) {
-                    user.a(new hj(itemId, 64));
+                    user.a(new hl(itemId, 64));
                 } else {
-                    user.a(new hj(itemId, temp));
+                    user.a(new hl(itemId, temp));
                 }
                 temp -= 64;
             } while (temp > 0);
@@ -227,7 +1137,7 @@ public class Player extends BaseEntity {
      * @return
      */
     public String getName() {
-        return user.ar;
+        return user.as;
     }
 
     /**
@@ -516,18 +1426,18 @@ public class Player extends BaseEntity {
      * 
      * @return
      */
-    public ep getUser() {
+    public er getUser() {
         return user;
     }
 
     /**
      * Sets the user. Don't use this.
      * 
-     * @param user
+     * @param er
      */
-    public void setUser(ep user) {
-        this.user = user;
-        this.entity = user;
+    public void setUser(er er) {
+        this.user = er;
+        this.entity = er;
         this.inventory = new Inventory(this, Inventory.Type.Inventory);
         this.craftingTable = new Inventory(this, Inventory.Type.CraftingTable);
         this.equipment = new Inventory(this, Inventory.Type.Equipment);

@@ -257,6 +257,20 @@ public abstract class PluginListener {
     }
 
     /**
+     * Called when a player picks up an item.
+     *
+     * @param player
+     *            player who picked up the item
+     * @param item
+     *            item that was picked up
+     * @return true if you want to leave the item where it was
+     */
+    public boolean onItemPickUp(Player player, Item item) {
+        return false;
+    }
+
+
+    /**
      * Called when either a sign, chest or furnace is changed.
      * 
      * @param player
@@ -312,20 +326,28 @@ public abstract class PluginListener {
     }
 
     /*
-     * Called when lava wants to flow to a certain block.
-     * block status represents the type that wants to flow.
+     * Called when fluid wants to flow to a certain block.
      * (10 & 11 for lava and 8 & 9 for water)
      * 
-     * @param block
-     *          the block beneath where the substance wants to flow to.
+     * @param blockFrom
+     *              the block where the fluid came from.
+     *              (blocktype = fluid type)
+     * @param blockTo
+     *              the block where fluid wants to flow to.
      *
-     * for example:
-     * lava want to flow to block x,y,z then the param block is the block x,y-1,z.
      *
      * @return true if you dont want the substance to flow.
      */
-    public boolean onFlow(Block block) {
+    public boolean onFlow(Block blockFrom,Block blockTo) {
         return false;
+    }
+    
+    /**
+     * @param mob Mob attempting to spawn.
+     * @return true if you dont want mob to spawn.
+     */
+    public boolean onMobSpawn(Mob mob) {
+    	return false;
     }
 
     /**

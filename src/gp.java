@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -11,12 +13,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 
-public class gn {
-
+public class gp {
     public static Logger a = Logger.getLogger("Minecraft");
     public List b = new ArrayList();
     private MinecraftServer c;
-    private ic d;
+    private Object d;
     private int e;
     private Set f = new HashSet();
     private Set g = new HashSet();
@@ -24,9 +25,11 @@ public class gn {
     private File i;
     private File j;
     private File k;
-    private cx l;
+    private cy l;
 
-    public gn(MinecraftServer paramMinecraftServer) {
+    private Method if_a, if_a1, if_a2, if_a3, if_b, if_b2, if_c;
+
+    public gp(MinecraftServer paramMinecraftServer) {
         etc.setServer(paramMinecraftServer);
         etc.getInstance().loadData();
         a.info("Hey0 Server Mod Build " + etc.getInstance().getVersion());
@@ -34,7 +37,41 @@ public class gn {
         this.i = paramMinecraftServer.a("banned-players.txt");
         this.j = paramMinecraftServer.a("banned-ips.txt");
         this.k = paramMinecraftServer.a("ops.txt");
-        this.d = new ic(paramMinecraftServer);
+
+        // Create an object of class 'if'.
+        try {
+            Class<?> reallyIf = Class.forName("if");
+            Constructor<?> ct = reallyIf.getConstructor(MinecraftServer.class);
+            d = ct.newInstance(paramMinecraftServer);
+
+            Class<?> aParamTypes[] = {ir.class, Integer.TYPE, Integer.TYPE, Integer.TYPE};
+            if_a = reallyIf.getMethod("a", aParamTypes);
+            if_a.setAccessible(true);
+
+            Class<?> a1ParamTypes[] = {Integer.TYPE, Integer.TYPE, Integer.TYPE};
+            if_a1 = reallyIf.getMethod("a", a1ParamTypes);
+            if_a1.setAccessible(true);
+
+            if_a2 = reallyIf.getMethod("a", null);
+            if_a2.setAccessible(true);
+
+            if_a3 = reallyIf.getMethod("a", er.class);
+            if_a3.setAccessible(true);
+
+            if_b = reallyIf.getMethod("b", null);
+            if_b.setAccessible(true);
+
+            if_b2 = reallyIf.getMethod("b", er.class);
+            if_b2.setAccessible(true);
+
+            if_c = reallyIf.getMethod("c", er.class);
+            if_c.setAccessible(true);
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
         this.e = paramMinecraftServer.d.a("max-players", 20);
         e();
         g();
@@ -44,82 +81,104 @@ public class gn {
         j();
     }
 
-    public void a(et paramet) {
-        this.l = new cx(new File(paramet.t, "players"));
+    public void a(ev paramev) {
+        this.l = new cy(new File(paramev.t, "players"));
     }
 
     public int a() {
-        return this.d.b();
+        int p = 0;
+        try {
+            p = (Integer) if_b.invoke(d);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return p;
     }
 
-    public void a(ep paramep) {
-        this.b.add(paramep);
-        this.l.b(paramep);
+    public void a(er paramer) {
+        this.b.add(paramer);
+        this.l.b(paramer);
 
-        this.c.e.A.d((int) paramep.p >> 4, (int) paramep.r >> 4);
+        this.c.e.A.d((int) paramer.p >> 4, (int) paramer.r >> 4);
 
-        while (this.c.e.a(paramep, paramep.z).size() != 0) {
-            paramep.a(paramep.p, paramep.q + 1.0D, paramep.r);
+        while (this.c.e.a(paramer, paramer.z).size() != 0) {
+            paramer.a(paramer.p, paramer.q + 1.0D, paramer.r);
         }
-        this.c.e.a(paramep);
-        this.d.a(paramep);
+        this.c.e.a(paramer);
+        try {
+            if_a3.invoke(d, paramer);
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
 
+        // Login
         for (String str : etc.getInstance().getMotd()) {
-            paramep.a.b(new bg(str));
+            paramer.a.b(new bh(str));
         }
-        etc.getLoader().callHook(PluginLoader.Hook.LOGIN, new Object[]{paramep});
+        etc.getLoader().callHook(PluginLoader.Hook.LOGIN, new Object[]{paramer});
     }
 
-    public void b(ep paramep) {
-        this.d.c(paramep);
+    public void b(er paramer) {
+        try {
+            if_c.invoke(d, paramer);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
-    public void c(ep paramep) {
-        this.d.b(paramep);
-        this.l.a(paramep);
-        this.c.e.d(paramep);
-        this.b.remove(paramep);
+    public void c(er paramer) {
+        try {
+            this.if_b2.invoke(d, paramer);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        this.l.a(paramer);
+        this.c.e.d(paramer);
+        this.b.remove(paramer);
     }
 
-    public ep a(fo paramfo, String paramString1, String paramString2) {
-        String newName = paramfo.overiddenName;
+    public er a(fq paramfq, String paramString1, String paramString2) {
+        String newName = paramfq.overiddenName;
         if (newName != null) {
             a.log(Level.INFO, "Name change: " + paramString1 + " -> " + newName);
             paramString1 = newName;
         }
         
         if (this.f.contains(paramString1.trim().toLowerCase())) {
-            paramfo.b("You are banned from this server!");
+            paramfq.b("You are banned from this server!");
             return null;
         }
 
-        ep temp = new ep(this.c, this.c.e, paramString1, new jq(this.c.e));
+        er temp = new er(this.c, this.c.e, paramString1, new jt(this.c.e));
         Player player = temp.getPlayer();
 
-        String ip = paramfo.b.b().toString().split(":")[0].substring(1);
+        String ip = paramfq.b.b().toString().split(":")[0].substring(1);
         if (this.g.contains(ip)) {
-            paramfo.b("Your IP address is banned from this server!");
+            paramfq.b("Your IP address is banned from this server!");
             return null;
         }
-        for (int i = 0; i < this.b.size(); i++) {
-            ep localep = (ep) this.b.get(i);
-            if (localep.ar.equalsIgnoreCase(paramString1)) {
-                String ip2 = localep.a.b.b().toString().split(":")[0].substring(1);
-
+        for (int m = 0; m < this.b.size(); m++) {
+            er localer = (er) this.b.get(m);
+            if (localer.as.equalsIgnoreCase(paramString1)) {
+                String ip2 = localer.a.b.b().toString().split(":")[0].substring(1);
                 // perhaps they timed out since they're coming from the same IP
                 if (ip2.equals(ip)) {
-                    localep.a.b("You logged in from another location.");
+                    localer.a.b("You logged in from another location.");
                 } else {
-                    paramfo.b("You are currently logged in.");
+                    // otherwise no.
+                    paramfq.b("You are currently logged in.");
                 }
-                // ^ otherwise no.
             }
         }
         if (etc.getInstance().isWhitelistEnabled() && !(etc.getDataSource().isUserOnWhitelist(paramString1) || player.isAdmin())) {
-            paramfo.b(etc.getInstance().getWhitelistMessage());
+            paramfq.b(etc.getInstance().getWhitelistMessage());
             return null;
         } else if (this.b.size() >= this.e && !(player.isAdmin() || etc.getDataSource().isUserOnReserveList(paramString1))) {
-            paramfo.b("Server is full.");
+            paramfq.b("Server is full.");
             return null;
         }
 
@@ -131,7 +190,7 @@ public class gn {
                 }
             }
             if (kick) {
-                paramfo.b("IP doesn't match specified IP.");
+                paramfq.b("IP doesn't match specified IP.");
                 return null;
             }
         }
@@ -140,12 +199,11 @@ public class gn {
         if (obj instanceof String) {
             String result = (String) obj;
             if (result != null && !result.equals("")) {
-                paramfo.b(result);
+                paramfq.b(result);
                 return null;
             }
         }
-
-        return new ep(this.c, this.c.e, paramString1, new jq(this.c.e));
+        return new er(this.c, this.c.e, paramString1, new jt(this.c.e));
     }
 
     /**
@@ -185,17 +243,28 @@ public class gn {
     }
 
     public void b() {
-        this.d.a();
+        try {
+            this.if_a2.invoke(d);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     public void a(int paramInt1, int paramInt2, int paramInt3) {
-        this.d.a(paramInt1, paramInt2, paramInt3);
+        Object args[] = {paramInt1, paramInt2, paramInt3};
+        try {
+            this.if_a1.invoke(d, args);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
-    public void a(io paramio) {
+    public void a(ir paramir) {
         for (int m = 0; m < this.b.size(); m++) {
-            ep localep = (ep) this.b.get(m);
-            localep.a.b(paramio);
+            er localer = (er) this.b.get(m);
+            localer.a.b(paramir);
         }
     }
 
@@ -205,7 +274,7 @@ public class gn {
             if (m > 0) {
                 str = str + ", ";
             }
-            str = str + ((ep) this.b.get(m)).ar;
+            str = str + ((er) this.b.get(m)).as;
         }
         return str;
     }
@@ -322,49 +391,55 @@ public class gn {
         return this.h.contains(paramString.trim().toLowerCase());
     }
 
-    public ep h(String paramString) {
+    public er h(String paramString) {
         for (int m = 0; m < this.b.size(); m++) {
-            ep localep = (ep) this.b.get(m);
-            if (localep.ar.equalsIgnoreCase(paramString)) {
-                return localep;
+            er localer = (er) this.b.get(m);
+            if (localer.as.equalsIgnoreCase(paramString)) {
+                return localer;
             }
         }
         return null;
     }
 
     public void a(String paramString1, String paramString2) {
-        ep localep = h(paramString1);
-        if (localep != null) {
-            localep.a.b(new bg(paramString2));
+        er localer = h(paramString1);
+        if (localer != null) {
+            localer.a.b(new bh(paramString2));
         }
     }
 
     public void i(String paramString) {
-        bg localbg = new bg(paramString);
+        bh localbh = new bh(paramString);
         for (int m = 0; m < this.b.size(); m++) {
-            ep localep = (ep) this.b.get(m);
-            if (g(localep.ar)) {
-                localep.a.b(localbg);
+            er localer = (er) this.b.get(m);
+            if (g(localer.as)) {
+                localer.a.b(localbh);
             }
         }
     }
 
-    public boolean a(String paramString, io paramio) {
-        ep localep = h(paramString);
-        if (localep != null) {
-            localep.a.b(paramio);
+    public boolean a(String paramString, ir paramir) {
+        er localer = h(paramString);
+        if (localer != null) {
+            localer.a.b(paramir);
             return true;
         }
         return false;
     }
 
     public void a(int paramInt1, int paramInt2, int paramInt3, ay paramay) {
-        this.d.a(new jc(paramInt1, paramInt2, paramInt3, paramay), paramInt1, paramInt2, paramInt3);
+        Object args[] = {new jf(paramInt1, paramInt2, paramInt3, paramay), paramInt1, paramInt2, paramInt3};
+        try {
+            if_a.invoke(d, args);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     public void d() {
         for (int m = 0; m < this.b.size(); m++) {
-            this.l.a((ep) this.b.get(m));
+            this.l.a((er) this.b.get(m));
         }
     }
 }

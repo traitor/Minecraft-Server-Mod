@@ -60,6 +60,7 @@ public class Block {
     private int type, x, y, z;
     private Face faceClicked;
     private int status, data;
+    private String spawnData = ""; // Used only for spawners, TODO: Find a better way?
 
     /**
      * Create a block with no type, x, y or z.
@@ -240,6 +241,22 @@ public class Block {
      */
     public void setData(int data) {
         this.data = data;
+    }
+
+    /**
+     * @param spawnData Assigns what to spawn and delay of spawn\n Format: SpawnName
+     */
+    public void setSpawnData(String spawnData) {
+        this.spawnData = spawnData;
+        ComplexBlock cb = etc.getServer().getComplexBlock(x, y, z);
+        if (cb instanceof MobSpawner) {
+            MobSpawner spawner = (MobSpawner)cb;
+            spawner.setSpawn(spawnData);
+        }
+    }
+
+    public String getSpawnData() {
+        return spawnData;
     }
 
     /**

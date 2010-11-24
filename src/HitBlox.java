@@ -126,9 +126,9 @@ public class HitBlox {
     public Block getFaceBlock() {
         while ((getNextBlock() != null) && (getCurBlock().getType() == 0));
         if (getCurBlock() != null) {
-            return null;
-        } else {
             return getLastBlock();
+        } else {
+            return null;
         }
     }
 

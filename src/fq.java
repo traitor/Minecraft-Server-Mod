@@ -5,18 +5,18 @@ import java.util.Random;
 import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 
-public class fo extends ey {
+public class fq extends fa {
     public InetAddress addr;
     public String overiddenName = null;
 
-    public fo(MinecraftServer minecraftserver, Socket socket, String s) {
+    public fq(MinecraftServer minecraftserver, Socket socket, String s) {
         c = false;
         f = 0;
         g = null;
         h = null;
         i = "";
         e = minecraftserver;
-        b = new bh(socket, s, this);
+        b = new bi(socket, s, this);
         addr = socket.getInetAddress();
     }
 
@@ -26,14 +26,14 @@ public class fo extends ey {
             h = null;
         }
         if(f++ == 600)
-            b(etc.getInstance().getTookTooLongMessage());
+            b("Took too long to log in");
         else
             b.a();
     }
 
     public void b(String s) {
         a.info((new StringBuilder()).append("Disconnecting ").append(b()).append(": ").append(s).toString());
-        b.a(new jr(s));
+        b.a(new ju(s));
         b.c();
         c = true;
     }
@@ -49,7 +49,7 @@ public class fo extends ey {
 
     public void a(ad ad1) {
         g = ad1.b;
-        if(ad1.a != 4) {
+        if(ad1.a != 5) {
             b("Outdated client!");
             return;
         }
@@ -57,21 +57,21 @@ public class fo extends ey {
         if(!e.l || overiddenName != null)
             b(ad1);
         else
-            (new dq(this, ad1)).start();
+            (new dr(this, ad1)).start();
     }
 
     public void b(ad ad1) {
-        ep ep1 = e.f.a(this, ad1.b, ad1.c);
-        if(ep1 != null) {
-            a.info((new StringBuilder()).append(b()).append(" logged in with entity id ").append(ep1.g).toString());
-            je je1 = new je(e, b, ep1);
-            je1.b(new ad("", "", ep1.g, e.e.u, (byte)e.e.q.g));
-            je1.b(new cn(e.e.m, e.e.n, e.e.o));
-            e.f.a(ep1);
-            je1.a(ep1.p, ep1.q, ep1.r, ep1.v, ep1.w);
-            je1.d();
-            e.c.a(je1);
-            je1.b(new gf(e.e.e));
+        er er1 = e.f.a(this, ad1.b, ad1.c);
+        if(er1 != null) {
+            a.info((new StringBuilder()).append(b()).append(" logged in with entity id ").append(er1.g).toString());
+            jg jg1 = new jg(e, b, er1);
+            jg1.b(new ad("", "", er1.g, e.e.u, (byte)e.e.q.g));
+            jg1.b(new co(e.e.m, e.e.n, e.e.o));
+            e.f.a(er1);
+            jg1.a(er1.p, er1.q, er1.r, er1.v, er1.w);
+            jg1.d();
+            e.c.a(jg1);
+            jg1.b(new gh(e.e.e));
         }
         c = true;
     }
@@ -81,7 +81,7 @@ public class fo extends ey {
         c = true;
     }
 
-    public void a(io io) {
+    public void a(ir ir) {
         b("Protocol error");
     }
 
@@ -92,17 +92,17 @@ public class fo extends ey {
             return b.b().toString();
     }
 
-    static String a(fo fo1) {
-        return fo1.i;
+    static String a(fq fq1) {
+        return fq1.i;
     }
 
-    static ad a(fo fo1, ad ad1) {
-        return fo1.h = ad1;
+    static ad a(fq fq1, ad ad1) {
+        return fq1.h = ad1;
     }
 
     public static Logger a = Logger.getLogger("Minecraft");
     private static Random d = new Random();
-    public bh b;
+    public bi b;
     public boolean c;
     private MinecraftServer e;
     private int f;

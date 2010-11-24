@@ -1,133 +1,139 @@
-
 import java.util.Random;
 
-public class ar extends cy {
-
+public class ar extends cz {
     int a = 0;
+
     boolean[] b = new boolean[4];
     int[] c = new int[4];
 
-    protected ar(int paramInt, jt paramjt) {
-        super(paramInt, paramjt);
+    protected ar(int paramInt, jw paramjw) {
+        super(paramInt, paramjw);
     }
 
-    private void i(em paramem, int paramInt1, int paramInt2, int paramInt3) {
-        int i = paramem.b(paramInt1, paramInt2, paramInt3);
-        paramem.a(paramInt1, paramInt2, paramInt3, this.bh + 1, i);
-        paramem.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
-        paramem.f(paramInt1, paramInt2, paramInt3);
+    private void i(eo parameo, int paramInt1, int paramInt2, int paramInt3) {
+        int i = parameo.b(paramInt1, paramInt2, paramInt3);
+        parameo.a(paramInt1, paramInt2, paramInt3, this.bh + 1, i);
+        parameo.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
+        parameo.f(paramInt1, paramInt2, paramInt3);
     }
 
-    public void a(em paramem, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
-        //lava flow prevention
-        Block block = new Block(paramem.a(paramInt1, paramInt2 - 1, paramInt3), paramInt1, paramInt2 - 1, paramInt3);
-        //change the status of the block to the type that is trying to flow ( 10 / 11 for lava).
-        block.setStatus(this.bh);
-        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{block})) {
-            return;
-        }
-
-        int i = g(paramem, paramInt1, paramInt2, paramInt3);
+    public void a(eo parameo, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
+        Block blockFrom = new Block(this.bh, paramInt1, paramInt2, paramInt3);
+        int i = g(parameo, paramInt1, paramInt2, paramInt3);
 
         int j = 1;
-        if ((this.bs == jt.g) && (!paramem.q.d)) {
+        if ((this.bs == jw.g) && (!parameo.q.d)) {
             j = 2;
         }
 
         int k = 1;
-
+        int n;
         if (i > 0) {
-            int l = -100;
+            int m = -100;
             this.a = 0;
-            l = e(paramem, paramInt1 - 1, paramInt2, paramInt3, l);
-            l = e(paramem, paramInt1 + 1, paramInt2, paramInt3, l);
-            l = e(paramem, paramInt1, paramInt2, paramInt3 - 1, l);
-            l = e(paramem, paramInt1, paramInt2, paramInt3 + 1, l);
+            m = e(parameo, paramInt1 - 1, paramInt2, paramInt3, m);
+            m = e(parameo, paramInt1 + 1, paramInt2, paramInt3, m);
+            m = e(parameo, paramInt1, paramInt2, paramInt3 - 1, m);
+            m = e(parameo, paramInt1, paramInt2, paramInt3 + 1, m);
 
-            int i1 = l + j;
-            if ((i1 >= 8) || (l < 0)) {
-                i1 = -1;
+            n = m + j;
+            if ((n >= 8) || (m < 0)) {
+                n = -1;
             }
-            if (g(paramem, paramInt1, paramInt2 + 1, paramInt3) >= 0) {
-                int i2 = g(paramem, paramInt1, paramInt2 + 1, paramInt3);
-                if (i2 >= 8) {
-                    i1 = i2;
+            if (g(parameo, paramInt1, paramInt2 + 1, paramInt3) >= 0) {
+                int i1 = g(parameo, paramInt1, paramInt2 + 1, paramInt3);
+                if (i1 >= 8) {
+                    n = i1;
                 } else {
-                    i1 = i2 + 8;
+                    n = i1 + 8;
                 }
             }
-            if ((this.a >= 2) && (this.bs == jt.f)) {
-                if (paramem.d(paramInt1, paramInt2 - 1, paramInt3)) {
-                    i1 = 0;
-                } else if ((paramem.c(paramInt1, paramInt2 - 1, paramInt3) == this.bs) && (paramem.b(paramInt1, paramInt2, paramInt3) == 0)) {
-                    i1 = 0;
+            if ((this.a >= 2) && (this.bs == jw.f)) {
+                if (parameo.d(paramInt1, paramInt2 - 1, paramInt3)) {
+                    n = 0;
+                } else if ((parameo.c(paramInt1, paramInt2 - 1, paramInt3) == this.bs)
+                        && (parameo.b(paramInt1, paramInt2, paramInt3) == 0)) {
+                    n = 0;
                 }
             }
-            if ((this.bs == jt.g) && (i < 8) && (i1 < 8) && (i1 > i) && (paramRandom.nextInt(4) != 0)) {
-                i1 = i;
+            if ((this.bs == jw.g) && (i < 8) && (n < 8) && (n > i) && (paramRandom.nextInt(4) != 0)) {
+                n = i;
                 k = 0;
             }
 
-            if (i1 != i) {
-                i = i1;
+            if (n != i) {
+                i = n;
                 if (i < 0) {
-                    paramem.d(paramInt1, paramInt2, paramInt3, 0);
+                    parameo.d(paramInt1, paramInt2, paramInt3, 0);
                 } else {
-                    paramem.b(paramInt1, paramInt2, paramInt3, i);
-                    paramem.h(paramInt1, paramInt2, paramInt3, this.bh);
-                    paramem.g(paramInt1, paramInt2, paramInt3, this.bh);
+                    parameo.b(paramInt1, paramInt2, paramInt3, i);
+                    parameo.h(paramInt1, paramInt2, paramInt3, this.bh);
+                    parameo.g(paramInt1, paramInt2, paramInt3, this.bh);
                 }
             } else if (k != 0) {
-                i(paramem, paramInt1, paramInt2, paramInt3);
+                i(parameo, paramInt1, paramInt2, paramInt3);
             }
         } else {
-            i(paramem, paramInt1, paramInt2, paramInt3);
+            i(parameo, paramInt1, paramInt2, paramInt3);
         }
-        if (l(paramem, paramInt1, paramInt2 - 1, paramInt3)) {
-            if (i >= 8) {
-                paramem.b(paramInt1, paramInt2 - 1, paramInt3, this.bh, i);
-            } else {
-                paramem.b(paramInt1, paramInt2 - 1, paramInt3, this.bh, i + 8);
+        if (l(parameo, paramInt1, paramInt2 - 1, paramInt3)) {
+            // downwards flow.
+            Block blockTo = new Block(0, paramInt1, paramInt2 - 1, paramInt3);
+            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo})) {
+                if (i >= 8) {
+                    parameo.b(paramInt1, paramInt2 - 1, paramInt3, this.bh, i);
+                } else {
+                    parameo.b(paramInt1, paramInt2 - 1, paramInt3, this.bh, i + 8);
+                }
             }
-        } else if ((i >= 0) && ((i == 0) || (k(paramem, paramInt1, paramInt2 - 1, paramInt3)))) {
-            boolean[] arrayOfBoolean = j(paramem, paramInt1, paramInt2, paramInt3);
-            int i1 = i + j;
+        } else if ((i >= 0) && ((i == 0) || (k(parameo, paramInt1, paramInt2 - 1, paramInt3)))) {
+            //sidewards flow.
+            boolean[] arrayOfBoolean = j(parameo, paramInt1, paramInt2, paramInt3);
+            n = i + j;
             if (i >= 8) {
-                i1 = 1;
+                n = 1;
             }
-            if (i1 >= 8) {
+            if (n >= 8) {
                 return;
             }
             if (arrayOfBoolean[0] != false) {
-                f(paramem, paramInt1 - 1, paramInt2, paramInt3, i1);
+                Block blockTo = new Block(0, paramInt1 - 1, paramInt2, paramInt3);
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo})) 
+                    f(parameo, paramInt1 - 1, paramInt2, paramInt3, n);
             }
             if (arrayOfBoolean[1] != false) {
-                f(paramem, paramInt1 + 1, paramInt2, paramInt3, i1);
+                Block blockTo = new Block(0, paramInt1 + 1, paramInt2, paramInt3);
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo})) 
+                    f(parameo, paramInt1 + 1, paramInt2, paramInt3, n);
             }
             if (arrayOfBoolean[2] != false) {
-                f(paramem, paramInt1, paramInt2, paramInt3 - 1, i1);
+                Block blockTo = new Block(0, paramInt1, paramInt2, paramInt3 - 1);
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo})) 
+                    f(parameo, paramInt1, paramInt2, paramInt3 - 1, n);
             }
             if (arrayOfBoolean[3] != false) {
-                f(paramem, paramInt1, paramInt2, paramInt3 + 1, i1);
+                Block blockTo = new Block(0, paramInt1, paramInt2, paramInt3 + 1);
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo})) 
+                    f(parameo, paramInt1, paramInt2, paramInt3 + 1, n);
             }
         }
     }
 
-    private void f(em paramem, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        if (l(paramem, paramInt1, paramInt2, paramInt3)) {
-            int i = paramem.a(paramInt1, paramInt2, paramInt3);
+    private void f(eo parameo, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+        if (l(parameo, paramInt1, paramInt2, paramInt3)) {
+            int i = parameo.a(paramInt1, paramInt2, paramInt3);
             if (i > 0) {
-                if (this.bs == jt.g) {
-                    h(paramem, paramInt1, paramInt2, paramInt3);
+                if (this.bs == jw.g) {
+                    h(parameo, paramInt1, paramInt2, paramInt3);
                 } else {
-                    fy.m[i].a_(paramem, paramInt1, paramInt2, paramInt3, paramem.b(paramInt1, paramInt2, paramInt3));
+                    ga.m[i].a_(parameo, paramInt1, paramInt2, paramInt3, parameo.b(paramInt1, paramInt2, paramInt3));
                 }
             }
-            paramem.b(paramInt1, paramInt2, paramInt3, this.bh, paramInt4);
+            parameo.b(paramInt1, paramInt2, paramInt3, this.bh, paramInt4);
         }
     }
 
-    private int a(em paramem, int paramInt1, int paramInt2, int paramInt3, int paramInt4, int paramInt5) {
+    private int a(eo parameo, int paramInt1, int paramInt2, int paramInt3, int paramInt4, int paramInt5) {
         int i = 1000;
         for (int j = 0; j < 4; j++) {
             if (((j == 0) && (paramInt5 == 1))
@@ -136,8 +142,8 @@ public class ar extends cy {
                 continue;
             }
             int k = paramInt1;
-            int l = paramInt2;
-            int i1 = paramInt3;
+            int m = paramInt2;
+            int n = paramInt3;
 
             if (j == 0) {
                 k--;
@@ -146,27 +152,26 @@ public class ar extends cy {
                 k++;
             }
             if (j == 2) {
-                i1--;
+                n--;
             }
             if (j == 3) {
-                i1++;
+                n++;
             }
 
-            if (k(paramem, k, l, i1)) {
+            if (k(parameo, k, m, n)) {
                 continue;
             }
-            if ((paramem.c(k, l, i1) == this.bs) && (paramem.b(k, l, i1) == 0)) {
+            if ((parameo.c(k, m, n) == this.bs) && (parameo.b(k, m, n) == 0)) {
                 continue;
             }
-            if (!k(paramem, k, l - 1, i1)) {
+            if (!k(parameo, k, m - 1, n)) {
                 return paramInt4;
             }
             if (paramInt4 < 4) {
-                int i2 = a(paramem, k, l, i1, paramInt4 + 1, j);
-                if (i2 >= i) {
+                int i1 = a(parameo, k, m, n, paramInt4 + 1, j);
+                if (i1 >= i)
                     continue;
-                }
-                i = i2;
+                i = i1;
             }
 
         }
@@ -174,12 +179,12 @@ public class ar extends cy {
         return i;
     }
 
-    private boolean[] j(em paramem, int paramInt1, int paramInt2, int paramInt3) {
+    private boolean[] j(eo parameo, int paramInt1, int paramInt2, int paramInt3) {
         for (int i = 0; i < 4; i++) {
             this.c[i] = 1000;
             int j = paramInt1;
             int k = paramInt2;
-            int l = paramInt3;
+            int m = paramInt3;
 
             if (i == 0) {
                 j--;
@@ -188,21 +193,21 @@ public class ar extends cy {
                 j++;
             }
             if (i == 2) {
-                l--;
+                m--;
             }
             if (i == 3) {
-                l++;
+                m++;
             }
-            if (k(paramem, j, k, l)) {
+            if (k(parameo, j, k, m)) {
                 continue;
             }
-            if ((paramem.c(j, k, l) == this.bs) && (paramem.b(j, k, l) == 0)) {
+            if ((parameo.c(j, k, m) == this.bs) && (parameo.b(j, k, m) == 0)) {
                 continue;
             }
-            if (!k(paramem, j, k - 1, l)) {
+            if (!k(parameo, j, k - 1, m)) {
                 this.c[i] = 0;
             } else {
-                this.c[i] = a(paramem, j, k, l, 1, i);
+                this.c[i] = a(parameo, j, k, m, 1, i);
             }
 
         }
@@ -221,20 +226,20 @@ public class ar extends cy {
         return this.b;
     }
 
-    private boolean k(em paramem, int paramInt1, int paramInt2, int paramInt3) {
-        int i = paramem.a(paramInt1, paramInt2, paramInt3);
-        if ((i == fy.aE.bh) || (i == fy.aL.bh) || (i == fy.aD.bh) || (i == fy.aF.bh) || (i == fy.aX.bh)) {
+    private boolean k(eo parameo, int paramInt1, int paramInt2, int paramInt3) {
+        int i = parameo.a(paramInt1, paramInt2, paramInt3);
+        if ((i == ga.aE.bh) || (i == ga.aL.bh) || (i == ga.aD.bh) || (i == ga.aF.bh) || (i == ga.aX.bh)) {
             return true;
         }
         if (i == 0) {
             return false;
         }
-        jt localjt = fy.m[i].bs;
-        return localjt.a();
+        jw localjw = ga.m[i].bs;
+        return localjw.a();
     }
 
-    protected int e(em paramem, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        int i = g(paramem, paramInt1, paramInt2, paramInt3);
+    protected int e(eo parameo, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+        int i = g(parameo, paramInt1, paramInt2, paramInt3);
         if (i < 0) {
             return paramInt4;
         }
@@ -247,21 +252,21 @@ public class ar extends cy {
         return (paramInt4 < 0) || (i < paramInt4) ? i : paramInt4;
     }
 
-    private boolean l(em paramem, int paramInt1, int paramInt2, int paramInt3) {
-        jt localjt = paramem.c(paramInt1, paramInt2, paramInt3);
-        if (localjt == this.bs) {
+    private boolean l(eo parameo, int paramInt1, int paramInt2, int paramInt3) {
+        jw localjw = parameo.c(paramInt1, paramInt2, paramInt3);
+        if (localjw == this.bs) {
             return false;
         }
-        if (localjt == jt.g) {
+        if (localjw == jw.g) {
             return false;
         }
-        return !k(paramem, paramInt1, paramInt2, paramInt3);
+        return !k(parameo, paramInt1, paramInt2, paramInt3);
     }
 
-    public void e(em paramem, int paramInt1, int paramInt2, int paramInt3) {
-        super.e(paramem, paramInt1, paramInt2, paramInt3);
-        if (paramem.a(paramInt1, paramInt2, paramInt3) == this.bh) {
-            paramem.h(paramInt1, paramInt2, paramInt3, this.bh);
+    public void e(eo parameo, int paramInt1, int paramInt2, int paramInt3) {
+        super.e(parameo, paramInt1, paramInt2, paramInt3);
+        if (parameo.a(paramInt1, paramInt2, paramInt3) == this.bh) {
+            parameo.h(paramInt1, paramInt2, paramInt3, this.bh);
         }
     }
 }
