@@ -102,9 +102,6 @@ public class cl extends gy { // Redstone torches
 
     public void a(eo parameo, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
         boolean bool = g(parameo, paramInt1, paramInt2, paramInt3);
-        int oldType = this.bh;
-        int newType = oldType;
-
         while ((b.size() > 0) && (parameo.e - ((iw) b.get(0)).d > 100L)) {
             b.remove(0);
         }
@@ -112,27 +109,26 @@ public class cl extends gy { // Redstone torches
         if (this.a) {
             if (bool) {
                 parameo.b(paramInt1, paramInt2, paramInt3, ga.aP.bh, parameo.b(paramInt1, paramInt2, paramInt3));
+                int current = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), 1, 0});
+                if (current == 0) {
+                    if (a(parameo, paramInt1, paramInt2, paramInt3, true)) {
+                        parameo.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, "random.fizz", 0.5F, 2.6F + (parameo.l.nextFloat() - parameo.l.nextFloat()) * 0.8F);
+                        for (int i = 0; i < 5; i++) {
+                            double d1 = paramInt1 + paramRandom.nextDouble() * 0.6D + 0.2D;
+                            double d2 = paramInt2 + paramRandom.nextDouble() * 0.6D + 0.2D;
+                            double d3 = paramInt3 + paramRandom.nextDouble() * 0.6D + 0.2D;
 
-                if (a(parameo, paramInt1, paramInt2, paramInt3, true)) {
-                    parameo.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, "random.fizz", 0.5F, 2.6F + (parameo.l.nextFloat() - parameo.l.nextFloat()) * 0.8F);
-                    for (int i = 0; i < 5; i++) {
-                        double d1 = paramInt1 + paramRandom.nextDouble() * 0.6D + 0.2D;
-                        double d2 = paramInt2 + paramRandom.nextDouble() * 0.6D + 0.2D;
-                        double d3 = paramInt3 + paramRandom.nextDouble() * 0.6D + 0.2D;
-
-                        parameo.a("smoke", d1, d2, d3, 0.0D, 0.0D, 0.0D);
+                            parameo.a("smoke", d1, d2, d3, 0.0D, 0.0D, 0.0D);
+                        }
                     }
                 }
             }
         } else if ((!bool)
                 && (!a(parameo, paramInt1, paramInt2, paramInt3, false))) {
-            parameo.b(paramInt1, paramInt2, paramInt3, ga.aQ.bh, parameo.b(paramInt1, paramInt2, paramInt3));
-        }
-
-        int old = (oldType == ga.aP.bh) ? 0 : 1;
-        int current = (newType == ga.aP.bh) ? 0 : 1;
-        if (old != current) {
-            etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(newType, paramInt1, paramInt2, paramInt3), old, current});
+            int current = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), 0, 1});
+            if (current > 0) {
+                parameo.b(paramInt1, paramInt2, paramInt3, ga.aQ.bh, parameo.b(paramInt1, paramInt2, paramInt3));
+            }
         }
     }
 

@@ -134,27 +134,29 @@ public class iu extends ga { // Lever
         int j = i & 0x7;
         int k = 8 - (i & 0x8);
 
-        parameo.b(paramInt1, paramInt2, paramInt3, j + k);
-        parameo.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
+        int old = (k != 8) ? 1 : 0;
+        int current = (k == 8) ? 1 : 0;
+        current = (Integer)etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), old, current});
 
-        parameo.a(paramInt1 + 0.5D, paramInt2 + 0.5D, paramInt3 + 0.5D, "random.click", 0.3F, k > 0 ? 0.6F : 0.5F);
+        if ((current > 0) == (k == 8)) {
+            parameo.b(paramInt1, paramInt2, paramInt3, j + k);
+            parameo.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
 
-        parameo.g(paramInt1, paramInt2, paramInt3, this.bh);
-        if (j == 1) {
-            parameo.g(paramInt1 - 1, paramInt2, paramInt3, this.bh);
-        } else if (j == 2) {
-            parameo.g(paramInt1 + 1, paramInt2, paramInt3, this.bh);
-        } else if (j == 3) {
-            parameo.g(paramInt1, paramInt2, paramInt3 - 1, this.bh);
-        } else if (j == 4) {
-            parameo.g(paramInt1, paramInt2, paramInt3 + 1, this.bh);
-        } else {
-            parameo.g(paramInt1, paramInt2 - 1, paramInt3, this.bh);
+            parameo.a(paramInt1 + 0.5D, paramInt2 + 0.5D, paramInt3 + 0.5D, "random.click", 0.3F, k > 0 ? 0.6F : 0.5F);
+
+            parameo.g(paramInt1, paramInt2, paramInt3, this.bh);
+            if (j == 1) {
+                parameo.g(paramInt1 - 1, paramInt2, paramInt3, this.bh);
+            } else if (j == 2) {
+                parameo.g(paramInt1 + 1, paramInt2, paramInt3, this.bh);
+            } else if (j == 3) {
+                parameo.g(paramInt1, paramInt2, paramInt3 - 1, this.bh);
+            } else if (j == 4) {
+                parameo.g(paramInt1, paramInt2, paramInt3 + 1, this.bh);
+            } else {
+                parameo.g(paramInt1, paramInt2 - 1, paramInt3, this.bh);
+            }
         }
-
-        int old = (k == 8) ? 1 : 0;
-        int current = (k != 8) ? 1 : 0;
-        etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), old, current});
 
         return true;
     }

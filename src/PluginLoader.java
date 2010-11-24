@@ -352,6 +352,11 @@ public class PluginLoader {
      */
     public Object callHook(Hook h, Object[] parameters) {
         Object toRet = false;
+
+        if (h == Hook.REDSTONE_CHANGE) {
+            toRet = (Integer) parameters[2];
+        }
+
         synchronized (lock) {
             try {
                 List<PluginRegisteredListener> registeredListeners = listeners.get(h.ordinal());
@@ -491,6 +496,9 @@ public class PluginLoader {
                                 if (listener.onHealthChange((Player) parameters[0], (Integer) parameters[1], (Integer) parameters[2])) {
                                     toRet = true;
                                 }
+                                break;
+                            case REDSTONE_CHANGE:
+                                toRet = listener.onRedstoneChange((Block) parameters[0], (Integer) parameters[1], (Integer) toRet);
                                 break;
                         }
                     } catch (UnsupportedOperationException ex) {

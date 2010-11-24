@@ -137,6 +137,10 @@ public class ap extends ga { // Buttons
         if (k == 0) {
             return true;
         }
+        int change = (Integer)etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), 0, 1});
+        if (change == 0) {
+            return true;
+        }
 
         parameo.b(paramInt1, paramInt2, paramInt3, j + k);
         parameo.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
@@ -157,8 +161,6 @@ public class ap extends ga { // Buttons
         }
 
         parameo.h(paramInt1, paramInt2, paramInt3, this.bh);
-
-        etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), 0, 1});
 
         return true;
     }
@@ -218,6 +220,11 @@ public class ap extends ga { // Buttons
         if ((i & 0x8) == 0) {
             return;
         }
+        int change = (Integer)etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), 1, 0});
+        if (change > 0) {
+            return;
+        }
+
         parameo.b(paramInt1, paramInt2, paramInt3, i & 0x7);
 
         parameo.g(paramInt1, paramInt2, paramInt3, this.bh);
@@ -236,7 +243,5 @@ public class ap extends ga { // Buttons
 
         parameo.a(paramInt1 + 0.5D, paramInt2 + 0.5D, paramInt3 + 0.5D, "random.click", 0.3F, 0.5F);
         parameo.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
-
-        etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), 1, 0});
     }
 }
