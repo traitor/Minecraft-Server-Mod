@@ -6,14 +6,14 @@
  */
 public class Sign implements ComplexBlock {
 
-    private ji sign;
+    private jl sign;
 
     /**
      * Creates a sign interface
      * 
      * @param sign
      */
-    public Sign(ji sign) {
+    public Sign(jl sign) {
         this.sign = sign;
     }
 

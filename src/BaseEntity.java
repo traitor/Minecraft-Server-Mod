@@ -7,7 +7,7 @@
  */
 public class BaseEntity {
 
-    jv entity;
+    jy entity;
 
     /**
      * Returns the ID for this mob
@@ -147,7 +147,7 @@ public class BaseEntity {
      * @return
      */
     public int getHealth() {
-        return entity.aP;
+        return entity.aQ;
     }
 
     /**

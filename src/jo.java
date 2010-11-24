@@ -1,194 +1,216 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import java.util.Random;
+public class jo implements bu {
+    private Set a = new HashSet();
+    private js b;
+    private bu c;
+    private av d;
+    private Map e = new HashMap();
+    private List f = new ArrayList();
+    private ev g;
 
-public class jo extends fy {
+    public jo(ev paramev, av paramav, bu parambu) {
+        this.b = new js(paramev, new byte[32768], 0, 0);
+        this.b.q = true;
+        this.b.p = true;
 
-    private int[] a = new int[256];
-    private int[] b = new int[256];
-
-    protected jo(int paramInt1, int paramInt2) {
-        super(paramInt1, paramInt2, jt.l);
-
-        a(fy.x.bh, 5, 20);
-        a(fy.J.bh, 5, 5);
-        a(fy.K.bh, 30, 60);
-        a(fy.an.bh, 30, 20);
-        a(fy.am.bh, 15, 100);
-        a(fy.ab.bh, 30, 60);
-
-        a(true);
+        this.g = paramev;
+        this.d = paramav;
+        this.c = parambu;
     }
 
-    private void a(int paramInt1, int paramInt2, int paramInt3) {
-        this.a[paramInt1] = paramInt2;
-        this.b[paramInt1] = paramInt3;
+    @Override
+    public boolean a(int paramInt1, int paramInt2) {
+        jx localjx = new jx(paramInt1, paramInt2);
+        return this.e.containsKey(localjx);
     }
 
-    public dt d(em paramem, int paramInt1, int paramInt2, int paramInt3) {
+    public void c(int paramInt1, int paramInt2) {
+        int i = paramInt1 * 16 + 8 - this.g.m;
+        int j = paramInt2 * 16 + 8 - this.g.o;
+        int k = 128;
+        if ((i < -k) || (i > k) || (j < -k) || (j > k)) {
+            this.a.add(new jx(paramInt1, paramInt2));
+        }
+    }
+
+    public js d(int paramInt1, int paramInt2) {
+        jx localjx = new jx(paramInt1, paramInt2);
+        this.a.remove(new jx(paramInt1, paramInt2));
+
+        js localjs = (js) this.e.get(localjx);
+        if (localjs == null) {
+            localjs = e(paramInt1, paramInt2);
+            if (localjs == null) {
+                if (this.c == null) {
+                    localjs = this.b;
+                } else {
+                    localjs = this.c.b(paramInt1, paramInt2);
+                }
+
+            }
+
+            this.e.put(localjx, localjs);
+            this.f.add(localjs);
+            localjs.c();
+
+            if (localjs != null) {
+                localjs.d();
+            }
+
+            if ((!localjs.n) && (a(paramInt1 + 1, paramInt2 + 1)) && (a(paramInt1, paramInt2 + 1)) && (a(paramInt1 + 1, paramInt2))) {
+                a(this, paramInt1, paramInt2);
+            }
+            if ((a(paramInt1 - 1, paramInt2)) && (!b(paramInt1 - 1, paramInt2).n) && (a(paramInt1 - 1, paramInt2 + 1))
+                    && (a(paramInt1, paramInt2 + 1)) && (a(paramInt1 - 1, paramInt2))) {
+                a(this, paramInt1 - 1, paramInt2);
+            }
+            if ((a(paramInt1, paramInt2 - 1)) && (!b(paramInt1, paramInt2 - 1).n) && (a(paramInt1 + 1, paramInt2 - 1))
+                    && (a(paramInt1, paramInt2 - 1)) && (a(paramInt1 + 1, paramInt2))) {
+                a(this, paramInt1, paramInt2 - 1);
+            }
+            if ((a(paramInt1 - 1, paramInt2 - 1)) && (!b(paramInt1 - 1, paramInt2 - 1).n) && (a(paramInt1 - 1, paramInt2 - 1))
+                    && (a(paramInt1, paramInt2 - 1)) && (a(paramInt1 - 1, paramInt2))) {
+                a(this, paramInt1 - 1, paramInt2 - 1);
+            }
+
+        }
+
+        return localjs;
+    }
+
+    @Override
+    public js b(int paramInt1, int paramInt2) {
+        jx localjx = new jx(paramInt1, paramInt2);
+        js localjs = (js) this.e.get(localjx);
+
+        if (localjs == null) {
+            if (this.g.x) {
+                return d(paramInt1, paramInt2);
+            }
+            return this.b;
+        }
+
+        return localjs;
+    }
+
+    private js e(int paramInt1, int paramInt2) {
+        if (this.d == null) {
+            return null;
+        }
+        try {
+            js localjs = this.d.a(this.g, paramInt1, paramInt2);
+            if (localjs != null) {
+                localjs.s = this.g.e;
+            }
+            return localjs;
+        } catch (Exception localException) {
+            localException.printStackTrace();
+        }
         return null;
     }
 
-    public boolean a() {
-        return false;
-    }
-
-    public int a(Random paramRandom) {
-        return 0;
-    }
-
-    public int b() {
-        return 10;
-    }
-
-    public void a(em paramem, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
-        int i = paramem.a(paramInt1, paramInt2 - 1, paramInt3) == fy.bb.bh ? 1 : 0;
-
-        int j = paramem.b(paramInt1, paramInt2, paramInt3);
-        if (j < 15) {
-            paramem.b(paramInt1, paramInt2, paramInt3, j + 1);
-            paramem.h(paramInt1, paramInt2, paramInt3, this.bh);
+    private void a(js paramjs) {
+        if (this.d == null) {
+            return;
         }
-        if ((i == 0) && (!g(paramem, paramInt1, paramInt2, paramInt3))) {
-            if ((!paramem.d(paramInt1, paramInt2 - 1, paramInt3)) || (j > 3)) {
-                paramem.d(paramInt1, paramInt2, paramInt3, 0);
-            }
+        try {
+            this.d.b(this.g, paramjs);
+        } catch (Exception localException) {
+            localException.printStackTrace();
+        }
+    }
+
+    private void b(js paramjs) {
+        if (this.d == null) {
             return;
         }
 
-        if ((i == 0) && (!b((iq) paramem, paramInt1, paramInt2 - 1, paramInt3))
-                && (j == 15) && (paramRandom.nextInt(4) == 0)) {
-            paramem.d(paramInt1, paramInt2, paramInt3, 0);
-            return;
-        }
+        // try {
+        paramjs.s = this.g.e;
+        this.d.a(this.g, paramjs);
+        /*
+         * } catch (IOException localIOException) {
+         * localIOException.printStackTrace(); }
+         */
+    }
 
-        if ((j % 2 == 0) && (j > 2)) {
-            a(paramem, paramInt1 + 1, paramInt2, paramInt3, 300, paramRandom);
-            a(paramem, paramInt1 - 1, paramInt2, paramInt3, 300, paramRandom);
-            a(paramem, paramInt1, paramInt2 - 1, paramInt3, 200, paramRandom);
-            a(paramem, paramInt1, paramInt2 + 1, paramInt3, 250, paramRandom);
-            a(paramem, paramInt1, paramInt2, paramInt3 - 1, 300, paramRandom);
-            a(paramem, paramInt1, paramInt2, paramInt3 + 1, 300, paramRandom);
-
-            for (int k = paramInt1 - 1; k <= paramInt1 + 1; k++) {
-                for (int m = paramInt3 - 1; m <= paramInt3 + 1; m++) {
-                    for (int n = paramInt2 - 1; n <= paramInt2 + 4; n++) {
-                        if ((k == paramInt1) && (n == paramInt2) && (m == paramInt3)) {
-                            continue;
-                        }
-                        int i1 = 100;
-                        if (n > paramInt2 + 1) {
-                            i1 += (n - (paramInt2 + 1)) * 100;
-                        }
-
-                        int i2 = h(paramem, k, n, m);
-                        if ((i2 > 0) && (paramRandom.nextInt(i1) <= i2)) {
-                            //dynamic spreading of fire.
-                            // avg call amount per placed block of fire ~ 4
-                            Block block = new Block(paramem.a(k, n, m), k, n, m);
-                            block.setStatus(3);
-                            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, new Object[]{block , null})) {
-                                paramem.d(k, n, m, this.bh);
-
-                            }
-                        }
-                    }
-                }
+    @Override
+    public void a(bu parambu, int paramInt1, int paramInt2) {
+        js localjs = b(paramInt1, paramInt2);
+        if (!localjs.n) {
+            localjs.n = true;
+            if (this.c != null) {
+                this.c.a(parambu, paramInt1, paramInt2);
+                localjs.f();
             }
         }
     }
 
-    private void a(em paramem, int paramInt1, int paramInt2, int paramInt3, int paramInt4, Random paramRandom) {
-        int i = this.b[paramem.a(paramInt1, paramInt2, paramInt3)];
-        if (paramRandom.nextInt(paramInt4) < i) {
-            int j = paramem.a(paramInt1, paramInt2, paramInt3) == fy.am.bh ? 1 : 0;
-            if (paramRandom.nextInt(2) == 0) {
-                //VERY SLOW dynamic spreading of fire.
-                Block block = new Block(paramem.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
-                block.setStatus(3);
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, new Object[]{block, null})) {
-                   paramem.d(paramInt1, paramInt2, paramInt3, this.bh);
-                }
-            } else {
-                paramem.d(paramInt1, paramInt2, paramInt3, 0);
-            }
-            if (j != 0) {
-                fy.am.a(paramem, paramInt1, paramInt2, paramInt3, 0);
-            }
-        }
-    }
-
-    private boolean g(em paramem, int paramInt1, int paramInt2, int paramInt3) {
-        if (b((iq) paramem, paramInt1 + 1, paramInt2, paramInt3)) {
-            return true;
-        }
-        if (b((iq) paramem, paramInt1 - 1, paramInt2, paramInt3)) {
-            return true;
-        }
-        if (b((iq) paramem, paramInt1, paramInt2 - 1, paramInt3)) {
-            return true;
-        }
-        if (b((iq) paramem, paramInt1, paramInt2 + 1, paramInt3)) {
-            return true;
-        }
-        if (b((iq) paramem, paramInt1, paramInt2, paramInt3 - 1)) {
-            return true;
-        }
-        return b((iq) paramem, paramInt1, paramInt2, paramInt3 + 1);
-    }
-
-    private int h(em paramem, int paramInt1, int paramInt2, int paramInt3) {
+    @Override
+    public boolean a(boolean paramBoolean, ja paramja) {
         int i = 0;
-        if (paramem.a(paramInt1, paramInt2, paramInt3) != 0) {
-            return 0;
+        for (int j = 0; j < this.f.size(); j++) {
+            js localjs = (js) this.f.get(j);
+            if ((paramBoolean) && (!localjs.p)) {
+                a(localjs);
+            }
+            if (localjs.a(paramBoolean)) {
+                b(localjs);
+                localjs.o = false;
+                i++;
+                if ((i == 2) && (!paramBoolean)) {
+                    return false;
+                }
+            }
         }
 
-        i = f(paramem, paramInt1 + 1, paramInt2, paramInt3, i);
-        i = f(paramem, paramInt1 - 1, paramInt2, paramInt3, i);
-        i = f(paramem, paramInt1, paramInt2 - 1, paramInt3, i);
-        i = f(paramem, paramInt1, paramInt2 + 1, paramInt3, i);
-        i = f(paramem, paramInt1, paramInt2, paramInt3 - 1, i);
-        i = f(paramem, paramInt1, paramInt2, paramInt3 + 1, i);
-
-        return i;
-    }
-
-    public boolean d() {
-        return false;
-    }
-
-    public boolean b(iq paramiq, int paramInt1, int paramInt2, int paramInt3) {
-        return this.a[paramiq.a(paramInt1, paramInt2, paramInt3)] > 0;
-    }
-
-    public int f(em paramem, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        int i = this.a[paramem.a(paramInt1, paramInt2, paramInt3)];
-        if (i > paramInt4) {
-            return i;
+        if (paramBoolean) {
+            if (this.d == null) {
+                return true;
+            }
+            this.d.b();
         }
-        return paramInt4;
+        return true;
     }
 
-    public boolean a(em paramem, int paramInt1, int paramInt2, int paramInt3) {
-        return (paramem.d(paramInt1, paramInt2 - 1, paramInt3)) || (g(paramem, paramInt1, paramInt2, paramInt3));
+    boolean loaded = false;
+
+    public boolean a() {
+        if (!loaded) {
+            etc.getLoader();
+            loaded = true;
+        }
+        if (!this.g.C) {
+            for (int i = 0; i < 16; i++) {
+                if (!this.a.isEmpty()) {
+                    jx localjx = (jx) this.a.iterator().next();
+
+                    js localjs = b(localjx.a, localjx.b);
+                    localjs.e();
+                    b(localjs);
+                    a(localjs);
+                    this.a.remove(localjx);
+
+                    this.e.remove(localjx);
+                    this.f.remove(localjs);
+                }
+            }
+
+            if (this.d != null) {
+                this.d.a();
+            }
+        }
+        return this.c.a();
     }
 
-    public void b(em paramem, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        if ((!paramem.d(paramInt1, paramInt2 - 1, paramInt3)) && (!g(paramem, paramInt1, paramInt2, paramInt3))) {
-            paramem.d(paramInt1, paramInt2, paramInt3, 0);
-            return;
-        }
-    }
-
-    public void e(em paramem, int paramInt1, int paramInt2, int paramInt3) {
-        if ((paramem.a(paramInt1, paramInt2 - 1, paramInt3) == fy.ap.bh)
-                && (fy.be.a_(paramem, paramInt1, paramInt2, paramInt3))) {
-            return;
-        }
-
-        if ((!paramem.d(paramInt1, paramInt2 - 1, paramInt3)) && (!g(paramem, paramInt1, paramInt2, paramInt3))) {
-            paramem.d(paramInt1, paramInt2, paramInt3, 0);
-            return;
-        }
-        paramem.h(paramInt1, paramInt2, paramInt3, this.bh);
+    @Override
+    public boolean b() {
+        return !this.g.C;
     }
 }

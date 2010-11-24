@@ -38,9 +38,9 @@ public class Item {
         this.slot = slot;
     }
 
-    public Item(hj hj) {
-        itemId = hj.c;
-        amount = hj.a;
+    public Item(hl hl) {
+        itemId = hl.c;
+        amount = hl.a;
     }
 
     /**
@@ -86,8 +86,8 @@ public class Item {
      * @return
      */
     public static boolean isValidItem(int itemId) {
-        if (itemId < fh.c.length) {
-            return fh.c[itemId] != null;
+        if (itemId < fj.c.length) {
+            return fj.c[itemId] != null;
         }
         return false;
     }

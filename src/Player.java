@@ -18,7 +18,7 @@ import net.minecraft.server.MinecraftServer;
 public class Player extends BaseEntity {
 
     public static Logger log = Logger.getLogger("Minecraft");
-    private ep user;
+    private er user;
     private int id = -1;
     private String prefix = "";
     private String[] commands = new String[]{""};
@@ -991,14 +991,14 @@ public class Player extends BaseEntity {
      */
     public void giveItemDrop(int itemId, int amount) {
         if (amount == -1) {
-            user.a(new hj(itemId, 255));
+            user.a(new hl(itemId, 255));
         } else {
             int temp = amount;
             do {
                 if (temp - 64 >= 64) {
-                    user.a(new hj(itemId, 64));
+                    user.a(new hl(itemId, 64));
                 } else {
-                    user.a(new hj(itemId, temp));
+                    user.a(new hl(itemId, temp));
                 }
                 temp -= 64;
             } while (temp > 0);
@@ -1137,7 +1137,7 @@ public class Player extends BaseEntity {
      * @return
      */
     public String getName() {
-        return user.ar;
+        return user.as;
     }
 
     /**
@@ -1426,18 +1426,18 @@ public class Player extends BaseEntity {
      * 
      * @return
      */
-    public ep getUser() {
+    public er getUser() {
         return user;
     }
 
     /**
      * Sets the user. Don't use this.
      * 
-     * @param user
+     * @param er
      */
-    public void setUser(ep user) {
-        this.user = user;
-        this.entity = user;
+    public void setUser(er er) {
+        this.user = er;
+        this.entity = er;
         this.inventory = new Inventory(this, Inventory.Type.Inventory);
         this.craftingTable = new Inventory(this, Inventory.Type.CraftingTable);
         this.equipment = new Inventory(this, Inventory.Type.Equipment);

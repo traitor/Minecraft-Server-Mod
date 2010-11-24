@@ -13,7 +13,7 @@ public class Mob extends BaseEntity {
      *            name of mob
      */
     public Mob(String mob) {
-        this.entity = (jv) hl.a(mob, etc.getMCServer().e);
+        this.entity = (jy) hn.a(mob, etc.getMCServer().e);
     }
 
     /**
@@ -25,7 +25,7 @@ public class Mob extends BaseEntity {
      *            location of mob
      */
     public Mob(String mob, Location location) {
-        this.entity = (jv) hl.a(mob, etc.getMCServer().e);
+        this.entity = (jy) hn.a(mob, etc.getMCServer().e);
         teleportTo(location);
     }
 
@@ -35,7 +35,7 @@ public class Mob extends BaseEntity {
      * @param mob
      *            name of mob
      */
-    public Mob(hb mob) {
+    public Mob(hd mob) {
         this.entity = mob;
     }
 
@@ -52,15 +52,15 @@ public class Mob extends BaseEntity {
      * @param rider
      */
     public void spawn(Mob rider) {
-        em localem = etc.getMCServer().e;
+        eo localeo = etc.getMCServer().e;
 
         entity.c(getX() + 0.5f, getY(), getZ() + 0.5f, getRotation(), 0f);
-        localem.a(entity);
+        localeo.a(entity);
 
         if (rider != null) {
-            jv mob2 = rider.getMob();
+            jy mob2 = rider.getMob();
             mob2.c(getX(), getY(), getZ(), getRotation(), 0f);
-            localem.a(mob2);
+            localeo.a(mob2);
             mob2.e(entity);
         }
     }
@@ -71,7 +71,7 @@ public class Mob extends BaseEntity {
      * @return name
      */
     public String getName() {
-        return hl.b(entity);
+        return hn.b(entity);
     }
 
     /**
@@ -93,7 +93,7 @@ public class Mob extends BaseEntity {
      * 
      * @return
      */
-    public jv getMob() {
+    public jy getMob() {
         return entity;
     }
 
@@ -108,6 +108,6 @@ public class Mob extends BaseEntity {
         if (mob == null) {
             return false;
         }
-        return hl.a(mob, etc.getMCServer().e) instanceof jv;
+        return hn.a(mob, etc.getMCServer().e) instanceof jy;
     }
 }

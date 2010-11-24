@@ -1,9 +1,9 @@
 
 public class MobSpawner implements ComplexBlock {
 
-	ce spawner;
+	cf spawner;
 	
-	public MobSpawner(ce spawner) {
+	public MobSpawner(cf spawner) {
 		this.spawner = spawner;
 	}
 	
