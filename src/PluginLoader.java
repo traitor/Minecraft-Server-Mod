@@ -128,6 +128,10 @@ public class PluginLoader {
          */
         MOB_SPAWN,
         /**
+         * Calls onRedstoneChange
+         */
+        REDSTONE_CHANGE,
+        /**
          * Unused.
          */
         NUM_HOOKS
