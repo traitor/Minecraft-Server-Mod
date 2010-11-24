@@ -1,14 +1,12 @@
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import net.minecraft.server.MinecraftServer;
 
-public class by extends Thread {
-
+public class bz extends Thread {
     private MinecraftServer server;
 
-    public by(MinecraftServer paramMinecraftServer) {
+    public bz(MinecraftServer paramMinecraftServer) {
         this.server = paramMinecraftServer;
     }
 
