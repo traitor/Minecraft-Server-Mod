@@ -363,7 +363,9 @@ public abstract class PluginListener {
      * @param redstone Block of redstone which has just changed in current
      * @param oldLevel the old current
      * @param newLevel the new current
+     * @return the new current to use (newLevel to leave as-is)
      */
-    public void onRedstoneChange(Block block, int oldLevel, int newLevel) {
+    public int onRedstoneChange(Block block, int oldLevel, int newLevel) {
+        return newLevel;
     }
 }

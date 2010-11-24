@@ -65,6 +65,9 @@ public class dv extends ga { // Redstone wire
             }
         }
         if (i != j) {
+            j = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), i, j});
+        }
+        if (i != j) {
             parameo.b(paramInt1, paramInt2, paramInt3, j);
             parameo.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
 
@@ -112,8 +115,6 @@ public class dv extends ga { // Redstone wire
                 parameo.g(paramInt1, paramInt2 - 1, paramInt3, this.bh);
                 parameo.g(paramInt1, paramInt2 + 1, paramInt3, this.bh);
             }
-
-            etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), i, j});
         }
     }
 

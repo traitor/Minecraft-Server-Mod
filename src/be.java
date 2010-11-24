@@ -82,6 +82,11 @@ public class be extends ga { // Preassure Plates
             j = 1;
         }
 
+        if (j != i) {
+            j = (Integer)etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), i, j});
+            if (j > 0) j = 1;
+        }
+
         if ((j != 0) && (i == 0)) {
             parameo.b(paramInt1, paramInt2, paramInt3, 1);
             parameo.g(paramInt1, paramInt2, paramInt3, this.bh);
@@ -101,10 +106,6 @@ public class be extends ga { // Preassure Plates
 
         if (j != 0) {
             parameo.h(paramInt1, paramInt2, paramInt3, this.bh);
-        }
-
-        if (i != j) {
-            etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), i, j});
         }
     }
 

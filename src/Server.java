@@ -380,4 +380,25 @@ public class Server {
         localgj.c = 10;
         server.e.a(localgj);
     }
+
+    /**
+     * Forces the server to update the physics for blocks around the given block
+     *
+     * @param block the block that changed
+     */
+    public void updateBlockPhysics(Block block) {
+        updateBlockPhysics(block.getX(), block.getY(), block.getZ(), block.getData());
+    }
+
+    /**
+     * Forces the server to update the physics for blocks around the given block
+     *
+     * @param x the X coordinate of the block
+     * @param y the Y coordinate of the block
+     * @param z the Z coordinate of the block
+     * @param data the new data for the block
+     */
+    public void updateBlockPhysics(int x, int y, int z, int data) {
+        server.e.b(x, y, z, data);
+    }
 }
