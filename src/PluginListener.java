@@ -377,4 +377,12 @@ public abstract class PluginListener {
     public boolean onHealthChange(Player player,int oldValue,int newValue){
         return false;
     }
+
+    /**
+     * @param toSpawn The entity being spawned.
+     * @return return true to stop the entity from spawning.
+     */
+    public boolean onEntitySpawn(BaseEntity toSpawn) {
+        return false;
+    }
 }

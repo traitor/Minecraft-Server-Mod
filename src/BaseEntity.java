@@ -7,7 +7,7 @@
  */
 public class BaseEntity {
 
-    jy entity;
+    dx entity;
 
     /**
      * Returns the ID for this mob
@@ -147,7 +147,10 @@ public class BaseEntity {
      * @return
      */
     public int getHealth() {
-        return entity.aQ;
+        if (entity instanceof jy) {
+            return ((jy)entity).aQ;
+        }
+        return 0;
     }
 
     /**
@@ -156,7 +159,9 @@ public class BaseEntity {
      * @param health
      */
     public void setHealth(int health) {
-        entity.aP = health;
+        if (entity instanceof jy) {
+            ((jy)entity).aP = health;
+        }
     }
 
     public boolean isPlayer(){

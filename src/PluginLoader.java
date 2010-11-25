@@ -136,6 +136,10 @@ public class PluginLoader {
          */
         HEALTH_CHANGE,
         /**
+         * Calls onEntitySpawn
+         */
+        ENTITY_SPAWN,
+        /**
          * Unused.
          */
         NUM_HOOKS
@@ -485,6 +489,11 @@ public class PluginLoader {
                                 break;
                             case HEALTH_CHANGE:
                                 if (listener.onHealthChange((Player) parameters[0], (Integer) parameters[1], (Integer) parameters[2])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case ENTITY_SPAWN:
+                                if (listener.onEntitySpawn((BaseEntity) parameters[0])) {
                                     toRet = true;
                                 }
                                 break;

@@ -5,7 +5,7 @@
  * @author James
  */
 public class Mob extends BaseEntity {
-
+    private jy mob;
     /**
      * Creates a mob interface
      * 
@@ -13,7 +13,8 @@ public class Mob extends BaseEntity {
      *            name of mob
      */
     public Mob(String mob) {
-        this.entity = (jy) hn.a(mob, etc.getMCServer().e);
+        this.mob = (jy)hn.a(mob, etc.getMCServer().e);
+        entity = this.mob;
     }
 
     /**
@@ -25,7 +26,7 @@ public class Mob extends BaseEntity {
      *            location of mob
      */
     public Mob(String mob, Location location) {
-        this.entity = (jy) hn.a(mob, etc.getMCServer().e);
+        this.entity = hn.a(mob, etc.getMCServer().e);
         teleportTo(location);
     }
 
@@ -78,7 +79,7 @@ public class Mob extends BaseEntity {
      * Drops this mob's loot. Automatically called if health is set to 0.
      */
     public void dropLoot() {
-        entity.f(null);
+        mob.f(null);
     }
 
     public void setHealth(int health) {
@@ -94,7 +95,7 @@ public class Mob extends BaseEntity {
      * @return
      */
     public jy getMob() {
-        return entity;
+        return mob;
     }
 
     /**

@@ -64,7 +64,22 @@ public class Player extends BaseEntity {
     public void giveItem(Item item) {
         giveItem(item.getItemId(), item.getAmount());
     }
-    
+
+
+    /**
+     * @return ticks left of oxygen. 20 ticks = 1s
+     */
+    public int getOxygen() {
+        return entity.ad;
+    }
+
+    /**
+     * @param oxygen Set ticks left of oxygen. 20 ticks = 1s
+     */
+    public void setOxygen(int oxygen) {
+        entity.ad = oxygen;
+    }
+
     /**
      * Makes player send message.
      * 
