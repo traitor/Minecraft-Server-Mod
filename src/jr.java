@@ -107,7 +107,6 @@ public class jr extends ga {
                 if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, new Object[]{block, null})) {
                    parameo.d(paramInt1, paramInt2, paramInt3, this.bh);
                 }
-                parameo.d(paramInt1, paramInt2, paramInt3, this.bh);
             } else {
                 parameo.d(paramInt1, paramInt2, paramInt3, 0);
             }

@@ -46,8 +46,11 @@ public class jg extends fa implements ew {
     }
 
     public void c(String paramString) {
+        // Should we add this too here?
+        // etc.getLoader().callHook(PluginLoader.Hook.DISCONNECT, new Object[]{e});
         this.b.a(new ju(paramString));
         this.b.c();
+        this.d.f.a(new bh("§e" + this.e.as + " left the game."));
         this.d.f.c(this.e);
         this.c = true;
     }
@@ -351,6 +354,7 @@ public class jg extends fa implements ew {
     public void a(String paramString) {
         etc.getLoader().callHook(PluginLoader.Hook.DISCONNECT, new Object[]{e});
         a.info(this.e.as + " lost connection: " + paramString);
+        this.d.f.a(new bh("§e" + this.e.as + " left the game."));
         this.d.f.c(this.e);
         this.c = true;
     }
@@ -523,7 +527,8 @@ public class jg extends fa implements ew {
     }
 
     public void a(az paramaz) {
-        this.e.G();
-        b(new az());
+        if (this.e.aQ > 0) return;
+        
+        this.e = this.d.f.e(this.e); 
     }
 }
