@@ -82,12 +82,12 @@ public class jt {
         int k = this.b.b(paramInt1, paramInt2, paramInt3);
         boolean bool = b(paramInt1, paramInt2, paramInt3);
 
-        hl localhl = this.a.I();
+        hl localhl = this.a.H();
         if (localhl != null) {
             localhl.a(j, paramInt1, paramInt2, paramInt3);
             if (localhl.a == 0) {
                 localhl.a(this.a);
-                this.a.J();
+                this.a.I();
             }
         }
         if ((bool) && (this.a.b(ga.m[j]))) {

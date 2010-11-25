@@ -141,7 +141,7 @@ public class jy extends dx
     if (aQ <= 0) {
       aV += 1;
       if (aV > 20) {
-        M();
+        L();
         l();
         for (i = 0; i < 20; i++) {
           double d1 = W.nextGaussian() * 0.02D;
@@ -159,7 +159,7 @@ public class jy extends dx
     y = w;
   }
 
-  public void K() {
+  public void J() {
     for (int i = 0; i < 20; i++) {
       double d1 = W.nextGaussian() * 0.02D;
       double d2 = W.nextGaussian() * 0.02D;
@@ -549,7 +549,7 @@ public class jy extends dx
       else if (bool2)
         t += 0.03999999910593033D;
       else if (A) {
-        L();
+        K();
       }
 
     }
@@ -567,7 +567,7 @@ public class jy extends dx
       }
   }
 
-  protected void L()
+  protected void K()
   {
     t = 0.4199999868869782D;
   }
@@ -665,7 +665,7 @@ public class jy extends dx
     return paramFloat1 + f;
   }
 
-  public void M() {
+  public void L() {
   }
 
   public boolean a() {
