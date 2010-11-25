@@ -46,6 +46,8 @@ public class etc {
     private boolean logging = false;
     private boolean enableHealth = true;
     private boolean showUnknownCommand = true;
+    private String versionStr;
+    private boolean tainted = true;
     private int version = 1;                                                                                                                              // Version
     // is
     // meant
@@ -152,7 +154,22 @@ public class etc {
             if (url != null) {
                 InputStreamReader ins = new InputStreamReader(url.openStream());
                 BufferedReader bufferedReader = new BufferedReader(ins);
-                version = Integer.parseInt(bufferedReader.readLine());
+                String versionParam = bufferedReader.readLine();
+                if (versionParam.contains("git")) {
+                    version = -1;
+                    versionStr = versionParam;
+                    tainted = true;
+                } else {
+                    version = Integer.parseInt(versionParam);
+                    versionStr = version.toString(); // and back to a string.
+                    tainted = false;
+                }
+            } else {
+                // I'm a tainted build, probably.
+                version = -1;
+                versionStr = "Undefined version";
+                tainted = true;
+                // If any mods check the version.. #@!$
             }
         } catch (Exception e) {
             log.log(Level.SEVERE, "Exception while reading from server.properties", e);
@@ -509,7 +526,12 @@ public class etc {
             etc.getLoader().disablePlugin(split[1]);
             log.info("Plugin disabled.");
         } else if (split[0].equalsIgnoreCase("version")) {
-            log.info("Hey0 Server Mod Build " + version);
+            if (tainted || version < 0) {
+                log.info("THIS IS AN UNOFFICIAL BUILD OF HMOD");
+                log.info("Build information: " + versionStr);
+            } else {
+                log.info("Hey0 Server Mod Build " + version);
+            }
         } else {
             dontParseRegular = false;
         }
@@ -920,6 +942,24 @@ public class etc {
      */
     public int getVersion() {
         return version;
+    }
+
+    /**
+     * Return whether this build is "tainted"
+     *
+     * @return tainted
+     */
+    public boolean getTainted() { 
+        return tainted;
+    }
+
+    /**
+     * Return the specified string version of the build
+     *
+     * @return build/version
+     */
+    public String getVersionStr() {
+        return versionStr;
     }
 
     private Connection _getSQLConnection() {
