@@ -508,6 +508,7 @@ public class etc {
             log.info("Plugin disabled.");
         } else if (split[0].equalsIgnoreCase("version")) {
             log.info("Hey0 Server Mod Build " + version);
+            log.info("Using SK's build <http://sk89q.com>");
         } else {
             dontParseRegular = false;
         }

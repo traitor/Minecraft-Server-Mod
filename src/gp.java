@@ -33,6 +33,7 @@ public class gp {
         etc.setServer(paramMinecraftServer);
         etc.getInstance().loadData();
         a.info("Hey0 Server Mod Build " + etc.getInstance().getVersion());
+        a.info("Using SK's build <http://sk89q.com>");
         this.c = paramMinecraftServer;
         this.i = paramMinecraftServer.a("banned-players.txt");
         this.j = paramMinecraftServer.a("banned-ips.txt");

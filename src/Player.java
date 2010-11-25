@@ -948,6 +948,7 @@ public class Player extends BaseEntity {
                 }
             } else if (split[0].equalsIgnoreCase("/version")) {
                 sendMessage(Colors.Gold + "Hey0 Server Mod Build " + etc.getInstance().getVersion());
+                sendMessage(Colors.Gold + "Using SK's build <http://sk89q.com>");
             } else {
                 log.info(getName() + " tried command " + command);
                 if (etc.getInstance().showUnknownCommand()) {
