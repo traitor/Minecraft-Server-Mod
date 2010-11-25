@@ -500,7 +500,17 @@ public class PluginLoader {
                                     toRet = true;
                                 }
                                 break;
-                            case DAMAGE:                                if (listener.onDamage((BaseEntity) parameters[0], (BaseEntity) parameters[1])) {                                    toRet = true;                                }                                break;                            case HEALTH_CHANGE:                                if (listener.onHealthChange((Player) parameters[0], (Integer) parameters[1], (Integer) parameters[2])) {                                    toRet = true;                                }                                break;                            case REDSTONE_CHANGE:
+                            case DAMAGE:
+                                if (listener.onDamage((BaseEntity) parameters[0], (BaseEntity) parameters[1])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case HEALTH_CHANGE:
+                                if (listener.onHealthChange((Player) parameters[0], (Integer) parameters[1], (Integer) parameters[2])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case REDSTONE_CHANGE:
                                 toRet = listener.onRedstoneChange((Block) parameters[0], (Integer) parameters[1], (Integer) toRet);
                                 break;
                             case VERIFICATION_CHECK:
