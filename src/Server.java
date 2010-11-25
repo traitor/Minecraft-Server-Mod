@@ -286,14 +286,18 @@ public class Server {
      *            data
      * @return true if it was successful
      */
-    public boolean setBlockData(int x, int y, int z, int data) {
-        boolean toRet = server.e.c(x, y, z, data);
+    public boolean setBlockData(final int x, final int y, final int z, final int data) {
+    	bx.add(new Runnable() {
+    		public void run() {
+        server.e.c(x, y, z, data);
         etc.getMCServer().f.a(new fl(x, y, z, etc.getMCServer().e));
         ComplexBlock block = getComplexBlock(x, y, z);
         if (block != null) {
             block.update();
         }
-        return toRet;
+    			}
+    		});
+        return true;
     }
 
     /**
@@ -304,8 +308,13 @@ public class Server {
      * @param y
      * @param z
      */
-    public boolean setBlockAt(int blockType, int x, int y, int z) {
-        return server.e.d(x, y, z, blockType);
+    public boolean setBlockAt(final int blockType, final int x, final int y, final int z) {
+    	bx.add(new Runnable() {
+			public void run() {
+	    		server.e.d(x, y, z, blockType);				
+			}
+    	});
+		return true;
     }
 
     /**
