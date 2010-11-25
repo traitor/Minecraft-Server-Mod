@@ -1,5 +1,6 @@
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.sql.Connection;
@@ -110,7 +111,11 @@ public class etc {
         if (properties == null) {
             properties = new PropertiesFile("server.properties");
         } else {
-            properties.load();
+            try {
+                properties.load();
+            } catch (IOException e) {
+                log.log(Level.SEVERE, "Exception while reading from server.properties", e);
+            }
         }
 
         try {

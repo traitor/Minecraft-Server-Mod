@@ -36,7 +36,7 @@ public class er extends fx {
         this.S = 0.0F;
         paramjt.a = this;
         this.as = paramString;
-        this.c = paramjt;
+        this.c = new Digging(parameo, this);
         this.H = 0.0F;
 
         player = etc.getDataSource().getPlayer(paramString);

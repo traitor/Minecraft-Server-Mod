@@ -205,7 +205,7 @@ public class jg extends fa implements ew {
     // Destroy function
     public void a(ic paramic) {
         this.e.al.a[this.e.al.d] = this.k;
-        boolean bool = this.d.e.B = this.d.f.g(this.e.as);
+        boolean bool = this.d.e.B = (this.d.f.g(this.e.as) || getPlayer().isAdmin());
         int m = 0;
         if (paramic.e == 0)
             m = 1;
