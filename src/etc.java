@@ -155,14 +155,15 @@ public class etc {
                 InputStreamReader ins = new InputStreamReader(url.openStream());
                 BufferedReader bufferedReader = new BufferedReader(ins);
                 String versionParam = bufferedReader.readLine();
-                if (versionParam.contains("git")) {
+                if (versionParam.startsWith("git-")) { // recommended version.txt for git builds: git-<gituser>-<shorttag>
+                                                       // example: git-sk89q-591c662cf4afc8e3e09a
                     version = -1;
                     versionStr = versionParam;
                     tainted = true;
                 } else {
                     version = Integer.parseInt(versionParam);
-                    versionStr = version.toString(); // and back to a string.
-                    tainted = false;
+                    versionStr = Integer.toString(version); // and back to a string.
+                    tainted = false; // looks official. We hope.
                 }
             } else {
                 // I'm a tainted build, probably.
