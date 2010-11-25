@@ -12,11 +12,9 @@ public class Digging extends jt {
 
     public boolean c(int x, int y, int z) {
         Block block = etc.getServer().getBlockAt(x, y, z);
-        Boolean result = (Boolean) etc.getLoader().callHook(
-                PluginLoader.Hook.BLOCK_BROKEN, new Object[]{(ep) a, block});
-        if (result) {
+        Boolean result = (Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, new Object[]{(er) a, block});
+        if (result)
             return true;
-        }
         return super.c(x, y, z);
     }
 }
