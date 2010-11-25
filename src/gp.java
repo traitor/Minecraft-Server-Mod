@@ -130,14 +130,25 @@ public class gp {
     }
 
     public void c(er paramer) {
+        this.l.a(paramer);
+        this.c.e.d(paramer);
+        this.b.remove(paramer);
         try {
             this.if_b2.invoke(d, paramer);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        this.l.a(paramer);
-        this.c.e.d(paramer);
+    }
+    
+    public void d(er paramer) {
+        try {
+            this.if_b2.invoke(d, paramer);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
         this.b.remove(paramer);
+        this.c.e.e(paramer);
+
     }
 
     public er a(fq paramfq, String paramString1, String paramString2) {
@@ -233,6 +244,35 @@ public class gp {
             l++;
         }
         return builder.toString();
+    }
+    
+    public er e(er paramer) {
+        d(paramer);
+        this.c.k.a(paramer);
+
+        er localer = new er(this.c, this.c.e, paramer.as, new jt(this.c.e));
+
+        localer.g = paramer.g;
+        localer.a = paramer.a;
+
+        this.c.e.A.d((int) localer.p >> 4, (int) localer.r >> 4);
+        while (this.c.e.a(localer, localer.z).size() != 0) {
+            localer.a(localer.p, localer.q + 1.0D, localer.r);
+        }
+
+        localer.a.b(new az());
+        localer.a.d();
+        localer.a.a(localer.p, localer.q, localer.r, localer.v, localer.w);
+
+        try {
+            this.if_a3.invoke(d, localer);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        this.c.e.a(localer);
+        this.b.add(localer);
+
+        return localer;
     }
 
     public void b() {
