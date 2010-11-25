@@ -368,4 +368,33 @@ public abstract class PluginListener {
     public int onRedstoneChange(Block block, int oldLevel, int newLevel) {
         return newLevel;
     }
+
+    /**
+     * Called when a living object is attacked.
+     * tip:
+     * Use isMob() and isPlayer() and getPlayer().
+     * @param attacker
+     *          object that is attacking.
+     * @param defender
+     *          object that is defending.
+     * @return
+     */
+    public boolean onDamage(BaseEntity attacker,BaseEntity defender){
+        return false;
+    }
+
+    /**
+     * Called when a players health changes.
+     * @param player
+     *              the player which health is changed.
+     * @param oldValue
+     *              old lives value
+     * @param newValue
+     *              new lives value
+     * @return
+     *      return true to stop the change.
+     */
+    public boolean onHealthChange(Player player,int oldValue,int newValue){
+        return false;
+    }
 }

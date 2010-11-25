@@ -43,6 +43,7 @@ public class etc {
     private PropertiesFile properties;
     private PluginLoader loader;
     private boolean logging = false;
+    private boolean enableHealth = true;
     private boolean showUnknownCommand = true;
     private int version = 1;                                                                                                                              // Version
     // is
@@ -140,6 +141,7 @@ public class etc {
             }
             spawnProtectionSize = properties.getInt("spawn-protection-size", 16);
             logging = properties.getBoolean("logging", false);
+            enableHealth = properties.getBoolean("enableHealth", true);
             showUnknownCommand = properties.getBoolean("show-unknown-command", true);
             URL url = this.getClass().getResource("/version.txt");
             if (url != null) {
@@ -305,6 +307,14 @@ public class etc {
         return logging;
     }
 
+    /**
+     * Returns true if we want health to be enabled.
+     *
+     * @return
+     */
+    public boolean isHealthEnabled(){
+        return enableHealth;
+    }
     /**
      * Adds command to the /help list
      * 
