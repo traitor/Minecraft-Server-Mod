@@ -397,4 +397,18 @@ public abstract class PluginListener {
     public int onRedstoneChange(Block block, int oldLevel, int newLevel) {
         return newLevel;
     }
+
+    /**
+     * Called when the game is checking the physics for a certain block.
+     * This method is called frequently whenever a nearby block is changed,
+     * or if the block has just been placed.
+     * Currently the only supported blocks are sand, gravel and portals.
+     *
+     * @param block Block which requires special physics
+     * @param boolean true if this block has just been placed
+     * @return true if you do want to stop the default physics for this block
+     */
+    public boolean onBlockPhysics(Block block, boolean placed) {
+    	return false;
+    }
 }

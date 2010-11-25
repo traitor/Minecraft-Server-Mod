@@ -140,6 +140,10 @@ public class PluginLoader {
          */
         REDSTONE_CHANGE,
         /**
+         * Calls onBlockPhysics
+         */
+        BLOCK_PHYSICS,
+        /**
          * Unused.
          */
         NUM_HOOKS
@@ -499,6 +503,11 @@ public class PluginLoader {
                                 break;
                             case REDSTONE_CHANGE:
                                 toRet = listener.onRedstoneChange((Block) parameters[0], (Integer) parameters[1], (Integer) toRet);
+                                break;
+                            case BLOCK_PHYSICS:
+                                if (listener.onBlockPhysics((Block) parameters[0], (Boolean) parameters[1])) {
+                                    toRet = true;
+                                }
                                 break;
                         }
                     } catch (UnsupportedOperationException ex) {
