@@ -187,7 +187,9 @@ public class gu
   private void b(er trigger) {
     Object localObject;
     ir toRet = null;
-    BaseEntity toSend = null;
+    BaseEntity toSend = new BaseEntity();
+    toSend.entity = this.a;
+
     if ((this.a instanceof gj)) { // Lava entity(?)
       localObject = (gj)this.a;
       l locall = new l((gj)localObject);
@@ -221,16 +223,11 @@ public class gu
     if ((this.a instanceof cj)) { // Dynamite
       toRet = new ea(this.a, 50);
     }
-    if (toSend != null) {
-        if(!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.ENTITY_SPAWN, new Object[] { toSend })) {
+    if(!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.ENTITY_SPAWN, new Object[] { toSend })) {
              trigger.a.b(toRet);
              System.out.println("Spawned Entity.");
-        }
-    } else {
-         trigger.a.b(toRet);
     }
     //throw new IllegalArgumentException("Don't know how to add " + this.a.getClass() + "!");
   }
   //CONSIDER MOVING JY IN BASE ENTITIY TO A DX TO ALLOW A HOOK TO PASS THESE OVER, THEN CAST FOR HEALTH.
 }
-sds
