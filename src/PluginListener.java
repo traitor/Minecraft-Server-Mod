@@ -378,7 +378,6 @@ public abstract class PluginListener {
     public boolean onHealthChange(Player player,int oldValue,int newValue){
         return false;
     }
-
     /*
      * Called whenever a redstone source (wire, switch, torch) changes its
      * current.

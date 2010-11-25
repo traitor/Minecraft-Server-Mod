@@ -142,7 +142,7 @@ public class etc {
             }
             spawnProtectionSize = properties.getInt("spawn-protection-size", 16);
             logging = properties.getBoolean("logging", false);
-            enableHealth = properties.getBoolean("enableHealth", true);
+            enableHealth = properties.getBoolean("enable-health", true);
             showUnknownCommand = properties.getBoolean("show-unknown-command", true);
             verifTookTooLongMessage = properties.getString("took-too-long-message", "Took too long to log in");
             URL url = this.getClass().getResource("/version.txt");
