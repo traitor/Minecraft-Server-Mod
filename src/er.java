@@ -64,7 +64,9 @@ public class er extends fx {
     }
 
     public void f(dx paramdx) {
-        this.al.f();
+        // drops inventory on death.
+        if(etc.getInstance().isHealthEnabled())
+            this.al.f();
     }
 
     public boolean a(dx paramdx, int paramInt) {
@@ -81,6 +83,27 @@ public class er extends fx {
         return super.a(paramdx, paramInt);
     }
 
+    /**
+     Heal health by paramInt
+     2 = 1 heart.
+     20 = max health.
+
+     Code for decrease health ( from fx.class )
+     *  Decrease damage because of armor ( al = inventory )
+            int i = 25 - al.e();
+     * paramInt is the ammount of health to decrease ?
+     * add left over damage ?
+            int j = paramInt * i + a;
+     * decrease durability of armor ?
+            al.c(paramInt);
+     * the actual damage experienced.
+            paramInt = j / 25;
+     * store left over damage ?
+            a = (j % 25);
+            super.c(paramInt);
+     *
+     *
+     */
     public void a(int paramInt) {
         super.a(paramInt);
     }
@@ -141,8 +164,11 @@ public class er extends fx {
         }
 
         if (this.aQ != this.bu) {
-            this.a.b(new ed(this.aQ));
-            this.bu = this.aQ;
+            //updates your health when it is changed.
+            if(etc.getInstance().isHealthEnabled() && !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.HEALTH_CHANGE, new Object[]{this, this.bu, this.aQ})){
+                this.a.b(new ed(this.aQ));
+                this.bu = this.aQ;
+            }
         }
     }
 
@@ -179,8 +205,12 @@ public class er extends fx {
         this.a.a(this.p, this.q, this.r, this.v, this.w);
     }
 
+    //on die
     public void G() {
         this.aQ = 20;
+        if(!etc.getInstance().isHealthEnabled()){
+            return;
+        }
 
         int i = this.l.m;
         int j = this.l.o;
@@ -193,8 +223,8 @@ public class er extends fx {
         }
 
         this.a.a(i + 0.5D, k, j + 0.5D, 0.0F, 0.0F);
+        // send respawn packet.
         this.a.b(new co(i, k, j));
-
         this.bu = -1;
         this.Z = 0;
         this.A = true;

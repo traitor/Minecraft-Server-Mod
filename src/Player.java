@@ -1448,14 +1448,35 @@ public class Player extends BaseEntity {
     }
 
     /**
-     * This doesn't work and only screws things up.
-     * 
+     * Sets the players health.
+     * 20 = max health
+     * 1 = 1/2 heart
+     * 2 = 1 heart
+     *
      * @param health
      */
     public void setHealth(int health) {
-        // Do nothing. Setting health fucks shit up on the server.
+        if(health < -1) health = -1;
+        if(health > 20) health = 20;
+        user.aQ = health;
     }
 
+    /**
+     * Returns the players health.
+     * 
+     * @return
+     */
+    public int getHealth(){
+        return user.aQ;
+    }
+    /**
+     * Increase player health.
+     * @param health
+     *          amount of health to increase the players health with.
+     */
+    public void increaseHealth(int health){
+        user.a(health);
+    }
     /**
      * Returns true if the player is muted
      * 
