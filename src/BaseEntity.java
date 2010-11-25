@@ -158,4 +158,24 @@ public class BaseEntity {
     public void setHealth(int health) {
         entity.aP = health;
     }
+
+    public boolean isPlayer(){
+        return entity instanceof er;
+    }
+    public boolean isMob(){
+        return entity instanceof gb;
+    }
+    public boolean isAnimal(){
+        return entity instanceof ax;
+    }
+    public Player getPlayer(){
+        if(!isPlayer())
+            return null;
+
+        er p = (er) entity;
+        Player player = etc.getServer().getPlayer(p.as);
+        player.setUser(p);
+
+        return player;
+     }
 }
