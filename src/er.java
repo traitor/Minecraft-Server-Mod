@@ -165,9 +165,12 @@ public class er extends fx {
 
         if (this.aQ != this.bu) {
             //updates your health when it is changed.
-            if(etc.getInstance().isHealthEnabled() && !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.HEALTH_CHANGE, new Object[]{this, this.bu, this.aQ})){
+            if(etc.getInstance().isHealthEnabled() && !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.HEALTH_CHANGE, new Object[]{getPlayer(), this.bu, this.aQ})){
                 this.a.b(new ed(this.aQ));
                 this.bu = this.aQ;
+            }else{
+                this.aQ = 20;
+                this.aZ = false;
             }
         }
     }
