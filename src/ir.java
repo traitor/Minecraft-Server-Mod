@@ -79,10 +79,10 @@ public abstract class ir {
         a(3, bh.class); // Chat
         a(4, gh.class); // Time
         a(5, u.class); // Inventory
-        a(6, co.class); // ?
+        a(6, co.class); // do respawn ?
         a(7, a.class); // ?
-        a(8, ed.class); // ?
-        a(9, az.class); // ?
+        a(8, ed.class); // received damage
+        a(9, az.class); // do die packet
 
         a(10, hb.class); // 'Flying'
         a(11, ae.class); // Player position (anim related)
