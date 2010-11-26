@@ -36,7 +36,7 @@ public class er extends fx {
         this.S = 0.0F;
         paramjt.a = this;
         this.as = paramString;
-        this.c = paramjt;
+        this.c = new Digging(parameo, this);
         this.H = 0.0F;
 
         player = etc.getDataSource().getPlayer(paramString);
@@ -64,7 +64,9 @@ public class er extends fx {
     }
 
     public void f(dx paramdx) {
-        this.al.f();
+        // drops inventory on death.
+        if(etc.getInstance().isHealthEnabled())
+            this.al.f();
     }
 
     public boolean a(dx paramdx, int paramInt) {
@@ -81,6 +83,27 @@ public class er extends fx {
         return super.a(paramdx, paramInt);
     }
 
+    /**
+     Heal health by paramInt
+     2 = 1 heart.
+     20 = max health.
+
+     Code for decrease health ( from fx.class )
+     *  Decrease damage because of armor ( al = inventory )
+            int i = 25 - al.e();
+     * paramInt is the ammount of health to decrease ?
+     * add left over damage ?
+            int j = paramInt * i + a;
+     * decrease durability of armor ?
+            al.c(paramInt);
+     * the actual damage experienced.
+            paramInt = j / 25;
+     * store left over damage ?
+            a = (j % 25);
+            super.c(paramInt);
+     *
+     *
+     */
     public void a(int paramInt) {
         super.a(paramInt);
     }
@@ -141,8 +164,14 @@ public class er extends fx {
         }
 
         if (this.aQ != this.bu) {
-            this.a.b(new ed(this.aQ));
-            this.bu = this.aQ;
+            //updates your health when it is changed.
+            if(etc.getInstance().isHealthEnabled() && !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.HEALTH_CHANGE, new Object[]{getPlayer(), this.bu, this.aQ})){
+                this.a.b(new ed(this.aQ));
+                this.bu = this.aQ;
+            }else{
+                this.aQ = 20;
+                this.aZ = false;
+            }
         }
     }
 
@@ -177,32 +206,6 @@ public class er extends fx {
         super.e(paramdx);
         this.a.b(new s(this, this.k));
         this.a.a(this.p, this.q, this.r, this.v, this.w);
-    }
-
-    public void G() {
-        this.aQ = 20;
-
-        int i = this.l.m;
-        int j = this.l.o;
-        int k = this.l.n;
-
-        if (!this.l.q.e) {
-            i += this.W.nextInt(20) - 10;
-            k = this.l.e(i, j);
-            j += this.W.nextInt(20) - 10;
-        }
-
-        this.a.a(i + 0.5D, k, j + 0.5D, 0.0F, 0.0F);
-        this.a.b(new co(i, k, j));
-
-        this.bu = -1;
-        this.Z = 0;
-        this.A = true;
-        this.ad = 300;
-        this.aa = 300;
-
-        this.aZ = false;
-        this.G = false;
     }
 
     protected void a(double paramDouble, boolean paramBoolean) {

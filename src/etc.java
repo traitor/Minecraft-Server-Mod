@@ -1,5 +1,6 @@
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.sql.Connection;
@@ -44,7 +45,10 @@ public class etc {
     private String verifTookTooLongMessage;
     private PluginLoader loader;
     private boolean logging = false;
+    private boolean enableHealth = true;
     private boolean showUnknownCommand = true;
+    private String versionStr;
+    private boolean tainted = true;
     private int version = 1;                                                                                                                              // Version
     // is
     // meant
@@ -109,7 +113,11 @@ public class etc {
         if (properties == null) {
             properties = new PropertiesFile("server.properties");
         } else {
-            properties.load();
+            try {
+                properties.load();
+            } catch (IOException e) {
+                log.log(Level.SEVERE, "Exception while reading from server.properties", e);
+            }
         }
 
         try {
@@ -141,13 +149,30 @@ public class etc {
             }
             spawnProtectionSize = properties.getInt("spawn-protection-size", 16);
             logging = properties.getBoolean("logging", false);
+            enableHealth = properties.getBoolean("enable-health", true);
             showUnknownCommand = properties.getBoolean("show-unknown-command", true);
             verifTookTooLongMessage = properties.getString("took-too-long-message", "Took too long to log in");
             URL url = this.getClass().getResource("/version.txt");
             if (url != null) {
                 InputStreamReader ins = new InputStreamReader(url.openStream());
                 BufferedReader bufferedReader = new BufferedReader(ins);
-                version = Integer.parseInt(bufferedReader.readLine());
+                String versionParam = bufferedReader.readLine();
+                if (versionParam.startsWith("git-")) { // recommended version.txt for git builds: git-<gituser>-<shorttag>
+                                                       // example: git-sk89q-591c662cf4afc8e3e09a
+                    version = -1;
+                    versionStr = versionParam;
+                    tainted = true;
+                } else {
+                    version = Integer.parseInt(versionParam);
+                    versionStr = Integer.toString(version); // and back to a string.
+                    tainted = false; // looks official. We hope.
+                }
+            } else {
+                // I'm a tainted build, probably.
+                version = -1;
+                versionStr = "Undefined version";
+                tainted = true;
+                // If any mods check the version.. #@!$
             }
         } catch (Exception e) {
             log.log(Level.SEVERE, "Exception while reading from server.properties", e);
@@ -308,6 +333,14 @@ public class etc {
         return logging;
     }
 
+    /**
+     * Returns true if we want health to be enabled.
+     *
+     * @return
+     */
+    public boolean isHealthEnabled(){
+        return enableHealth;
+    }
     /**
      * Adds command to the /help list
      * 
@@ -497,7 +530,12 @@ public class etc {
             etc.getLoader().disablePlugin(split[1]);
             log.info("Plugin disabled.");
         } else if (split[0].equalsIgnoreCase("version")) {
-            log.info("Hey0 Server Mod Build " + version);
+            if (tainted || version < 0) {
+                log.info("THIS IS AN UNOFFICIAL BUILD OF HMOD");
+                log.info("Build information: " + versionStr);
+            } else {
+                log.info("Hey0 Server Mod Build " + version);
+            }
         } else {
             dontParseRegular = false;
         }
@@ -908,6 +946,24 @@ public class etc {
      */
     public int getVersion() {
         return version;
+    }
+
+    /**
+     * Return whether this build is "tainted"
+     *
+     * @return tainted
+     */
+    public boolean getTainted() { 
+        return tainted;
+    }
+
+    /**
+     * Return the specified string version of the build
+     *
+     * @return build/version
+     */
+    public String getVersionStr() {
+        return versionStr;
     }
 
     private Connection _getSQLConnection() {

@@ -67,6 +67,7 @@ public class fq extends fa {
             jg jg1 = new jg(e, b, er1);
             jg1.b(new ad("", "", er1.g, e.e.u, (byte)e.e.q.g));
             jg1.b(new co(e.e.m, e.e.n, e.e.o));
+            e.f.a(new bh((new StringBuilder()).append("\247e").append(er1.as).append(" joined the game.").toString()));
             e.f.a(er1);
             jg1.a(er1.p, er1.q, er1.r, er1.v, er1.w);
             jg1.d();
