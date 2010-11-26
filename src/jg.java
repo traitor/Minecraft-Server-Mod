@@ -365,7 +365,7 @@ public class jg extends fa implements ew {
         // hMod: disconnect!
         etc.getLoader().callHook(PluginLoader.Hook.DISCONNECT, new Object[]{e});
         a.info(this.e.as + " lost connection: " + paramString);
-        this.d.f.a(new bh( "§7" + this.e.as + " left the game."));
+        this.d.f.a(new bh( "§e" + this.e.as + " left the game."));
         this.d.f.c(this.e);
         this.c = true;
     }
