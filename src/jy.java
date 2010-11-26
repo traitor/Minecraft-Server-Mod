@@ -528,6 +528,12 @@ public class jy extends dx {
         aS = paramv.c("HurtTime");
         aV = paramv.c("DeathTime");
         aW = paramv.c("AttackTime");
+
+        // hMod: Lets unbreak 'dead' characters so admins don't have to delete .dat files anymore >.>
+        if (aQ <= 0 && aV > 20) {
+            aQ = 20;
+            aV = 0;
+        }
     }
 
     @Override
