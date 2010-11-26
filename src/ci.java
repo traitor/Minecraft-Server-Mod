@@ -9,17 +9,18 @@ public class ci {
     private Random b = new Random();
 
     public void a(eo parameo, dx paramdx, double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat) {
+        // hMod: store block location of explosion
         Block block = new Block((int) parameo.a((int) Math.floor(paramDouble1), (int) Math.floor(paramDouble2), (int) Math.floor(paramDouble3)), (int) Math.floor(paramDouble1), (int) Math.floor(paramDouble2), (int) Math.floor(paramDouble3));
 
-        //dynamite (notch failed since he made the type null) :/
+        // hMod: dynamite (notch failed since he made the type null) :/
         if (paramdx == null) {
             block.setStatus(1);
-        }
-        //Creeper
-        else if (paramdx instanceof fm) {
+        } else if (paramdx instanceof fm) {
+            //Creeper
             block.setStatus(2);
         }
 
+        // hMod: allow explosion
         if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.EXPLODE, new Object[]{block})) {
             return;
         }

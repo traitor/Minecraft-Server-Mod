@@ -4,10 +4,18 @@ public class dt extends ay implements kc {
     private int g = 0;
     private int h = 0;
 
+    /**
+     * Get contents of the furnace block
+     * @return
+     */
     public hl[] getContents() {
         return e;
     }
-
+    
+    /**
+     * Set contents of the furnace block
+     * @return
+     */
     public void setContents(hl[] e) {
         this.e = e;
     }

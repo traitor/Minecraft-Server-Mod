@@ -18,7 +18,9 @@ public class ar extends cz {
     }
 
     public void a(eo parameo, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
+        // hMod: Store originating block
         Block blockFrom = new Block(this.bh, paramInt1, paramInt2, paramInt3);
+        
         int i = g(parameo, paramInt1, paramInt2, paramInt3);
 
         int j = 1;
@@ -77,7 +79,7 @@ public class ar extends cz {
             i(parameo, paramInt1, paramInt2, paramInt3);
         }
         if (l(parameo, paramInt1, paramInt2 - 1, paramInt3)) {
-            // downwards flow.
+            // hMod: downwards flow.
             Block blockTo = new Block(0, paramInt1, paramInt2 - 1, paramInt3);
             if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo})) {
                 if (i >= 8) {
@@ -87,7 +89,6 @@ public class ar extends cz {
                 }
             }
         } else if ((i >= 0) && ((i == 0) || (k(parameo, paramInt1, paramInt2 - 1, paramInt3)))) {
-            //sidewards flow.
             boolean[] arrayOfBoolean = j(parameo, paramInt1, paramInt2, paramInt3);
             n = i + j;
             if (i >= 8) {
@@ -96,6 +97,7 @@ public class ar extends cz {
             if (n >= 8) {
                 return;
             }
+            // hMod: sidewards flow.
             if (arrayOfBoolean[0] != false) {
                 Block blockTo = new Block(0, paramInt1 - 1, paramInt2, paramInt3);
                 if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo})) 

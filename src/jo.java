@@ -179,9 +179,11 @@ public class jo implements bu {
         return true;
     }
 
+    // hMod: Load status
     boolean loaded = false;
 
     public boolean a() {
+        // hMod: Load once!
         if (!loaded) {
             etc.getLoader();
             loaded = true;

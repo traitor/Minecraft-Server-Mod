@@ -1,7 +1,7 @@
 
 import java.util.Random;
 
-public class iu extends ga { // Lever
+public class iu extends ga {
 
     protected iu(int paramInt1, int paramInt2) {
         super(paramInt1, paramInt2, jw.n);
@@ -136,6 +136,7 @@ public class iu extends ga { // Lever
 
         int old = (k != 8) ? 1 : 0;
         int current = (k == 8) ? 1 : 0;
+        // hMod: Allow the lever to change the current
         current = (Integer)etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), old, current});
 
         if ((current > 0) == (k == 8)) {
