@@ -949,7 +949,7 @@ public class etc {
                 URL manifestUrl = new URL("jar:" + classContainer + "!/META-INF/MANIFEST.MF");
                 Manifest manifest = new Manifest(manifestUrl.openStream());
                 Attributes attrib = manifest.getMainAttributes();
-                String ver = (String)attrib.getValue("WorldGuard-Version");
+                String ver = (String)attrib.getValue("SK-hMod-Version");
                 skVersion = ver != null ? ver : "(unavailable)";
             } catch (IOException e) {
                 skVersion = "(unknown)";
