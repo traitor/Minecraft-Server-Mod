@@ -148,18 +148,6 @@ public class gp {
         }
     }
 
-    public void d(er paramer) {
-        // hMod: reflection to get around 'if'
-        try {
-            this.if_b2.invoke(d, paramer);
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-        this.b.remove(paramer);
-        this.c.e.e(paramer);
-
-    }
-
     public er a(fq paramfq, String paramString1, String paramString2) {
         if (this.f.contains(paramString1.trim().toLowerCase())) {
             paramfq.b("You are banned from this server!");
@@ -257,9 +245,17 @@ public class gp {
         return builder.toString();
     }
 
-    public er e(er paramer) {
-        d(paramer);
+    public er d(er paramer) {
         this.c.k.a(paramer);
+        this.c.k.b(paramer);
+        // hMod: reflection to get around 'if'
+        try {
+            this.if_b2.invoke(d, paramer);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        this.b.remove(paramer);
+        this.c.e.e(paramer);
 
         er localer = new er(this.c, this.c.e, paramer.as, new jt(this.c.e));
 
@@ -272,7 +268,6 @@ public class gp {
         }
 
         localer.a.b(new az());
-        localer.a.d();
         localer.a.a(localer.p, localer.q, localer.r, localer.v, localer.w);
 
         // hMod: reflection to get around 'if'
