@@ -162,7 +162,8 @@ public class hi implements kc {
     }
 
     public void b(eb parameb) {
-        this.a = new hl[37]; // Because Notch doesn't have to test anything >.>
+         // hMod: Because Notch doesn't have to test anything >.>
+        this.a = new hl[37];
         this.b = new hl[4];
         this.c = new hl[4];
         for (int i = 0; i < parameb.b(); i++) {

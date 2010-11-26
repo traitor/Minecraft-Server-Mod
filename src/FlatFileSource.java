@@ -496,7 +496,7 @@ public class FlatFileSource extends DataSource {
                 writer.write("meat:319\r\n");
                 writer.write("pork:319\r\n");
                 writer.write("cookedmeat:320\r\n");
-                writer.write("cookedport:320\r\n");
+                writer.write("cookedpork:320\r\n");
                 writer.write("painting:321\r\n");
                 writer.write("paintings:321\r\n");
                 writer.write("goldenapple:322\r\n");

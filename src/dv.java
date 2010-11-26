@@ -1,7 +1,7 @@
 
 import java.util.Random;
 
-public class dv extends ga { // Redstone wire
+public class dv extends ga {
 
     private boolean a = true;
 
@@ -65,6 +65,7 @@ public class dv extends ga { // Redstone wire
             }
         }
         if (i != j) {
+            // hMod: Allow redstone wire current changes
             j = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), i, j});
         }
         if (i != j) {

@@ -82,7 +82,7 @@ public class jr extends ga {
 
                         int i2 = h(parameo, k, n, m);
                         if ((i2 > 0) && (paramRandom.nextInt(i1) <= i2)) {
-                            //dynamic spreading of fire.
+                            // hMod: dynamic spreading of fire.
                             // avg call amount per placed block of fire ~ 4
                             Block block = new Block(parameo.a(k, n, m), k, n, m);
                             block.setStatus(3);
@@ -101,7 +101,7 @@ public class jr extends ga {
         if (paramRandom.nextInt(paramInt4) < i) {
             int j = parameo.a(paramInt1, paramInt2, paramInt3) == ga.am.bh ? 1 : 0;
             if (paramRandom.nextInt(2) == 0) {
-                //VERY SLOW dynamic spreading of fire.
+                // hMod: VERY SLOW dynamic spreading of fire.
                 Block block = new Block(parameo.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
                 block.setStatus(3);
                 if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, new Object[]{block, null})) {

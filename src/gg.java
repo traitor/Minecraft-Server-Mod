@@ -25,7 +25,7 @@ public class gg {
             a.log(Level.WARNING, "Failed to log to server.log", localException);
         }
         
-        // Keep these files logged.
+        // hMod: Keep the serveroutput logs.
         File log = new File("logs");
         try {
             if (!log.exists()) {

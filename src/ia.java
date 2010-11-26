@@ -1,10 +1,18 @@
 public class ia extends ay implements kc {
     private hl[] e = new hl[36];
     
+    /**
+     * Get contents of the chest block
+     * @return
+     */
     public hl[] getContents() {
         return e;
     }
-
+    
+    /**
+     * Set contents of the chest block
+     * @return
+     */ 
     public void setContents(hl[] e) {
         this.e = e;
     }

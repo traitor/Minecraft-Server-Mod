@@ -30,6 +30,7 @@ public class jc extends fu {
         int i = parameo.a(paramInt1, paramInt2, paramInt3);
 
         if (i == 0) {
+            // hMod: Hook to control ignites -- TODO This needs some looking over!
             Block block = new Block(paramInt1, paramInt2, paramInt3, 0);
             block.setStatus(2);
             //fire lighter check
@@ -45,7 +46,6 @@ public class jc extends fu {
                 //set block to air.
                 parameo.d(paramInt1, paramInt2, paramInt3, 0);
             }
-            parameo.d(paramInt1, paramInt2, paramInt3, ga.ar.bh);
         }
 
         paramhl.a(1);
