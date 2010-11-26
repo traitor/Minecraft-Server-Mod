@@ -530,9 +530,9 @@ public class jy extends dx {
         aW = paramv.c("AttackTime");
 
         // hMod: Lets unbreak 'dead' characters so admins don't have to delete .dat files anymore >.>
-        if (aQ <= 0 && aV > 20) {
-            aQ = 20;
-            aV = 0;
+        if (aQ < 0 || aV != 0) {
+            aQ = 20; // Health
+            aV = 0; // DeathTime
         }
     }
 
