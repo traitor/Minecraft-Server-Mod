@@ -12,6 +12,8 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.jar.Manifest;
+import java.util.jar.Attributes;
 
 import net.minecraft.server.*;
 
@@ -47,7 +49,9 @@ public class etc {
     private boolean logging = false;
     private boolean enableHealth = true;
     private boolean showUnknownCommand = true;
-    private int version = 1;                                                                                                                              // Version
+    private String versionStr;
+    private boolean tainted = true;
+    private int version = 1;                                                                                                                             // Version
     // is
     // meant
     // to
@@ -60,6 +64,7 @@ public class etc {
     // stays
     // as
     // 1.
+    private String skVersion;
     private String driver, username, password, db;
 
     private etc() {
@@ -150,12 +155,9 @@ public class etc {
             enableHealth = properties.getBoolean("enable-health", true);
             showUnknownCommand = properties.getBoolean("show-unknown-command", true);
             verifTookTooLongMessage = properties.getString("took-too-long-message", "Took too long to log in");
-            URL url = this.getClass().getResource("/version.txt");
-            if (url != null) {
-                InputStreamReader ins = new InputStreamReader(url.openStream());
-                BufferedReader bufferedReader = new BufferedReader(ins);
-                version = Integer.parseInt(bufferedReader.readLine());
-            }
+            version = 12000;
+            versionStr = "SK's version";
+            tainted = true;
         } catch (Exception e) {
             log.log(Level.SEVERE, "Exception while reading from server.properties", e);
             // Just in case...
@@ -512,8 +514,7 @@ public class etc {
             etc.getLoader().disablePlugin(split[1]);
             log.info("Plugin disabled.");
         } else if (split[0].equalsIgnoreCase("version")) {
-            log.info("Hey0 Server Mod Build " + version);
-            log.info("Using SK's build <http://sk89q.com>");
+            log.info("SK's Build <http://www.sk89q.com> version " + etc.getInstance().getSKVersion());
         } else {
             dontParseRegular = false;
         }
@@ -924,6 +925,49 @@ public class etc {
      */
     public int getVersion() {
         return version;
+    }
+
+    /**
+     * Return whether this build is "tainted"
+     *
+     * @return tainted
+     */
+    public boolean getTainted() { 
+        return tainted;
+    }
+
+    /**
+     * Get SK's hMod version.
+     *
+     * @return
+     */
+    public String getSKVersion() {
+        if (skVersion == null) {
+            try {
+                String classContainer = etc.class.getProtectionDomain()
+                        .getCodeSource().getLocation().toString();
+                URL manifestUrl = new URL("jar:" + classContainer + "!/META-INF/MANIFEST.MF");
+                Manifest manifest = new Manifest(manifestUrl.openStream());
+                Attributes attrib = manifest.getMainAttributes();
+                String ver = (String)attrib.getValue("WorldGuard-Version");
+                skVersion = ver != null ? ver : "(unavailable)";
+            } catch (IOException e) {
+                skVersion = "(unknown)";
+            }
+
+            return skVersion;
+        } else {
+            return skVersion;
+        }
+    }
+
+    /**
+     * Return the specified string version of the build
+     *
+     * @return build/version
+     */
+    public String getVersionStr() {
+        return versionStr;
     }
 
     private Connection _getSQLConnection() {

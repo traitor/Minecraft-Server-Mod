@@ -141,6 +141,10 @@ public class PluginLoader {
          */
         REDSTONE_CHANGE,
         /**
+         * Calls onBlockPhysics
+         */
+        BLOCK_PHYSICS,
+        /**
          * Calls onVerificationCheck
          */
         VERIFICATION_CHECK,
@@ -512,6 +516,11 @@ public class PluginLoader {
                                 break;
                             case REDSTONE_CHANGE:
                                 toRet = listener.onRedstoneChange((Block) parameters[0], (Integer) parameters[1], (Integer) toRet);
+                                break;
+                            case BLOCK_PHYSICS:
+                                if (listener.onBlockPhysics((Block) parameters[0], (Boolean) parameters[1])) {
+                                    toRet = true;
+                                }
                                 break;
                             case VERIFICATION_CHECK:
                                 if (listener.shouldIgnoreVerification((String) parameters[0], (InetAddress) parameters[1])) {
