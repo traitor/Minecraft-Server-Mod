@@ -269,6 +269,7 @@ public abstract class PluginListener {
         return false;
     }
 
+
     /**
      * Called when either a sign, chest or furnace is changed.
      * 
@@ -327,7 +328,7 @@ public abstract class PluginListener {
     /*
      * Called when fluid wants to flow to a certain block.
      * (10 & 11 for lava and 8 & 9 for water)
-     * 
+     *
      * @param blockFrom
      *              the block where the fluid came from.
      *              (blocktype = fluid type)
@@ -340,7 +341,7 @@ public abstract class PluginListener {
     public boolean onFlow(Block blockFrom,Block blockTo) {
         return false;
     }
-    
+
     /**
      * @param mob Mob attempting to spawn.
      * @return true if you dont want mob to spawn.
@@ -378,20 +379,6 @@ public abstract class PluginListener {
         return false;
     }
 
-    /**
-     * Called when the game is checking the physics for a certain block.
-     * This method is called frequently whenever a nearby block is changed,
-     * or if the block has just been placed.
-     * Currently the only supported blocks are sand, gravel and portals.
-     *
-     * @param block Block which requires special physics
-     * @param boolean true if this block has just been placed
-     * @return true if you do want to stop the default physics for this block
-     */
-    public boolean onBlockPhysics(Block block, boolean placed) {
-    	return false;
-    }
-
     /*
      * Called whenever a redstone source (wire, switch, torch) changes its
      * current.
@@ -410,6 +397,20 @@ public abstract class PluginListener {
      */
     public int onRedstoneChange(Block block, int oldLevel, int newLevel) {
         return newLevel;
+    }
+
+    /**
+     * Called when the game is checking the physics for a certain block.
+     * This method is called frequently whenever a nearby block is changed,
+     * or if the block has just been placed.
+     * Currently the only supported blocks are sand, gravel and portals.
+     *
+     * @param block Block which requires special physics
+     * @param boolean true if this block has just been placed
+     * @return true if you do want to stop the default physics for this block
+     */
+    public boolean onBlockPhysics(Block block, boolean placed) {
+    	return false;
     }
 
     /**
