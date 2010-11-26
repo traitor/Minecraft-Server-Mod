@@ -947,7 +947,8 @@ public class Player extends BaseEntity {
                     sendMessage(Colors.Rose + "You are not targeting a mob spawner.");
                 }
             } else if (split[0].equalsIgnoreCase("/version")) {
-                sendMessage(Colors.Gold + "Using SK's build <http://sk89q.com>");
+                sendMessage(Colors.Gold + "Using SK's build <http://sk89q.com> version "
+                        + etc.getInstance().getSKVersion());
             } else {
                 log.info(getName() + " tried command " + command);
                 if (etc.getInstance().showUnknownCommand()) {
