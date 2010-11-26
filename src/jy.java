@@ -284,8 +284,6 @@ public class jy extends dx {
         ac = (av / 2);
     }
 
-    // do damage
-    // dx is the entity.
     @Override
     public boolean a(dx paramdx, int paramInt) {
         if (l.z) {
@@ -297,15 +295,7 @@ public class jy extends dx {
         }
 
         bd = 1.5F;
-        /*
-         * ar = flowing object (lava,water) dw = mini block ? bg = snow tile ?
-         * bp = fire ball ch = painting cj = dynamite entity dw = entity arrow
-         * fk = boat fx = base living human er = player gj = lava entity(fx ? )
-         * ib = falling sand jm = minecart ke = fish ? jy = base for living
-         * beings gb = mob entity ( t = giant; bv = spider; fb = skeleton; fm =
-         * creeper; gi = zombie; iy = pigzombie ) ax = animals (ig = chicken; hs
-         * = pig; cu = sheep; bf = cow ) hy = flying object ( ghast ? )
-         */
+        // hMod: the different entities are defined in hn
         if (paramdx != null && (paramdx instanceof gb || paramdx instanceof er || paramdx instanceof ax)) {
             BaseEntity attacker = new BaseEntity(), defender = new BaseEntity();
             attacker.entity = (jy) paramdx;

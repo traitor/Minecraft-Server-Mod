@@ -56,7 +56,7 @@ public class ay {
     }
 
     public void c() {
-        /* this.a.b(this.b, this.c, this.d, this); */
+        // hMod: Allow visibility of 'complex blocks'?? 
         // Hacky... but it works at least.
         for (Player player : etc.getServer().getPlayerList()) {
             ay localay = this;
