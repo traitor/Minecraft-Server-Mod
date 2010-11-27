@@ -137,7 +137,7 @@ public class BaseEntity {
      * @param health
      */
     public void setHealth(int health) {
-        entity.aP = health;
+        entity.aQ = health;
     }
 
     /**

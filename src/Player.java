@@ -17,7 +17,7 @@ import net.minecraft.server.MinecraftServer;
  */
 public class Player extends BaseEntity {
     
-    public static Logger log = Logger.getLogger("Minecraft");
+    private static final Logger log = Logger.getLogger("Minecraft");
     private er user;
     private int id = -1;
     private String prefix = "";
@@ -358,10 +358,9 @@ public class Player extends BaseEntity {
                         sendMessage(Colors.Rose + "You can't message yourself!");
                         return;
                     }
-                    String prefix = getColor();
 
-                    player.sendMessage("(MSG) " + prefix + "<" + getName() + "> " + Colors.White + etc.combineSplit(2, split, " "));
-                    sendMessage("(MSG) " + prefix + "<" + getName() + "> " + Colors.White + etc.combineSplit(2, split, " "));
+                    player.sendMessage("(MSG) " + getColor() + "<" + getName() + "> " + Colors.White + etc.combineSplit(2, split, " "));
+                    sendMessage("(MSG) " + getColor() + "<" + getName() + "> " + Colors.White + etc.combineSplit(2, split, " "));
                 } else {
                     sendMessage(Colors.Rose + "Couldn't find player " + split[1]);
                 }
@@ -677,8 +676,7 @@ public class Player extends BaseEntity {
                 if (split.length == 1) {
                     return;
                 }
-                String prefix = getColor();
-                String paramString2 = "* " + prefix + getName() + Colors.White + " " + command.substring(command.indexOf(" ")).trim();
+                String paramString2 = "* " + getColor() + getName() + Colors.White + " " + command.substring(command.indexOf(" ")).trim();
                 log.info("* " + getName() + " " + command.substring(command.indexOf(" ")).trim());
                 etc.getServer().messageAll(paramString2);
             } else if (split[0].equalsIgnoreCase("/sethome")) {
