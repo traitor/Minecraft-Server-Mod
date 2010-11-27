@@ -1129,9 +1129,8 @@ public class FlatFileSource extends DataSource {
                 if (line.startsWith("#") || line.equals("") || line.startsWith("﻿")) {
                     continue;
                 }
-                if (line.startsWith("@") && player.isInGroup(line.substring(1))) {
+                if (line.startsWith("@") && player.isInGroup(line.substring(1)))
                     return true;
-                }
                 if (line.equalsIgnoreCase(user)) {
                     return true;
                 }
@@ -1153,9 +1152,8 @@ public class FlatFileSource extends DataSource {
                 if (line.startsWith("#") || line.equals("") || line.startsWith("﻿")) {
                     continue;
                 }
-                if (line.startsWith("@") && player.isInGroup(line.substring(1))) {
+                if (line.startsWith("@") && player.isInGroup(line.substring(1)))
                     return true;
-                }
                 if (line.equalsIgnoreCase(user)) {
                     return true;
                 }

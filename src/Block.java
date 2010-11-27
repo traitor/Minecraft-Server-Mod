@@ -255,6 +255,10 @@ public class Block {
         }
     }
 
+    /**
+     * Returns this block's spawn data.
+     * @return
+     */
     public String getSpawnData() {
         return spawnData;
     }

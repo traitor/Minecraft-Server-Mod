@@ -116,6 +116,11 @@ public abstract class ItemArray {
         }
     }
 
+    /**
+     * Sets the specified slot with item
+     * @param item item to set
+     * @param slot slot to use
+     */
     public void setSlot(Item item, int slot) {
         setSlot(item.getItemId(), item.getAmount(), slot);
     }

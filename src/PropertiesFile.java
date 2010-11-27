@@ -49,6 +49,7 @@ public final class PropertiesFile {
 
     /**
      * Loads, or reloads, the properties file
+     * @throws IOException
      */
     public void load() throws IOException {
         BufferedReader reader;
@@ -303,8 +304,7 @@ public final class PropertiesFile {
     /**
      * Checks to see if this key exists
      * 
-     * @param key
-     *            the key to check
+     * @param var
      * @return true if key exists
      */
     public boolean containsKey(String var) {
@@ -336,8 +336,7 @@ public final class PropertiesFile {
     /**
      * Grabs the value from a key
      * 
-     * @param key
-     *            the key to parse
+     * @param var property to retreive
      * @return string if key exists
      */
     public String getProperty(String var) {

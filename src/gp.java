@@ -35,9 +35,9 @@ public class gp {
         // hMod: Store the server, load data, get cracking!
         etc.setServer(paramMinecraftServer);
         etc.getInstance().loadData();
-        if (!etc.getInstance().getTainted()) {
+        if (!etc.getInstance().getTainted())
             a.info("Hey0 Server Mod Build " + etc.getInstance().getVersion());
-        } else {
+        else {
             a.info("hMod Build Information: " + etc.getInstance().getVersionStr());
         }
         this.c = paramMinecraftServer;

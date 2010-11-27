@@ -16,7 +16,7 @@ import net.minecraft.server.MinecraftServer;
  * @author James
  */
 public class Player extends BaseEntity {
-
+    
     public static Logger log = Logger.getLogger("Minecraft");
     private er user;
     private int id = -1;
@@ -948,9 +948,9 @@ public class Player extends BaseEntity {
                     sendMessage(Colors.Rose + "You are not targeting a mob spawner.");
                 }
             } else if (split[0].equalsIgnoreCase("/version")) {
-                if (!etc.getInstance().getTainted()) {
+                if (!etc.getInstance().getTainted())
                     sendMessage(Colors.Gold + "Hey0 Server Mod Build " + etc.getInstance().getVersion());
-                } else {
+                else {
                     sendMessage(Colors.Gold + "Unofficial hMod Build " + etc.getInstance().getVersionStr());
                 }
             } else {
@@ -1301,13 +1301,16 @@ public class Player extends BaseEntity {
     /**
      * Adds the player to the specified group
      * 
-     * @param group
-     *            group to add player to
+     * @param group group to add player to
      */
     public void addGroup(String group) {
         this.groups.add(group);
     }
 
+    /**
+     * Removes specified group from list of groups
+     * @param group group to remove
+     */
     public void removeGroup(String group) {
         this.groups.remove(group);
     }
@@ -1462,12 +1465,10 @@ public class Player extends BaseEntity {
      * @param health
      */
     public void setHealth(int health) {
-        if (health < -1) {
+        if (health < -1)
             health = -1;
-        }
-        if (health > 20) {
+        if (health > 20)
             health = 20;
-        }
         user.aQ = health;
     }
 

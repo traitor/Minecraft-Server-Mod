@@ -101,27 +101,23 @@ public class ar extends cz {
             // hMod: sidewards flow.
             if (arrayOfBoolean[0] != false) {
                 Block blockTo = new Block(0, paramInt1 - 1, paramInt2, paramInt3);
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo})) {
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo}))
                     f(parameo, paramInt1 - 1, paramInt2, paramInt3, n);
-                }
             }
             if (arrayOfBoolean[1] != false) {
                 Block blockTo = new Block(0, paramInt1 + 1, paramInt2, paramInt3);
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo})) {
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo}))
                     f(parameo, paramInt1 + 1, paramInt2, paramInt3, n);
-                }
             }
             if (arrayOfBoolean[2] != false) {
                 Block blockTo = new Block(0, paramInt1, paramInt2, paramInt3 - 1);
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo})) {
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo}))
                     f(parameo, paramInt1, paramInt2, paramInt3 - 1, n);
-                }
             }
             if (arrayOfBoolean[3] != false) {
                 Block blockTo = new Block(0, paramInt1, paramInt2, paramInt3 + 1);
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo})) {
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo}))
                     f(parameo, paramInt1, paramInt2, paramInt3 + 1, n);
-                }
             }
         }
     }
@@ -176,9 +172,8 @@ public class ar extends cz {
             }
             if (paramInt4 < 4) {
                 int i1 = a(parameo, k, m, n, paramInt4 + 1, j);
-                if (i1 >= i) {
+                if (i1 >= i)
                     continue;
-                }
                 i = i1;
             }
 

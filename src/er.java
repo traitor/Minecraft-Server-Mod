@@ -66,16 +66,14 @@ public class er extends fx {
 
     public void f(dx paramdx) {
         // hMod: drops inventory on death.
-        if (etc.getInstance().isHealthEnabled()) {
+        if (etc.getInstance().isHealthEnabled())
             this.al.f();
-        }
     }
 
     public boolean a(dx paramdx, int paramInt) {
         if (!this.b.n) {
-            if ((paramdx instanceof fx)) {
+            if ((paramdx instanceof fx))
                 return false;
-            }
             if ((paramdx instanceof dw)) {
                 dw localdw = (dw) paramdx;
                 if ((localdw.b instanceof fx)) {
@@ -130,12 +128,10 @@ public class er extends fx {
         if (localObject1 != null) {
             int i = 0;
 
-            if (d1 < 1024.0D) {
+            if (d1 < 1024.0D)
                 i = 1;
-            }
-            if (this.a.b() < 2) {
+            if (this.a.b() < 2)
                 i = 1;
-            }
 
             if (i != 0) {
                 this.f.remove(localObject1);

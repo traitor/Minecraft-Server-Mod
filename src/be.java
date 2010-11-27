@@ -85,9 +85,8 @@ public class be extends ga {
         if (j != i) {
             // hMod: Allow pressure plate interaction to power redstone
             j = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), i, j});
-            if (j > 0) {
+            if (j > 0)
                 j = 1;
-            }
         }
 
         if ((j != 0) && (i == 0)) {

@@ -14,9 +14,8 @@ public class z extends cz {
 
     public void b(eo parameo, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         super.b(parameo, paramInt1, paramInt2, paramInt3, paramInt4);
-        if (parameo.a(paramInt1, paramInt2, paramInt3) == this.bh) {
+        if (parameo.a(paramInt1, paramInt2, paramInt3) == this.bh)
             i(parameo, paramInt1, paramInt2, paramInt3);
-        }
     }
 
     private void i(eo parameo, int paramInt1, int paramInt2, int paramInt3) {

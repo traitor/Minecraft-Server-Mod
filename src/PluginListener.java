@@ -294,7 +294,7 @@ public abstract class PluginListener {
         return false;
     }
 
-    /*
+    /**
      * Called when either a lava block or a lighter tryes to light something on fire.
      * block status depends on the light source:
      * 1 = lava.
@@ -309,7 +309,7 @@ public abstract class PluginListener {
         return false;
     }
 
-    /*
+    /**
      * Called when a dynamite block or a creeper is triggerd.
      * block status depends on explosive compound:
      * 1 = dynamite.
@@ -323,7 +323,7 @@ public abstract class PluginListener {
         return false;
     }
 
-    /*
+    /**
      * Called when fluid wants to flow to a certain block.
      * (10 & 11 for lava and 8 & 9 for water)
      * 
@@ -377,7 +377,7 @@ public abstract class PluginListener {
         return false;
     }
 
-    /*
+    /**
      * Called whenever a redstone source (wire, switch, torch) changes its
      * current.
      *
@@ -404,7 +404,7 @@ public abstract class PluginListener {
      * Currently the only supported blocks are sand, gravel and portals.
      *
      * @param block Block which requires special physics
-     * @param boolean true if this block has just been placed
+     * @param placed True if block was just placed
      * @return true if you do want to stop the default physics for this block
      */
     public boolean onBlockPhysics(Block block, boolean placed) {
