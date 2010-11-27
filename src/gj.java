@@ -1,12 +1,13 @@
+
 import java.util.Random;
 
 public class gj extends dx {
+
     public hl a;
     private int e;
     public int b = 0;
     public int c;
     private int f = 5;
-
     public float d = (float) (Math.random() * 3.141592653589793D * 2.0D);
 
     public gj(eo parameo, double paramDouble1, double paramDouble2, double paramDouble3, hl paramhl) {

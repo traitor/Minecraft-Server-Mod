@@ -268,7 +268,6 @@ public abstract class PluginListener {
         return false;
     }
 
-
     /**
      * Called when either a sign, chest or furnace is changed.
      * 
@@ -337,16 +336,16 @@ public abstract class PluginListener {
      *
      * @return true if you dont want the substance to flow.
      */
-    public boolean onFlow(Block blockFrom,Block blockTo) {
+    public boolean onFlow(Block blockFrom, Block blockTo) {
         return false;
     }
-    
+
     /**
      * @param mob Mob attempting to spawn.
      * @return true if you dont want mob to spawn.
      */
     public boolean onMobSpawn(Mob mob) {
-    	return false;
+        return false;
     }
 
     /**
@@ -359,7 +358,7 @@ public abstract class PluginListener {
      *          object that is defending.
      * @return
      */
-    public boolean onDamage(BaseEntity attacker,BaseEntity defender){
+    public boolean onDamage(BaseEntity attacker, BaseEntity defender) {
         return false;
     }
 
@@ -374,7 +373,7 @@ public abstract class PluginListener {
      * @return
      *      return true to stop the change.
      */
-    public boolean onHealthChange(Player player,int oldValue,int newValue){
+    public boolean onHealthChange(Player player, int oldValue, int newValue) {
         return false;
     }
 
@@ -409,6 +408,6 @@ public abstract class PluginListener {
      * @return true if you do want to stop the default physics for this block
      */
     public boolean onBlockPhysics(Block block, boolean placed) {
-    	return false;
+        return false;
     }
 }

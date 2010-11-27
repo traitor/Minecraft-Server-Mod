@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,11 +19,10 @@ import java.util.Map;
  * 
  * @author Nijiko
  */
-
 public final class PropertiesFile {
+
     private static final Logger log = Logger.getLogger("Minecraft");
     private String fileName;
-
     // Data
     private List<String> lines = new ArrayList<String>();
     private Map<String, String> props = new HashMap<String, String>();
@@ -97,26 +97,26 @@ public final class PropertiesFile {
                     } else {
                         c = line.charAt(pos++);
                         switch (c) {
-                        case 'n':
-                            key.append('\n');
-                            break;
-                        case 't':
-                            key.append('\t');
-                            break;
-                        case 'r':
-                            key.append('\r');
-                            break;
-                        case 'u':
-                            if (pos + 4 <= line.length()) {
-                                char uni = (char) Integer.parseInt(line.substring(pos, pos + 4), 16);
-                                key.append(uni);
-                                pos += 4;
-                            }
+                            case 'n':
+                                key.append('\n');
+                                break;
+                            case 't':
+                                key.append('\t');
+                                break;
+                            case 'r':
+                                key.append('\r');
+                                break;
+                            case 'u':
+                                if (pos + 4 <= line.length()) {
+                                    char uni = (char) Integer.parseInt(line.substring(pos, pos + 4), 16);
+                                    key.append(uni);
+                                    pos += 4;
+                                }
 
-                            break;
-                        default:
-                            key.append(c);
-                            break;
+                                break;
+                            default:
+                                key.append(c);
+                                break;
                         }
                     }
                 } else if (needsEscape) {
@@ -176,25 +176,25 @@ public final class PropertiesFile {
                     } else {
                         c = line.charAt(pos++);
                         switch (c) {
-                        case 'n':
-                            element.append('\n');
-                            break;
-                        case 't':
-                            element.append('\t');
-                            break;
-                        case 'r':
-                            element.append('\r');
-                            break;
-                        case 'u':
-                            if (pos + 4 <= line.length()) {
-                                char uni = (char) Integer.parseInt(line.substring(pos, pos + 4), 16);
-                                element.append(uni);
-                                pos += 4;
-                            }
-                            break;
-                        default:
-                            element.append(c);
-                            break;
+                            case 'n':
+                                element.append('\n');
+                                break;
+                            case 't':
+                                element.append('\t');
+                                break;
+                            case 'r':
+                                element.append('\r');
+                                break;
+                            case 'u':
+                                if (pos + 4 <= line.length()) {
+                                    char uni = (char) Integer.parseInt(line.substring(pos, pos + 4), 16);
+                                    element.append(uni);
+                                    pos += 4;
+                                }
+                                break;
+                            default:
+                                element.append(c);
+                                break;
                         }
                     }
                 } else {

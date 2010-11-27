@@ -1,3 +1,4 @@
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -7,9 +8,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class ir {
+
     private static Map a = new HashMap();
     private static Map b = new HashMap();
-
     public boolean j = false;
 
     static void a(int paramInt, Class paramClass) {
@@ -112,7 +113,7 @@ public abstract class ir {
 
         // hMod: get around referencing of 'do'
         try {
-            a(50, Class.forName("do") ); // Pre-chunk
+            a(50, Class.forName("do")); // Pre-chunk
         } catch (ClassNotFoundException e) {
         } //do.class);
         a(51, dm.class); // Map chunk

@@ -119,6 +119,7 @@ public abstract class ItemArray {
     public void setSlot(Item item, int slot) {
         setSlot(item.getItemId(), item.getAmount(), slot);
     }
+
     /**
      * Replaces the slot with the item inputted.
      *
@@ -134,7 +135,7 @@ public abstract class ItemArray {
             getArray()[slot] = new hl(itemId, (amount > 64 ? 64 : amount));
         }
     }
-    
+
     /**
      * Removes the item. No slot needed, it will go through the inventory until
      * the amount specified is removed.

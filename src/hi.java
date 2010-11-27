@@ -1,8 +1,9 @@
+
 public class hi implements kc {
+
     public hl[] a = new hl[37];
     public hl[] b = new hl[4];
     public hl[] c = new hl[4];
-
     public int d = 0;
     private fx f;
     public boolean e = false;
@@ -16,8 +17,8 @@ public class hi implements kc {
     }
 
     private int d(int paramInt) {
-    	// hMod: a.length has one extra slot for the hand item
-        for (int i = 0; i < this.a.length-1; i++) {
+        // hMod: a.length has one extra slot for the hand item
+        for (int i = 0; i < this.a.length - 1; i++) {
             if ((this.a[i] != null) && (this.a[i].c == paramInt)) {
                 return i;
             }
@@ -26,8 +27,8 @@ public class hi implements kc {
     }
 
     private int e(int paramInt) {
-    	// hMod: a.length has one extra slot for the hand item
-        for (int i = 0; i < this.a.length-1; i++) {
+        // hMod: a.length has one extra slot for the hand item
+        for (int i = 0; i < this.a.length - 1; i++) {
             if ((this.a[i] != null) && (this.a[i].c == paramInt) && (this.a[i].a < this.a[i].b()) && (this.a[i].a < d())) {
                 return i;
             }
@@ -36,8 +37,8 @@ public class hi implements kc {
     }
 
     private int g() {
-    	// hMod: a.length has one extra slot for the hand item
-        for (int i = 0; i < this.a.length-1; i++) {
+        // hMod: a.length has one extra slot for the hand item
+        for (int i = 0; i < this.a.length - 1; i++) {
             if (this.a[i] == null) {
                 return i;
             }
@@ -77,8 +78,8 @@ public class hi implements kc {
     }
 
     public void c() {
-    	// hMod: a.length has one extra slot for the hand item
-        for (int i = 0; i < this.a.length-1; i++) {
+        // hMod: a.length has one extra slot for the hand item
+        for (int i = 0; i < this.a.length - 1; i++) {
             if ((this.a[i] == null) || (this.a[i].b <= 0)) {
                 continue;
             }
@@ -138,8 +139,8 @@ public class hi implements kc {
     }
 
     public eb a(eb parameb) {
-    	// hMod: a.length has one extra slot for the hand item
-        for (int i = 0; i < this.a.length-1; i++) {
+        // hMod: a.length has one extra slot for the hand item
+        for (int i = 0; i < this.a.length - 1; i++) {
             if (this.a[i] != null) {
                 v localv = new v();
                 localv.a("Slot", (byte) i);
@@ -167,15 +168,15 @@ public class hi implements kc {
     }
 
     public void b(eb parameb) {
-         // hMod: Because Notch doesn't have to test anything >.>
+        // hMod: Because Notch doesn't have to test anything >.>
         this.a = new hl[37];
         this.b = new hl[4];
         this.c = new hl[4];
         for (int i = 0; i < parameb.b(); i++) {
             v localv = (v) parameb.a(i);
             int j = localv.b("Slot") & 0xFF;
-        	// hMod: a.length has one extra slot for the hand item
-            if ((j >= 0) && (j < this.a.length-1)) {
+            // hMod: a.length has one extra slot for the hand item
+            if ((j >= 0) && (j < this.a.length - 1)) {
                 this.a[j] = new hl(localv);
             }
             if ((j >= 80) && (j < this.c.length + 80)) {
@@ -190,8 +191,8 @@ public class hi implements kc {
 
     @Override
     public int a() {
-    	// hMod: a.length has one extra slot for the hand item
-        return (this.a.length-1) + 4;
+        // hMod: a.length has one extra slot for the hand item
+        return (this.a.length - 1) + 4;
     }
 
     @Override
@@ -271,8 +272,8 @@ public class hi implements kc {
 
     // spill out inventory; called on death
     public void f() {
-    	// hMod: a.length has one extra slot for the hand item
-        for (int i = 0; i < this.a.length-1; i++) {
+        // hMod: a.length has one extra slot for the hand item
+        for (int i = 0; i < this.a.length - 1; i++) {
             if (this.a[i] != null) {
                 this.f.a(this.a[i], true);
                 this.a[i] = null;

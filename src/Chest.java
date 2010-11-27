@@ -36,23 +36,29 @@ public class Chest extends ItemArray implements ComplexBlock {
     public hl[] getArray() {
         return chest.getContents();
     }
+
     public int getContentSize() {
         return 36;
     }
-    public void setArray(hl[] contents){
+
+    public void setArray(hl[] contents) {
         chest.setContents(contents);
     }
+
     public Item[] getContents() {
         Item[] rt = new Item[getContentSize()];
-        for(int i = 0; i < getContentSize();i++)
+        for (int i = 0; i < getContentSize(); i++) {
             rt[i] = new Item(getArray()[i]);
+        }
 
         return rt;
     }
+
     public void setContents(Item[] contents) {
         hl[] newcontents = new hl[getContentSize()];
-        for(int i = 0; i < getContentSize();i++)
-            newcontents[i] = new hl(contents[i].getItemId(),contents[i].getAmount());
+        for (int i = 0; i < getContentSize(); i++) {
+            newcontents[i] = new hl(contents[i].getItemId(), contents[i].getAmount());
+        }
         setArray(newcontents);
     }
 }

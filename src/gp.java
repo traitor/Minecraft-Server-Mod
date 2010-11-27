@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -13,6 +14,7 @@ import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 
 public class gp {
+
     public static Logger a = Logger.getLogger("Minecraft");
     public List b = new ArrayList();
     private MinecraftServer c;
@@ -26,7 +28,6 @@ public class gp {
     private File j;
     private File k;
     private cy l;
-
     // hMod: reflection to get around 'if'
     private Method if_a, if_a1, if_a2, if_a3, if_b, if_b2, if_c;
 
@@ -34,9 +35,9 @@ public class gp {
         // hMod: Store the server, load data, get cracking!
         etc.setServer(paramMinecraftServer);
         etc.getInstance().loadData();
-        if (!etc.getInstance().getTainted())
+        if (!etc.getInstance().getTainted()) {
             a.info("Hey0 Server Mod Build " + etc.getInstance().getVersion());
-        else {
+        } else {
             a.info("hMod Build Information: " + etc.getInstance().getVersionStr());
         }
         this.c = paramMinecraftServer;

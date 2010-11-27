@@ -1,7 +1,9 @@
+
 import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 
 public class jg extends fa implements ew {
+
     public static Logger a = Logger.getLogger("Minecraft");
     public bi b;
     public boolean c = false;
@@ -12,7 +14,6 @@ public class jg extends fa implements ew {
     private double h;
     private double i;
     private boolean j = true;
-
     private hl k = null;
 
     public jg(MinecraftServer paramMinecraftServer, bi parambi, er paramer) {
@@ -41,8 +42,9 @@ public class jg extends fa implements ew {
 
     public void a() {
         this.b.a();
-        if (this.f++ % 20 == 0)
+        if (this.f++ % 20 == 0) {
             this.b.a(new kh());
+        }
     }
 
     public void c(String paramString) {
@@ -50,7 +52,7 @@ public class jg extends fa implements ew {
         // etc.getLoader().callHook(PluginLoader.Hook.DISCONNECT, new Object[]{e});
         this.b.a(new ju(paramString));
         this.b.c();
-        this.d.f.a(new bh( "§e" + this.e.as + " left the game."));
+        this.d.f.a(new bh("§e" + this.e.as + " left the game."));
         this.d.f.c(this.e);
         this.c = true;
     }
@@ -193,7 +195,7 @@ public class jg extends fa implements ew {
         if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.TELEPORT, new Object[]{e, e.getPlayer().getLocation(), from})) {
             return;
         }
-        
+
         this.j = false;
         this.g = paramDouble1;
         this.h = paramDouble2;
@@ -202,7 +204,6 @@ public class jg extends fa implements ew {
         this.e.a.b(new ef(paramDouble1, paramDouble2 + 1.620000004768372D, paramDouble2, paramDouble3, paramFloat1, paramFloat2,
                 false));
     }
-
     // hMod: Store x/y/z
     int x, y, z, type;
 
@@ -212,10 +213,12 @@ public class jg extends fa implements ew {
         // hMod: Allow admins
         boolean bool = this.d.e.B = (this.d.f.g(this.e.as) || getPlayer().isAdmin());
         int m = 0;
-        if (paramic.e == 0)
+        if (paramic.e == 0) {
             m = 1;
-        if (paramic.e == 1)
+        }
+        if (paramic.e == 1) {
             m = 1;
+        }
 
         int n = paramic.a;
         int i1 = paramic.b;
@@ -225,8 +228,9 @@ public class jg extends fa implements ew {
             double d2 = this.e.q - (i1 + 0.5D);
             double d4 = this.e.r - (i2 + 0.5D);
             double d6 = d1 * d1 + d2 * d2 + d4 * d4;
-            if (d6 > 36.0D)
+            if (d6 > 36.0D) {
                 return;
+            }
 
             double d8 = this.e.q;
             this.e.q = this.e.ak;
@@ -237,8 +241,9 @@ public class jg extends fa implements ew {
         int i3 = paramic.d;
         int i4 = (int) hf.e(n - this.d.e.m);
         int i5 = (int) hf.e(i2 - this.d.e.o);
-        if (i4 > i5)
+        if (i4 > i5) {
             i5 = i4;
+        }
         if (paramic.e == 0) {
             // hMod: Start digging
             // No buildrights
@@ -305,9 +310,10 @@ public class jg extends fa implements ew {
             int i2 = paramfz.e;
             int i3 = (int) hf.e(m - this.d.e.m);
             int i4 = (int) hf.e(i1 - this.d.e.o);
-            if (i3 > i4)
+            if (i3 > i4) {
                 i4 = i3;
-            
+            }
+
             // hMod: Block creation hook (also finds what block was clicked on)
             if ((i4 > etc.getInstance().getSpawnProtectionSize()) || (bool)) {
                 hl localhl = paramfz.a >= 0 ? new hl(paramfz.a) : null;
@@ -343,18 +349,24 @@ public class jg extends fa implements ew {
 
             this.e.a.b(new fl(m, n, i1, this.d.e));
 
-            if (i2 == 0)
+            if (i2 == 0) {
                 n--;
-            if (i2 == 1)
+            }
+            if (i2 == 1) {
                 n++;
-            if (i2 == 2)
+            }
+            if (i2 == 2) {
                 i1--;
-            if (i2 == 3)
+            }
+            if (i2 == 3) {
                 i1++;
-            if (i2 == 4)
+            }
+            if (i2 == 4) {
                 m--;
-            if (i2 == 5)
+            }
+            if (i2 == 5) {
                 m++;
+            }
 
             this.e.a.b(new fl(m, n, i1, this.d.e));
         }
@@ -365,7 +377,7 @@ public class jg extends fa implements ew {
         // hMod: disconnect!
         etc.getLoader().callHook(PluginLoader.Hook.DISCONNECT, new Object[]{e});
         a.info(this.e.as + " lost connection: " + paramString);
-        this.d.f.a(new bh( "§e" + this.e.as + " left the game."));
+        this.d.f.a(new bh("§e" + this.e.as + " left the game."));
         this.d.f.c(this.e);
         this.c = true;
     }
@@ -382,9 +394,9 @@ public class jg extends fa implements ew {
     public void a(gr paramgr) {
         int m = paramgr.b;
         this.e.al.d = (this.e.al.a.length - 1);
-        if (m == 0)
+        if (m == 0) {
             this.k = null;
-        else {
+        } else {
             this.k = new hl(m);
         }
         this.e.al.a[this.e.al.d] = this.k;
@@ -422,8 +434,8 @@ public class jg extends fa implements ew {
     }
 
     private void d(String paramString) {
-       // hMod: chat already handles the call to command();.
-       //getPlayer().command(paramString);
+        // hMod: chat already handles the call to command();.
+        //getPlayer().command(paramString);
     }
 
     public void a(q paramq) {
@@ -496,12 +508,15 @@ public class jg extends fa implements ew {
     }
 
     public void a(jf paramjf) {
-        if (paramjf.e.d("x") != paramjf.a)
+        if (paramjf.e.d("x") != paramjf.a) {
             return;
-        if (paramjf.e.d("y") != paramjf.b)
+        }
+        if (paramjf.e.d("y") != paramjf.b) {
             return;
-        if (paramjf.e.d("z") != paramjf.c)
+        }
+        if (paramjf.e.d("z") != paramjf.c) {
             return;
+        }
 
         ay localay = this.d.e.k(paramjf.a, paramjf.b, paramjf.c);
         if (localay != null) {
@@ -541,16 +556,20 @@ public class jg extends fa implements ew {
     public void a(a parama) {
         dx localdx = this.d.e.a(parama.b);
 
-        if ((localdx != null) && (this.e.i(localdx)))
-            if (parama.c == 0)
+        if ((localdx != null) && (this.e.i(localdx))) {
+            if (parama.c == 0) {
                 this.e.g(localdx);
-            else if (parama.c == 1)
+            } else if (parama.c == 1) {
                 this.e.h(localdx);
+            }
+        }
     }
 
     public void a(az paramaz) {
-        if (this.e.aQ > 0) return;
-        
-        this.e = this.d.f.d(this.e); 
+        if (this.e.aQ > 0) {
+            return;
+        }
+
+        this.e = this.d.f.d(this.e);
     }
 }

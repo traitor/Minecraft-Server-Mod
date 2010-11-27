@@ -156,7 +156,7 @@ public class etc {
                 BufferedReader bufferedReader = new BufferedReader(ins);
                 String versionParam = bufferedReader.readLine();
                 if (versionParam.startsWith("git-")) { // recommended version.txt for git builds: git-<gituser>-<shorttag>
-                                                       // example: git-sk89q-591c662cf4afc8e3e09a
+                    // example: git-sk89q-591c662cf4afc8e3e09a
                     version = -1;
                     versionStr = versionParam;
                     tainted = true;
@@ -335,9 +335,10 @@ public class etc {
      *
      * @return
      */
-    public boolean isHealthEnabled(){
+    public boolean isHealthEnabled() {
         return enableHealth;
     }
+
     /**
      * Adds command to the /help list
      * 
@@ -950,7 +951,7 @@ public class etc {
      *
      * @return tainted
      */
-    public boolean getTainted() { 
+    public boolean getTainted() {
         return tainted;
     }
 

@@ -472,7 +472,7 @@ public class PluginLoader {
                                 }
                                 break;
                             case FLOW:
-                                if (listener.onFlow((Block) parameters[0],(Block) parameters[1])) {
+                                if (listener.onFlow((Block) parameters[0], (Block) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;

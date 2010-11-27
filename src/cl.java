@@ -141,7 +141,7 @@ public class cl extends gy {
 
     public boolean d(eo parameo, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         if (paramInt4 == 0) {
-            return b((it)parameo, paramInt1, paramInt2, paramInt3, paramInt4);
+            return b((it) parameo, paramInt1, paramInt2, paramInt3, paramInt4);
         }
         return false;
     }

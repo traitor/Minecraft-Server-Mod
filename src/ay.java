@@ -1,7 +1,9 @@
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class ay {
+
     private static Map e = new HashMap();
     private static Map f = new HashMap();
     public eo a;

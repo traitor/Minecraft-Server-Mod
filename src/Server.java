@@ -162,7 +162,7 @@ public class Server {
         Player lastPlayer = null;
         name = name.toLowerCase();
 
-        for (Object player: server.f.b) {
+        for (Object player : server.f.b) {
             String playerName = ((er) player).as;
 
             if (playerName.toLowerCase().equals(name)) {
@@ -353,7 +353,7 @@ public class Server {
             } else if (localav instanceof dt) {
                 return new Furnace((dt) localav);
             } else if (localav instanceof cf) {
-            	return new MobSpawner((cf) localav);
+                return new MobSpawner((cf) localav);
             }
         }
         return null;

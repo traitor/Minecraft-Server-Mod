@@ -1,4 +1,5 @@
 /* Patch by Zeerix */
+
 public class Digging extends jt {
 
     public Digging(eo world) {
@@ -13,8 +14,9 @@ public class Digging extends jt {
     public boolean c(int x, int y, int z) {
         Block block = etc.getServer().getBlockAt(x, y, z);
         Boolean result = (Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, new Object[]{(er) a, block});
-        if (result)
+        if (result) {
             return true;
+        }
         return super.c(x, y, z);
     }
 }
