@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class cl extends gy { // Redstone torches
+public class cl extends gy {
 
     private boolean a = false;
     private static List b = new ArrayList();
@@ -109,6 +109,7 @@ public class cl extends gy { // Redstone torches
         if (this.a) {
             if (bool) {
                 parameo.b(paramInt1, paramInt2, paramInt3, ga.aP.bh, parameo.b(paramInt1, paramInt2, paramInt3));
+                // hMod: Allow redstone torches to provide power
                 int current = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), 1, 0});
                 if (current == 0) {
                     if (a(parameo, paramInt1, paramInt2, paramInt3, true)) {
@@ -125,6 +126,7 @@ public class cl extends gy { // Redstone torches
             }
         } else if ((!bool)
                 && (!a(parameo, paramInt1, paramInt2, paramInt3, false))) {
+            // hMod: Allow redstone torches to provide power
             int current = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), 0, 1});
             if (current > 0) {
                 parameo.b(paramInt1, paramInt2, paramInt3, ga.aQ.bh, parameo.b(paramInt1, paramInt2, paramInt3));

@@ -110,6 +110,7 @@ public abstract class ir {
         a(38, ho.class); // ??
         a(39, s.class); // ?? 
 
+        // hMod: get around referencing of 'do'
         try {
             a(50, Class.forName("do") ); // Pre-chunk
         } catch (ClassNotFoundException e) {

@@ -12,7 +12,7 @@ public class gt {
     private MinecraftServer c;
     private int d;
     
-    // New fields to store the threads in.
+    // hMod: New fields to store the threads in.
     private static Object synchronizeObject = new Object();
     private static final Vector<Runnable> eventQueue = new Vector<Runnable>();
 
@@ -89,7 +89,7 @@ public class gt {
                 }
             }
         }
-        // Execute runnables contained in eventQueue.
+        // hMod: Execute runnables contained in eventQueue.
         synchronized (synchronizeObject) {
             for (Iterator<Runnable> it = eventQueue.iterator(); it.hasNext();) {
                 it.next().run();
@@ -98,7 +98,7 @@ public class gt {
         }
     }
     
-    // Allow adding of items to the queue
+    // hMod: Allow adding of items to the queue
     public synchronized static void add(Runnable r) {
         synchronized (synchronizeObject) {
             eventQueue.add(r);

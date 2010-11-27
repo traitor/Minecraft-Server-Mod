@@ -1,7 +1,7 @@
 
 import java.util.Random;
 
-public class ap extends ga { // Buttons
+public class ap extends ga {
 
     protected ap(int paramInt1, int paramInt2) {
         super(paramInt1, paramInt2, jw.n);
@@ -137,6 +137,8 @@ public class ap extends ga { // Buttons
         if (k == 0) {
             return true;
         }
+        
+        // hMod: Allow button to provide power
         int change = (Integer)etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), 0, 1});
         if (change == 0) {
             return true;
@@ -220,6 +222,7 @@ public class ap extends ga { // Buttons
         if ((i & 0x8) == 0) {
             return;
         }
+        // hMod: Allow button to provide power
         int change = (Integer)etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), 1, 0});
         if (change > 0) {
             return;

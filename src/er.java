@@ -64,7 +64,7 @@ public class er extends fx {
     }
 
     public void f(dx paramdx) {
-        // drops inventory on death.
+        // hMod: drops inventory on death.
         if(etc.getInstance().isHealthEnabled())
             this.al.f();
     }
@@ -139,6 +139,8 @@ public class er extends fx {
                         localObject1.b * 16 + 16);
                 for (int j = 0; j < ((List) localObject2).size(); j++) {
                     ay localay = (ay) ((List) localObject2).get(j);
+                    
+                    // hMod: Don't let people interact with Chests/Furnaces unless they can guild
                     if (!player.canBuild() && (localay instanceof ia || localay instanceof dt)) {
                         continue;
                     }
@@ -164,7 +166,7 @@ public class er extends fx {
         }
 
         if (this.aQ != this.bu) {
-            //updates your health when it is changed.
+            // hMod: updates your health when it is changed.
             if(etc.getInstance().isHealthEnabled() && !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.HEALTH_CHANGE, new Object[]{getPlayer(), this.bu, this.aQ})){
                 this.a.b(new ed(this.aQ));
                 this.bu = this.aQ;
