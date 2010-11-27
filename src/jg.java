@@ -463,6 +463,7 @@ public class jg extends fa implements ew {
             // hMod: Inventory
             hl[] temp = this.e.al.a;
             this.e.al.a = paramu.b;
+            this.e.al.a[this.e.al.d] = k;	// hMod: Preserve item in hand
             if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_CHANGE, new Object[]{e})) {
                 this.e.al.a = temp;
                 getPlayer().getInventory().updateInventory();
