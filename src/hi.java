@@ -16,7 +16,8 @@ public class hi implements kc {
     }
 
     private int d(int paramInt) {
-        for (int i = 0; i < this.a.length; i++) {
+    	// hMod: a.length has one extra slot for the hand item
+        for (int i = 0; i < this.a.length-1; i++) {
             if ((this.a[i] != null) && (this.a[i].c == paramInt)) {
                 return i;
             }
@@ -25,7 +26,8 @@ public class hi implements kc {
     }
 
     private int e(int paramInt) {
-        for (int i = 0; i < this.a.length; i++) {
+    	// hMod: a.length has one extra slot for the hand item
+        for (int i = 0; i < this.a.length-1; i++) {
             if ((this.a[i] != null) && (this.a[i].c == paramInt) && (this.a[i].a < this.a[i].b()) && (this.a[i].a < d())) {
                 return i;
             }
@@ -34,7 +36,8 @@ public class hi implements kc {
     }
 
     private int g() {
-        for (int i = 0; i < this.a.length; i++) {
+    	// hMod: a.length has one extra slot for the hand item
+        for (int i = 0; i < this.a.length-1; i++) {
             if (this.a[i] == null) {
                 return i;
             }
@@ -74,7 +77,8 @@ public class hi implements kc {
     }
 
     public void c() {
-        for (int i = 0; i < this.a.length; i++) {
+    	// hMod: a.length has one extra slot for the hand item
+        for (int i = 0; i < this.a.length-1; i++) {
             if ((this.a[i] == null) || (this.a[i].b <= 0)) {
                 continue;
             }
@@ -134,7 +138,8 @@ public class hi implements kc {
     }
 
     public eb a(eb parameb) {
-        for (int i = 0; i < this.a.length; i++) {
+    	// hMod: a.length has one extra slot for the hand item
+        for (int i = 0; i < this.a.length-1; i++) {
             if (this.a[i] != null) {
                 v localv = new v();
                 localv.a("Slot", (byte) i);
@@ -169,7 +174,8 @@ public class hi implements kc {
         for (int i = 0; i < parameb.b(); i++) {
             v localv = (v) parameb.a(i);
             int j = localv.b("Slot") & 0xFF;
-            if ((j >= 0) && (j < this.a.length)) {
+        	// hMod: a.length has one extra slot for the hand item
+            if ((j >= 0) && (j < this.a.length-1)) {
                 this.a[j] = new hl(localv);
             }
             if ((j >= 80) && (j < this.c.length + 80)) {
@@ -184,7 +190,8 @@ public class hi implements kc {
 
     @Override
     public int a() {
-        return this.a.length + 4;
+    	// hMod: a.length has one extra slot for the hand item
+        return (this.a.length-1) + 4;
     }
 
     @Override
@@ -262,8 +269,10 @@ public class hi implements kc {
         }
     }
 
+    // spill out inventory; called on death
     public void f() {
-        for (int i = 0; i < this.a.length; i++) {
+    	// hMod: a.length has one extra slot for the hand item
+        for (int i = 0; i < this.a.length-1; i++) {
             if (this.a[i] != null) {
                 this.f.a(this.a[i], true);
                 this.a[i] = null;
