@@ -34,6 +34,7 @@ public class Player extends LivingEntity {
 
     /**
      * Creates a player interface
+     * @param player player to interface
      */
     public Player(er player) {
         super(player);

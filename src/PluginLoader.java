@@ -144,29 +144,33 @@ public class PluginLoader {
          */
         BLOCK_PHYSICS,
         /**
-         * Calls onMinecartCreate
+         * Calls onVehicleCreate
          */
-        MINECART_CREATE,
+        VEHICLE_CREATE,
         /**
-         * Calls onMinecartUpdate
+         * Calls onVehicleUpdate
          */
-        MINECART_UPDATE,
+        VEHICLE_UPDATE,
         /**
-         * Calls onMinecartDamage
+         * Calls onVehicleDamage
          */
-        MINECART_DAMAGE,
+        VEHICLE_DAMAGE,
         /**
-         * Calls onMinecartCollision
+         * Calls onVehicleCollision
          */
-        MINECART_COLLISION,
+        VEHICLE_COLLISION,
         /**
-         * Calls onMinecartDestroyed
+         * Calls onVehicleDestroyed
          */
-        MINECART_DESTROYED,
+        VEHICLE_DESTROYED,
         /**
-         * Calls onMinecartEntered
+         * Calls onVehicleEntered
          */
-        MINECART_ENTERED,
+        VEHICLE_ENTERED,
+        /**
+         * Calls onItemUse
+         */
+        ITEM_USE,
         /**
          * Calls onVerificationCheck
          */
@@ -528,33 +532,28 @@ public class PluginLoader {
                                     toRet = true;
                                 }
                                 break;
-                            case MINECART_CREATE:
-                                if (listener.onMinecartCreate((Minecart) parameters[0])) {
+                            case VEHICLE_CREATE:
+                                listener.onVehicleCreate((BaseVehicle) parameters[0]);
+                                break;
+                            case VEHICLE_UPDATE:
+                                listener.onVehicleUpdate((BaseVehicle) parameters[0]);
+                                break;
+                            case VEHICLE_DAMAGE:
+                                if (listener.onVehicleDamage((BaseVehicle) parameters[0], (LivingEntity) parameters[1], (Integer) parameters[2])) {
                                     toRet = true;
                                 }
                                 break;
-                            case MINECART_UPDATE:
-                                if (listener.onMinecartUpdate((Minecart) parameters[0])) {
-                                    toRet = true;
-                                }
+                            case VEHICLE_COLLISION:
+                                listener.onVehicleCollision((BaseVehicle) parameters[0], (BaseEntity) parameters[1]);
                                 break;
-                            case MINECART_DAMAGE:
-                                if (listener.onMinecartDamage((Minecart) parameters[0], (LivingEntity) parameters[1], (Integer) parameters[2])) {
-                                    toRet = true;
-                                }
+                            case VEHICLE_DESTROYED:
+                                listener.onVehicleDestroyed((BaseVehicle) parameters[0]);
                                 break;
-                            case MINECART_COLLISION:
-                                if (listener.onMinecartCollision((Minecart) parameters[0], (BaseEntity) parameters[1])) {
-                                    toRet = true;
-                                }
+                            case VEHICLE_ENTERED:
+                                listener.onVehicleEnter((BaseVehicle) parameters[0], (HumanEntity) parameters[1]);
                                 break;
-                            case MINECART_DESTROYED:
-                                if (listener.onMinecartDestroyed((Minecart) parameters[0])) {
-                                    toRet = true;
-                                }
-                                break;
-                            case MINECART_ENTERED:
-                                if (listener.onMinecartEnter((Minecart) parameters[0], (HumanEntity) parameters[1])) {
+                            case ITEM_USE:
+                                if (listener.onItemUse((Player) parameters[0], (Item) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;

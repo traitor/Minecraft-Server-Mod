@@ -1,83 +1,77 @@
 
 /**
- * Real Base entity class to be able to handle all entity classes.
+ * Minecart - Used for manipulating minecarts
  *
  * @author tw1nk
  */
-public class Minecart extends BaseEntity {
+public class Minecart extends BaseVehicle {
 
     jm cart;
 
+    /**
+     * Type of minecart
+     */
+    public enum Type {
+        /**
+         * Base minecart.
+         */
+        Minecart,
+        /**
+         * Powered minecart. Has storage for fuel.
+         */
+        PoweredMinecart,
+        /**
+         * Storage minecart. Has storage for items.
+         */
+        StorageCart,
+    }
+
+    /**
+     * Creates an interface for minecart.
+     * @param cart
+     */
     public Minecart(jm cart) {
         super(cart);
         this.cart = cart;
     }
 
-    public double getMotionX() {
-        return cart.s;
-    }
-
-    public double getMotionY() {
-        return cart.t;
-    }
-
-    public double getMotionZ() {
-        return cart.u;
-    }
-
-    public void setMotionX(double motion) {
-        cart.s = motion;
-    }
-
-    public void setMotionY(double motion) {
-        cart.t = motion;
-    }
-
-    public void setMotionZ(double motion) {
-        cart.u = motion;
-    }
-
     /**
-     * Set minecart motion
-     * @param motionX
-     * @param motionY
-     * @param motionZ
-     */
-    public void setMotion(double motionX, double motionY, double motionZ) {
-        cart.s = motionX;
-        cart.t = motionY;
-        cart.u = motionZ;
-    }
-
-    /**
-     * Set damage on Minecart
-     * @param damage over 40 and you "kill" the minecart
+     * Set damage on Mineentity
+     * @param damage over 40 and you "kill" the mineentity
      */
     public void setDamage(int damage) {
         cart.a = damage;
     }
 
     /**
-     * Returns damage for minecart
+     * Returns damage for mineentity
      * @return returns current damage
      */
     public int getDamage() {
         return cart.a;
     }
 
-    public void destroy() {
-        cart.l();
-    }
-
-    public int getType() {
-        return cart.d;
-    }
-
-    public boolean isEmpty() {
-        if (cart.j == null) {
-            return true;
-        } else {
-            return false;
+    /**
+     * Returns the type of this minecart.
+     * @return type
+     */
+    public Type getType() {
+        switch (cart.d) {
+            case 1: return Type.Minecart;
+            case 2: return Type.StorageCart;
+            case 3: return Type.PoweredMinecart;
+            default: return Type.Minecart;
         }
+    }
+
+    /**
+     * Returns the storage for this minecart. Returns null if minecart is not a storage or powered
+     * minecart.
+     * @return storage
+     */
+    public StorageMinecart getStorage() {
+        if (getType() == Type.StorageCart || getType() == Type.PoweredMinecart)
+            return new StorageMinecart(cart);
+        return null;
     }
 }

@@ -3,7 +3,7 @@ import java.util.List;
 
 public class jm extends dx implements kc {
 
-    private hl[] ak = new hl[36];
+    public hl[] ak = new hl[36];
     public int a = 0;
     public int b = 0;
     public int c = 1;
@@ -70,7 +70,7 @@ public class jm extends dx implements kc {
 
         // hMod: Creation of the cart
         Minecart cart = new Minecart(this);
-        etc.getLoader().callHook(PluginLoader.Hook.MINECART_CREATE, new Object[]{cart});
+        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_CREATE, new Object[]{cart});
     }
 
     @Override
@@ -90,7 +90,8 @@ public class jm extends dx implements kc {
         // hMod: Attack of the cart
         BaseEntity attacker = new BaseEntity(paramdx);
         Minecart cart = new Minecart(this);
-        etc.getLoader().callHook(PluginLoader.Hook.MINECART_DAMAGE, new Object[]{cart, attacker, paramInt});
+        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_DAMAGE, new Object[]{cart, attacker, paramInt}))
+            return true;
 
         if (this.l.z) {
             return true;
@@ -120,7 +121,7 @@ public class jm extends dx implements kc {
     public void l() {
         // hMod: Destruction of the cart
         Minecart cart = new Minecart(this);
-        etc.getLoader().callHook(PluginLoader.Hook.MINECART_DESTROYED, new Object[]{cart});
+        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_DESTROYED, new Object[]{cart});
 
         for (int i = 0; i < a(); i++) {
             hl localhl = a(i);
@@ -155,7 +156,7 @@ public class jm extends dx implements kc {
     public void b_() {
         // hMod: Update of the cart
         Minecart cart = new Minecart(this);
-        etc.getLoader().callHook(PluginLoader.Hook.MINECART_UPDATE, new Object[]{cart});
+        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_UPDATE, new Object[]{cart});
 
         if (this.b > 0) {
             this.b -= 1;
@@ -552,12 +553,6 @@ public class jm extends dx implements kc {
      */
     @Override
     public void c(dx paramdx) {
-        // hMod: Collision of a cart
-        Minecart cart = new Minecart(this);
-        BaseEntity baseEntity = new BaseEntity(paramdx);
-
-        etc.getLoader().callHook(PluginLoader.Hook.MINECART_COLLISION, new Object[]{cart, baseEntity});
-
         if (this.l.z) {
             return;
         }
@@ -565,6 +560,11 @@ public class jm extends dx implements kc {
         if (paramdx == this.j) {
             return;
         }
+        // hMod: Collision of a cart
+        Minecart cart = new Minecart(this);
+        BaseEntity baseEntity = new BaseEntity(paramdx);
+        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_COLLISION, new Object[]{cart, baseEntity});
+
         if (((paramdx instanceof jy)) && (!(paramdx instanceof fx)) && (this.d == 0) && (this.s * this.s + this.u * this.u > 0.01D)
                 && (this.j == null) && (paramdx.k == null)) {
             paramdx.e(this);
@@ -646,7 +646,7 @@ public class jm extends dx implements kc {
         // hMod: Entering the cart
         Minecart cart = new Minecart(this);
         HumanEntity player = new HumanEntity(paramfx);
-        etc.getLoader().callHook(PluginLoader.Hook.MINECART_ENTERED, new Object[]{cart, player});
+        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_ENTERED, new Object[]{cart, player});
 
         if (this.d == 0) {
             if ((this.j != null) && ((this.j instanceof fx)) && (this.j != paramfx)) {

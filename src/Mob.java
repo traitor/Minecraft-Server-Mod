@@ -10,8 +10,7 @@ public class Mob extends LivingEntity {
     /**
      * Creates a mob interface
      * 
-     * @param mob
-     *            name of mob
+     * @param mob name of mob
      */
     public Mob(gb mob) {
         super(mob);
@@ -31,10 +30,8 @@ public class Mob extends LivingEntity {
     /**
      * Creates a mob interface
      * 
-     * @param mob
-     *            name of mob
-     * @param location
-     *            location of mob
+     * @param mobName name of mob
+     * @param location location of mob
      */
     public Mob(String mobName, Location location) {
         this(mobName);

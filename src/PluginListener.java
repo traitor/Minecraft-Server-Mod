@@ -301,9 +301,8 @@ public abstract class PluginListener {
      * 1 = lava.
      * 2 = lighter (flint + steel).
      * 3 = spread (dynamic spreading of fire).
-     * @param block
-     *          block that the fire wants to spawn in.
-     *
+     * @param block block that the fire wants to spawn in.
+     * @param player player
      * @return true if you dont want the fire to ignite.
      */
     public boolean onIgnite(Block block, Player player) {
@@ -389,7 +388,7 @@ public abstract class PluginListener {
      * For other blocks which provide a source of redstone current, the current
      * value will be 1 or 0 for on and off respectively.
      *
-     * @param redstone Block of redstone which has just changed in current
+     * @param block
      * @param oldLevel the old current
      * @param newLevel the new current
      * @return the new current to use (newLevel to leave as-is)
@@ -413,66 +412,72 @@ public abstract class PluginListener {
     }
 
     /**
-     * Called when you place a minecart.
+     * Called when you place a vehicle.
      * 
-     * @param the minecart
-     * @return true to kill the cart on the spot
+     * @param vehicle the vehicle placed
      */
-    public boolean onMinecartCreate(Minecart cart) {
-        return true;
+    public void onVehicleCreate(BaseVehicle vehicle) {
+
     }
 
     /**
-     * Called when minecart receives damage
+     * Called when vehicle receives damage
      * 
-     * @param minecart
+     * @param vehicle
      * @param attacker entity that dealt the damage
      * @param damage
-     * @return true to set damage
+     * @return false to set damage
      */
-    public boolean onMinecartDamage(Minecart minecart, LivingEntity attacker, int damage) {
-        return true;
-    }
-
-    /**
-     * Called when a minecart enters or leaves a block
-     * 
-     * @param minecart the minecart
-     * @return doesn't do anything
-     */
-    public boolean onMinecartUpdate(Minecart minecart) {
+    public boolean onVehicleDamage(BaseVehicle vehicle, LivingEntity attacker, int damage) {
         return false;
     }
 
     /**
-     * Called when a collision occurs with a minecart and an entity.
+     * Called when a vehicle enters or leaves a block
      * 
-     * @param minecart the minecart
-     * @param collisioner, the Entity that collisioned with the Minecart
-     * @return doesn't do anything
+     * @param vehicle the vehicle
      */
-    public boolean onMinecartCollision(Minecart minecart, BaseEntity collisioner) {
-        return false;
+    public void onVehicleUpdate(BaseVehicle vehicle) {
+
     }
 
     /**
-     * Called when a minecart is destroyed
+     * Called when a collision occurs with a vehicle and an entity.
      * 
-     * @param minecart the minecart
-     * @return doesn't do anything
+     * @param vehicle the vehicle
+     * @param collisioner
      */
-    public boolean onMinecartDestroyed(Minecart minecart) {
-        return false;
+    public void onVehicleCollision(BaseVehicle vehicle, BaseEntity collisioner) {
+
     }
 
     /**
-     * Called when a player enter or leaves a minecart
+     * Called when a vehicle is destroyed
      * 
-     * @param minecart the minecart
+     * @param vehicle the vehicle
+     */
+    public void onVehicleDestroyed(BaseVehicle vehicle) {
+
+    }
+
+    /**
+     * Called when a player enter or leaves a vehicle
+     * 
+     * @param vehicle the vehicle
      * @param player the player
-     * @return return does not do anything
      */
-    public boolean onMinecartEnter(Minecart minecart, HumanEntity player) {
+    public void onVehicleEnter(BaseVehicle vehicle, HumanEntity player) {
+
+    }
+    
+    /**
+     * Called when a player uses an item (rightclick with item in hand)
+     * @param player the player
+     * @param item the item being used (in hand)
+     * @return true to prevent using the item.
+     */
+    
+    public boolean onItemUse(Player player, Item item) {
         return false;
     }
 

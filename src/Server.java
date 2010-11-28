@@ -195,9 +195,8 @@ public class Server {
     }
 
     /**
-     * Returns the player list
-     * 
-     * @return
+     * Returns the player list.
+     * @return list of players
      */
     public List<Player> getPlayerList() {
         List<Player> toRet = new ArrayList<Player>();
@@ -208,9 +207,8 @@ public class Server {
     }
 
     /**
-     * Returns the list of mobs in all open chunks
-     * 
-     * @return
+     * Returns the list of mobs in all open chunks.
+     * @return list of mobs
      */
     public List<Mob> getMobList() {
         List<Mob> toRet = new ArrayList<Mob>();
@@ -223,15 +221,80 @@ public class Server {
     }
 
     /**
-     * Returns the list of minecarts in all open chunks
-     *
-     * @return
+     * Returns the list of minecarts in all open chunks.
+     * @return list of minecarts
      */
     public List<Minecart> getMinecartList() {
         List<Minecart> toRet = new ArrayList<Minecart>();
         for (Object o : server.e.b) {
             if (o instanceof jm) {
                 toRet.add(new Minecart((jm) o));
+            }
+        }
+        return toRet;
+    }
+
+    /**
+     * Returns the list of boats in all open chunks.
+     * @return list of boats
+     */
+    public List<Boat> getBoatList() {
+        List<Boat> toRet = new ArrayList<Boat>();
+        for (Object o : server.e.b) {
+            if (o instanceof fk) {
+                toRet.add(new Boat((fk) o));
+            }
+        }
+        return toRet;
+    }
+
+    /**
+     * Returns the list of all entities in the server in open chunks.
+     * @return list of entities
+     */
+    public List<BaseEntity> getEntityList() {
+        List<BaseEntity> toRet = new ArrayList<BaseEntity>();
+        for (Object o : server.e.b) {
+            if (o instanceof gb) {
+                toRet.add(new Mob((gb) o));
+            } else if (o instanceof jm) {
+                toRet.add(new Minecart((jm) o));
+            } else if (o instanceof fk) {
+                toRet.add(new Boat((fk) o));
+            } else if (o instanceof er) {
+                toRet.add(((er)o).getPlayer());
+            }
+        }
+        return toRet;
+    }
+
+    /**
+     * Returns the list of all living entities (players, mobs) in open chunks.
+     * @return list of living entities
+     */
+    public List<LivingEntity> getLivingEntityList() {
+        List<LivingEntity> toRet = new ArrayList<LivingEntity>();
+        for (Object o : server.e.b) {
+            if (o instanceof gb) {
+                toRet.add(new Mob((gb) o));
+            } else if (o instanceof er) {
+                toRet.add(((er)o).getPlayer());
+            }
+        }
+        return toRet;
+    }
+
+    /**
+     * Returns the list of vehicles in open chunks.
+     * @return list of vehicles
+     */
+    public List<BaseVehicle> getVehicleEntityList() {
+        List<BaseVehicle> toRet = new ArrayList<BaseVehicle>();
+        for (Object o : server.e.b) {
+            if (o instanceof jm) {
+                toRet.add(new Minecart((jm) o));
+            } else if (o instanceof fk) {
+                toRet.add(new Boat((fk) o));
             }
         }
         return toRet;
