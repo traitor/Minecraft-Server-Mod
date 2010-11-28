@@ -295,10 +295,9 @@ public class jy extends dx {
 
         bd = 1.5F;
         // hMod: the different entities are defined in hn
-        if (paramdx != null && (paramdx instanceof gb || paramdx instanceof er || paramdx instanceof ax)) {
-            BaseEntity attacker = new BaseEntity(), defender = new BaseEntity();
-            attacker.entity = (jy) paramdx;
-            defender.entity = this;
+        if (paramdx != null && (paramdx instanceof jy)) {
+            LivingEntity attacker = new LivingEntity((jy)paramdx);
+            LivingEntity defender = new LivingEntity(this);
             if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new Object[]{attacker, defender})) {
                 return false;
             }

@@ -410,4 +410,68 @@ public abstract class PluginListener {
     public boolean onBlockPhysics(Block block, boolean placed) {
         return false;
     }
+
+    /**
+     * Called when you place a minecart.
+     * 
+     * @param the minecart
+     * @return true to kill the cart on the spot
+     */
+    public boolean onMinecartCreate(Minecart cart) {
+        return true;
+    }
+
+    /**
+     * Called when minecart receives damage
+     * 
+     * @param minecart
+     * @param attacker entity that dealt the damage
+     * @param damage
+     * @return true to set damage
+     */
+    public boolean onMinecartDamage(Minecart minecart, LivingEntity attacker, int damage) {
+        return true;
+    }
+
+    /**
+     * Called when a minecart enters or leaves a block
+     * 
+     * @param minecart the minecart
+     * @return doesn't do anything
+     */
+    public boolean onMinecartUpdate(Minecart minecart) {
+        return false;
+    }
+
+    /**
+     * Called when a collision occurs with a minecart and an entity.
+     * 
+     * @param minecart the minecart
+     * @param collisioner, the Entity that collisioned with the Minecart
+     * @return doesn't do anything
+     */
+    public boolean onMinecartCollision(Minecart minecart, BaseEntity collisioner) {
+        return false;
+    }
+
+    /**
+     * Called when a minecart is destroyed
+     * 
+     * @param minecart the minecart
+     * @return doesn't do anything
+     */
+    public boolean onMinecartDestroyed(Minecart minecart) {
+        return false;
+    }
+
+    /**
+     * Called when a player enter or leaves a minecart
+     * 
+     * @param minecart the minecart
+     * @param player the player
+     * @return return does not do anything
+     */
+    public boolean onMinecartEnter(Minecart minecart, HumanEntity player) {
+        return false;
+    }
 }

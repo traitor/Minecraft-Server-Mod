@@ -216,7 +216,7 @@ public class Server {
         List<Mob> toRet = new ArrayList<Mob>();
         for (Object o : server.e.b) {
             if (o instanceof hd) {
-                toRet.add(new Mob((hd) o));
+                toRet.add(new Mob((gb) o));
             }
         }
         return toRet;
@@ -427,4 +427,14 @@ public class Server {
     public void updateBlockPhysics(int x, int y, int z, int data) {
         server.e.b(x, y, z, data);
     }
+    
+    /**
+     * Adds a runnable to the Server Queue, so that it will be executed in the Server Thread.
+     *  
+     * @param r - the runnable
+     * @return true if successful
+     */
+    public void addToServerQueue(Runnable r) {
+    	gt.add(r);
+    }    
 }

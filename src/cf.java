@@ -64,8 +64,8 @@ public class cf extends ay {
                 localjy.c(d4, d5, d6, this.a.l.nextFloat() * 360.0F, 0.0F);
 
                 if (localjy.a()) {
-                    // hMod: allow mobs to spawn
-                    if ((Boolean) (etc.getLoader().callHook(PluginLoader.Hook.MOB_SPAWN, new Object[]{new Mob((hd) localjy)}))) {
+                    // hMod: allow entities to spawn
+                    if ((Boolean) (etc.getLoader().callHook(PluginLoader.Hook.MOB_SPAWN, new Object[]{new LivingEntity(localjy)}))) {
                         d();
                         return;
                     }

@@ -307,40 +307,18 @@ public class jg extends fa implements ew {
             int i4 = (int) hf.e(i1 - this.d.e.o);
             if (i3 > i4)
                 i4 = i3;
-
-            // hMod: Block creation hook (also finds what block was clicked on)
-            if ((i4 > etc.getInstance().getSpawnProtectionSize()) || (bool)) {
+            
+            // hMod: If we were building inside spawn, bail! (unless ops/admin)
+            if ((i4 > etc.getInstance().getSpawnProtectionSize() || bool) && getPlayer().canBuild()) {
                 hl localhl = paramfz.a >= 0 ? new hl(paramfz.a) : null;
-
-                Block blockPlaced = new Block(localhl != null ? localhl.c : paramfz.a, m, n, i1);
-                if (paramfz.e == 0) {
-                    blockPlaced.setY(blockPlaced.getY() - 1);
-                } else if (paramfz.e == 1) {
-                    blockPlaced.setY(blockPlaced.getY() + 1);
-                } else if (paramfz.e == 2) {
-                    blockPlaced.setZ(blockPlaced.getZ() - 1);
-                } else if (paramfz.e == 3) {
-                    blockPlaced.setZ(blockPlaced.getZ() + 1);
-                } else if (paramfz.e == 4) {
-                    blockPlaced.setX(blockPlaced.getX() - 1);
-                } else if (paramfz.e == 5) {
-                    blockPlaced.setX(blockPlaced.getX() + 1);
-                }
-                Block blockClicked = new Block(etc.getServer().getBlockIdAt(m, n, i1), m, n, i1);
-                blockClicked.setFaceClicked(Block.Face.fromId(paramfz.e));
-
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, new Object[]{e, blockPlaced, blockClicked, paramfz.a}) && getPlayer().canBuild()) {
-                    if (localhl != null) {
-                        if (!etc.getInstance().isOnItemBlacklist(localhl.c) || bool) {
-                            this.e.c.a(this.e, this.d.e, localhl, m, n, i1, i2);
-                        }
-                    } // TODO: is this right ?
-                    else {
-                        this.e.c.a(this.e, this.d.e, localhl, m, n, i1, i2);
-                    }
-                }
+                this.e.c.a(this.e, this.d.e, localhl, m, n, i1, i2);
+            } else {
+                // hMod: No point sending the client to update the blocks, you weren't allowed to place!
+                this.d.e.B = false;
+                return;
             }
 
+            // hMod: these are the 'block changed' packets for the client.
             this.e.a.b(new fl(m, n, i1, this.d.e));
 
             if (i2 == 0)
