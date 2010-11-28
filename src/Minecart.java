@@ -1,16 +1,18 @@
+
 /**
  * Real Base entity class to be able to handle all entity classes.
  *
  * @author tw1nk
  */
 public class Minecart extends BaseEntity {
+
     jm cart;
 
-    public Minecart(jm cart){
+    public Minecart(jm cart) {
         super(cart);
         this.cart = cart;
     }
- 
+
     public double getMotionX() {
         return cart.s;
     }
@@ -41,39 +43,40 @@ public class Minecart extends BaseEntity {
      * @param motionY
      * @param motionZ
      */
-    public void setMotion(double motionX, double motionY, double motionZ){
+    public void setMotion(double motionX, double motionY, double motionZ) {
         cart.s = motionX;
         cart.t = motionY;
         cart.u = motionZ;
     }
+
     /**
      * Set damage on Minecart
      * @param damage over 40 and you "kill" the minecart
      */
-    public void setDamage(int damage){
-       cart.a = damage;
+    public void setDamage(int damage) {
+        cart.a = damage;
     }
 
     /**
-     *
+     * Returns damage for minecart
      * @return returns current damage
      */
-    public int getDamage(){
+    public int getDamage() {
         return cart.a;
     }
 
-    public void destroy(){
-       cart.l();
+    public void destroy() {
+        cart.l();
     }
 
-    public int getType(){
+    public int getType() {
         return cart.d;
     }
 
-    public boolean isEmpty(){
-        if(cart.j == null){
+    public boolean isEmpty() {
+        if (cart.j == null) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }

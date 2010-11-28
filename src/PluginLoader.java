@@ -142,17 +142,14 @@ public class PluginLoader {
          * Calls onBlockPhysics
          */
         BLOCK_PHYSICS,
-
         /**
          * Calls onMinecartCreate
          */
         MINECART_CREATE,
-
         /**
          * Calls onMinecartUpdate
          */
         MINECART_UPDATE,
-
         /**
          * Calls onMinecartDamage
          */
@@ -160,13 +157,11 @@ public class PluginLoader {
         /**
          * Calls onMinecartCollision
          */
-
         MINECART_COLLISION,
         /**
          * Calls onMinecartDestroyed
          */
         MINECART_DESTROYED,
-
         /**
          * Calls onMinecartEntered
          */

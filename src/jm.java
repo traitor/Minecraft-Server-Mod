@@ -1,8 +1,9 @@
+
 import java.util.List;
 
 public class jm extends dx implements kc {
-    private hl[] ak = new hl[36];
 
+    private hl[] ak = new hl[36];
     public int a = 0;
     public int b = 0;
     public int c = 1;
@@ -12,8 +13,8 @@ public class jm extends dx implements kc {
     public double f;
     public double aj;
     private static final int[][][] am = {{{0, 0, -1}, {0, 0, 1}}, {{-1, 0, 0}, {1, 0, 0}}, {{-1, -1, 0}, {1, 0, 0}},
-            {{-1, 0, 0}, {1, -1, 0}}, {{0, 0, -1}, {0, -1, 1}}, {{0, -1, -1}, {0, 0, 1}}, {{0, 0, 1}, {1, 0, 0}},
-            {{0, 0, 1}, {-1, 0, 0}}, {{0, 0, -1}, {-1, 0, 0}}, {{0, 0, -1}, {1, 0, 0}}};
+        {{-1, 0, 0}, {1, -1, 0}}, {{0, 0, -1}, {0, -1, 1}}, {{0, -1, -1}, {0, 0, 1}}, {{0, 0, 1}, {1, 0, 0}},
+        {{0, 0, 1}, {-1, 0, 0}}, {{0, 0, -1}, {-1, 0, 0}}, {{0, 0, -1}, {1, 0, 0}}};
     private int an;
     private double ao;
     private double ap;
