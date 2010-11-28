@@ -167,6 +167,10 @@ public class PluginLoader {
          */
         VEHICLE_ENTERED,
         /**
+         * Calls onItemUse
+         */
+        ITEM_USE,
+        /**
          * Unused.
          */
         NUM_HOOKS
@@ -534,6 +538,11 @@ public class PluginLoader {
                                 break;
                             case VEHICLE_ENTERED:
                                 listener.onVehicleEnter((BaseVehicle) parameters[0], (HumanEntity) parameters[1]);
+                                break;
+                            case ITEM_USE:
+                                if (listener.onItemUse((Player) parameters[0], (Item) parameters[1])) {
+                                    toRet = true;
+                                }
                                 break;
                         }
                     } catch (UnsupportedOperationException ex) {
