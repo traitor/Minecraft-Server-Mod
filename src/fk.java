@@ -45,6 +45,10 @@ public class fk extends dx {
         this.m = paramDouble1;
         this.n = paramDouble2;
         this.o = paramDouble3;
+
+        // hMod: Creation of the boat
+        Boat boat = new Boat(this);
+        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_CREATE, new Object[]{boat});
     }
 
     public double j() {
@@ -52,6 +56,12 @@ public class fk extends dx {
     }
 
     public boolean a(dx paramdx, int paramInt) {
+        // hMod: Attack of the boat
+        BaseEntity attacker = new BaseEntity(paramdx);
+        Boat boat = new Boat(this);
+        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_DAMAGE, new Object[]{boat, attacker, paramInt}))
+            return true;
+
         if (this.l.z)
             return true;
         this.c = (-this.c);
@@ -70,11 +80,23 @@ public class fk extends dx {
         return true;
     }
 
+    @Override
+    public void l() {
+        // hMod: Destruction of the boat
+        Boat boat = new Boat(this);
+        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_DESTROYED, new Object[]{boat});
+        super.l();
+    }
+
     public boolean c_() {
         return !this.G;
     }
 
     public void b_() {
+        // hMod: Update of the boat
+        Boat boat = new Boat(this);
+        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_UPDATE, new Object[]{boat});
+
         super.b_();
         if (this.b > 0)
             this.b -= 1;
@@ -246,7 +268,21 @@ public class fk extends dx {
     protected void b(v paramv) {
     }
 
+    @Override
+    public void c(dx paramdx) {
+        // hMod: Collision of a boat
+        super.c(paramdx);
+        Boat boat = new Boat(this);
+        BaseEntity baseEntity = new BaseEntity(paramdx);
+        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_COLLISION, new Object[]{boat, baseEntity});
+    }
+
     public boolean a(fx paramfx) {
+        // hMod: Entering the boat
+        Boat boat = new Boat(this);
+        HumanEntity player = new HumanEntity(paramfx);
+        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_ENTERED, new Object[]{boat, player});
+
         if ((this.j != null) && ((this.j instanceof fx)) && (this.j != paramfx))
             return true;
         if (!this.l.z) {

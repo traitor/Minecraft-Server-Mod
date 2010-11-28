@@ -411,66 +411,61 @@ public abstract class PluginListener {
     }
 
     /**
-     * Called when you place a minecart.
+     * Called when you place a vehicle.
      * 
-     * @param cart
-     * @return true to kill the cart on the spot
+     * @param vehicle the vehicle placed
      */
-    public boolean onMinecartCreate(Minecart cart) {
-        return true;
+    public void onVehicleCreate(BaseVehicle vehicle) {
+
     }
 
     /**
-     * Called when minecart receives damage
+     * Called when vehicle receives damage
      * 
-     * @param minecart
+     * @param vehicle
      * @param attacker entity that dealt the damage
      * @param damage
      * @return true to set damage
      */
-    public boolean onMinecartDamage(Minecart minecart, LivingEntity attacker, int damage) {
+    public boolean onVehicleDamage(BaseVehicle vehicle, LivingEntity attacker, int damage) {
         return true;
     }
 
     /**
-     * Called when a minecart enters or leaves a block
+     * Called when a vehicle enters or leaves a block
      * 
-     * @param minecart the minecart
-     * @return doesn't do anything
+     * @param vehicle the vehicle
      */
-    public boolean onMinecartUpdate(Minecart minecart) {
-        return false;
+    public void onVehicleUpdate(BaseVehicle vehicle) {
+
     }
 
     /**
-     * Called when a collision occurs with a minecart and an entity.
+     * Called when a collision occurs with a vehicle and an entity.
      * 
-     * @param minecart the minecart
+     * @param vehicle the vehicle
      * @param collisioner
-     * @return doesn't do anything
      */
-    public boolean onMinecartCollision(Minecart minecart, BaseEntity collisioner) {
-        return false;
+    public void onVehicleCollision(BaseVehicle vehicle, BaseEntity collisioner) {
+
     }
 
     /**
-     * Called when a minecart is destroyed
+     * Called when a vehicle is destroyed
      * 
-     * @param minecart the minecart
-     * @return doesn't do anything
+     * @param vehicle the vehicle
      */
-    public boolean onMinecartDestroyed(Minecart minecart) {
-        return false;
+    public void onVehicleDestroyed(BaseVehicle vehicle) {
+
     }
 
     /**
-     * Called when a player enter or leaves a minecart
+     * Called when a player enter or leaves a vehicle
      * 
-     * @param minecart the minecart
+     * @param vehicle the vehicle
      * @param player the player
-     * @return return does not do anything
      */
-    public boolean onMinecartEnter(Minecart minecart, HumanEntity player) {
-        return false;
+    public void onVehicleEnter(BaseVehicle vehicle, HumanEntity player) {
+
     }
 }
