@@ -1,10 +1,9 @@
-
 public class LivingEntity extends BaseEntity {
     jy livingEntity;
-    
+
     public LivingEntity() {
     }
-    
+
     public LivingEntity(jy livingEntity) {
         super(livingEntity);
         this.livingEntity = livingEntity;
@@ -12,13 +11,13 @@ public class LivingEntity extends BaseEntity {
 
     /**
      * Returns the players health.
-     * 
+     *
      * @return
      */
     public int getHealth() {
         return livingEntity.aQ;
     }
-    
+
     /**
      * Increase player health.
      * @param health
@@ -43,5 +42,4 @@ public class LivingEntity extends BaseEntity {
             health = 20;
         livingEntity.aQ = health;
     }
-
 }

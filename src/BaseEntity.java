@@ -129,7 +129,7 @@ public class BaseEntity {
     public void setRotation(float rotation) {
         teleportTo(getX(), getY(), getZ(), rotation, getPitch());
     }
-    
+
     /**
      * Returns whether or not this entity is a mob
      * @return true if mob

@@ -142,6 +142,35 @@ public class PluginLoader {
          * Calls onBlockPhysics
          */
         BLOCK_PHYSICS,
+
+        /**
+         * Calls onMinecartCreate
+         */
+        MINECART_CREATE,
+
+        /**
+         * Calls onMinecartUpdate
+         */
+        MINECART_UPDATE,
+
+        /**
+         * Calls onMinecartDamage
+         */
+        MINECART_DAMAGE,
+        /**
+         * Calls onMinecartCollision
+         */
+
+        MINECART_COLLISION,
+        /**
+         * Calls onMinecartDestroyed
+         */
+        MINECART_DESTROYED,
+
+        /**
+         * Calls onMinecartEntered
+         */
+        MINECART_ENTERED,
         /**
          * Unused.
          */
@@ -488,6 +517,35 @@ public class PluginLoader {
                                 break;
                             case BLOCK_PHYSICS:
                                 if (listener.onBlockPhysics((Block) parameters[0], (Boolean) parameters[1])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case MINECART_CREATE:
+                                if (listener.onMinecartCreate((Minecart) parameters[0]))
+                                    toRet = true;
+                                break;
+                            case MINECART_UPDATE:
+                                if (listener.onMinecartUpdate((Minecart) parameters[0])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case MINECART_DAMAGE:
+                                if (listener.onMinecartDamage((Minecart) parameters[0], (LivingEntity) parameters[1], (Integer) parameters[2])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case MINECART_COLLISION:
+                                if (listener.onMinecartCollision((Minecart) parameters[0], (BaseEntity) parameters[1])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case MINECART_DESTROYED:
+                                if (listener.onMinecartDestroyed((Minecart) parameters[0])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case MINECART_ENTERED:
+                                if (listener.onMinecartEnter((Minecart) parameters[0], (HumanEntity) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
