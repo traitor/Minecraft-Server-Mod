@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
@@ -5,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class gg {
+
     public static Logger a = Logger.getLogger("Minecraft");
 
     public static void a() {
@@ -15,7 +17,7 @@ public class gg {
         ConsoleHandler localConsoleHandler = new ConsoleHandler();
         localConsoleHandler.setFormatter(localhv);
         a.addHandler(localConsoleHandler);
-        
+
         // For parsers, or whatever.
         try {
             FileHandler localFileHandler = new FileHandler("server.log");
@@ -24,7 +26,7 @@ public class gg {
         } catch (Exception localException) {
             a.log(Level.WARNING, "Failed to log to server.log", localException);
         }
-        
+
         // hMod: Keep the serveroutput logs.
         File log = new File("logs");
         try {

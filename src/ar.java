@@ -1,8 +1,9 @@
+
 import java.util.Random;
 
 public class ar extends cz {
-    int a = 0;
 
+    int a = 0;
     boolean[] b = new boolean[4];
     int[] c = new int[4];
 
@@ -20,7 +21,7 @@ public class ar extends cz {
     public void a(eo parameo, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
         // hMod: Store originating block
         Block blockFrom = new Block(this.bh, paramInt1, paramInt2, paramInt3);
-        
+
         int i = g(parameo, paramInt1, paramInt2, paramInt3);
 
         int j = 1;
@@ -100,22 +101,22 @@ public class ar extends cz {
             // hMod: sidewards flow.
             if (arrayOfBoolean[0] != false) {
                 Block blockTo = new Block(0, paramInt1 - 1, paramInt2, paramInt3);
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo})) 
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo}))
                     f(parameo, paramInt1 - 1, paramInt2, paramInt3, n);
             }
             if (arrayOfBoolean[1] != false) {
                 Block blockTo = new Block(0, paramInt1 + 1, paramInt2, paramInt3);
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo})) 
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo}))
                     f(parameo, paramInt1 + 1, paramInt2, paramInt3, n);
             }
             if (arrayOfBoolean[2] != false) {
                 Block blockTo = new Block(0, paramInt1, paramInt2, paramInt3 - 1);
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo})) 
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo}))
                     f(parameo, paramInt1, paramInt2, paramInt3 - 1, n);
             }
             if (arrayOfBoolean[3] != false) {
                 Block blockTo = new Block(0, paramInt1, paramInt2, paramInt3 + 1);
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo})) 
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, new Object[]{blockFrom, blockTo}))
                     f(parameo, paramInt1, paramInt2, paramInt3 + 1, n);
             }
         }

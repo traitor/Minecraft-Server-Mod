@@ -1,7 +1,9 @@
+
 import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 
 public class jg extends fa implements ew {
+
     public static Logger a = Logger.getLogger("Minecraft");
     public bi b;
     public boolean c = false;
@@ -12,7 +14,6 @@ public class jg extends fa implements ew {
     private double h;
     private double i;
     private boolean j = true;
-
     private hl k = null;
 
     public jg(MinecraftServer paramMinecraftServer, bi parambi, er paramer) {
@@ -50,7 +51,7 @@ public class jg extends fa implements ew {
         // etc.getLoader().callHook(PluginLoader.Hook.DISCONNECT, new Object[]{e});
         this.b.a(new ju(paramString));
         this.b.c();
-        this.d.f.a(new bh( "§e" + this.e.as + " left the game."));
+        this.d.f.a(new bh("§e" + this.e.as + " left the game."));
         this.d.f.c(this.e);
         this.c = true;
     }
@@ -193,7 +194,7 @@ public class jg extends fa implements ew {
         if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.TELEPORT, new Object[]{e, e.getPlayer().getLocation(), from})) {
             return;
         }
-        
+
         this.j = false;
         this.g = paramDouble1;
         this.h = paramDouble2;
@@ -202,7 +203,6 @@ public class jg extends fa implements ew {
         this.e.a.b(new ef(paramDouble1, paramDouble2 + 1.620000004768372D, paramDouble2, paramDouble3, paramFloat1, paramFloat2,
                 false));
     }
-
     // hMod: Store x/y/z
     int x, y, z, type;
 
@@ -308,39 +308,17 @@ public class jg extends fa implements ew {
             if (i3 > i4)
                 i4 = i3;
             
-            // hMod: Block creation hook (also finds what block was clicked on)
-            if ((i4 > etc.getInstance().getSpawnProtectionSize()) || (bool)) {
+            // hMod: If we were building inside spawn, bail! (unless ops/admin)
+            if ((i4 > etc.getInstance().getSpawnProtectionSize() || bool) && getPlayer().canBuild()) {
                 hl localhl = paramfz.a >= 0 ? new hl(paramfz.a) : null;
-
-                Block blockPlaced = new Block(localhl != null ? localhl.c : paramfz.a, m, n, i1);
-                if (paramfz.e == 0) {
-                    blockPlaced.setY(blockPlaced.getY() - 1);
-                } else if (paramfz.e == 1) {
-                    blockPlaced.setY(blockPlaced.getY() + 1);
-                } else if (paramfz.e == 2) {
-                    blockPlaced.setZ(blockPlaced.getZ() - 1);
-                } else if (paramfz.e == 3) {
-                    blockPlaced.setZ(blockPlaced.getZ() + 1);
-                } else if (paramfz.e == 4) {
-                    blockPlaced.setX(blockPlaced.getX() - 1);
-                } else if (paramfz.e == 5) {
-                    blockPlaced.setX(blockPlaced.getX() + 1);
-                }
-                Block blockClicked = new Block(etc.getServer().getBlockIdAt(m, n, i1), m, n, i1);
-                blockClicked.setFaceClicked(Block.Face.fromId(paramfz.e));
-
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, new Object[]{e, blockPlaced, blockClicked, paramfz.a}) && getPlayer().canBuild()) {
-                    if (localhl != null) {
-                        if (!etc.getInstance().isOnItemBlacklist(localhl.c) || bool) {
-                            this.e.c.a(this.e, this.d.e, localhl, m, n, i1, i2);
-                        }
-                    } // TODO: is this right ?
-                    else {
-                        this.e.c.a(this.e, this.d.e, localhl, m, n, i1, i2);
-                    }
-                }
+                this.e.c.a(this.e, this.d.e, localhl, m, n, i1, i2);
+            } else {
+                // hMod: No point sending the client to update the blocks, you weren't allowed to place!
+                this.d.e.B = false;
+                return;
             }
 
+            // hMod: these are the 'block changed' packets for the client.
             this.e.a.b(new fl(m, n, i1, this.d.e));
 
             if (i2 == 0)
@@ -365,7 +343,7 @@ public class jg extends fa implements ew {
         // hMod: disconnect!
         etc.getLoader().callHook(PluginLoader.Hook.DISCONNECT, new Object[]{e});
         a.info(this.e.as + " lost connection: " + paramString);
-        this.d.f.a(new bh( "§e" + this.e.as + " left the game."));
+        this.d.f.a(new bh("§e" + this.e.as + " left the game."));
         this.d.f.c(this.e);
         this.c = true;
     }
@@ -422,8 +400,8 @@ public class jg extends fa implements ew {
     }
 
     private void d(String paramString) {
-       // hMod: chat already handles the call to command();.
-       //getPlayer().command(paramString);
+        // hMod: chat already handles the call to command();.
+        //getPlayer().command(paramString);
     }
 
     public void a(q paramq) {
@@ -463,6 +441,7 @@ public class jg extends fa implements ew {
             // hMod: Inventory
             hl[] temp = this.e.al.a;
             this.e.al.a = paramu.b;
+            this.e.al.a[this.e.al.d] = k;	// hMod: Preserve item in hand
             if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_CHANGE, new Object[]{e})) {
                 this.e.al.a = temp;
                 getPlayer().getInventory().updateInventory();
@@ -548,8 +527,9 @@ public class jg extends fa implements ew {
     }
 
     public void a(az paramaz) {
-        if (this.e.aQ > 0) return;
-        
-        this.e = this.d.f.d(this.e); 
+        if (this.e.aQ > 0)
+            return;
+
+        this.e = this.d.f.d(this.e);
     }
 }

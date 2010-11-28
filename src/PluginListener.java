@@ -268,7 +268,6 @@ public abstract class PluginListener {
         return false;
     }
 
-
     /**
      * Called when either a sign, chest or furnace is changed.
      * 
@@ -295,7 +294,7 @@ public abstract class PluginListener {
         return false;
     }
 
-    /*
+    /**
      * Called when either a lava block or a lighter tryes to light something on fire.
      * block status depends on the light source:
      * 1 = lava.
@@ -310,7 +309,7 @@ public abstract class PluginListener {
         return false;
     }
 
-    /*
+    /**
      * Called when a dynamite block or a creeper is triggerd.
      * block status depends on explosive compound:
      * 1 = dynamite.
@@ -324,7 +323,7 @@ public abstract class PluginListener {
         return false;
     }
 
-    /*
+    /**
      * Called when fluid wants to flow to a certain block.
      * (10 & 11 for lava and 8 & 9 for water)
      * 
@@ -337,16 +336,16 @@ public abstract class PluginListener {
      *
      * @return true if you dont want the substance to flow.
      */
-    public boolean onFlow(Block blockFrom,Block blockTo) {
+    public boolean onFlow(Block blockFrom, Block blockTo) {
         return false;
     }
-    
+
     /**
      * @param mob Mob attempting to spawn.
      * @return true if you dont want mob to spawn.
      */
     public boolean onMobSpawn(Mob mob) {
-    	return false;
+        return false;
     }
 
     /**
@@ -359,7 +358,7 @@ public abstract class PluginListener {
      *          object that is defending.
      * @return
      */
-    public boolean onDamage(BaseEntity attacker,BaseEntity defender){
+    public boolean onDamage(BaseEntity attacker, BaseEntity defender) {
         return false;
     }
 
@@ -374,11 +373,11 @@ public abstract class PluginListener {
      * @return
      *      return true to stop the change.
      */
-    public boolean onHealthChange(Player player,int oldValue,int newValue){
+    public boolean onHealthChange(Player player, int oldValue, int newValue) {
         return false;
     }
 
-    /*
+    /**
      * Called whenever a redstone source (wire, switch, torch) changes its
      * current.
      *
@@ -405,10 +404,10 @@ public abstract class PluginListener {
      * Currently the only supported blocks are sand, gravel and portals.
      *
      * @param block Block which requires special physics
-     * @param boolean true if this block has just been placed
+     * @param placed True if block was just placed
      * @return true if you do want to stop the default physics for this block
      */
     public boolean onBlockPhysics(Block block, boolean placed) {
-    	return false;
+        return false;
     }
 }

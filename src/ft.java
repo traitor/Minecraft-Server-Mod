@@ -10,13 +10,13 @@ public class ft extends ga { // Sand block (gravel inherits)
     }
 
     public void e(eo parameo, int paramInt1, int paramInt2, int paramInt3) {
-        if (!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Object[] {new Block(bh, paramInt1, paramInt2, paramInt3), true})) {
+        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Object[]{new Block(bh, paramInt1, paramInt2, paramInt3), true})) {
             parameo.h(paramInt1, paramInt2, paramInt3, this.bh);
         }
     }
 
     public void b(eo parameo, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        if (!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Object[] {new Block(bh, paramInt1, paramInt2, paramInt3), false})) {
+        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Object[]{new Block(bh, paramInt1, paramInt2, paramInt3), false})) {
             parameo.h(paramInt1, paramInt2, paramInt3, this.bh);
         }
     }

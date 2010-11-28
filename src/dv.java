@@ -245,7 +245,7 @@ public class dv extends ga {
         if (!this.a) {
             return false;
         }
-        return b((it)parameo, paramInt1, paramInt2, paramInt3, paramInt4);
+        return b((it) parameo, paramInt1, paramInt2, paramInt3, paramInt4);
     }
 
     public boolean b(it paramit, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {

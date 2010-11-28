@@ -16,8 +16,8 @@ import net.minecraft.server.MinecraftServer;
  * @author James
  */
 public class Player extends BaseEntity {
-
-    public static Logger log = Logger.getLogger("Minecraft");
+    
+    private static final Logger log = Logger.getLogger("Minecraft");
     private er user;
     private int id = -1;
     private String prefix = "";
@@ -64,13 +64,13 @@ public class Player extends BaseEntity {
     public void giveItem(Item item) {
         giveItem(item.getItemId(), item.getAmount());
     }
-    
+
     /**
      * Makes player send message.
      * 
      * @param message
      */
-    public void chat(String message){
+    public void chat(String message) {
         if (message.length() > 100) {
             user.a.c("Chat message too long");
             return;
@@ -97,14 +97,15 @@ public class Player extends BaseEntity {
             etc.getServer().messageAll(chat);
         }
     }
+
     /**
      * Makes player use command.
      * 
      * @param command
      * 
      */
-    public void command(String command){
-         try {
+    public void command(String command) {
+        try {
             if (etc.getInstance().isLogging()) {
                 log.info("Command used by " + getName() + " " + command);
             }
@@ -357,10 +358,9 @@ public class Player extends BaseEntity {
                         sendMessage(Colors.Rose + "You can't message yourself!");
                         return;
                     }
-                    String prefix = getColor();
 
-                    player.sendMessage("(MSG) " + prefix + "<" + getName() + "> " + Colors.White + etc.combineSplit(2, split, " "));
-                    sendMessage("(MSG) " + prefix + "<" + getName() + "> " + Colors.White + etc.combineSplit(2, split, " "));
+                    player.sendMessage("(MSG) " + getColor() + "<" + getName() + "> " + Colors.White + etc.combineSplit(2, split, " "));
+                    sendMessage("(MSG) " + getColor() + "<" + getName() + "> " + Colors.White + etc.combineSplit(2, split, " "));
                 } else {
                     sendMessage(Colors.Rose + "Couldn't find player " + split[1]);
                 }
@@ -676,8 +676,7 @@ public class Player extends BaseEntity {
                 if (split.length == 1) {
                     return;
                 }
-                String prefix = getColor();
-                String paramString2 = "* " + prefix + getName() + Colors.White + " " + command.substring(command.indexOf(" ")).trim();
+                String paramString2 = "* " + getColor() + getName() + Colors.White + " " + command.substring(command.indexOf(" ")).trim();
                 log.info("* " + getName() + " " + command.substring(command.indexOf(" ")).trim());
                 etc.getServer().messageAll(paramString2);
             } else if (split[0].equalsIgnoreCase("/sethome")) {
@@ -698,7 +697,7 @@ public class Player extends BaseEntity {
                 // used anyways.
                 // this.d.e.n = (int) Math.ceil(e.m); //Not that the Y axis
                 // really matters since it tries to get the highest point iirc.
-                
+
                 log.info("Spawn position changed.");
                 sendMessage(Colors.Rose + "You have set the spawn to your current position.");
             } else if (split[0].equalsIgnoreCase("/home")) {
@@ -941,7 +940,7 @@ public class Player extends BaseEntity {
                 }
                 HitBlox hb = new HitBlox(this);
                 Block block = hb.getTargetBlock();
-		if (block.getType() == 52) { // mob spawner
+                if (block.getType() == 52) { // mob spawner
                     block.setSpawnData(split[1]);
                 } else {
                     sendMessage(Colors.Rose + "You are not targeting a mob spawner.");
@@ -967,6 +966,7 @@ public class Player extends BaseEntity {
             }
         }
     }
+
     /**
      * Gives an item to the player
      * 
@@ -1299,13 +1299,16 @@ public class Player extends BaseEntity {
     /**
      * Adds the player to the specified group
      * 
-     * @param group
-     *            group to add player to
+     * @param group group to add player to
      */
     public void addGroup(String group) {
         this.groups.add(group);
     }
 
+    /**
+     * Removes specified group from list of groups
+     * @param group group to remove
+     */
     public void removeGroup(String group) {
         this.groups.remove(group);
     }
@@ -1460,8 +1463,10 @@ public class Player extends BaseEntity {
      * @param health
      */
     public void setHealth(int health) {
-        if(health < -1) health = -1;
-        if(health > 20) health = 20;
+        if (health < -1)
+            health = -1;
+        if (health > 20)
+            health = 20;
         user.aQ = health;
     }
 
@@ -1470,17 +1475,19 @@ public class Player extends BaseEntity {
      * 
      * @return
      */
-    public int getHealth(){
+    public int getHealth() {
         return user.aQ;
     }
+
     /**
      * Increase player health.
      * @param health
      *          amount of health to increase the players health with.
      */
-    public void increaseHealth(int health){
+    public void increaseHealth(int health) {
         user.a(health);
     }
+
     /**
      * Returns true if the player is muted
      * 

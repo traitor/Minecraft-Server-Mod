@@ -1,4 +1,6 @@
+
 public class cf extends ay {
+
     public int e = -1;
     public String f;
     public double g;
@@ -51,9 +53,7 @@ public class cf extends ay {
                 return;
             }
 
-            int k = this.a
-                    .a(localjy.getClass(), du.b(this.b, this.c, this.d, this.b + 1, this.c + 1, this.d + 1).b(8.0D, 4.0D, 8.0D))
-                    .size();
+            int k = this.a.a(localjy.getClass(), du.b(this.b, this.c, this.d, this.b + 1, this.c + 1, this.d + 1).b(8.0D, 4.0D, 8.0D)).size();
             if (k >= 6) {
                 d();
                 return;

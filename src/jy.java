@@ -1,6 +1,8 @@
+
 import java.util.List;
 
 public class jy extends dx {
+
     public int av = 20;
     public float aw;
     public float ax;
@@ -33,7 +35,6 @@ public class jy extends dx {
     public float aX;
     public float aY;
     protected boolean aZ = false;
-
     public int ba = -1;
     public float bb = (float) (Math.random() * 0.8999999761581421D + 0.1000000014901161D);
     public float bc;
@@ -46,9 +47,7 @@ public class jy extends dx {
     protected double bj;
     protected double bk;
     float bl = 0.0F;
-
     protected int bm = 0;
-
     protected int bn = 0;
     protected float bo;
     protected float bp;

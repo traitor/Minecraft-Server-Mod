@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,11 +19,10 @@ import java.util.Map;
  * 
  * @author Nijiko
  */
-
 public final class PropertiesFile {
+
     private static final Logger log = Logger.getLogger("Minecraft");
     private String fileName;
-
     // Data
     private List<String> lines = new ArrayList<String>();
     private Map<String, String> props = new HashMap<String, String>();
@@ -49,6 +49,7 @@ public final class PropertiesFile {
 
     /**
      * Loads, or reloads, the properties file
+     * @throws IOException
      */
     public void load() throws IOException {
         BufferedReader reader;
@@ -97,26 +98,26 @@ public final class PropertiesFile {
                     } else {
                         c = line.charAt(pos++);
                         switch (c) {
-                        case 'n':
-                            key.append('\n');
-                            break;
-                        case 't':
-                            key.append('\t');
-                            break;
-                        case 'r':
-                            key.append('\r');
-                            break;
-                        case 'u':
-                            if (pos + 4 <= line.length()) {
-                                char uni = (char) Integer.parseInt(line.substring(pos, pos + 4), 16);
-                                key.append(uni);
-                                pos += 4;
-                            }
+                            case 'n':
+                                key.append('\n');
+                                break;
+                            case 't':
+                                key.append('\t');
+                                break;
+                            case 'r':
+                                key.append('\r');
+                                break;
+                            case 'u':
+                                if (pos + 4 <= line.length()) {
+                                    char uni = (char) Integer.parseInt(line.substring(pos, pos + 4), 16);
+                                    key.append(uni);
+                                    pos += 4;
+                                }
 
-                            break;
-                        default:
-                            key.append(c);
-                            break;
+                                break;
+                            default:
+                                key.append(c);
+                                break;
                         }
                     }
                 } else if (needsEscape) {
@@ -176,25 +177,25 @@ public final class PropertiesFile {
                     } else {
                         c = line.charAt(pos++);
                         switch (c) {
-                        case 'n':
-                            element.append('\n');
-                            break;
-                        case 't':
-                            element.append('\t');
-                            break;
-                        case 'r':
-                            element.append('\r');
-                            break;
-                        case 'u':
-                            if (pos + 4 <= line.length()) {
-                                char uni = (char) Integer.parseInt(line.substring(pos, pos + 4), 16);
-                                element.append(uni);
-                                pos += 4;
-                            }
-                            break;
-                        default:
-                            element.append(c);
-                            break;
+                            case 'n':
+                                element.append('\n');
+                                break;
+                            case 't':
+                                element.append('\t');
+                                break;
+                            case 'r':
+                                element.append('\r');
+                                break;
+                            case 'u':
+                                if (pos + 4 <= line.length()) {
+                                    char uni = (char) Integer.parseInt(line.substring(pos, pos + 4), 16);
+                                    element.append(uni);
+                                    pos += 4;
+                                }
+                                break;
+                            default:
+                                element.append(c);
+                                break;
                         }
                     }
                 } else {
@@ -303,8 +304,7 @@ public final class PropertiesFile {
     /**
      * Checks to see if this key exists
      * 
-     * @param key
-     *            the key to check
+     * @param var the key to check
      * @return true if key exists
      */
     public boolean containsKey(String var) {
@@ -336,8 +336,7 @@ public final class PropertiesFile {
     /**
      * Grabs the value from a key
      * 
-     * @param key
-     *            the key to parse
+     * @param var property to retreive
      * @return string if key exists
      */
     public String getProperty(String var) {
@@ -367,34 +366,46 @@ public final class PropertiesFile {
     }
 
     /**
-     * Remove a key
-     * 
+     * Remove a key from the file
+     *
      * @param var
      *            the key to remove
      */
     public void removeKey(String var) {
-        for (String line : this.lines) {
+        Boolean changed = false;
+
+        if(this.props.containsKey(var)) {
+            this.props.remove(var);
+            changed = true;
+        }
+
+        for (int i = 0; i < this.lines.size(); i++) {
+            String line = this.lines.get(i);
+
             if (line.trim().length() == 0) {
                 continue;
             }
+
             if (line.charAt(0) == '#') {
                 continue;
             }
 
             if (line.contains("=")) {
                 int delimPosition = line.indexOf('=');
-
                 String key = line.substring(0, delimPosition).trim();
 
                 if (key.equals(var)) {
-                    this.lines.remove(line);
+                    this.lines.remove(i);
+                    changed = true;
                 }
             } else {
                 continue;
             }
         }
 
-        save();
+        // Save on change
+        if(changed)
+            save();
     }
 
     /**

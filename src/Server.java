@@ -162,7 +162,7 @@ public class Server {
         Player lastPlayer = null;
         name = name.toLowerCase();
 
-        for (Object player: server.f.b) {
+        for (Object player : server.f.b) {
             String playerName = ((er) player).as;
 
             if (playerName.toLowerCase().equals(name)) {
@@ -241,6 +241,7 @@ public class Server {
      * Sets the block
      * 
      * @param block
+     * @return
      */
     public boolean setBlock(Block block) {
         return setBlockAt(block.getType(), block.getX(), block.getY(), block.getZ()) && setBlockData(block.getX(), block.getY(), block.getZ(), block.getData());
@@ -303,6 +304,7 @@ public class Server {
      * @param x
      * @param y
      * @param z
+     * @return true if successful
      */
     public boolean setBlockAt(int blockType, int x, int y, int z) {
         return server.e.d(x, y, z, blockType);
@@ -353,24 +355,50 @@ public class Server {
             } else if (localav instanceof dt) {
                 return new Furnace((dt) localav);
             } else if (localav instanceof cf) {
-            	return new MobSpawner((cf) localav);
+                return new MobSpawner((cf) localav);
             }
         }
         return null;
     }
 
+    /**
+     * Drops an item at the specified location
+     * @param loc
+     * @param itemId
+     */
     public void dropItem(Location loc, int itemId) {
         dropItem(loc.x, loc.y, loc.z, itemId, 1);
     }
 
+    /**
+     * Drops an item at the specified location
+     * @param x
+     * @param y
+     * @param z
+     * @param itemId
+     */
     public void dropItem(double x, double y, double z, int itemId) {
         dropItem(x, y, z, itemId, 1);
     }
 
+    /**
+     * Drops an item with desired quantity at the specified location
+     * @param loc
+     * @param itemId
+     * @param quantity
+     */
     public void dropItem(Location loc, int itemId, int quantity) {
         dropItem(loc.x, loc.y, loc.z, itemId, quantity);
     }
 
+    /**
+     * Drops an item with desired quantity at the specified location
+     * @param x
+     * @param y
+     * @param z
+     * @param itemId
+     * @param quantity
+     */
     public void dropItem(double x, double y, double z, int itemId, int quantity) {
         double d1 = server.e.l.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
         double d2 = server.e.l.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
@@ -383,7 +411,6 @@ public class Server {
 
     /**
      * Forces the server to update the physics for blocks around the given block
-     *
      * @param block the block that changed
      */
     public void updateBlockPhysics(Block block) {
@@ -392,7 +419,6 @@ public class Server {
 
     /**
      * Forces the server to update the physics for blocks around the given block
-     *
      * @param x the X coordinate of the block
      * @param y the Y coordinate of the block
      * @param z the Z coordinate of the block

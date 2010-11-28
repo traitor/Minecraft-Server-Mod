@@ -250,11 +250,15 @@ public class Block {
         this.spawnData = spawnData;
         ComplexBlock cb = etc.getServer().getComplexBlock(x, y, z);
         if (cb instanceof MobSpawner) {
-            MobSpawner spawner = (MobSpawner)cb;
+            MobSpawner spawner = (MobSpawner) cb;
             spawner.setSpawn(spawnData);
         }
     }
 
+    /**
+     * Returns this block's spawn data.
+     * @return
+     */
     public String getSpawnData() {
         return spawnData;
     }
