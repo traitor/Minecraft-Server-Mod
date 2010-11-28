@@ -553,11 +553,6 @@ public class jm extends dx implements kc {
      */
     @Override
     public void c(dx paramdx) {
-        // hMod: Collision of a cart
-        Minecart cart = new Minecart(this);
-        BaseEntity baseEntity = new BaseEntity(paramdx);
-        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_COLLISION, new Object[]{cart, baseEntity});
-
         if (this.l.z) {
             return;
         }
@@ -565,6 +560,11 @@ public class jm extends dx implements kc {
         if (paramdx == this.j) {
             return;
         }
+        // hMod: Collision of a cart
+        Minecart cart = new Minecart(this);
+        BaseEntity baseEntity = new BaseEntity(paramdx);
+        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_COLLISION, new Object[]{cart, baseEntity});
+
         if (((paramdx instanceof jy)) && (!(paramdx instanceof fx)) && (this.d == 0) && (this.s * this.s + this.u * this.u > 0.01D)
                 && (this.j == null) && (paramdx.k == null)) {
             paramdx.e(this);

@@ -97,4 +97,15 @@ public class BaseVehicle extends BaseEntity {
             return false;
         }
     }
+
+    /**
+     * Returns the passenger. If there is no passenger this function returns null.
+     * @return passenger
+     */
+    public Player getPassenger() {
+        if (entity.j != null)
+            if (entity.j instanceof er)
+                return ((er)entity.j).getPlayer();
+        return null;
+    }
 }

@@ -272,6 +272,9 @@ public class fk extends dx {
     public void c(dx paramdx) {
         // hMod: Collision of a boat
         super.c(paramdx);
+        if (paramdx == this.j) {
+            return;
+        }
         Boat boat = new Boat(this);
         BaseEntity baseEntity = new BaseEntity(paramdx);
         etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_COLLISION, new Object[]{boat, baseEntity});
