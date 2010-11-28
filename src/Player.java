@@ -15,10 +15,10 @@ import net.minecraft.server.MinecraftServer;
  * 
  * @author James
  */
-public class Player extends BaseEntity {
+public class Player extends LivingEntity {
+    private er player;
     
     private static final Logger log = Logger.getLogger("Minecraft");
-    private er user;
     private int id = -1;
     private String prefix = "";
     private String[] commands = new String[]{""};
@@ -35,6 +35,14 @@ public class Player extends BaseEntity {
     /**
      * Creates a player interface
      */
+    public Player(er player) {
+        super(player);
+        this.player = player;
+    }
+
+    /**
+     * Creates an empty player (FlatFileSource uses it, any use? O.o)
+     */
     public Player() {
     }
 
@@ -44,7 +52,7 @@ public class Player extends BaseEntity {
      * @param reason
      */
     public void kick(String reason) {
-        user.a.c(reason);
+        player.a.c(reason);
     }
 
     /**
@@ -53,7 +61,7 @@ public class Player extends BaseEntity {
      * @param message
      */
     public void sendMessage(String message) {
-        user.a.msg(message);
+        player.a.msg(message);
     }
 
     /**
@@ -72,13 +80,13 @@ public class Player extends BaseEntity {
      */
     public void chat(String message) {
         if (message.length() > 100) {
-            user.a.c("Chat message too long");
+            kick("Chat message too long");
             return;
         }
         message = message.trim();
         Matcher m = badChatPattern.matcher(message);
         if (m.find()) {
-            user.a.c("Illegal characters '" + m.group() + "' hex: " + Integer.toHexString(message.charAt(m.start())) + " in chat");
+            kick("Illegal characters '" + m.group() + "' hex: " + Integer.toHexString(message.charAt(m.start())) + " in chat");
             return;
         }
         if (message.startsWith("/")) {
@@ -88,7 +96,7 @@ public class Player extends BaseEntity {
                 sendMessage(Colors.Rose + "You are currently muted.");
                 return;
             }
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.CHAT, new Object[]{user, message})) {
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.CHAT, new Object[]{player, message})) {
                 return;
             }
 
@@ -110,7 +118,7 @@ public class Player extends BaseEntity {
                 log.info("Command used by " + getName() + " " + command);
             }
             String[] split = command.split(" ");
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMMAND, new Object[]{user, split})) {
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMMAND, new Object[]{player, split})) {
                 return; // No need to go on, commands were parsed.
             }
             if (!canUseCommand(split[0]) && !split[0].startsWith("/#")) {
@@ -796,7 +804,7 @@ public class Player extends BaseEntity {
             } else if ((command.startsWith("/#")) && (etc.getMCServer().f.g(getName()))) {
                 String str = command.substring(2);
                 log.info(getName() + " issued server command: " + str);
-                etc.getMCServer().a(str, user.a);
+                etc.getMCServer().a(str, player.a);
             } else if (split[0].equalsIgnoreCase("/time")) {
                 if (split.length == 2) {
                     if (split[1].equalsIgnoreCase("day")) {
@@ -995,14 +1003,14 @@ public class Player extends BaseEntity {
      */
     public void giveItemDrop(int itemId, int amount) {
         if (amount == -1) {
-            user.a(new hl(itemId, 255));
+            player.a(new hl(itemId, 255));
         } else {
             int temp = amount;
             do {
                 if (temp - 64 >= 64) {
-                    user.a(new hl(itemId, 64));
+                    player.a(new hl(itemId, 64));
                 } else {
-                    user.a(new hl(itemId, temp));
+                    player.a(new hl(itemId, temp));
                 }
                 temp -= 64;
             } while (temp > 0);
@@ -1141,7 +1149,7 @@ public class Player extends BaseEntity {
      * @return
      */
     public String getName() {
-        return user.as;
+        return player.as;
     }
 
     /**
@@ -1165,7 +1173,7 @@ public class Player extends BaseEntity {
      * @return
      */
     public String getIP() {
-        return user.a.b.b().toString().split(":")[0].substring(1);
+        return player.a.b.b().toString().split(":")[0].substring(1);
     }
 
     /**
@@ -1434,7 +1442,7 @@ public class Player extends BaseEntity {
      * @return
      */
     public er getUser() {
-        return user;
+        return player;
     }
 
     /**
@@ -1443,7 +1451,7 @@ public class Player extends BaseEntity {
      * @param er
      */
     public void setUser(er er) {
-        this.user = er;
+        this.player = er;
         this.entity = er;
         this.inventory = new Inventory(this, Inventory.Type.Inventory);
         this.craftingTable = new Inventory(this, Inventory.Type.CraftingTable);
@@ -1451,41 +1459,7 @@ public class Player extends BaseEntity {
     }
 
     public void teleportTo(double x, double y, double z, float rotation, float pitch) {
-        user.a.a(x, y, z, rotation, pitch);
-    }
-
-    /**
-     * Sets the players health.
-     * 20 = max health
-     * 1 = 1/2 heart
-     * 2 = 1 heart
-     *
-     * @param health
-     */
-    public void setHealth(int health) {
-        if (health < -1)
-            health = -1;
-        if (health > 20)
-            health = 20;
-        user.aQ = health;
-    }
-
-    /**
-     * Returns the players health.
-     * 
-     * @return
-     */
-    public int getHealth() {
-        return user.aQ;
-    }
-
-    /**
-     * Increase player health.
-     * @param health
-     *          amount of health to increase the players health with.
-     */
-    public void increaseHealth(int health) {
-        user.a(health);
+        player.a.a(x, y, z, rotation, pitch);
     }
 
     /**
@@ -1528,7 +1502,7 @@ public class Player extends BaseEntity {
      * @return
      */
     public int getItemInHand() {
-        return user.a.getItemInHand();
+        return player.a.getItemInHand();
     }
 
     /**

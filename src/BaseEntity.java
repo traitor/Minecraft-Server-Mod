@@ -5,8 +5,14 @@
  * @author James
  */
 public class BaseEntity {
+    dx entity;
+    
+    public BaseEntity(dx entity) {
+        this.entity = entity;
+    }
 
-    jy entity;
+    public BaseEntity() {
+    }
 
     /**
      * Returns the ID for this mob
@@ -123,31 +129,7 @@ public class BaseEntity {
     public void setRotation(float rotation) {
         teleportTo(getX(), getY(), getZ(), rotation, getPitch());
     }
-
-    /**
-     * Returns this entity's health
-     * @return health
-     */
-    public int getHealth() {
-        return entity.aQ;
-    }
-
-    /**
-     * Sets this entity's health
-     * @param health
-     */
-    public void setHealth(int health) {
-        entity.aQ = health;
-    }
-
-    /**
-     * Returns true if this entity is a player
-     * @return true if player
-     */
-    public boolean isPlayer() {
-        return entity instanceof er;
-    }
-
+    
     /**
      * Returns whether or not this entity is a mob
      * @return true if mob
@@ -162,6 +144,14 @@ public class BaseEntity {
      */
     public boolean isAnimal() {
         return entity instanceof ax;
+    }
+
+    /**
+     * Returns true if this entity is a player
+     * @return true if player
+     */
+    public boolean isPlayer() {
+        return entity instanceof er;
     }
 
     /**

@@ -216,7 +216,7 @@ public class Server {
         List<Mob> toRet = new ArrayList<Mob>();
         for (Object o : server.e.b) {
             if (o instanceof hd) {
-                toRet.add(new Mob((hd) o));
+                toRet.add(new Mob((gb) o));
             }
         }
         return toRet;
