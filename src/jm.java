@@ -90,7 +90,7 @@ public class jm extends dx implements kc {
         // hMod: Attack of the cart
         BaseEntity attacker = new BaseEntity(paramdx);
         Minecart cart = new Minecart(this);
-        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_DAMAGE, new Object[]{cart, attacker, paramInt}))
+        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_DAMAGE, new Object[]{cart, attacker, paramInt}))
             return true;
 
         if (this.l.z) {

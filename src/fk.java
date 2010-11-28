@@ -59,7 +59,7 @@ public class fk extends dx {
         // hMod: Attack of the boat
         BaseEntity attacker = new BaseEntity(paramdx);
         Boat boat = new Boat(this);
-        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_DAMAGE, new Object[]{boat, attacker, paramInt}))
+        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_DAMAGE, new Object[]{boat, attacker, paramInt}))
             return true;
 
         if (this.l.z)
