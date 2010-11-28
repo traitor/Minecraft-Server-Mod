@@ -468,4 +468,15 @@ public abstract class PluginListener {
     public void onVehicleEnter(BaseVehicle vehicle, HumanEntity player) {
 
     }
+    
+    /**
+     * Called when a player uses an item (rightclick with item in hand)
+     * @param player the player
+     * @param item the item being used (in hand)
+     * @return true to prevent using the item.
+     */
+    
+    public boolean onItemUse(Player player, Item item) {
+        return false;
+    }
 }
