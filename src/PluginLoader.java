@@ -530,7 +530,7 @@ public class PluginLoader {
                                 }
                                 break;
                             case MINECART_DAMAGE:
-                                if (listener.onMinecartDamage((Minecart) parameters[0], (LivingEntity) parameters[1], (Integer) parameters[2])) {
+                                if (listener.onMinecartDamage((Minecart) parameters[0], (BaseEntity) parameters[1], (Integer) parameters[2])) {
                                     toRet = true;
                                 }
                                 break;

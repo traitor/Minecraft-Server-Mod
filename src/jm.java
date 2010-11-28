@@ -69,7 +69,9 @@ public class jm extends dx implements kc {
 
         // hMod: Creation of the cart
         Minecart cart = new Minecart(this);
-        etc.getLoader().callHook(PluginLoader.Hook.MINECART_CREATE, new Object[]{cart});
+        if((Boolean)etc.getLoader().callHook(PluginLoader.Hook.MINECART_CREATE, new Object[]{cart})){
+            cart.destroy();
+        }
 
     }
 

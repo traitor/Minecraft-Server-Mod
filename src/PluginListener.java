@@ -429,7 +429,7 @@ public abstract class PluginListener {
      * @param damage
      * @return true to set damage
      */
-    public boolean onMinecartDamage(Minecart minecart, LivingEntity attacker, int damage) {
+    public boolean onMinecartDamage(Minecart minecart, BaseEntity attacker, int damage) {
         return true;
     }
 
