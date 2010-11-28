@@ -16,7 +16,7 @@ public class bt extends fu {
         
         // hMod: Store blockInfo of the one we clicked
         int blockClickedId = parameo.a(paramInt1, paramInt2, paramInt3);
-        Block blockClicked = new Block( blockClickedId, paramInt1, paramInt2, paramInt3 );
+        Block blockClicked = new Block(blockClickedId, paramInt1, paramInt2, paramInt3 );
         
         if (blockClickedId == ga.aS.bh) {
             paramInt4 = 0;
@@ -57,15 +57,15 @@ public class bt extends fu {
             //hMod: Take over block placement
             if (parameo.a(paramInt1, paramInt2, paramInt3, this.a)) {
                 // hMod: Check if this was playerPlaced and call the hook
-                if (paramfx instanceof er && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, new Object[]{e, blockPlaced, blockClicked, this.a})) {
+                if (paramfx instanceof er && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, new Object[]{paramfx, blockPlaced, blockClicked, this.a})) {
                     // hMod: Undo!
                     
                     // Specialcase iceblocks, replace with 'glass' first (so it doesnt explode into water)
                     if (this.a == 79) {
-                        parameo.a( paramInt1, paramInt2, paramInt3, 20 );
+                        parameo.a(paramInt1, paramInt2, paramInt3, 20 );
                     }
-                    parameo.a( paramInt1, paramInt2, paramInt3, oldMaterial );
-                    parameo.c( paramInt1, paramInt2, paramInt3, oldData );
+                    parameo.a(paramInt1, paramInt2, paramInt3, oldMaterial );
+                    parameo.c(paramInt1, paramInt2, paramInt3, oldData );
                     
                     // hMod: Refund the item the player lost >.>
                     // or not, this occasionally dupes items! we'll do this when notch implements serverside invs.
