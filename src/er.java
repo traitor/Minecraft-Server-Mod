@@ -166,14 +166,16 @@ public class er extends fx {
             }
         }
 
+        // hMod: Update the health
         if (this.aQ != this.bu) {
-            // hMod: updates your health when it is changed.
-            if (etc.getInstance().isHealthEnabled() && !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.HEALTH_CHANGE, new Object[]{getPlayer(), this.bu, this.aQ})) {
-                this.a.b(new ed(this.aQ));
-                this.bu = this.aQ;
-            } else {
+            //updates your health when it is changed.
+            if(!etc.getInstance().isHealthEnabled()) {
                 this.aQ = 20;
                 this.aZ = false;
+            // Only send health updates when health is turned on.
+            } else if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.HEALTH_CHANGE, new Object[]{getPlayer(), this.bu, this.aQ})){
+                this.a.b(new ed(this.aQ));
+                this.bu = this.aQ;
             }
         }
     }
