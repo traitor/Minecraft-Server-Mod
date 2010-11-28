@@ -447,9 +447,15 @@ public class Server {
      * Adds a runnable to the Server Queue, so that it will be executed in the Server Thread.
      *  
      * @param r - the runnable
-     * @return true if successful
      */
     public void addToServerQueue(Runnable r) {
         gt.add(r);
+    }
+
+    /**
+     * Saves all player inventories to file
+     */
+    public void saveInventories() {
+        server.f.d();
     }
 }

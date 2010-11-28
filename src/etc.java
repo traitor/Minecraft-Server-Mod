@@ -388,7 +388,10 @@ public class etc {
         }
 
         boolean dontParseRegular = true;
-        if (split[0].equalsIgnoreCase("help") || split[0].equalsIgnoreCase("mod-help")) {
+        if (split[0].equalsIgnoreCase("save-all")) {
+            dontParseRegular = false;
+            getServer().saveInventories();
+        } else if (split[0].equalsIgnoreCase("help") || split[0].equalsIgnoreCase("mod-help")) {
             if (split[0].equalsIgnoreCase("help")) {
                 dontParseRegular = false;
             }
