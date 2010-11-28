@@ -938,10 +938,17 @@ public class Player extends BaseEntity {
                     sendMessage(Colors.Rose + "You must specify what to change the mob spawner to.");
                     return;
                 }
+                if (!Mob.isValid(split[1])) {
+                    sendMessage(Colors.Rose + "Invalid mob specified.");
+                    return;
+                }
+
                 HitBlox hb = new HitBlox(this);
                 Block block = hb.getTargetBlock();
                 if (block.getType() == 52) { // mob spawner
-                    block.setSpawnData(split[1]);
+                    MobSpawner ms = (MobSpawner) etc.getServer().getComplexBlock(block.getX(), block.getY(), block.getZ());
+                    if (ms != null)
+                        ms.setSpawn(split[1]);
                 } else {
                     sendMessage(Colors.Rose + "You are not targeting a mob spawner.");
                 }

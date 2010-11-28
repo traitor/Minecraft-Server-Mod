@@ -33,7 +33,6 @@ public class MobSpawner implements ComplexBlock {
 
     /**
      * Allows what to spawn to change on-the-fly
-     * See: Block.setSpawnData() if you want to adjust this value.
      * @param spawn
      */
     public void setSpawn(String spawn) {
@@ -42,7 +41,6 @@ public class MobSpawner implements ComplexBlock {
     
     /**
      * Returns the spawn used.
-     * See: Block.getSpawnData() if you want the "actual" value
      * @return
      */
     public String getSpawn() {

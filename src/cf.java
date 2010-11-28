@@ -7,9 +7,6 @@ public class cf extends ay {
     public double h = 0.0D;
 
     public cf() {
-        // hMod: override spawndata with what is stored in the block
-        String spawnData = etc.getServer().getBlockAt(b, c, d).getSpawnData();
-        this.f = spawnData;
         this.e = 20;
     }
 
