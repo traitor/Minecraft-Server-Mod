@@ -60,6 +60,7 @@ public class bt extends fu {
                 if (paramfx instanceof er && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, new Object[]{e, blockPlaced, blockClicked, this.a})) {
                     // hMod: Undo!
                     
+                    // Specialcase iceblocks, replace with 'glass' first (so it doesnt explode into water)
                     if (this.a == 79) {
                         parameo.a( paramInt1, paramInt2, paramInt3, 20 );
                     }
