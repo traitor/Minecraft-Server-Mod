@@ -2,6 +2,11 @@
 import java.io.PrintStream;
 import java.util.Random;
 
+/**
+ * BlockPortal
+ *
+ * Class implementing portal block mechanics
+ */
 public class ai extends hw {
 
     public ai(int paramInt1, int paramInt2) {

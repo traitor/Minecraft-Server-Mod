@@ -1,6 +1,12 @@
 
 import java.util.Random;
 
+
+/**
+ * BlockRedstoneWire
+ *
+ * Class implementing redstone wire block mechanics
+ */
 public class dv extends ga {
 
     private boolean a = true;

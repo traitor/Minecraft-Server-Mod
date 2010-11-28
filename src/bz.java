@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import net.minecraft.server.MinecraftServer;
 
+/**
+ * ThreadCommandReader
+ *
+ * Class implementing reading commands from the console
+ */
 public class bz extends Thread {
     // hMod: Store server
 

@@ -1,4 +1,9 @@
 
+/**
+ * InventoryPlayer
+ *
+ * Class for keeping track of an individual player's inventory
+ */
 public class hi implements kc {
 
     public hl[] a = new hl[37];

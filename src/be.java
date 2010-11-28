@@ -2,6 +2,11 @@
 import java.util.List;
 import java.util.Random;
 
+/**
+ * BlockPressurePlate
+ *
+ * Class implementing pressure plate block mechanics
+ */
 public class be extends ga {
 
     private dd a;

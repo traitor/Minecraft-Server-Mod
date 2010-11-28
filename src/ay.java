@@ -2,6 +2,12 @@
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * TileEntity
+ *
+ * Class implementing entities that are also blocks
+ * Furnace/Chest/Sign/MobSpawner
+ */
 public class ay {
 
     private static Map e = new HashMap();

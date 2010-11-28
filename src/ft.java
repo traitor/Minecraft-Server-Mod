@@ -1,6 +1,11 @@
 
 import java.util.Random;
 
+/**
+ * BlockSand
+ *
+ * Class implementing sand block mechanics
+ */
 public class ft extends ga { // Sand block (gravel inherits)
 
     public static boolean a = false;

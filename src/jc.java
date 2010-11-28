@@ -1,4 +1,9 @@
 
+/**
+ * ItemFlintAndSteel
+ *
+ * Class implementing lighter mechanics
+ */
 public class jc extends fu {
 
     public jc(int paramInt) {

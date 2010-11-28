@@ -1,6 +1,11 @@
 
 import java.util.Random;
 
+/**
+ * BlockFire
+ *
+ * Class implementing fire mechanics
+ */
 public class jr extends ga {
 
     private int[] a = new int[256];

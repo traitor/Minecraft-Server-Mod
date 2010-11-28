@@ -1,6 +1,11 @@
 
 import java.util.Random;
 
+/**
+ * EntityItem
+ *
+ * Class implementing items
+ */
 public class gj extends dx {
 
     public hl a;

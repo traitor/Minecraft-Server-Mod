@@ -1,6 +1,12 @@
 
 import java.util.Random;
 
+/**
+ * BlockStationary
+ *
+ * Class implementing stationary block mechanics
+ * hMod modification: allow blocking fire from igniting blocks
+ */
 public class z extends cz {
 
     protected z(int paramInt, jw paramjw) {

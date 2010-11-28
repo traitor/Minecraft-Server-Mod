@@ -13,6 +13,12 @@ import java.util.Set;
 import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 
+/**
+ * ServerConfigurationManager
+ *
+ * Class implementing server configuration setup
+ * Bans, etc.
+ */
 public class gp {
 
     public static Logger a = Logger.getLogger("Minecraft");

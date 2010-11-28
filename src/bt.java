@@ -1,3 +1,8 @@
+/**
+ * ItemBlock
+ *
+ * Class implementing block placement
+ */
 public class bt extends fu {
     private int a;
 

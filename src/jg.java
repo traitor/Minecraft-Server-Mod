@@ -2,6 +2,11 @@
 import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 
+/**
+ * NetServerHandler
+ *
+ * Class implementing user connections
+ */
 public class jg extends fa implements ew {
 
     public static Logger a = Logger.getLogger("Minecraft");

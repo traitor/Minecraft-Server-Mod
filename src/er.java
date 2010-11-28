@@ -6,6 +6,11 @@ import java.util.Random;
 import java.util.Set;
 import net.minecraft.server.MinecraftServer;
 
+/**
+ * EntityPlayerMP
+ *
+ * Class implementing players as entities (MinecraftServer side)
+ */
 public class er extends fx {
 
     public jg a;

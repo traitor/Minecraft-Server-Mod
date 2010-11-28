@@ -7,6 +7,11 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Packet
+ *
+ * Class implementing a generic packet
+ */
 public abstract class ir {
 
     private static Map a = new HashMap();

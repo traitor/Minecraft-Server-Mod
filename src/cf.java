@@ -1,4 +1,9 @@
 
+/**
+ * TileEntityMobSpawner
+ *
+ * Class implementing the mob spawner mechnanics
+ */
 public class cf extends ay {
 
     public int e = -1;

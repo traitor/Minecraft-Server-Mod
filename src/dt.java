@@ -1,4 +1,9 @@
 
+/**
+ * TileEntityFurnace
+ *
+ * Class implementing furnace mechanics
+ */
 public class dt extends ay implements kc {
 
     private hl[] e = new hl[3];

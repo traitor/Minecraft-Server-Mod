@@ -5,6 +5,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * Explosion
+ *
+ * Class implementing explosion mechanics
+ */
 public class ci {
 
     public boolean a = false;

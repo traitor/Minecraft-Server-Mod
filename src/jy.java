@@ -1,6 +1,12 @@
 
 import java.util.List;
 
+/**
+ * EntityLiving
+ *
+ * Class implementing living entity mechanics
+ * Health, etc.
+ */
 public class jy extends dx {
 
     public int av = 20;

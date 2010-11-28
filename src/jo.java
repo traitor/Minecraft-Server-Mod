@@ -6,6 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * ChunkProviderServer
+ *
+ * Class implementing chunk sending
+ */
 public class jo implements bu {
 
     private Set a = new HashSet();

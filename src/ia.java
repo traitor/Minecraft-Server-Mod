@@ -1,4 +1,8 @@
-
+/**
+ * TileEntityChest
+ *
+ * Class implementing chest mechanics
+ */
 public class ia extends ay implements kc {
 
     private hl[] e = new hl[36];

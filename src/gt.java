@@ -7,6 +7,12 @@ import java.util.Vector;
 
 import net.minecraft.server.MinecraftServer;
 
+/**
+ * EntityTracker
+ *
+ * Class to store entities
+ * hMod modification to periodically thread-safely execute plugin methods
+ */
 public class gt {
 
     private Set<gu> a = new HashSet<gu>();

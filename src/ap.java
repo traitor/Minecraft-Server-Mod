@@ -1,6 +1,11 @@
 
 import java.util.Random;
 
+/**
+ * BlockButton
+ *
+ * Class implementing button block mechanics
+ */
 public class ap extends ga {
 
     protected ap(int paramInt1, int paramInt2) {

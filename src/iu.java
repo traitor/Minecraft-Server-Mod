@@ -1,6 +1,11 @@
 
 import java.util.Random;
 
+/**
+ * BlockLever
+ *
+ * Class implementing lever mechanics
+ */
 public class iu extends ga {
 
     protected iu(int paramInt1, int paramInt2) {

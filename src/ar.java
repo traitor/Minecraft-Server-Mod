@@ -1,6 +1,11 @@
 
 import java.util.Random;
 
+/**
+ * BlockFlowing
+ *
+ * Class implementing generic flowing mechanics - i.e. water/lava
+ */
 public class ar extends cz {
 
     int a = 0;

@@ -5,6 +5,11 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * ConsoleLogManager
+ *
+ * Manages logging output - to console, and to file
+ */
 public class gg {
 
     public static Logger a = Logger.getLogger("Minecraft");

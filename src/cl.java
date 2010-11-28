@@ -3,6 +3,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * BlockRedstoneTorch
+ *
+ * Class implementing redstone torch mechanics
+ */
 public class cl extends gy {
 
     private boolean a = false;
