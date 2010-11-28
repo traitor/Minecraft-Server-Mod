@@ -304,7 +304,7 @@ public final class PropertiesFile {
     /**
      * Checks to see if this key exists
      * 
-     * @param var
+     * @param var the key to check
      * @return true if key exists
      */
     public boolean containsKey(String var) {
@@ -366,34 +366,46 @@ public final class PropertiesFile {
     }
 
     /**
-     * Remove a key
-     * 
+     * Remove a key from the file
+     *
      * @param var
      *            the key to remove
      */
     public void removeKey(String var) {
-        for (String line : this.lines) {
+        Boolean changed = false;
+
+        if(this.props.containsKey(var)) {
+            this.props.remove(var);
+            changed = true;
+        }
+
+        for (int i = 0; i < this.lines.size(); i++) {
+            String line = this.lines.get(i);
+
             if (line.trim().length() == 0) {
                 continue;
             }
+
             if (line.charAt(0) == '#') {
                 continue;
             }
 
             if (line.contains("=")) {
                 int delimPosition = line.indexOf('=');
-
                 String key = line.substring(0, delimPosition).trim();
 
                 if (key.equals(var)) {
-                    this.lines.remove(line);
+                    this.lines.remove(i);
+                    changed = true;
                 }
             } else {
                 continue;
             }
         }
 
-        save();
+        // Save on change
+        if(changed)
+            save();
     }
 
     /**
