@@ -7,10 +7,17 @@
 public class BaseEntity {
     dx entity;
     
+    /**
+     * Creates an interface for an entity
+     * @param entity
+     */
     public BaseEntity(dx entity) {
         this.entity = entity;
     }
 
+    /**
+     * Interface for entities.
+     */
     public BaseEntity() {
     }
 

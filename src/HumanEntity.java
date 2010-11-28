@@ -1,7 +1,8 @@
 
 public class HumanEntity extends LivingEntity {
+
     fx human;
-    
+
     public HumanEntity() {
     }
 
@@ -9,5 +10,4 @@ public class HumanEntity extends LivingEntity {
         super((jy) human);
         this.human = human;
     }
-
 }

@@ -3,7 +3,7 @@ import java.util.List;
 
 public class jm extends dx implements kc {
 
-    private hl[] ak = new hl[36];
+    public hl[] ak = new hl[36];
     public int a = 0;
     public int b = 0;
     public int c = 1;

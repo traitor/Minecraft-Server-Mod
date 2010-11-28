@@ -300,9 +300,8 @@ public abstract class PluginListener {
      * 1 = lava.
      * 2 = lighter (flint + steel).
      * 3 = spread (dynamic spreading of fire).
-     * @param block
-     *          block that the fire wants to spawn in.
-     *
+     * @param block block that the fire wants to spawn in.
+     * @param player player
      * @return true if you dont want the fire to ignite.
      */
     public boolean onIgnite(Block block, Player player) {
@@ -388,7 +387,7 @@ public abstract class PluginListener {
      * For other blocks which provide a source of redstone current, the current
      * value will be 1 or 0 for on and off respectively.
      *
-     * @param redstone Block of redstone which has just changed in current
+     * @param block
      * @param oldLevel the old current
      * @param newLevel the new current
      * @return the new current to use (newLevel to leave as-is)
@@ -414,7 +413,7 @@ public abstract class PluginListener {
     /**
      * Called when you place a minecart.
      * 
-     * @param the minecart
+     * @param cart
      * @return true to kill the cart on the spot
      */
     public boolean onMinecartCreate(Minecart cart) {
@@ -447,7 +446,7 @@ public abstract class PluginListener {
      * Called when a collision occurs with a minecart and an entity.
      * 
      * @param minecart the minecart
-     * @param collisioner, the Entity that collisioned with the Minecart
+     * @param collisioner
      * @return doesn't do anything
      */
     public boolean onMinecartCollision(Minecart minecart, BaseEntity collisioner) {
