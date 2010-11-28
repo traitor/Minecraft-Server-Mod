@@ -425,10 +425,10 @@ public abstract class PluginListener {
      * @param vehicle
      * @param attacker entity that dealt the damage
      * @param damage
-     * @return true to set damage
+     * @return false to set damage
      */
     public boolean onVehicleDamage(BaseVehicle vehicle, LivingEntity attacker, int damage) {
-        return true;
+        return false;
     }
 
     /**
