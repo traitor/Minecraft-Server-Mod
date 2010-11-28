@@ -14,7 +14,6 @@ import net.minecraft.server.MinecraftServer;
 
 /**
  * PluginLoader.java - Used to load plugins, toggle them, etc.
- * 
  * @author James
  */
 public class PluginLoader {
@@ -145,6 +144,30 @@ public class PluginLoader {
          */
         BLOCK_PHYSICS,
         /**
+         * Calls onMinecartCreate
+         */
+        MINECART_CREATE,
+        /**
+         * Calls onMinecartUpdate
+         */
+        MINECART_UPDATE,
+        /**
+         * Calls onMinecartDamage
+         */
+        MINECART_DAMAGE,
+        /**
+         * Calls onMinecartCollision
+         */
+        MINECART_COLLISION,
+        /**
+         * Calls onMinecartDestroyed
+         */
+        MINECART_DESTROYED,
+        /**
+         * Calls onMinecartEntered
+         */
+        MINECART_ENTERED,
+        /**
          * Calls onVerificationCheck
          */
         VERIFICATION_CHECK,
@@ -171,9 +194,7 @@ public class PluginLoader {
 
     /**
      * Creates a plugin loader
-     * 
-     * @param server
-     *            server to use
+     * @param server server to use
      */
     public PluginLoader(MinecraftServer server) {
         properties = new PropertiesFile("server.properties");
@@ -199,9 +220,7 @@ public class PluginLoader {
 
     /**
      * Loads the specified plugin
-     * 
-     * @param fileName
-     *            file name of plugin to load
+     * @param fileName file name of plugin to load
      */
     public void loadPlugin(String fileName) {
         if (getPlugin(fileName) != null) {
@@ -212,9 +231,7 @@ public class PluginLoader {
 
     /**
      * Reloads the specified plugin
-     * 
-     * @param fileName
-     *            file name of plugin to reload
+     * @param fileName file name of plugin to reload
      */
     public void reloadPlugin(String fileName) {
         /* Not sure exactly how much of this is necessary */
@@ -269,9 +286,7 @@ public class PluginLoader {
 
     /**
      * Returns the specified plugin
-     * 
-     * @param name
-     *            name of plugin
+     * @param name name of plugin
      * @return plugin
      */
     public Plugin getPlugin(String name) {
@@ -287,7 +302,6 @@ public class PluginLoader {
 
     /**
      * Returns a string list of plugins
-     * 
      * @return String of plugins
      */
     public String getPluginList() {
@@ -310,9 +324,7 @@ public class PluginLoader {
 
     /**
      * Enables the specified plugin (Or adds and enables it)
-     * 
-     * @param name
-     *            name of plugin to enable
+     * @param name name of plugin to enable
      * @return whether or not this plugin was enabled
      */
     public boolean enablePlugin(String name) {
@@ -335,9 +347,7 @@ public class PluginLoader {
 
     /**
      * Disables specified plugin
-     * 
-     * @param name
-     *            name of the plugin to disable
+     * @param name name of the plugin to disable
      */
     public void disablePlugin(String name) {
         Plugin plugin = getPlugin(name);
@@ -351,7 +361,6 @@ public class PluginLoader {
 
     /**
      * Returns the server
-     * 
      * @return server
      */
     public Server getServer() {
@@ -360,11 +369,8 @@ public class PluginLoader {
 
     /**
      * Calls a plugin hook.
-     * 
-     * @param h
-     *            Hook to call
-     * @param parameters
-     *            Parameters of call
+     * @param h Hook to call
+     * @param parameters Parameters of call
      * @return Object returned by call
      */
     public Object callHook(Hook h, Object[] parameters) {
@@ -485,7 +491,7 @@ public class PluginLoader {
                                 }
                                 break;
                             case FLOW:
-                                if (listener.onFlow((Block) parameters[0],(Block) parameters[1])) {
+                                if (listener.onFlow((Block) parameters[0], (Block) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
@@ -522,6 +528,36 @@ public class PluginLoader {
                                     toRet = true;
                                 }
                                 break;
+                            case MINECART_CREATE:
+                                if (listener.onMinecartCreate((Minecart) parameters[0])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case MINECART_UPDATE:
+                                if (listener.onMinecartUpdate((Minecart) parameters[0])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case MINECART_DAMAGE:
+                                if (listener.onMinecartDamage((Minecart) parameters[0], (LivingEntity) parameters[1], (Integer) parameters[2])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case MINECART_COLLISION:
+                                if (listener.onMinecartCollision((Minecart) parameters[0], (BaseEntity) parameters[1])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case MINECART_DESTROYED:
+                                if (listener.onMinecartDestroyed((Minecart) parameters[0])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case MINECART_ENTERED:
+                                if (listener.onMinecartEnter((Minecart) parameters[0], (HumanEntity) parameters[1])) {
+                                    toRet = true;
+                                }
+                                break;
                             case VERIFICATION_CHECK:
                                 if (listener.shouldIgnoreVerification((String) parameters[0], (InetAddress) parameters[1])) {
                                     toRet = true;
@@ -553,6 +589,12 @@ public class PluginLoader {
         return toRet;
     }
 
+    /**
+     * Calls a custom hook
+     * @param name name of hook
+     * @param parameters parameters for the hook
+     * @return object returned by call
+     */
     public Object callCustomHook(String name, Object[] parameters) {
         Object toRet = false;
         synchronized (lock) {
@@ -580,15 +622,10 @@ public class PluginLoader {
 
     /**
      * Calls a plugin hook.
-     * 
-     * @param hook
-     *            The hook to call on
-     * @param listener
-     *            The listener to use when calling
-     * @param plugin
-     *            The plugin of this listener
-     * @param priorityEnum
-     *            The priority of this listener
+     * @param hook The hook to call on
+     * @param listener The listener to use when calling
+     * @param plugin The plugin of this listener
+     * @param priorityEnum The priority of this listener
      * @return PluginRegisteredListener
      */
     public PluginRegisteredListener addListener(Hook hook, PluginListener listener, Plugin plugin, PluginListener.Priority priorityEnum) {
@@ -612,6 +649,10 @@ public class PluginLoader {
         return reg;
     }
 
+    /**
+     * Adds a custom listener
+     * @param listener listener to add
+     */
     public void addCustomListener(PluginInterface listener) {
         synchronized (lock) {
             if (customListeners.get(listener.getName()) != null) {
@@ -624,9 +665,7 @@ public class PluginLoader {
 
     /**
      * Removes the specified listener from the list of listeners
-     * 
-     * @param reg
-     *            listener to remove
+     * @param reg listener to remove
      */
     public void removeListener(PluginRegisteredListener reg) {
         List<PluginRegisteredListener> regListeners = listeners.get(reg.getHook().ordinal());
@@ -635,6 +674,10 @@ public class PluginLoader {
         }
     }
 
+    /**
+     * Removes a custom listener
+     * @param name name of listener
+     */
     public void removeCustomListener(String name) {
         synchronized (lock) {
             customListeners.remove(name);

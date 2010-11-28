@@ -1,4 +1,6 @@
+
 public class dt extends ay implements kc {
+
     private hl[] e = new hl[3];
     private int f = 0;
     private int g = 0;
@@ -11,7 +13,7 @@ public class dt extends ay implements kc {
     public hl[] getContents() {
         return e;
     }
-    
+
     /**
      * Set contents of the furnace block
      * @return
@@ -19,6 +21,7 @@ public class dt extends ay implements kc {
     public void setContents(hl[] e) {
         this.e = e;
     }
+
     @Override
     public int a() {
         return this.e.length;

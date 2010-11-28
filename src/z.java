@@ -1,6 +1,8 @@
+
 import java.util.Random;
 
 public class z extends cz {
+
     protected z(int paramInt, jw paramjw) {
         super(paramInt, paramjw);
 
@@ -31,7 +33,7 @@ public class z extends cz {
             // hMod: prevent lava from putting something on fire.
             Block block = new Block(parameo.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
             block.setStatus(1);
-            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, new Object[]{block , null})) {
+            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, new Object[]{block, null})) {
                 for (int j = 0; j < i; j++) {
                     paramInt1 += paramRandom.nextInt(3) - 1;
                     paramInt2++;

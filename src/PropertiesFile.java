@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,14 +17,13 @@ import java.util.Map;
 /**
  * PropertiesFile.java - Used for accessing and creating .properties files
  * 
- * @author Nijikokun
+ * @author Nijiko
  */
-
 public final class PropertiesFile {
+
     private static final Logger log = Logger.getLogger("Minecraft");
     private String fileName;
-
-    // Property file handlers
+    // Data
     private List<String> lines = new ArrayList<String>();
     private Map<String, String> props = new HashMap<String, String>();
 
@@ -40,7 +40,7 @@ public final class PropertiesFile {
             try {
                 load();
             } catch (IOException ex) {
-                log.severe("[propertiesFile] Unable to load " + fileName + "!");
+                log.severe("[PropertiesFile] Unable to load " + fileName + "!");
             }
         } else {
             save();
@@ -49,6 +49,7 @@ public final class PropertiesFile {
 
     /**
      * Loads, or reloads, the properties file
+     * @throws IOException
      */
     public void load() throws IOException {
         BufferedReader reader;
@@ -84,9 +85,8 @@ public final class PropertiesFile {
             while (pos < line.length() && !Character.isWhitespace(c = line.charAt(pos++)) && c != '=' && c != ':') {
                 if (needsEscape && c == '\\') {
                     if (pos == line.length()) {
-                        // The line continues on the next line. If there is no
-                        // next line, just treat it as a key with an empty
-                        // value.
+                        // The line continues on the next line. If there is no next line, just
+                        // treat it as a key with an empty value.
                         line = reader.readLine();
                         if (line == null) {
                             line = "";
@@ -98,26 +98,26 @@ public final class PropertiesFile {
                     } else {
                         c = line.charAt(pos++);
                         switch (c) {
-                        case 'n':
-                            key.append('\n');
-                            break;
-                        case 't':
-                            key.append('\t');
-                            break;
-                        case 'r':
-                            key.append('\r');
-                            break;
-                        case 'u':
-                            if (pos + 4 <= line.length()) {
-                                char uni = (char) Integer.parseInt(line.substring(pos, pos + 4), 16);
-                                key.append(uni);
-                                pos += 4;
-                            }
+                            case 'n':
+                                key.append('\n');
+                                break;
+                            case 't':
+                                key.append('\t');
+                                break;
+                            case 'r':
+                                key.append('\r');
+                                break;
+                            case 'u':
+                                if (pos + 4 <= line.length()) {
+                                    char uni = (char) Integer.parseInt(line.substring(pos, pos + 4), 16);
+                                    key.append(uni);
+                                    pos += 4;
+                                }
 
-                            break;
-                        default:
-                            key.append(c);
-                            break;
+                                break;
+                            default:
+                                key.append(c);
+                                break;
                         }
                     }
                 } else if (needsEscape) {
@@ -163,9 +163,8 @@ public final class PropertiesFile {
                         // The line continues on the next line.
                         line = reader.readLine();
 
-                        // We might have seen a backslash at the end of
-                        // the file. The JDK ignores the backslash in
-                        // this case, so we follow for compatibility.
+                        // We might have seen a backslash at the end of the file. The JDK
+                        // ignores the backslash in this case, so we follow for compatibility.
                         if (line == null) {
                             break;
                         }
@@ -178,25 +177,25 @@ public final class PropertiesFile {
                     } else {
                         c = line.charAt(pos++);
                         switch (c) {
-                        case 'n':
-                            element.append('\n');
-                            break;
-                        case 't':
-                            element.append('\t');
-                            break;
-                        case 'r':
-                            element.append('\r');
-                            break;
-                        case 'u':
-                            if (pos + 4 <= line.length()) {
-                                char uni = (char) Integer.parseInt(line.substring(pos, pos + 4), 16);
-                                element.append(uni);
-                                pos += 4;
-                            }
-                            break;
-                        default:
-                            element.append(c);
-                            break;
+                            case 'n':
+                                element.append('\n');
+                                break;
+                            case 't':
+                                element.append('\t');
+                                break;
+                            case 'r':
+                                element.append('\r');
+                                break;
+                            case 'u':
+                                if (pos + 4 <= line.length()) {
+                                    char uni = (char) Integer.parseInt(line.substring(pos, pos + 4), 16);
+                                    element.append(uni);
+                                    pos += 4;
+                                }
+                                break;
+                            default:
+                                element.append(c);
+                                break;
                         }
                     }
                 } else {
@@ -237,13 +236,17 @@ public final class PropertiesFile {
                 continue;
             }
 
-            int delimPosition = line.indexOf('=');
-            String key = line.substring(0, delimPosition).trim();
+            if (line.contains("=")) {
+                int delimPosition = line.indexOf('=');
+                String key = line.substring(0, delimPosition).trim();
 
-            if (this.props.containsKey(key)) {
-                String value = this.props.get(key);
-                ps.println(key + "=" + value);
-                usedProps.add(key);
+                if (this.props.containsKey(key)) {
+                    String value = this.props.get(key);
+                    ps.println(key + "=" + value);
+                    usedProps.add(key);
+                } else {
+                    ps.println(line);
+                }
             } else {
                 ps.println(line);
             }
@@ -274,7 +277,6 @@ public final class PropertiesFile {
      * @return
      * @throws Exception
      */
-
     public Map<String, String> returnMap() throws Exception {
         Map<String, String> map = new HashMap<String, String>();
         BufferedReader reader = new BufferedReader(new FileReader(this.fileName));
@@ -286,10 +288,14 @@ public final class PropertiesFile {
             if (line.charAt(0) == '#') {
                 continue;
             }
-            int delimPosition = line.indexOf('=');
-            String key = line.substring(0, delimPosition).trim();
-            String value = line.substring(delimPosition + 1).trim();
-            map.put(key, value);
+            if (line.contains("=")) {
+                int delimPosition = line.indexOf('=');
+                String key = line.substring(0, delimPosition).trim();
+                String value = line.substring(delimPosition + 1).trim();
+                map.put(key, value);
+            } else {
+                continue;
+            }
         }
         reader.close();
         return map;
@@ -298,8 +304,7 @@ public final class PropertiesFile {
     /**
      * Checks to see if this key exists
      * 
-     * @param key
-     *            the key to be checked for existance
+     * @param var the key to check
      * @return true if key exists
      */
     public boolean containsKey(String var) {
@@ -307,15 +312,21 @@ public final class PropertiesFile {
             if (line.trim().length() == 0) {
                 continue;
             }
+
             if (line.charAt(0) == '#') {
                 continue;
             }
-            int delimPosition = line.indexOf('=');
 
-            String key = line.substring(0, delimPosition);
+            if (line.contains("=")) {
+                int delimPosition = line.indexOf('=');
 
-            if (key.equals(var)) {
-                return true;
+                String key = line.substring(0, delimPosition);
+
+                if (key.equals(var)) {
+                    return true;
+                }
+            } else {
+                continue;
             }
         }
 
@@ -323,38 +334,10 @@ public final class PropertiesFile {
     }
 
     /**
-     * The back end of key removal.
+     * Grabs the value from a key
      * 
-     * @param var
-     *            the key to check
-     * @return true if key exists
-     */
-    private boolean removesKey(String var) {
-        for (String line : this.lines) {
-            if (line.trim().length() == 0) {
-                continue;
-            }
-            if (line.charAt(0) == '#') {
-                continue;
-            }
-            int delimPosition = line.indexOf('=');
-
-            String key = line.substring(0, delimPosition).trim();
-
-            if (key.equals(var)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Get string value for a key
-     * 
-     * @param var
-     *            the key to get the value of
-     * @return
+     * @param var property to retreive
+     * @return string if key exists
      */
     public String getProperty(String var) {
         for (String line : this.lines) {
@@ -364,13 +347,18 @@ public final class PropertiesFile {
             if (line.charAt(0) == '#') {
                 continue;
             }
-            int delimPosition = line.indexOf('=');
 
-            String key = line.substring(0, delimPosition).trim();
-            String value = line.substring(delimPosition + 1);
+            if (line.contains("=")) {
+                int delimPosition = line.indexOf('=');
 
-            if (key.equals(var)) {
-                return value;
+                String key = line.substring(0, delimPosition).trim();
+                String value = line.substring(delimPosition + 1);
+
+                if (key.equals(var)) {
+                    return value;
+                }
+            } else {
+                continue;
             }
         }
 
@@ -378,26 +366,61 @@ public final class PropertiesFile {
     }
 
     /**
-     * The actual removeKey command.
-     * 
+     * Remove a key from the file
+     *
      * @param var
      *            the key to remove
-     * @return true if key exists
      */
-    public void removeKey(String key) {
-        this.removesKey(key);
-        save();
+    public void removeKey(String var) {
+        Boolean changed = false;
+
+        if(this.props.containsKey(var)) {
+            this.props.remove(var);
+            changed = true;
+        }
+
+        for (int i = 0; i < this.lines.size(); i++) {
+            String line = this.lines.get(i);
+
+            if (line.trim().length() == 0) {
+                continue;
+            }
+
+            if (line.charAt(0) == '#') {
+                continue;
+            }
+
+            if (line.contains("=")) {
+                int delimPosition = line.indexOf('=');
+                String key = line.substring(0, delimPosition).trim();
+
+                if (key.equals(var)) {
+                    this.lines.remove(i);
+                    changed = true;
+                }
+            } else {
+                continue;
+            }
+        }
+
+        // Save on change
+        if(changed)
+            save();
     }
 
     /**
      * Checks to see if this key exists
      * 
      * @param key
-     *            the key to check for existance
+     *            the key to check
      * @return true if key exists
      */
     public boolean keyExists(String key) {
-        return (this.containsKey(key)) ? true : false;
+        try {
+            return (this.containsKey(key)) ? true : false;
+        } catch (Exception ex) {
+            return false;
+        }
     }
 
     /**

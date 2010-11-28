@@ -1,6 +1,8 @@
+
 import java.util.List;
 
 public class jy extends dx {
+
     public int av = 20;
     public float aw;
     public float ax;
@@ -33,7 +35,6 @@ public class jy extends dx {
     public float aX;
     public float aY;
     protected boolean aZ = false;
-
     public int ba = -1;
     public float bb = (float) (Math.random() * 0.8999999761581421D + 0.1000000014901161D);
     public float bc;
@@ -46,9 +47,7 @@ public class jy extends dx {
     protected double bj;
     protected double bk;
     float bl = 0.0F;
-
     protected int bm = 0;
-
     protected int bn = 0;
     protected float bo;
     protected float bp;
@@ -296,10 +295,9 @@ public class jy extends dx {
 
         bd = 1.5F;
         // hMod: the different entities are defined in hn
-        if (paramdx != null && (paramdx instanceof gb || paramdx instanceof er || paramdx instanceof ax)) {
-            BaseEntity attacker = new BaseEntity(), defender = new BaseEntity();
-            attacker.entity = (jy) paramdx;
-            defender.entity = this;
+        if (paramdx != null && (paramdx instanceof jy)) {
+            LivingEntity attacker = new LivingEntity((jy)paramdx);
+            LivingEntity defender = new LivingEntity(this);
             if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new Object[]{attacker, defender})) {
                 return false;
             }

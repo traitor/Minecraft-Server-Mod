@@ -269,7 +269,6 @@ public abstract class PluginListener {
         return false;
     }
 
-
     /**
      * Called when either a sign, chest or furnace is changed.
      * 
@@ -296,7 +295,7 @@ public abstract class PluginListener {
         return false;
     }
 
-    /*
+    /**
      * Called when either a lava block or a lighter tryes to light something on fire.
      * block status depends on the light source:
      * 1 = lava.
@@ -311,7 +310,7 @@ public abstract class PluginListener {
         return false;
     }
 
-    /*
+    /**
      * Called when a dynamite block or a creeper is triggerd.
      * block status depends on explosive compound:
      * 1 = dynamite.
@@ -325,7 +324,7 @@ public abstract class PluginListener {
         return false;
     }
 
-    /*
+    /**
      * Called when fluid wants to flow to a certain block.
      * (10 & 11 for lava and 8 & 9 for water)
      *
@@ -338,7 +337,7 @@ public abstract class PluginListener {
      *
      * @return true if you dont want the substance to flow.
      */
-    public boolean onFlow(Block blockFrom,Block blockTo) {
+    public boolean onFlow(Block blockFrom, Block blockTo) {
         return false;
     }
 
@@ -347,7 +346,7 @@ public abstract class PluginListener {
      * @return true if you dont want mob to spawn.
      */
     public boolean onMobSpawn(Mob mob) {
-    	return false;
+        return false;
     }
 
     /**
@@ -360,7 +359,7 @@ public abstract class PluginListener {
      *          object that is defending.
      * @return
      */
-    public boolean onDamage(BaseEntity attacker,BaseEntity defender){
+    public boolean onDamage(BaseEntity attacker, BaseEntity defender) {
         return false;
     }
 
@@ -375,11 +374,11 @@ public abstract class PluginListener {
      * @return
      *      return true to stop the change.
      */
-    public boolean onHealthChange(Player player,int oldValue,int newValue){
+    public boolean onHealthChange(Player player, int oldValue, int newValue) {
         return false;
     }
 
-    /*
+    /**
      * Called whenever a redstone source (wire, switch, torch) changes its
      * current.
      *
@@ -406,11 +405,75 @@ public abstract class PluginListener {
      * Currently the only supported blocks are sand, gravel and portals.
      *
      * @param block Block which requires special physics
-     * @param boolean true if this block has just been placed
+     * @param placed True if block was just placed
      * @return true if you do want to stop the default physics for this block
      */
     public boolean onBlockPhysics(Block block, boolean placed) {
-    	return false;
+        return false;
+    }
+
+    /**
+     * Called when you place a minecart.
+     * 
+     * @param the minecart
+     * @return true to kill the cart on the spot
+     */
+    public boolean onMinecartCreate(Minecart cart) {
+        return true;
+    }
+
+    /**
+     * Called when minecart receives damage
+     * 
+     * @param minecart
+     * @param attacker entity that dealt the damage
+     * @param damage
+     * @return true to set damage
+     */
+    public boolean onMinecartDamage(Minecart minecart, LivingEntity attacker, int damage) {
+        return true;
+    }
+
+    /**
+     * Called when a minecart enters or leaves a block
+     * 
+     * @param minecart the minecart
+     * @return doesn't do anything
+     */
+    public boolean onMinecartUpdate(Minecart minecart) {
+        return false;
+    }
+
+    /**
+     * Called when a collision occurs with a minecart and an entity.
+     * 
+     * @param minecart the minecart
+     * @param collisioner, the Entity that collisioned with the Minecart
+     * @return doesn't do anything
+     */
+    public boolean onMinecartCollision(Minecart minecart, BaseEntity collisioner) {
+        return false;
+    }
+
+    /**
+     * Called when a minecart is destroyed
+     * 
+     * @param minecart the minecart
+     * @return doesn't do anything
+     */
+    public boolean onMinecartDestroyed(Minecart minecart) {
+        return false;
+    }
+
+    /**
+     * Called when a player enter or leaves a minecart
+     * 
+     * @param minecart the minecart
+     * @param player the player
+     * @return return does not do anything
+     */
+    public boolean onMinecartEnter(Minecart minecart, HumanEntity player) {
+        return false;
     }
 
     /**

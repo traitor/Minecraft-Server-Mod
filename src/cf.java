@@ -1,13 +1,12 @@
+
 public class cf extends ay {
+
     public int e = -1;
     public String f;
     public double g;
     public double h = 0.0D;
 
     public cf() {
-        // hMod: override spawndata with what is stored in the block
-        String spawnData = etc.getServer().getBlockAt(b, c, d).getSpawnData();
-        this.f = spawnData;
         this.e = 20;
     }
 
@@ -51,9 +50,7 @@ public class cf extends ay {
                 return;
             }
 
-            int k = this.a
-                    .a(localjy.getClass(), du.b(this.b, this.c, this.d, this.b + 1, this.c + 1, this.d + 1).b(8.0D, 4.0D, 8.0D))
-                    .size();
+            int k = this.a.a(localjy.getClass(), du.b(this.b, this.c, this.d, this.b + 1, this.c + 1, this.d + 1).b(8.0D, 4.0D, 8.0D)).size();
             if (k >= 6) {
                 d();
                 return;
@@ -67,8 +64,8 @@ public class cf extends ay {
                 localjy.c(d4, d5, d6, this.a.l.nextFloat() * 360.0F, 0.0F);
 
                 if (localjy.a()) {
-                    // hMod: allow mobs to spawn
-                    if ((Boolean) (etc.getLoader().callHook(PluginLoader.Hook.MOB_SPAWN, new Object[]{new Mob((hd) localjy)}))) {
+                    // hMod: allow entities to spawn
+                    if ((Boolean) (etc.getLoader().callHook(PluginLoader.Hook.MOB_SPAWN, new Object[]{new LivingEntity(localjy)}))) {
                         d();
                         return;
                     }

@@ -322,9 +322,10 @@ public class etc {
      *
      * @return
      */
-    public boolean isHealthEnabled(){
+    public boolean isHealthEnabled() {
         return enableHealth;
     }
+
     /**
      * Adds command to the /help list
      * 
@@ -374,7 +375,10 @@ public class etc {
         }
 
         boolean dontParseRegular = true;
-        if (split[0].equalsIgnoreCase("help") || split[0].equalsIgnoreCase("mod-help")) {
+        if (split[0].equalsIgnoreCase("save-all")) {
+            dontParseRegular = false;
+            getServer().saveInventories();
+        } else if (split[0].equalsIgnoreCase("help") || split[0].equalsIgnoreCase("mod-help")) {
             if (split[0].equalsIgnoreCase("help")) {
                 dontParseRegular = false;
             }
@@ -932,7 +936,7 @@ public class etc {
      *
      * @return tainted
      */
-    public boolean getTainted() { 
+    public boolean getTainted() {
         return tainted;
     }
 

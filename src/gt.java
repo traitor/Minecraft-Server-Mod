@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -7,11 +8,11 @@ import java.util.Vector;
 import net.minecraft.server.MinecraftServer;
 
 public class gt {
+
     private Set<gu> a = new HashSet<gu>();
     private ie b = new ie();
     private MinecraftServer c;
     private int d;
-    
     // hMod: New fields to store the threads in.
     private static Object synchronizeObject = new Object();
     private static final Vector<Runnable> eventQueue = new Vector<Runnable>();
@@ -97,7 +98,7 @@ public class gt {
             }
         }
     }
-    
+
     // hMod: Allow adding of items to the queue
     public synchronized static void add(Runnable r) {
         synchronized (synchronizeObject) {

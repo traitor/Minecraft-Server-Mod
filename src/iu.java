@@ -137,7 +137,7 @@ public class iu extends ga {
         int old = (k != 8) ? 1 : 0;
         int current = (k == 8) ? 1 : 0;
         // hMod: Allow the lever to change the current
-        current = (Integer)etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), old, current});
+        current = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), old, current});
 
         if ((current > 0) == (k == 8)) {
             parameo.b(paramInt1, paramInt2, paramInt3, j + k);

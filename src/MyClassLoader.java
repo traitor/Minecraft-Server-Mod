@@ -2,12 +2,25 @@
 import java.net.URL;
 import java.net.URLClassLoader;
 
+/**
+ * Class loader used so we can dynamically load classes. Normal class loader doesn't close the .jar
+ * so you can't reload. This fixes that.
+ * @author James
+ */
 public class MyClassLoader extends URLClassLoader {
 
+    /**
+     * Creates loader
+     * @param urls
+     * @param loader
+     */
     public MyClassLoader(URL[] urls, ClassLoader loader) {
         super(urls, loader);
     }
 
+    /**
+     * Fix here.
+     */
     public void close() {
         try {
             Class clazz = java.net.URLClassLoader.class;

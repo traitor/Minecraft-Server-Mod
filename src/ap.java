@@ -137,9 +137,9 @@ public class ap extends ga {
         if (k == 0) {
             return true;
         }
-        
+
         // hMod: Allow button to provide power
-        int change = (Integer)etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), 0, 1});
+        int change = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), 0, 1});
         if (change == 0) {
             return true;
         }
@@ -223,7 +223,7 @@ public class ap extends ga {
             return;
         }
         // hMod: Allow button to provide power
-        int change = (Integer)etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), 1, 0});
+        int change = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), 1, 0});
         if (change > 0) {
             return;
         }

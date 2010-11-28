@@ -13,7 +13,7 @@ public class ai extends hw {
     }
 
     public void a(it paramit, int paramInt1, int paramInt2, int paramInt3) {
-        if (!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Object[] {new Block(bh, paramInt1, paramInt2, paramInt3), true})) {
+        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Object[]{new Block(bh, paramInt1, paramInt2, paramInt3), true})) {
             float f1;
             float f2;
             if ((paramit.a(paramInt1 - 1, paramInt2, paramInt3) == this.bh) || (paramit.a(paramInt1 + 1, paramInt2, paramInt3) == this.bh)) {
