@@ -215,8 +215,23 @@ public class Server {
     public List<Mob> getMobList() {
         List<Mob> toRet = new ArrayList<Mob>();
         for (Object o : server.e.b) {
-            if (o instanceof hd) {
+            if (o instanceof gb) {
                 toRet.add(new Mob((gb) o));
+            }
+        }
+        return toRet;
+    }
+
+    /**
+     * Returns the list of minecarts in all open chunks
+     *
+     * @return
+     */
+    public List<Minecart> getMinecartList() {
+        List<Minecart> toRet = new ArrayList<Minecart>();
+        for (Object o : server.e.b) {
+            if (o instanceof jm) {
+                toRet.add(new Minecart((jm) o));
             }
         }
         return toRet;
