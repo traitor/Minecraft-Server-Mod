@@ -2,16 +2,27 @@
 /**
  * BaseEntity.java - Class for accessing things that all entities share - X, Y,
  * Z, health.
- * 
  * @author James
  */
 public class BaseEntity {
+    dx entity;
+    
+    /**
+     * Creates an interface for an entity
+     * @param entity
+     */
+    public BaseEntity(dx entity) {
+        this.entity = entity;
+    }
 
-    jv entity;
+    /**
+     * Interface for entities.
+     */
+    public BaseEntity() {
+    }
 
     /**
      * Returns the ID for this mob
-     * 
      * @return id
      */
     public int getId() {
@@ -20,7 +31,6 @@ public class BaseEntity {
 
     /**
      * Teleports to the provided location
-     * 
      * @param x
      * @param rotation
      * @param y
@@ -33,9 +43,7 @@ public class BaseEntity {
 
     /**
      * Teleports to the other entity
-     * 
-     * @param ent
-     *            entity to teleport to
+     * @param ent entity to teleport to
      */
     public void teleportTo(BaseEntity ent) {
         teleportTo(ent.getX(), ent.getY(), ent.getZ(), ent.getRotation(), ent.getPitch());
@@ -43,9 +51,7 @@ public class BaseEntity {
 
     /**
      * Teleports to the provided location
-     * 
-     * @param location
-     *            location to teleport to
+     * @param location location to teleport to
      */
     public void teleportTo(Location location) {
         teleportTo(location.x, location.y, location.z, location.rotX, location.rotY);
@@ -53,8 +59,7 @@ public class BaseEntity {
 
     /**
      * Returns the entity's X
-     * 
-     * @return
+     * @return x
      */
     public double getX() {
         return entity.p;
@@ -62,8 +67,7 @@ public class BaseEntity {
 
     /**
      * Sets the entity's X
-     * 
-     * @param x
+     * @param x x to set
      */
     public void setX(double x) {
         teleportTo(x, getY(), getZ(), getRotation(), getPitch());
@@ -71,8 +75,7 @@ public class BaseEntity {
 
     /**
      * Returns the entity's Y
-     * 
-     * @return
+     * @return y
      */
     public double getY() {
         return entity.q;
@@ -80,8 +83,7 @@ public class BaseEntity {
 
     /**
      * Sets the entity's Y
-     * 
-     * @param y
+     * @param y y to set
      */
     public void setY(double y) {
         teleportTo(getX(), y, getZ(), getRotation(), getPitch());
@@ -89,8 +91,7 @@ public class BaseEntity {
 
     /**
      * Returns the entity's Z
-     * 
-     * @return
+     * @return z
      */
     public double getZ() {
         return entity.r;
@@ -98,8 +99,7 @@ public class BaseEntity {
 
     /**
      * Sets the entity's Z
-     * 
-     * @param z
+     * @param z z to set
      */
     public void setZ(double z) {
         teleportTo(getX(), getY(), z, getRotation(), getPitch());
@@ -107,8 +107,7 @@ public class BaseEntity {
 
     /**
      * Returns the entity's pitch
-     * 
-     * @return
+     * @return pitch
      */
     public float getPitch() {
         return entity.w;
@@ -116,8 +115,7 @@ public class BaseEntity {
 
     /**
      * Sets the entity's pitch
-     * 
-     * @param pitch
+     * @param pitch pitch to set
      */
     public void setPitch(float pitch) {
         teleportTo(getX(), getY(), getZ(), getRotation(), pitch);
@@ -125,8 +123,7 @@ public class BaseEntity {
 
     /**
      * Returns the entity's rotation
-     * 
-     * @return
+     * @return rotation
      */
     public float getRotation() {
         return entity.v;
@@ -134,28 +131,48 @@ public class BaseEntity {
 
     /**
      * Sets the entity's rotation
-     * 
-     * @param rotation
+     * @param rotation rotation to set
      */
     public void setRotation(float rotation) {
         teleportTo(getX(), getY(), getZ(), rotation, getPitch());
     }
 
     /**
-     * Returns this entity's health
-     * 
-     * @return
+     * Returns whether or not this entity is a mob
+     * @return true if mob
      */
-    public int getHealth() {
-        return entity.aP;
+    public boolean isMob() {
+        return entity instanceof gb;
     }
 
     /**
-     * Sets this entity's health
-     * 
-     * @param health
+     * Returns whether or not this entity is an animal
+     * @return true if animal
      */
-    public void setHealth(int health) {
-        entity.aP = health;
+    public boolean isAnimal() {
+        return entity instanceof ax;
+    }
+
+    /**
+     * Returns true if this entity is a player
+     * @return true if player
+     */
+    public boolean isPlayer() {
+        return entity instanceof er;
+    }
+
+    /**
+     * Returns the player for this entity
+     * @return player
+     */
+    public Player getPlayer() {
+        if (!isPlayer())
+            return null;
+
+        er p = (er) entity;
+        Player player = etc.getServer().getPlayer(p.as);
+        player.setUser(p);
+
+        return player;
     }
 }

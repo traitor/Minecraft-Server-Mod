@@ -1,0 +1,2 @@
+ALTER TABLE `homes` ADD COLUMN `group` VARCHAR(64) DEFAULT ''  AFTER `rotY`;
+ALTER TABLE `warps` ADD COLUMN `group` VARCHAR(64) DEFAULT ''  AFTER `rotY`;

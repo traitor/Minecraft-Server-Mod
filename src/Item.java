@@ -1,7 +1,6 @@
 
 /**
  * Item.java - Item stuff.
- * 
  * @author James
  */
 public class Item {
@@ -16,7 +15,6 @@ public class Item {
 
     /**
      * Creates an item with specified id and amount
-     * 
      * @param itemId
      * @param amount
      */
@@ -27,7 +25,6 @@ public class Item {
 
     /**
      * Creates an item with specified id, amount and slot
-     * 
      * @param itemId
      * @param amount
      * @param slot
@@ -39,8 +36,16 @@ public class Item {
     }
 
     /**
+     * Creates an item from the actual item class
+     * @param hl
+     */
+    public Item(hl hl) {
+        itemId = hl.c;
+        amount = hl.a;
+    }
+
+    /**
      * Returns the item id
-     * 
      * @return item id
      */
     public int getItemId() {
@@ -49,7 +54,6 @@ public class Item {
 
     /**
      * Sets item id to specified id
-     * 
      * @param itemId
      */
     public void setItemId(int itemId) {
@@ -58,7 +62,6 @@ public class Item {
 
     /**
      * Returns the amount
-     * 
      * @return amount
      */
     public int getAmount() {
@@ -67,7 +70,6 @@ public class Item {
 
     /**
      * Sets the amount
-     * 
      * @param amount
      */
     public void setAmount(int amount) {
@@ -76,20 +78,18 @@ public class Item {
 
     /**
      * Returns true if specified item id is a valid item id.
-     * 
      * @param itemId
      * @return
      */
     public static boolean isValidItem(int itemId) {
-        if (itemId < fh.c.length) {
-            return fh.c[itemId] != null;
+        if (itemId < fj.c.length) {
+            return fj.c[itemId] != null;
         }
         return false;
     }
 
     /**
      * Returns this item's current slot. -1 if no slot is specified
-     * 
      * @return slot
      */
     public int getSlot() {
@@ -98,7 +98,6 @@ public class Item {
 
     /**
      * Sets this item's slot
-     * 
      * @param slot
      */
     public void setSlot(int slot) {
