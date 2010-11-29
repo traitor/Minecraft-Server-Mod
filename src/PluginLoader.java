@@ -210,7 +210,7 @@ public class PluginLoader {
     private static final Object lock = new Object();
     private List<Plugin> plugins = new ArrayList<Plugin>();
     private List<List<PluginRegisteredListener>> listeners = new ArrayList<List<PluginRegisteredListener>>();
-    private HashMap<String, PluginInterface> customListeners = new HashMap<String, PluginInterface>();
+    private HashMap<String, HashMap<String,PluginInterface>> customListeners = new HashMap<String, HashMap<String,PluginInterface>>();
     private Server server;
     private PropertiesFile properties;
 
@@ -616,20 +616,31 @@ public class PluginLoader {
         Object toRet = false;
         synchronized (lock) {
             try {
-                PluginInterface listener = customListeners.get(name);
+                HashMap<String,PluginInterface> listeners = customListeners.get(name);
 
-                if (listener == null) {
+                if (listeners == null) {
                     log.log(Level.SEVERE, "Cannot find custom hook: " + name);
                     return false;
                 }
 
-                String msg = listener.checkParameters(parameters);
-                if (msg != null) {
-                    log.log(Level.SEVERE, msg);
-                    return false;
-                }
+                Iterator<PluginInterface> itr = listeners.values().iterator();
+                
+                while( itr.hasNext() ) {
 
-                toRet = listener.run(parameters);
+                    PluginInterface listener = itr.next();
+
+                    String msg = listener.checkParameters(parameters);
+                    if (msg != null) {
+                        log.log(Level.SEVERE, msg);
+                        return false;
+                    }
+
+                    Object tempReturn = listener.run(parameters);
+                    
+                    if( tempReturn != null ) {
+                        toRet = tempReturn;
+                    }
+                }
             } catch (Exception ex) {
                 log.log(Level.SEVERE, "Exception while calling custom plugin function", ex);
             }
@@ -671,12 +682,27 @@ public class PluginLoader {
      * @param listener listener to add
      */
     public void addCustomListener(PluginInterface listener) {
+        addCustomListenerSourceNamed( "unnamed" , listener );
+    }
+    
+    /**
+     * Adds a custom listener from a named source
+     * @param source source of hook
+     * @param listener listener to add
+     */
+    
+    public void addCustomListenerSourceNamed(String source , PluginInterface listener) {
         synchronized (lock) {
-            if (customListeners.get(listener.getName()) != null) {
-                log.log(Level.SEVERE, "Replacing existing listener: " + listener.getName());
+            if (customListeners.get(listener.getName()) == null) {
+                customListeners.put(listener.getName(), new HashMap<String, PluginInterface>());
+                log.info("Registered new custom hook: " + listener.getName());
+            } else if(customListeners.get(listener.getName()).get(source) != null) {
+                log.log(Level.SEVERE, "Replacing existing listener: " + listener.getName() + " from " + source);
             }
-            customListeners.put(listener.getName(), listener);
-            log.info("Registered custom hook: " + listener.getName());
+            customListeners.get(listener.getName()).put(source,listener);
+            if( source.equals("unnamed")) {
+                log.info("Added listener from " + source + " to hook: " + listener.getName());
+            }
         }
     }
 
@@ -696,8 +722,22 @@ public class PluginLoader {
      * @param name name of listener
      */
     public void removeCustomListener(String name) {
+        removeCustomListenerSourceNamed("unnamed" , name);
+    }
+    
+    /**
+     * Removes a custom listener from a named source
+     * @param source source of hook
+     * @param name name of listener
+     */
+    public void removeCustomListenerSourceNamed(String source, String name) {
         synchronized (lock) {
-            customListeners.remove(name);
+            if(customListeners.get(name) != null) {
+                customListeners.get(name).remove(source);
+                if(customListeners.get(name).size() == 0) {
+                    customListeners.remove(name);
+                }
+            }
         }
     }
 }
