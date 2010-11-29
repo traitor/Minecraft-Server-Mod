@@ -223,6 +223,38 @@ public class PluginLoader {
         DEFAULT_ACTION
     }
     
+    public enum DamageType {
+    	/*
+    	 * Damage dealt by another entity (n)
+    	 */
+    	ENTITY,
+    	/*
+    	 * Damage caused by explosion (?)
+    	 */
+    	EXPLOSION,
+    	/* 
+    	 * Damage caused from falling (fall distance - 3.0)
+    	 */
+    	FALL,
+    	/* 
+    	 * Damage caused by fire (1)
+    	 */
+    	FIRE,
+    	/*
+    	 * Low periodic damage caused by burning (1)
+    	 */
+    	FIRE_TICK,
+    	/* 
+    	 * Damage caused from lava (4)
+    	 */
+    	LAVA,
+    	/* 
+    	 * Damage caused from drowning (2)
+    	 */
+    	WATER
+    	
+    }
+    
     private static final Logger log = Logger.getLogger("Minecraft");
     private static final Object lock = new Object();
     private List<Plugin> plugins = new ArrayList<Plugin>();
@@ -552,7 +584,7 @@ public class PluginLoader {
                                 }
                                 break;
                             case DAMAGE:
-                                if (listener.onDamage((BaseEntity) parameters[0], (BaseEntity) parameters[1])) {
+                            	if (listener.onDamage((DamageType)parameters[0], (BaseEntity) parameters[1], (BaseEntity) parameters[2], (Integer) parameters[3])) {
                                     toRet = true;
                                 }
                                 break;
