@@ -56,7 +56,7 @@ public class fx extends jy
 		/*  hmod: this is where we screw with healing
 		 *  if ((this.l.k == 0) && (this.aQ < 20) && 
 		 *  		(this.X % 20 * 4 == 0)) a(1);
-		 *  a(1) is heal-me: +1
+		 *  a(1) is heal player +1 health
 		 *  this.l is an ev, this.l.k is 1 for monsters-spawn=true
 		 *  0 for monsters-spawn=false
 		 *  notch's coding says "lol imma heal u if u disable monsters"
