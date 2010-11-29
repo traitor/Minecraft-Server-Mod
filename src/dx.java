@@ -172,9 +172,9 @@ public abstract class dx
       else {
         if (this.Z % 20 == 0) {
             // hMod Damage hook: Periodic burn damage
-            LivingEntity defender = new LivingEntity((jy)this);
+	        BaseEntity burner = new BaseEntity(this);
             if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE,
-            		new Object[]{PluginLoader.DamageType.FIRE_TICK, null, defender, 1})) {        	
+            		new Object[]{PluginLoader.DamageType.FIRE_TICK, null, burner, 1})) {        	
             	a(null, 1);
             }
         }
@@ -197,7 +197,7 @@ public abstract class dx
   protected void n() {
   	// hMod Damage hook: Lava	  
     if(this instanceof jy) {
-		LivingEntity defender = new LivingEntity((jy)this);
+		BaseEntity defender = new BaseEntity(this);
 		if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, 
 				new Object[]{PluginLoader.DamageType.LAVA, null, defender, 4}))
 			return;
