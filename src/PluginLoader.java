@@ -179,10 +179,33 @@ public class PluginLoader {
          */
         BLOCK_RIGHTCLICKED,
         /**
+         * Calls onLiquidDestroy
+         */
+        LIQUID_DESTROY,
+        /**
          * Unused.
          */
         NUM_HOOKS
     }
+    
+    /**
+     * HookResult - Used where returning a boolean isn't enough.
+     */
+    public enum HookResult {
+        /**
+         * Prevent the action
+         */
+        PREVENT_ACTION,
+        /**
+         * Allow the action
+         */
+        ALLOW_ACTION,
+        /**
+         * Do whatever it would normally do, continue processing
+         */
+        DEFAULT_ACTION
+    }
+    
     private static final Logger log = Logger.getLogger("Minecraft");
     private static final Object lock = new Object();
     private List<Plugin> plugins = new ArrayList<Plugin>();
@@ -377,6 +400,8 @@ public class PluginLoader {
 
         if (h == Hook.REDSTONE_CHANGE) {
             toRet = (Integer) parameters[2];
+        } else if (h == Hook.LIQUID_DESTROY) {
+            toRet = HookResult.DEFAULT_ACTION;
         }
 
         synchronized (lock) {
@@ -558,6 +583,12 @@ public class PluginLoader {
                             case BLOCK_PLACE:
                                 if (listener.onBlockPlace((Player) parameters[0], (Block) parameters[1], (Block) parameters[2], (Item) parameters[3])) {
                                     toRet = true;
+                                }
+                                break;
+                            case LIQUID_DESTROY:
+                                HookResult ret = listener.onLiquidDestroy((HookResult) toRet, (Integer) parameters[0], (Block) parameters[1]);
+                                if (ret != HookResult.DEFAULT_ACTION && (HookResult) toRet == HookResult.DEFAULT_ACTION) {
+                                    toRet = ret;
                                 }
                                 break;
                         }

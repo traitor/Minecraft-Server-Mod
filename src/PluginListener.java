@@ -511,5 +511,19 @@ public abstract class PluginListener {
     public void onBlockRightClicked(Player player, Block blockClicked, Item item) {
         
     }
+    
+    /**
+     * Called when water or lava tries to populate a block, you can prevent
+     * crushing of torches, railways, flowers etc. You can alternatively allow
+     * to let normally solid blocks be crushed.
+     * 
+     * @param currentState the current tristate, once it's set to a non DEFAULT_ACTION it is final.
+     * @param liquidBlock the type of the attacking block
+     * @param targetBlock the block to be destroyed
+     * @return final after a non DEFAULT_ACTION
+     */
+    public PluginLoader.HookResult onLiquidDestroy( PluginLoader.HookResult currentState, int liquidBlockId, Block targetBlock )  {
+        return PluginLoader.HookResult.DEFAULT_ACTION;
+    }  
 
 }
