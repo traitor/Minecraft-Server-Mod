@@ -432,7 +432,7 @@ public abstract class PluginListener {
     }
 
     /**
-     * Called when a vehicle enters or leaves a block
+     * Called when a vehicle changes speed
      * 
      * @param vehicle the vehicle
      */
@@ -469,7 +469,7 @@ public abstract class PluginListener {
 
     }
     /**
-     * Called when changing block
+     * Called when a vehicle changes block
      * @param vehicle the vehicle
      * @param x coordinate x
      * @param y coordinate y
