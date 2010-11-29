@@ -93,7 +93,7 @@ public class jt {
     public boolean a(fx paramfx, eo parameo, hl paramhl) {
         int j = paramhl.a;
         // hMod: onItemUse
-        if (paramfx instanceof er && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, new Object[]{new Player((er) paramfx), new Item(paramhl)})) {
+        if (paramfx instanceof er && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, new Object[]{((er) paramfx).getPlayer(), new Item(paramhl)})) {
             return false;
         }
         hl localhl = paramhl.a(parameo, paramfx);
