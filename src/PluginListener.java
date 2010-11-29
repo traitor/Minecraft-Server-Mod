@@ -357,13 +357,19 @@ public abstract class PluginListener {
      * Called when a living object is attacked.
      * tip:
      * Use isMob() and isPlayer() and getPlayer().
+     * 
+     * @param type 
+     *          type of damage dealt.
      * @param attacker
      *          object that is attacking.
      * @param defender
      *          object that is defending.
+     * @param amount
+     *          amount of damage dealt.
+     * 
      * @return
      */
-    public boolean onDamage(BaseEntity attacker, BaseEntity defender) {
+    public boolean onDamage(PluginLoader.DamageType type, BaseEntity attacker, BaseEntity defender, int amount) {
         return false;
     }
 

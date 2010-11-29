@@ -127,7 +127,11 @@ public class jy extends dx {
                     float f3 = W.nextFloat() - W.nextFloat();
                     l.a("bubble", p + f1, q + f2, r + f3, s, t, u);
                 }
-                a(null, 2);
+                // hMod Damage hook: Drowning
+                LivingEntity defender = new LivingEntity(this);
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new Object[]{PluginLoader.DamageType.WATER, null, defender, 2})) {
+                    a(null, 2);
+                }
             }
 
             Z = 0;
@@ -298,7 +302,7 @@ public class jy extends dx {
         if (paramdx != null && (paramdx instanceof jy)) {
             LivingEntity attacker = new LivingEntity((jy)paramdx);
             LivingEntity defender = new LivingEntity(this);
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new Object[]{attacker, defender})) {
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new Object[]{PluginLoader.DamageType.ENTITY, attacker, defender, paramInt})) {
                 return false;
             }
         }
@@ -413,7 +417,11 @@ public class jy extends dx {
     protected void a(float paramFloat) {
         int i = (int) Math.ceil(paramFloat - 3.0F);
         if (i > 0) {
-            a(null, i);
+            // hMod Damage hook: Falling
+            LivingEntity defender = new LivingEntity(this);
+            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new Object[]{PluginLoader.DamageType.FALL, null, defender, i})) {
+                a(null, i);
+            }
 
             int j = l.a(hf.b(p), hf.b(q - 0.2000000029802322D - H), hf.b(r));
             if (j > 0) {
