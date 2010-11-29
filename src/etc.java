@@ -45,6 +45,7 @@ public class etc {
     private PluginLoader loader;
     private boolean logging = false;
     private boolean enableHealth = true;
+    private PluginLoader.HookResult autoHeal = PluginLoader.HookResult.DEFAULT_ACTION;
     private boolean showUnknownCommand = true;
     private String versionStr;
     private boolean tainted = true;
@@ -149,6 +150,14 @@ public class etc {
             spawnProtectionSize = properties.getInt("spawn-protection-size", 16);
             logging = properties.getBoolean("logging", false);
             enableHealth = properties.getBoolean("enable-health", true);
+
+            String autoHealString = properties.getString("auto-heal", "default");
+            if (autoHealString.equalsIgnoreCase("true")) {
+                autoHeal = PluginLoader.HookResult.ALLOW_ACTION;
+            } else if (autoHealString.equalsIgnoreCase("false")) {
+                autoHeal = PluginLoader.HookResult.PREVENT_ACTION;
+            }
+
             showUnknownCommand = properties.getBoolean("show-unknown-command", true);
             URL url = this.getClass().getResource("/version.txt");
             if (url != null) {
@@ -337,6 +346,16 @@ public class etc {
      */
     public boolean isHealthEnabled() {
         return enableHealth;
+    }
+    
+
+    /**
+     * Returns the status of auto-heal.
+     *
+     * @return
+     */
+    public PluginLoader.HookResult autoHeal() {
+        return autoHeal;
     }
 
     /**
