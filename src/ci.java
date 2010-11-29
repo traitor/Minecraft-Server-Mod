@@ -108,7 +108,19 @@ public class ci {
 
                 d10 = parameo.a(localbd, localdx.z);
                 d11 = (1.0D - d5) * d10;
-                localdx.a(paramdx, (int) ((d11 * d11 + d11) / 2.0D * 8.0D * paramFloat + 1.0D));
+                // hMod Damage hook: Explosions
+                int dmg = (int) ((d11 * d11 + d11) / 2.0D * 8.0D * paramFloat + 1.0D);
+                if (localdx instanceof jy) {
+	                LivingEntity defender = new LivingEntity((jy)localdx);
+	                PluginLoader.DamageType dmgType = (paramdx instanceof fm) ? 
+	                		PluginLoader.DamageType.CREEPER_EXPLOSION : PluginLoader.DamageType.EXPLOSION;
+	            	if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, 
+	            			new Object[]{dmgType, null, defender, dmg})) {
+	            		localdx.a(paramdx, dmg);
+	                }
+                } else {
+                	localdx.a(paramdx, dmg);
+                }
 
                 d12 = d11;
                 localdx.s += d6 * d12;
