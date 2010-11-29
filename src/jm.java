@@ -449,6 +449,9 @@ public class jm extends dx implements kc {
         int i = hf.b(paramDouble1);
         int j = hf.b(paramDouble2);
         int k = hf.b(paramDouble3);
+        // hMod: Change of the cart
+        Minecart minecart = new Minecart(this);
+        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_POSITIONCHANGE, new Object[]{minecart,i,j,k});
         if (this.l.a(i, j - 1, k) == ga.aG.bh) {
             j--;
         }

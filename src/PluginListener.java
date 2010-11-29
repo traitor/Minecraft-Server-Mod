@@ -427,7 +427,7 @@ public abstract class PluginListener {
      * @param damage
      * @return false to set damage
      */
-    public boolean onVehicleDamage(BaseVehicle vehicle, LivingEntity attacker, int damage) {
+    public boolean onVehicleDamage(BaseVehicle vehicle, BaseEntity attacker, int damage) {
         return false;
     }
 
@@ -468,7 +468,16 @@ public abstract class PluginListener {
     public void onVehicleEnter(BaseVehicle vehicle, HumanEntity player) {
 
     }
-    
+    /**
+     * Called when changing block
+     * @param vehicle the vehicle
+     * @param x coordinate x
+     * @param y coordinate y
+     * @param z coordinate z
+     */
+    public void onVehiclePositionChange(BaseVehicle vehicle, int x, int y, int z) {
+
+    }
     /**
      * Called when a player uses an item (rightclick with item in hand)
      * @param player the player
@@ -479,4 +488,5 @@ public abstract class PluginListener {
     public boolean onItemUse(Player player, Item item) {
         return false;
     }
+
 }
