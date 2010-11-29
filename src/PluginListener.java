@@ -162,16 +162,22 @@ public abstract class PluginListener {
     }
 
     /**
-     * Called when someone presses right click. If they right clicked with a
-     * block you can return true to cancel that. You can intercept this to add
-     * your own right click actions to different item types (see itemInHand)
+     * Called when someone presses right click aimed at a block.
+     * You can intercept this to add your own right click actions
+     * to different item types (see itemInHand)
      * 
      * @param player
      * @param blockPlaced
      * @param blockClicked
      * @param itemInHand
      * @return false if you want the action to go through
+     * 
+     * @deprecated use onBlockRightClick to get the information
+     * @see #onBlockRightClicked(Player, Block, Item)
+     * @see #onBlockPlace(Player, Block, Block, Item)
+     * @see #onItemUse(Player, Item)
      */
+    @Deprecated
     public boolean onBlockCreate(Player player, Block blockPlaced, Block blockClicked, int itemInHand) {
         return false;
     }
@@ -489,6 +495,7 @@ public abstract class PluginListener {
     public boolean onItemUse(Player player, Item item) {
         return false;
     }
+
     /**
      * Called when the server considers whether to perform verification.
      * 
@@ -524,5 +531,44 @@ public abstract class PluginListener {
      */
     public String onNameResolution(String name, InetAddress address) {
         return null;
+    }
+
+    /**
+     * Called when someone places a block. Return true to prevent the placement.
+     *
+     * @param player
+     * @param blockPlaced
+     * @param blockClicked
+     * @param itemInHand
+     * @return true if you want to undo the block placement
+     */
+    public boolean onBlockPlace(Player player, Block blockPlaced, Block blockClicked, Item itemInHand) {
+        return false;
+    }
+
+    /**
+     * Called when someone presses right click aimed at a block.
+     * You can intercept this to add your own right click actions
+     * to different item types (see itemInHand)
+     *
+     * @param player
+     * @param blockClicked
+     * @param itemInHand
+     */
+    public void onBlockRightClicked(Player player, Block blockClicked, Item item) {
+    }
+
+    /**
+     * Called when water or lava tries to populate a block, you can prevent
+     * crushing of torches, railways, flowers etc. You can alternatively allow
+     * to let normally solid blocks be crushed.
+     *
+     * @param currentState the current tristate, once it's set to a non DEFAULT_ACTION it is final.
+     * @param liquidBlock the type of the attacking block
+     * @param targetBlock the block to be destroyed
+     * @return final after a non DEFAULT_ACTION
+     */
+    public PluginLoader.HookResult onLiquidDestroy(PluginLoader.HookResult currentState, int liquidBlockId, Block targetBlock) {
+        return PluginLoader.HookResult.DEFAULT_ACTION;
     }
 }

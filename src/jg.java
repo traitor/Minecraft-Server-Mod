@@ -308,6 +308,30 @@ public class jg extends fa implements ew {
             if (i3 > i4)
                 i4 = i3;
             
+            // hMod: Store block data to call BLOCK_CREATED
+            Block blockClicked = new Block(etc.getServer().getBlockIdAt(m, n, i1), m, n, i1);
+            blockClicked.setFaceClicked(Block.Face.fromId(paramfz.e));
+            
+            // hMod: call BLOCK_RIGHTCLICKED
+            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_RIGHTCLICKED, new Object[]{((er)e).getPlayer(), blockClicked, new Item(new hl(paramfz.a))});
+            
+            // hMod: call original BLOCK_CREATED
+            Block blockPlaced = new Block(paramfz.a, m, n, i1);
+            if (paramfz.e == 0) {
+                blockPlaced.setY(blockPlaced.getY() - 1);
+            } else if (paramfz.e == 1) {
+                blockPlaced.setY(blockPlaced.getY() + 1);
+            } else if (paramfz.e == 2) {
+                blockPlaced.setZ(blockPlaced.getZ() - 1);
+            } else if (paramfz.e == 3) {
+                blockPlaced.setZ(blockPlaced.getZ() + 1);
+            } else if (paramfz.e == 4) {
+                blockPlaced.setX(blockPlaced.getX() - 1);
+            } else if (paramfz.e == 5) {
+                blockPlaced.setX(blockPlaced.getX() + 1);
+            } 
+            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, new Object[]{e, blockPlaced, blockClicked, paramfz.a});
+            
             // hMod: If we were building inside spawn, bail! (unless ops/admin)
             if ((i4 > etc.getInstance().getSpawnProtectionSize() || bool) && getPlayer().canBuild()) {
                 hl localhl = paramfz.a >= 0 ? new hl(paramfz.a) : null;

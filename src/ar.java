@@ -256,6 +256,15 @@ public class ar extends cz {
     }
 
     private boolean l(eo parameo, int paramInt1, int paramInt2, int paramInt3) {
+        // hMod: See if this liquid can destroy this block.
+        Block block = new Block(parameo.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
+        PluginLoader.HookResult ret = (PluginLoader.HookResult) etc.getLoader().callHook(PluginLoader.Hook.LIQUID_DESTROY, new Object[]{this.bh, block});
+        if (ret == PluginLoader.HookResult.PREVENT_ACTION) {
+            return false;
+        } else if (ret == PluginLoader.HookResult.ALLOW_ACTION) {
+            return true;
+        }
+        
         jw localjw = parameo.c(paramInt1, paramInt2, paramInt3);
         if (localjw == this.bs) {
             return false;
