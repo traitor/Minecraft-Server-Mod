@@ -171,6 +171,14 @@ public class PluginLoader {
          */
         ITEM_USE,
         /**
+         * Calls onBlockPlace
+         */
+        BLOCK_PLACE,
+        /**
+         * Calls onBlockRightClicked
+         */
+        BLOCK_RIGHTCLICKED,
+        /**
          * Unused.
          */
         NUM_HOOKS
@@ -541,6 +549,14 @@ public class PluginLoader {
                                 break;
                             case ITEM_USE:
                                 if (listener.onItemUse((Player) parameters[0], (Item) parameters[1])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case BLOCK_RIGHTCLICKED:
+                                listener.onBlockRightClicked((Player) parameters[0], (Block) parameters[1], (Item) parameters[2]);
+                                break;
+                            case BLOCK_PLACE:
+                                if (listener.onBlockPlace((Player) parameters[0], (Block) parameters[1], (Block) parameters[2], (Item) parameters[3])) {
                                     toRet = true;
                                 }
                                 break;

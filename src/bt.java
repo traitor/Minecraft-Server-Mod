@@ -57,7 +57,7 @@ public class bt extends fu {
             //hMod: Take over block placement
             if (parameo.a(paramInt1, paramInt2, paramInt3, this.a)) {
                 // hMod: Check if this was playerPlaced and call the hook
-                if (paramfx instanceof er && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, new Object[]{paramfx, blockPlaced, blockClicked, this.a})) {
+                if (paramfx instanceof er && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PLACE, new Object[]{((er)paramfx).getPlayer(), blockPlaced, blockClicked, new Item(paramhl)})) {
                     // hMod: Undo!
                     
                     // Specialcase iceblocks, replace with 'glass' first (so it doesnt explode into water)
