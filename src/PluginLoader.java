@@ -168,6 +168,10 @@ public class PluginLoader {
          */
         VEHICLE_ENTERED,
         /**
+         * Calls onVehiclePositionChange
+         */
+        VEHICLE_POSITIONCHANGE,
+        /**
          * Calls onItemUse
          */
         ITEM_USE,
@@ -539,7 +543,7 @@ public class PluginLoader {
                                 listener.onVehicleUpdate((BaseVehicle) parameters[0]);
                                 break;
                             case VEHICLE_DAMAGE:
-                                if (listener.onVehicleDamage((BaseVehicle) parameters[0], (LivingEntity) parameters[1], (Integer) parameters[2])) {
+                                if (listener.onVehicleDamage((BaseVehicle) parameters[0], (BaseEntity) parameters[1], (Integer) parameters[2])) {
                                     toRet = true;
                                 }
                                 break;
@@ -551,6 +555,9 @@ public class PluginLoader {
                                 break;
                             case VEHICLE_ENTERED:
                                 listener.onVehicleEnter((BaseVehicle) parameters[0], (HumanEntity) parameters[1]);
+                                break;
+                            case VEHICLE_POSITIONCHANGE:
+                                listener.onVehiclePositionChange((BaseVehicle) parameters[0], (Integer) parameters[1], (Integer) parameters[2], (Integer) parameters[3]);
                                 break;
                             case ITEM_USE:
                                 if (listener.onItemUse((Player) parameters[0], (Item) parameters[1])) {
