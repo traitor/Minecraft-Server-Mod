@@ -4,16 +4,13 @@
  * @author James
  */
 public class Mob extends LivingEntity {
-    gc mob;
-    
     /**
      * Creates a mob interface
      * 
      * @param mob name of mob
      */
-    public Mob(gc mob) {
+    public Mob(jz mob) {
         super(mob);
-        this.mob = mob;
     }
 
     /**
@@ -23,7 +20,7 @@ public class Mob extends LivingEntity {
      *            name of mob
      */
     public Mob(String mob) {
-        this((gc) ho.a(mob, etc.getMCServer().e));
+        this((jz) ho.a(mob, etc.getMCServer().e));
     }
 
     /**
@@ -76,7 +73,7 @@ public class Mob extends LivingEntity {
      * Drops this mob's loot. Automatically called if health is set to 0.
      */
     public void dropLoot() {
-        mob.f(null);
+        this.livingEntity.f(null);
     }
     
     public void setHealth(int health) {
@@ -91,8 +88,8 @@ public class Mob extends LivingEntity {
      * 
      * @return
      */
-    public gc getMob() {
-        return mob;
+    public jz getMob() {
+        return this.livingEntity;
     }
 
     /**
