@@ -65,6 +65,15 @@ public class gq {
         }
         this.c.e.a(parames);
         this.d.a(parames);
+        
+        // hMod: Handle login (send MOTD and call hook)
+        String[] motd = etc.getInstance().getMotd();
+        if (!(motd.length == 1 && motd[0].equals(""))) {
+            for (String str : etc.getInstance().getMotd()) {
+                parames.a.b(new bh(str));
+            }
+        }
+        etc.getLoader().callHook(PluginLoader.Hook.LOGIN, new Object[]{parames});
     }
 
     public void b(es parames) {
