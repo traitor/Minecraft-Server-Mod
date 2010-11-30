@@ -1,4 +1,3 @@
-
 /**
  * Sign.java - Interface to signs
  * 
@@ -6,14 +5,14 @@
  */
 public class Sign implements ComplexBlock {
 
-    private jl sign;
+    private jm sign;
 
     /**
      * Creates a sign interface
      * 
-     * @param sign
+     * @param localav
      */
-    public Sign(jl sign) {
+    public Sign(jm sign) {
         this.sign = sign;
     }
 

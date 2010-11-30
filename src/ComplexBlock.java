@@ -1,4 +1,3 @@
-
 /**
  * ComplexBlock.java - Interface for complex blocks like chests and signs
  * 

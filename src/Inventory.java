@@ -1,11 +1,9 @@
-
 /**
  * Inventory.java - Interface to player inventories
  * 
  * @author James
  */
 public class Inventory extends ItemArray {
-
     /**
      * The type of inventory to use
      */
@@ -24,7 +22,7 @@ public class Inventory extends ItemArray {
          */
         Equipment
     }
-    private er user;
+    private es user;
     private Type type;
 
     /**
@@ -103,15 +101,15 @@ public class Inventory extends ItemArray {
         user.a.d();
     }
 
-    public hl[] getArray() {
+    public hm[] getArray() {
         switch (type) {
             case Inventory:
-                return user.al.a;
+                return user.am.a;
             case CraftingTable:
-                return user.al.c;
+                return user.am.c;
             case Equipment:
-                return user.al.b;
+                return user.am.b;
         }
-        return new hl[0];
+        return new hm[0];
     }
 }

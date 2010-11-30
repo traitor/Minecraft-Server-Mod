@@ -1,12 +1,10 @@
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class ay {
-
     private static Map e = new HashMap();
     private static Map f = new HashMap();
-    public eo a;
+    public ep a;
     public int b;
     public int c;
     public int d;
@@ -63,45 +61,47 @@ public class ay {
         for (Player player : etc.getServer().getPlayerList()) {
             ay localay = this;
             ComplexBlock block = null;
-            if (localay instanceof ia) {
-                block = new Chest((ia) localay);
-            } else if (localay instanceof dt) {
-                block = new Furnace((dt) localay);
-            } else if (localay instanceof jl) {
-                block = new Sign((jl) localay);
+            if (localay instanceof ib) {
+                block = new Chest((ib) localay);
+            } else if (localay instanceof du) {
+                block = new Furnace((du) localay);
+            } else if (localay instanceof jm) {
+                block = new Sign((jm) localay);
             } else if (localay instanceof cf) {
                 block = new MobSpawner((cf) localay);
             }
             if (block != null) {
                 if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, new Object[]{player.getUser(), block})
                         && player.canBuild()) {
-                    player.getUser().a.b.a(new jf(this.b, this.c, this.d, this));
+                    player.getUser().a.b.a(new jg(this.b, this.c, this.d, this));
                 } else {
                     ay toSend = null;
-                    if (localay instanceof ia) {
-                        toSend = new ia();
-                    } else if (localay instanceof dt) {
-                        toSend = new dt();
-                    } else if (localay instanceof jl) {
-                        toSend = new jl();
+                    if (localay instanceof ib) {
+                        toSend = new ib();
+                    } else if (localay instanceof du) {
+                        toSend = new du();
+                    } else if (localay instanceof jm) {
+                        toSend = new jm();
                     } else if (localay instanceof cf) {
                         toSend = new cf();
                     }
                     toSend.b = b;
                     toSend.c = c;
                     toSend.d = d;
-                    player.getUser().a.b.a(new jf(this.b, this.c, this.d, toSend));
+                    player.getUser().a.b.a(new jg(this.b, this.c, this.d, toSend));
+                                       //this.a.b(this.b, this.c, this.d, this);
                 }
             } else {
-                player.getUser().a.b.a(new jf(this.b, this.c, this.d, this));
+                player.getUser().a.b.a(new jg(this.b, this.c, this.d, this));
+                            //this.a.b(this.b, this.c, this.d, this);
             }
         }
     }
 
     static {
-        a(dt.class, "Furnace");
-        a(ia.class, "Chest");
-        a(jl.class, "Sign");
+        a(du.class, "Furnace");
+        a(ib.class, "Chest");
+        a(jm.class, "Sign");
         a(cf.class, "MobSpawner");
     }
 }

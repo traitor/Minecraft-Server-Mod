@@ -1,11 +1,9 @@
-
 /**
  *
  * @author 
  */
 public class HumanEntity extends LivingEntity {
-
-    fx human;
+    fy human;
 
     /**
      *
@@ -17,8 +15,8 @@ public class HumanEntity extends LivingEntity {
      *
      * @param human
      */
-    public HumanEntity(fx human) {
-        super((jy) human);
+    public HumanEntity(fy human) {
+        super((jz) human);
         this.human = human;
     }
 }

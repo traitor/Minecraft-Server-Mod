@@ -3,7 +3,7 @@
  * @author
  */
 public class LivingEntity extends BaseEntity {
-    jy livingEntity;
+    jz livingEntity;
 
     /**
      * Interface for living entities
@@ -15,7 +15,7 @@ public class LivingEntity extends BaseEntity {
      * Interface for living entities
      * @param livingEntity
      */
-    public LivingEntity(jy livingEntity) {
+    public LivingEntity(jz livingEntity) {
         super(livingEntity);
         this.livingEntity = livingEntity;
     }
@@ -26,7 +26,7 @@ public class LivingEntity extends BaseEntity {
      * @return health
      */
     public int getHealth() {
-        return livingEntity.aQ;
+        return livingEntity.aR;
     }
 
     /**
@@ -51,6 +51,6 @@ public class LivingEntity extends BaseEntity {
             health = -1;
         if (health > 20)
             health = 20;
-        livingEntity.aQ = health;
+        livingEntity.aR = health;
     }
 }

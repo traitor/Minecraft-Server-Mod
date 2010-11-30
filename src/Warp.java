@@ -1,4 +1,3 @@
-
 /**
  * Warp.java - Contains the stuff for a warp (Name, location, etc.). Also used
  * for homes.

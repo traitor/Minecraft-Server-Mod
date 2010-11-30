@@ -1,4 +1,3 @@
-
 /**
  * Location.java - Used for passing a location to other functions and such.
  * 

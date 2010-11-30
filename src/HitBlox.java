@@ -1,4 +1,3 @@
-
 /**
  * HitBlox.java - Class for getting blocks along line of sight
  * 

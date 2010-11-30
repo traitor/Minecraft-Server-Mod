@@ -1,80 +1,79 @@
-
 import java.util.List;
 
-public class jy extends dx {
-
-    public int av = 20;
-    public float aw;
+public class jz extends dy {
+    public int aw = 20;
     public float ax;
     public float ay;
-    public float az = 0.0F;
+    public float az;
     public float aA = 0.0F;
-    protected float aB;
+    public float aB = 0.0F;
     protected float aC;
     protected float aD;
     protected float aE;
-    protected boolean aF = true;
-    protected String aG = "/mob/char.png";
-    protected boolean aH = true;
-    protected float aI = 0.0F;
-    protected String aJ = null;
-    protected float aK = 1.0F;
-    protected int aL = 0;
-    protected float aM = 0.0F;
-    public boolean aN = false;
-    public float aO;
+    protected float aF;
+    protected boolean aG = true;
+    protected String aH = "/mob/char.png";
+    protected boolean aI = true;
+    protected float aJ = 0.0F;
+    protected String aK = null;
+    protected float aL = 1.0F;
+    protected int aM = 0;
+    protected float aN = 0.0F;
+    public boolean aO = false;
     public float aP;
-    public int aQ;
+    public float aQ;
     public int aR;
-    private int a;
     public int aS;
+    private int a;
     public int aT;
-    public float aU = 0.0F;
-    public int aV = 0;
+    public int aU;
+    public float aV = 0.0F;
     public int aW = 0;
-    public float aX;
+    public int aX = 0;
     public float aY;
-    protected boolean aZ = false;
-    public int ba = -1;
-    public float bb = (float) (Math.random() * 0.8999999761581421D + 0.1000000014901161D);
-    public float bc;
+    public float aZ;
+    protected boolean ba = false;
+    public int bb = -1;
+    public float bc = (float) (Math.random() * 0.8999999761581421D + 0.1000000014901161D);
     public float bd;
     public float be;
-    protected int bf;
-    protected double bg;
+    public float bf;
+    protected int bg;
     protected double bh;
     protected double bi;
     protected double bj;
     protected double bk;
-    float bl = 0.0F;
-    protected int bm = 0;
+    protected double bl;
+    float bm = 0.0F;
     protected int bn = 0;
-    protected float bo;
+    protected int bo = 0;
     protected float bp;
     protected float bq;
-    protected boolean br = false;
-    protected float bs = 0.0F;
-    protected float bt = 0.7F;
-    private dx b;
+    protected float br;
+    protected boolean bs = false;
+    protected float bt = 0.0F;
+    protected float bu = 0.7F;
+    private dy b;
     private int c = 0;
 
-    public jy(eo parameo) {
-        super(parameo);
-        aQ = 10;
+    public jz(ep paramep) {
+        super(paramep);
+        aR = 10;
         i = true;
 
-        ay = ((float) (Math.random() + 1.0D) * 0.01F);
+        az = ((float) (Math.random() + 1.0D) * 0.01F);
         a(p, q, r);
-        aw = ((float) Math.random() * 12398.0F);
+        ax = ((float) Math.random() * 12398.0F);
         v = (float) (Math.random() * 3.141592741012573D * 2.0D);
-        ax = 1.0F;
+        ay = 1.0F;
 
         S = 0.5F;
     }
 
-    public boolean i(dx paramdx) {
+    public boolean i(dy paramdy) {
+        // hMod fix the static reference here with a null element.
         bd bd = null;
-        return l.a(bd.b(p, q + s(), r), bd.b(paramdx.p, paramdx.q + paramdx.s(), paramdx.r)) == null;
+        return l.a(bd.b(p, q + s(), r), bd.b(paramdy.p, paramdy.q + paramdy.s(), paramdy.r)) == null;
     }
 
     @Override
@@ -98,7 +97,7 @@ public class jy extends dx {
 
     @Override
     public void m() {
-        aO = aP;
+        aP = aQ;
         super.m();
 
         if (W.nextInt(1000) < a++) {
@@ -117,7 +116,7 @@ public class jy extends dx {
             Z = 0;
         }
         int i;
-        if ((x()) && (a(jw.f))) {
+        if ((x()) && (a(jx.f))) {
             ad -= 1;
             if (ad == -20) {
                 ad = 0;
@@ -126,12 +125,13 @@ public class jy extends dx {
                     float f2 = W.nextFloat() - W.nextFloat();
                     float f3 = W.nextFloat() - W.nextFloat();
                     l.a("bubble", p + f1, q + f2, r + f3, s, t, u);
+                    // hMod Damage hook: Drowning
+                    LivingEntity defender = new LivingEntity(this);
+                    if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new Object[]{PluginLoader.DamageType.WATER, null, defender, 2})) {
+                        a(null, 2);
+                    }
                 }
-                // hMod Damage hook: Drowning
-                LivingEntity defender = new LivingEntity(this);
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new Object[]{PluginLoader.DamageType.WATER, null, defender, 2})) {
-                    a(null, 2);
-                }
+                a(null, 2);
             }
 
             Z = 0;
@@ -139,35 +139,34 @@ public class jy extends dx {
             ad = aa;
         }
 
-        aX = aY;
+        aY = aZ;
 
-        if (aW > 0) {
-            aW -= 1;
+        if (aX > 0) {
+            aX -= 1;
         }
-        if (aS > 0) {
-            aS -= 1;
+        if (aT > 0) {
+            aT -= 1;
         }
         if (ac > 0) {
             ac -= 1;
         }
-        if (aQ <= 0) {
-            aV += 1;
-            if (aV > 20) {
+        if (aR <= 0) {
+            aW += 1;
+            if (aW > 20) {
                 L();
                 l();
                 for (i = 0; i < 20; i++) {
                     double d1 = W.nextGaussian() * 0.02D;
                     double d2 = W.nextGaussian() * 0.02D;
                     double d3 = W.nextGaussian() * 0.02D;
-                    l.a("explode", p + W.nextFloat() * I * 2.0F - I, q + W.nextFloat() * J, r + W.nextFloat() * I * 2.0F - I, d1, d2,
-                            d3);
+                    l.a("explode", p + W.nextFloat() * I * 2.0F - I, q + W.nextFloat() * J, r + W.nextFloat() * I * 2.0F - I, d1, d2, d3);
                 }
             }
         }
 
-        aE = aD;
+        aF = aE;
 
-        aA = az;
+        aB = aA;
         x = v;
         y = w;
     }
@@ -178,16 +177,15 @@ public class jy extends dx {
             double d2 = W.nextGaussian() * 0.02D;
             double d3 = W.nextGaussian() * 0.02D;
             double d4 = 10.0D;
-            l.a("explode", p + W.nextFloat() * I * 2.0F - I - d1 * d4, q + W.nextFloat() * J - d2 * d4, r + W.nextFloat() * I * 2.0F
-                    - I - d3 * d4, d1, d2, d3);
+            l.a("explode", p + W.nextFloat() * I * 2.0F - I - d1 * d4, q + W.nextFloat() * J - d2 * d4, r + W.nextFloat() * I * 2.0F - I - d3 * d4, d1, d2, d3);
         }
     }
 
     @Override
     public void z() {
         super.z();
-        aB = aC;
-        aC = 0.0F;
+        aC = aD;
+        aD = 0.0F;
     }
 
     @Override
@@ -199,36 +197,36 @@ public class jy extends dx {
         double d1 = p - m;
         double d2 = r - o;
 
-        float f1 = hf.a(d1 * d1 + d2 * d2);
+        float f1 = hg.a(d1 * d1 + d2 * d2);
 
-        float f2 = az;
+        float f2 = aA;
 
         float f3 = 0.0F;
-        aB = aC;
+        aC = aD;
         float f4 = 0.0F;
         if (f1 > 0.05F) {
             f4 = 1.0F;
             f3 = f1 * 3.0F;
             f2 = (float) Math.atan2(d2, d1) * 180.0F / 3.141593F - 90.0F;
         }
-        if (aP > 0.0F) {
+        if (aQ > 0.0F) {
             f2 = v;
         }
         if (!A) {
             f4 = 0.0F;
         }
-        aC += (f4 - aC) * 0.3F;
+        aD += (f4 - aD) * 0.3F;
 
-        float f5 = f2 - az;
+        float f5 = f2 - aA;
         while (f5 < -180.0F) {
             f5 += 360.0F;
         }
         while (f5 >= 180.0F) {
             f5 -= 360.0F;
         }
-        az += f5 * 0.3F;
+        aA += f5 * 0.3F;
 
-        float f6 = v - az;
+        float f6 = v - aA;
         while (f6 < -180.0F) {
             f6 += 360.0F;
         }
@@ -242,9 +240,9 @@ public class jy extends dx {
         if (f6 >= 75.0F) {
             f6 = 75.0F;
         }
-        az = (v - f6);
+        aA = (v - f6);
         if (f6 * f6 > 2500.0F) {
-            az += f6 * 0.2F;
+            aA += f6 * 0.2F;
         }
 
         if (i != 0) {
@@ -256,11 +254,11 @@ public class jy extends dx {
         while (v - x >= 180.0F) {
             x += 360.0F;
         }
-        while (az - aA < -180.0F) {
-            aA -= 360.0F;
+        while (aA - aB < -180.0F) {
+            aB -= 360.0F;
         }
-        while (az - aA >= 180.0F) {
-            aA += 360.0F;
+        while (aA - aB >= 180.0F) {
+            aB += 360.0F;
         }
         while (w - y < -180.0F) {
             y -= 360.0F;
@@ -268,7 +266,7 @@ public class jy extends dx {
         while (w - y >= 180.0F) {
             y += 360.0F;
         }
-        aD += f3;
+        aE += f3;
     }
 
     @Override
@@ -277,30 +275,31 @@ public class jy extends dx {
     }
 
     public void a(int paramInt) {
-        if (aQ <= 0) {
+        if (aR <= 0) {
             return;
         }
-        aQ += paramInt;
-        if (aQ > 20) {
-            aQ = 20;
+        aR += paramInt;
+        if (aR > 20) {
+            aR = 20;
         }
-        ac = (av / 2);
+        ac = (aw / 2);
     }
 
     @Override
-    public boolean a(dx paramdx, int paramInt) {
+    public boolean a(dy paramdy, int paramInt) {
         if (l.z) {
             return false;
         }
-        bn = 0;
-        if (aQ <= 0) {
+        bo = 0;
+        if (aR <= 0) {
             return false;
         }
 
-        bd = 1.5F;
+        be = 1.5F;
+
         // hMod: the different entities are defined in hn
-        if (paramdx != null && (paramdx instanceof jy)) {
-            LivingEntity attacker = new LivingEntity((jy)paramdx);
+        if (paramdy != null && (paramdy instanceof jz)) {
+            LivingEntity attacker = new LivingEntity((jz) paramdy);
             LivingEntity defender = new LivingEntity(this);
             if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new Object[]{PluginLoader.DamageType.ENTITY, attacker, defender, paramInt})) {
                 return false;
@@ -308,44 +307,45 @@ public class jy extends dx {
         }
 
         int i = 1;
-        if (ac > av / 2.0F) {
-            if (paramInt <= bm) {
+        if (ac > aw / 2.0F) {
+            if (paramInt <= bn) {
                 return false;
             }
-            c(paramInt - bm);
-            bm = paramInt;
+            c(paramInt - bn);
+            bn = paramInt;
             i = 0;
         } else {
-            bm = paramInt;
-            aR = aQ;
-            ac = av;
+            bn = paramInt;
+            aS = aR;
+            ac = aw;
             c(paramInt);
-            aS = (this.aT = 10); // <=
+            aT = (this.aU = 10);
         }
 
-        aU = 0.0F;
+        aV = 0.0F;
 
         if (i != 0) {
+            l.a(this, 2);
             u();
-            if (paramdx != null) {
-                double d1 = paramdx.p - p;
-                double d2 = paramdx.r - r;
+            if (paramdy != null) {
+                double d1 = paramdy.p - p;
+                double d2 = paramdy.r - r;
                 while (d1 * d1 + d2 * d2 < 0.0001D) {
                     d1 = (Math.random() - Math.random()) * 0.01D;
                     d2 = (Math.random() - Math.random()) * 0.01D;
                 }
-                aU = ((float) (Math.atan2(d2, d1) * 180.0D / 3.141592741012573D) - v);
-                a(paramdx, paramInt, d1, d2);
+                aV = ((float) (Math.atan2(d2, d1) * 180.0D / 3.141592741012573D) - v);
+                a(paramdy, paramInt, d1, d2);
             } else {
-                aU = ((int) (Math.random() * 2.0D) * 180);
+                aV = ((int) (Math.random() * 2.0D) * 180);
             }
         }
 
-        if (aQ <= 0) {
+        if (aR <= 0) {
             if (i != 0) {
                 l.a(this, f(), h(), (W.nextFloat() - W.nextFloat()) * 0.2F + 1.0F);
             }
-            f(paramdx);
+            f(paramdy);
         } else if (i != 0) {
             l.a(this, e(), h(), (W.nextFloat() - W.nextFloat()) * 0.2F + 1.0F);
         }
@@ -354,7 +354,7 @@ public class jy extends dx {
     }
 
     protected void c(int paramInt) {
-        aQ -= paramInt;
+        aR -= paramInt;
     }
 
     protected float h() {
@@ -373,8 +373,8 @@ public class jy extends dx {
         return "random.hurt";
     }
 
-    public void a(dx paramdx, int paramInt, double paramDouble1, double paramDouble2) {
-        float f1 = hf.a(paramDouble1 * paramDouble1 + paramDouble2 * paramDouble2);
+    public void a(dy paramdy, int paramInt, double paramDouble1, double paramDouble2) {
+        float f1 = hg.a(paramDouble1 * paramDouble1 + paramDouble2 * paramDouble2);
         float f2 = 0.4F;
 
         s /= 2.0D;
@@ -390,11 +390,11 @@ public class jy extends dx {
         }
     }
 
-    public void f(dx paramdx) {
-        if ((aL > 0) && (paramdx != null)) {
-            paramdx.b(this, aL);
+    public void f(dy paramdy) {
+        if ((aM > 0) && (paramdy != null)) {
+            paramdy.b(this, aM);
         }
-        aZ = true;
+        ba = true;
 
         if (!l.z) {
             int i = g();
@@ -423,9 +423,9 @@ public class jy extends dx {
                 a(null, i);
             }
 
-            int j = l.a(hf.b(p), hf.b(q - 0.2000000029802322D - H), hf.b(r));
+            int j = l.a(hg.b(p), hg.b(q - 0.2000000029802322D - H), hg.b(r));
             if (j > 0) {
-                cd localcd = ga.m[j].bq;
+                cd localcd = gb.m[j].bq;
                 l.a(this, localcd.c(), localcd.a() * 0.5F, localcd.b() * 0.75F);
             }
         }
@@ -462,9 +462,9 @@ public class jy extends dx {
             float f1 = 0.91F;
             if (A) {
                 f1 = 0.5460001F;
-                int i = l.a(hf.b(p), hf.b(z.b) - 1, hf.b(r));
+                int i = l.a(hg.b(p), hg.b(z.b) - 1, hg.b(r));
                 if (i > 0) {
-                    f1 = ga.m[i].bt * 0.91F;
+                    f1 = gb.m[i].bt * 0.91F;
                 }
             }
 
@@ -474,9 +474,9 @@ public class jy extends dx {
             f1 = 0.91F;
             if (A) {
                 f1 = 0.5460001F;
-                int j = l.a(hf.b(p), hf.b(z.b) - 1, hf.b(r));
+                int j = l.a(hg.b(p), hg.b(z.b) - 1, hg.b(r));
                 if (j > 0) {
-                    f1 = ga.m[j].bt * 0.91F;
+                    f1 = gb.m[j].bt * 0.91F;
                 }
             }
 
@@ -499,42 +499,41 @@ public class jy extends dx {
             s *= f1;
             u *= f1;
         }
-        bc = bd;
+        bd = be;
         double d2 = p - m;
         double d3 = r - o;
-        float f3 = hf.a(d2 * d2 + d3 * d3) * 4.0F;
+        float f3 = hg.a(d2 * d2 + d3 * d3) * 4.0F;
         if (f3 > 1.0F) {
             f3 = 1.0F;
         }
-        bd += (f3 - bd) * 0.4F;
-        be += bd;
+        be += (f3 - be) * 0.4F;
+        bf += be;
     }
 
     public boolean d_() {
-        int i = hf.b(p);
-        int j = hf.b(z.b);
-        int k = hf.b(r);
-        return (l.a(i, j, k) == ga.aF.bh) || (l.a(i, j + 1, k) == ga.aF.bh);
+        int i = hg.b(p);
+        int j = hg.b(z.b);
+        int k = hg.b(r);
+        return (l.a(i, j, k) == gb.aF.bh) || (l.a(i, j + 1, k) == gb.aF.bh);
     }
 
     @Override
     public void a(v paramv) {
-        paramv.a("Health", (short) aQ);
-        paramv.a("HurtTime", (short) aS);
-        paramv.a("DeathTime", (short) aV);
-        paramv.a("AttackTime", (short) aW);
+        paramv.a("Health", (short) aR);
+        paramv.a("HurtTime", (short) aT);
+        paramv.a("DeathTime", (short) aW);
+        paramv.a("AttackTime", (short) aX);
     }
 
     @Override
     public void b(v paramv) {
-        aQ = paramv.c("Health");
+        aR = paramv.c("Health");
         if (!paramv.a("Health")) {
-            aQ = 10;
+            aR = 10;
         }
-        aS = paramv.c("HurtTime");
-        aV = paramv.c("DeathTime");
-        aW = paramv.c("AttackTime");
-
+        aT = paramv.c("HurtTime");
+        aW = paramv.c("DeathTime");
+        aX = paramv.c("AttackTime");
         // hMod: Lets unbreak 'dead' characters so admins don't have to delete .dat files anymore >.>
         if (aQ < 0 || aV != 0) {
             aQ = 20; // Health
@@ -544,43 +543,43 @@ public class jy extends dx {
 
     @Override
     public boolean x() {
-        return (!G) && (aQ > 0);
+        return (!G) && (aR > 0);
     }
 
     public void E() {
-        if (bf > 0) {
-            double d1 = p + (bg - p) / bf;
-            double d2 = q + (bh - q) / bf;
-            double d3 = r + (bi - r) / bf;
+        if (bg > 0) {
+            double d1 = p + (bh - p) / bg;
+            double d2 = q + (bi - q) / bg;
+            double d3 = r + (bj - r) / bg;
 
-            double d4 = bj - v;
+            double d4 = bk - v;
             while (d4 < -180.0D) {
                 d4 += 360.0D;
             }
             while (d4 >= 180.0D) {
                 d4 -= 360.0D;
             }
-            v = (float) (v + d4 / bf);
-            w = (float) (w + (bk - w) / bf);
+            v = (float) (v + d4 / bg);
+            w = (float) (w + (bl - w) / bg);
 
-            bf -= 1;
+            bg -= 1;
             a(d1, d2, d3);
             b(v, w);
         }
 
-        if (aQ <= 0) {
-            br = false;
-            bo = 0.0F;
+        if (aR <= 0) {
+            bs = false;
             bp = 0.0F;
             bq = 0.0F;
-        } else if (!aN) {
+            br = 0.0F;
+        } else if (!aO) {
             c();
         }
 
         boolean bool1 = r();
         boolean bool2 = t();
 
-        if (br) {
+        if (bs) {
             if (bool1) {
                 t += 0.03999999910593033D;
             } else if (bool2) {
@@ -591,19 +590,19 @@ public class jy extends dx {
 
         }
 
-        bo *= 0.98F;
         bp *= 0.98F;
-        bq *= 0.9F;
-        c(bo, bp);
+        bq *= 0.98F;
+        br *= 0.9F;
+        c(bp, bq);
 
         List localList = l.b(this, z.b(0.2000000029802322D, 0.0D, 0.2000000029802322D));
         if ((localList != null) && (localList.size() > 0)) {
             for (int i = 0; i < localList.size(); i++) {
-                dx localdx = (dx) localList.get(i);
-                if (!localdx.v()) {
+                dy localdy = (dy) localList.get(i);
+                if (!localdy.v()) {
                     continue;
                 }
-                localdx.c(this);
+                localdy.c(this);
             }
         }
     }
@@ -613,40 +612,40 @@ public class jy extends dx {
     }
 
     protected void c() {
-        bn += 1;
+        bo += 1;
 
-        fx localfx = l.a(this, -1.0D);
+        fy localfy = l.a(this, -1.0D);
 
-        if (localfx != null) {
-            double d1 = localfx.p - p;
-            double d2 = localfx.q - q;
-            double d3 = localfx.r - r;
+        if (localfy != null) {
+            double d1 = localfy.p - p;
+            double d2 = localfy.q - q;
+            double d3 = localfy.r - r;
             double d4 = d1 * d1 + d2 * d2 + d3 * d3;
 
             if (d4 > 16384.0D) {
                 l();
             }
 
-            if ((bn > 600) && (W.nextInt(800) == 0)) {
+            if ((bo > 600) && (W.nextInt(800) == 0)) {
                 if (d4 < 1024.0D) {
-                    bn = 0;
+                    bo = 0;
                 } else {
                     l();
                 }
             }
         }
 
-        bo = 0.0F;
         bp = 0.0F;
+        bq = 0.0F;
 
         float f = 8.0F;
         if (W.nextFloat() < 0.02F) {
-            localfx = l.a(this, f);
-            if (localfx != null) {
-                b = localfx;
+            localfy = l.a(this, f);
+            if (localfy != null) {
+                b = localfy;
                 c = (10 + W.nextInt(20));
             } else {
-                bq = ((W.nextFloat() - 0.5F) * 20.0F);
+                br = ((W.nextFloat() - 0.5F) * 20.0F);
             }
         }
 
@@ -657,36 +656,36 @@ public class jy extends dx {
             }
         } else {
             if (W.nextFloat() < 0.05F) {
-                bq = ((W.nextFloat() - 0.5F) * 20.0F);
+                br = ((W.nextFloat() - 0.5F) * 20.0F);
             }
-            v += bq;
-            w = bs;
+            v += br;
+            w = bt;
         }
 
         boolean bool1 = r();
         boolean bool2 = t();
         if ((bool1) || (bool2)) {
-            br = (W.nextFloat() < 0.8F);
+            bs = (W.nextFloat() < 0.8F);
         }
     }
 
-    public void b(dx paramdx, float paramFloat) {
-        double d1 = paramdx.p - p;
+    public void b(dy paramdy, float paramFloat) {
+        double d1 = paramdy.p - p;
 
-        double d3 = paramdx.r - r;
+        double d3 = paramdy.r - r;
         double d2;
-        if ((paramdx instanceof jy)) {
-            jy localjy = (jy) paramdx;
-            d2 = localjy.q + localjy.s() - (q + s());
+        if ((paramdy instanceof jz)) {
+            jz localjz = (jz) paramdy;
+            d2 = localjz.q + localjz.s() - (q + s());
         } else {
-            d2 = (paramdx.z.b + paramdx.z.e) / 2.0D - (q + s());
+            d2 = (paramdy.z.b + paramdy.z.e) / 2.0D - (q + s());
         }
 
-        double d4 = hf.a(d1 * d1 + d3 * d3);
+        double d4 = hg.a(d1 * d1 + d3 * d3);
 
         float f1 = (float) (Math.atan2(d3, d1) * 180.0D / 3.141592741012573D) - 90.0F;
         float f2 = (float) (Math.atan2(d2, d4) * 180.0D / 3.141592741012573D);
-        w = b(w, f2, paramFloat);
+        w = (-b(w, f2, paramFloat));
         v = b(v, f1, paramFloat);
     }
 
@@ -725,22 +724,23 @@ public class jy extends dx {
     }
 
     public bd c(float paramFloat) {
+        // hMod fix the static reference here with a null element.
         bd bd = null;
         if (paramFloat == 1.0F) {
-            float f1 = hf.b(-v * 0.01745329F - 3.141593F);
-            float f2 = hf.a(-v * 0.01745329F - 3.141593F);
-            float f3 = -hf.b(-w * 0.01745329F);
-            float f4 = hf.a(-w * 0.01745329F);
+            float f1 = hg.b(-v * 0.01745329F - 3.141593F);
+            float f2 = hg.a(-v * 0.01745329F - 3.141593F);
+            float f3 = -hg.b(-w * 0.01745329F);
+            float f4 = hg.a(-w * 0.01745329F);
 
-            return bd.b(((double) f2 * f3), f4, (double) f1 * f3);
+            return bd.b(f2 * f3, f4, f1 * f3);
         }
         float f1 = y + (w - y) * paramFloat;
         float f2 = x + (v - x) * paramFloat;
 
-        float f3 = hf.b(-f2 * 0.01745329F - 3.141593F);
-        float f4 = hf.a(-f2 * 0.01745329F - 3.141593F);
-        float f5 = -hf.b(-f1 * 0.01745329F);
-        float f6 = hf.a(-f1 * 0.01745329F);
+        float f3 = hg.b(-f2 * 0.01745329F - 3.141593F);
+        float f4 = hg.a(-f2 * 0.01745329F - 3.141593F);
+        float f5 = -hg.b(-f1 * 0.01745329F);
+        float f6 = hg.a(-f1 * 0.01745329F);
 
         return bd.b(f4 * f5, f6, f3 * f5);
     }

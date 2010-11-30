@@ -1,4 +1,3 @@
-
 /**
  * PluginListener.java - Extend this and register it to listen to specific
  * hooks.

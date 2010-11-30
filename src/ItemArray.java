@@ -1,4 +1,3 @@
-
 /**
  * ItemArray.java - Interface to jh[] so I don't have to copy+paste this a bunch
  * of times
@@ -6,14 +5,12 @@
  * @author James
  */
 public abstract class ItemArray {
-
     /**
      * Adds the specified item. If the item doesn't have a slot, it will get the
      * nearest available slot. If amount is equal to 0, it will delete the item
      * if a slot is specified.
      * 
-     * @param item
-     *            item to add
+     * @param item item to add
      */
     public void addItem(Item item) {
         if (item == null) {
@@ -25,12 +22,12 @@ public abstract class ItemArray {
             if (item.getAmount() <= 0) {
                 getArray()[slot] = null;
             } else if (Item.isValidItem(item.getItemId())) {
-                getArray()[slot] = new hl(item.getItemId(), item.getAmount());
+                getArray()[slot] = new hm(item.getItemId(), item.getAmount());
             }
         } else if (slot == -1) {
             int newSlot = getEmptySlot();
             if (newSlot != -1) {
-                getArray()[newSlot] = new hl(item.getItemId(), item.getAmount());
+                getArray()[newSlot] = new hm(item.getItemId(), item.getAmount());
                 item.setSlot(newSlot);
             }
         }
@@ -39,8 +36,7 @@ public abstract class ItemArray {
     /**
      * Retrieves from the slot
      * 
-     * @param slot
-     *            slot to get item from
+     * @param slot slot to get item from
      * @return item
      */
     public Item getItemFromSlot(int slot) {
@@ -107,8 +103,7 @@ public abstract class ItemArray {
     /**
      * Removes the item from the slot
      * 
-     * @param slot
-     *            slot to remove item from
+     * @param slot slot to remove item from
      */
     public void removeItem(int slot) {
         if (slot < getArray().length && slot >= 0) {
@@ -118,6 +113,7 @@ public abstract class ItemArray {
 
     /**
      * Sets the specified slot with item
+     * 
      * @param item item to set
      * @param slot slot to use
      */
@@ -127,17 +123,14 @@ public abstract class ItemArray {
 
     /**
      * Replaces the slot with the item inputted.
-     *
-     * @param itemId
-     *              item id of the item to put into the slot.
-     * @param amount
-     *              amount of the item to put into the slot.
-     * @param slot
-     *          the id of the slot.
+     * 
+     * @param itemId item id of the item to put into the slot.
+     * @param amount amount of the item to put into the slot.
+     * @param slot the id of the slot.
      */
     public void setSlot(int itemId, int amount, int slot) {
         if (slot < getArray().length && slot >= 0) {
-            getArray()[slot] = new hl(itemId, (amount > 64 ? 64 : amount));
+            getArray()[slot] = new hm(itemId, (amount > 64 ? 64 : amount));
         }
     }
 
@@ -145,8 +138,7 @@ public abstract class ItemArray {
      * Removes the item. No slot needed, it will go through the inventory until
      * the amount specified is removed.
      * 
-     * @param item
-     *            item id and amount to remove
+     * @param item item id and amount to remove
      */
     public void removeItem(Item item) {
         int amount = item.getAmount();
@@ -205,5 +197,5 @@ public abstract class ItemArray {
      * 
      * @return item array
      */
-    public abstract hl[] getArray();
+    public abstract hm[] getArray();
 }
