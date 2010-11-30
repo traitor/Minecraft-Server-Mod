@@ -36,7 +36,7 @@ public class gu {
             if_bI = reallyIf.getMethod("b", Integer.TYPE);
             if_bI.setAccessible(true);
 
-            if_dI = reallyIf.getMethod("c", Integer.TYPE);
+            if_dI = reallyIf.getMethod("d", Integer.TYPE);
             if_dI.setAccessible(true);
         } catch (Exception e) {
             e.printStackTrace();
