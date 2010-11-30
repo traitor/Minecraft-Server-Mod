@@ -173,10 +173,14 @@ public class er extends fx {
                 this.aQ = 20;
                 this.aZ = false;
             // Only send health updates when health is turned on.
-            } else if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.HEALTH_CHANGE, new Object[]{getPlayer(), this.bu, this.aQ})){
-                this.a.b(new ed(this.aQ));
-                this.bu = this.aQ;
+            } else {
+                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.HEALTH_CHANGE, new Object[]{getPlayer(), this.bu, this.aQ})){
+                    this.aQ = this.bu;
+                } else {
+                    this.a.b(new ed(this.aQ));
+                }
             }
+            this.bu = this.aQ;
         }
     }
 
