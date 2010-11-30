@@ -57,9 +57,6 @@ public class jy extends dx {
     protected float bt = 0.7F;
     private dx b;
     private int c = 0;
-    
-    // hMod : Overloaded dx.m() with dxm() , therefore overlodaing boolean dx.c with this. 
-    private boolean dxc = true;
 
     public jy(eo parameo) {
         super(parameo);
@@ -98,83 +95,11 @@ public class jy extends dx {
     public int b() {
         return 80;
     }
-    
-    // hMod version of m() from class dx.
-    // Used for hooking burn damage ticks
-    public void dxm() {
-	    if ((this.k != null) && (this.k.G)) this.k = null;
-	
-	    this.X += 1;
-	    this.K = this.L;
-	    this.m = this.p;
-	    this.n = this.q;
-	    this.o = this.r;
-	    this.y = this.w;
-	    this.x = this.v;
-	
-	    if (r()) {
-	      if ((!this.ab) && (!this.dxc)) {
-	        float f1 = hf.a(this.s * this.s * 0.2000000029802322D + this.t * this.t + this.u * this.u * 0.2000000029802322D) * 0.2F;
-	        if (f1 > 1.0F) f1 = 1.0F;
-	        this.l.a(this, "random.splash", f1, 1.0F + (this.W.nextFloat() - this.W.nextFloat()) * 0.4F);
-	        float f2 = hf.b(this.z.b);
-	        float f3;
-	        float f4;
-	        for (int i1 = 0; i1 < 1.0F + this.I * 20.0F; i1++) {
-	          f3 = (this.W.nextFloat() * 2.0F - 1.0F) * this.I;
-	          f4 = (this.W.nextFloat() * 2.0F - 1.0F) * this.I;
-	          this.l.a("bubble", this.p + f3, f2 + 1.0F, this.r + f4, this.s, this.t - this.W.nextFloat() * 0.2F, this.u);
-	        }
-	        for (int i1 = 0; i1 < 1.0F + this.I * 20.0F; i1++) {
-	          f3 = (this.W.nextFloat() * 2.0F - 1.0F) * this.I;
-	          f4 = (this.W.nextFloat() * 2.0F - 1.0F) * this.I;
-	          this.l.a("splash", this.p + f3, f2 + 1.0F, this.r + f4, this.s, this.t, this.u);
-	        }
-	      }
-	      this.N = 0.0F;
-	      this.ab = true;
-	      this.Z = 0;
-	    } else {
-	      this.ab = false;
-	    }
-	
-	    if (this.l.z) {
-	      this.Z = 0;
-	    }
-	    else if (this.Z > 0) {
-	      if (this.ae) {
-	        this.Z -= 4;
-	        if (this.Z < 0) this.Z = 0; 
-	      }
-	      else {
-	        if (this.Z % 20 == 0) {
-	            // hMod Damage hook: Periodic burn damage
-	            LivingEntity defender = new LivingEntity(this);
-	            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE,
-	            		new Object[]{PluginLoader.DamageType.FIRE_TICK, null, defender, 1})) {        	
-	            	a(null, 1);
-	            }
-	        }
-	        this.Z -= 1;
-	      }
-	
-	    }
-	
-	    if (t()) {
-	      n();
-	    }
-	
-	    if (this.q < -64.0D) {
-	      o();
-	    }
-	
-	    this.dxc = false;
-	}
+
     @Override
     public void m() {
         aO = aP;
-        //hMod: replaced super.m() with this.dxm();
-       	this.dxm();
+        super.m();
 
         if (W.nextInt(1000) < a++) {
             a = (-b());
@@ -373,12 +298,11 @@ public class jy extends dx {
         }
 
         bd = 1.5F;
-        // hMod Damage hook: Entities. The different entities are defined in hn.
+        // hMod: the different entities are defined in hn
         if (paramdx != null && (paramdx instanceof jy)) {
             LivingEntity attacker = new LivingEntity((jy)paramdx);
             LivingEntity defender = new LivingEntity(this);
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, 
-            		new Object[]{PluginLoader.DamageType.ENTITY, attacker, defender, paramInt})) {
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new Object[]{PluginLoader.DamageType.ENTITY, attacker, defender, paramInt})) {
                 return false;
             }
         }
@@ -493,10 +417,9 @@ public class jy extends dx {
     protected void a(float paramFloat) {
         int i = (int) Math.ceil(paramFloat - 3.0F);
         if (i > 0) {
-        	// hMod Damage hook: Falling
-    		LivingEntity defender = new LivingEntity(this);
-        	if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, 
-        			new Object[]{PluginLoader.DamageType.FALL, null, defender, i})) {
+            // hMod Damage hook: Falling
+            LivingEntity defender = new LivingEntity(this);
+            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new Object[]{PluginLoader.DamageType.FALL, null, defender, i})) {
                 a(null, i);
             }
 
@@ -507,36 +430,6 @@ public class jy extends dx {
             }
         }
     }
-
-    // hMod patch: b(int paramInt) overloaded from dx.java
-    @Override
-    protected void b(int paramInt) {
-    	// hMod Damage hook: Fire
-		LivingEntity defender = new LivingEntity(this);
-    	if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, 
-    			new Object[]{PluginLoader.DamageType.FIRE, null, defender, paramInt}))
-            return;
-       
-    	if (!this.ae)
-          a(null, paramInt);
-      }    
-    
-    // hMod patch: n() overloaded from dx.java
-    @Override
-    protected void n() {
-    	// hMod Damage hook: Lava
-		LivingEntity defender = new LivingEntity(this);
-    	if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, 
-    			new Object[]{PluginLoader.DamageType.LAVA, null, defender, 4}))
-    		return;
-        
-    	if (!this.ae)
-        {
-          a(null, 4);
-          this.Z = 600;
-        }
-      }
-    
 
     public void c(float paramFloat1, float paramFloat2) {
         double d1;

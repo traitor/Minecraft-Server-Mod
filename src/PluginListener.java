@@ -371,7 +371,7 @@ public abstract class PluginListener {
      * @return
      */
     public boolean onDamage(PluginLoader.DamageType type, BaseEntity attacker, BaseEntity defender, int amount) {
-	    return false;
+        return false;
     }
 
     /**
@@ -497,7 +497,7 @@ public abstract class PluginListener {
      * @param item the item being used (in hand)
      * @return true to prevent using the item.
      */
-    
+
     public boolean onItemUse(Player player, Item item) {
         return false;
     }
@@ -562,6 +562,7 @@ public abstract class PluginListener {
      * @param itemInHand
      */
     public void onBlockRightClicked(Player player, Block blockClicked, Item item) {
+
     }
 
     /**

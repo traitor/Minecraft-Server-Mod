@@ -225,11 +225,15 @@ public class PluginLoader {
     
     public enum DamageType {
     	/*
-    	 * Damage dealt by another entity (n)
+    	 * Creeper explosion
+    	 */
+    	CREEPER_EXPLOSION,
+    	/*
+    	 * Damage dealt by another entity
     	 */
     	ENTITY,
     	/*
-    	 * Damage caused by explosion (?)
+    	 * Damage caused by explosion
     	 */
     	EXPLOSION,
     	/* 
@@ -584,7 +588,7 @@ public class PluginLoader {
                                 }
                                 break;
                             case DAMAGE:
-                            	if (listener.onDamage((DamageType)parameters[0], (BaseEntity) parameters[1], (BaseEntity) parameters[2], (Integer) parameters[3])) {
+                                if (listener.onDamage((DamageType) parameters[0], (BaseEntity) parameters[1], (BaseEntity) parameters[2], (Integer) parameters[3])) {
                                     toRet = true;
                                 }
                                 break;
