@@ -1538,4 +1538,47 @@ public class Player extends LivingEntity {
     public Inventory getEquipment() {
         return equipment;
     }
+
+    /**
+     * Returns a String representation of this Player
+     * 
+     * @return String representation of this Player
+     */
+    @Override
+    public String toString() {
+        return String.format("Player[id=%d, name=%s]", id, getName());
+    }
+
+    /**
+     * Tests the given object to see if it equals this object
+     * 
+     * @param obj the object to test
+     * @return true if the two objects match
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Player other = (Player) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Returns a unique hashcode for this Player
+     * 
+     * @return hashcode
+     */
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + this.id;
+        return hash;
+    }
 }

@@ -102,4 +102,55 @@ public class Item {
     public void setSlot(int slot) {
         this.slot = slot;
     }
+
+    /**
+     * Returns a String value representing this object
+     * 
+     * @return String representation of this object
+     */
+    @Override
+    public String toString() {
+        return String.format("Item[id=%d, amount=%d, slot=%d]", itemId, amount, slot);
+    }
+
+    /**
+     * Tests the given object to see if it equals this object
+     * 
+     * @param obj the object to test
+     * @return true if the two objects match
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Item other = (Item) obj;
+        if (this.itemId != other.itemId) {
+            return false;
+        }
+        if (this.amount != other.amount) {
+            return false;
+        }
+        if (this.slot != other.slot) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Returns a semi-unique hashcode for this object
+     * 
+     * @return hashcode
+     */
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + this.itemId;
+        hash = 97 * hash + this.amount;
+        hash = 97 * hash + this.slot;
+        return hash;
+    }
 }
