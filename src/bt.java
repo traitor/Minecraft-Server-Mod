@@ -76,9 +76,9 @@ public class bt extends fu {
                     parameo.g(paramInt1, paramInt2, paramInt3, this.a);
                     
                     ga.m[this.a].c(parameo, paramInt1, paramInt2, paramInt3, paramInt4);
-                    ga.m[this.a].a(parameo, paramInt1, paramInt2, paramInt3, paramfx);
-                    parameo.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localga.bq.c(), (localga.bq.a() + 1.0F) / 2.0F,
-                            localga.bq.b() * 0.8F);
+                    // hMod: Downcast fx to jy; demanded for inheritane to work >.>
+                    ga.m[this.a].a(parameo, paramInt1, paramInt2, paramInt3, (jy)paramfx);
+                    parameo.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localga.bq.c(), (localga.bq.a() + 1.0F) / 2.0F, localga.bq.b() * 0.8F);
                     paramhl.a -= 1; 
                 }
             }
