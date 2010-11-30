@@ -11,7 +11,7 @@ public class gu {
     private Set<gv> a = new HashSet<gv>();
     // hMod: reflection to get around 'if'
     private Object b;
-    private Method if_a, if_a1, if_b, if_d;
+    private Method if_aI, if_aIO, if_bI, if_dI;
 
     private MinecraftServer c;
     private int d;
@@ -26,18 +26,18 @@ public class gu {
             Constructor<?> ct = reallyIf.getConstructor();
             b = ct.newInstance();
 
-            if_a = reallyIf.getMethod("a", Integer.TYPE);
-            if_a.setAccessible(true);
+            if_aI = reallyIf.getMethod("a", Integer.TYPE);
+            if_aI.setAccessible(true);
 
-            Class<?> aParamTypes[] = {Integer.TYPE, gv.class};
-            if_a1 = reallyIf.getMethod("a", aParamTypes);
-            if_a1.setAccessible(true);
+            Class<?> aParamTypes[] = {Integer.TYPE, Object.class};
+            if_aIO = reallyIf.getMethod("a", aParamTypes);
+            if_aIO.setAccessible(true);
 
-            if_b = reallyIf.getMethod("b", Integer.TYPE);
-            if_b.setAccessible(true);
+            if_bI = reallyIf.getMethod("b", Integer.TYPE);
+            if_bI.setAccessible(true);
 
-            if_d = reallyIf.getMethod("c", Integer.TYPE);
-            if_d.setAccessible(true);
+            if_dI = reallyIf.getMethod("c", Integer.TYPE);
+            if_dI.setAccessible(true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -83,7 +83,7 @@ public class gu {
             paramInt1 = d;
         }
         try {
-            if (((Boolean) if_b.invoke(b, paramdy.g))) {
+            if (((Boolean) if_bI.invoke(b, paramdy.g))) {
                 throw new IllegalStateException("Entity is already tracked!");
             }
         } catch (Exception e) {
@@ -92,7 +92,7 @@ public class gu {
         gv localgv = new gv(paramdy, paramInt1, paramInt2, paramBoolean);
         a.add(localgv);
         try {
-            if_a1.invoke(b, paramdy.g, localgv);
+            if_aIO.invoke(b, paramdy.g, localgv);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -102,7 +102,7 @@ public class gu {
     public void b(dy paramdy) {
         gv localgv = null;
         try {
-            localgv = (gv) if_d.invoke(b, paramdy.g);
+            localgv = (gv) if_dI.invoke(b, paramdy.g);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -149,7 +149,7 @@ public class gu {
     public void a(dy paramdy, is paramis) {
         gv localgv = null;
         try {
-            localgv = (gv) if_a.invoke(b, paramdy.g);
+            localgv = (gv) if_aI.invoke(b, paramdy.g);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -161,7 +161,7 @@ public class gu {
     public void b(dy paramdy, is paramis) {
         gv localgv = null;
         try {
-            localgv = (gv) if_a.invoke(b, paramdy.g);
+            localgv = (gv) if_aI.invoke(b, paramdy.g);
         } catch (Exception e) {
             e.printStackTrace();
         }
