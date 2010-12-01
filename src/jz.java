@@ -125,13 +125,12 @@ public class jz extends dy {
                     float f2 = W.nextFloat() - W.nextFloat();
                     float f3 = W.nextFloat() - W.nextFloat();
                     l.a("bubble", p + f1, q + f2, r + f3, s, t, u);
-                    // hMod Damage hook: Drowning
-                    LivingEntity defender = new LivingEntity(this);
-                    if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new Object[]{PluginLoader.DamageType.WATER, null, defender, 2})) {
-                        a(null, 2);
-                    }
                 }
-                a(null, 2);
+                // hMod Damage hook: Drowning
+                LivingEntity defender = new LivingEntity(this);
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new Object[]{PluginLoader.DamageType.WATER, null, defender, 2})) {
+                    a(null, 2);
+                }
             }
 
             Z = 0;
