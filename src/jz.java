@@ -536,10 +536,11 @@ public class jz extends dy {
         aT = paramv.c("HurtTime");
         aW = paramv.c("DeathTime");
         aX = paramv.c("AttackTime");
+
         // hMod: Lets unbreak 'dead' characters so admins don't have to delete .dat files anymore >.>
-        if (aQ < 0 || aV != 0) {
-            aQ = 20; // Health
-            aV = 0; // DeathTime
+        if (aR < 0 || aW != 0) {
+            aR = 20; // Health
+            aW = 0; // DeathTime
         }
     }
 
