@@ -1,4 +1,3 @@
-
 /**
  * PluginRegisteredListener - Stores the registered listeners
  * 

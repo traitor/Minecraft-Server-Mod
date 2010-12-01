@@ -4,13 +4,13 @@
  */
 public class Boat extends BaseVehicle {
 
-    fk boat;
+    fl boat;
 
     /**
      * Interface for boats.
      * @param boat
      */
-    public Boat(fk boat) {
+    public Boat(fl boat) {
         super(boat);
         this.boat = boat;
     }

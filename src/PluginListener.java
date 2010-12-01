@@ -1,4 +1,3 @@
-
 /**
  * PluginListener.java - Extend this and register it to listen to specific
  * hooks.
@@ -357,13 +356,19 @@ public abstract class PluginListener {
      * Called when a living object is attacked.
      * tip:
      * Use isMob() and isPlayer() and getPlayer().
+     * 
+     * @param type 
+     *          type of damage dealt.
      * @param attacker
      *          object that is attacking.
      * @param defender
      *          object that is defending.
+     * @param amount
+     *          amount of damage dealt.
+     * 
      * @return
      */
-    public boolean onDamage(BaseEntity attacker, BaseEntity defender) {
+    public boolean onDamage(PluginLoader.DamageType type, BaseEntity attacker, BaseEntity defender, int amount) {
         return false;
     }
 
@@ -433,12 +438,12 @@ public abstract class PluginListener {
      * @param damage
      * @return false to set damage
      */
-    public boolean onVehicleDamage(BaseVehicle vehicle, LivingEntity attacker, int damage) {
+    public boolean onVehicleDamage(BaseVehicle vehicle, BaseEntity attacker, int damage) {
         return false;
     }
 
     /**
-     * Called when a vehicle enters or leaves a block
+     * Called when a vehicle changes speed
      * 
      * @param vehicle the vehicle
      */
@@ -474,14 +479,23 @@ public abstract class PluginListener {
     public void onVehicleEnter(BaseVehicle vehicle, HumanEntity player) {
 
     }
-    
+    /**
+     * Called when a vehicle changes block
+     * @param vehicle the vehicle
+     * @param x coordinate x
+     * @param y coordinate y
+     * @param z coordinate z
+     */
+    public void onVehiclePositionChange(BaseVehicle vehicle, int x, int y, int z) {
+
+    }
     /**
      * Called when a player uses an item (rightclick with item in hand)
      * @param player the player
      * @param item the item being used (in hand)
      * @return true to prevent using the item.
      */
-    
+
     public boolean onItemUse(Player player, Item item) {
         return false;
     }
@@ -498,7 +512,7 @@ public abstract class PluginListener {
     public boolean onBlockPlace(Player player, Block blockPlaced, Block blockClicked, Item itemInHand) {
         return false;
     }
-    
+
     /**
      * Called when someone presses right click aimed at a block.
      * You can intercept this to add your own right click actions
@@ -509,9 +523,9 @@ public abstract class PluginListener {
      * @param itemInHand
      */
     public void onBlockRightClicked(Player player, Block blockClicked, Item item) {
-        
+
     }
-    
+
     /**
      * Called when water or lava tries to populate a block, you can prevent
      * crushing of torches, railways, flowers etc. You can alternatively allow
@@ -524,6 +538,5 @@ public abstract class PluginListener {
      */
     public PluginLoader.HookResult onLiquidDestroy( PluginLoader.HookResult currentState, int liquidBlockId, Block targetBlock )  {
         return PluginLoader.HookResult.DEFAULT_ACTION;
-    }  
-
+    }
 }

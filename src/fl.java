@@ -1,9 +1,6 @@
-
 import java.util.List;
-import java.util.Random;
 
-public class fk extends dx {
-
+public class fl extends dy {
     public int a = 0;
     public int b = 0;
     public int c = 1;
@@ -14,28 +11,31 @@ public class fk extends dx {
     private double ak;
     private double al;
 
-    public fk(eo parameo) {
-        super(parameo);
+    public fl(ep paramep) {
+        super(paramep);
         this.i = true;
         a(1.5F, 0.6F);
         this.H = (this.J / 2.0F);
         this.M = false;
     }
 
-    public du d(dx paramdx) {
-        return paramdx.z;
+    @Override
+    public dv d(dy paramdy) {
+        return paramdy.z;
     }
 
-    public du q() {
+    @Override
+    public dv q() {
         return this.z;
     }
 
+    @Override
     public boolean v() {
         return true;
     }
 
-    public fk(eo parameo, double paramDouble1, double paramDouble2, double paramDouble3) {
-        this(parameo);
+    public fl(ep paramep, double paramDouble1, double paramDouble2, double paramDouble3) {
+        this(paramep);
         a(paramDouble1, paramDouble2 + this.H, paramDouble3);
 
         this.s = 0.0D;
@@ -51,57 +51,65 @@ public class fk extends dx {
         etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_CREATE, new Object[]{boat});
     }
 
+    @Override
     public double j() {
         return this.J * 0.0D - 0.300000011920929D;
     }
 
-    public boolean a(dx paramdx, int paramInt) {
+    @Override
+    public boolean a(dy paramdy, int paramInt) {
         // hMod: Attack of the boat
-        BaseEntity attacker = new BaseEntity(paramdx);
+        BaseEntity attacker = new BaseEntity(paramdy);
         Boat boat = new Boat(this);
-        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_DAMAGE, new Object[]{boat, attacker, paramInt}))
+        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_DAMAGE, new Object[]{boat, attacker, paramInt})) {
             return true;
+        }
 
-        if (this.l.z)
+        if (this.l.z) {
             return true;
+        }
         this.c = (-this.c);
         this.b = 10;
         this.a += paramInt * 10;
         u();
         if (this.a > 40) {
             for (int i = 0; i < 3; i++) {
-                a(ga.x.bh, 1, 0.0F);
+                a(gb.x.bh, 1, 0.0F);
             }
             for (int i = 0; i < 2; i++) {
-                a(fu.B.aW, 1, 0.0F);
+                a(fv.B.aW, 1, 0.0F);
             }
             l();
         }
         return true;
     }
 
+    // hMod: Destruction of the boat
     @Override
     public void l() {
-        // hMod: Destruction of the boat
         Boat boat = new Boat(this);
         etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_DESTROYED, new Object[]{boat});
         super.l();
     }
 
+    @Override
     public boolean c_() {
         return !this.G;
     }
 
+    @Override
     public void b_() {
         // hMod: Update of the boat
         Boat boat = new Boat(this);
         etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_UPDATE, new Object[]{boat});
 
         super.b_();
-        if (this.b > 0)
+        if (this.b > 0) {
             this.b -= 1;
-        if (this.a > 0)
+        }
+        if (this.a > 0) {
             this.a -= 1;
+        }
         this.m = this.p;
         this.n = this.q;
         this.o = this.r;
@@ -111,9 +119,10 @@ public class fk extends dx {
         for (int j = 0; j < i; j++) {
             double d3 = this.z.b + (this.z.e - this.z.b) * (j + 0) / i - 0.125D;
             double d5 = this.z.b + (this.z.e - this.z.b) * (j + 1) / i - 0.125D;
-            du localdu = du.b(this.z.a, d3, this.z.c, this.z.d, d5, this.z.f);
-            if (this.l.b(localdu, jw.f))
+            dv localdv = dv.b(this.z.a, d3, this.z.c, this.z.d, d5, this.z.f);
+            if (this.l.b(localdv, jx.f)) {
                 d1 += 1.0D / i;
+            }
         }
         double d7;
         if (this.l.z) {
@@ -162,14 +171,18 @@ public class fk extends dx {
 
         double d4 = 0.4D;
 
-        if (this.s < -d4)
+        if (this.s < -d4) {
             this.s = (-d4);
-        if (this.s > d4)
+        }
+        if (this.s > d4) {
             this.s = d4;
-        if (this.u < -d4)
+        }
+        if (this.u < -d4) {
             this.u = (-d4);
-        if (this.u > d4)
+        }
+        if (this.u > d4) {
             this.u = d4;
+        }
         if (this.A) {
             this.s *= 0.5D;
             this.t *= 0.5D;
@@ -203,10 +216,10 @@ public class fk extends dx {
             if (!this.l.z) {
                 l();
                 for (int k = 0; k < 3; k++) {
-                    a(ga.x.bh, 1, 0.0F);
+                    a(gb.x.bh, 1, 0.0F);
                 }
                 for (int k = 0; k < 2; k++) {
-                    a(fu.B.aW, 1, 0.0F);
+                    a(fv.B.aW, 1, 0.0F);
                 }
             }
         } else {
@@ -230,10 +243,12 @@ public class fk extends dx {
         while (d12 < -180.0D) {
             d12 += 360.0D;
         }
-        if (d12 > 20.0D)
+        if (d12 > 20.0D) {
             d12 = 20.0D;
-        if (d12 < -20.0D)
+        }
+        if (d12 < -20.0D) {
             d12 = -20.0D;
+        }
 
         this.v = (float) (this.v + d12);
         b(this.v, this.w);
@@ -241,55 +256,61 @@ public class fk extends dx {
         List localList = this.l.b(this, this.z.b(0.2000000029802322D, 0.0D, 0.2000000029802322D));
         if ((localList != null) && (localList.size() > 0)) {
             for (int n = 0; n < localList.size(); n++) {
-                dx localdx = (dx) localList.get(n);
-                if ((localdx != this.j) && (localdx.v()) && ((localdx instanceof fk))) {
-                    localdx.c(this);
+                dy localdy = (dy) localList.get(n);
+                if ((localdy != this.j) && (localdy.v()) && ((localdy instanceof fl))) {
+                    localdy.c(this);
                 }
             }
         }
 
-        if ((this.j != null)
-                && (this.j.G))
+        if ((this.j != null) && (this.j.G)) {
             this.j = null;
+        }
     }
 
+    @Override
     public void A() {
-        if (this.j == null)
+        if (this.j == null) {
             return;
+        }
 
         double d1 = Math.cos(this.v * 3.141592653589793D / 180.0D) * 0.4D;
         double d2 = Math.sin(this.v * 3.141592653589793D / 180.0D) * 0.4D;
         this.j.a(this.p + d1, this.q + j() + this.j.B(), this.r + d2);
     }
 
+    @Override
     protected void a(v paramv) {
     }
 
+    @Override
     protected void b(v paramv) {
     }
 
+    // hMod: Collision of a boat
     @Override
-    public void c(dx paramdx) {
-        // hMod: Collision of a boat
-        super.c(paramdx);
-        if (paramdx == this.j) {
+    public void c(dy paramdy) {
+        super.c(paramdy);
+        if (paramdy == this.j) {
             return;
         }
         Boat boat = new Boat(this);
-        BaseEntity baseEntity = new BaseEntity(paramdx);
+        BaseEntity baseEntity = new BaseEntity(paramdy);
         etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_COLLISION, new Object[]{boat, baseEntity});
     }
 
-    public boolean a(fx paramfx) {
+    @Override
+    public boolean a(fy paramfy) {
         // hMod: Entering the boat
         Boat boat = new Boat(this);
-        HumanEntity player = new HumanEntity(paramfx);
+        HumanEntity player = new HumanEntity(paramfy);
         etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_ENTERED, new Object[]{boat, player});
 
-        if ((this.j != null) && ((this.j instanceof fx)) && (this.j != paramfx))
+        if ((this.j != null) && ((this.j instanceof fy)) && (this.j != paramfy)) {
             return true;
+        }
         if (!this.l.z) {
-            paramfx.e(this);
+            paramfy.e(this);
         }
         return true;
     }

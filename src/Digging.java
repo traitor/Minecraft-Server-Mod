@@ -1,16 +1,15 @@
-/* Patch by Zeerix */
-
 /**
  * Used so we don't have class collisions with Runecraft
+ *  - Patch by Zeerix
  * @author James
  */
-public class Digging extends jt {
+public class Digging extends ju {
 
     /**
      * Creates a digging class
      * @param world
      */
-    public Digging(eo world) {
+    public Digging(ep world) {
         super(world);
     }
 
@@ -19,7 +18,7 @@ public class Digging extends jt {
      * @param world
      * @param player
      */
-    public Digging(eo world, er player) {
+    public Digging(ep world, es player) {
         this(world);
         a = player;
     }
@@ -33,7 +32,7 @@ public class Digging extends jt {
      */
     public boolean c(int x, int y, int z) {
         Block block = etc.getServer().getBlockAt(x, y, z);
-        Boolean result = (Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, new Object[]{(er) a, block});
+        Boolean result = (Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, new Object[]{(es) a, block});
         if (result)
             return true;
         return super.c(x, y, z);

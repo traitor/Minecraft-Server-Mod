@@ -5,13 +5,13 @@
  * @author James
  */
 public class BaseEntity {
-    dx entity;
+    dy entity;
     
     /**
      * Creates an interface for an entity
      * @param entity
      */
-    public BaseEntity(dx entity) {
+    public BaseEntity(dy entity) {
         this.entity = entity;
     }
 
@@ -142,7 +142,7 @@ public class BaseEntity {
      * @return true if mob
      */
     public boolean isMob() {
-        return entity instanceof gb;
+        return entity instanceof gc;
     }
 
     /**
@@ -158,7 +158,7 @@ public class BaseEntity {
      * @return true if player
      */
     public boolean isPlayer() {
-        return entity instanceof er;
+        return entity instanceof es;
     }
 
     /**
@@ -169,8 +169,8 @@ public class BaseEntity {
         if (!isPlayer())
             return null;
 
-        er p = (er) entity;
-        Player player = etc.getServer().getPlayer(p.as);
+        es p = (es) entity;
+        Player player = etc.getServer().getPlayer(p.at);
         player.setUser(p);
 
         return player;

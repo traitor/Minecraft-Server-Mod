@@ -4,7 +4,6 @@
  * @author James
  */
 public class Item {
-
     private int itemId = 1, amount = 1, slot = -1;
 
     /**
@@ -37,11 +36,11 @@ public class Item {
 
     /**
      * Creates an item from the actual item class
-     * @param hl
+     * @param hm
      */
-    public Item(hl hl) {
-        itemId = hl.c;
-        amount = hl.a;
+    public Item(hm hm) {
+        itemId = hm.c;
+        amount = hm.a;
     }
 
     /**
@@ -82,8 +81,8 @@ public class Item {
      * @return
      */
     public static boolean isValidItem(int itemId) {
-        if (itemId < fj.c.length) {
-            return fj.c[itemId] != null;
+        if (itemId < fk.c.length) {
+            return fk.c[itemId] != null;
         }
         return false;
     }

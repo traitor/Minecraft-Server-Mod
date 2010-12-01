@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,9 +6,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -150,13 +146,14 @@ public class etc {
             spawnProtectionSize = properties.getInt("spawn-protection-size", 16);
             logging = properties.getBoolean("logging", false);
             enableHealth = properties.getBoolean("enable-health", true);
-            String autoHealTemp = properties.getString("auto-heal", "default");
-            if(autoHealTemp.equalsIgnoreCase("true"))
-            	autoHeal=PluginLoader.HookResult.ALLOW_ACTION;
-            else if(autoHealTemp.equalsIgnoreCase("false"))
-            	autoHeal=PluginLoader.HookResult.PREVENT_ACTION;
-            else
-            	autoHeal=PluginLoader.HookResult.DEFAULT_ACTION;
+
+            String autoHealString = properties.getString("auto-heal", "default");
+            if (autoHealString.equalsIgnoreCase("true")) {
+                autoHeal = PluginLoader.HookResult.ALLOW_ACTION;
+            } else if (autoHealString.equalsIgnoreCase("false")) {
+                autoHeal = PluginLoader.HookResult.PREVENT_ACTION;
+            }
+
             showUnknownCommand = properties.getBoolean("show-unknown-command", true);
             URL url = this.getClass().getResource("/version.txt");
             if (url != null) {
