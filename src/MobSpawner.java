@@ -1,4 +1,3 @@
-
 /**
  * MobSpawner.java - Wrapper for mob spawners.
  * @author James

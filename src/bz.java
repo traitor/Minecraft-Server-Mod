@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -6,7 +5,6 @@ import net.minecraft.server.MinecraftServer;
 
 public class bz extends Thread {
     // hMod: Store server
-
     private MinecraftServer server;
 
     public bz(MinecraftServer paramMinecraftServer) {
@@ -14,6 +12,7 @@ public class bz extends Thread {
         this.server = paramMinecraftServer;
     }
 
+    @Override
     public void run() {
         BufferedReader localBufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String str = null;

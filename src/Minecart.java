@@ -1,4 +1,3 @@
-
 /**
  * Minecart - Used for manipulating minecarts
  *
@@ -6,7 +5,7 @@
  */
 public class Minecart extends BaseVehicle {
 
-    jm cart;
+    jn cart;
 
     /**
      * Type of minecart
@@ -30,7 +29,7 @@ public class Minecart extends BaseVehicle {
      * Creates an interface for minecart.
      * @param cart
      */
-    public Minecart(jm cart) {
+    public Minecart(jn cart) {
         super(cart);
         this.cart = cart;
     }

@@ -1,17 +1,16 @@
-
 /**
  * Furnace.java - Interface for furnaces
  * @author James
  */
 public class Furnace extends ItemArray implements ComplexBlock {
 
-    private dt furnace;
+    private du furnace;
 
     /**
      * Creates a furnace interface
      * @param furnace
      */
-    public Furnace(dt furnace) {
+    public Furnace(du furnace) {
         this.furnace = furnace;
     }
 
@@ -31,7 +30,7 @@ public class Furnace extends ItemArray implements ComplexBlock {
         furnace.c();
     }
 
-    public hl[] getArray() {
+    public hm[] getArray() {
         return furnace.getContents();
     }
 
@@ -47,7 +46,7 @@ public class Furnace extends ItemArray implements ComplexBlock {
      * Sets the contents of this furnace
      * @param contents contents of this furnace
      */
-    public void setArray(hl[] contents) {
+    public void setArray(hm[] contents) {
         furnace.setContents(contents);
     }
 
@@ -69,9 +68,9 @@ public class Furnace extends ItemArray implements ComplexBlock {
      * @param contents contents to set
      */
     public void setContents(Item[] contents) {
-        hl[] newcontents = new hl[getContentSize()];
+        hm[] newcontents = new hm[getContentSize()];
         for (int i = 0; i < getContentSize(); i++) {
-            newcontents[i] = new hl(contents[i].getItemId(), contents[i].getAmount());
+            newcontents[i] = new hm(contents[i].getItemId(), contents[i].getAmount());
         }
 
         setArray(newcontents);

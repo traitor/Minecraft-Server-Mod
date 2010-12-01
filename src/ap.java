@@ -1,109 +1,115 @@
-
 import java.util.Random;
 
-public class ap extends ga {
-
+public class ap extends gb {
     protected ap(int paramInt1, int paramInt2) {
-        super(paramInt1, paramInt2, jw.n);
+        super(paramInt1, paramInt2, jx.n);
         a(true);
     }
 
-    public du d(eo parameo, int paramInt1, int paramInt2, int paramInt3) {
+    @Override
+    public dv d(ep paramep, int paramInt1, int paramInt2, int paramInt3) {
         return null;
     }
 
+    @Override
     public int b() {
         return 20;
     }
 
+    @Override
     public boolean a() {
         return false;
     }
 
-    public boolean a(eo parameo, int paramInt1, int paramInt2, int paramInt3) {
-        if (parameo.d(paramInt1 - 1, paramInt2, paramInt3)) {
+    @Override
+    public boolean a(ep paramep, int paramInt1, int paramInt2, int paramInt3) {
+        if (paramep.d(paramInt1 - 1, paramInt2, paramInt3)) {
             return true;
         }
-        if (parameo.d(paramInt1 + 1, paramInt2, paramInt3)) {
+        if (paramep.d(paramInt1 + 1, paramInt2, paramInt3)) {
             return true;
         }
-        if (parameo.d(paramInt1, paramInt2, paramInt3 - 1)) {
+        if (paramep.d(paramInt1, paramInt2, paramInt3 - 1)) {
             return true;
         }
-        return parameo.d(paramInt1, paramInt2, paramInt3 + 1);
+        return paramep.d(paramInt1, paramInt2, paramInt3 + 1);
     }
 
-    public void c(eo parameo, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        int i = parameo.b(paramInt1, paramInt2, paramInt3);
+    @Override
+    public void c(ep paramep, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+        int i = paramep.b(paramInt1, paramInt2, paramInt3);
 
         int j = i & 0x8;
         i &= 7;
 
-        if ((paramInt4 == 2) && (parameo.d(paramInt1, paramInt2, paramInt3 + 1))) {
+        if ((paramInt4 == 2) && (paramep.d(paramInt1, paramInt2, paramInt3 + 1))) {
             i = 4;
         }
-        if ((paramInt4 == 3) && (parameo.d(paramInt1, paramInt2, paramInt3 - 1))) {
+        if ((paramInt4 == 3) && (paramep.d(paramInt1, paramInt2, paramInt3 - 1))) {
             i = 3;
         }
-        if ((paramInt4 == 4) && (parameo.d(paramInt1 + 1, paramInt2, paramInt3))) {
+        if ((paramInt4 == 4) && (paramep.d(paramInt1 + 1, paramInt2, paramInt3))) {
             i = 2;
         }
-        if ((paramInt4 == 5) && (parameo.d(paramInt1 - 1, paramInt2, paramInt3))) {
+        if ((paramInt4 == 5) && (paramep.d(paramInt1 - 1, paramInt2, paramInt3))) {
             i = 1;
         }
 
-        parameo.b(paramInt1, paramInt2, paramInt3, i + j);
+        paramep.b(paramInt1, paramInt2, paramInt3, i + j);
     }
 
-    public void e(eo parameo, int paramInt1, int paramInt2, int paramInt3) {
-        if (parameo.d(paramInt1 - 1, paramInt2, paramInt3)) {
-            parameo.b(paramInt1, paramInt2, paramInt3, 1);
-        } else if (parameo.d(paramInt1 + 1, paramInt2, paramInt3)) {
-            parameo.b(paramInt1, paramInt2, paramInt3, 2);
-        } else if (parameo.d(paramInt1, paramInt2, paramInt3 - 1)) {
-            parameo.b(paramInt1, paramInt2, paramInt3, 3);
-        } else if (parameo.d(paramInt1, paramInt2, paramInt3 + 1)) {
-            parameo.b(paramInt1, paramInt2, paramInt3, 4);
+    @Override
+    public void e(ep paramep, int paramInt1, int paramInt2, int paramInt3) {
+        if (paramep.d(paramInt1 - 1, paramInt2, paramInt3)) {
+            paramep.b(paramInt1, paramInt2, paramInt3, 1);
+        } else if (paramep.d(paramInt1 + 1, paramInt2, paramInt3)) {
+            paramep.b(paramInt1, paramInt2, paramInt3, 2);
+        } else if (paramep.d(paramInt1, paramInt2, paramInt3 - 1)) {
+            paramep.b(paramInt1, paramInt2, paramInt3, 3);
+        } else if (paramep.d(paramInt1, paramInt2, paramInt3 + 1)) {
+            paramep.b(paramInt1, paramInt2, paramInt3, 4);
         }
-        g(parameo, paramInt1, paramInt2, paramInt3);
+        g(paramep, paramInt1, paramInt2, paramInt3);
     }
 
-    public void b(eo parameo, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        if (g(parameo, paramInt1, paramInt2, paramInt3)) {
-            int i = parameo.b(paramInt1, paramInt2, paramInt3) & 0x7;
+    @Override
+    public void b(ep paramep, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+        if (g(paramep, paramInt1, paramInt2, paramInt3)) {
+            int i = paramep.b(paramInt1, paramInt2, paramInt3) & 0x7;
             int j = 0;
 
-            if ((!parameo.d(paramInt1 - 1, paramInt2, paramInt3)) && (i == 1)) {
+            if ((!paramep.d(paramInt1 - 1, paramInt2, paramInt3)) && (i == 1)) {
                 j = 1;
             }
-            if ((!parameo.d(paramInt1 + 1, paramInt2, paramInt3)) && (i == 2)) {
+            if ((!paramep.d(paramInt1 + 1, paramInt2, paramInt3)) && (i == 2)) {
                 j = 1;
             }
-            if ((!parameo.d(paramInt1, paramInt2, paramInt3 - 1)) && (i == 3)) {
+            if ((!paramep.d(paramInt1, paramInt2, paramInt3 - 1)) && (i == 3)) {
                 j = 1;
             }
-            if ((!parameo.d(paramInt1, paramInt2, paramInt3 + 1)) && (i == 4)) {
+            if ((!paramep.d(paramInt1, paramInt2, paramInt3 + 1)) && (i == 4)) {
                 j = 1;
             }
 
             if (j != 0) {
-                a_(parameo, paramInt1, paramInt2, paramInt3, parameo.b(paramInt1, paramInt2, paramInt3));
-                parameo.d(paramInt1, paramInt2, paramInt3, 0);
+                a_(paramep, paramInt1, paramInt2, paramInt3, paramep.b(paramInt1, paramInt2, paramInt3));
+                paramep.d(paramInt1, paramInt2, paramInt3, 0);
             }
         }
     }
 
-    private boolean g(eo parameo, int paramInt1, int paramInt2, int paramInt3) {
-        if (!a(parameo, paramInt1, paramInt2, paramInt3)) {
-            a_(parameo, paramInt1, paramInt2, paramInt3, parameo.b(paramInt1, paramInt2, paramInt3));
-            parameo.d(paramInt1, paramInt2, paramInt3, 0);
+    private boolean g(ep paramep, int paramInt1, int paramInt2, int paramInt3) {
+        if (!a(paramep, paramInt1, paramInt2, paramInt3)) {
+            a_(paramep, paramInt1, paramInt2, paramInt3, paramep.b(paramInt1, paramInt2, paramInt3));
+            paramep.d(paramInt1, paramInt2, paramInt3, 0);
             return false;
         }
         return true;
     }
 
-    public void a(it paramit, int paramInt1, int paramInt2, int paramInt3) {
-        int i = paramit.b(paramInt1, paramInt2, paramInt3);
+    @Override
+    public void a(iu paramiu, int paramInt1, int paramInt2, int paramInt3) {
+        int i = paramiu.b(paramInt1, paramInt2, paramInt3);
         int j = i & 0x7;
         int k = (i & 0x8) > 0 ? 1 : 0;
 
@@ -126,12 +132,18 @@ public class ap extends ga {
         }
     }
 
-    public void b(eo parameo, int paramInt1, int paramInt2, int paramInt3, fx paramfx) {
-        a(parameo, paramInt1, paramInt2, paramInt3, paramfx);
+    @Override
+    public void b(ep paramep, int paramInt1, int paramInt2, int paramInt3, fy paramfy) {
+        a(paramep, paramInt1, paramInt2, paramInt3, paramfy);
     }
 
-    public boolean a(eo parameo, int paramInt1, int paramInt2, int paramInt3, fx paramfx) {
-        int i = parameo.b(paramInt1, paramInt2, paramInt3);
+    @Override
+    public boolean a(ep paramep, int paramInt1, int paramInt2, int paramInt3, fy paramfy) {
+        if (paramep.z) {
+            return true;
+        }
+
+        int i = paramep.b(paramInt1, paramInt2, paramInt3);
         int j = i & 0x7;
         int k = 8 - (i & 0x8);
         if (k == 0) {
@@ -144,55 +156,58 @@ public class ap extends ga {
             return true;
         }
 
-        parameo.b(paramInt1, paramInt2, paramInt3, j + k);
-        parameo.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
+        paramep.b(paramInt1, paramInt2, paramInt3, j + k);
+        paramep.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
 
-        parameo.a(paramInt1 + 0.5D, paramInt2 + 0.5D, paramInt3 + 0.5D, "random.click", 0.3F, 0.6F);
+        paramep.a(paramInt1 + 0.5D, paramInt2 + 0.5D, paramInt3 + 0.5D, "random.click", 0.3F, 0.6F);
 
-        parameo.g(paramInt1, paramInt2, paramInt3, this.bh);
+        paramep.g(paramInt1, paramInt2, paramInt3, this.bh);
         if (j == 1) {
-            parameo.g(paramInt1 - 1, paramInt2, paramInt3, this.bh);
+            paramep.g(paramInt1 - 1, paramInt2, paramInt3, this.bh);
         } else if (j == 2) {
-            parameo.g(paramInt1 + 1, paramInt2, paramInt3, this.bh);
+            paramep.g(paramInt1 + 1, paramInt2, paramInt3, this.bh);
         } else if (j == 3) {
-            parameo.g(paramInt1, paramInt2, paramInt3 - 1, this.bh);
+            paramep.g(paramInt1, paramInt2, paramInt3 - 1, this.bh);
         } else if (j == 4) {
-            parameo.g(paramInt1, paramInt2, paramInt3 + 1, this.bh);
+            paramep.g(paramInt1, paramInt2, paramInt3 + 1, this.bh);
         } else {
-            parameo.g(paramInt1, paramInt2 - 1, paramInt3, this.bh);
+            paramep.g(paramInt1, paramInt2 - 1, paramInt3, this.bh);
         }
 
-        parameo.h(paramInt1, paramInt2, paramInt3, this.bh);
+        paramep.h(paramInt1, paramInt2, paramInt3, this.bh);
 
         return true;
     }
 
-    public void b(eo parameo, int paramInt1, int paramInt2, int paramInt3) {
-        int i = parameo.b(paramInt1, paramInt2, paramInt3);
+    @Override
+    public void b(ep paramep, int paramInt1, int paramInt2, int paramInt3) {
+        int i = paramep.b(paramInt1, paramInt2, paramInt3);
         if ((i & 0x8) > 0) {
-            parameo.g(paramInt1, paramInt2, paramInt3, this.bh);
+            paramep.g(paramInt1, paramInt2, paramInt3, this.bh);
             int j = i & 0x7;
             if (j == 1) {
-                parameo.g(paramInt1 - 1, paramInt2, paramInt3, this.bh);
+                paramep.g(paramInt1 - 1, paramInt2, paramInt3, this.bh);
             } else if (j == 2) {
-                parameo.g(paramInt1 + 1, paramInt2, paramInt3, this.bh);
+                paramep.g(paramInt1 + 1, paramInt2, paramInt3, this.bh);
             } else if (j == 3) {
-                parameo.g(paramInt1, paramInt2, paramInt3 - 1, this.bh);
+                paramep.g(paramInt1, paramInt2, paramInt3 - 1, this.bh);
             } else if (j == 4) {
-                parameo.g(paramInt1, paramInt2, paramInt3 + 1, this.bh);
+                paramep.g(paramInt1, paramInt2, paramInt3 + 1, this.bh);
             } else {
-                parameo.g(paramInt1, paramInt2 - 1, paramInt3, this.bh);
+                paramep.g(paramInt1, paramInt2 - 1, paramInt3, this.bh);
             }
         }
-        super.b(parameo, paramInt1, paramInt2, paramInt3);
+        super.b(paramep, paramInt1, paramInt2, paramInt3);
     }
 
-    public boolean b(it paramit, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        return (paramit.b(paramInt1, paramInt2, paramInt3) & 0x8) > 0;
+    @Override
+    public boolean b(iu paramiu, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+        return (paramiu.b(paramInt1, paramInt2, paramInt3) & 0x8) > 0;
     }
 
-    public boolean d(eo parameo, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        int i = parameo.b(paramInt1, paramInt2, paramInt3);
+    @Override
+    public boolean d(ep paramep, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+        int i = paramep.b(paramInt1, paramInt2, paramInt3);
         if ((i & 0x8) == 0) {
             return false;
         }
@@ -213,12 +228,17 @@ public class ap extends ga {
         return (j == 1) && (paramInt4 == 5);
     }
 
+    @Override
     public boolean c() {
         return true;
     }
 
-    public void a(eo parameo, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
-        int i = parameo.b(paramInt1, paramInt2, paramInt3);
+    @Override
+    public void a(ep paramep, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
+        if (paramep.z) {
+            return;
+        }
+        int i = paramep.b(paramInt1, paramInt2, paramInt3);
         if ((i & 0x8) == 0) {
             return;
         }
@@ -227,24 +247,23 @@ public class ap extends ga {
         if (change > 0) {
             return;
         }
+        paramep.b(paramInt1, paramInt2, paramInt3, i & 0x7);
 
-        parameo.b(paramInt1, paramInt2, paramInt3, i & 0x7);
-
-        parameo.g(paramInt1, paramInt2, paramInt3, this.bh);
+        paramep.g(paramInt1, paramInt2, paramInt3, this.bh);
         int j = i & 0x7;
         if (j == 1) {
-            parameo.g(paramInt1 - 1, paramInt2, paramInt3, this.bh);
+            paramep.g(paramInt1 - 1, paramInt2, paramInt3, this.bh);
         } else if (j == 2) {
-            parameo.g(paramInt1 + 1, paramInt2, paramInt3, this.bh);
+            paramep.g(paramInt1 + 1, paramInt2, paramInt3, this.bh);
         } else if (j == 3) {
-            parameo.g(paramInt1, paramInt2, paramInt3 - 1, this.bh);
+            paramep.g(paramInt1, paramInt2, paramInt3 - 1, this.bh);
         } else if (j == 4) {
-            parameo.g(paramInt1, paramInt2, paramInt3 + 1, this.bh);
+            paramep.g(paramInt1, paramInt2, paramInt3 + 1, this.bh);
         } else {
-            parameo.g(paramInt1, paramInt2 - 1, paramInt3, this.bh);
+            paramep.g(paramInt1, paramInt2 - 1, paramInt3, this.bh);
         }
 
-        parameo.a(paramInt1 + 0.5D, paramInt2 + 0.5D, paramInt3 + 0.5D, "random.click", 0.3F, 0.5F);
-        parameo.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
+        paramep.a(paramInt1 + 0.5D, paramInt2 + 0.5D, paramInt3 + 0.5D, "random.click", 0.3F, 0.5F);
+        paramep.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
     }
 }

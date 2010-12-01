@@ -1,20 +1,16 @@
-
 /**
  * Mob.java - Interface for mobs
  * 
  * @author James
  */
 public class Mob extends LivingEntity {
-    gb mob;
-    
     /**
      * Creates a mob interface
      * 
      * @param mob name of mob
      */
-    public Mob(gb mob) {
+    public Mob(jz mob) {
         super(mob);
-        this.mob = mob;
     }
 
     /**
@@ -24,7 +20,7 @@ public class Mob extends LivingEntity {
      *            name of mob
      */
     public Mob(String mob) {
-        this((gb) hn.a(mob, etc.getMCServer().e));
+        this((jz) ho.a(mob, etc.getMCServer().e));
     }
 
     /**
@@ -51,15 +47,15 @@ public class Mob extends LivingEntity {
      * @param rider
      */
     public void spawn(Mob rider) {
-        eo localeo = etc.getMCServer().e;
+        ep localep = etc.getMCServer().e;
 
         entity.c(getX() + 0.5f, getY(), getZ() + 0.5f, getRotation(), 0f);
-        localeo.a(entity);
+        localep.a(entity);
 
         if (rider != null) {
-            jy mob2 = rider.getMob();
+            jz mob2 = rider.getMob();
             mob2.c(getX(), getY(), getZ(), getRotation(), 0f);
-            localeo.a(mob2);
+            localep.a(mob2);
             mob2.e(entity);
         }
     }
@@ -70,14 +66,14 @@ public class Mob extends LivingEntity {
      * @return name
      */
     public String getName() {
-        return hn.b(entity);
+        return ho.b(entity);
     }
 
     /**
      * Drops this mob's loot. Automatically called if health is set to 0.
      */
     public void dropLoot() {
-        mob.f(null);
+        this.livingEntity.f(null);
     }
     
     public void setHealth(int health) {
@@ -92,8 +88,8 @@ public class Mob extends LivingEntity {
      * 
      * @return
      */
-    public gb getMob() {
-        return mob;
+    public jz getMob() {
+        return this.livingEntity;
     }
 
     /**
@@ -107,6 +103,6 @@ public class Mob extends LivingEntity {
         if (mob == null) {
             return false;
         }
-        return hn.a(mob, etc.getMCServer().e) instanceof jy;
+        return ho.a(mob, etc.getMCServer().e) instanceof jz;
     }
 }

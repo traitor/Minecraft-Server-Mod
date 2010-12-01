@@ -1,17 +1,16 @@
-
 /**
  * Chest.java - Interface to chests.
  * @author James
  */
 public class Chest extends ItemArray implements ComplexBlock {
 
-    private ia chest;
+    private ib chest;
 
     /**
      * Creates a chest interface
      * @param chest
      */
-    public Chest(ia chest) {
+    public Chest(ib chest) {
         this.chest = chest;
     }
 
@@ -31,7 +30,7 @@ public class Chest extends ItemArray implements ComplexBlock {
         chest.c();
     }
 
-    public hl[] getArray() {
+    public hm[] getArray() {
         return chest.getContents();
     }
 
@@ -47,7 +46,7 @@ public class Chest extends ItemArray implements ComplexBlock {
      * Sets the contents
      * @param contents contents to set
      */
-    public void setArray(hl[] contents) {
+    public void setArray(hm[] contents) {
         chest.setContents(contents);
     }
 
@@ -69,9 +68,9 @@ public class Chest extends ItemArray implements ComplexBlock {
      * @param contents contents to set
      */
     public void setContents(Item[] contents) {
-        hl[] newcontents = new hl[getContentSize()];
+        hm[] newcontents = new hm[getContentSize()];
         for (int i = 0; i < getContentSize(); i++) {
-            newcontents[i] = new hl(contents[i].getItemId(), contents[i].getAmount());
+            newcontents[i] = new hm(contents[i].getItemId(), contents[i].getAmount());
         }
         setArray(newcontents);
     }

@@ -276,6 +276,43 @@ public abstract class PluginListener {
     }
 
     /**
+     * Called when the server considers whether to perform verification.
+     * 
+     * @param address
+     *          player's address
+     * @return
+     */
+    public boolean shouldIgnoreVerification(String name, InetAddress address) {
+        return false;
+    }
+
+    /**
+     * Called on name verification. Return true to override.
+     *
+     * @param name
+     *          player's name
+     * @param serverID
+     *         server ID
+     * @param address
+     *         address
+     * @return true to allow pass through
+     */
+    public boolean onNameVerification(String name, String serverID, InetAddress address) {
+        return false;
+    }
+
+    /**
+     * Allow overriding a player's name.
+     * 
+     * @param name
+     * @param address
+     * @return a String to change a player's name
+     */
+    public String onNameResolution(String name, InetAddress address) {
+        return null;
+    }
+
+    /**
      * Called when either a sign, chest or furnace is changed.
      * 
      * @param player
@@ -332,7 +369,7 @@ public abstract class PluginListener {
     /**
      * Called when fluid wants to flow to a certain block.
      * (10 & 11 for lava and 8 & 9 for water)
-     *
+     * 
      * @param blockFrom
      *              the block where the fluid came from.
      *              (blocktype = fluid type)
@@ -503,45 +540,8 @@ public abstract class PluginListener {
     }
 
     /**
-     * Called when the server considers whether to perform verification.
-     * 
-     * @param address
-     *          player's address
-     * @return
-     */
-    public boolean shouldIgnoreVerification(String name, InetAddress address) {
-        return false;
-    }
-
-    /**
-     * Called on name verification. Return true to override.
-     *
-     * @param name
-     *          player's name
-     * @param serverID
-     *         server ID
-     * @param address
-     *         address
-     * @return true to allow pass through
-     */
-    public boolean onNameVerification(String name, String serverID, InetAddress address) {
-        return false;
-    }
-
-    /**
-     * Allow overriding a player's name.
-     * 
-     * @param name
-     * @param address
-     * @return a String to change a player's name
-     */
-    public String onNameResolution(String name, InetAddress address) {
-        return null;
-    }
-
-    /**
      * Called when someone places a block. Return true to prevent the placement.
-     *
+     * 
      * @param player
      * @param blockPlaced
      * @param blockClicked
@@ -556,7 +556,7 @@ public abstract class PluginListener {
      * Called when someone presses right click aimed at a block.
      * You can intercept this to add your own right click actions
      * to different item types (see itemInHand)
-     *
+     * 
      * @param player
      * @param blockClicked
      * @param itemInHand
@@ -569,13 +569,13 @@ public abstract class PluginListener {
      * Called when water or lava tries to populate a block, you can prevent
      * crushing of torches, railways, flowers etc. You can alternatively allow
      * to let normally solid blocks be crushed.
-     *
+     * 
      * @param currentState the current tristate, once it's set to a non DEFAULT_ACTION it is final.
      * @param liquidBlock the type of the attacking block
      * @param targetBlock the block to be destroyed
      * @return final after a non DEFAULT_ACTION
      */
-    public PluginLoader.HookResult onLiquidDestroy(PluginLoader.HookResult currentState, int liquidBlockId, Block targetBlock) {
+    public PluginLoader.HookResult onLiquidDestroy( PluginLoader.HookResult currentState, int liquidBlockId, Block targetBlock )  {
         return PluginLoader.HookResult.DEFAULT_ACTION;
     }
 }

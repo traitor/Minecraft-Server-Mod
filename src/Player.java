@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +15,7 @@ import net.minecraft.server.MinecraftServer;
  * @author James
  */
 public class Player extends LivingEntity {
-    private er player;
+    private es player;
     
     private static final Logger log = Logger.getLogger("Minecraft");
     private int id = -1;
@@ -36,7 +35,7 @@ public class Player extends LivingEntity {
      * Creates a player interface
      * @param player player to interface
      */
-    public Player(er player) {
+    public Player(es player) {
         super(player);
         this.player = player;
     }
@@ -1008,14 +1007,14 @@ public class Player extends LivingEntity {
      */
     public void giveItemDrop(int itemId, int amount) {
         if (amount == -1) {
-            player.a(new hl(itemId, 255));
+            player.a(new hm(itemId, 255));
         } else {
             int temp = amount;
             do {
                 if (temp - 64 >= 64) {
-                    player.a(new hl(itemId, 64));
+                    player.a(new hm(itemId, 64));
                 } else {
-                    player.a(new hl(itemId, temp));
+                    player.a(new hm(itemId, temp));
                 }
                 temp -= 64;
             } while (temp > 0);
@@ -1154,7 +1153,7 @@ public class Player extends LivingEntity {
      * @return
      */
     public String getName() {
-        return player.as;
+        return player.at;
     }
 
     /**
@@ -1446,7 +1445,7 @@ public class Player extends LivingEntity {
      * 
      * @return
      */
-    public er getUser() {
+    public es getUser() {
         return player;
     }
 
@@ -1455,9 +1454,9 @@ public class Player extends LivingEntity {
      * 
      * @param er
      */
-    public void setUser(er er) {
-        this.player = er;
-        this.entity = er;
+    public void setUser(es es) {
+        this.player = es;
+        this.entity = es;
         this.inventory = new Inventory(this, Inventory.Type.Inventory);
         this.craftingTable = new Inventory(this, Inventory.Type.CraftingTable);
         this.equipment = new Inventory(this, Inventory.Type.Equipment);

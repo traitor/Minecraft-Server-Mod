@@ -1,4 +1,3 @@
-
 /**
  * PluginInterface.java - Used for interfacing with other plugins.
  */

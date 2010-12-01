@@ -1,38 +1,92 @@
-import java.io.*;
-import java.net.URL;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import net.minecraft.server.MinecraftServer;
 
-class dr extends Thread {
+public class dr {
+    public static Logger a = Logger.getLogger("Minecraft");
+    private ServerSocket d;
+    private Thread e;
+    public volatile boolean b = false;
+    private int f = 0;
 
-    dr(fq fq1, ad ad1) {
-        super();
-        b = fq1;
-        a = ad1;
-    }
+    private ArrayList<fr> g = new ArrayList<fr>();
+    private ArrayList<jh> h = new ArrayList<jh>();
+    public MinecraftServer c;
 
-    public void run() {
+    // hMod: Something is calling this staticly ! >.<
+    static ServerSocket a(dr self) { return self.d; }
+    static int b(dr self) { return self.f; }
+    static void a(dr self, fr newfr) { ++self.f; self.a(newfr); }
+
+    public dr(MinecraftServer paramMinecraftServer, InetAddress paramInetAddress, int paramInt) {
+        c = paramMinecraftServer;
+        // hMod: Catch me!
         try {
-            String serverID = fq.a(b);
-            boolean res = (Boolean)etc.getLoader().callHook(PluginLoader.Hook.NAME_VERIFICATION, new Object[] { a.b, serverID, b.addr });
-            if (res) {
-                fq.a(b, a);
-                return;
-            }
-            URL url = new URL("http://www.minecraft.net/game/checkserver.jsp?user=" + a.b + "&serverId=" + serverID);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-            String reply = reader.readLine();
-            reader.close();
-            System.out.println("THE REPLY IS " + reply);
-            if (reply.equals("YES")) {
-                fq.a(b, a);
-            } else {
-                b.b("Failed to verify username!");
-            }
+            d = new ServerSocket(paramInt, 0, paramInetAddress);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        catch(Exception exception) {
-            exception.printStackTrace();
-        }
+        this.d.setPerformancePreferences(0, 2, 1);
+
+        this.b = true;
+        this.e = new di(this, "Listen thread", paramMinecraftServer);
+
+        this.e.start();
     }
 
-    final ad a;
-    final fq b;
+    public void a(jh paramjh) {
+        this.h.add(paramjh);
+    }
+
+    private void a(fr paramfr) {
+        if (paramfr == null) {
+            throw new IllegalArgumentException("Got null pendingconnection!");
+        }
+        this.g.add(paramfr);
+    }
+
+    public void a() {
+        for (int i = 0; i < this.g.size(); i++) {
+            fr localObject = this.g.get(i);
+            try {
+                localObject.a();
+            } catch (Exception localException1) {
+                a.log(Level.WARNING, "Failed to handle packet: " + localException1, localException1);
+                // hMod: handle exception, removing the object
+                try {
+                    localObject.b("Internal server error");
+                } catch (Exception e) {
+                    a.log(Level.WARNING, "Exception while handling internal server error", e);
+                    localObject.c = true; // let the code remove it
+                }
+            }
+            if (localObject.c) {
+                this.g.remove(i--);
+            }
+        }
+
+        for (int i = 0; i < this.h.size(); i++) {
+            jh localObject = this.h.get(i);
+            try {
+                localObject.a();
+            } catch (Exception localException2) {
+                a.log(Level.WARNING, "Failed to handle packet: " + localException2, localException2);
+                // hMod: handle exception, removing the object
+                try {
+                    localObject.c("Internal server error");
+                } catch (Exception e) {
+                    a.log(Level.WARNING, "Exception while handling internal server error", e);
+                    localObject.c = true; // let the code remove it
+                }
+            }
+            if (localObject.c) {
+                this.h.remove(i--);
+            }
+        }
+    }
 }

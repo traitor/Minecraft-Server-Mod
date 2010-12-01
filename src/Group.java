@@ -1,4 +1,3 @@
-
 /**
  * Group.java - Group stuff.
  * 
