@@ -59,6 +59,7 @@ public class etc {
     // as
     // 1.
     private String driver, username, password, db;
+    public static final String MINECRAFT_SERVER_SHA1 = "f4d5a32b582b6f4d43a7d9c06297798be809f034";
 
     private etc() {
         commands.put("/help", "[Page] - Shows a list of commands. 7 per page.");
