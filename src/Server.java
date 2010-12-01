@@ -520,4 +520,72 @@ public class Server {
     public void saveInventories() {
         server.f.d();
     }
+
+    /**
+     * Checks to see whether or not the chunk containing the given block is
+     * loaded into memory.
+     * 
+     * @param block the Block to check
+     * @return true if the chunk is loaded
+     */
+    public boolean isChunkLoaded(Block block) {
+        return isChunkLoaded(block.getX(), block.getY(), block.getZ());
+    }
+
+    /**
+     * Checks to see whether or not the chunk containing the given block
+     * coordinates is loaded into memory.
+     * 
+     * @param x a block x-coordinate
+     * @param y a block y-coordinate
+     * @param z a block z-coordinate
+     * @return true if the chunk is loaded
+     */
+    public boolean isChunkLoaded(int x, int y, int z) {
+        return this.server.e.e(x, y, z);
+    }
+
+    /**
+     * Checks if the provided block is being powered through redstone
+     * 
+     * @param block Block to check
+     * @return true if the block is being powered
+     */
+    public boolean isBlockPowered(Block block) {
+        return isBlockPowered(block.getX(), block.getY(), block.getZ());
+    }
+
+    /**
+     * Checks if the provided block is being powered through redstone
+     *
+     * @param x a block x-coordinate
+     * @param y a block y-coordinate
+     * @param z a block z-coordinate
+     * @return true if the block is being powered
+     */
+    public boolean isBlockPowered(int x, int y, int z) {
+        return this.server.e.m(x, y, z);
+    }
+
+    /**
+     * Checks if the provided block is being indirectly powered through redstone
+     *
+     * @param block Block to check
+     * @return true if the block is being indirectly powered
+     */
+    public boolean isBlockIndirectlyPowered(Block block) {
+        return isBlockIndirectlyPowered(block.getX(), block.getY(), block.getZ());
+    }
+
+    /**
+     * Checks if the provided block is being indirectly powered through redstone
+     *
+     * @param x a block x-coordinate
+     * @param y a block y-coordinate
+     * @param z a block z-coordinate
+     * @return true if the block is being indirectly powered
+     */
+    public boolean isBlockIndirectlyPowered(int x, int y, int z) {
+        return this.server.e.n(x, y, z);
+    }
 }

@@ -102,12 +102,18 @@ public class jh extends fb implements ex {
 
                 e.A = paramhc.g;
                 e.k();
+                e.c(d6, 0.0D, d7);
                 e.b(d3, d4, d5, f1, f2);
                 e.s = d6;
                 e.u = d7;
-                e.k.b_();
-
+                d.e.b(e.k, true);
+                e.k.A();
                 d.f.b(e);
+                g = e.p;
+                h = e.q;
+                i = e.r;
+                d.e.f(e);
+
                 return;
             }
 

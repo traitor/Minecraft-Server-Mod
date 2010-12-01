@@ -100,16 +100,23 @@ public class gu {
     }
 
     public void b(dy paramdy) {
-        gv localgv = null;
+        if ((paramdy instanceof es)) {
+            Object localObject = (es) paramdy;
+            for (gv localgv : this.a) {
+                localgv.a((es) localObject);
+            }
+        }
+        Object localObject = null;
         try {
-            localgv = (gv) if_dI.invoke(b, paramdy.g);
+            localObject = (gv) if_dI.invoke(b, paramdy.g);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (localgv != null) {
-            a.remove(localgv);
-            localgv.a();
+        if (localObject != null) {
+            this.a.remove(localObject);
+            ((gv) localObject).a();
         }
+
     }
 
     public void a() {
@@ -126,7 +133,7 @@ public class gu {
             localObject = localArrayList.get(i);
             for (gv localgv : a) {
                 if (localgv.a != localObject) {
-                    localgv.a((es) localObject);
+                    localgv.b((es) localObject);
                 }
             }
         }
@@ -172,7 +179,7 @@ public class gu {
 
     public void a(es parames) {
         for (gv localgv : a) {
-            localgv.b(parames);
+            localgv.c(parames);
         }
     }
 }

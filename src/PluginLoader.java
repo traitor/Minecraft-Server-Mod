@@ -254,8 +254,11 @@ public class PluginLoader {
     	/* 
     	 * Damage caused from drowning (2)
     	 */
-    	WATER
-    	
+    	WATER,
+        /*
+         * Damaged caused by cactus (1)
+         */
+        CACTUS
     }
     
     private static final Logger log = Logger.getLogger("Minecraft");

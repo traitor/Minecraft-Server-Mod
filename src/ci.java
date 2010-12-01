@@ -25,17 +25,21 @@ public class ci {
     }
 
     public void a() {
-        // hMod: store block location of explosion
+        // hMod: allow explosion
         Block block = new Block(this.i.a((int) Math.floor(this.b), (int) Math.floor(this.c), (int) Math.floor(this.d)), (int) Math.floor(this.b), (int) Math.floor(this.c), (int) Math.floor(this.d));
 
-        // hMod: dynamite (notch failed since he made the type null) :/
+        // hMod: preserve source through blockStatus.
         if (this.e == null) {
-            block.setStatus(1);
+            block.setStatus(1); // TNT
         } else if (this.e instanceof fn) {
-            //Creeper
-            block.setStatus(2);
+            block.setStatus(2); //Creeper
         }
-        
+
+        // hMod: Call explode hook.
+        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.EXPLODE, new Object[]{block})) {
+            return;
+        }
+
         float f1 = this.f;
 
         int j = 16;
@@ -110,13 +114,13 @@ public class ci {
 
                 double d10 = this.i.a(localbd, localdy.z);
                 double d11 = (1.0D - d5) * d10;
-                
+
                 // hMod Damage hook: Explosions
                 int damage = (int) ((d11 * d11 + d11) / 2.0D * 8.0D * this.f + 1.0D);
                 BaseEntity exploder = new BaseEntity(localdy);
-                PluginLoader.DamageType dmgType = (localdy instanceof fn) ? PluginLoader.DamageType.CREEPER_EXPLOSION : PluginLoader.DamageType.EXPLOSION;
+                PluginLoader.DamageType dmgType = (this.e instanceof fn) ? PluginLoader.DamageType.CREEPER_EXPLOSION : PluginLoader.DamageType.EXPLOSION;
                 if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new Object[]{dmgType, null, exploder, damage})) {
-                    localdy.a(localdy, damage);
+                    localdy.a(this.e, damage);
                 }
 
                 double d12 = d11;
@@ -130,7 +134,7 @@ public class ci {
         ArrayList localArrayList = new ArrayList();
         localArrayList.addAll(this.g);
 
-        if (this.a)
+        if (this.a) {
             for (int i5 = localArrayList.size() - 1; i5 >= 0; i5--) {
                 hr localhr = (hr) localArrayList.get(i5);
                 int i6 = localhr.a;
@@ -138,9 +142,11 @@ public class ci {
                 int i8 = localhr.c;
                 int i9 = this.i.a(i6, i7, i8);
                 int i10 = this.i.a(i6, i7 - 1, i8);
-                if ((i9 == 0) && (gb.o[i10] != false) && (this.h.nextInt(3) == 0))
+                if ((i9 == 0) && (gb.o[i10]) && (this.h.nextInt(3) == 0)) {
                     this.i.d(i6, i7, i8, gb.ar.bh);
+                }
             }
+        }
     }
 
     public void b() {
