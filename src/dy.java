@@ -122,9 +122,10 @@ public abstract class dy {
     }
 
     public void m() {
-        if ((this.k != null) && (this.k.G)) {
+    	// hMod: Ghetto fix as this crashes you if you break a vehicle you're in...
+        /*if ((this.k != null) && (this.k.G)) {
             this.k = null;
-        }
+        }*/
 
         this.X += 1;
         this.K = this.L;
