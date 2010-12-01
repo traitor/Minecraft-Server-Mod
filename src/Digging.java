@@ -37,4 +37,18 @@ public class Digging extends ju {
             return true;
         return super.c(x, y, z);
     }
+    
+    /**
+     * Called when a player right-click air with an item in hand. We intercept it.
+     * @param player
+     * @param world
+     * @param item
+     * @return
+     */
+    public boolean a(fy player, ep world, hm item) {
+    	
+    	if (player instanceof es && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, new Object[]{((es)player).getPlayer(), new Item(item)}))
+    		return false;
+    	return super.a(player, world, item);
+    }
 }
