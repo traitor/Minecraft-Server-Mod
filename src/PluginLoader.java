@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Iterator;
+
+import javax.xml.bind.Marshaller.Listener;
+
 import net.minecraft.server.MinecraftServer;
 
 /**
@@ -447,6 +450,8 @@ public class PluginLoader {
         }
 
         synchronized (lock) {
+        	PluginListener listener = null;
+        	
             try {
                 List<PluginRegisteredListener> registeredListeners = listeners.get(h.ordinal());
 
@@ -455,7 +460,7 @@ public class PluginLoader {
                         continue;
                     }
 
-                    PluginListener listener = regListener.getListener();
+                    listener = regListener.getListener();
 
                     try {
                         switch (h) {
@@ -641,7 +646,13 @@ public class PluginLoader {
                     }
                 }
             } catch (Exception ex) {
-                log.log(Level.SEVERE, "Exception while calling plugin function", ex);
+            	String listenerString = null;
+            	if (listener == null) {
+            		listenerString = "null";
+            	} else {
+            		listenerString = listener.getClass().toString();
+            	}
+                log.log(Level.SEVERE, "Exception while calling plugin function. Listener = " + listenerString + ". Hook = " + h.toString(), ex);
             } catch (Throwable ex) { // The 'exception' thrown is so severe it's
                 // not even an exception!
                 log.log(Level.SEVERE, "Throwable while calling plugin (Outdated?)", ex);
