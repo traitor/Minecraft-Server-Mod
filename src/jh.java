@@ -87,7 +87,10 @@ public class jh extends fb implements ex {
                 float f2 = e.w;
                 e.k.A();
                 double d3 = e.p;
-                double d4 = e.q;
+
+                // hMod: added +1 to Y coordinate to avoid falling through ground.
+                double d4 = e.q + 1;
+
                 double d5 = e.r;
                 double d6 = 0.0D;
                 double d7 = 0.0D;
