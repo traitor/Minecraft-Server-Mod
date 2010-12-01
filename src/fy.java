@@ -60,7 +60,7 @@ public class fy extends jz {
     	  //above me is allowing the default action, auto-heal=default 
     	  //below is if you set autoheal=true
     	  //no attempting to auto-heal if auto-heal=false
-        if (etc.getInstance().autoHeal() == PluginLoader.HookResult.ALLOW_ACTION) {
+        else if (etc.getInstance().autoHeal() == PluginLoader.HookResult.ALLOW_ACTION) {
             if ((this.aR < 20) && (this.X % 20 * 4 == 0)) {
                 a(1);
             }
