@@ -51,12 +51,35 @@ public class fy extends jz {
 
     @Override
     public void E() {
-        // hMod: prevent 'healing over time' when monster-spawn=true (nice notchup!)
-        if (etc.getInstance().autoHeal() != PluginLoader.HookResult.PREVENT_ACTION) {
-            if ((this.l.k == 0) && (this.aR < 20) && (this.X % 20 * 4 == 0)) {
-                a(1);
-            }
-        }
+      	// hMod: adjust 'healing over time' independent of monster-spawn=true/false (nice notchup!)
+      	/*How this works:
+      	 * this.l.k defines what monsters-spawn is set to
+      	 * =0 is no monsters
+      	 * =1 is yes to monsters
+      	 * default notch functionality (DEFAULT_ACTION in the enum here) is to auto-heal
+      	 *   if monsters-spawn=false (this.l.k==0)
+      	 * So, if your server.properties says auto-heal=default (the default, standard setting)
+      	 * 	 Then you're getting notch's lovely method of doing stuff
+      	 * Or, if you have auto-heal=true (ALLOW_ACTION), then it doesn't care about this.l.k
+      	 *   because it's always going to heal
+      	 * If you have auto-heal=false (PREVENT_ACTION), it's not going to bother with auto-healing
+      	 * 	 no matter what you say, because you've asked it to never auto-heal
+      	 * What the other pieces of the statement are:
+      	 * 	this.aR < 20 checks to see if player's health is under 20 (the max)
+      	 * 	  no need to heal if the player's already healed 
+      	 *    (even though there are checks later as well >.<)
+    	   *  this.X %20 * 4 ==0 checks for every twentieth tick
+    	   *    Also, the *4 seems to be totally unnecessary, 
+      	 *    but many people have confirmed that it is decompiling right.
+      	 * I've kept the stuff that's always considered and not changed by hmod separate
+      	 *   for easier reading.
+      	 */
+      	if ( ( (etc.getInstance().autoHeal() == PluginLoader.HookResult.DEFAULT_ACTION) && (this.l.k == 0) ) 
+    	  		|| (etc.getInstance().autoHeal() == PluginLoader.HookResult.ALLOW_ACTION)){
+    	  	if ((this.aR < 20) && (this.X % 20 * 4 == 0)) {
+      			a(1);
+      		}
+      	}
 
         this.am.c();
         this.ap = this.aq;
