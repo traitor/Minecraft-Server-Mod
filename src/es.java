@@ -38,7 +38,8 @@ public class es extends fy {
         this.S = 0.0F;
         paramju.a = this;
         this.at = paramString;
-        this.c = paramju;
+        // hMod: So we don't conflict with runecraft
+        this.c = new Digging(paramep, this);
         this.H = 0.0F;
 
         player = etc.getDataSource().getPlayer(paramString);
