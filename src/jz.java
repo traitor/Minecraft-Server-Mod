@@ -325,7 +325,8 @@ public class jz extends dy {
         aV = 0.0F;
 
         if (i != 0) {
-            l.a(this, 2);
+            // hMod: Forced cast to send 'damage animation'.
+            l.a(this, (byte)2);
             u();
             if (paramdy != null) {
                 double d1 = paramdy.p - p;
@@ -406,7 +407,8 @@ public class jz extends dy {
             }
         }
 
-        l.a(this, 3);
+        // hMod: Forced cast to play Death Animations.
+        l.a((dy)this, (byte)3);
     }
 
     protected int g() {
