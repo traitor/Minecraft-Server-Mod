@@ -16,10 +16,7 @@ public class fr extends fb {
         h = null;
         i = "";
         e = minecraftserver;
-        try {
-            b = new bi(socket, s, this);
-        } catch (IOException e) {
-        }
+        b = new bi(socket, s, this);
         addr = socket.getInetAddress();
     }
 
