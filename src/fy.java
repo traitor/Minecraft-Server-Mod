@@ -51,9 +51,10 @@ public class fy extends jz {
 
     @Override
     public void E() {
-        // hMod: prevent 'healing over time' when monster-spawn=true (nice notchup!)
-        if (etc.getInstance().autoHeal() != PluginLoader.HookResult.PREVENT_ACTION) {
-            if ((this.l.k == 0) && (this.aR < 20) && (this.X % 20 * 4 == 0)) {
+        // hMod: adjust 'healing over time' independent of monster-spawn=true/false (nice notchup!)
+        PluginLoader.HookResult autoHeal = etc.getInstance().autoHeal();
+        if ((this.l.k == 0 && autoHeal == PluginLoader.HookResult.DEFAULT_ACTION) || autoHeal == PluginLoader.HookResult.ALLOW_ACTION) {
+            if ((this.aR < 20) && (this.X % 20 * 4 == 0)) {
                 a(1);
             }
         }
