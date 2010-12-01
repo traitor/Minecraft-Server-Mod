@@ -64,7 +64,7 @@ public class cf extends ay {
 
                 if (localjz.a()) {
                     // hMod: allow entities to spawn
-                    if ((Boolean) (etc.getLoader().callHook(PluginLoader.Hook.MOB_SPAWN, new Object[]{new LivingEntity(localjz)}))) {
+                    if ((Boolean) (etc.getLoader().callHook(PluginLoader.Hook.MOB_SPAWN, new Object[]{new Mob(localjz)}))) {
                         d();
                         return;
                     }
