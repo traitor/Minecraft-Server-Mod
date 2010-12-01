@@ -1010,14 +1010,14 @@ public class Player extends LivingEntity {
      */
     public void giveItemDrop(int itemId, int amount) {
         if (amount == -1) {
-            player.a(new hl(itemId, 255));
+            player.a(new hm(itemId, 255));
         } else {
             int temp = amount;
             do {
                 if (temp - 64 >= 64) {
-                    player.a(new hl(itemId, 64));
+                    player.a(new hm(itemId, 64));
                 } else {
-                    player.a(new hl(itemId, temp));
+                    player.a(new hm(itemId, temp));
                 }
                 temp -= 64;
             } while (temp > 0);
