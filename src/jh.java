@@ -318,9 +318,30 @@ public class jh extends fb implements ex {
     @Override
     public void a(ga paramga) {
         boolean bool = d.e.B = (d.f.g(getPlayer().getName()) || getPlayer().isAdmin());
+
+        // hMod: Store block data to call BLOCK_CREATED
+        Block blockClicked = new Block(etc.getServer().getBlockIdAt(paramga.b, paramga.c, paramga.d), paramga.b, paramga.c, paramga.d);
+        blockClicked.setFaceClicked(Block.Face.fromId(paramga.e));
+
+        Block blockPlaced = new Block(paramga.a, paramga.b, paramga.c, paramga.d);
+        if (paramga.e == 0) {
+            blockPlaced.setY(blockPlaced.getY() - 1);
+        } else if (paramga.e == 1) {
+            blockPlaced.setY(blockPlaced.getY() + 1);
+        } else if (paramga.e == 2) {
+            blockPlaced.setZ(blockPlaced.getZ() - 1);
+        } else if (paramga.e == 3) {
+            blockPlaced.setZ(blockPlaced.getZ() + 1);
+        } else if (paramga.e == 4) {
+            blockPlaced.setX(blockPlaced.getX() - 1);
+        } else if (paramga.e == 5) {
+            blockPlaced.setX(blockPlaced.getX() + 1);
+        }
+
         if (paramga.e == 255) {
             hm localhm1 = paramga.a >= 0 ? new hm(paramga.a) : null;
-            e.c.a(e, d.e, localhm1);
+            // hMod: call our version with extra blockClicked/blockPlaced
+            ((Digging)e.c).a(e, d.e, localhm1, blockClicked, blockPlaced);
         } else {
             int m = paramga.b;
             int n = paramga.c;
@@ -331,29 +352,11 @@ public class jh extends fb implements ex {
             if (i3 > i4) {
                 i4 = i3;
             }
-            // hMod: Store block data to call BLOCK_CREATED
-            Block blockClicked = new Block(etc.getServer().getBlockIdAt(m, n, i1), m, n, i1);
-            blockClicked.setFaceClicked(Block.Face.fromId(paramga.e));
-
             // hMod: call BLOCK_RIGHTCLICKED
             Player player = ((es)e).getPlayer();
             etc.getLoader().callHook(PluginLoader.Hook.BLOCK_RIGHTCLICKED, new Object[]{player, blockClicked, new Item(new hm(paramga.a))});
 
             // hMod: call original BLOCK_CREATED
-            Block blockPlaced = new Block(paramga.a, m, n, i1);
-            if (paramga.e == 0) {
-                blockPlaced.setY(blockPlaced.getY() - 1);
-            } else if (paramga.e == 1) {
-                blockPlaced.setY(blockPlaced.getY() + 1);
-            } else if (paramga.e == 2) {
-                blockPlaced.setZ(blockPlaced.getZ() - 1);
-            } else if (paramga.e == 3) {
-                blockPlaced.setZ(blockPlaced.getZ() + 1);
-            } else if (paramga.e == 4) {
-                blockPlaced.setX(blockPlaced.getX() - 1);
-            } else if (paramga.e == 5) {
-                blockPlaced.setX(blockPlaced.getX() + 1);
-            }
             etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, new Object[]{player, blockPlaced, blockClicked, paramga.a});
 
             // hMod: If we were building inside spawn, bail! (unless ops/admin)

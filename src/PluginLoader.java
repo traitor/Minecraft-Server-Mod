@@ -437,7 +437,7 @@ public class PluginLoader {
      * @param parameters Parameters of call
      * @return Object returned by call
      */
-    public Object callHook(Hook h, Object[] parameters) {
+    public Object callHook(Hook h, Object... parameters) {
         Object toRet = false;
 
         if (h == Hook.REDSTONE_CHANGE) {
@@ -619,7 +619,7 @@ public class PluginLoader {
                                 listener.onVehiclePositionChange((BaseVehicle) parameters[0], (Integer) parameters[1], (Integer) parameters[2], (Integer) parameters[3]);
                                 break;
                             case ITEM_USE:
-                                if (listener.onItemUse((Player) parameters[0], (Item) parameters[1])) {
+                                if (listener.onItemUse((Player) parameters[0], (Block) parameters[1], (Block) parameters[2], (Item) parameters[3])) {
                                     toRet = true;
                                 }
                                 break;

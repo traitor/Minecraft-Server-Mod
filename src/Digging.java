@@ -45,8 +45,8 @@ public class Digging extends ju {
      * @param item
      * @return
      */
-    public boolean a(fy player, ep world, hm item) {
-        if (player instanceof es && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, new Object[]{((es)player).getPlayer(), new Item(item)})) {
+    public boolean a(fy player, ep world, hm item, Block blockToPlace, Block blockClicked) {
+        if (player instanceof es && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, ((es) player).getPlayer(), blockToPlace, blockClicked, new Item(item))) {
             return false;
         }
         return super.a(player, world, item);
