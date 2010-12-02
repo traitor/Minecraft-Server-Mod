@@ -3,20 +3,27 @@
  * @author 
  */
 public class HumanEntity extends LivingEntity {
-    fy human;
-
     /**
-     *
+     * Constructor
      */
     public HumanEntity() {
     }
 
     /**
-     *
+     * Constructor
+     * 
      * @param human
      */
     public HumanEntity(fy human) {
-        super((jz) human);
-        this.human = human;
+        super(human);
+    }
+    
+    /**
+     * Returns the name
+     * 
+     * @return
+     */
+    public String getName() {
+        return getEntity().at;
     }
 }

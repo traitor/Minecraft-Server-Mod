@@ -14,7 +14,7 @@ import net.minecraft.server.MinecraftServer;
  * 
  * @author James
  */
-public class Player extends LivingEntity {
+public class Player extends HumanEntity {
     private static final Logger log = Logger.getLogger("Minecraft");
     private int id = -1;
     private String prefix = "";
@@ -1145,15 +1145,6 @@ public class Player extends LivingEntity {
         }
 
         return isInGroup;
-    }
-
-    /**
-     * Returns the player's name
-     * 
-     * @return
-     */
-    public String getName() {
-        return getEntity().at;
     }
 
     /**
