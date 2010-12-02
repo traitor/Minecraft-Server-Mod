@@ -212,8 +212,8 @@ public class Server {
     public List<Mob> getMobList() {
         List<Mob> toRet = new ArrayList<Mob>();
         for (Object o : server.e.b) {
-            if (o instanceof gb) {
-                toRet.add(new Mob((gc) o));
+            if (o instanceof gc || o instanceof ba) {
+                toRet.add(new Mob((jz) o));
             }
         }
         return toRet;
@@ -254,8 +254,8 @@ public class Server {
     public List<BaseEntity> getEntityList() {
         List<BaseEntity> toRet = new ArrayList<BaseEntity>();
         for (Object o : server.e.b) {
-            if (o instanceof gc) {
-                toRet.add(new Mob((gc) o));
+            if (o instanceof gc || o instanceof ba) {
+                toRet.add(new Mob((jz) o));
             } else if (o instanceof jn) {
                 toRet.add(new Minecart((jn) o));
             } else if (o instanceof fl) {
@@ -274,8 +274,8 @@ public class Server {
     public List<LivingEntity> getLivingEntityList() {
         List<LivingEntity> toRet = new ArrayList<LivingEntity>();
         for (Object o : server.e.b) {
-            if (o instanceof gc) {
-                toRet.add(new Mob((gc) o));
+            if (o instanceof gc || o instanceof ba) {
+                toRet.add(new Mob((jz) o));
             } else if (o instanceof es) {
                 toRet.add(((es)o).getPlayer());
             }
