@@ -87,10 +87,7 @@ public class jh extends fb implements ex {
                 float f2 = e.w;
                 e.k.A();
                 double d3 = e.p;
-
-                // hMod: added +1 to Y coordinate to avoid falling through ground.
-                double d4 = e.q + 1;
-
+                double d4 = e.q;
                 double d5 = e.r;
                 double d6 = 0.0D;
                 double d7 = 0.0D;
@@ -104,23 +101,24 @@ public class jh extends fb implements ex {
                 }
 
                 e.A = paramhc.g;
-                
+
                 // hMod: Make tmp copy of e.k as it sets k to null but has to run first :/
-                dy tmp = e.k;                     
-                e.k();    
+                dy tmp = e.k;
+                e.k();
                 e.c(d6, 0.0D, d7);
-                
+
                 // hMod: +1 to remove risk of falling through ground.
                 e.b(d3, d4+1, d5, f1, f2);
                 e.s = d6;
                 e.u = d7;
-                
+
                 // hMod: set player as no longer in vehicle (that of tmp).
-                d.e.b(tmp, true);          
-                
+                d.e.b(tmp, true);
+
                 // hMod: prevent this null pointer exception...
-                if(e.k != null && e.k.j != null) 
+                if(e.k != null && e.k.j != null) {
                     e.k.A();
+                }
                 d.f.b(e);
                 g = e.p;
                 h = e.q;
