@@ -1,17 +1,20 @@
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * PropertiesFile.java - Used for accessing and creating .properties files
@@ -52,7 +55,7 @@ public final class PropertiesFile {
      */
     public void load() throws IOException {
         BufferedReader reader;
-        reader = new BufferedReader(new FileReader(this.fileName));
+        reader = new BufferedReader(new InputStreamReader(new FileInputStream(this.fileName), "UTF-8"));
         String line;
 
         // Clear the file
@@ -219,7 +222,12 @@ public final class PropertiesFile {
             Logger.getLogger(PropertiesFile.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        PrintStream ps = new PrintStream(os);
+        PrintStream ps = null;
+        try {
+            ps = new PrintStream(os, true, "UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(PropertiesFile.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         // Keep track of properties that were set
         List<String> usedProps = new ArrayList<String>();
