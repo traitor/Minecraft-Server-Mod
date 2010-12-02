@@ -105,15 +105,17 @@ public class jh extends fb implements ex {
 
                 e.A = paramhc.g;
 
+                // hMod: update boatspeed before doing e.k.A()
+                e.c(d6, 0.0D, d7);
+                e.s = d6;
+                e.u = d7;
+
                 // hMod: make sure the e.k.A() is before d.e.b(e.k,true) and that one before e.k()
                 e.k.A();
                 d.e.b(e.k, true);
 
                 e.k();
-                e.c(d6, 0.0D, d7);
                 e.b(d3, d4, d5, f1, f2);
-                e.s = d6;
-                e.u = d7;
                 d.f.b(e);
                 g = e.p;
                 h = e.q;
