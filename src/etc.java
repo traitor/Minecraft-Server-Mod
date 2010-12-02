@@ -45,19 +45,7 @@ public class etc {
     private boolean showUnknownCommand = true;
     private String versionStr;
     private boolean tainted = true;
-    private int version = 1;                                                                                                                              // Version
-    // is
-    // meant
-    // to
-    // be
-    // loaded
-    // from
-    // the
-    // file,
-    // this
-    // stays
-    // as
-    // 1.
+    private int version = 1; // Version is meant to be loaded from the file, this stays as 1.
     private String driver, username, password, db;
 
     private etc() {
@@ -106,6 +94,7 @@ public class etc {
      * Loads or reloads the mod
      */
     public final void load() {
+        log.log(Level.INFO, "Note: your current classpath is: " + System.getProperty("java.class.path", "*UNKNOWN*"));
         if (properties == null) {
             properties = new PropertiesFile("server.properties");
         } else {
