@@ -17,7 +17,15 @@ public class HumanEntity extends LivingEntity {
     public HumanEntity(fy human) {
         super(human);
     }
-    
+
+    /**
+     * Returns the entity we're wrapping.
+     * @return
+     */
+    public fy getEntity() {
+        return (fy) entity;
+    }
+
     /**
      * Returns the name
      * 
