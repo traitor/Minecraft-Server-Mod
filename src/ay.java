@@ -71,8 +71,7 @@ public class ay {
                 block = new MobSpawner((cf) localay);
             }
             if (block != null) {
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, new Object[]{player.getUser(), block})
-                        && player.canBuild()) {
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, new Object[]{player, block}) && player.canBuild()) {
                     player.getUser().a.b.a(new jg(this.b, this.c, this.d, this));
                 } else {
                     ay toSend = null;

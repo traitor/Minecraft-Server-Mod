@@ -93,7 +93,7 @@ public class Player extends LivingEntity {
                 sendMessage(Colors.Rose + "You are currently muted.");
                 return;
             }
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.CHAT, new Object[]{getEntity(), message})) {
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.CHAT, new Object[]{this, message})) {
                 return;
             }
 
@@ -115,7 +115,7 @@ public class Player extends LivingEntity {
                 log.info("Command used by " + getName() + " " + command);
             }
             String[] split = command.split(" ");
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMMAND, new Object[]{getEntity(), split})) {
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMMAND, new Object[]{this, split})) {
                 return; // No need to go on, commands were parsed.
             }
             if (!canUseCommand(split[0]) && !split[0].startsWith("/#")) {
@@ -587,8 +587,7 @@ public class Player extends LivingEntity {
 
                     // adds player to ban list
                     etc.getMCServer().f.c(player.getIP());
-
-                    etc.getLoader().callHook(PluginLoader.Hook.IPBAN, new Object[]{getUser(), player.getUser(), split.length >= 3 ? etc.combineSplit(2, split, " ") : ""});
+                    etc.getLoader().callHook(PluginLoader.Hook.IPBAN, new Object[]{this, player, split.length >= 3 ? etc.combineSplit(2, split, " ") : ""});
 
                     log.log(Level.INFO, "IP Banning " + player.getName() + " (IP: " + player.getIP() + ")");
                     sendMessage(Colors.Rose + "IP Banning " + player.getName() + " (IP: " + player.getIP() + ")");
@@ -618,7 +617,7 @@ public class Player extends LivingEntity {
                     // adds player to ban list
                     etc.getServer().ban(player.getName());
 
-                    etc.getLoader().callHook(PluginLoader.Hook.BAN, new Object[]{getUser(), player.getUser(), split.length >= 3 ? etc.combineSplit(2, split, " ") : ""});
+                    etc.getLoader().callHook(PluginLoader.Hook.BAN, new Object[]{this, player, split.length >= 3 ? etc.combineSplit(2, split, " ") : ""});
 
                     if (split.length > 2) {
                         player.kick("Banned by " + getName() + ": " + etc.combineSplit(2, split, " "));
@@ -661,7 +660,7 @@ public class Player extends LivingEntity {
                         return;
                     }
 
-                    etc.getLoader().callHook(PluginLoader.Hook.KICK, new Object[]{getUser(), player.getUser(), split.length >= 3 ? etc.combineSplit(2, split, " ") : ""});
+                    etc.getLoader().callHook(PluginLoader.Hook.KICK, new Object[]{this, player, split.length >= 3 ? etc.combineSplit(2, split, " ") : ""});
 
                     if (split.length > 2) {
                         player.kick("Kicked by " + getName() + ": " + etc.combineSplit(2, split, " "));

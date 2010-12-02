@@ -166,7 +166,7 @@ public class es extends fy {
                         block = new MobSpawner((cf) localay);
                     }
                     if (block != null) {
-                        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, new Object[]{this, block})) {
+                        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, new Object[]{this.getPlayer(), block})) {
                             this.a.b(new jg(localay.b, localay.c, localay.d, localay));
                         }
                     } else {

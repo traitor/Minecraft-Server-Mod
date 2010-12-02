@@ -73,7 +73,7 @@ public class gq {
                 parames.a.b(new bh(str));
             }
         }
-        etc.getLoader().callHook(PluginLoader.Hook.LOGIN, new Object[]{parames});
+        etc.getLoader().callHook(PluginLoader.Hook.LOGIN, new Object[]{parames.getPlayer()});
     }
 
     public void b(es parames) {
