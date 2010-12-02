@@ -104,18 +104,23 @@ public class jh extends fb implements ex {
                 }
 
                 e.A = paramhc.g;
-
-                // hMod: update boatspeed before doing e.k.A()
+                
+                // hMod: Make tmp copy of e.k as it sets k to null but has to run first :/
+                dy tmp = e.k;                     
+                e.k();    
                 e.c(d6, 0.0D, d7);
+                
+                // hMod: +1 to remove risk of falling through ground.
+                e.b(d3, d4+1, d5, f1, f2);
                 e.s = d6;
                 e.u = d7;
-
-                // hMod: make sure the e.k.A() is before d.e.b(e.k,true) and that one before e.k()
-                e.k.A();
-                d.e.b(e.k, true);
-
-                e.k();
-                e.b(d3, d4, d5, f1, f2);
+                
+                // hMod: set player as no longer in vehicle (that of tmp).
+                d.e.b(tmp, true);          
+                
+                // hMod: prevent this null pointer exception...
+                if(e.k != null && e.k.j != null) 
+                    e.k.A();
                 d.f.b(e);
                 g = e.p;
                 h = e.q;

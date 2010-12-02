@@ -1453,7 +1453,13 @@ public class Player extends HumanEntity {
     }
 
     public void teleportTo(double x, double y, double z, float rotation, float pitch) {
-        getEntity().a.a(x, y, z, rotation, pitch);
+        es player = getEntity();
+        
+        // If player is in vehicle - eject them before they are teleported.
+        if (player.k != null) {
+            player.e(player.k);
+        }
+        player.a.a(x, y, z, rotation, pitch);
     }
 
     /**
