@@ -94,7 +94,6 @@ public class etc {
      * Loads or reloads the mod
      */
     public final void load() {
-        log.log(Level.INFO, "Note: your current classpath is: " + System.getProperty("java.class.path", "*UNKNOWN*"));
         if (properties == null) {
             properties = new PropertiesFile("server.properties");
         } else {
