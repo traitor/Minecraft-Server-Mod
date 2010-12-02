@@ -136,6 +136,14 @@ public class BaseEntity {
     public void setRotation(float rotation) {
         teleportTo(getX(), getY(), getZ(), rotation, getPitch());
     }
+    
+    /**
+     * Returns the entity we're wrapping.
+     * @return
+     */
+    public dy getEntity() {
+        return entity;
+    }
 
     /**
      * Returns whether or not this entity is a mob

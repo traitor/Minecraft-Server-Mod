@@ -15,8 +15,6 @@ import net.minecraft.server.MinecraftServer;
  * @author James
  */
 public class Player extends LivingEntity {
-    private es player;
-    
     private static final Logger log = Logger.getLogger("Minecraft");
     private int id = -1;
     private String prefix = "";
@@ -37,13 +35,20 @@ public class Player extends LivingEntity {
      */
     public Player(es player) {
         super(player);
-        this.player = player;
     }
 
     /**
      * Creates an empty player (FlatFileSource uses it, any use? O.o)
      */
     public Player() {
+    }
+    
+    /**
+     * Returns the entity we're wrapping.
+     * @return
+     */
+    public es getEntity() {
+        return (es)entity;
     }
 
     /**
@@ -52,7 +57,7 @@ public class Player extends LivingEntity {
      * @param reason
      */
     public void kick(String reason) {
-        player.a.c(reason);
+        getEntity().a.c(reason);
     }
 
     /**
@@ -61,7 +66,7 @@ public class Player extends LivingEntity {
      * @param message
      */
     public void sendMessage(String message) {
-        player.a.msg(message);
+        getEntity().a.msg(message);
     }
 
     /**
@@ -96,7 +101,7 @@ public class Player extends LivingEntity {
                 sendMessage(Colors.Rose + "You are currently muted.");
                 return;
             }
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.CHAT, new Object[]{player, message})) {
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.CHAT, new Object[]{getEntity(), message})) {
                 return;
             }
 
@@ -118,7 +123,7 @@ public class Player extends LivingEntity {
                 log.info("Command used by " + getName() + " " + command);
             }
             String[] split = command.split(" ");
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMMAND, new Object[]{player, split})) {
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMMAND, new Object[]{getEntity(), split})) {
                 return; // No need to go on, commands were parsed.
             }
             if (!canUseCommand(split[0]) && !split[0].startsWith("/#")) {
@@ -804,7 +809,7 @@ public class Player extends LivingEntity {
             } else if ((command.startsWith("/#")) && (etc.getMCServer().f.g(getName()))) {
                 String str = command.substring(2);
                 log.info(getName() + " issued server command: " + str);
-                etc.getMCServer().a(str, player.a);
+                etc.getMCServer().a(str, getEntity().a);
             } else if (split[0].equalsIgnoreCase("/time")) {
                 if (split.length == 2) {
                     if (split[1].equalsIgnoreCase("day")) {
@@ -1009,6 +1014,7 @@ public class Player extends LivingEntity {
      * @param amount
      */
     public void giveItemDrop(int itemId, int amount) {
+        es player = getEntity();
         if (amount == -1) {
             player.a(new hm(itemId, 255));
         } else {
@@ -1156,7 +1162,7 @@ public class Player extends LivingEntity {
      * @return
      */
     public String getName() {
-        return player.at;
+        return getEntity().at;
     }
 
     /**
@@ -1180,7 +1186,7 @@ public class Player extends LivingEntity {
      * @return
      */
     public String getIP() {
-        return player.a.b.b().toString().split(":")[0].substring(1);
+        return getEntity().a.b.b().toString().split(":")[0].substring(1);
     }
 
     /**
@@ -1449,7 +1455,7 @@ public class Player extends LivingEntity {
      * @return
      */
     public es getUser() {
-        return player;
+        return getEntity();
     }
 
     /**
@@ -1457,16 +1463,15 @@ public class Player extends LivingEntity {
      * 
      * @param er
      */
-    public void setUser(es es) {
-        this.player = es;
-        this.entity = es;
+    public void setUser(es player) {
+        this.entity = player;
         this.inventory = new Inventory(this, Inventory.Type.Inventory);
         this.craftingTable = new Inventory(this, Inventory.Type.CraftingTable);
         this.equipment = new Inventory(this, Inventory.Type.Equipment);
     }
 
     public void teleportTo(double x, double y, double z, float rotation, float pitch) {
-        player.a.a(x, y, z, rotation, pitch);
+        getEntity().a.a(x, y, z, rotation, pitch);
     }
 
     /**
@@ -1509,7 +1514,7 @@ public class Player extends LivingEntity {
      * @return
      */
     public int getItemInHand() {
-        return player.a.getItemInHand();
+        return getEntity().a.getItemInHand();
     }
 
     /**

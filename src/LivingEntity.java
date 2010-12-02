@@ -3,8 +3,6 @@
  * @author
  */
 public class LivingEntity extends BaseEntity {
-    jz livingEntity;
-
     /**
      * Interface for living entities
      */
@@ -17,7 +15,14 @@ public class LivingEntity extends BaseEntity {
      */
     public LivingEntity(jz livingEntity) {
         super(livingEntity);
-        this.livingEntity = livingEntity;
+    }
+    
+    /**
+     * Returns the entity we're wrapping.
+     * @return
+     */
+    public jz getEntity() {
+        return (jz)entity;
     }
 
     /**
@@ -26,7 +31,7 @@ public class LivingEntity extends BaseEntity {
      * @return health
      */
     public int getHealth() {
-        return livingEntity.aR;
+        return getEntity().aR;
     }
 
     /**
@@ -35,7 +40,7 @@ public class LivingEntity extends BaseEntity {
      *          amount of health to increase the players health with.
      */
     public void increaseHealth(int health) {
-        entity.a(health);
+        getEntity().a(health);
     }
 
     /**
@@ -51,6 +56,6 @@ public class LivingEntity extends BaseEntity {
             health = -1;
         if (health > 20)
             health = 20;
-        livingEntity.aR = health;
+        getEntity().aR = health;
     }
 }
