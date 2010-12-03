@@ -1,12 +1,15 @@
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Item.java - Item stuff.
  * @author James
  */
 public class Item {
-
-
-      public enum Type {
+    /**
+     * Type - Used to identify items
+     */
+    public enum Type {
         Air (0),
         Stone (1),
         Grass(2),
@@ -173,20 +176,33 @@ public class Item {
         LightstoneDust(348),
         RawFish(349),
         CookedFish(350),
+
         GoldRecord(2256),
         GreenRecord(2257)
         ;
 
         private int id;
+        private static Map<Integer, Type> map;
 
         private Type(int id){
             this.id = id;
+            add( id, this );
         }
 
-        public int getId() {return id;}
+        private static void add( int type, Type name ) {
+            if (map == null) {
+                map = new HashMap<Integer, Type>();
+            }
+            
+            map.put(type, name);
+        }
+
+        public int getId() {
+            return id;
+        }
 
         public static Type fromId(final int id) {
-               return Type.values()[id];
+            return map.get(id);
         }
     }
 

@@ -1,3 +1,5 @@
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Block.java - Provides some way of making/editing blocks
@@ -9,8 +11,8 @@ public class Block {
      * Type - Used to identify blocks
      */
     public enum Type {
-        Air (0),
-        Stone (1),
+        Air(0),
+        Stone(1),
         Grass(2),
         Dirt(3),
         Cobblestone(4),
@@ -88,17 +90,28 @@ public class Block {
         ;
 
         private int id;
+        private static Map<Integer, Type> map;
 
         private Type(int id){
             this.id = id;
+            add( id, this );
         }
 
-        public int getType() {return id;}
+        private static void add( int type, Type name ) {
+            if (map == null) {
+                map = new HashMap<Integer, Type>();
+            }
 
-        public static Type fromId(final int id) {
-            return Type.values()[id];
+            map.put(type, name);
         }
 
+        public int getType() {
+            return id;
+        }
+
+        public static Type fromId(final int type) {
+            return map.get(type);
+        }
     }
 
     /**
