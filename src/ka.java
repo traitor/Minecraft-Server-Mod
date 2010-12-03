@@ -543,13 +543,16 @@ public class ka extends ea {
         this.aW = paramv.c("DeathTime");
         this.aX = paramv.c("AttackTime");
 
-        /* Remove this, see if notch has fixed it.
         // hMod: Lets unbreak 'dead' characters so admins don't have to delete .dat files anymore >.>
         if (aR < 0 || aW != 0) {
             aR = 20; // Health
             aW = 0; // DeathTime
+            
+            // Dead people belong @ Spawn on servers with health
+            if (this instanceof et && etc.getInstance().isHealthEnabled()) {
+                ((et) this).getPlayer().teleportTo(etc.getServer().getSpawnLocation());
+            }
         }
-        */
     }
 
     @Override
