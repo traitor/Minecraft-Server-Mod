@@ -12,7 +12,7 @@ public class Mob extends LivingEntity {
     public Mob(jz mob) {
         super(mob);
     }
-
+    
     /**
      * Creates a mob interface
      * 
@@ -73,7 +73,7 @@ public class Mob extends LivingEntity {
      * Drops this mob's loot. Automatically called if health is set to 0.
      */
     public void dropLoot() {
-        this.livingEntity.f(null);
+        getEntity().f(null);
     }
     
     public void setHealth(int health) {
@@ -89,7 +89,7 @@ public class Mob extends LivingEntity {
      * @return
      */
     public jz getMob() {
-        return this.livingEntity;
+        return getEntity();
     }
 
     /**

@@ -296,24 +296,27 @@ public class jz extends dy {
 
         be = 1.5F;
 
-        // hMod: the different entities are defined in hn
-        if (paramdy != null && (paramdy instanceof jz)) {
-            LivingEntity attacker = new LivingEntity((jz) paramdy);
-            LivingEntity defender = new LivingEntity(this);
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new Object[]{PluginLoader.DamageType.ENTITY, attacker, defender, paramInt})) {
-                return false;
-            }
-        }
+        // hMod damage entities.
+        LivingEntity attacker = (paramdy != null && paramdy instanceof jz) ? new LivingEntity((jz) paramdy) : null;
+        LivingEntity defender = new LivingEntity(this);
 
         int i = 1;
         if (ac > aw / 2.0F) {
             if (paramInt <= bn) {
                 return false;
             }
+            // hMod: partial damage
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new Object[]{PluginLoader.DamageType.ENTITY, attacker, defender, paramInt - bn})) {
+                return false;
+            }
             c(paramInt - bn);
             bn = paramInt;
             i = 0;
         } else {
+            // hMod: full damage
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new Object[]{PluginLoader.DamageType.ENTITY, attacker, defender, paramInt})) {
+                return false;
+            }
             bn = paramInt;
             aS = aR;
             ac = aw;

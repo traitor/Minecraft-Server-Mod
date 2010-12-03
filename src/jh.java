@@ -47,7 +47,7 @@ public class jh extends fb implements ex {
 
     public void c(String paramString) {
         // hMod: Should we add this too here?
-        // etc.getLoader().callHook(PluginLoader.Hook.DISCONNECT, new Object[]{e});
+        // etc.getLoader().callHook(PluginLoader.Hook.DISCONNECT, new Object[]{((es)e).getPlayer()});
         b.a(new jv(paramString));
         b.c();
         d.f.a(new bh("§e" + e.at + " left the game."));
@@ -79,7 +79,7 @@ public class jh extends fb implements ex {
             to.rotX = getPlayer().getRotation();
             to.rotY = getPlayer().getPitch();
 
-            etc.getLoader().callHook(PluginLoader.Hook.PLAYER_MOVE, new Object[]{e, from, to});
+            etc.getLoader().callHook(PluginLoader.Hook.PLAYER_MOVE, new Object[]{((es)e).getPlayer(), from, to});
         }
         if (j) {
             if (e.k != null) {
@@ -87,10 +87,7 @@ public class jh extends fb implements ex {
                 float f2 = e.w;
                 e.k.A();
                 double d3 = e.p;
-
-                // hMod: added +1 to Y coordinate to avoid falling through ground.
-                double d4 = e.q + 1;
-
+                double d4 = e.q;
                 double d5 = e.r;
                 double d6 = 0.0D;
                 double d7 = 0.0D;
@@ -105,15 +102,23 @@ public class jh extends fb implements ex {
 
                 e.A = paramhc.g;
 
-                // hMod: make sure the e.k.A() is before d.e.b(e.k,true) and that one before e.k()
-                e.k.A();
-                d.e.b(e.k, true);
-
+                // hMod: Make tmp copy of e.k as it sets k to null but has to run first :/
+                dy tmp = e.k;
                 e.k();
                 e.c(d6, 0.0D, d7);
-                e.b(d3, d4, d5, f1, f2);
+
+                // hMod: +1 to remove risk of falling through ground.
+                e.b(d3, d4+1, d5, f1, f2);
                 e.s = d6;
                 e.u = d7;
+
+                // hMod: set player as no longer in vehicle (that of tmp).
+                d.e.b(tmp, true);
+
+                // hMod: prevent this null pointer exception...
+                if(e.k != null && e.k.j != null) {
+                    e.k.A();
+                }
                 d.f.b(e);
                 g = e.p;
                 h = e.q;
@@ -203,7 +208,8 @@ public class jh extends fb implements ex {
         from.z = paramDouble3;
         from.rotX = paramFloat1;
         from.rotY = paramFloat2;
-        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.TELEPORT, new Object[]{e, e.getPlayer().getLocation(), from})) {
+        Player player = ((es)e).getPlayer();
+        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.TELEPORT, new Object[]{player, player.getLocation(), from})) {
             return;
         }
 
@@ -255,6 +261,10 @@ public class jh extends fb implements ex {
         if (i4 > i5) {
             i5 = i4;
         }
+
+        // hMod: the player
+        Player player = ((es)e).getPlayer();
+
         if (paramid.e == 0) {
             // hMod: Start digging
             // No buildrights
@@ -268,7 +278,7 @@ public class jh extends fb implements ex {
                 y = block.getY();
                 z = block.getZ();
                 type = block.getType();
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[]{e, block})) {
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[]{player, block})) {
                     this.e.c.a(n, i1, i2);
                 }
             }
@@ -276,7 +286,7 @@ public class jh extends fb implements ex {
             // hMod: Stop digging
             Block block = etc.getServer().getBlockAt(n, i1, i2);
             block.setStatus(2); // Stopped digging
-            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[]{e, block});
+            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[]{player, block});
             e.c.a();
         } else if (paramid.e == 1) {
             // hMod: Continue digging
@@ -287,7 +297,7 @@ public class jh extends fb implements ex {
             if (i5 > etc.getInstance().getSpawnProtectionSize() || (bool)) {
                 Block block = etc.getServer().getBlockAt(n, i1, i2);
                 block.setStatus(1); // Digging
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[]{e, block})) {
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[]{player, block})) {
                     this.e.c.a(n, i1, i2, i3);
                 }
             }
@@ -295,7 +305,7 @@ public class jh extends fb implements ex {
             // hMod: Break block
             Block block = new Block(type, x, y, z);
             block.setStatus(3);
-            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[]{e, block});
+            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, new Object[]{player, block});
 
             double d3 = e.p - (n + 0.5D);
             double d5 = e.q - (i1 + 0.5D);
@@ -311,9 +321,30 @@ public class jh extends fb implements ex {
     @Override
     public void a(ga paramga) {
         boolean bool = d.e.B = (d.f.g(getPlayer().getName()) || getPlayer().isAdmin());
+
+        // hMod: Store block data to call BLOCK_CREATED
+        Block blockClicked = new Block(etc.getServer().getBlockIdAt(paramga.b, paramga.c, paramga.d), paramga.b, paramga.c, paramga.d);
+        blockClicked.setFaceClicked(Block.Face.fromId(paramga.e));
+
+        Block blockPlaced = new Block(paramga.a, paramga.b, paramga.c, paramga.d);
+        if (paramga.e == 0) {
+            blockPlaced.setY(blockPlaced.getY() - 1);
+        } else if (paramga.e == 1) {
+            blockPlaced.setY(blockPlaced.getY() + 1);
+        } else if (paramga.e == 2) {
+            blockPlaced.setZ(blockPlaced.getZ() - 1);
+        } else if (paramga.e == 3) {
+            blockPlaced.setZ(blockPlaced.getZ() + 1);
+        } else if (paramga.e == 4) {
+            blockPlaced.setX(blockPlaced.getX() - 1);
+        } else if (paramga.e == 5) {
+            blockPlaced.setX(blockPlaced.getX() + 1);
+        }
+
         if (paramga.e == 255) {
             hm localhm1 = paramga.a >= 0 ? new hm(paramga.a) : null;
-            e.c.a(e, d.e, localhm1);
+            // hMod: call our version with extra blockClicked/blockPlaced
+            ((Digging)e.c).a(e, d.e, localhm1, blockClicked, blockPlaced);
         } else {
             int m = paramga.b;
             int n = paramga.c;
@@ -324,32 +355,15 @@ public class jh extends fb implements ex {
             if (i3 > i4) {
                 i4 = i3;
             }
-            // hMod: Store block data to call BLOCK_CREATED
-            Block blockClicked = new Block(etc.getServer().getBlockIdAt(m, n, i1), m, n, i1);
-            blockClicked.setFaceClicked(Block.Face.fromId(paramga.e));
-
             // hMod: call BLOCK_RIGHTCLICKED
-            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_RIGHTCLICKED, new Object[]{(e).getPlayer(), blockClicked, new Item(new hm(paramga.a))});
+            Player player = ((es)e).getPlayer();
+            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_RIGHTCLICKED, new Object[]{player, blockClicked, new Item(new hm(paramga.a))});
 
             // hMod: call original BLOCK_CREATED
-            Block blockPlaced = new Block(paramga.a, m, n, i1);
-            if (paramga.e == 0) {
-                blockPlaced.setY(blockPlaced.getY() - 1);
-            } else if (paramga.e == 1) {
-                blockPlaced.setY(blockPlaced.getY() + 1);
-            } else if (paramga.e == 2) {
-                blockPlaced.setZ(blockPlaced.getZ() - 1);
-            } else if (paramga.e == 3) {
-                blockPlaced.setZ(blockPlaced.getZ() + 1);
-            } else if (paramga.e == 4) {
-                blockPlaced.setX(blockPlaced.getX() - 1);
-            } else if (paramga.e == 5) {
-                blockPlaced.setX(blockPlaced.getX() + 1);
-            }
-            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, new Object[]{e, blockPlaced, blockClicked, paramga.a});
+            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, new Object[]{player, blockPlaced, blockClicked, paramga.a});
 
             // hMod: If we were building inside spawn, bail! (unless ops/admin)
-            if ((i4 > etc.getInstance().getSpawnProtectionSize() || bool) && getPlayer().canBuild()) {
+            if ((i4 > etc.getInstance().getSpawnProtectionSize() || bool) && player.canBuild()) {
                 hm localhm = paramga.a >= 0 ? new hm(paramga.a) : null;
                 this.e.c.a(this.e, this.d.e, localhm, m, n, i1, i2);
             } else {
@@ -388,7 +402,7 @@ public class jh extends fb implements ex {
     @Override
     public void a(String paramString) {
         // hMod: disconnect!
-        etc.getLoader().callHook(PluginLoader.Hook.DISCONNECT, new Object[]{e});
+        etc.getLoader().callHook(PluginLoader.Hook.DISCONNECT, new Object[]{((es)e).getPlayer()});
         a.info(e.at + " lost connection: " + paramString);
         d.f.a(new bh("§e" + e.at + " left the game."));
         d.f.c(e);
@@ -424,7 +438,7 @@ public class jh extends fb implements ex {
         double d2 = paraml.c / 32.0D;
         double d3 = paraml.d / 32.0D;
         // hMod: allow item drops
-        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_DROP, new Object[]{e, new Item(paraml.h, paraml.i)})) {
+        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_DROP, new Object[]{((es)e).getPlayer(), new Item(paraml.h, paraml.i)})) {
 
             gk localgk = new gk(d.e, d1, d2, d3, new hm(paraml.h, paraml.i));
             localgk.s = (paraml.e / 128.0D);
@@ -460,7 +474,7 @@ public class jh extends fb implements ex {
     public void a(q paramq) {
         if (paramq.b == 1) {
             // hMod: Swing teh arm!
-            etc.getLoader().callHook(PluginLoader.Hook.ARM_SWING, new Object[]{e});
+            etc.getLoader().callHook(PluginLoader.Hook.ARM_SWING, new Object[]{((es)e).getPlayer()});
             e.F();
         } else if (paramq.b == 104) {
             e.al = true;
@@ -491,6 +505,7 @@ public class jh extends fb implements ex {
     @Override
     public void a(u paramu) {
         // hMod: Inventory handling; no inventory if you don't have buildrights
+        Player player = ((es)this.e).getPlayer();
         if (!getPlayer().canBuild()) {
             getPlayer().getInventory().clearContents();
             getPlayer().getCraftingTable().clearContents();
@@ -503,7 +518,7 @@ public class jh extends fb implements ex {
             hm[] temp = this.e.am.a;
             this.e.am.a = paramu.b;
             this.e.am.a[this.e.am.d] = k; // hMod: Preserve item in hand
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_CHANGE, new Object[]{e})) {
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_CHANGE, new Object[]{player})) {
                 this.e.am.a = temp;
                 getPlayer().getInventory().updateInventory();
             }
@@ -512,7 +527,7 @@ public class jh extends fb implements ex {
             // hMod: Equipment
             hm[] temp = this.e.am.c;
             this.e.am.c = paramu.b;
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.EQUIPMENT_CHANGE, new Object[]{e})) {
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.EQUIPMENT_CHANGE, new Object[]{player})) {
                 this.e.am.c = temp;
                 getPlayer().getInventory().updateInventory();
             }
@@ -521,7 +536,7 @@ public class jh extends fb implements ex {
             // hMod: Craft inventory
             hm[] temp = this.e.am.b;
             this.e.am.b = paramu.b;
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.CRAFTINVENTORY_CHANGE, new Object[]{e})) {
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.CRAFTINVENTORY_CHANGE, new Object[]{player})) {
                 this.e.am.b = temp;
                 getPlayer().getInventory().updateInventory();
             }
@@ -546,6 +561,9 @@ public class jh extends fb implements ex {
             return;
         }
 
+        // hMod: Player
+        Player player = ((es)e).getPlayer();
+
         ay localay = d.e.k(paramjg.a, paramjg.b, paramjg.c);
         if (localay != null) {
             if (localay instanceof ib) {
@@ -553,7 +571,7 @@ public class jh extends fb implements ex {
                 ib chest = (ib) localay;
                 hm[] temp = chest.getContents();
                 localay.a(paramjg.e);
-                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[]{e, new Chest(chest)}) || !e.getPlayer().canBuild()) {
+                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[]{player, new Chest(chest)}) || !player.canBuild()) {
                     chest.setContents(temp);
                 }
             } else if (localay instanceof du) {
@@ -561,7 +579,7 @@ public class jh extends fb implements ex {
                 du furnace = (du) localay;
                 hm[] temp = furnace.getContents();
                 localay.a(paramjg.e);
-                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[]{e, new Furnace(furnace)}) || !e.getPlayer().canBuild()) {
+                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[]{player, new Furnace(furnace)}) || !player.canBuild()) {
                     furnace.setContents(temp);
                 }
             } else if (localay instanceof jm) {
@@ -569,7 +587,7 @@ public class jh extends fb implements ex {
                 jm sign = (jm) localay;
                 String[] temp = sign.e;
                 localay.a(paramjg.e);
-                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[]{e, new Sign(sign)}) || !e.getPlayer().canBuild()) {
+                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, new Object[]{player, new Sign(sign)}) || !player.canBuild()) {
                     sign.e = temp;
                 }
             }

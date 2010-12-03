@@ -1,34 +1,39 @@
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.logging.Level;
+import java.io.UnsupportedEncodingException;
 import java.util.logging.Logger;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * PropertiesFile.java - Used for accessing and creating .properties files
- * 
- * @author Nijiko
+ * Used for accessing and creating .[properties] files, reads them as utf-8, saves as utf-8.
+ * Internationalization is key importance especially for character codes.
+ *
+ * @author Nijikokun
+ * @version 1.0.4, %G%
  */
 public final class PropertiesFile {
 
     private static final Logger log = Logger.getLogger("Minecraft");
     private String fileName;
-    // Data
     private List<String> lines = new ArrayList<String>();
     private Map<String, String> props = new HashMap<String, String>();
 
     /**
      * Creates or opens a properties file using specified filename
-     * 
+     *
      * @param fileName
      */
     public PropertiesFile(String fileName) {
@@ -47,36 +52,35 @@ public final class PropertiesFile {
     }
 
     /**
-     * Loads, or reloads, the properties file
+     * The loader for property files, it reads the file as UTF8 or converts the string into UTF8.
+     * Used for simple runthrough's, loading, or reloading of the file.
+     *
      * @throws IOException
      */
     public void load() throws IOException {
         BufferedReader reader;
-        reader = new BufferedReader(new FileReader(this.fileName));
+        reader = new BufferedReader(new InputStreamReader(new FileInputStream(this.fileName), "UTF8"));
         String line;
 
-        // Clear the file
+        // Clear the file & unwritten properties
         lines.clear();
+        props.clear();
 
+        // Begin reading the file.
         while ((line = reader.readLine()) != null) {
+            line = new String(line.getBytes(), "UTF-8");
             char c = 0;
             int pos = 0;
 
-            // Leading whitespaces must be deleted first.
             while (pos < line.length() && Character.isWhitespace(c = line.charAt(pos))) {
                 pos++;
             }
 
-            // If empty line or begins with a comment character, save this line
-            // in lineData and save a "" in keyData.
             if ((line.length() - pos) == 0 || line.charAt(pos) == '#' || line.charAt(pos) == '!') {
                 lines.add(line);
                 continue;
             }
 
-            // The characters up to the next Whitespace, ':', or '=' describe
-            // the key. But look for escape sequences.
-            // Try to short-circuit when there is no escape char.
             int start = pos;
             boolean needsEscape = line.indexOf('\\', pos) != -1;
             StringBuffer key = needsEscape ? new StringBuffer() : null;
@@ -84,18 +88,20 @@ public final class PropertiesFile {
             while (pos < line.length() && !Character.isWhitespace(c = line.charAt(pos++)) && c != '=' && c != ':') {
                 if (needsEscape && c == '\\') {
                     if (pos == line.length()) {
-                        // The line continues on the next line. If there is no next line, just
-                        // treat it as a key with an empty value.
                         line = reader.readLine();
+
                         if (line == null) {
                             line = "";
                         }
+
                         pos = 0;
+
                         while (pos < line.length() && Character.isWhitespace(c = line.charAt(pos))) {
                             pos++;
                         }
                     } else {
                         c = line.charAt(pos++);
+
                         switch (c) {
                             case 'n':
                                 key.append('\n');
@@ -159,11 +165,8 @@ public final class PropertiesFile {
                 c = line.charAt(pos++);
                 if (c == '\\') {
                     if (pos == line.length()) {
-                        // The line continues on the next line.
                         line = reader.readLine();
 
-                        // We might have seen a backslash at the end of the file. The JDK
-                        // ignores the backslash in this case, so we follow for compatibility.
                         if (line == null) {
                             break;
                         }
@@ -208,7 +211,10 @@ public final class PropertiesFile {
     }
 
     /**
-     * Saves the properties file
+     * Writes out the <code>key=value</code> properties that were changed into
+     * a .[properties] file in UTF8.
+     *
+     * @see #load()
      */
     public void save() {
         OutputStream os = null;
@@ -216,10 +222,15 @@ public final class PropertiesFile {
         try {
             os = new FileOutputStream(this.fileName);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(PropertiesFile.class.getName()).log(Level.SEVERE, null, ex);
+            log.severe("[PropertiesFile] Unable to open " + fileName + "!");
         }
 
-        PrintStream ps = new PrintStream(os);
+        PrintStream ps = null;
+        try {
+            ps = new PrintStream(os, true, "UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            log.severe("[PropertiesFile] Unable to write to " + fileName + "!");
+        }
 
         // Keep track of properties that were set
         List<String> usedProps = new ArrayList<String>();
@@ -263,30 +274,46 @@ public final class PropertiesFile {
 
         // Reload
         try {
+            props.clear();
             lines.clear();
             this.load();
         } catch (IOException ex) {
-            log.severe("[propertiesFile] Unable to load " + fileName + "!");
+            log.severe("[PropertiesFile] Unable to load " + fileName + "!");
         }
     }
 
     /**
-     * Returns a map with all key/value pairs
+     * Returns a Map of all <code>key=value</code> properties in the file as <code>&lt;key (java.lang.String), value (java.lang.String)></code>
+     * <br /><br />
+     * Example:
+     * <blockquote><pre>
+     * PropertiesFile settings = new PropertiesFile("settings.properties");
+     * Map<String, String> mappedSettings;
      * 
-     * @return
-     * @throws Exception
+     * try {
+     * 	 mappedSettings = settings.returnMap();
+     * } catch (Exception ex) {
+     * 	 log.info("Failed mapping settings.properties");
+     * }
+     * </pre></blockquote>
+     *
+     * @return <code>map</code> - Simple Map HashMap of the entire <code>key=value</code> as <code>&lt;key (java.lang.String), value (java.lang.String)></code>
+     * @throws Exception If the properties file doesn't exist.
      */
     public Map<String, String> returnMap() throws Exception {
         Map<String, String> map = new HashMap<String, String>();
         BufferedReader reader = new BufferedReader(new FileReader(this.fileName));
         String line;
+
         while ((line = reader.readLine()) != null) {
             if (line.trim().length() == 0) {
                 continue;
             }
+
             if (line.charAt(0) == '#') {
                 continue;
             }
+
             if (line.contains("=")) {
                 int delimPosition = line.indexOf('=');
                 String key = line.substring(0, delimPosition).trim();
@@ -296,15 +323,16 @@ public final class PropertiesFile {
                 continue;
             }
         }
+
         reader.close();
         return map;
     }
 
     /**
-     * Checks to see if this key exists
-     * 
-     * @param var the key to check
-     * @return true if key exists
+     * Checks to see if the .[properties] file contains the given <code>key</code>.
+     *
+     * @param var The key we are going to be checking the existance of.
+     * @return <code>Boolean</code> - True if the <code>key</code> exists, false if it cannot be found.
      */
     public boolean containsKey(String var) {
         for (String line : this.lines) {
@@ -318,7 +346,6 @@ public final class PropertiesFile {
 
             if (line.contains("=")) {
                 int delimPosition = line.indexOf('=');
-
                 String key = line.substring(0, delimPosition);
 
                 if (key.equals(var)) {
@@ -333,10 +360,10 @@ public final class PropertiesFile {
     }
 
     /**
-     * Grabs the value from a key
-     * 
-     * @param var property to retreive
-     * @return string if key exists
+     * Checks to see if this <code>key</code> exists in the .[properties] file.
+     *
+     * @param var The key we are grabbing the value of.
+     * @return <code>java.lang.String</code> - True if the <code>key</code> exists, false if it cannot be found.
      */
     public String getProperty(String var) {
         for (String line : this.lines) {
@@ -349,7 +376,6 @@ public final class PropertiesFile {
 
             if (line.contains("=")) {
                 int delimPosition = line.indexOf('=');
-
                 String key = line.substring(0, delimPosition).trim();
                 String value = line.substring(delimPosition + 1);
 
@@ -365,54 +391,61 @@ public final class PropertiesFile {
     }
 
     /**
-     * Remove a key from the file
+     * Remove a key from the file if it exists.
+     * This will save() which will invoke a load() on the file.
      *
-     * @param var
-     *            the key to remove
+     * @see #save()
+     * @param var The <code>key</code> that will be removed from the file
      */
     public void removeKey(String var) {
         Boolean changed = false;
 
-        if(this.props.containsKey(var)) {
+        if (this.props.containsKey(var)) {
             this.props.remove(var);
             changed = true;
         }
 
-        for (int i = 0; i < this.lines.size(); i++) {
-            String line = this.lines.get(i);
+        try {
+            for (int i = 0; i < this.lines.size(); i++) {
+                String line = this.lines.get(i);
 
-            if (line.trim().length() == 0) {
-                continue;
-            }
-
-            if (line.charAt(0) == '#') {
-                continue;
-            }
-
-            if (line.contains("=")) {
-                int delimPosition = line.indexOf('=');
-                String key = line.substring(0, delimPosition).trim();
-
-                if (key.equals(var)) {
-                    this.lines.remove(i);
-                    changed = true;
+                if (line.trim().length() == 0) {
+                    continue;
                 }
-            } else {
-                continue;
+
+                if (line.charAt(0) == '#') {
+                    continue;
+                }
+
+                if (line.contains("=")) {
+                    int delimPosition = line.indexOf('=');
+                    String key = line.substring(0, delimPosition).trim();
+
+                    if (key.equals(var)) {
+                        this.lines.remove(i);
+                        changed = true;
+                    }
+                } else {
+                    continue;
+                }
             }
+        } catch (ConcurrentModificationException concEx) {
+            removeKey(var);
+            return;
         }
 
         // Save on change
-        if(changed)
+        if (changed) {
             save();
+        }
     }
 
     /**
-     * Checks to see if this key exists
-     * 
-     * @param key
-     *            the key to check
-     * @return true if key exists
+     * Checks the existance of a <code>key</code>.
+     *
+     * @see #containsKey(java.lang.String)
+     * @param key The <code>key</code> in question of existance.
+     * @return <code>Boolean</code> - True for existance, false for <code>key</code> found.
      */
     public boolean keyExists(String key) {
         try {
@@ -423,11 +456,11 @@ public final class PropertiesFile {
     }
 
     /**
-     * Returns the string value of the key
-     * 
-     * @param key
-     *            key to retrieve value from
-     * @return value
+     * Returns the value of the <code>key</code> given as a <code>String</code>,
+     * however we do not set a string if no <code>key</code> is found.
+     *
+     * @see #getProperty(java.lang.String)
+     * @param key The <code>key</code> we will retrieve the property from, if no <code>key</code> is found default to "" or empty.
      */
     public String getString(String key) {
         if (this.containsKey(key)) {
@@ -438,13 +471,14 @@ public final class PropertiesFile {
     }
 
     /**
-     * Returns the string value of a key
-     * 
-     * @param key
-     *            the key to use
-     * @param value
-     *            the default value
-     * @return
+     * Returns the value of the <code>key</code> given as a <code>String</code>.
+     * If it is not found, it will invoke saving the default <code>value</code> to the properties file.
+     *
+     * @see #setString(java.lang.String, java.lang.String)
+     * @see #getProperty(java.lang.String)
+     * @param key The key that we will be grabbing the value from, if no value is found set and return <code>value</code>
+     * @param value The default value that we will be setting if no prior <code>key</code> is found.
+     * @return java.lang.String Either we will return the default value or a prior existing value depending on existance.
      */
     public String getString(String key, String value) {
         if (this.containsKey(key)) {
@@ -456,22 +490,24 @@ public final class PropertiesFile {
     }
 
     /**
-     * Sets the key
-     * 
-     * @param key
-     * @param value
+     * Save the value given as a <code>String</code> on the specified key.
+     *
+     * @see #save()
+     * @param key The <code>key</code> that we will be addressing the <code>value</code> to.
+     * @param value The <code>value</code> we will be setting inside the <code>.[properties]</code> file.
      */
     public void setString(String key, String value) {
         props.put(key, value);
+
         save();
     }
 
     /**
-     * Returns the int value of the key
-     * 
-     * @param key
-     *            key to retrieve value from
-     * @return value
+     * Returns the value of the <code>key</code> given in a Integer,
+     * however we do not set a string if no <code>key</code> is found.
+     *
+     * @see #getProperty(String var)
+     * @param key The <code>key</code> we will retrieve the property from, if no <code>key</code> is found default to 0
      */
     public int getInt(String key) {
         if (this.containsKey(key)) {
@@ -483,10 +519,11 @@ public final class PropertiesFile {
 
     /**
      * Returns the int value of a key
-     * 
-     * @param key
-     * @param value
-     * @return
+     *
+     * @see #setInt(String key, int value)
+     * @param key The key that we will be grabbing the value from, if no value is found set and return <code>value</code>
+     * @param value The default value that we will be setting if no prior <code>key</code> is found.
+     * @return <code>Integer</code> - Either we will return the default value or a prior existing value depending on existance.
      */
     public int getInt(String key, int value) {
         if (this.containsKey(key)) {
@@ -499,22 +536,24 @@ public final class PropertiesFile {
     }
 
     /**
-     * Sets the key
-     * 
-     * @param key
-     * @param value
+     * Save the value given as a <code>int</code> on the specified key.
+     *
+     * @see #save()
+     * @param key The <code>key</code> that we will be addressing the <code>value</code> to.
+     * @param value The <code>value</code> we will be setting inside the <code>.[properties]</code> file.
      */
     public void setInt(String key, int value) {
         props.put(key, String.valueOf(value));
+
         save();
     }
 
     /**
-     * Returns the double value of the key
-     * 
-     * @param key
-     *            key to retrieve value from
-     * @return value
+     * Returns the value of the <code>key</code> given in a Double,
+     * however we do not set a string if no <code>key</code> is found.
+     *
+     * @see #getProperty(String var)
+     * @param key The <code>key</code> we will retrieve the property from, if no <code>key</code> is found default to 0.0
      */
     public double getDouble(String key) {
         if (this.containsKey(key)) {
@@ -526,10 +565,11 @@ public final class PropertiesFile {
 
     /**
      * Returns the double value of a key
-     * 
-     * @param key
-     * @param value
-     * @return
+     *
+     * @see #setDouble(String key, double value)
+     * @param key The key that we will be grabbing the value from, if no value is found set and return <code>value</code>
+     * @param value The default value that we will be setting if no prior <code>key</code> is found.
+     * @return <code>Double</code> - Either we will return the default value or a prior existing value depending on existance.
      */
     public double getDouble(String key, double value) {
         if (this.containsKey(key)) {
@@ -541,22 +581,24 @@ public final class PropertiesFile {
     }
 
     /**
-     * Sets a key
-     * 
-     * @param key
-     * @param value
+     * Save the value given as a <code>double</code> on the specified key.
+     *
+     * @see #save()
+     * @param key The <code>key</code> that we will be addressing the <code>value</code> to.
+     * @param value The <code>value</code> we will be setting inside the <code>.[properties]</code> file.
      */
     public void setDouble(String key, double value) {
         props.put(key, String.valueOf(value));
+
         save();
     }
 
     /**
-     * Returns the long value of the key
-     * 
-     * @param key
-     *            key to retrieve value from
-     * @return value
+     * Returns the value of the <code>key</code> given in a Long,
+     * however we do not set a string if no <code>key</code> is found.
+     *
+     * @see #getProperty(String var)
+     * @param key The <code>key</code> we will retrieve the property from, if no <code>key</code> is found default to 0L
      */
     public long getLong(String key) {
         if (this.containsKey(key)) {
@@ -568,10 +610,11 @@ public final class PropertiesFile {
 
     /**
      * Returns the long value of a key
-     * 
-     * @param key
-     * @param value
-     * @return
+     *
+     * @see #setLong(String key, long value)
+     * @param key The key that we will be grabbing the value from, if no value is found set and return <code>value</code>
+     * @param value The default value that we will be setting if no prior <code>key</code> is found.
+     * @return <code>Long</code> - Either we will return the default value or a prior existing value depending on existance.
      */
     public long getLong(String key, long value) {
         if (this.containsKey(key)) {
@@ -583,22 +626,24 @@ public final class PropertiesFile {
     }
 
     /**
-     * Sets a key
-     * 
-     * @param key
-     * @param value
+     * Save the value given as a <code>long</code> on the specified key.
+     *
+     * @see #save()
+     * @param key The <code>key</code> that we will be addressing the <code>value</code> to.
+     * @param value The <code>value</code> we will be setting inside the <code>.[properties]</code> file.
      */
     public void setLong(String key, long value) {
         props.put(key, String.valueOf(value));
+
         save();
     }
 
     /**
-     * Returns the boolean value of the key
-     * 
-     * @param key
-     *            key to retrieve value from
-     * @return value
+     * Returns the value of the <code>key</code> given in a Boolean,
+     * however we do not set a string if no <code>key</code> is found.
+     *
+     * @see #getProperty(String var)
+     * @param key The <code>key</code> we will retrieve the property from, if no <code>key</code> is found default to false
      */
     public boolean getBoolean(String key) {
         if (this.containsKey(key)) {
@@ -610,10 +655,11 @@ public final class PropertiesFile {
 
     /**
      * Returns the boolean value of a key
-     * 
-     * @param key
-     * @param value
-     * @return
+     *
+     * @see #setBoolean(String key, boolean value)
+     * @param key The key that we will be grabbing the value from, if no value is found set and return <code>value</code>
+     * @param value The default value that we will be setting if no prior <code>key</code> is found.
+     * @return <code>Boolean</code> - Either we will return the default value or a prior existing value depending on existance.
      */
     public boolean getBoolean(String key, boolean value) {
         if (this.containsKey(key)) {
@@ -625,13 +671,15 @@ public final class PropertiesFile {
     }
 
     /**
-     * Sets a key
-     * 
-     * @param key
-     * @param value
+     * Save the value given as a <code>boolean</code> on the specified key.
+     *
+     * @see #save()
+     * @param key The <code>key</code> that we will be addressing the <code>value</code> to.
+     * @param value The <code>value</code> we will be setting inside the <code>.[properties]</code> file.
      */
     public void setBoolean(String key, boolean value) {
         props.put(key, String.valueOf(value));
+
         save();
     }
 }

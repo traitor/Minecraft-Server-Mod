@@ -32,7 +32,7 @@ public class Digging extends ju {
      */
     public boolean c(int x, int y, int z) {
         Block block = etc.getServer().getBlockAt(x, y, z);
-        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, new Object[]{(es) a, block})) {
+        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, new Object[]{((es) a).getPlayer(), block})) {
             return true;
         }
         return super.c(x, y, z);
@@ -45,8 +45,8 @@ public class Digging extends ju {
      * @param item
      * @return
      */
-    public boolean a(fy player, ep world, hm item) {
-        if (player instanceof es && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, new Object[]{((es)player).getPlayer(), new Item(item)})) {
+    public boolean a(fy player, ep world, hm item, Block blockToPlace, Block blockClicked) {
+        if (player instanceof es && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, ((es) player).getPlayer(), blockToPlace, blockClicked, new Item(item))) {
             return false;
         }
         return super.a(player, world, item);

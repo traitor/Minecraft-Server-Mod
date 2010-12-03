@@ -187,7 +187,7 @@ public class gk extends dy {
         if ((this.c == 0) && (paramfy.am.a(this.a))) {
             // hMod: allow item pickups
             Item item = new Item(a.c, a.a);
-            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_PICK_UP, new Object[]{paramfy, item})) {
+            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_PICK_UP, new Object[]{((es)paramfy).getPlayer(), item})) {
                 this.l.a(this, "random.pop", 0.2F, ((this.W.nextFloat() - this.W.nextFloat()) * 0.7F + 1.0F) * 2.0F);
                 paramfy.c(this, i);
                 l();

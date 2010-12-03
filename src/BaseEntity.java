@@ -136,6 +136,14 @@ public class BaseEntity {
     public void setRotation(float rotation) {
         teleportTo(getX(), getY(), getZ(), rotation, getPitch());
     }
+    
+    /**
+     * Returns the entity we're wrapping.
+     * @return
+     */
+    public dy getEntity() {
+        return entity;
+    }
 
     /**
      * Returns whether or not this entity is a mob
@@ -174,5 +182,99 @@ public class BaseEntity {
         player.setUser(p);
 
         return player;
+    }
+
+    /**
+     * Get the default amount of AirTicks for this entity
+     * 20 ticks per second.
+     * 
+     * @return
+     */
+    public int getBaseAirTicks() {
+        return getEntity().aa;
+    }
+
+    /**
+     * Set the default amount of AirTicks for this entity
+     * 20 ticks per second.
+     * 
+     * @param ticks
+     */
+    public void setBaseAirTicks(int ticks) {
+        getEntity().aa = ticks;
+    }
+
+    /**
+     * Get the current NoDamageTicks for this entity
+     * 
+     * This gets lowered every game tick, until its smaller than half the BaseNoDamageTicks
+     * it only registers any damage more than {@link LivingEntity#getLastDamage()}.
+     * 20 ticks per second.
+     * 
+     * @return
+     */
+    public int getNoDamageTicks() {
+        return getEntity().ac;
+    }
+
+    /**
+     * Set the current NoDamageTicks for this entity
+     * 
+     * This gets lowered every game tick, until its smaller than half the BaseNoDamageTicks
+     * it only registers any damage more than {@link LivingEntity#getLastDamage()}.
+     * 20 ticks per second.
+     * 
+     * @param ticks
+     */
+    public void setNoDamageTicks(int ticks) {
+        getEntity().ac = ticks;
+    }
+
+    /**
+     * Get the amount of AirTicks left.
+     * 
+     * This gets lowered every game tick when you are under water. 
+     * 20 ticks per second.
+     * 
+     * @return
+     */
+    public int getAirTicks() {
+        return getEntity().ad;
+    }
+
+    /**
+     * Set the amount of AirTicks left.
+     * 
+     * This gets lowered every game tick when you are under water. 
+     * 20 ticks per second.
+     * 
+     * @return
+     */
+    public void setAirTicks(int ticks) {
+        getEntity().ad = ticks;
+    }
+
+    /**
+     * Get the amount of FireTicks left.
+     * 
+     * This gets lowered every game tick when you are on fire. 
+     * 20 ticks per second.
+     * 
+     * @return
+     */
+    public int getFireTicks() {
+        return getEntity().Z;
+    }
+
+    /**
+     * Set the amount of FireTicks left.
+     * 
+     * This gets lowered every game tick when you are on fire. 
+     * 20 ticks per second.
+     * 
+     * @return
+     */
+    public void setFireTicks(int ticks) {
+        getEntity().Z = ticks;
     }
 }
