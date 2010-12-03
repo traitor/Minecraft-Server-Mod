@@ -24,7 +24,7 @@ import java.util.Map;
  * @author Nijikokun
  * @version 1.0.4, %G%
  */
-public final class PropertiesFiles {
+public final class PropertiesFile {
 
     private static final Logger log = Logger.getLogger("Minecraft");
     private String fileName;
@@ -36,7 +36,7 @@ public final class PropertiesFiles {
      *
      * @param fileName
      */
-    public PropertiesFiles(String fileName) {
+    public PropertiesFile(String fileName) {
         this.fileName = fileName;
         File file = new File(fileName);
 
