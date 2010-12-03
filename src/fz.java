@@ -1,7 +1,8 @@
 import java.util.List;
+import java.util.Random;
 
-public class fy extends jz {
-    public hj am = new hj(this);
+public class fz extends ka {
+    public hk am = new hk(this);
     public byte an = 0;
     public int ao = 0;
     public float ap;
@@ -11,13 +12,13 @@ public class fy extends jz {
     public String at;
     public int au;
     private int a = 0;
-    public kf av = null;
+    public kg av = null;
 
-    public fy(ep paramep) {
-        super(paramep);
+    public fz(eq parameq) {
+        super(parameq);
 
         this.H = 1.62F;
-        c(paramep.m + 0.5D, paramep.n + 1, paramep.o + 0.5D, 0.0F, 0.0F);
+        c(parameq.m + 0.5D, parameq.n + 1, parameq.o + 0.5D, 0.0F, 0.0F);
 
         this.aR = 20;
         this.aK = "humanoid";
@@ -54,7 +55,7 @@ public class fy extends jz {
         // hMod: adjust 'healing over time' independent of monster-spawn=true/false (nice notchup!)
         PluginLoader.HookResult autoHeal = etc.getInstance().autoHeal();
         if ((this.l.k == 0 && autoHeal == PluginLoader.HookResult.DEFAULT_ACTION) || autoHeal == PluginLoader.HookResult.ALLOW_ACTION) {
-            if ((this.aR < 20) && (this.X % 20 * 4 == 0)) {
+            if ((this.aR < 20) && (this.X % 20 == 0)) {
                 a(1);
             }
         }
@@ -64,7 +65,7 @@ public class fy extends jz {
 
         super.E();
 
-        float f1 = hg.a(this.s * this.s + this.u * this.u);
+        float f1 = hh.a(this.s * this.s + this.u * this.u);
         float f2 = (float) Math.atan(-this.t * 0.2000000029802322D) * 15.0F;
         if (f1 > 0.1F) {
             f1 = 0.1F;
@@ -82,31 +83,31 @@ public class fy extends jz {
             List localList = this.l.b(this, this.z.b(1.0D, 0.0D, 1.0D));
             if (localList != null) {
                 for (int i = 0; i < localList.size(); i++) {
-                    j((dy) localList.get(i));
+                    j((ea) localList.get(i));
                 }
             }
         }
     }
 
-    private void j(dy paramdy) {
-        paramdy.b(this);
+    private void j(ea paramea) {
+        paramea.b(this);
     }
 
     @Override
-    public void f(dy paramdy) {
-        super.f(paramdy);
+    public void f(ea paramea) {
+        super.f(paramea);
         a(0.2F, 0.2F);
         a(this.p, this.q, this.r);
         this.t = 0.1000000014901161D;
 
         if (this.at.equals("Notch")) {
-            a(new hm(fv.h, 1), true);
+            a(new hn(fw.h, 1), true);
         }
         this.am.f();
 
-        if (paramdy != null) {
-            this.s = (-hg.b((this.aV + this.v) * 3.141593F / 180.0F) * 0.1F);
-            this.u = (-hg.a((this.aV + this.v) * 3.141593F / 180.0F) * 0.1F);
+        if (paramea != null) {
+            this.s = (-hh.b((this.aV + this.v) * 3.141593F / 180.0F) * 0.1F);
+            this.u = (-hh.a((this.aV + this.v) * 3.141593F / 180.0F) * 0.1F);
         } else {
             this.s = (this.u = 0.0D);
         }
@@ -114,54 +115,54 @@ public class fy extends jz {
     }
 
     @Override
-    public void b(dy paramdy, int paramInt) {
+    public void b(ea paramea, int paramInt) {
         this.ao += paramInt;
     }
 
-    public void a(hm paramhm) {
-        a(paramhm, false);
+    public void a(hn paramhn) {
+        a(paramhn, false);
     }
 
-    public void a(hm paramhm, boolean paramBoolean) {
-        if (paramhm == null) {
+    public void a(hn paramhn, boolean paramBoolean) {
+        if (paramhn == null) {
             return;
         }
 
-        gk localgk = new gk(this.l, this.p, this.q - 0.300000011920929D + s(), this.r, paramhm);
-        localgk.c = 40;
+        gl localgl = new gl(this.l, this.p, this.q - 0.300000011920929D + s(), this.r, paramhn);
+        localgl.c = 40;
 
         float f1 = 0.1F;
         float f2;
         if (paramBoolean) {
             f2 = this.W.nextFloat() * 0.5F;
             float f3 = this.W.nextFloat() * 3.141593F * 2.0F;
-            localgk.s = (-hg.a(f3) * f2);
-            localgk.u = (hg.b(f3) * f2);
-            localgk.t = 0.2000000029802322D;
+            localgl.s = (-hh.a(f3) * f2);
+            localgl.u = (hh.b(f3) * f2);
+            localgl.t = 0.2000000029802322D;
         } else {
             f1 = 0.3F;
-            localgk.s = (-hg.a(this.v / 180.0F * 3.141593F) * hg.b(this.w / 180.0F * 3.141593F) * f1);
-            localgk.u = (hg.b(this.v / 180.0F * 3.141593F) * hg.b(this.w / 180.0F * 3.141593F) * f1);
-            localgk.t = (-hg.a(this.w / 180.0F * 3.141593F) * f1 + 0.1F);
+            localgl.s = (-hh.a(this.v / 180.0F * 3.141593F) * hh.b(this.w / 180.0F * 3.141593F) * f1);
+            localgl.u = (hh.b(this.v / 180.0F * 3.141593F) * hh.b(this.w / 180.0F * 3.141593F) * f1);
+            localgl.t = (-hh.a(this.w / 180.0F * 3.141593F) * f1 + 0.1F);
             f1 = 0.02F;
 
             f2 = this.W.nextFloat() * 3.141593F * 2.0F;
             f1 *= this.W.nextFloat();
-            localgk.s += Math.cos(f2) * f1;
-            localgk.t += (this.W.nextFloat() - this.W.nextFloat()) * 0.1F;
-            localgk.u += Math.sin(f2) * f1;
+            localgl.s += Math.cos(f2) * f1;
+            localgl.t += (this.W.nextFloat() - this.W.nextFloat()) * 0.1F;
+            localgl.u += Math.sin(f2) * f1;
         }
 
-        a(localgk);
+        a(localgl);
     }
 
-    protected void a(gk paramgk) {
-        this.l.a(paramgk);
+    protected void a(gl paramgl) {
+        this.l.a(paramgl);
     }
 
-    public float a(gb paramgb) {
-        float f = this.am.a(paramgb);
-        if (a(jx.f)) {
+    public float a(gc paramgc) {
+        float f = this.am.a(paramgc);
+        if (a(jy.f)) {
             f /= 5.0F;
         }
         if (!this.A) {
@@ -171,32 +172,32 @@ public class fy extends jz {
         return f;
     }
 
-    public boolean b(gb paramgb) {
-        return this.am.b(paramgb);
+    public boolean b(gc paramgc) {
+        return this.am.b(paramgc);
     }
 
     @Override
     public void b(v paramv) {
         super.b(paramv);
-        ec localec = paramv.k("Inventory");
-        this.am.b(localec);
+        ed localed = paramv.k("Inventory");
+        this.am.b(localed);
         this.au = paramv.d("Dimension");
     }
 
     @Override
     public void a(v paramv) {
         super.a(paramv);
-        paramv.a("Inventory", this.am.a(new ec()));
+        paramv.a("Inventory", this.am.a(new ed()));
         paramv.a("Dimension", this.au);
     }
 
-    public void a(kd paramkd) {
+    public void a(ke paramke) {
     }
 
     public void G() {
     }
 
-    public void c(dy paramdy, int paramInt) {
+    public void c(ea paramea, int paramInt) {
     }
 
     @Override
@@ -205,13 +206,13 @@ public class fy extends jz {
     }
 
     @Override
-    public boolean a(dy paramdy, int paramInt) {
+    public boolean a(ea paramea, int paramInt) {
         this.bo = 0;
         if (this.aR <= 0) {
             return false;
         }
 
-        if (((paramdy instanceof gc)) || ((paramdy instanceof dx))) {
+        if (((paramea instanceof gd)) || ((paramea instanceof dy))) {
             if (this.l.k == 0) {
                 paramInt = 0;
             }
@@ -227,7 +228,7 @@ public class fy extends jz {
             return false;
         }
 
-        return super.a(paramdy, paramInt);
+        return super.a(paramea, paramInt);
     }
 
     @Override
@@ -240,17 +241,17 @@ public class fy extends jz {
         super.c(paramInt);
     }
 
-    public void a(du paramdu) {
+    public void a(dv paramdv) {
     }
 
-    public void a(jm paramjm) {
+    public void a(jn paramjn) {
     }
 
-    public void g(dy paramdy) {
-        paramdy.a(this);
+    public void g(ea paramea) {
+        paramea.a(this);
     }
 
-    public hm H() {
+    public hn H() {
         return this.am.b();
     }
 
@@ -268,15 +269,15 @@ public class fy extends jz {
         this.ar = true;
     }
 
-    public void h(dy paramdy) {
-        int i = this.am.a(paramdy);
+    public void h(ea paramea) {
+        int i = this.am.a(paramea);
         if (i > 0) {
-            paramdy.a(this, i);
-            hm localhm = H();
-            if ((localhm != null) && ((paramdy instanceof jz))) {
-                localhm.a((jz) paramdy);
-                if (localhm.a <= 0) {
-                    localhm.a(this);
+            paramea.a(this, i);
+            hn localhn = H();
+            if ((localhn != null) && ((paramea instanceof ka))) {
+                localhn.a((ka) paramea);
+                if (localhn.a <= 0) {
+                    localhn.a(this);
                     I();
                 }
             }

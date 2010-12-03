@@ -1,5 +1,5 @@
-public class gk extends dy {
-    public hm a;
+public class gl extends ea {
+    public hn a;
     private int e;
     public int b = 0;
     public int c;
@@ -7,12 +7,12 @@ public class gk extends dy {
 
     public float d = (float) (Math.random() * 3.141592653589793D * 2.0D);
 
-    public gk(ep paramep, double paramDouble1, double paramDouble2, double paramDouble3, hm paramhm) {
-        super(paramep);
+    public gl(eq parameq, double paramDouble1, double paramDouble2, double paramDouble3, hn paramhn) {
+        super(parameq);
         a(0.25F, 0.25F);
         this.H = (this.J / 2.0F);
         a(paramDouble1, paramDouble2, paramDouble3);
-        this.a = paramhm;
+        this.a = paramhn;
 
         this.v = (float) (Math.random() * 360.0D);
 
@@ -22,8 +22,8 @@ public class gk extends dy {
         this.M = false;
     }
 
-    public gk(ep paramep) {
-        super(paramep);
+    public gl(eq parameq) {
+        super(parameq);
         a(0.25F, 0.25F);
         this.H = (this.J / 2.0F);
     }
@@ -39,7 +39,7 @@ public class gk extends dy {
         this.o = this.r;
 
         this.t -= 0.03999999910593033D;
-        if (this.l.c(hg.b(this.p), hg.b(this.q), hg.b(this.r)) == jx.g) {
+        if (this.l.c(hh.b(this.p), hh.b(this.q), hh.b(this.r)) == jy.g) {
             this.t = 0.2000000029802322D;
             this.s = ((this.W.nextFloat() - this.W.nextFloat()) * 0.2F);
             this.u = ((this.W.nextFloat() - this.W.nextFloat()) * 0.2F);
@@ -52,9 +52,9 @@ public class gk extends dy {
         float f1 = 0.98F;
         if (this.A) {
             f1 = 0.5880001F;
-            int i = this.l.a(hg.b(this.p), hg.b(this.z.b) - 1, hg.b(this.r));
+            int i = this.l.a(hh.b(this.p), hh.b(this.z.b) - 1, hh.b(this.r));
             if (i > 0) {
-                f1 = gb.m[i].bt * 0.98F;
+                f1 = gc.m[i].bt * 0.98F;
             }
         }
 
@@ -75,25 +75,25 @@ public class gk extends dy {
 
     @Override
     public boolean r() {
-        return this.l.a(this.z, jx.f, this);
+        return this.l.a(this.z, jy.f, this);
     }
 
     private boolean g(double paramDouble1, double paramDouble2, double paramDouble3) {
-        int i = hg.b(paramDouble1);
-        int j = hg.b(paramDouble2);
-        int k = hg.b(paramDouble3);
+        int i = hh.b(paramDouble1);
+        int j = hh.b(paramDouble2);
+        int k = hh.b(paramDouble3);
 
         double d1 = paramDouble1 - i;
         double d2 = paramDouble2 - j;
         double d3 = paramDouble3 - k;
 
-        if (gb.o[this.l.a(i, j, k)] != false) {
-            int m = gb.o[this.l.a(i - 1, j, k)] == false ? 1 : 0;
-            int n = gb.o[this.l.a(i + 1, j, k)] == false ? 1 : 0;
-            int i1 = gb.o[this.l.a(i, j - 1, k)] == false ? 1 : 0;
-            int i2 = gb.o[this.l.a(i, j + 1, k)] == false ? 1 : 0;
-            int i3 = gb.o[this.l.a(i, j, k - 1)] == false ? 1 : 0;
-            int i4 = gb.o[this.l.a(i, j, k + 1)] == false ? 1 : 0;
+        if (gc.o[this.l.a(i, j, k)] != false) {
+            int m = gc.o[this.l.a(i - 1, j, k)] == false ? 1 : 0;
+            int n = gc.o[this.l.a(i + 1, j, k)] == false ? 1 : 0;
+            int i1 = gc.o[this.l.a(i, j - 1, k)] == false ? 1 : 0;
+            int i2 = gc.o[this.l.a(i, j + 1, k)] == false ? 1 : 0;
+            int i3 = gc.o[this.l.a(i, j, k - 1)] == false ? 1 : 0;
+            int i4 = gc.o[this.l.a(i, j, k + 1)] == false ? 1 : 0;
 
             int i5 = -1;
             double d4 = 9999.0D;
@@ -152,7 +152,7 @@ public class gk extends dy {
     }
 
     @Override
-    public boolean a(dy paramdy, int paramInt) {
+    public boolean a(ea paramea, int paramInt) {
         u();
         this.f -= paramInt;
         if (this.f <= 0) {
@@ -174,22 +174,22 @@ public class gk extends dy {
         this.f = (paramv.c("Health") & 0xFF);
         this.b = paramv.c("Age");
         v localv = paramv.j("Item");
-        this.a = new hm(localv);
+        this.a = new hn(localv);
     }
 
     @Override
-    public void b(fy paramfy) {
+    public void b(fz paramfz) {
         if (this.l.z) {
             return;
         }
 
         int i = this.a.a;
-        if ((this.c == 0) && (paramfy.am.a(this.a))) {
+        if ((this.c == 0) && (paramfz.am.a(this.a))) {
             // hMod: allow item pickups
             Item item = new Item(a.c, a.a);
-            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_PICK_UP, new Object[]{((es)paramfy).getPlayer(), item})) {
+            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_PICK_UP, ((et)paramfz).getPlayer(), item)) {
                 this.l.a(this, "random.pop", 0.2F, ((this.W.nextFloat() - this.W.nextFloat()) * 0.7F + 1.0F) * 2.0F);
-                paramfy.c(this, i);
+                paramfz.c(this, i);
                 l();
             }
         }

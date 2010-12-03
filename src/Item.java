@@ -241,11 +241,11 @@ public class Item {
 
     /**
      * Creates an item from the actual item class
-     * @param hm
+     * @param hn
      */
-    public Item(hm hm) {
-        itemId = hm.c;
-        amount = hm.a;
+    public Item(hn hn) {
+        itemId = hn.c;
+        amount = hn.a;
         this.itemType = Type.fromId(itemId);
     }
 
@@ -288,8 +288,8 @@ public class Item {
      * @return
      */
     public static boolean isValidItem(int itemId) {
-        if (itemId < fk.c.length) {
-            return fk.c[itemId] != null;
+        if (itemId < fl.c.length) {
+            return fl.c[itemId] != null;
         }
         return false;
     }
