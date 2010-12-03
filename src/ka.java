@@ -310,7 +310,7 @@ public class ka extends ea {
                 return false;
             }
             // hMod: partial damage
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.ENTITY, attacker, defender, paramInt - bn)) {
+            if (attacker != null && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.ENTITY, attacker, defender, paramInt - bn)) {
                 return false;
             }
             c(paramInt - this.bn);
@@ -318,7 +318,7 @@ public class ka extends ea {
             i = 0;
         } else {
             // hMod: full damage
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.ENTITY, attacker, defender, paramInt)) {
+            if (attacker != null && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.ENTITY, attacker, defender, paramInt)) {
                 return false;
             }
             this.bn = paramInt;
