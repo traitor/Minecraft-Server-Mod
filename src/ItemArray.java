@@ -6,7 +6,7 @@
  */
 public abstract class ItemArray<C extends Container<hn>> {
     protected C container;
-    private int arraySize = 0;    
+    private int arraySize = 0;
     
     public ItemArray(C c, int size) {
         this.container = c;
