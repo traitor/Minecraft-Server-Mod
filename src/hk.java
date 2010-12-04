@@ -1,4 +1,4 @@
-public class hk implements ke {
+public class hk implements ke, Container<hn> {
     public hn[] a = new hn[37];
     public hn[] b = new hn[4];
     public hn[] c = new hn[4];
@@ -6,6 +6,9 @@ public class hk implements ke {
     public int d = 0;
     private fz f;
     public boolean e = false;
+    
+    //hMod: keep track of inventory type here so that we can conform to Container.
+    public Inventory.Type type = Inventory.Type.Inventory;
 
     public hk(fz paramfz) {
         this.f = paramfz;
@@ -284,6 +287,31 @@ public class hk implements ke {
                 this.f.a(this.b[i], true);
                 this.b[i] = null;
             }
+        }
+    }
+
+    @Override
+    public hn[] getContents() {
+        switch (type) {
+        case Inventory:
+            return a;
+        case CraftingTable:
+            return c;
+        case Equipment:
+            return b;
+        }
+        return null;
+    }
+
+    @Override
+    public void setContents(hn[] values) {
+        switch (type) {
+        case Inventory:
+            a = values;
+        case CraftingTable:
+            c = values;
+        case Equipment:
+            b = values;
         }
     }
 }

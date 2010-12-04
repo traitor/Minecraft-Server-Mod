@@ -3,7 +3,7 @@
  * 
  * @author James
  */
-public class Inventory extends ItemArray {
+public class Inventory extends ItemArray<hk> {
     /**
      * The type of inventory to use
      */
@@ -23,7 +23,6 @@ public class Inventory extends ItemArray {
         Equipment
     }
     private et user;
-    private Type type;
 
     /**
      * Creates an interface for this player's inventory
@@ -32,8 +31,9 @@ public class Inventory extends ItemArray {
      * @param type
      */
     public Inventory(Player player, Type type) {
+        super(player.getUser().am, 27);
         this.user = player.getUser();
-        this.type = type;
+        container.type = type;
     }
 
     /**
@@ -101,18 +101,6 @@ public class Inventory extends ItemArray {
         user.a.d();
     }
 
-    public hn[] getArray() {
-        switch (type) {
-            case Inventory:
-                return user.am.a;
-            case CraftingTable:
-                return user.am.c;
-            case Equipment:
-                return user.am.b;
-        }
-        return new hn[0];
-    }
-
     /**
      * Returns a String value representing this Block
      * 
@@ -120,7 +108,7 @@ public class Inventory extends ItemArray {
      */
     @Override
     public String toString() {
-        return String.format("Inventory[user=%s, type=%s]", user.getPlayer(), type);
+        return String.format("Inventory[user=%s, type=%s]", user.getPlayer(), container.type);
     }
 
     /**
@@ -141,7 +129,7 @@ public class Inventory extends ItemArray {
         if (!this.user.getPlayer().equals(other.user.getPlayer())) {
             return false;
         }
-        if (this.type != other.type) {
+        if (container.type != other.container.type) {
             return false;
         }
         return true;
@@ -156,7 +144,7 @@ public class Inventory extends ItemArray {
     public int hashCode() {
         int hash = 7;
         hash = 97 * hash + this.user.hashCode();
-        hash = 97 * hash + this.type.ordinal();
+        hash = 97 * hash + container.type.ordinal();
         return hash;
     }
 }

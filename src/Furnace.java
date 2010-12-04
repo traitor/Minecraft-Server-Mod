@@ -2,77 +2,30 @@
  * Furnace.java - Interface for furnaces
  * @author James
  */
-public class Furnace extends ItemArray implements ComplexBlock {
-    private dv furnace;
+public class Furnace extends ItemArray<dv> implements ComplexBlock {
 
     /**
      * Creates a furnace interface
      * @param localay
      */
-    public Furnace(dv localay) {
-        this.furnace = localay;
+    public Furnace(dv furnace) {
+        super(furnace, 3);
     }
 
     public int getX() {
-        return furnace.b;
+        return container.b;
     }
 
     public int getY() {
-        return furnace.c;
+        return container.c;
     }
 
     public int getZ() {
-        return furnace.d;
+        return container.d;
     }
 
     public void update() {
-        furnace.c();
-    }
-
-    public hn[] getArray() {
-        return furnace.getContents();
-    }
-
-    /**
-     * Returns the size of contents
-     * @return size
-     */
-    public int getContentSize() {
-        return furnace.a();
-    }
-
-    /**
-     * Sets the contents of this furnace
-     * @param contents contents of this furnace
-     */
-    public void setArray(hn[] contents) {
-        furnace.setContents(contents);
-    }
-
-    /**
-     * Returns the contents of this furnace
-     * @return contents
-     */
-    public Item[] getContents() {
-        Item[] rt = new Item[getContentSize()];
-        for (int i = 0; i < getContentSize(); i++) {
-            rt[i] = new Item(getArray()[i]);
-        }
-
-        return rt;
-    }
-
-    /**
-     * Sets the contents of this furnace
-     * @param contents contents to set
-     */
-    public void setContents(Item[] contents) {
-        hn[] newcontents = new hn[getContentSize()];
-        for (int i = 0; i < getContentSize(); i++) {
-            newcontents[i] = new hn(contents[i].getItemId(), contents[i].getAmount());
-        }
-
-        setArray(newcontents);
+        container.c();
     }
 
     /**
