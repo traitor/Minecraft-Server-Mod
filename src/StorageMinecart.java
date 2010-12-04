@@ -4,17 +4,17 @@
  */
 public class StorageMinecart extends ItemArray {
 
-    private jn cart;
+    private jo cart;
 
     /**
      * Creates an interface for storage of powered and storage carts.
-     * @param cart
+     * @param jo
      */
-    public StorageMinecart(jn cart) {
-        this.cart = cart;
+    public StorageMinecart(jo jo) {
+        this.cart = jo;
     }
 
-    public hm[] getArray() {
+    public hn[] getArray() {
         return cart.ak;
     }
 }

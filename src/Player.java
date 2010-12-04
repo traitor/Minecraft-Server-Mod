@@ -14,9 +14,7 @@ import net.minecraft.server.MinecraftServer;
  * 
  * @author James
  */
-public class Player extends LivingEntity {
-    private es player;
-    
+public class Player extends HumanEntity {
     private static final Logger log = Logger.getLogger("Minecraft");
     private int id = -1;
     private String prefix = "";
@@ -32,18 +30,25 @@ public class Player extends LivingEntity {
     private Pattern badChatPattern = Pattern.compile("[^ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ\\[\\\\\\]^_'abcdefghijklmnopqrstuvwxyz{|}~\u2302\u00C7\u00FC\u00E9\u00E2\u00E4\u00E0\u00E5\u00E7\u00EA\u00EB\u00E8\u00EF\u00EE\u00EC\u00C4\u00C5\u00C9\u00E6\u00C6\u00F4\u00F6\u00F2\u00FB\u00F9\u00FF\u00D6\u00DC\u00F8\u00A3\u00D8\u00D7\u0192\u00E1\u00ED\u00F3\u00FA\u00F1\u00D1\u00AA\u00BA\u00BF\u00AE\u00AC\u00BD\u00BC\u00A1\u00AB\u00BB]");
 
     /**
-     * Creates a player interface
-     * @param player player to interface
-     */
-    public Player(es player) {
-        super(player);
-        this.player = player;
-    }
-
-    /**
-     * Creates an empty player (FlatFileSource uses it, any use? O.o)
+     * Creates an empty player. Add the player by calling {@link #setUser(es)}
      */
     public Player() {
+    }
+    
+    /**
+     * Returns the entity we're wrapping.
+     * @return
+     */
+    public et getEntity() {
+        return (et)entity;
+    }
+    
+    /**
+     * Returns if the player is still connected
+     * @return
+     */
+    public boolean isConnected() {
+        return !getEntity().a.c;
     }
 
     /**
@@ -52,7 +57,7 @@ public class Player extends LivingEntity {
      * @param reason
      */
     public void kick(String reason) {
-        player.a.c(reason);
+        getEntity().a.c(reason);
     }
 
     /**
@@ -61,7 +66,7 @@ public class Player extends LivingEntity {
      * @param message
      */
     public void sendMessage(String message) {
-        player.a.msg(message);
+        getEntity().a.msg(message);
     }
 
     /**
@@ -96,7 +101,7 @@ public class Player extends LivingEntity {
                 sendMessage(Colors.Rose + "You are currently muted.");
                 return;
             }
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.CHAT, new Object[]{player, message})) {
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.CHAT, new Object[]{this, message})) {
                 return;
             }
 
@@ -118,7 +123,7 @@ public class Player extends LivingEntity {
                 log.info("Command used by " + getName() + " " + command);
             }
             String[] split = command.split(" ");
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMMAND, new Object[]{player, split})) {
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMMAND, new Object[]{this, split})) {
                 return; // No need to go on, commands were parsed.
             }
             if (!canUseCommand(split[0]) && !split[0].startsWith("/#")) {
@@ -590,8 +595,7 @@ public class Player extends LivingEntity {
 
                     // adds player to ban list
                     etc.getMCServer().f.c(player.getIP());
-
-                    etc.getLoader().callHook(PluginLoader.Hook.IPBAN, new Object[]{getUser(), player.getUser(), split.length >= 3 ? etc.combineSplit(2, split, " ") : ""});
+                    etc.getLoader().callHook(PluginLoader.Hook.IPBAN, new Object[]{this, player, split.length >= 3 ? etc.combineSplit(2, split, " ") : ""});
 
                     log.log(Level.INFO, "IP Banning " + player.getName() + " (IP: " + player.getIP() + ")");
                     sendMessage(Colors.Rose + "IP Banning " + player.getName() + " (IP: " + player.getIP() + ")");
@@ -621,7 +625,7 @@ public class Player extends LivingEntity {
                     // adds player to ban list
                     etc.getServer().ban(player.getName());
 
-                    etc.getLoader().callHook(PluginLoader.Hook.BAN, new Object[]{getUser(), player.getUser(), split.length >= 3 ? etc.combineSplit(2, split, " ") : ""});
+                    etc.getLoader().callHook(PluginLoader.Hook.BAN, new Object[]{this, player, split.length >= 3 ? etc.combineSplit(2, split, " ") : ""});
 
                     if (split.length > 2) {
                         player.kick("Banned by " + getName() + ": " + etc.combineSplit(2, split, " "));
@@ -664,7 +668,7 @@ public class Player extends LivingEntity {
                         return;
                     }
 
-                    etc.getLoader().callHook(PluginLoader.Hook.KICK, new Object[]{getUser(), player.getUser(), split.length >= 3 ? etc.combineSplit(2, split, " ") : ""});
+                    etc.getLoader().callHook(PluginLoader.Hook.KICK, new Object[]{this, player, split.length >= 3 ? etc.combineSplit(2, split, " ") : ""});
 
                     if (split.length > 2) {
                         player.kick("Kicked by " + getName() + ": " + etc.combineSplit(2, split, " "));
@@ -804,7 +808,7 @@ public class Player extends LivingEntity {
             } else if ((command.startsWith("/#")) && (etc.getMCServer().f.g(getName()))) {
                 String str = command.substring(2);
                 log.info(getName() + " issued server command: " + str);
-                etc.getMCServer().a(str, player.a);
+                etc.getMCServer().a(str, getEntity().a);
             } else if (split[0].equalsIgnoreCase("/time")) {
                 if (split.length == 2) {
                     if (split[1].equalsIgnoreCase("day")) {
@@ -1009,15 +1013,16 @@ public class Player extends LivingEntity {
      * @param amount
      */
     public void giveItemDrop(int itemId, int amount) {
+        et player = getEntity();
         if (amount == -1) {
-            player.a(new hm(itemId, 255));
+            player.a(new hn(itemId, 255));
         } else {
             int temp = amount;
             do {
                 if (temp - 64 >= 64) {
-                    player.a(new hm(itemId, 64));
+                    player.a(new hn(itemId, 64));
                 } else {
-                    player.a(new hm(itemId, temp));
+                    player.a(new hn(itemId, temp));
                 }
                 temp -= 64;
             } while (temp > 0);
@@ -1151,15 +1156,6 @@ public class Player extends LivingEntity {
     }
 
     /**
-     * Returns the player's name
-     * 
-     * @return
-     */
-    public String getName() {
-        return player.at;
-    }
-
-    /**
      * Returns the player's current location
      * 
      * @return
@@ -1180,7 +1176,7 @@ public class Player extends LivingEntity {
      * @return
      */
     public String getIP() {
-        return player.a.b.b().toString().split(":")[0].substring(1);
+        return getEntity().a.b.b().toString().split(":")[0].substring(1);
     }
 
     /**
@@ -1448,8 +1444,8 @@ public class Player extends LivingEntity {
      * 
      * @return
      */
-    public es getUser() {
-        return player;
+    public et getUser() {
+        return getEntity();
     }
 
     /**
@@ -1457,15 +1453,20 @@ public class Player extends LivingEntity {
      * 
      * @param er
      */
-    public void setUser(es es) {
-        this.player = es;
-        this.entity = es;
+    public void setUser(et player) {
+        this.entity = player;
         this.inventory = new Inventory(this, Inventory.Type.Inventory);
         this.craftingTable = new Inventory(this, Inventory.Type.CraftingTable);
         this.equipment = new Inventory(this, Inventory.Type.Equipment);
     }
 
     public void teleportTo(double x, double y, double z, float rotation, float pitch) {
+        et player = getEntity();
+        
+        // If player is in vehicle - eject them before they are teleported.
+        if (player.k != null) {
+            player.e(player.k);
+        }
         player.a.a(x, y, z, rotation, pitch);
     }
 
@@ -1509,7 +1510,7 @@ public class Player extends LivingEntity {
      * @return
      */
     public int getItemInHand() {
-        return player.a.getItemInHand();
+        return getEntity().a.getItemInHand();
     }
 
     /**

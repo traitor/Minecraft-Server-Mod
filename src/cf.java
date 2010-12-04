@@ -1,3 +1,6 @@
+import java.util.List;
+import java.util.Random;
+
 public class cf extends ay {
     public int e = -1;
     public String f;
@@ -44,31 +47,31 @@ public class cf extends ay {
 
         int i = 4;
         for (int j = 0; j < i; j++) {
-            jz localjz = (jz) ho.a(this.f, this.a);
-            if (localjz == null) {
+            ka localka = (ka) hp.a(this.f, this.a);
+            if (localka == null) {
                 return;
             }
 
-            int k = this.a.a(localjz.getClass(), dv.b(this.b, this.c, this.d, this.b + 1, this.c + 1, this.d + 1).b(8.0D, 4.0D, 8.0D)).size();
+            int k = this.a.a(localka.getClass(), dw.b(this.b, this.c, this.d, this.b + 1, this.c + 1, this.d + 1).b(8.0D, 4.0D, 8.0D)).size();
             if (k >= 6) {
                 d();
                 return;
             }
 
-            if (localjz != null) {
+            if (localka != null) {
                 double d4 = this.b + (this.a.l.nextDouble() - this.a.l.nextDouble()) * 4.0D;
                 double d5 = this.c + this.a.l.nextInt(3) - 1;
                 double d6 = this.d + (this.a.l.nextDouble() - this.a.l.nextDouble()) * 4.0D;
 
-                localjz.c(d4, d5, d6, this.a.l.nextFloat() * 360.0F, 0.0F);
+                localka.c(d4, d5, d6, this.a.l.nextFloat() * 360.0F, 0.0F);
 
-                if (localjz.a()) {
+                if (localka.a()) {
                     // hMod: allow entities to spawn
-                    if ((Boolean) (etc.getLoader().callHook(PluginLoader.Hook.MOB_SPAWN, new Object[]{new Mob(localjz)}))) {
+                    if ((Boolean) (etc.getLoader().callHook(PluginLoader.Hook.MOB_SPAWN, new Mob(localka)))) {
                         d();
                         return;
                     }
-                    this.a.a(localjz);
+                    this.a.a(localka);
 
                     for (int m = 0; m < 20; m++) {
                         d1 = this.b + 0.5D + (this.a.l.nextFloat() - 0.5D) * 2.0D;
@@ -79,7 +82,7 @@ public class cf extends ay {
                         this.a.a("flame", d1, d2, d3, 0.0D, 0.0D, 0.0D);
                     }
 
-                    localjz.J();
+                    localka.J();
                     d();
                 }
             }

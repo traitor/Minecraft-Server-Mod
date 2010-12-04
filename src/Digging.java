@@ -3,13 +3,12 @@
  *  - Patch by Zeerix
  * @author James
  */
-public class Digging extends ju {
-
+public class Digging extends jv {
     /**
      * Creates a digging class
      * @param world
      */
-    public Digging(ep world) {
+    public Digging(eq world) {
         super(world);
     }
 
@@ -18,7 +17,7 @@ public class Digging extends ju {
      * @param world
      * @param player
      */
-    public Digging(ep world, es player) {
+    public Digging(eq world, et player) {
         this(world);
         a = player;
     }
@@ -32,9 +31,23 @@ public class Digging extends ju {
      */
     public boolean c(int x, int y, int z) {
         Block block = etc.getServer().getBlockAt(x, y, z);
-        Boolean result = (Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, new Object[]{(es) a, block});
-        if (result)
+        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, ((et) a).getPlayer(), block)) {
             return true;
+        }
         return super.c(x, y, z);
+    }
+
+    /**
+     * Called when a player right-click air with an item in hand. We intercept it.
+     * @param player
+     * @param world
+     * @param item
+     * @return
+     */
+    public boolean a(fz player, eq world, hn item, Block blockToPlace, Block blockClicked) {
+        if (player instanceof et && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, ((et) player).getPlayer(), blockToPlace, blockClicked, new Item(item))) {
+            return false;
+        }
+        return super.a(player, world, item);
     }
 }

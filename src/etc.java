@@ -45,19 +45,7 @@ public class etc {
     private boolean showUnknownCommand = true;
     private String versionStr;
     private boolean tainted = true;
-    private int version = 1;                                                                                                                              // Version
-    // is
-    // meant
-    // to
-    // be
-    // loaded
-    // from
-    // the
-    // file,
-    // this
-    // stays
-    // as
-    // 1.
+    private int version = 1; // Version is meant to be loaded from the file, this stays as 1.
     private String driver, username, password, db;
     public static final String MINECRAFT_SERVER_SHA1 = "f4d5a32b582b6f4d43a7d9c06297798be809f034";
 

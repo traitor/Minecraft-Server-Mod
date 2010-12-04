@@ -4,9 +4,6 @@
  * @author tw1nk
  */
 public class Minecart extends BaseVehicle {
-
-    jn cart;
-
     /**
      * Type of minecart
      */
@@ -27,11 +24,18 @@ public class Minecart extends BaseVehicle {
 
     /**
      * Creates an interface for minecart.
-     * @param cart
+     * @param o
      */
-    public Minecart(jn cart) {
-        super(cart);
-        this.cart = cart;
+    public Minecart(jo o) {
+        super(o);
+    }
+    
+    /**
+     * Returns the entity we're wrapping.
+     * @return
+     */ 
+    public jo getEntity() {
+        return (jo) entity;
     }
 
     /**
@@ -39,7 +43,7 @@ public class Minecart extends BaseVehicle {
      * @param damage over 40 and you "kill" the mineentity
      */
     public void setDamage(int damage) {
-        cart.a = damage;
+        getEntity().a = damage;
     }
 
     /**
@@ -47,7 +51,7 @@ public class Minecart extends BaseVehicle {
      * @return returns current damage
      */
     public int getDamage() {
-        return cart.a;
+        return getEntity().a;
     }
 
     /**
@@ -55,7 +59,7 @@ public class Minecart extends BaseVehicle {
      * @return type
      */
     public Type getType() {
-        switch (cart.d) {
+        switch (getEntity().d) {
             case 1: return Type.Minecart;
             case 2: return Type.StorageCart;
             case 3: return Type.PoweredMinecart;
@@ -70,7 +74,7 @@ public class Minecart extends BaseVehicle {
      */
     public StorageMinecart getStorage() {
         if (getType() == Type.StorageCart || getType() == Type.PoweredMinecart)
-            return new StorageMinecart(cart);
+            return new StorageMinecart(getEntity());
         return null;
     }
 }

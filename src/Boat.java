@@ -3,15 +3,19 @@
  * @author James
  */
 public class Boat extends BaseVehicle {
-
-    fl boat;
-
     /**
      * Interface for boats.
      * @param boat
      */
-    public Boat(fl boat) {
+    public Boat(fm boat) {
         super(boat);
-        this.boat = boat;
+    }
+    
+    /**
+     * Returns the entity we're wrapping.
+     * @return
+     */ 
+    public fm getEntity() {
+        return (fm) entity;
     }
 }

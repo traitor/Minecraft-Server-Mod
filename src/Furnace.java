@@ -3,15 +3,14 @@
  * @author James
  */
 public class Furnace extends ItemArray implements ComplexBlock {
-
-    private du furnace;
+    private dv furnace;
 
     /**
      * Creates a furnace interface
-     * @param furnace
+     * @param localay
      */
-    public Furnace(du furnace) {
-        this.furnace = furnace;
+    public Furnace(dv localay) {
+        this.furnace = localay;
     }
 
     public int getX() {
@@ -30,7 +29,7 @@ public class Furnace extends ItemArray implements ComplexBlock {
         furnace.c();
     }
 
-    public hm[] getArray() {
+    public hn[] getArray() {
         return furnace.getContents();
     }
 
@@ -46,7 +45,7 @@ public class Furnace extends ItemArray implements ComplexBlock {
      * Sets the contents of this furnace
      * @param contents contents of this furnace
      */
-    public void setArray(hm[] contents) {
+    public void setArray(hn[] contents) {
         furnace.setContents(contents);
     }
 
@@ -68,9 +67,9 @@ public class Furnace extends ItemArray implements ComplexBlock {
      * @param contents contents to set
      */
     public void setContents(Item[] contents) {
-        hm[] newcontents = new hm[getContentSize()];
+        hn[] newcontents = new hn[getContentSize()];
         for (int i = 0; i < getContentSize(); i++) {
-            newcontents[i] = new hm(contents[i].getItemId(), contents[i].getAmount());
+            newcontents[i] = new hn(contents[i].getItemId(), contents[i].getAmount());
         }
 
         setArray(newcontents);

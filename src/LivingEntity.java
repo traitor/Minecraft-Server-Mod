@@ -3,8 +3,6 @@
  * @author
  */
 public class LivingEntity extends BaseEntity {
-    jz livingEntity;
-
     /**
      * Interface for living entities
      */
@@ -15,9 +13,16 @@ public class LivingEntity extends BaseEntity {
      * Interface for living entities
      * @param livingEntity
      */
-    public LivingEntity(jz livingEntity) {
+    public LivingEntity(ka livingEntity) {
         super(livingEntity);
-        this.livingEntity = livingEntity;
+    }
+    
+    /**
+     * Returns the entity we're wrapping.
+     * @return
+     */
+    public ka getEntity() {
+        return (ka)entity;
     }
 
     /**
@@ -26,7 +31,7 @@ public class LivingEntity extends BaseEntity {
      * @return health
      */
     public int getHealth() {
-        return livingEntity.aR;
+        return getEntity().aR;
     }
 
     /**
@@ -35,7 +40,7 @@ public class LivingEntity extends BaseEntity {
      *          amount of health to increase the players health with.
      */
     public void increaseHealth(int health) {
-        entity.a(health);
+        getEntity().a(health);
     }
 
     /**
@@ -51,6 +56,64 @@ public class LivingEntity extends BaseEntity {
             health = -1;
         if (health > 20)
             health = 20;
-        livingEntity.aR = health;
+        getEntity().aR = health;
+    }
+
+    /**
+     * Get the amount of ticks this entity is dead.
+     * 20 ticks per second.
+     * @return
+     */
+    public int getDeathTicks() {
+        return getEntity().aW;
+    }
+
+    /**
+     * Set the amount of ticks this entity is dead.
+     * 20 ticks per second.
+     * 
+     * @param ticks
+     */
+    public void setDeathTicks(int ticks) {
+        getEntity().aW = ticks;
+    }
+
+    /**
+     * Get the amount of ticks this entity will not take damage. (unless it heals)
+     * 20 ticks per second.
+     * 
+     * @return
+     */
+    public int getBaseNoDamageTicks() {
+        return getEntity().aw;
+    }
+
+    /**
+     * Set the amount of ticks this entity will not take damage. (until it heals)
+     * 20 ticks per second.
+     * 
+     * @param ticks
+     */
+    public void setBaseNoDamageTicks(int ticks) {
+        getEntity().aw = ticks;
+    }
+
+    /**
+     * Get the current maximum damage taken during this NoDamageTime
+     * 
+     * @return
+     */
+    public int getLastDamage() {
+        return getEntity().bn;
+    }
+
+    /**
+     * Set the current maximum damage taken during this NoDamageTime
+     * (if any damage is higher than this number the difference will be added)
+     * 
+     * @param amount
+     */
+    public void setLastDamage(int amount) {
+        getEntity().bn = amount;
     }
 }

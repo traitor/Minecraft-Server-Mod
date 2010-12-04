@@ -1,13 +1,15 @@
+import java.lang.reflect.Constructor;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import net.minecraft.server.MinecraftServer;
 
-public class es extends fy {
-    public jh a;
+public class et extends fz {
+    public ji a;
     public MinecraftServer b;
-    public ju c;
+    public jv c;
     public double d;
     public double e;
     public List f = new LinkedList();
@@ -15,31 +17,33 @@ public class es extends fy {
     public Set aj = new HashSet();
     public double ak;
     public boolean al = false;
+
     private int bv = -99999999;
+    private int bw = 60;
 
     // hMod: Player storage
     private Player player;
 
-    public es(MinecraftServer paramMinecraftServer, ep paramep, String paramString, ju paramju) {
-        super(paramep);
+    public et(MinecraftServer paramMinecraftServer, eq parameq, String paramString, jv paramjv) {
+        super(parameq);
 
-        int i = paramep.m;
-        int j = paramep.o;
-        int k = paramep.n;
+        int i = parameq.m;
+        int j = parameq.o;
+        int k = parameq.n;
 
-        if (!paramep.q.e) {
+        if (!parameq.q.e) {
             i += this.W.nextInt(20) - 10;
-            k = paramep.e(i, j);
+            k = parameq.e(i, j);
             j += this.W.nextInt(20) - 10;
         }
         c(i + 0.5D, k, j + 0.5D, 0.0F, 0.0F);
 
         this.b = paramMinecraftServer;
         this.S = 0.0F;
-        paramju.a = this;
+        paramjv.a = this;
         this.at = paramString;
         // hMod: So we don't conflict with runecraft
-        this.c = new Digging(paramep, this);
+        this.c = new Digging(parameq, this);
         this.H = 0.0F;
 
         player = etc.getDataSource().getPlayer(paramString);
@@ -65,10 +69,11 @@ public class es extends fy {
 
     @Override
     public void b_() {
+        this.bw -= 1;
     }
 
     @Override
-    public void f(dy paramdy) {
+    public void f(ea paramea) {
         // hMod: drops inventory on death.
         // TODO: HOOK MEH
         if (etc.getInstance().isHealthEnabled()) {
@@ -77,19 +82,23 @@ public class es extends fy {
     }
 
     @Override
-    public boolean a(dy paramdy, int paramInt) {
+    public boolean a(ea paramea, int paramInt) {
+        if (this.bw > 0) {
+            return false;
+        }
+
         if (!this.b.n) {
-            if ((paramdy instanceof fy)) {
+            if ((paramea instanceof fz)) {
                 return false;
             }
-            if ((paramdy instanceof dx)) {
-                dx localdx = (dx) paramdy;
-                if ((localdx.b instanceof fy)) {
+            if ((paramea instanceof dy)) {
+                dy localdy = (dy) paramea;
+                if ((localdy.b instanceof fz)) {
                     return false;
                 }
             }
         }
-        return super.a(paramdy, paramInt);
+        return super.a(paramea, paramInt);
     }
 
     /**
@@ -121,16 +130,16 @@ public class es extends fy {
     public void k() {
         super.b_();
 
-        kg localObject1 = null;
+        kh localObject1 = null;
 
         double d1 = 0.0D;
         Object localObject2;
         for (int i = 0; i < this.f.size(); i++) {
             localObject2 = this.f.get(i);
-            double d2 = ((kg) localObject2).a(this);
+            double d2 = ((kh) localObject2).a(this);
             if ((i == 0) || (d2 < d1)) {
-                localObject1 = (kg) localObject2;
-                d1 = ((kg) localObject2).a(this);
+                localObject1 = (kh) localObject2;
+                d1 = ((kh) localObject2).a(this);
             }
         }
 
@@ -146,31 +155,43 @@ public class es extends fy {
 
             if (i != 0) {
                 this.f.remove(localObject1);
-                this.a.b(new dn(localObject1.a * 16, 0, localObject1.b * 16, 16, 128, 16, this.b.e));
+                
+                //hMod: create 'do' object using reflection...
+                Class doClass;
+                try {
+                    doClass = Class.forName("do");
+                    Class params[] = {Integer.TYPE, Integer.TYPE, Integer.TYPE, Integer.TYPE, Integer.TYPE, Integer.TYPE, eq.class};
+                    Constructor ct = doClass.getConstructor(params);
+                    Object arglist[] = { localObject1.a * 16, 0, localObject1.b * 16, 16, 128, 16, this.b.e };
+                    this.a.b((it)ct.newInstance(arglist));
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+                //this.a.b(new do(localObject1.a * 16, 0, localObject1.b * 16, 16, 128, 16, this.b.e));
                 localObject2 = this.b.e.d(localObject1.a * 16, 0, localObject1.b * 16, localObject1.a * 16 + 16, 128, localObject1.b * 16 + 16);
                 for (int j = 0; j < ((List) localObject2).size(); j++) {
                     ay localay = (ay) ((List) localObject2).get(j);
 
                     // hMod: Don't let people interact with Chests/Furnaces unless they can guild
-                    if (!player.canBuild() && (localay instanceof ib || localay instanceof du)) {
+                    if (!player.canBuild() && (localay instanceof ic || localay instanceof dv)) {
                         continue;
                     }
                     ComplexBlock block = null;
-                    if (localay instanceof ib) {
-                        block = new Chest((ib) localay);
-                    } else if (localay instanceof du) {
-                        block = new Furnace((du) localay);
-                    } else if (localay instanceof jm) {
-                        block = new Sign((jm) localay);
+                    if (localay instanceof ic) {
+                        block = new Chest((ic) localay);
+                    } else if (localay instanceof dv) {
+                        block = new Furnace((dv) localay);
+                    } else if (localay instanceof jn) {
+                        block = new Sign((jn) localay);
                     } else if (localay instanceof cf) {
                         block = new MobSpawner((cf) localay);
                     }
                     if (block != null) {
-                        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, new Object[]{this, block})) {
-                            this.a.b(new jg(localay.b, localay.c, localay.d, localay));
+                        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, this.getPlayer(), block)) {
+                            this.a.b(new jh(localay.b, localay.c, localay.d, localay));
                         }
                     } else {
-                        this.a.b(new jg(localay.b, localay.c, localay.d, localay));
+                        this.a.b(new jh(localay.b, localay.c, localay.d, localay));
                     }
                 }
             }
@@ -184,10 +205,10 @@ public class es extends fy {
                 this.ba = false;
             // Only send health updates when health is turned on.
             } else {
-                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.HEALTH_CHANGE, new Object[]{getPlayer(), this.bv, this.aR})){
+                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.HEALTH_CHANGE, getPlayer(), this.bv, this.aR)){
                     this.aR = this.bv;
                 } else {
-                    this.a.b(new ee(this.aR));
+                    this.a.b(new ef(this.aR));
                 }
             }
             this.bv = this.aR;
@@ -202,18 +223,18 @@ public class es extends fy {
     }
 
     @Override
-    public void c(dy paramdy, int paramInt) {
-        if (!paramdy.G) {
-            if ((paramdy instanceof gk)) {
-                this.a.b(new fg(((gk) paramdy).a, paramInt));
-                this.b.k.a(paramdy, new cs(paramdy.g, this.g));
+    public void c(ea paramea, int paramInt) {
+        if (!paramea.G) {
+            if ((paramea instanceof gl)) {
+                this.a.b(new fh(((gl) paramea).a, paramInt));
+                this.b.k.a(paramea, new cs(paramea.g, this.g));
             }
-            if ((paramdy instanceof dx)) {
-                this.a.b(new fg(new hm(fv.j), 1));
-                this.b.k.a(paramdy, new cs(paramdy.g, this.g));
+            if ((paramea instanceof dy)) {
+                this.a.b(new fh(new hn(fw.j), 1));
+                this.b.k.a(paramea, new cs(paramea.g, this.g));
             }
         }
-        super.c(paramdy, paramInt);
+        super.c(paramea, paramInt);
     }
 
     @Override
@@ -231,8 +252,8 @@ public class es extends fy {
     }
 
     @Override
-    public void e(dy paramdy) {
-        super.e(paramdy);
+    public void e(ea paramea) {
+        super.e(paramea);
         this.a.b(new s(this, this.k));
         this.a.a(this.p, this.q, this.r, this.v, this.w);
     }

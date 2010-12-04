@@ -162,11 +162,11 @@ public class Server {
         name = name.toLowerCase();
 
         for (Object player : server.f.b) {
-            String playerName = ((es) player).at;
+            String playerName = ((et) player).at;
 
             if (playerName.toLowerCase().equals(name)) {
                 // Perfect match found
-                lastPlayer = ((es) player).getPlayer();
+                lastPlayer = ((et) player).getPlayer();
                 break;
             }
             if (playerName.toLowerCase().indexOf(name.toLowerCase()) != -1) {
@@ -175,7 +175,7 @@ public class Server {
                     // Found multiple
                     return null;
                 }
-                lastPlayer = ((es) player).getPlayer();
+                lastPlayer = ((et) player).getPlayer();
             }
         }
 
@@ -189,7 +189,7 @@ public class Server {
      * @return
      */
     public Player getPlayer(String name) {
-        es user = server.f.h(name);
+        et user = server.f.h(name);
         return user == null ? null : user.getPlayer();
     }
 
@@ -200,7 +200,7 @@ public class Server {
     public List<Player> getPlayerList() {
         List<Player> toRet = new ArrayList<Player>();
         for (Object o : server.f.b) {
-            toRet.add(((es) o).getPlayer());
+            toRet.add(((et) o).getPlayer());
         }
         return toRet;
     }
@@ -212,8 +212,8 @@ public class Server {
     public List<Mob> getMobList() {
         List<Mob> toRet = new ArrayList<Mob>();
         for (Object o : server.e.b) {
-            if (o instanceof gb) {
-                toRet.add(new Mob((gc) o));
+            if (o instanceof gd || o instanceof ba) {
+                toRet.add(new Mob((ka) o));
             }
         }
         return toRet;
@@ -226,8 +226,8 @@ public class Server {
     public List<Minecart> getMinecartList() {
         List<Minecart> toRet = new ArrayList<Minecart>();
         for (Object o : server.e.b) {
-            if (o instanceof jn) {
-                toRet.add(new Minecart((jn) o));
+            if (o instanceof jo) {
+                toRet.add(new Minecart((jo) o));
             }
         }
         return toRet;
@@ -241,7 +241,7 @@ public class Server {
         List<Boat> toRet = new ArrayList<Boat>();
         for (Object o : server.e.b) {
             if (o instanceof fl) {
-                toRet.add(new Boat((fl) o));
+                toRet.add(new Boat((fm) o));
             }
         }
         return toRet;
@@ -254,14 +254,14 @@ public class Server {
     public List<BaseEntity> getEntityList() {
         List<BaseEntity> toRet = new ArrayList<BaseEntity>();
         for (Object o : server.e.b) {
-            if (o instanceof gc) {
-                toRet.add(new Mob((gc) o));
-            } else if (o instanceof jn) {
-                toRet.add(new Minecart((jn) o));
-            } else if (o instanceof fl) {
-                toRet.add(new Boat((fl) o));
-            } else if (o instanceof es) {
-                toRet.add(((es)o).getPlayer());
+            if (o instanceof gd || o instanceof ba) {
+                toRet.add(new Mob((ka) o));
+            } else if (o instanceof jo) {
+                toRet.add(new Minecart((jo) o));
+            } else if (o instanceof fm) {
+                toRet.add(new Boat((fm) o));
+            } else if (o instanceof et) {
+                toRet.add(((et)o).getPlayer());
             }
         }
         return toRet;
@@ -274,10 +274,10 @@ public class Server {
     public List<LivingEntity> getLivingEntityList() {
         List<LivingEntity> toRet = new ArrayList<LivingEntity>();
         for (Object o : server.e.b) {
-            if (o instanceof gc) {
-                toRet.add(new Mob((gc) o));
-            } else if (o instanceof es) {
-                toRet.add(((es)o).getPlayer());
+            if (o instanceof gd || o instanceof ba) {
+                toRet.add(new Mob((ka) o));
+            } else if (o instanceof et) {
+                toRet.add(((et)o).getPlayer());
             }
         }
         return toRet;
@@ -290,10 +290,10 @@ public class Server {
     public List<BaseVehicle> getVehicleEntityList() {
         List<BaseVehicle> toRet = new ArrayList<BaseVehicle>();
         for (Object o : server.e.b) {
-            if (o instanceof jn) {
-                toRet.add(new Minecart((jn) o));
-            } else if (o instanceof fl) {
-                toRet.add(new Boat((fl) o));
+            if (o instanceof jo) {
+                toRet.add(new Minecart((jo) o));
+            } else if (o instanceof fm) {
+                toRet.add(new Boat((fm) o));
             }
         }
         return toRet;
@@ -366,7 +366,7 @@ public class Server {
      */
     public boolean setBlockData(int x, int y, int z, int data) {
         boolean toRet = server.e.c(x, y, z, data);
-        etc.getMCServer().f.a(new fm(x, y, z, etc.getMCServer().e));
+        etc.getMCServer().f.a(new fn(x, y, z, etc.getMCServer().e));
         ComplexBlock block = getComplexBlock(x, y, z);
         if (block != null) {
             block.update();
@@ -425,12 +425,12 @@ public class Server {
     public ComplexBlock getComplexBlock(int x, int y, int z) {
         ay localav = server.e.k(x, y, z);
         if (localav != null) {
-            if (localav instanceof ib) {
-                return new Chest((ib) localav);
-            } else if (localav instanceof jm) {
-                return new Sign((jm) localav);
-            } else if (localav instanceof du) {
-                return new Furnace((du) localav);
+            if (localav instanceof ic) {
+                return new Chest((ic) localav);
+            } else if (localav instanceof jn) {
+                return new Sign((jn) localav);
+            } else if (localav instanceof dv) {
+                return new Furnace((dv) localav);
             } else if (localav instanceof cf) {
                 return new MobSpawner((cf) localav);
             }
@@ -481,9 +481,9 @@ public class Server {
         double d2 = server.e.l.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
         double d3 = server.e.l.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
 
-        gk localgk = new gk(server.e, x + d1, y + d2, z + d3, new hm(itemId, quantity));
-        localgk.c = 10;
-        server.e.a(localgk);
+        gl localgl = new gl(server.e, x + d1, y + d2, z + d3, new hn(itemId, quantity));
+        localgl.c = 10;
+        server.e.a(localgl);
     }
 
     /**
@@ -511,7 +511,7 @@ public class Server {
      * @param r - the runnable
      */
     public void addToServerQueue(Runnable r) {
-        gu.add(r);
+        gv.add(r);
     }
 
     /**
@@ -543,6 +543,39 @@ public class Server {
      */
     public boolean isChunkLoaded(int x, int y, int z) {
         return this.server.e.e(x, y, z);
+    }
+
+    /**
+     * Loads the chunk containing the given block. If the chunk does not
+     * exist, it will be generated.
+     *
+     * @param block the Block to check
+     */
+    public void loadChunk(Block block) {
+        loadChunk(block.getX(), block.getY(), block.getZ());
+    }
+
+    /**
+     * Loads the chunk containing the given block coordinates. If the chunk
+     * does not exist, it will be generated.
+     *
+     * @param x a block x-coordinate
+     * @param y a block y-coordinate
+     * @param z a block z-coordinate
+     */
+    public void loadChunk(int x, int y, int z) {
+        loadChunk(x >> 4, z >> 4);
+    }
+
+    /**
+     * Loads the chunk containing the given chunk coordinates. If the chunk
+     * does not exist, it will be generated.
+     *
+     * @param x a chunk x-coordinate
+     * @param z a chunk z-coordinate
+     */
+    public void loadChunk(int x, int z) {
+        this.server.e.A.d(x, z);
     }
 
     /**

@@ -492,11 +492,13 @@ public abstract class PluginListener {
     /**
      * Called when a player uses an item (rightclick with item in hand)
      * @param player the player
+     * @param blockPlaced where a block would end up when the item was a bucket
+     * @param blockClicked
      * @param item the item being used (in hand)
      * @return true to prevent using the item.
      */
 
-    public boolean onItemUse(Player player, Item item) {
+    public boolean onItemUse(Player player, Block blockPlaced, Block blockClicked, Item item) {
         return false;
     }
 
@@ -538,5 +540,20 @@ public abstract class PluginListener {
      */
     public PluginLoader.HookResult onLiquidDestroy( PluginLoader.HookResult currentState, int liquidBlockId, Block targetBlock )  {
         return PluginLoader.HookResult.DEFAULT_ACTION;
+    }
+
+    /**
+     * Called when an entity (attacker) tries to hurt a player (defender).
+     * Returning 'true' prevents all damage, returning 'false' lets the game handle it.
+     * Remember that the damage will be lessened by the amount of {@link LivingEntity#getLastDamage()}
+     * the defender has.
+     * 
+     * @param attacker the giver
+     * @param defender the taker
+     * @param amount of damage the entity tries to do
+     * @return
+     */
+    public boolean onAttack(LivingEntity attacker, LivingEntity defender, Integer amount) {
+        return false;
     }
 }
