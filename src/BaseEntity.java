@@ -169,7 +169,7 @@ public class BaseEntity {
         return entity instanceof et;
     }
 	
-	/**
+    /**
      * Returns whether or not this entity is alive
      * @return true if living entity
      */
