@@ -85,7 +85,9 @@ public class gr {
     }
 
     public et a(fs paramfs, String paramString1, String paramString2) {
-        String newName = paramfs.overiddenName;
+        //String newName = paramfs.overiddenName;
+        String newName = paramString1;
+
         if (newName != null) {
             a.log(Level.INFO, "Name change: " + paramString1 + " -> " + newName);
             paramString1 = newName;
