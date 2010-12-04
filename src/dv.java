@@ -1,4 +1,4 @@
-public class dv extends ay implements ke {
+public class dv extends ay implements ke, Container<hn> {
     private hn[] e = new hn[3];
     private int f = 0;
     private int g = 0;

@@ -197,5 +197,5 @@ public abstract class ItemArray {
      * 
      * @return item array
      */
-    public abstract hn[] getArray();
+    protected abstract hn[] getArray();
 }
