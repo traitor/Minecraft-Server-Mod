@@ -2,43 +2,34 @@
  * Chest.java - Interface to chests.
  * @author James
  */
-public class Chest extends ItemArray implements ComplexBlock {
-    private ic chest;
+public class Chest extends ItemArray<ic> implements ComplexBlock {
 
     /**
      * Creates a chest interface
      * @param localay
      */
-    public Chest(ic localay) {
-        this.chest = localay;
+    public Chest(ic chest) {
+        super(chest, 27);
     }
 
     public int getX() {
-        return chest.b;
+        return container.b;
     }
 
     public int getY() {
-        return chest.c;
+        return container.c;
     }
 
     public int getZ() {
-        return chest.d;
+        return container.d;
     }
 
     public void update() {
-        chest.c();
+        container.c();
     }
 
     public hn[] getArray() {
-        return chest.getContents();
-    }
-
-    /**
-     * Returns the content size of this chest
-     * @return
-     */
-    public int getContentSize() {
-        return 36;
+        return container.getContents();
     }
 
     /**
@@ -46,32 +37,7 @@ public class Chest extends ItemArray implements ComplexBlock {
      * @param contents contents to set
      */
     public void setArray(hn[] contents) {
-        chest.setContents(contents);
-    }
-
-    /**
-     * Returns the contents of this chest
-     * @return contents
-     */
-    public Item[] getContents() {
-        Item[] rt = new Item[getContentSize()];
-        for (int i = 0; i < getContentSize(); i++) {
-            rt[i] = new Item(getArray()[i]);
-        }
-
-        return rt;
-    }
-
-    /**
-     * Sets the contents
-     * @param contents contents to set
-     */
-    public void setContents(Item[] contents) {
-        hn[] newcontents = new hn[getContentSize()];
-        for (int i = 0; i < getContentSize(); i++) {
-            newcontents[i] = new hn(contents[i].getItemId(), contents[i].getAmount());
-        }
-        setArray(newcontents);
+        container.setContents(contents);
     }
 
     /**

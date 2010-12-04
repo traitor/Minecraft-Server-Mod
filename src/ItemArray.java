@@ -4,7 +4,19 @@
  * 
  * @author James
  */
-public abstract class ItemArray {
+public abstract class ItemArray<C extends Container<hn>> {
+    protected C container;
+    private int arraySize = 0;    
+    
+    public ItemArray(C c, int size) {
+        this.container = c;
+        this.arraySize = size;
+    }
+    
+    public int getContentSize() {
+        return arraySize;
+    }
+    
     /**
      * Adds the specified item. If the item doesn't have a slot, it will get the
      * nearest available slot. If amount is equal to 0, it will delete the item
@@ -184,18 +196,41 @@ public abstract class ItemArray {
     }
 
     /**
-     * Clears the contents
+     * Returns the contents of this chest
+     * @return contents
      */
+    public Item[] getContents() {
+        Item[] rt = new Item[arraySize];
+        for (int i = 0; i < arraySize; i++) {
+            rt[i] = (getArray()[i] != null) ? new Item(getArray()[i]):null;
+        }
+
+        return rt;
+    }
+
+    /**
+     * Sets the contents
+     * @param contents contents to set
+     */
+    public void setContents(Item[] contents) {
+        hn[] newcontents = new hn[arraySize];
+        for (int i = 0; i < arraySize; i++) {
+            newcontents[i] = (contents[i] != null) ? new hn(contents[i].getItemId(), contents[i].getAmount()):null;
+        }
+        setArray(newcontents);
+    }
+        
+    public hn[] getArray() {
+        return container.getContents();
+    }
+    
+    public void setArray(hn[] values) {
+        container.setContents(values);
+    }
+    
     public void clearContents() {
         for (int i = 0; getArray().length > i; i++) {
             getArray()[i] = null;
         }
     }
-
-    /**
-     * Gets the actual item array
-     * 
-     * @return item array
-     */
-    public abstract hn[] getArray();
 }

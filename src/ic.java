@@ -1,4 +1,4 @@
-public class ic extends ay implements ke {
+public class ic extends ay implements ke, Container<hn> {
     private hn[] e = new hn[36];
 
     /**
