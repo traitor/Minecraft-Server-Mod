@@ -14,7 +14,7 @@ public class HumanEntity extends LivingEntity {
      * 
      * @param human
      */
-    public HumanEntity(fy human) {
+    public HumanEntity(fz human) {
         super(human);
     }
 
@@ -22,8 +22,8 @@ public class HumanEntity extends LivingEntity {
      * Returns the entity we're wrapping.
      * @return
      */
-    public fy getEntity() {
-        return (fy) entity;
+    public fz getEntity() {
+        return (fz) entity;
     }
 
     /**

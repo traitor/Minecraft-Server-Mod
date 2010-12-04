@@ -13,7 +13,7 @@ public class LivingEntity extends BaseEntity {
      * Interface for living entities
      * @param livingEntity
      */
-    public LivingEntity(jz livingEntity) {
+    public LivingEntity(ka livingEntity) {
         super(livingEntity);
     }
     
@@ -21,8 +21,8 @@ public class LivingEntity extends BaseEntity {
      * Returns the entity we're wrapping.
      * @return
      */
-    public jz getEntity() {
-        return (jz)entity;
+    public ka getEntity() {
+        return (ka)entity;
     }
 
     /**
@@ -57,5 +57,63 @@ public class LivingEntity extends BaseEntity {
         if (health > 20)
             health = 20;
         getEntity().aR = health;
+    }
+
+    /**
+     * Get the amount of ticks this entity is dead.
+     * 20 ticks per second.
+     * @return
+     */
+    public int getDeathTicks() {
+        return getEntity().aW;
+    }
+
+    /**
+     * Set the amount of ticks this entity is dead.
+     * 20 ticks per second.
+     * 
+     * @param ticks
+     */
+    public void setDeathTicks(int ticks) {
+        getEntity().aW = ticks;
+    }
+
+    /**
+     * Get the amount of ticks this entity will not take damage. (unless it heals)
+     * 20 ticks per second.
+     * 
+     * @return
+     */
+    public int getBaseNoDamageTicks() {
+        return getEntity().aw;
+    }
+
+    /**
+     * Set the amount of ticks this entity will not take damage. (until it heals)
+     * 20 ticks per second.
+     * 
+     * @param ticks
+     */
+    public void setBaseNoDamageTicks(int ticks) {
+        getEntity().aw = ticks;
+    }
+
+    /**
+     * Get the current maximum damage taken during this NoDamageTime
+     * 
+     * @return
+     */
+    public int getLastDamage() {
+        return getEntity().bn;
+    }
+
+    /**
+     * Set the current maximum damage taken during this NoDamageTime
+     * (if any damage is higher than this number the difference will be added)
+     * 
+     * @param amount
+     */
+    public void setLastDamage(int amount) {
+        getEntity().bn = amount;
     }
 }

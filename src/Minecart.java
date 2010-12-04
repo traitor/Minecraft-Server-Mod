@@ -24,18 +24,18 @@ public class Minecart extends BaseVehicle {
 
     /**
      * Creates an interface for minecart.
-     * @param cart
+     * @param o
      */
-    public Minecart(jn cart) {
-        super(cart);
+    public Minecart(jo o) {
+        super(o);
     }
     
     /**
      * Returns the entity we're wrapping.
      * @return
      */ 
-    public jn getEntity() {
-        return (jn) entity;
+    public jo getEntity() {
+        return (jo) entity;
     }
 
     /**

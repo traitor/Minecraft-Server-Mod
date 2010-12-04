@@ -7,17 +7,17 @@ import java.util.Set;
 public class ci {
     public boolean a = false;
     private Random h = new Random();
-    private ep i;
+    private eq i;
     public double b;
     public double c;
     public double d;
-    public dy e;
+    public ea e;
     public float f;
     public Set g = new HashSet();
 
-    public ci(ep paramep, dy paramdy, double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat) {
-        this.i = paramep;
-        this.e = paramdy;
+    public ci(eq parameq, ea paramea, double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat) {
+        this.i = parameq;
+        this.e = paramea;
         this.f = paramFloat;
         this.b = paramDouble1;
         this.c = paramDouble2;
@@ -28,15 +28,15 @@ public class ci {
         // hMod: allow explosion
         Block block = new Block(this.i.a((int) Math.floor(this.b), (int) Math.floor(this.c), (int) Math.floor(this.d)), (int) Math.floor(this.b), (int) Math.floor(this.c), (int) Math.floor(this.d));
 
-        // hMod: preserve source through blockStatus.
+        // hMod: preserve source through blockstatus.
         if (this.e == null) {
             block.setStatus(1); // TNT
-        } else if (this.e instanceof fn) {
+        } else if (this.e instanceof fo) {
             block.setStatus(2); //Creeper
         }
 
-        // hMod: Call explode hook.
-        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.EXPLODE, new Object[]{block})) {
+        // hMod: call explode hook.
+        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.EXPLODE, block)) {
             return;
         }
 
@@ -68,15 +68,15 @@ public class ci {
 
                     float f3 = 0.3F;
                     while (f2 > 0.0F) {
-                        int i11 = hg.b(d6);
-                        int i12 = hg.b(d7);
-                        int i13 = hg.b(d8);
+                        int i11 = hh.b(d6);
+                        int i12 = hh.b(d7);
+                        int i13 = hh.b(d8);
                         int i14 = this.i.a(i11, i12, i13);
                         if (i14 > 0) {
-                            f2 -= (gb.m[i14].a(this.e) + 0.3F) * f3;
+                            f2 -= (gc.m[i14].a(this.e) + 0.3F) * f3;
                         }
                         if (f2 > 0.0F) {
-                            this.g.add(new hr(i11, i12, i13));
+                            this.g.add(new hs(i11, i12, i13));
                         }
 
                         d6 += d1 * f3;
@@ -90,43 +90,43 @@ public class ci {
         }
 
         this.f *= 2.0F;
-        int k = hg.b(this.b - this.f - 1.0D);
-        int m = hg.b(this.b + this.f + 1.0D);
-        int n = hg.b(this.c - this.f - 1.0D);
-        int i1 = hg.b(this.c + this.f + 1.0D);
-        int i2 = hg.b(this.d - this.f - 1.0D);
-        int i3 = hg.b(this.d + this.f + 1.0D);
-        List localList = this.i.b(this.e, dv.b(k, n, i2, m, i1, i3));
+        int k = hh.b(this.b - this.f - 1.0D);
+        int m = hh.b(this.b + this.f + 1.0D);
+        int n = hh.b(this.c - this.f - 1.0D);
+        int i1 = hh.b(this.c + this.f + 1.0D);
+        int i2 = hh.b(this.d - this.f - 1.0D);
+        int i3 = hh.b(this.d + this.f + 1.0D);
+        List localList = this.i.b(this.e, dw.b(k, n, i2, m, i1, i3));
         bd localbd = bd.b(this.b, this.c, this.d);
         for (int i4 = 0; i4 < localList.size(); i4++) {
-            dy localdy = (dy) localList.get(i4);
-            double d5 = localdy.e(this.b, this.c, this.d) / this.f;
+            ea localea = (ea) localList.get(i4);
+            double d5 = localea.e(this.b, this.c, this.d) / this.f;
             if (d5 <= 1.0D) {
-                d6 = localdy.p - this.b;
-                d7 = localdy.q - this.c;
-                d8 = localdy.r - this.d;
+                d6 = localea.p - this.b;
+                d7 = localea.q - this.c;
+                d8 = localea.r - this.d;
 
-                double d9 = hg.a(d6 * d6 + d7 * d7 + d8 * d8);
+                double d9 = hh.a(d6 * d6 + d7 * d7 + d8 * d8);
 
                 d6 /= d9;
                 d7 /= d9;
                 d8 /= d9;
 
-                double d10 = this.i.a(localbd, localdy.z);
+                double d10 = this.i.a(localbd, localea.z);
                 double d11 = (1.0D - d5) * d10;
 
                 // hMod Damage hook: Explosions
                 int damage = (int) ((d11 * d11 + d11) / 2.0D * 8.0D * this.f + 1.0D);
-                BaseEntity exploder = new BaseEntity(localdy);
-                PluginLoader.DamageType dmgType = (this.e instanceof fn) ? PluginLoader.DamageType.CREEPER_EXPLOSION : PluginLoader.DamageType.EXPLOSION;
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new Object[]{dmgType, null, exploder, damage})) {
-                    localdy.a(this.e, damage);
+                BaseEntity exploder = new BaseEntity(localea);
+                PluginLoader.DamageType dmgType = (this.e instanceof fo) ? PluginLoader.DamageType.CREEPER_EXPLOSION : PluginLoader.DamageType.EXPLOSION;
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, dmgType, null, exploder, damage)) {
+                    localea.a(this.e, damage);
                 }
 
                 double d12 = d11;
-                localdy.s += d6 * d12;
-                localdy.t += d7 * d12;
-                localdy.u += d8 * d12;
+                localea.s += d6 * d12;
+                localea.t += d7 * d12;
+                localea.u += d8 * d12;
             }
         }
         this.f = f1;
@@ -136,14 +136,14 @@ public class ci {
 
         if (this.a) {
             for (int i5 = localArrayList.size() - 1; i5 >= 0; i5--) {
-                hr localhr = (hr) localArrayList.get(i5);
-                int i6 = localhr.a;
-                int i7 = localhr.b;
-                int i8 = localhr.c;
+                hs localhs = (hs) localArrayList.get(i5);
+                int i6 = localhs.a;
+                int i7 = localhs.b;
+                int i8 = localhs.c;
                 int i9 = this.i.a(i6, i7, i8);
                 int i10 = this.i.a(i6, i7 - 1, i8);
-                if ((i9 == 0) && (gb.o[i10]) && (this.h.nextInt(3) == 0)) {
-                    this.i.d(i6, i7, i8, gb.ar.bh);
+                if ((i9 == 0) && (gc.o[i10]) && (this.h.nextInt(3) == 0)) {
+                    this.i.d(i6, i7, i8, gc.ar.bh);
                 }
             }
         }
@@ -155,10 +155,10 @@ public class ci {
         ArrayList localArrayList = new ArrayList();
         localArrayList.addAll(this.g);
         for (int j = localArrayList.size() - 1; j >= 0; j--) {
-            hr localhr = (hr) localArrayList.get(j);
-            int k = localhr.a;
-            int m = localhr.b;
-            int n = localhr.c;
+            hs localhs = (hs) localArrayList.get(j);
+            int k = localhs.a;
+            int m = localhs.b;
+            int n = localhs.c;
 
             int i1 = this.i.a(k, m, n);
 
@@ -171,7 +171,7 @@ public class ci {
                 double d5 = d2 - this.c;
                 double d6 = d3 - this.d;
 
-                double d7 = hg.a(d4 * d4 + d5 * d5 + d6 * d6);
+                double d7 = hh.a(d4 * d4 + d5 * d5 + d6 * d6);
 
                 d4 /= d7;
                 d5 /= d7;
@@ -188,9 +188,9 @@ public class ci {
             }
 
             if (i1 > 0) {
-                gb.m[i1].a(this.i, k, m, n, this.i.b(k, m, n), 0.3F);
+                gc.m[i1].a(this.i, k, m, n, this.i.b(k, m, n), 0.3F);
                 this.i.d(k, m, n, 0);
-                gb.m[i1].c(this.i, k, m, n);
+                gc.m[i1].c(this.i, k, m, n);
             }
         }
     }
