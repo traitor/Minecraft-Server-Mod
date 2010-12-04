@@ -321,28 +321,46 @@ public class ji extends fc implements ey {
         this.d.e.B = false;
     }
 
+    // hMod: Store the blocks between blockPlaced packets
+    Block lastRightClicked;
+    
     @Override
     public void a(gb paramgb) {
+        //System.out.println(String.format("BlockPlacePacket: %d @ [%d,%d,%d] dir %s", paramgb.a, paramgb.b, paramgb.c, paramgb.d, paramgb.e ));
         // hMod allow admins to dig!
         boolean bool = d.e.B = (d.f.g(getPlayer().getName()) || getPlayer().isAdmin());
 
-        // hMod: Store block data to call BLOCK_CREATED
-        Block blockClicked = new Block(etc.getServer().getBlockIdAt(paramgb.b, paramgb.c, paramgb.d), paramgb.b, paramgb.c, paramgb.d);
-        blockClicked.setFaceClicked(Block.Face.fromId(paramgb.e));
+        // hMod: Store block data to call hooks
+        Block blockClicked = null;
+        Block blockPlaced = null;
 
-        Block blockPlaced = new Block(paramgb.a, paramgb.b, paramgb.c, paramgb.d);
-        if (paramgb.e == 0) {
-            blockPlaced.setY(blockPlaced.getY() - 1);
-        } else if (paramgb.e == 1) {
-            blockPlaced.setY(blockPlaced.getY() + 1);
-        } else if (paramgb.e == 2) {
-            blockPlaced.setZ(blockPlaced.getZ() - 1);
-        } else if (paramgb.e == 3) {
-            blockPlaced.setZ(blockPlaced.getZ() + 1);
-        } else if (paramgb.e == 4) {
-            blockPlaced.setX(blockPlaced.getX() - 1);
-        } else if (paramgb.e == 5) {
-            blockPlaced.setX(blockPlaced.getX() + 1);
+        if (paramgb.c == 255) {
+            // ITEM_USE -- if we have a lastRightClicked then it could be a usable location
+            blockClicked = lastRightClicked;
+            lastRightClicked = null;
+        } else {
+            // RIGHTCLICK or BLOCK_PLACE .. or nothing
+            blockClicked = new Block(etc.getServer().getBlockIdAt(paramgb.b, paramgb.c, paramgb.d), paramgb.b, paramgb.c, paramgb.d);
+            blockClicked.setFaceClicked(Block.Face.fromId(paramgb.e));
+            lastRightClicked = blockClicked;
+        }
+
+        // If we clicked on something then we also have a location to place the block
+        if (blockClicked != null) {
+            blockPlaced = new Block( paramgb.a, blockClicked.getX(), blockClicked.getY(), blockClicked.getZ());
+            if (paramgb.e == 0) {
+                blockPlaced.setY(blockPlaced.getY() - 1);
+            } else if (paramgb.e == 1) {
+                blockPlaced.setY(blockPlaced.getY() + 1);
+            } else if (paramgb.e == 2) {
+                blockPlaced.setZ(blockPlaced.getZ() - 1);
+            } else if (paramgb.e == 3) {
+                blockPlaced.setZ(blockPlaced.getZ() + 1);
+            } else if (paramgb.e == 4) {
+                blockPlaced.setX(blockPlaced.getX() - 1);
+            } else if (paramgb.e == 5) {
+                blockPlaced.setX(blockPlaced.getX() + 1);
+            }
         }
 
         if (paramgb.e == 255) {

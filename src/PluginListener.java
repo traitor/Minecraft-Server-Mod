@@ -173,7 +173,7 @@ public abstract class PluginListener {
      * @deprecated use onBlockRightClick to get the information
      * @see #onBlockRightClicked(Player, Block, Item)
      * @see #onBlockPlace(Player, Block, Block, Item)
-     * @see #onItemUse(Player, Item)
+     * @see #onItemUse(Player, Block, Block, Item)
      */
     @Deprecated
     public boolean onBlockCreate(Player player, Block blockPlaced, Block blockClicked, int itemInHand) {
@@ -489,6 +489,7 @@ public abstract class PluginListener {
     public void onVehiclePositionChange(BaseVehicle vehicle, int x, int y, int z) {
 
     }
+
     /**
      * Called when a player uses an item (rightclick with item in hand)
      * @param player the player
@@ -497,7 +498,6 @@ public abstract class PluginListener {
      * @param item the item being used (in hand)
      * @return true to prevent using the item.
      */
-
     public boolean onItemUse(Player player, Block blockPlaced, Block blockClicked, Item item) {
         return false;
     }

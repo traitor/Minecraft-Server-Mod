@@ -45,8 +45,11 @@ public class Digging extends jv {
      * @return
      */
     public boolean a(fz player, eq world, hn item, Block blockToPlace, Block blockClicked) {
-        if (player instanceof et && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, ((et) player).getPlayer(), blockToPlace, blockClicked, new Item(item))) {
-            return false;
+        // hMod: only call this hook if we're not using buckets/signs
+        if (item.a > 0 && item.c != Item.Type.Sign.getId() && item.c != Item.Type.Bucket.getId() && item.c != Item.Type.WaterBucket.getId() && item.c != Item.Type.LavaBucket.getId()) {
+            if (player instanceof et && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, ((et) player).getPlayer(), blockToPlace, blockClicked, new Item(item))) {
+                return false;
+            }
         }
         return super.a(player, world, item);
     }
