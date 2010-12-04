@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.logging.Logger;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
@@ -47,7 +47,11 @@ public final class PropertiesFile {
                 log.severe("[PropertiesFile] Unable to load " + fileName + "!");
             }
         } else {
-            save();
+            try {
+                save();
+            } catch (IOException ex) {
+                log.severe("[PropertiesFile] Unable to write to file " + fileName + "!");
+            }
         }
     }
 
@@ -214,35 +218,37 @@ public final class PropertiesFile {
      * Writes out the <code>key=value</code> properties that were changed into
      * a .[properties] file in UTF8.
      *
-     * @see #load()
+     * @see #save()
+     * @throws IOException
      */
-    public void save() {
-        OutputStream os = null;
+    public void save() throws IOException {
+        BufferedWriter os = null;
 
         try {
-            os = new FileOutputStream(this.fileName);
+            try {
+                os = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName), "UTF8"));
+            } catch (UnsupportedEncodingException ex) {
+                log.severe("[PropertiesFile] Unable to write to file " + fileName + "!");
+            }
+
         } catch (FileNotFoundException ex) {
-            log.severe("[PropertiesFile] Unable to open " + fileName + "!");
+            log.severe("[PropertiesFile] Unable to find file " + fileName + "!");
         }
 
-        PrintStream ps = null;
-        try {
-            ps = new PrintStream(os, true, "UTF-8");
-        } catch (UnsupportedEncodingException ex) {
-            log.severe("[PropertiesFile] Unable to write to " + fileName + "!");
-        }
 
         // Keep track of properties that were set
         List<String> usedProps = new ArrayList<String>();
 
         for (String line : this.lines) {
             if (line.trim().length() == 0) {
-                ps.println(line);
+                os.write(line);
+                os.newLine();
                 continue;
             }
 
             if (line.charAt(0) == '#') {
-                ps.println(line);
+                os.write(line);
+                os.newLine();
                 continue;
             }
 
@@ -252,33 +258,37 @@ public final class PropertiesFile {
 
                 if (this.props.containsKey(key)) {
                     String value = this.props.get(key);
-                    ps.println(key + "=" + value);
+                    os.write(key + "=" + value);
+                    os.newLine();
                     usedProps.add(key);
                 } else {
-                    ps.println(line);
+                    os.write(line);
+                    os.newLine();
                 }
             } else {
-                ps.println(line);
+                os.write(line);
+                os.newLine();
             }
         }
 
         // Add any new properties
         for (Map.Entry<String, String> entry : this.props.entrySet()) {
             if (!usedProps.contains(entry.getKey())) {
-                ps.println(entry.getKey() + "=" + entry.getValue());
+                os.write(entry.getKey() + "=" + entry.getValue());
+                os.newLine();
             }
         }
 
         // Exit that stream
-        ps.close();
+        os.close();
 
         // Reload
         try {
-            props.clear();
             lines.clear();
+            props.clear();
             this.load();
         } catch (IOException ex) {
-            log.severe("[PropertiesFile] Unable to load " + fileName + "!");
+            log.severe("[propertiesFile] Unable to load " + fileName + "!");
         }
     }
 
@@ -436,7 +446,11 @@ public final class PropertiesFile {
 
         // Save on change
         if (changed) {
-            save();
+            try {
+                save();
+            } catch (IOException ex) {
+                log.severe("[PropertiesFile] Unable to write to file " + fileName + "!");
+            }
         }
     }
 
@@ -499,7 +513,11 @@ public final class PropertiesFile {
     public void setString(String key, String value) {
         props.put(key, value);
 
-        save();
+        try {
+            save();
+        } catch (IOException ex) {
+            log.severe("[PropertiesFile] Unable to write to file " + fileName + "!");
+        }
     }
 
     /**
@@ -545,7 +563,11 @@ public final class PropertiesFile {
     public void setInt(String key, int value) {
         props.put(key, String.valueOf(value));
 
-        save();
+        try {
+            save();
+        } catch (IOException ex) {
+            log.severe("[PropertiesFile] Unable to write to file " + fileName + "!");
+        }
     }
 
     /**
@@ -590,7 +612,11 @@ public final class PropertiesFile {
     public void setDouble(String key, double value) {
         props.put(key, String.valueOf(value));
 
-        save();
+        try {
+            save();
+        } catch (IOException ex) {
+            log.severe("[PropertiesFile] Unable to write to file " + fileName + "!");
+        }
     }
 
     /**
@@ -635,7 +661,11 @@ public final class PropertiesFile {
     public void setLong(String key, long value) {
         props.put(key, String.valueOf(value));
 
-        save();
+        try {
+            save();
+        } catch (IOException ex) {
+            log.severe("[PropertiesFile] Unable to write to file " + fileName + "!");
+        }
     }
 
     /**
@@ -680,6 +710,10 @@ public final class PropertiesFile {
     public void setBoolean(String key, boolean value) {
         props.put(key, String.valueOf(value));
 
-        save();
+        try {
+            save();
+        } catch (IOException ex) {
+            log.severe("[PropertiesFile] Unable to write to file " + fileName + "!");
+        }
     }
 }
