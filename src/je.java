@@ -32,7 +32,7 @@ public class je extends fw {
 
         if (i == 0) {
             // hMod: Hook to control ignites -- TODO This needs some looking over!
-            Block block = new Block(paramInt1, paramInt2, paramInt3, 0);
+            Block block = new Block(0, paramInt1, paramInt2, paramInt3);
             block.setStatus(2);
             // fire lighter check
             if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, block, ((et) paramfz).getPlayer())) {
