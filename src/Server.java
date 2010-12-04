@@ -220,6 +220,20 @@ public class Server {
     }
 
     /**
+     * Returns the list of animals in all open chunks.
+     * @return list of animals
+     */
+    public List<Mob> getAnimalList() {
+        List<Mob> toRet = new ArrayList<Mob>();
+        for (Object o : server.e.b) {
+            if (o instanceof ax) {
+                toRet.add(new Mob((ka) o));
+            }
+        }
+        return toRet;
+    }
+
+    /**
      * Returns the list of minecarts in all open chunks.
      * @return list of minecarts
      */
@@ -254,7 +268,7 @@ public class Server {
     public List<BaseEntity> getEntityList() {
         List<BaseEntity> toRet = new ArrayList<BaseEntity>();
         for (Object o : server.e.b) {
-            if (o instanceof gd || o instanceof ba) {
+            if (o instanceof gd || o instanceof ba || o instanceof ax) {
                 toRet.add(new Mob((ka) o));
             } else if (o instanceof jo) {
                 toRet.add(new Minecart((jo) o));
@@ -268,13 +282,13 @@ public class Server {
     }
 
     /**
-     * Returns the list of all living entities (players, mobs) in open chunks.
+     * Returns the list of all living entities (players, animals, mobs) in open chunks.
      * @return list of living entities
      */
     public List<LivingEntity> getLivingEntityList() {
         List<LivingEntity> toRet = new ArrayList<LivingEntity>();
         for (Object o : server.e.b) {
-            if (o instanceof gd || o instanceof ba) {
+            if (o instanceof gd || o instanceof ba || o instanceof ax) {
                 toRet.add(new Mob((ka) o));
             } else if (o instanceof et) {
                 toRet.add(((et)o).getPlayer());
