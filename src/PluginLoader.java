@@ -2,6 +2,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -174,6 +175,18 @@ public class PluginLoader {
          */
         ITEM_USE,
         /**
+         * Calls onVerificationCheck
+         */
+        VERIFICATION_CHECK,
+        /**
+         * Calls onNameVerification
+         */
+        NAME_VERIFICATION,
+        /**
+         * Calls onNameResolution
+         */
+        NAME_RESOLUTION,
+        /**
          * Calls onBlockPlace
          */
         BLOCK_PLACE,
@@ -192,7 +205,7 @@ public class PluginLoader {
         /**
          * Unused.
          */
-        NUM_HOOKS
+        NUM_HOOKS,
     }
     
     /**
@@ -442,7 +455,7 @@ public class PluginLoader {
      * @return Object returned by call
      */
     public Object callHook(Hook h, Object... parameters) {
-        Object toRet = false;
+        Object toRet = h == Hook.NAME_RESOLUTION ? null : false;
 
         if (h == Hook.REDSTONE_CHANGE) {
             toRet = (Integer) parameters[2];
@@ -625,6 +638,22 @@ public class PluginLoader {
                             case ITEM_USE:
                                 if (listener.onItemUse((Player) parameters[0], (Block) parameters[1], (Block) parameters[2], (Item) parameters[3])) {
                                     toRet = true;
+                                }
+                                break;
+                            case VERIFICATION_CHECK:
+                                if (listener.shouldIgnoreVerification((String) parameters[0], (InetAddress) parameters[1])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case NAME_VERIFICATION:
+                                if (listener.onNameVerification((String) parameters[0], (String) parameters[1], (InetAddress) parameters[2])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case NAME_RESOLUTION:
+                                String name = listener.onNameResolution((String) parameters[0], (InetAddress) parameters[1]);
+                                if (name != null) {
+                                    toRet = name;
                                 }
                                 break;
                             case BLOCK_RIGHTCLICKED:

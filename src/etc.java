@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.jar.Manifest;
+import java.util.jar.Attributes;
 
 import net.minecraft.server.*;
 
@@ -38,6 +40,7 @@ public class etc {
     private String dataSourceType;
     private DataSource dataSource;
     private PropertiesFile properties;
+    private String verifTookTooLongMessage;
     private PluginLoader loader;
     private boolean logging = false;
     private boolean enableHealth = true;
@@ -46,6 +49,7 @@ public class etc {
     private String versionStr;
     private boolean tainted = true;
     private int version = 1; // Version is meant to be loaded from the file, this stays as 1.
+    private String skVersion;
     private String driver, username, password, db;
     public static final String MINECRAFT_SERVER_SHA1 = "f4d5a32b582b6f4d43a7d9c06297798be809f034";
 
@@ -144,28 +148,10 @@ public class etc {
             }
 
             showUnknownCommand = properties.getBoolean("show-unknown-command", true);
-            URL url = this.getClass().getResource("/version.txt");
-            if (url != null) {
-                InputStreamReader ins = new InputStreamReader(url.openStream());
-                BufferedReader bufferedReader = new BufferedReader(ins);
-                String versionParam = bufferedReader.readLine();
-                if (versionParam.startsWith("git-")) { // recommended version.txt for git builds: git-<gituser>-<shorttag>
-                    // example: git-sk89q-591c662cf4afc8e3e09a
-                    version = -1;
-                    versionStr = versionParam;
-                    tainted = true;
-                } else {
-                    version = Integer.parseInt(versionParam);
-                    versionStr = Integer.toString(version); // and back to a string.
-                    tainted = false; // looks official. We hope.
-                }
-            } else {
-                // I'm a tainted build, probably.
-                version = -1;
-                versionStr = "Undefined version";
-                tainted = true;
-                // If any mods check the version.. #@!$
-            }
+            verifTookTooLongMessage = properties.getString("took-too-long-message", "Took too long to log in");
+            version = 12000;
+            versionStr = "SK's version";
+            tainted = true;
         } catch (Exception e) {
             log.log(Level.SEVERE, "Exception while reading from server.properties", e);
             // Just in case...
@@ -173,6 +159,7 @@ public class etc {
             allowedItems = new String[]{""};
             itemSpawnBlacklist = new String[]{""};
             motd = new String[]{"Type /help for a list of commands."};
+            verifTookTooLongMessage = "Took too long to log in";
         }
     }
 
@@ -535,12 +522,7 @@ public class etc {
             etc.getLoader().disablePlugin(split[1]);
             log.info("Plugin disabled.");
         } else if (split[0].equalsIgnoreCase("version")) {
-            if (tainted || version < 0) {
-                log.info("THIS IS AN UNOFFICIAL BUILD OF HMOD");
-                log.info("Build information: " + versionStr);
-            } else {
-                log.info("Hey0 Server Mod Build " + version);
-            }
+            log.info("SK's Build <http://www.sk89q.com> version " + etc.getInstance().getSKVersion());
         } else {
             dontParseRegular = false;
         }
@@ -963,6 +945,31 @@ public class etc {
     }
 
     /**
+     * Get SK's hMod version.
+     *
+     * @return
+     */
+    public String getSKVersion() {
+        if (skVersion == null) {
+            try {
+                String classContainer = etc.class.getProtectionDomain()
+                        .getCodeSource().getLocation().toString();
+                URL manifestUrl = new URL("jar:" + classContainer + "!/META-INF/MANIFEST.MF");
+                Manifest manifest = new Manifest(manifestUrl.openStream());
+                Attributes attrib = manifest.getMainAttributes();
+                String ver = (String)attrib.getValue("SK-hMod-Version");
+                skVersion = ver != null ? ver : "(unavailable)";
+            } catch (IOException e) {
+                skVersion = "(unknown)";
+            }
+
+            return skVersion;
+        } else {
+            return skVersion;
+        }
+    }
+
+    /**
      * Return the specified string version of the build
      *
      * @return build/version
@@ -987,5 +994,12 @@ public class etc {
      */
     public static Connection getSQLConnection() {
         return getInstance()._getSQLConnection();
+    }
+
+    /**
+     * @return the verifTookTooLongMessage
+     */
+    public String getTookTooLongMessage() {
+        return verifTookTooLongMessage;
     }
 }

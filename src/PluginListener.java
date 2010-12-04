@@ -1,3 +1,5 @@
+import java.net.InetAddress;
+
 /**
  * PluginListener.java - Extend this and register it to listen to specific
  * hooks.
@@ -271,6 +273,43 @@ public abstract class PluginListener {
      */
     public boolean onItemPickUp(Player player, Item item) {
         return false;
+    }
+
+    /**
+     * Called when the server considers whether to perform verification.
+     * 
+     * @param address
+     *          player's address
+     * @return
+     */
+    public boolean shouldIgnoreVerification(String name, InetAddress address) {
+        return false;
+    }
+
+    /**
+     * Called on name verification. Return true to override.
+     *
+     * @param name
+     *          player's name
+     * @param serverID
+     *         server ID
+     * @param address
+     *         address
+     * @return true to allow pass through
+     */
+    public boolean onNameVerification(String name, String serverID, InetAddress address) {
+        return false;
+    }
+
+    /**
+     * Allow overriding a player's name.
+     * 
+     * @param name
+     * @param address
+     * @return a String to change a player's name
+     */
+    public String onNameResolution(String name, InetAddress address) {
+        return null;
     }
 
     /**

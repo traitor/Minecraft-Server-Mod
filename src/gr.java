@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 
@@ -27,12 +28,7 @@ public class gr {
     public gr(MinecraftServer paramMinecraftServer) {
         etc.setServer(paramMinecraftServer);
         etc.getInstance().loadData();
-        a.info("Note: your current classpath is: " + System.getProperty("java.class.path", "*UNKNOWN*"));
-        if (!etc.getInstance().getTainted())
-            a.info("Hey0 Server Mod Build " + etc.getInstance().getVersion());
-        else {
-            a.info("hMod Build Information: " + etc.getInstance().getVersionStr());
-        }
+        a.info("SK's Build <http://www.sk89q.com> version " + etc.getInstance().getSKVersion());
         this.c = paramMinecraftServer;
         this.i = paramMinecraftServer.a("banned-players.txt");
         this.j = paramMinecraftServer.a("banned-ips.txt");
@@ -89,6 +85,12 @@ public class gr {
     }
 
     public et a(fs paramfs, String paramString1, String paramString2) {
+        String newName = paramfs.overiddenName;
+        if (newName != null) {
+            a.log(Level.INFO, "Name change: " + paramString1 + " -> " + newName);
+            paramString1 = newName;
+        }
+        
         if (this.f.contains(paramString1.trim().toLowerCase())) {
             paramfs.b("You are banned from this server!");
             return null;
