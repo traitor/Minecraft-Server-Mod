@@ -611,7 +611,9 @@ public class PluginLoader {
                                 }
                                 break;
                             case VEHICLE_COLLISION:
-                                listener.onVehicleCollision((BaseVehicle) parameters[0], (BaseEntity) parameters[1]);
+                                if (listener.onVehicleCollision((BaseVehicle) parameters[0], (BaseEntity) parameters[1])) {
+                                    toRet = true;
+                                }
                                 break;
                             case VEHICLE_DESTROYED:
                                 listener.onVehicleDestroyed((BaseVehicle) parameters[0]);
