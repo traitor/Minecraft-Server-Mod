@@ -1,4 +1,5 @@
 import java.io.File;
+import java.lang.System;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -284,17 +285,30 @@ public class PluginLoader {
             }
             loadPlugin(sclass.trim());
         }
+        if (properties.containsKey("requiredplugins")) {
+            String[] requiredclasses = properties.getString("plugins", "").split(",");
+            for (String reqclass : requiredclasses) {
+                if (reqclass.equals("")) {
+                    continue;
+                }
+                if (!loadPlugin(reqclass.trim())) {
+                    log.log(Level.SEVERE, "Could not load required plugin. Exiting.");
+                    System.exit(1);
+                }
+            }
+        }
     }
 
     /**
      * Loads the specified plugin
      * @param fileName file name of plugin to load
+     * @return boolean Whether the plugin was successfully loaded
      */
-    public void loadPlugin(String fileName) {
+    public boolean loadPlugin(String fileName) {
         if (getPlugin(fileName) != null) {
             return; // Already exists.
         }
-        load(fileName);
+        return load(fileName);
     }
 
     /**
@@ -325,12 +339,12 @@ public class PluginLoader {
         load(fileName);
     }
 
-    private void load(String fileName) {
+    private boolean load(String fileName) {
         try {
             File file = new File("plugins/" + fileName + ".jar");
             if (!file.exists()) {
                 log.log(Level.SEVERE, "Failed to find plugin file: plugins/" + fileName + ".jar. Please ensure the file exists");
-                return;
+                return false;
             }
             URLClassLoader child = null;
             try {
@@ -349,7 +363,9 @@ public class PluginLoader {
             }
         } catch (Throwable ex) {
             log.log(Level.SEVERE, "Exception while loading plugin", ex);
+            return false;
         }
+        return true;
     }
 
     /**
