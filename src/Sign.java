@@ -66,7 +66,7 @@ public class Sign implements ComplexBlock {
      */
     @Override
     public String toString() {
-        return String.format("Sign[x=%d, y=%d, z=%d, type=%d]", getX(), getY(), getZ());
+        return String.format("Sign [x=%d, y=%d, z=%d]", getX(), getY(), getZ());
     }
 
     /**
