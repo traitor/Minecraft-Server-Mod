@@ -6,9 +6,6 @@ public class hk implements ke, Container<hn> {
     public int d = 0;
     private fz f;
     public boolean e = false;
-    
-    //hMod: keep track of inventory type here so that we can conform to Container.
-    public Inventory.Type type = Inventory.Type.Inventory;
 
     public hk(fz paramfz) {
         this.f = paramfz;
@@ -290,28 +287,11 @@ public class hk implements ke, Container<hn> {
         }
     }
 
-    @Override
     public hn[] getContents() {
-        switch (type) {
-        case Inventory:
-            return a;
-        case CraftingTable:
-            return c;
-        case Equipment:
-            return b;
-        }
-        return null;
+        return a;
     }
 
-    @Override
     public void setContents(hn[] values) {
-        switch (type) {
-        case Inventory:
-            a = values;
-        case CraftingTable:
-            c = values;
-        case Equipment:
-            b = values;
-        }
+        a = values;
     }
 }
