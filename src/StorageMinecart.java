@@ -12,12 +12,4 @@ public class StorageMinecart extends ItemArray<jo> {
         super(cart, 27);
     }
 
-    public hn[] getArray() {
-        return container.ak;
-    }
-
-    @Override
-    public void setArray(hn[] values) {
-        container.ak = values;
-    }
 }
