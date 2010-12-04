@@ -38,7 +38,7 @@ public class Chest extends ItemArray implements ComplexBlock {
      * @return
      */
     public int getContentSize() {
-        return 36;
+        return 27;
     }
 
     /**
@@ -56,7 +56,8 @@ public class Chest extends ItemArray implements ComplexBlock {
     public Item[] getContents() {
         Item[] rt = new Item[getContentSize()];
         for (int i = 0; i < getContentSize(); i++) {
-            rt[i] = new Item(getArray()[i]);
+            hn item = getArray()[i];
+            rt[i] = (item != null) ? new Item(item) : null;
         }
 
         return rt;
@@ -69,7 +70,7 @@ public class Chest extends ItemArray implements ComplexBlock {
     public void setContents(Item[] contents) {
         hn[] newcontents = new hn[getContentSize()];
         for (int i = 0; i < getContentSize(); i++) {
-            newcontents[i] = new hn(contents[i].getItemId(), contents[i].getAmount());
+            newcontents[i] = (contents[i] != null) ? new hn(contents[i].getItemId(), contents[i].getAmount()) : null;
         }
         setArray(newcontents);
     }
