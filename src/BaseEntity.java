@@ -168,6 +168,14 @@ public class BaseEntity {
     public boolean isPlayer() {
         return entity instanceof et;
     }
+	
+    /**
+     * Returns whether or not this entity is alive
+     * @return true if living entity
+     */
+    public boolean isLiving() {
+        return entity instanceof ka;
+    }
 
     /**
      * Returns the player for this entity
