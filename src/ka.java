@@ -304,6 +304,11 @@ public class ka extends ea {
         LivingEntity attacker = (paramea != null && paramea instanceof ka) ? new LivingEntity((ka) paramea) : null;
         LivingEntity defender = new LivingEntity(this);
 
+        // hMod attack by entity, but it might not do damage!
+        if (attacker != null && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ATTACK, attacker, defender, paramInt)) {
+            return false;
+        }
+
         int i = 1;
         if (this.ac > this.aw / 2.0F) {
             if (paramInt <= this.bn) {

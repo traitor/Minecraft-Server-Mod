@@ -541,4 +541,19 @@ public abstract class PluginListener {
     public PluginLoader.HookResult onLiquidDestroy( PluginLoader.HookResult currentState, int liquidBlockId, Block targetBlock )  {
         return PluginLoader.HookResult.DEFAULT_ACTION;
     }
+
+    /**
+     * Called when an entity (attacker) tries to hurt a player (defender).
+     * Returning 'true' prevents all damage, returning 'false' lets the game handle it.
+     * Remember that the damage will be lessened by the amount of {@link LivingEntity#getLastDamage()}
+     * the defender has.
+     * 
+     * @param attacker the giver
+     * @param defender the taker
+     * @param amount of damage the entity tries to do
+     * @return
+     */
+    public boolean onAttack(LivingEntity attacker, LivingEntity defender, Integer amount) {
+        return false;
+    }
 }
