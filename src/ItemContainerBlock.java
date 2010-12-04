@@ -1,6 +1,7 @@
 
 public abstract class ItemContainerBlock<C extends ay & ke & Container<hn>> extends ItemArray implements ComplexBlock  {
     private C container;
+    private hn[] storedState = new hn[getContentSize()]; 
 
     /**
      * Creates a chest interface
@@ -123,5 +124,15 @@ public abstract class ItemContainerBlock<C extends ay & ke & Container<hn>> exte
         hash = 97 * hash + this.getY();
         hash = 97 * hash + this.getZ();
         return hash;
+    }
+
+    @Override
+    public void saveState() {
+        storedState = container.getContents();
+    }
+
+    @Override
+    public void loadState() {
+        container.setContents(storedState);        
     }
 }

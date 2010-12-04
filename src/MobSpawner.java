@@ -55,4 +55,16 @@ public class MobSpawner implements ComplexBlock {
     public void setDelay(int delay) {
         spawner.e = delay;
     }
+
+    @Override
+    public void saveState() {
+        // Nothing to store
+        
+    }
+
+    @Override
+    public void loadState() {
+        // Nothing to load
+        
+    }
 }

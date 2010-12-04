@@ -5,6 +5,7 @@
  */
 public class Sign implements ComplexBlock {
     private jn sign;
+    private String[] state;
 
     /**
      * Creates a sign interface
@@ -96,11 +97,6 @@ public class Sign implements ComplexBlock {
         return true;
     }
 
-    /**
-     * Returns a semi-unique hashcode for this block
-     *
-     * @return hashcode
-     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -108,5 +104,15 @@ public class Sign implements ComplexBlock {
         hash = 97 * hash + this.getY();
         hash = 97 * hash + this.getZ();
         return hash;
+    }
+
+    @Override
+    public void saveState() {
+        this.state = sign.e;
+    }
+
+    @Override
+    public void loadState() {
+        sign.e = this.state;
     }
 }

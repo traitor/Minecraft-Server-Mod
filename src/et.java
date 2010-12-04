@@ -176,16 +176,8 @@ public class et extends fz {
                     if (!player.canBuild() && (localay instanceof ic || localay instanceof dv)) {
                         continue;
                     }
-                    ComplexBlock block = null;
-                    if (localay instanceof ic) {
-                        block = new Chest((ic) localay);
-                    } else if (localay instanceof dv) {
-                        block = new Furnace((dv) localay);
-                    } else if (localay instanceof jn) {
-                        block = new Sign((jn) localay);
-                    } else if (localay instanceof cf) {
-                        block = new MobSpawner((cf) localay);
-                    }
+                    ComplexBlock block = ComplexBlockCreator.newComplexBlock(localay);
+                    
                     if (block != null) {
                         if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, this.getPlayer(), block)) {
                             this.a.b(new jh(localay.b, localay.c, localay.d, localay));

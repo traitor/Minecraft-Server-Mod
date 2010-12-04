@@ -10,24 +10,34 @@ public interface ComplexBlock {
      * 
      * @return X
      */
-    public int getX();
+    int getX();
 
     /**
      * Returns the Y coordinates of this block
      * 
      * @return Y
      */
-    public int getY();
+    int getY();
 
     /**
      * Returns the Z coordinates of this block
      * 
      * @return Z
      */
-    public int getZ();
+    int getZ();
 
     /**
      * Sends the updated block information to clients.
      */
-    public void update();
+    void update();
+    
+    /**
+     * Stores the current state of this complex block.
+     */
+    void saveState();
+    
+    /** 
+     * Restores state of this complex block to that which is stored.
+     */
+    void loadState();
 }

@@ -570,35 +570,14 @@ public class ji extends fc implements ey {
 
         ay localay = this.d.e.k(paramjh.a, paramjh.b, paramjh.c);
         if (localay != null) {
-            if (localay instanceof ic) {
-                // hMod: Chest
-                ic chest = (ic) localay;
-                hn[] temp = chest.getContents();
-                localay.a(paramjh.e);
-                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, player, new Chest(chest)) || !player.canBuild()) {
-                    chest.setContents(temp);
-                }
-            } else if (localay instanceof dv) {
-                // hMod: Furnace
-                dv furnace = (dv) localay;
-                hn[] temp = furnace.getContents();
-                localay.a(paramjh.e);
-                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, player, new Furnace(furnace)) || !player.canBuild()) {
-                    furnace.setContents(temp);
-                }
-            } else if (localay instanceof jn) {
-                // hMod: Sign
-                jn sign = (jn) localay;
-                String[] temp = sign.e;
-                localay.a(paramjh.e);
-                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, player, new Sign(sign)) || !player.canBuild()) {
-                    sign.e = temp;
-                }
+            ComplexBlock block = ComplexBlockCreator.newComplexBlock(localay);
+            block.saveState();
+            localay.a(paramjh.e);
+            
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, player, block) || !player.canBuild()) {
+                block.loadState();
             }
-            // try {
-            // localay.a(paramjh.e);
-            // } catch (Exception localException) {
-            // }
+            
             localay.c();
         }
     }
