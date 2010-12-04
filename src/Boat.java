@@ -7,7 +7,7 @@ public class Boat extends BaseVehicle {
      * Interface for boats.
      * @param boat
      */
-    public Boat(fl boat) {
+    public Boat(fm boat) {
         super(boat);
     }
     
@@ -15,7 +15,7 @@ public class Boat extends BaseVehicle {
      * Returns the entity we're wrapping.
      * @return
      */ 
-    public fl getEntity() {
-        return (fl) entity;
+    public fm getEntity() {
+        return (fm) entity;
     }
 }

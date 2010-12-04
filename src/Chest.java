@@ -3,15 +3,14 @@
  * @author James
  */
 public class Chest extends ItemArray implements ComplexBlock {
-
-    private ib chest;
+    private ic chest;
 
     /**
      * Creates a chest interface
-     * @param chest
+     * @param localay
      */
-    public Chest(ib chest) {
-        this.chest = chest;
+    public Chest(ic localay) {
+        this.chest = localay;
     }
 
     public int getX() {
@@ -30,7 +29,7 @@ public class Chest extends ItemArray implements ComplexBlock {
         chest.c();
     }
 
-    public hm[] getArray() {
+    public hn[] getArray() {
         return chest.getContents();
     }
 
@@ -46,7 +45,7 @@ public class Chest extends ItemArray implements ComplexBlock {
      * Sets the contents
      * @param contents contents to set
      */
-    public void setArray(hm[] contents) {
+    public void setArray(hn[] contents) {
         chest.setContents(contents);
     }
 
@@ -68,9 +67,9 @@ public class Chest extends ItemArray implements ComplexBlock {
      * @param contents contents to set
      */
     public void setContents(Item[] contents) {
-        hm[] newcontents = new hm[getContentSize()];
+        hn[] newcontents = new hn[getContentSize()];
         for (int i = 0; i < getContentSize(); i++) {
-            newcontents[i] = new hm(contents[i].getItemId(), contents[i].getAmount());
+            newcontents[i] = new hn(contents[i].getItemId(), contents[i].getAmount());
         }
         setArray(newcontents);
     }

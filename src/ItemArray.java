@@ -22,12 +22,12 @@ public abstract class ItemArray {
             if (item.getAmount() <= 0) {
                 getArray()[slot] = null;
             } else if (Item.isValidItem(item.getItemId())) {
-                getArray()[slot] = new hm(item.getItemId(), item.getAmount());
+                getArray()[slot] = new hn(item.getItemId(), item.getAmount());
             }
         } else if (slot == -1) {
             int newSlot = getEmptySlot();
             if (newSlot != -1) {
-                getArray()[newSlot] = new hm(item.getItemId(), item.getAmount());
+                getArray()[newSlot] = new hn(item.getItemId(), item.getAmount());
                 item.setSlot(newSlot);
             }
         }
@@ -130,7 +130,7 @@ public abstract class ItemArray {
      */
     public void setSlot(int itemId, int amount, int slot) {
         if (slot < getArray().length && slot >= 0) {
-            getArray()[slot] = new hm(itemId, (amount > 64 ? 64 : amount));
+            getArray()[slot] = new hn(itemId, (amount > 64 ? 64 : amount));
         }
     }
 
@@ -197,5 +197,5 @@ public abstract class ItemArray {
      * 
      * @return item array
      */
-    public abstract hm[] getArray();
+    public abstract hn[] getArray();
 }

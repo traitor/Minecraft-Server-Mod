@@ -1,12 +1,15 @@
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Item.java - Item stuff.
  * @author James
  */
 public class Item {
-
-
-      public enum Type {
+    /**
+     * Type - Used to identify items
+     */
+    public enum Type {
         Air (0),
         Stone (1),
         Grass(2),
@@ -173,20 +176,33 @@ public class Item {
         LightstoneDust(348),
         RawFish(349),
         CookedFish(350),
+
         GoldRecord(2256),
         GreenRecord(2257)
         ;
 
         private int id;
+        private static Map<Integer, Type> map;
 
         private Type(int id){
             this.id = id;
+            add( id, this );
         }
 
-        public int getId() {return id;}
+        private static void add( int type, Type name ) {
+            if (map == null) {
+                map = new HashMap<Integer, Type>();
+            }
+            
+            map.put(type, name);
+        }
+
+        public int getId() {
+            return id;
+        }
 
         public static Type fromId(final int id) {
-               return Type.values()[id];
+            return map.get(id);
         }
     }
 
@@ -225,11 +241,11 @@ public class Item {
 
     /**
      * Creates an item from the actual item class
-     * @param hm
+     * @param hn
      */
-    public Item(hm hm) {
-        itemId = hm.c;
-        amount = hm.a;
+    public Item(hn hn) {
+        itemId = hn.c;
+        amount = hn.a;
         this.itemType = Type.fromId(itemId);
     }
 
@@ -272,8 +288,8 @@ public class Item {
      * @return
      */
     public static boolean isValidItem(int itemId) {
-        if (itemId < fk.c.length) {
-            return fk.c[itemId] != null;
+        if (itemId < fl.c.length) {
+            return fl.c[itemId] != null;
         }
         return false;
     }
