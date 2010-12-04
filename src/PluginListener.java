@@ -456,9 +456,10 @@ public abstract class PluginListener {
      * 
      * @param vehicle the vehicle
      * @param collisioner
+     * @return false to ignore damage
      */
-    public void onVehicleCollision(BaseVehicle vehicle, BaseEntity collisioner) {
-
+    public Boolean onVehicleCollision(BaseVehicle vehicle, BaseEntity collisioner) {
+        return false;
     }
 
     /**

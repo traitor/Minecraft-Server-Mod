@@ -297,8 +297,8 @@ public class fm extends ea {
         }
         Boat boat = new Boat(this);
         BaseEntity baseEntity = new BaseEntity(paramea);
-        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_COLLISION, boat, baseEntity);
-    }
+        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_COLLISION, boat, baseEntity)
+0    }
 
     @Override
     public boolean a(fz paramfz) {

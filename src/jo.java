@@ -534,7 +534,9 @@ public class jo extends ea implements ke {
         // hMod: Collision of a cart
         Minecart cart = new Minecart(this);
         BaseEntity baseEntity = new BaseEntity(paramea);
-        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_COLLISION, cart, baseEntity);
+        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_COLLISION, cart, baseEntity)) {
+            return;
+        }
 
         if (((paramea instanceof ka)) && (!(paramea instanceof fz)) && (this.d == 0) && (this.s * this.s + this.u * this.u > 0.01D) && (this.j == null) && (paramea.k == null)) {
             paramea.e(this);
