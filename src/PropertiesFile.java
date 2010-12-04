@@ -5,15 +5,16 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.logging.Logger;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -213,69 +214,73 @@ public final class PropertiesFile {
     /**
      * Writes out the <code>key=value</code> properties that were changed into
      * a .[properties] file in UTF8.
-     *
-     * @see #load()
      */
     public void save() {
-        OutputStream os = null;
+        BufferedWriter os = null;
 
         try {
-            os = new FileOutputStream(this.fileName);
-        } catch (FileNotFoundException ex) {
-            log.severe("[PropertiesFile] Unable to open " + fileName + "!");
-        }
-
-        PrintStream ps = null;
-        try {
-            ps = new PrintStream(os, true, "UTF-8");
+            os = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName), "UTF8"));
         } catch (UnsupportedEncodingException ex) {
-            log.severe("[PropertiesFile] Unable to write to " + fileName + "!");
+            log.severe("[PropertiesFile] Unable to write to file " + fileName + "!");
+        } catch (FileNotFoundException ex) {
+            log.severe("[PropertiesFile] Unable to find file " + fileName + "!");
         }
+
 
         // Keep track of properties that were set
         List<String> usedProps = new ArrayList<String>();
 
-        for (String line : this.lines) {
-            if (line.trim().length() == 0) {
-                ps.println(line);
-                continue;
-            }
-
-            if (line.charAt(0) == '#') {
-                ps.println(line);
-                continue;
-            }
-
-            if (line.contains("=")) {
-                int delimPosition = line.indexOf('=');
-                String key = line.substring(0, delimPosition).trim();
-
-                if (this.props.containsKey(key)) {
-                    String value = this.props.get(key);
-                    ps.println(key + "=" + value);
-                    usedProps.add(key);
-                } else {
-                    ps.println(line);
+        try {
+            for (String line : this.lines) {
+                if (line.trim().length() == 0) {
+                    os.write(line);
+                    os.newLine();
+                    continue;
                 }
-            } else {
-                ps.println(line);
-            }
-        }
 
-        // Add any new properties
-        for (Map.Entry<String, String> entry : this.props.entrySet()) {
-            if (!usedProps.contains(entry.getKey())) {
-                ps.println(entry.getKey() + "=" + entry.getValue());
-            }
-        }
+                if (line.charAt(0) == '#') {
+                    os.write(line);
+                    os.newLine();
+                    continue;
+                }
 
-        // Exit that stream
-        ps.close();
+                if (line.contains("=")) {
+                    int delimPosition = line.indexOf('=');
+                    String key = line.substring(0, delimPosition).trim();
+
+                    if (this.props.containsKey(key)) {
+                        String value = this.props.get(key);
+                        os.write(key + "=" + value);
+                        os.newLine();
+                        usedProps.add(key);
+                    } else {
+                        os.write(line);
+                        os.newLine();
+                    }
+                } else {
+                    os.write(line);
+                    os.newLine();
+                }
+            }
+
+            // Add any new properties
+            for (Map.Entry<String, String> entry : this.props.entrySet()) {
+                if (!usedProps.contains(entry.getKey())) {
+                    os.write(entry.getKey() + "=" + entry.getValue());
+                    os.newLine();
+                }
+            }
+
+            // Exit that stream
+            os.close();
+        } catch (IOException ex) {
+            log.severe("[PropertiesFile] Unable to write to file " + fileName + "!");
+        }
 
         // Reload
         try {
-            props.clear();
             lines.clear();
+            props.clear();
             this.load();
         } catch (IOException ex) {
             log.severe("[PropertiesFile] Unable to load " + fileName + "!");
@@ -405,33 +410,30 @@ public final class PropertiesFile {
             changed = true;
         }
 
-        try {
-            for (int i = 0; i < this.lines.size(); i++) {
-                String line = this.lines.get(i);
+        // Use an iterator to prevent ConcurrentModification exceptions
+        Iterator<String> it = this.lines.listIterator();
+        while (it.hasNext()) {
+            String line = it.next();
 
-                if (line.trim().length() == 0) {
-                    continue;
-                }
-
-                if (line.charAt(0) == '#') {
-                    continue;
-                }
-
-                if (line.contains("=")) {
-                    int delimPosition = line.indexOf('=');
-                    String key = line.substring(0, delimPosition).trim();
-
-                    if (key.equals(var)) {
-                        this.lines.remove(i);
-                        changed = true;
-                    }
-                } else {
-                    continue;
-                }
+            if (line.trim().length() == 0) {
+                continue;
             }
-        } catch (ConcurrentModificationException concEx) {
-            removeKey(var);
-            return;
+
+            if (line.charAt(0) == '#') {
+                continue;
+            }
+
+            if (line.contains("=")) {
+                int delimPosition = line.indexOf('=');
+                String key = line.substring(0, delimPosition).trim();
+
+                if (key.equals(var)) {
+                    it.remove();
+                    changed = true;
+                }
+            } else {
+                continue;
+            }
         }
 
         // Save on change
