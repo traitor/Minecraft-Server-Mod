@@ -5,6 +5,7 @@
  */
 public class Sign implements ComplexBlock {
     private jn sign;
+    private String[] savedState = null;
 
     /**
      * Creates a sign interface
@@ -108,5 +109,16 @@ public class Sign implements ComplexBlock {
         hash = 97 * hash + this.getY();
         hash = 97 * hash + this.getZ();
         return hash;
+    }
+
+    @Override
+    public void saveState() {
+        savedState = sign.e;        
+    }
+
+    @Override
+    public void loadState() {
+        if (savedState != null)
+            sign.e = savedState;
     }
 }

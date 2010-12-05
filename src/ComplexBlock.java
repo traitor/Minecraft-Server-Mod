@@ -30,4 +30,14 @@ public interface ComplexBlock {
      * Sends the updated block information to clients.
      */
     public void update();
+    
+    /**
+     * Save the state of this complex object.
+     */
+    public void saveState();
+    
+    /**
+     * Restore state of this complex object.
+     */
+    public void loadState();
 }

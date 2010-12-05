@@ -6,6 +6,7 @@
  */
 public abstract class BaseContainerBlock<C extends ay & ke & Container<hn>> extends ItemArray<C> implements ComplexBlock {
     String name = "BaseContainerBlock";
+    hn[] savedState = null;
 
     /**
      * Create a BaseContainerBlock to act as a wrapper for a given container.
@@ -81,5 +82,16 @@ public abstract class BaseContainerBlock<C extends ay & ke & Container<hn>> exte
     @Override
     public String toString() {
         return String.format(name + " [x=%d, y=%d, z=%d]", getX(), getY(), getZ());
+    }
+    
+    @Override
+    public void saveState() {
+        savedState = container.getContents();
+    }
+
+    @Override
+    public void loadState() {
+        if (savedState != null)
+            container.setContents(savedState);        
     }
 }

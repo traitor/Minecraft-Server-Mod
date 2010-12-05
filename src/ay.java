@@ -61,16 +61,8 @@ public class ay {
         // Hacky... but it works at least.
         for (Player player : etc.getServer().getPlayerList()) {
             ay localay = this;
-            ComplexBlock block = null;
-            if (localay instanceof ic) {
-                block = new Chest((ic) localay);
-            } else if (localay instanceof dv) {
-                block = new Furnace((dv) localay);
-            } else if (localay instanceof jn) {
-                block = new Sign((jn) localay);
-            } else if (localay instanceof cf) {
-                block = new MobSpawner((cf) localay);
-            }
+            ComplexBlock block = ComplexBlockCreator.createFrom(localay);
+            
             if (block != null) {
                 if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, player, block) && player.canBuild()) {
                     player.getUser().a.b.a(new jh(this.b, this.c, this.d, this));

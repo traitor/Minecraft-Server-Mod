@@ -426,7 +426,7 @@ public class Server {
 
     /**
      * Returns the complex block at the specified location. Null if there's no
-     * complex block there.
+     * complex block there, or if it is of an invalid type.
      * 
      * @param x
      *            x
@@ -437,19 +437,8 @@ public class Server {
      * @return complex block
      */
     public ComplexBlock getComplexBlock(int x, int y, int z) {
-        ay localav = server.e.k(x, y, z);
-        if (localav != null) {
-            if (localav instanceof ic) {
-                return new Chest((ic) localav);
-            } else if (localav instanceof jn) {
-                return new Sign((jn) localav);
-            } else if (localav instanceof dv) {
-                return new Furnace((dv) localav);
-            } else if (localav instanceof cf) {
-                return new MobSpawner((cf) localav);
-            }
-        }
-        return null;
+        ay block = server.e.k(x, y, z);
+        return ComplexBlockCreator.createFrom(block);
     }
 
     /**

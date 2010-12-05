@@ -3,8 +3,8 @@
  * @author James
  */
 public class MobSpawner implements ComplexBlock {
-
-    cf spawner;
+    private int storedDelay = 0;
+    private cf spawner;
 
     /**
      * Creates an interface for the spawner.
@@ -54,5 +54,17 @@ public class MobSpawner implements ComplexBlock {
      */
     public void setDelay(int delay) {
         spawner.e = delay;
+    }
+
+    @Override
+    public void saveState() {
+        storedDelay = spawner.e;
+    }
+
+    @Override
+    public void loadState() {
+        if (storedDelay != 0) {
+            spawner.e = storedDelay;
+        }
     }
 }
