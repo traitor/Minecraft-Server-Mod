@@ -49,26 +49,11 @@ public class etc {
     private String driver, username, password, db;
 
     private etc() {
-        commands.put("/help", "[Page] - Shows a list of commands. 7 per page.");
-        commands.put("/playerlist", "- Shows a list of players");
-        commands.put("/reload", "- Reloads config");
-        commands.put("/banlist", "<IP or bans> - Gives a list of bans");
-        commands.put("/banip", "[Player] <Reason> - Bans the player's IP");
-        commands.put("/unbanip", "[IP] - Unbans the IP");
-        commands.put("/ban", "[Player] <Reason> - Bans the player");
-        commands.put("/unban", "[Player] - Unbans the player");
-        commands.put("/mute", "[Player] - Toggles mute on player.");
-        commands.put("/tp", "[Player] - Teleports to player. Credits to Zet from SA");
-        commands.put("/tphere", "[Player] - Teleports the player to you");
-        commands.put("/kick", "[Player] <Reason> - Kicks player");
-        commands.put("/item", "[ID] [Amount] <Player> - Gives items");
-        commands.put("/kit", "[Kit] - Gives a kit. To get a list of kits type /kit");
         commands.put("/listwarps", "- Gives a list of available warps");
         commands.put("/home", "- Teleports you home");
         commands.put("/sethome", "- Sets your home");
         commands.put("/setspawn", "- Sets the spawn point to your position.");
         commands.put("/me", "[Message] - * hey0 says hi!");
-        commands.put("/msg", "[Player] [Message] - Sends a message to player");
         commands.put("/spawn", "- Teleports you to spawn");
         commands.put("/warp", "[Warp] - Warps to the specified warp.");
         commands.put("/setwarp", "[Warp] - Sets the warp to your current position.");
@@ -78,9 +63,6 @@ public class etc {
         commands.put("/time", "[time|'day|night|check|raw'] (rawtime) - Changes or checks the time");
         commands.put("/lighter", "- Gives you a lighter for lighting furnaces");
         commands.put("/motd", "- Displays the MOTD");
-        commands.put("/modify", "[player] [key] [value] - Type /modify for more info");
-        commands.put("/whitelist", "[operation (add or remove)] [player]");
-        commands.put("/reservelist", "[operation (add or remove)] [player]");
         commands.put("/enableplugin", "[plugin] - Enables plugin");
         commands.put("/disableplugin", "[plugin] - Disables plugin");
         commands.put("/listplugins", "- Lists all plugins");
