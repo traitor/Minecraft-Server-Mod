@@ -206,7 +206,7 @@ public class Item {
         }
     }
 
-    private int itemId = 1, amount = 1, slot = -1;
+    private int itemId = 1, amount = 1, slot = -1, damage = 0;
 
     public Type itemType = Type.fromId(itemId);
     /**
@@ -246,6 +246,7 @@ public class Item {
     public Item(hn hn) {
         itemId = hn.c;
         amount = hn.a;
+        damage = hn.d;
         this.itemType = Type.fromId(itemId);
     }
 
@@ -308,6 +309,22 @@ public class Item {
      */
     public void setSlot(int slot) {
         this.slot = slot;
+    }
+
+    /**
+     * Returns this item's current damage. 0 if no damage is specified
+     * @return damage
+     */
+    public int getDanage() {
+        return damage;
+    }
+
+    /**
+     * Sets this item's damage
+     * @param damage
+     */
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 
     /**
