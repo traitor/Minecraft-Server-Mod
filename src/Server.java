@@ -525,9 +525,19 @@ public class Server {
      * @param r - the runnable
      */
     public void addToServerQueue(Runnable r) {
-        gv.add(r);
+        addToServerQueue(r, 0L);
     }
 
+    /**
+     * Executes a runnable in the server thread after a specified delay.
+     *  
+     * @param r           - the runnable
+     * @param delayMillis - the delay in milliseconds
+     */
+    public void addToServerQueue(Runnable r, long delayMillis) {
+        gv.add(r, delayMillis);
+    }
+    
     /**
      * Saves all player inventories to file
      */
