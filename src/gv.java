@@ -3,7 +3,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.Vector;
+import java.util.concurrent.DelayQueue;
+
 import net.minecraft.server.MinecraftServer;
 
 public class gv {
@@ -12,9 +13,8 @@ public class gv {
     private MinecraftServer c;
     private int d;
 
-    // hMod: New fields to store the threads in.
-    private static Object synchronizeObject = new Object();
-    private static final Vector<Runnable> eventQueue = new Vector<Runnable>();
+    // hMod: New fields to store the runnables in.
+    private static final DelayQueue<DelayedTask> delayQueue = new DelayQueue<DelayedTask>();
 
     public gv(MinecraftServer paramMinecraftServer) {
         this.c = paramMinecraftServer;
@@ -100,19 +100,21 @@ public class gv {
             }
         }
         // hMod: Execute runnables contained in eventQueue.
-        synchronized (synchronizeObject) {
-            for (Iterator<Runnable> it = eventQueue.iterator(); it.hasNext();) {
-                it.next().run();
-                it.remove();
-            }
+        for (DelayedTask task = delayQueue.poll(); task != null; task = delayQueue.poll()) {
+        	// should we catch exceptions here?
+        	task.run();
         }
     }
 
-    // hMod: Allow adding of items to the queue
+    // hMod: Allow adding of tasks to the queue
+    public static void add(Runnable task, long delayMillis) {
+        // j.u.concurent.* classes are thread safe
+        delayQueue.add(new DelayedTask(task, delayMillis));
+    }
+    	
+    // hMod: deprecated. Use server.addToServerQueue().
     public synchronized static void add(Runnable r) {
-        synchronized (synchronizeObject) {
-            eventQueue.add(r);
-        }
+        add(r, 0L);
     }
 
     public void a(ea paramea, it paramit) {
