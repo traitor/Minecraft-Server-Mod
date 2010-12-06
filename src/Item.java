@@ -315,7 +315,7 @@ public class Item {
      * Returns this item's current damage. 0 if no damage is specified
      * @return damage
      */
-    public int getDanage() {
+    public int getDamage() {
         return damage;
     }
 
