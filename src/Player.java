@@ -509,23 +509,7 @@ public class Player extends HumanEntity {
                         if (amount > 1024) {
                             amount = 1024; // 16 stacks worth. More than enough.
                         }
-                        boolean allowedItem = false;
-                        if (!etc.getInstance().getAllowedItems()[0].equals("") && (!canIgnoreRestrictions())) {
-                            for (String str : etc.getInstance().getAllowedItems()) {
-                                if (itemIdstr.equals(str)) {
-                                    allowedItem = true;
-                                }
-                            }
-                        } else {
-                            allowedItem = true;
-                        }
-                        if (!etc.getInstance().getDisallowedItems()[0].equals("") && !canIgnoreRestrictions()) {
-                            for (String str : etc.getInstance().getDisallowedItems()) {
-                                if (itemIdstr.equals(str)) {
-                                    allowedItem = false;
-                                }
-                            }
-                        }
+                        boolean allowedItem = etc.getInstance().getAllowedItems().contains(itemId) && !etc.getInstance().getDisallowedItems().contains(itemId);
                         if (Item.isValidItem(itemId)) {
                             if (allowedItem || canIgnoreRestrictions()) {
                                 log.log(Level.INFO, "Giving " + toGive.getName() + " some " + itemId);

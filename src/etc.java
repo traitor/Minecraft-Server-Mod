@@ -5,11 +5,15 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.minecraft.server.*;
+import net.minecraft.server.MinecraftServer;
 
 /**
  * etc.java - My catch-all class for a bunch of shit. If there's something you
@@ -25,9 +29,11 @@ public class etc {
     private String usersLoc = "users.txt", kitsLoc = "kits.txt", homeLoc = "homes.txt", warpLoc = "warps.txt", itemLoc = "items.txt", groupLoc = "groups.txt";
     private String whitelistLoc = "whitelist.txt", reservelistLoc = "reservelist.txt";
     private String whitelistMessage = "Not on whitelist.";
-    private String[] allowedItems = null;
-    private String[] disallowedItems = null;
-    private String[] itemSpawnBlacklist = null;
+    
+    private Set<Integer> allowedItems = new HashSet<Integer>();
+    private Set<Integer> disallowedItems = new HashSet<Integer>();
+    private Set<Integer> itemSpawnBlacklist = new HashSet<Integer>();
+    
     private String[] motd = null;
     private boolean saveHomes = true;
     private boolean firstLoad = true;
@@ -90,6 +96,19 @@ public class etc {
         load();
     }
 
+    private void loadIds(Collection<Integer> storage, String rawData) {
+        for (String id : rawData.split(",")) {
+            id = id.trim();
+            if (id.length() > 0) {
+                try {
+                    storage.add(Integer.parseInt(id));
+                } catch (NumberFormatException e) {
+                    log.log(Level.SEVERE, "While parsing the config: '" + id + "' is not a number");
+                }
+            }
+        }
+    }
+
     /**
      * Loads or reloads the mod
      */
@@ -107,9 +126,9 @@ public class etc {
         try {
             dataSourceType = properties.getString("data-source", "flatfile");
 
-            allowedItems = properties.getString("alloweditems", "").split(",");
-            disallowedItems = properties.getString("disalloweditems", "").split(",");
-            itemSpawnBlacklist = properties.getString("itemspawnblacklist", "").split(",");
+            loadIds( allowedItems, properties.getString("alloweditems", ""));
+            loadIds( disallowedItems, properties.getString("disalloweditems", ""));
+            loadIds( itemSpawnBlacklist, properties.getString("itemspawnblacklist", ""));
             motd = properties.getString("motd", "Type /help for a list of commands.").split("@");
             playerLimit = properties.getInt("max-players", 20);
             saveHomes = properties.getBoolean("save-homes", true);
@@ -168,9 +187,6 @@ public class etc {
         } catch (Exception e) {
             log.log(Level.SEVERE, "Exception while reading from server.properties", e);
             // Just in case...
-            disallowedItems = new String[]{""};
-            allowedItems = new String[]{""};
-            itemSpawnBlacklist = new String[]{""};
             motd = new String[]{"Type /help for a list of commands."};
         }
     }
@@ -297,12 +313,7 @@ public class etc {
      * @return
      */
     public boolean isOnItemBlacklist(int id) {
-        for (String str : itemSpawnBlacklist) {
-            if (Integer.toString(id).equalsIgnoreCase(str)) {
-                return true;
-            }
-        }
-        return false;
+        return itemSpawnBlacklist.contains(id);
     }
 
     /**
@@ -609,7 +620,7 @@ public class etc {
      * 
      * @return list of allowed items
      */
-    public String[] getAllowedItems() {
+    public Set<Integer> getAllowedItems() {
         return allowedItems;
     }
 
@@ -627,7 +638,7 @@ public class etc {
      * 
      * @return
      */
-    public String[] getDisallowedItems() {
+    public Set<Integer> getDisallowedItems() {
         return disallowedItems;
     }
 
@@ -663,7 +674,7 @@ public class etc {
      * 
      * @return
      */
-    public String[] getItemSpawnBlacklist() {
+    public Set<Integer> getItemSpawnBlacklist() {
         return itemSpawnBlacklist;
     }
 
@@ -771,8 +782,12 @@ public class etc {
      * 
      * @param allowedItems
      */
-    public void setAllowedItems(String[] allowedItems) {
-        this.allowedItems = allowedItems;
+    public void setAllowedItems(int[] allowedItems) {
+        this.allowedItems.clear();
+        // this.allowedItems.addAll(Arrays.asList(allowedItems)); <-- if only java was smart >.>
+        for (int item: allowedItems) {
+            this.allowedItems.add(item);
+        }
     }
 
     /**
@@ -780,8 +795,12 @@ public class etc {
      * 
      * @param disallowedItems
      */
-    public void setDisallowedItems(String[] disallowedItems) {
-        this.disallowedItems = disallowedItems;
+    public void setDisallowedItems(int[] disallowedItems) {
+        this.disallowedItems.clear();
+        // this.allowedItems.addAll(Arrays.asList(allowedItems)); <-- if only java was smart >.>
+        for (int item: disallowedItems) {
+            this.disallowedItems.add(item);
+        }
     }
 
     /**
@@ -816,8 +835,12 @@ public class etc {
      * 
      * @param itemSpawnBlacklist
      */
-    public void setItemSpawnBlacklist(String[] itemSpawnBlacklist) {
-        this.itemSpawnBlacklist = itemSpawnBlacklist;
+    public void setItemSpawnBlacklist(int[] itemSpawnBlacklist) {
+        this.itemSpawnBlacklist.clear();
+        // this.allowedItems.addAll(Arrays.asList(allowedItems)); <-- if only java was smart >.>
+        for (int item: itemSpawnBlacklist) {
+            this.itemSpawnBlacklist.add(item);
+        }
     }
 
     /**

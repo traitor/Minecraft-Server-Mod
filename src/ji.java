@@ -387,7 +387,7 @@ public class ji extends fc implements ey {
             etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, player, blockPlaced, blockClicked, paramgb.a);
 
             // hMod: If we were building inside spawn, bail! (unless ops/admin)
-            if ((i4 > etc.getInstance().getSpawnProtectionSize() || bool) && player.canBuild()) {
+            if (((i4 > etc.getInstance().getSpawnProtectionSize() && !etc.getInstance().isOnItemBlacklist(paramgb.a)) || bool) && player.canBuild()) {
                 hn localhn = paramgb.a >= 0 ? new hn(paramgb.a) : null;
                 this.e.c.a(this.e, this.d.e, localhn, m, n, i1, i2);
             } else {
