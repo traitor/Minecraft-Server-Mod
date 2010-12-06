@@ -109,9 +109,7 @@ public class ji extends fc implements ey {
                 ea tmp = this.e.k;
                 this.e.k();
                 this.e.c(d6, 0.0D, d7);
-
-                // hMod: +1 to remove risk of falling through ground.
-                this.e.b(d3, d4+1, d5, f1, f2);
+                this.e.b(d3, d4, d5, f1, f2);
                 this.e.s = d6;
                 this.e.u = d7;
 
@@ -366,7 +364,11 @@ public class ji extends fc implements ey {
         if (paramgb.e == 255) {
             hn localhn1 = paramgb.a >= 0 ? new hn(paramgb.a) : null;
             // hMod: call our version with extra blockClicked/blockPlaced
-            ((Digging)this.e.c).a(this.e, this.d.e, localhn1, blockClicked, blockPlaced);
+            if (blockPlaced != null) {
+                // Set the type of block to what it currently is
+                blockPlaced.setType(etc.getServer().getBlockIdAt(blockPlaced.getX(), blockPlaced.getY(), blockPlaced.getZ()));
+            }
+            ((Digging)this.e.c).a(this.e, this.d.e, localhn1, blockPlaced, blockClicked);
         } else {
             int m = paramgb.b;
             int n = paramgb.c;

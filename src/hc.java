@@ -39,10 +39,10 @@ public class hc extends fw {
             Player player = ((et) paramfz).getPlayer();
             if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, blockPlaced, blockClicked, new Item(paramhn))) {
                 return false;
-            } else {
-                paramhn.a -= 1;
-                parameq.d(paramInt1, paramInt2, paramInt3, gc.av.bh);
             }
+
+            paramhn.a -= 1;
+            parameq.d(paramInt1, paramInt2, paramInt3, gc.av.bh);
         }
 
         return true;
