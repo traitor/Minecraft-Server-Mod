@@ -515,16 +515,22 @@ public class etc {
                 return true;
             }
 
-            etc.getLoader().reloadPlugin(split[1]);
-            log.info("Plugin reloaded.");
+            if (etc.getLoader().reloadPlugin(split[1])) {
+                log.info("Plugin reloaded.");
+            } else {
+                log.info("Plugin failed to reload.");
+            }
         } else if (split[0].equalsIgnoreCase("enableplugin")) {
             if (split.length < 2) {
                 log.info("Correct usage is: enableplugin [plugin]");
                 return true;
             }
 
-            etc.getLoader().enablePlugin(split[1]);
-            log.info("Plugin enabled.");
+            if (etc.getLoader().enablePlugin(split[1])) {
+                log.info("Plugin enabled.");
+            } else {
+                log.info("Plugin failed to enable");
+            }
         } else if (split[0].equalsIgnoreCase("disableplugin")) {
             if (split.length < 2) {
                 log.info("Correct usage is: disableplugin [plugin]");

@@ -289,19 +289,21 @@ public class PluginLoader {
     /**
      * Loads the specified plugin
      * @param fileName file name of plugin to load
+     * @return if the operation was successful
      */
-    public void loadPlugin(String fileName) {
+    public Boolean loadPlugin(String fileName) {
         if (getPlugin(fileName) != null) {
-            return; // Already exists.
+            return false; // Already exists.
         }
-        load(fileName);
+        return load(fileName);
     }
 
     /**
      * Reloads the specified plugin
      * @param fileName file name of plugin to reload
+     * @return if the operation was successful
      */
-    public void reloadPlugin(String fileName) {
+    public Boolean reloadPlugin(String fileName) {
         /* Not sure exactly how much of this is necessary */
         Plugin toNull = getPlugin(fileName);
         if (toNull != null) {
@@ -322,21 +324,22 @@ public class PluginLoader {
         }
         toNull = null;
 
-        load(fileName);
+        return load(fileName);
     }
 
-    private void load(String fileName) {
+    private Boolean load(String fileName) {
         try {
             File file = new File("plugins/" + fileName + ".jar");
             if (!file.exists()) {
                 log.log(Level.SEVERE, "Failed to find plugin file: plugins/" + fileName + ".jar. Please ensure the file exists");
-                return;
+                return false;
             }
             URLClassLoader child = null;
             try {
                 child = new MyClassLoader(new URL[]{file.toURI().toURL()}, Thread.currentThread().getContextClassLoader());
             } catch (MalformedURLException ex) {
                 log.log(Level.SEVERE, "Exception while loading class", ex);
+                return false;
             }
             Class c = child.loadClass(fileName);
 
@@ -349,7 +352,9 @@ public class PluginLoader {
             }
         } catch (Throwable ex) {
             log.log(Level.SEVERE, "Exception while loading plugin", ex);
+            return false;
         }
+        return true;
     }
 
     /**
@@ -405,7 +410,7 @@ public class PluginLoader {
         } else { // New plugin, perhaps?
             File file = new File("plugins/" + name + ".jar");
             if (file.exists()) {
-                loadPlugin(name);
+                return loadPlugin(name);
             } else {
                 return false;
             }

@@ -853,16 +853,22 @@ public class Player extends HumanEntity {
                     return;
                 }
 
-                etc.getLoader().reloadPlugin(split[1]);
-                sendMessage(Colors.Rose + "Plugin reloaded.");
+                if (etc.getLoader().reloadPlugin(split[1])) {
+                    sendMessage(Colors.Rose + "Plugin reloaded.");
+                } else {
+                    sendMessage(Colors.Rose + "Unable to reload plugin. Check capitalization and/or server logfile.");
+                }
             } else if (split[0].equalsIgnoreCase("/enableplugin")) {
                 if (split.length < 2) {
                     sendMessage(Colors.Rose + "Correct usage is: /enableplugin [plugin]");
                     return;
                 }
 
-                etc.getLoader().enablePlugin(split[1]);
-                sendMessage(Colors.Rose + "Plugin enabled.");
+                if (etc.getLoader().enablePlugin(split[1])) {
+                    sendMessage(Colors.Rose + "Plugin enabled.");
+                } else {
+                    sendMessage(Colors.Rose + "Unable to enable plugin. Check capitalization and/or server logfile.");
+                }
             } else if (split[0].equalsIgnoreCase("/disableplugin")) {
                 if (split.length < 2) {
                     sendMessage(Colors.Rose + "Correct usage is: /disableplugin [plugin]");
