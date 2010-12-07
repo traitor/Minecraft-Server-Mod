@@ -304,7 +304,7 @@ public class PluginLoader {
      */
     public boolean loadPlugin(String fileName) {
         if (getPlugin(fileName) != null) {
-            return; // Already exists.
+            return true; // Already exists.
         }
         return load(fileName);
     }
