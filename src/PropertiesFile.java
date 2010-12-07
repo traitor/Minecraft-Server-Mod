@@ -12,18 +12,17 @@ import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Used for accessing and creating .[properties] files, reads them as utf-8, saves as utf-8.
+ * Used for accessing and creating .[properties] files, reads them as ISO-8859-1, saves as ISO-8859-1.
  * Internationalization is key importance especially for character codes.
  *
  * @author Nijikokun
- * @version 1.0.4, %G%
+ * @version 1.0.5
  */
 public final class PropertiesFile {
 
@@ -53,14 +52,14 @@ public final class PropertiesFile {
     }
 
     /**
-     * The loader for property files, it reads the file as UTF8 or converts the string into UTF8.
+     * The loader for property files, it reads the file as ISO-8859-1 or converts the string into UTF8.
      * Used for simple runthrough's, loading, or reloading of the file.
      *
      * @throws IOException
      */
     public void load() throws IOException {
         BufferedReader reader;
-        reader = new BufferedReader(new InputStreamReader(new FileInputStream(this.fileName), "UTF8"));
+        reader = new BufferedReader(new InputStreamReader(new FileInputStream(this.fileName), "ISO-8859-1"));
         String line;
 
         // Clear the file & unwritten properties
@@ -69,7 +68,7 @@ public final class PropertiesFile {
 
         // Begin reading the file.
         while ((line = reader.readLine()) != null) {
-            line = new String(line.getBytes(), "UTF-8");
+            line = new String(line.getBytes("ISO-8859-1"), "ISO-8859-1");
             char c = 0;
             int pos = 0;
 
@@ -219,7 +218,7 @@ public final class PropertiesFile {
         BufferedWriter os = null;
 
         try {
-            os = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName), "UTF8"));
+            os = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName), "ISO-8859-1"));
         } catch (UnsupportedEncodingException ex) {
             log.severe("[PropertiesFile] Unable to write to file " + fileName + "!");
         } catch (FileNotFoundException ex) {
@@ -232,6 +231,8 @@ public final class PropertiesFile {
 
         try {
             for (String line : this.lines) {
+		line = new String(line.getBytes("ISO-8859-1"), "ISO-8859-1");
+
                 if (line.trim().length() == 0) {
                     os.write(line);
                     os.newLine();
