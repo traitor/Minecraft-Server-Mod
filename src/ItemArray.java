@@ -54,7 +54,10 @@ public abstract class ItemArray<C extends Container<hn>> {
     public Item getItemFromSlot(int slot) {
         if (slot < getArray().length && slot >= 0) {
             if (getArray()[slot] != null) {
-                return new Item(getArray()[slot]);
+            	Item i = new Item(getArray()[slot]);
+            	i.setSlot(slot);
+            	return i;
+                
             }
         }
         return null;
@@ -72,7 +75,9 @@ public abstract class ItemArray<C extends Container<hn>> {
                 continue;
             }
             if (getArray()[i].c == id) {
-                return new Item(getArray()[i]);
+            	Item item = new Item(getArray()[i]);
+	        	item.setSlot(i);
+	        	return item;
             }
         }
         return null;
@@ -91,7 +96,10 @@ public abstract class ItemArray<C extends Container<hn>> {
                 continue;
             }
             if (getArray()[i].c == id && getArray()[i].a <= maxAmount) {
-                return new Item(getArray()[i]);
+                //
+            	Item item = new Item(getArray()[i]);
+            	item.setSlot(i);
+            	return item;
             }
         }
         return null;
