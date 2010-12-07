@@ -229,7 +229,8 @@ public class ji extends fc implements ey {
     @Override
     public void a(ie paramie) {
         this.e.am.a[this.e.am.d] = this.k;
-        boolean bool = this.d.e.B = this.d.f.g(this.e.at);
+        // hMod: We allow admins and ops to dig!
+        boolean bool = this.d.e.B = this.d.f.g(this.e.at) || getPlayer().isAdmin();
         int m = 0;
         if (paramie.e == 0) {
             m = 1;
@@ -325,7 +326,7 @@ public class ji extends fc implements ey {
     @Override
     public void a(gb paramgb) {
         //System.out.println(String.format("BlockPlacePacket: %d @ [%d,%d,%d] dir %s", paramgb.a, paramgb.b, paramgb.c, paramgb.d, paramgb.e ));
-        // hMod allow admins to dig!
+        // hMod: We allow admins and ops to build!
         boolean bool = d.e.B = (d.f.g(getPlayer().getName()) || getPlayer().isAdmin());
 
         // hMod: Store block data to call hooks
