@@ -285,16 +285,14 @@ public class PluginLoader {
             }
             loadPlugin(sclass.trim());
         }
-        if (properties.containsKey("requiredplugins")) {
-            String[] requiredclasses = properties.getString("plugins", "").split(",");
-            for (String reqclass : requiredclasses) {
-                if (reqclass.equals("")) {
-                    continue;
-                }
-                if (!loadPlugin(reqclass.trim())) {
-                    log.log(Level.SEVERE, "Could not load required plugin. Exiting.");
-                    System.exit(1);
-                }
+        String[] requiredclasses = properties.getString("requiredplugins", "").split(",");
+        for (String reqclass : requiredclasses) {
+            if (reqclass.equals("")) {
+                continue;
+            }
+            if (!loadPlugin(reqclass.trim())) {
+                log.log(Level.SEVERE, "Could not load required plugin. Exiting.");
+                System.exit(1);
             }
         }
     }
