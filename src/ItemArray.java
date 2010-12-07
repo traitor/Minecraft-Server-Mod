@@ -54,7 +54,7 @@ public abstract class ItemArray<C extends Container<hn>> {
     public Item getItemFromSlot(int slot) {
         if (slot < getArray().length && slot >= 0) {
             if (getArray()[slot] != null) {
-                return new Item(getArray()[slot].c, getArray()[slot].a, slot);
+                return new Item(getArray()[slot]);
             }
         }
         return null;
@@ -72,7 +72,7 @@ public abstract class ItemArray<C extends Container<hn>> {
                 continue;
             }
             if (getArray()[i].c == id) {
-                return new Item(getArray()[i].c, getArray()[i].a, i);
+                return new Item(getArray()[i]);
             }
         }
         return null;
@@ -91,7 +91,7 @@ public abstract class ItemArray<C extends Container<hn>> {
                 continue;
             }
             if (getArray()[i].c == id && getArray()[i].a <= maxAmount) {
-                return new Item(getArray()[i].c, getArray()[i].a, i);
+                return new Item(getArray()[i]);
             }
         }
         return null;
@@ -141,8 +141,19 @@ public abstract class ItemArray<C extends Container<hn>> {
      * @param slot the id of the slot.
      */
     public void setSlot(int itemId, int amount, int slot) {
+        setSlot(itemId, amount, slot, 0);
+    }
+    /**
+     * Replaces the slot with the item inputted.
+     * 
+     * @param itemId item id of the item to put into the slot.
+     * @param amount amount of the item to put into the slot.
+     * @param slot the id of the slot.
+     * @param damage
+     */
+    public void setSlot(int itemId, int amount, int slot, int damage) {
         if (slot < getArray().length && slot >= 0) {
-            getArray()[slot] = new hn(itemId, (amount > 64 ? 64 : amount));
+            getArray()[slot] = new hn(itemId, (amount > 64 ? 64 : amount), damage);
         }
     }
 

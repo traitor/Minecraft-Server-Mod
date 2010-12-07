@@ -238,6 +238,21 @@ public class Item {
         this.slot = slot;
         this.itemType = Type.fromId(itemId);
     }
+    
+    /**
+     * Creates an item with specified id, amount and slot
+     * @param itemId
+     * @param amount
+     * @param slot
+     * @param damage
+     */
+    public Item(int itemId, int amount, int slot, int damage) {
+        this.itemId = itemId;
+        this.amount = amount;
+        this.slot = slot;
+        this.damage = damage;
+        this.itemType = Type.fromId(itemId);
+    }
 
     /**
      * Creates an item from the actual item class
@@ -375,6 +390,7 @@ public class Item {
         hash = 97 * hash + this.itemId;
         hash = 97 * hash + this.amount;
         hash = 97 * hash + this.slot;
+    
         return hash;
     }
 
