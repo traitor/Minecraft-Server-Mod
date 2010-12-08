@@ -14,7 +14,7 @@ import net.minecraft.server.MinecraftServer;
  * 
  * @author James
  */
-public class Player extends HumanEntity {
+public class Player extends HumanEntity implements MessageReceiver {
     private static final Logger log = Logger.getLogger("Minecraft");
     private int id = -1;
     private String prefix = "";
@@ -58,6 +58,16 @@ public class Player extends HumanEntity {
      */
     public void kick(String reason) {
         getEntity().a.c(reason);
+    }
+    
+    /**
+     * Sends player a notification
+     * 
+     * @param message
+     */
+    public void notify(String message) {
+        if (message.length() > 0)
+            sendMessage(Colors.Rose + message);
     }
 
     /**
@@ -132,7 +142,11 @@ public class Player extends HumanEntity {
                 }
                 return;
             }
-            if (split[0].equalsIgnoreCase("/help")) {
+            
+            // Remove '/' before checking.
+            if (ServerConsoleCommands.parseServerConsoleCommand(this, split[0].substring(1), split)) {
+                // Command parsed successfully...
+            } else if (split[0].equalsIgnoreCase("/help")) {
                 // Meh, not the greatest way, but not the worst either.
                 List<String> availableCommands = new ArrayList<String>();
                 for (Entry<String, String> entry : etc.getInstance().getCommands().entrySet()) {
@@ -173,169 +187,6 @@ public class Player extends HumanEntity {
                             sendMessage(Colors.Rose + availableCommands.get(i));
                         }
                     }
-                }
-            } else if (split[0].equalsIgnoreCase("/reload")) {
-                etc.getInstance().load();
-                etc.getInstance().loadData();
-                for (Player player : etc.getServer().getPlayerList()) {
-                    player.getUser().reloadPlayer();
-                }
-                log.info("Reloaded config");
-                sendMessage("Successfuly reloaded config");
-            } else if ((split[0].equalsIgnoreCase("/modify") || split[0].equalsIgnoreCase("/mp"))) {
-                if (split.length > 2 && split[2].contains(":")) {
-                    for (int i = 3; i < split.length; i++) {
-                        if (!split[i].contains(":")) {
-                            sendMessage(Colors.Rose + "Usage is: /modify [player] [key] [value]");
-                            sendMessage(Colors.Rose + "Keys:");
-                            sendMessage(Colors.Rose + "prefix: only the letter the color represents");
-                            sendMessage(Colors.Rose + "commands: list seperated by comma");
-                            sendMessage(Colors.Rose + "groups: list seperated by comma");
-                            sendMessage(Colors.Rose + "ignoresrestrictions: true or false");
-                            sendMessage(Colors.Rose + "admin: true or false");
-                            sendMessage(Colors.Rose + "modworld: true or false");
-                            return;
-                        }
-                    }
-
-                    Player player = etc.getServer().matchPlayer(split[1]);
-
-                    if (player == null) {
-                        sendMessage(Colors.Rose + "Player does not exist.");
-                        return;
-                    }
-
-                    for (int i = 2; i < split.length; i++) {
-                        if (split[i].split(":").length != 2) {
-                            sendMessage("This key:value pair is deformed... " + split[i]);
-                            return;
-                        }
-                        String key = split[i].split(":")[0];
-                        String value = split[i].split(":")[1];
-                        boolean newUser = false;
-
-                        if (!etc.getDataSource().doesPlayerExist(player.getName())) {
-                            if (!key.equalsIgnoreCase("groups") && !key.equalsIgnoreCase("g")) {
-                                sendMessage(Colors.Rose + "When adding a new user, set their group(s) first.");
-                                return;
-                            }
-                            sendMessage(Colors.Rose + "Adding new user.");
-                            newUser = true;
-                            player.setCanModifyWorld(true);
-                        }
-
-                        if (key.equalsIgnoreCase("prefix") || key.equalsIgnoreCase("p")) {
-                            player.setPrefix(value);
-                        } else if (key.equalsIgnoreCase("commands") || key.equalsIgnoreCase("c")) {
-                            player.setCommands(value.split(","));
-                        } else if (key.equalsIgnoreCase("groups") || key.equalsIgnoreCase("g")) {
-                            player.setGroups(value.split(","));
-                        } else if (key.equalsIgnoreCase("ignoresrestrictions") || key.equalsIgnoreCase("ir")) {
-                            player.setIgnoreRestrictions(value.equalsIgnoreCase("true") || value.equals("1"));
-                        } else if (key.equalsIgnoreCase("admin") || key.equalsIgnoreCase("a")) {
-                            player.setAdmin(value.equalsIgnoreCase("true") || value.equals("1"));
-                        } else if (key.equalsIgnoreCase("modworld") || key.equalsIgnoreCase("mw")) {
-                            player.setCanModifyWorld(value.equalsIgnoreCase("true") || value.equals("1"));
-                        }
-
-                        if (newUser) {
-                            etc.getDataSource().addPlayer(player);
-                        } else {
-                            etc.getDataSource().modifyPlayer(player);
-                        }
-                        log.info("Modifed user " + split[1] + ". " + key + " => " + value + " by " + getName());
-                    }
-                    sendMessage(Colors.Rose + "Modified user.");
-                } else {
-                    if (split.length < 4) {
-                        sendMessage(Colors.Rose + "Usage is: /modify [player] [key] [value]");
-                        sendMessage(Colors.Rose + "Keys:");
-                        sendMessage(Colors.Rose + "prefix: only the letter the color represents");
-                        sendMessage(Colors.Rose + "commands: list seperated by comma");
-                        sendMessage(Colors.Rose + "groups: list seperated by comma");
-                        sendMessage(Colors.Rose + "ignoresrestrictions: true or false");
-                        sendMessage(Colors.Rose + "admin: true or false");
-                        sendMessage(Colors.Rose + "modworld: true or false");
-                        return;
-                    }
-
-                    Player player = etc.getServer().matchPlayer(split[1]);
-
-                    if (player == null) {
-                        sendMessage(Colors.Rose + "Player does not exist.");
-                        return;
-                    }
-
-                    String key = split[2];
-                    String value = split[3];
-                    boolean newUser = false;
-
-                    if (!etc.getDataSource().doesPlayerExist(player.getName())) {
-                        if (!key.equalsIgnoreCase("groups") && !key.equalsIgnoreCase("g")) {
-                            sendMessage(Colors.Rose + "When adding a new user, set their group(s) first.");
-                            return;
-                        }
-                        sendMessage(Colors.Rose + "Adding new user.");
-                        newUser = true;
-                    }
-
-                    if (key.equalsIgnoreCase("prefix") || key.equalsIgnoreCase("p")) {
-                        player.setPrefix(value);
-                    } else if (key.equalsIgnoreCase("commands") || key.equalsIgnoreCase("c")) {
-                        player.setCommands(value.split(","));
-                    } else if (key.equalsIgnoreCase("groups") || key.equalsIgnoreCase("g")) {
-                        player.setGroups(value.split(","));
-                    } else if (key.equalsIgnoreCase("ignoresrestrictions") || key.equalsIgnoreCase("ir")) {
-                        player.setIgnoreRestrictions(value.equalsIgnoreCase("true") || value.equals("1"));
-                    } else if (key.equalsIgnoreCase("admin") || key.equalsIgnoreCase("a")) {
-                        player.setAdmin(value.equalsIgnoreCase("true") || value.equals("1"));
-                    } else if (key.equalsIgnoreCase("modworld") || key.equalsIgnoreCase("mw")) {
-                        player.setCanModifyWorld(value.equalsIgnoreCase("true") || value.equals("1"));
-                    }
-
-                    if (newUser) {
-                        etc.getDataSource().addPlayer(player);
-                    } else {
-                        etc.getDataSource().modifyPlayer(player);
-                    }
-                    sendMessage(Colors.Rose + "Modified user.");
-                    log.info("Modifed user " + split[1] + ". " + key + " => " + value + " by " + getName());
-                }
-            } else if (split[0].equalsIgnoreCase("/whitelist")) {
-                if (split.length < 2) {
-                    sendMessage(Colors.Rose + "whitelist [operation (toggle, add or remove)] <player>");
-                    return;
-                }
-
-                if (split[1].equalsIgnoreCase("toggle")) {
-                    sendMessage(Colors.Rose + (etc.getInstance().toggleWhitelist() ? "Whitelist enabled" : "Whitelist disabled"));
-                } else if (split.length == 3) {
-                    if (split[1].equalsIgnoreCase("add")) {
-                        etc.getDataSource().addToWhitelist(split[2]);
-                        sendMessage(Colors.Rose + split[2] + " added to whitelist");
-                    } else if (split[1].equalsIgnoreCase("remove")) {
-                        etc.getDataSource().removeFromWhitelist(split[2]);
-                        sendMessage(Colors.Rose + split[2] + " removed from whitelist");
-                    } else {
-                        sendMessage(Colors.Rose + "Invalid operation.");
-                    }
-                } else {
-                    sendMessage(Colors.Rose + "Invalid operation.");
-                }
-            } else if (split[0].equalsIgnoreCase("/reservelist")) {
-                if (split.length != 3) {
-                    sendMessage(Colors.Rose + "reservelist [operation (add or remove)] [player]");
-                    return;
-                }
-
-                if (split[1].equalsIgnoreCase("add")) {
-                    etc.getDataSource().addToReserveList(split[2]);
-                    sendMessage(Colors.Rose + split[2] + " added to reservelist");
-                } else if (split[1].equalsIgnoreCase("remove")) {
-                    etc.getDataSource().removeFromReserveList(split[2]);
-                    sendMessage(Colors.Rose + split[2] + " removed from reservelist");
-                } else {
-                    sendMessage(Colors.Rose + "Invalid operation.");
                 }
             } else if (split[0].equalsIgnoreCase("/mute")) {
                 if (split.length != 2) {
@@ -836,38 +687,6 @@ public class Player extends HumanEntity {
                     degreeRotation += 360.0;
                 }
                 sendMessage("Compass: " + etc.getCompassPointForDirection(degreeRotation) + " (" + (Math.round(degreeRotation * 10) / 10.0) + ")");
-            } else if (split[0].equalsIgnoreCase("/listplugins")) {
-                sendMessage(Colors.Rose + "Plugins" + Colors.White + ": " + etc.getLoader().getPluginList());
-            } else if (split[0].equalsIgnoreCase("/reloadplugin")) {
-                if (split.length < 2) {
-                    sendMessage(Colors.Rose + "Correct usage is: /reloadplugin [plugin]");
-                    return;
-                }
-
-                if (etc.getLoader().reloadPlugin(split[1])) {
-                    sendMessage(Colors.Rose + "Plugin reloaded.");
-                } else {
-                    sendMessage(Colors.Rose + "Unable to reload plugin. Check capitalization and/or server logfile.");
-                }
-            } else if (split[0].equalsIgnoreCase("/enableplugin")) {
-                if (split.length < 2) {
-                    sendMessage(Colors.Rose + "Correct usage is: /enableplugin [plugin]");
-                    return;
-                }
-
-                if (etc.getLoader().enablePlugin(split[1])) {
-                    sendMessage(Colors.Rose + "Plugin enabled.");
-                } else {
-                    sendMessage(Colors.Rose + "Unable to enable plugin. Check capitalization and/or server logfile.");
-                }
-            } else if (split[0].equalsIgnoreCase("/disableplugin")) {
-                if (split.length < 2) {
-                    sendMessage(Colors.Rose + "Correct usage is: /disableplugin [plugin]");
-                    return;
-                }
-
-                etc.getLoader().disablePlugin(split[1]);
-                sendMessage(Colors.Rose + "Plugin disabled.");
             } else if (split[0].equalsIgnoreCase("/compass")) {
                 double degreeRotation = ((getRotation() - 90) % 360);
                 if (degreeRotation < 0) {
@@ -960,12 +779,6 @@ public class Player extends HumanEntity {
                         ms.setSpawn(split[1]);
                 } else {
                     sendMessage(Colors.Rose + "You are not targeting a mob spawner.");
-                }
-            } else if (split[0].equalsIgnoreCase("/version")) {
-                if (!etc.getInstance().getTainted())
-                    sendMessage(Colors.Gold + "Hey0 Server Mod Build " + etc.getInstance().getVersion());
-                else {
-                    sendMessage(Colors.Gold + "Unofficial hMod Build " + etc.getInstance().getVersionStr());
                 }
             } else {
                 log.info(getName() + " tried command " + command);
