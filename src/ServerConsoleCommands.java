@@ -10,6 +10,7 @@ public class ServerConsoleCommands {
         add("reload",        reload);
         add("listplugins",   listplugins);
         add("enableplugin",  enableplugin);
+        add("reloadplugin",  reloadplugin);
         add("disableplugin", disableplugin);
         add("modify",        modify);
         add("mp",            modify);       
