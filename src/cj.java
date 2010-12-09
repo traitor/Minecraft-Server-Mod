@@ -55,7 +55,7 @@ public class cj extends ea
       this.l.a("smoke", this.p, this.q + 0.5D, this.r, 0.0D, 0.0D, 0.0D);
     }
   }
-
+  // hMod: Changed from private to public to be able to explode the TNT
   public void c()
   {
     float f = 4.0F;
