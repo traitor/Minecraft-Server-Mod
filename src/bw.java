@@ -1,6 +1,5 @@
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Logger;
 
 public final class bw {
     // hMod: Add generic here, saves zillions of casts.
@@ -44,21 +43,21 @@ public final class bw {
 
         int i = 0;
         js localjs;
-        label797: label803: for (int j = 0; j < js.values().length; j++) {
+        for (int j = 0; j < js.values().length; j++) {
             localjs = js.values()[j];
 
             if (parameq.a(localjs.c) > localjs.d * a.size() / 256) {
                 continue;
             }
-            for (kh localkh : a) {
+            label797: for (kh localkh : a) {
                 // hMod: from nextInt(50) == 0 to nextInt(100) <= spawnRate, allow customisable value
                 if (parameq.l.nextInt(100) <= etc.getInstance().getMobSpawnRate()) {
                     // hMod: ignore default spawns, load from config
                     Class[] arrayOfClass = null;
                     if (localjs == js.a) {
-                        arrayOfClass = animals;
-                    } else if (localjs == js.b) {
                         arrayOfClass = mobs;
+                    } else if (localjs == js.b) {
+                        arrayOfClass = animals;
                     } else {
                         continue;
                     }
@@ -75,7 +74,7 @@ public final class bw {
                     }
                     int i7 = 0;
 
-                    for (int i8 = 0;; i8++) {
+                    label803: for (int i8 = 0;; i8++) {
                         if (i8 >= 3) {
                             break label803;
                         }
@@ -112,7 +111,6 @@ public final class bw {
                                     localException.printStackTrace();
                                     return i;
                                 }
-                                Logger.getLogger("Minecraft").info("Spawning a " + new Mob(localka).getName());
 
                                 localka.c(f1, f2, f3, parameq.l.nextFloat() * 360.0F, 0.0F);
 
