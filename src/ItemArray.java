@@ -313,7 +313,7 @@ public abstract class ItemArray<C extends Container<hn>> {
     public Item[] getContents() {
         Item[] rt = new Item[arraySize];
         for (int i = 0; i < arraySize; i++) {
-            rt[i] = (_getArray()[i] != null) ? new Item(getArray()[i]):null;
+            rt[i] = (_getArray()[i] != null) ? new Item(_getArray()[i]):null;
         }
 
         return rt;
