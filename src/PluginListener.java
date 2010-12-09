@@ -557,4 +557,18 @@ public abstract class PluginListener {
     public boolean onAttack(LivingEntity attacker, LivingEntity defender, Integer amount) {
         return false;
     }
+    
+    /**
+     * Called when a block is destroyed by fire
+     * block status depends on type of destruction:
+     * 1 = replaced with air.
+     * 3 = replaced with fire.
+     * @param block
+     *          block to be destroyed.
+     *
+     * @return true if you dont the block to be destroyed.
+     */
+    public boolean onBurn(Block block) {
+        return false;
+    }
 }

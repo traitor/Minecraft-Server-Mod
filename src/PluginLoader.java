@@ -190,6 +190,10 @@ public class PluginLoader {
          */
         ATTACK,
         /**
+         * Calls onBurn
+         */
+        BURN,
+        /**
          * Unused.
          */
         NUM_HOOKS
@@ -650,6 +654,11 @@ public class PluginLoader {
                                 break;
                             case ATTACK:
                                 if (listener.onAttack((LivingEntity) parameters[0], (LivingEntity) parameters[1], (Integer) parameters[2])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case BURN:
+                                if (listener.onBurn((Block) parameters[0])) {
                                     toRet = true;
                                 }
                                 break;
