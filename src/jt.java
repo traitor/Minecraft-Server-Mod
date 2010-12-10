@@ -106,12 +106,16 @@ public class jt extends gc {
             if (paramRandom.nextInt(2) == 0) {
                 // hMod: VERY SLOW dynamic spreading of fire.
                 Block block = new Block(parameq.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
-                block.setStatus(3);
+                block.setStatus(4);
                 if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, block, null)) {
                     parameq.d(paramInt1, paramInt2, paramInt3, this.bh);
                 }
             } else {
-                parameq.d(paramInt1, paramInt2, paramInt3, 0);
+                Block block = new Block(parameq.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
+                block.setStatus(5);
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, block, null)) {
+                    parameq.d(paramInt1, paramInt2, paramInt3, 0);
+                }
             }
             if (j != 0) {
                 gc.am.a(parameq, paramInt1, paramInt2, paramInt3, 0);
