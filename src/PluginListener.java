@@ -300,11 +300,13 @@ public abstract class PluginListener {
     }
 
     /**
-     * Called when either a lava block or a lighter tryes to light something on fire.
+     * Called when either a lava block or a lighter tries to light something on fire, or fire tries to destroy a block.
      * block status depends on the light source:
      * 1 = lava.
      * 2 = lighter (flint + steel).
      * 3 = spread (dynamic spreading of fire).
+     * 4 = fire destroys a block and replaces it with fire.
+     * 5 = fire destroys a block.
      * @param block block that the fire wants to spawn in.
      * @param player player
      * @return true if you dont want the fire to ignite.
