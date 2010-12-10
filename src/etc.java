@@ -53,6 +53,9 @@ public class etc {
     private boolean tainted = true;
     private int version = 1; // Version is meant to be loaded from the file, this stays as 1.
     private String driver, username, password, db;
+    private String[] animals = new String[] {};
+    private String[] monsters = new String[] {};
+    private int mobSpawnRate = 2;
 
     private etc() {
         commands.put("/help", "[Page] - Shows a list of commands. 7 per page.");
@@ -153,6 +156,10 @@ public class etc {
             spawnProtectionSize = properties.getInt("spawn-protection-size", 16);
             logging = properties.getBoolean("logging", false);
             enableHealth = properties.getBoolean("enable-health", true);
+
+            animals = properties.getString("natural-animals", "Sheep,Pig,Chicken,Cow").split(",");
+            monsters = properties.getString("natural-monsters", "Spider,Zombie,Skeleton,Creeper").split(",");
+            mobSpawnRate = properties.getInt("natural-spawn-rate", mobSpawnRate);
 
             String autoHealString = properties.getString("auto-heal", "default");
             if (autoHealString.equalsIgnoreCase("true")) {
@@ -882,6 +889,60 @@ public class etc {
      */
     public String getVersionStr() {
         return versionStr;
+    }
+
+    /**
+     * Returns a list of animals that are allowed to spawn naturally
+     *
+     * @return a list of animals
+     */
+    public String[] getAnimals() {
+        return animals;
+    }
+
+    /**
+     * Sets a list of animals that are allowed to spawn naturally
+     *
+     * @param animals a list of animals
+     */
+    public void setAnimals(String[] animals) {
+        this.animals = animals;
+    }
+
+    /**
+     * Returns a list of mobs that are allowed to spawn naturally
+     *
+     * @return a list of mobs
+     */
+    public String[] getMonsters() {
+        return monsters;
+    }
+
+    /**
+     * Sets a list of mobs that are allowed to spawn naturally
+     *
+     * @param monsters a list of mobs
+     */
+    public void setMonsters(String[] monsters) {
+        this.monsters = monsters;
+    }
+
+    /**
+     * Returns the % from 0 to 100 that a mob or animal will spawn
+     *
+     * @return a percentage from 0 to 100
+     */
+    public int getMobSpawnRate() {
+        return mobSpawnRate;
+    }
+
+    /**
+     * Sets the % from 0 to 100 that a mob or animal will spawn
+     *
+     * @param rate a percentage from 0 to 100
+     */
+    public void setNightSpawnChance(int rate) {
+        this.mobSpawnRate = rate;
     }
 
     private Connection _getSQLConnection() {

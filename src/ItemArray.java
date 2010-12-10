@@ -30,16 +30,16 @@ public abstract class ItemArray<C extends Container<hn>> {
         }
 
         int slot = item.getSlot();
-        if (slot < getArray().length && slot >= 0) {
+        if (slot < _getArray().length && slot >= 0) {
             if (item.getAmount() <= 0) {
-                getArray()[slot] = null;
+                _getArray()[slot] = null;
             } else if (Item.isValidItem(item.getItemId())) {
-                getArray()[slot] = new hn(item.getItemId(), item.getAmount());
+                _getArray()[slot] = new hn(item.getItemId(), item.getAmount());
             }
         } else if (slot == -1) {
             int newSlot = getEmptySlot();
             if (newSlot != -1) {
-                getArray()[newSlot] = new hn(item.getItemId(), item.getAmount());
+                _getArray()[newSlot] = new hn(item.getItemId(), item.getAmount());
                 item.setSlot(newSlot);
             }
         }
@@ -52,12 +52,22 @@ public abstract class ItemArray<C extends Container<hn>> {
      * @return item
      */
     public Item getItemFromSlot(int slot) {
-        if (slot < getArray().length && slot >= 0) {
-            if (getArray()[slot] != null) {
-                return new Item(getArray()[slot].c, getArray()[slot].a, slot);
+        if (slot < _getArray().length && slot >= 0) {
+            if (_getArray()[slot] != null) {
+                return new Item(_getArray()[slot]);
             }
         }
         return null;
+    }
+
+    /**
+     * Retrieves from the slot
+     * 
+     * @param type
+     * @return item
+     */
+    public Item getItemFromId(Item.Type type) {
+        return getItemFromId(type.getId());
     }
 
     /**
@@ -67,15 +77,26 @@ public abstract class ItemArray<C extends Container<hn>> {
      * @return item
      */
     public Item getItemFromId(int id) {
-        for (int i = 0; getArray().length > i; i++) {
-            if (getArray()[i] == null) {
-                continue;
-            }
-            if (getArray()[i].c == id) {
-                return new Item(getArray()[i].c, getArray()[i].a, i);
+        Item[] items = getContents();
+
+        for (Item item : items) {
+            if ((item != null) && (item.getItemId() == id)) {
+                return item;
             }
         }
+
         return null;
+    }
+
+    /**
+     * Retrieves from the slot
+     * 
+     * @param type
+     * @param maxAmount
+     * @return item
+     */
+    public Item getItemFromId(Item.Type type, int maxAmount) {
+        return getItemFromId(type.getId());
     }
 
     /**
@@ -86,14 +107,14 @@ public abstract class ItemArray<C extends Container<hn>> {
      * @return item
      */
     public Item getItemFromId(int id, int maxAmount) {
-        for (int i = 0; getArray().length > i; i++) {
-            if (getArray()[i] == null) {
-                continue;
-            }
-            if (getArray()[i].c == id && getArray()[i].a <= maxAmount) {
-                return new Item(getArray()[i].c, getArray()[i].a, i);
+        Item[] items = getContents();
+
+        for (Item item : items) {
+            if ((item != null) && (item.getItemId() == id) && (item.getAmount() <= maxAmount)) {
+                return item;
             }
         }
+
         return null;
     }
 
@@ -103,8 +124,8 @@ public abstract class ItemArray<C extends Container<hn>> {
      * @return nearest empty slot
      */
     public int getEmptySlot() {
-        for (int i = 0; getArray().length > i; i++) {
-            if (getArray()[i] != null) {
+        for (int i = 0; _getArray().length > i; i++) {
+            if (_getArray()[i] != null) {
                 continue;
             }
             return i;
@@ -118,8 +139,8 @@ public abstract class ItemArray<C extends Container<hn>> {
      * @param slot slot to remove item from
      */
     public void removeItem(int slot) {
-        if (slot < getArray().length && slot >= 0) {
-            getArray()[slot] = null;
+        if (slot < _getArray().length && slot >= 0) {
+            _getArray()[slot] = null;
         }
     }
 
@@ -134,15 +155,26 @@ public abstract class ItemArray<C extends Container<hn>> {
     }
 
     /**
-     * Replaces the slot with the item inputted.
-     * 
+     * Replaces the slot with the specified item.
+     *
+     * @param type type of the item to put into the slot.
+     * @param amount amount of the item to put into the slot.
+     * @param slot the id of the slot.
+     */
+    public void setSlot(Item.Type type, int amount, int slot) {
+        setSlot(type.getId(), amount, slot);
+    }
+
+    /**
+     * Replaces the slot with the specified item.
+     *
      * @param itemId item id of the item to put into the slot.
      * @param amount amount of the item to put into the slot.
      * @param slot the id of the slot.
      */
     public void setSlot(int itemId, int amount, int slot) {
-        if (slot < getArray().length && slot >= 0) {
-            getArray()[slot] = new hn(itemId, (amount > 64 ? 64 : amount));
+        if (slot < _getArray().length && slot >= 0) {
+            _getArray()[slot] = new hn(itemId, (amount > 64 ? 64 : amount));
         }
     }
 
@@ -153,26 +185,104 @@ public abstract class ItemArray<C extends Container<hn>> {
      * @param item item id and amount to remove
      */
     public void removeItem(Item item) {
-        int amount = item.getAmount();
-        int itemId = item.getItemId();
-        for (int i = 0; getArray().length > i; i++) {
-            if (getArray()[i] == null) {
-                continue;
-            }
-            if (getArray()[i].c == itemId) {
-                int tempAmount = getArray()[i].a;
-                tempAmount -= amount;
-                amount -= getArray()[i].a;
-                if (tempAmount <= 0) {
-                    getArray()[i] = null;
-                } else {
-                    getArray()[i].a = tempAmount;
-                }
-                if (amount <= 0) {
+        removeItem(item.getItemId(), item.getAmount());
+    }
+
+    /**
+     * Removes the item. No slot needed, it will go through the inventory until
+     * the amount specified is removed.
+     * 
+     * @param type item to remove
+     * @param amount amount to remove
+     */
+    public void removeItem(Item.Type type, int amount) {
+        removeItem(type.getId(), amount);
+    }
+
+    /**
+     * Removes the item. No slot needed, it will go through the inventory until
+     * the amount specified is removed.
+     * 
+     * @param id item to remove
+     * @param amount amount to remove
+     */
+    public void removeItem(int id, int amount) {
+        Item[] items = getContents();
+
+        for (Item item : items) {
+            if ((item != null) && (item.getItemId() == id)) {
+                if (item.getAmount() == amount) {
+                    removeItem(item.getSlot());
                     return;
+                } else if (item.getAmount() > amount) {
+                    setSlot(id, item.getAmount() - amount, item.getSlot());
+                    amount -= item.getAmount();
+                } else {
+                    removeItem(item.getSlot());
+                    amount -= item.getAmount();
                 }
             }
         }
+    }
+
+    /**
+     * Checks to see if this getArray() has one slot that has the given item type
+     * 
+     * @param type
+     * @return
+     */
+    public boolean hasItem(Item.Type type) {
+        return hasItem(type, 1);
+    }
+
+    /**
+     * Checks to see if this getArray() has one slot that has the given item id
+     * 
+     * @param itemId
+     * @return
+     */
+    public boolean hasItem(int itemId) {
+        return hasItem(itemId, 1);
+    }
+
+    /**
+     * Checks to see if this getArray() has one slot that has the item id and
+     * equal or more to the amount.
+     *
+     * @param type item to look for
+     * @param minimum amount of items that must be in the stack
+     * @return
+     */
+    public boolean hasItem(Item.Type type, int minimum) {
+        Item[] items = getContents();
+
+        for (Item item : items) {
+            if ((item != null) && (item.getType() == type) && (item.getAmount() >= minimum)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks to see if this getArray() has one slot that has the item id and
+     * equal or more to the amount.
+     * 
+     * @param itemId item to look for
+     * @param minimum amount of items that must be in the stack
+     * @return
+     */
+    public boolean hasItem(int itemId, int minimum) {
+        Item[] items = getContents();
+
+        for (Item item : items) {
+            if ((item != null) && (item.getItemId() == itemId) && (item.getAmount() >= minimum)) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 
     /**
@@ -185,13 +295,14 @@ public abstract class ItemArray<C extends Container<hn>> {
      * @return
      */
     public boolean hasItem(int itemId, int minimum, int maximum) {
-        for (int i = 0; getArray().length > i; i++) {
-            if (getArray()[i] != null) {
-                if (getArray()[i].c == itemId && getArray()[i].a >= minimum && getArray()[i].a <= maximum) {
-                    return true;
-                }
+        Item[] items = getContents();
+
+        for (Item item : items) {
+            if ((item != null) && (item.getItemId() == itemId) && (item.getAmount() >= minimum) && (item.getAmount() <= maximum)) {
+                return true;
             }
         }
+        
         return false;
     }
 
@@ -202,7 +313,7 @@ public abstract class ItemArray<C extends Container<hn>> {
     public Item[] getContents() {
         Item[] rt = new Item[arraySize];
         for (int i = 0; i < arraySize; i++) {
-            rt[i] = (getArray()[i] != null) ? new Item(getArray()[i]):null;
+            rt[i] = (_getArray()[i] != null) ? new Item(_getArray()[i]):null;
         }
 
         return rt;
@@ -215,22 +326,40 @@ public abstract class ItemArray<C extends Container<hn>> {
     public void setContents(Item[] contents) {
         hn[] newcontents = new hn[arraySize];
         for (int i = 0; i < arraySize; i++) {
-            newcontents[i] = (contents[i] != null) ? new hn(contents[i].getItemId(), contents[i].getAmount()):null;
+            newcontents[i] = (contents[i] != null) ? new hn(contents[i].getItemId(), contents[i].getAmount()) : null;
         }
-        setArray(newcontents);
+        _setArray(newcontents);
     }
-        
+
+    /**
+     * Gets the raw items in this array
+     * @return an array of raw items
+     * @deprecated use getContents() instead
+     */
     public hn[] getArray() {
+        return _getArray();
+    }
+
+    private hn[] _getArray() {
         return container.getContents();
     }
-    
+
+    /**
+     * Sets the raw items in this array
+     * @param values items to set
+     * @deprecated use setContents(Item[]) instead
+     */
     public void setArray(hn[] values) {
+        _setArray(values);
+    }
+
+    public void _setArray(hn[] values) {
         container.setContents(values);
     }
     
     public void clearContents() {
-        for (int i = 0; getArray().length > i; i++) {
-            getArray()[i] = null;
+        for (int i = 0; _getArray().length > i; i++) {
+            _getArray()[i] = null;
         }
     }
 }
