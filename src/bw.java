@@ -49,7 +49,7 @@ public final class bw {
             if (parameq.a(localjs.c) > localjs.d * a.size() / 256) {
                 continue;
             }
-            label797: for (kh localkh : a) {
+            for (kh localkh : a) {
                 // hMod: from nextInt(50) == 0 to nextInt(100) <= spawnRate, allow customisable value
                 if (parameq.l.nextInt(100) <= etc.getInstance().getMobSpawnRate()) {
                     // hMod: ignore default spawns, load from config
@@ -74,18 +74,12 @@ public final class bw {
                     }
                     int i7 = 0;
 
-                    label803: for (int i8 = 0;; i8++) {
-                        if (i8 >= 3) {
-                            break label803;
-                        }
+                    for (int i8 = 0; i8 < 3; i8++) {
                         int i9 = i4;
                         int i10 = i5;
                         int i11 = i6;
                         int i12 = 6;
-                        for (int i13 = 0;; i13++) {
-                            if (i13 >= 4) {
-                                break label797;
-                            }
+                        for (int i13 = 0; i13 < 4; i13++) {
                             i9 += parameq.l.nextInt(i12) - parameq.l.nextInt(i12);
                             i10 += parameq.l.nextInt(1) - parameq.l.nextInt(1);
                             i11 += parameq.l.nextInt(i12) - parameq.l.nextInt(i12);
