@@ -941,7 +941,7 @@ public class etc {
      *
      * @param rate a percentage from 0 to 100
      */
-    public void setNightSpawnChance(int rate) {
+    public void setMobSpawnRate(int rate) {
         this.mobSpawnRate = rate;
     }
 
