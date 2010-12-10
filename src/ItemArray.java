@@ -54,7 +54,7 @@ public abstract class ItemArray<C extends Container<hn>> {
     public Item getItemFromSlot(int slot) {
         if (slot < _getArray().length && slot >= 0) {
             if (_getArray()[slot] != null) {
-                return new Item(_getArray()[slot]);
+                return new Item(_getArray()[slot], slot);
             }
         }
         return null;
@@ -208,18 +208,19 @@ public abstract class ItemArray<C extends Container<hn>> {
      */
     public void removeItem(int id, int amount) {
         Item[] items = getContents();
+        int remaining = amount;
 
         for (Item item : items) {
             if ((item != null) && (item.getItemId() == id)) {
-                if (item.getAmount() == amount) {
+                if (item.getAmount() == remaining) {
                     removeItem(item.getSlot());
                     return;
-                } else if (item.getAmount() > amount) {
-                    setSlot(id, item.getAmount() - amount, item.getSlot());
-                    amount -= item.getAmount();
+                } else if (item.getAmount() > remaining) {
+                    setSlot(id, item.getAmount() - remaining, item.getSlot());
+                    return;
                 } else {
                     removeItem(item.getSlot());
-                    amount -= item.getAmount();
+                    remaining -= item.getAmount();
                 }
             }
         }
@@ -313,7 +314,7 @@ public abstract class ItemArray<C extends Container<hn>> {
     public Item[] getContents() {
         Item[] rt = new Item[arraySize];
         for (int i = 0; i < arraySize; i++) {
-            rt[i] = (_getArray()[i] != null) ? new Item(_getArray()[i]):null;
+            rt[i] = getItemFromSlot(i);
         }
 
         return rt;

@@ -258,6 +258,16 @@ public class Item {
     }
 
     /**
+     * Creates an item from the actual item class at the given slot
+     * @param hn
+     * @param slot
+     */
+    public Item(hn hn, int slot) {
+        this(hn);
+        this.slot = slot;
+    }
+
+    /**
      * Returns the item id
      * @return item id
      */
