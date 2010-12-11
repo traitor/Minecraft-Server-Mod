@@ -223,6 +223,18 @@ public class Item {
     }
 
     /**
+     * Create a new item.
+     * @param itemType type of item.
+     */
+    public Item(Type itemType) {
+        this(itemType, 1);
+    }
+    
+    public Item(Type itemType, int amount) {
+        this(itemType.getId(), amount);
+    }
+
+    /**
      * Creates an item with specified id and amount
      * @param itemId
      * @param amount
