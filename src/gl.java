@@ -186,7 +186,7 @@ public class gl extends ea {
         int i = this.a.a;
         if ((this.c == 0) && (paramfz.am.a(this.a))) {
             // hMod: allow item pickups
-            Item item = new Item(a.c, a.a);
+            Item item = new Item(a.c, i);
             if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_PICK_UP, ((et)paramfz).getPlayer(), item)) {
                 this.l.a(this, "random.pop", 0.2F, ((this.W.nextFloat() - this.W.nextFloat()) * 0.7F + 1.0F) * 2.0F);
                 paramfz.c(this, i);
