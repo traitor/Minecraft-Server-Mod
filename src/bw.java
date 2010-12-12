@@ -98,13 +98,18 @@ public final class bw {
                                 if (f7 < 576.0F) {
                                     continue;
                                 }
-                                ka localka;
+                                ka localka = null;
                                 try {
-                                    localka = (ka) arrayOfClass[i3].getConstructor(new Class[]{eq.class}).newInstance(new Object[]{parameq});
+                                        //hMod : make sure we have something to spawn before fetching calling newInstance.
+                                        if(arrayOfClass != null && arrayOfClass[i3] != null)
+                                            localka = (ka) arrayOfClass[i3].getConstructor(new Class[]{eq.class}).newInstance(new Object[]{parameq});
                                 } catch (Exception localException) {
                                     localException.printStackTrace();
                                     return i;
                                 }
+                                
+                                if(localka == null)
+                                    continue;
 
                                 localka.c(f1, f2, f3, parameq.l.nextFloat() * 360.0F, 0.0F);
 
