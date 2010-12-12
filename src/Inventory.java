@@ -32,9 +32,26 @@ public class Inventory extends ItemArray<hk> {
      * @param type
      */
     public Inventory(Player player, Type type) {
-        super(player.getUser().am, 27);
+        super(player.getUser().am, 37);
         this.user = player.getUser();
         this.type = type;
+    }
+    
+    /**
+     * Return an empty slot.
+     * Overridden to ensure the last slot remains hidden, as use of it is forbidden.
+     */
+    @Override
+    public int getEmptySlot() {
+        Item[] contents = getContents();
+        int free = -1;
+
+        // We subtract 1 to hide element 36 which is out of view.
+        for(int i = 0; i < contents.length-1; i++)
+            if (contents[i] == null) 
+                free = i;
+
+        return free;
     }
 
     /**
