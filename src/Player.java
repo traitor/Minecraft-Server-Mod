@@ -1351,6 +1351,24 @@ public class Player extends HumanEntity implements MessageReceiver {
     }
 
     /**
+     * Returns whether or not this Player is currently sneaking (crouching)
+     * 
+     * @return true if sneaking
+     */
+    public boolean getSneaking() {
+        return getEntity().al;
+    }
+
+    /**
+     * Force this Player to be sneaking or not
+     * 
+     * @param sneaking true if sneaking
+     */
+    public void setSneaking(boolean sneaking) {
+        getEntity().al = sneaking;
+    }
+
+    /**
      * Returns a String representation of this Player
      * 
      * @return String representation of this Player
