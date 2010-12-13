@@ -46,8 +46,8 @@ public class Inventory extends ItemArray<hk> {
         Item[] contents = getContents();
         int free = -1;
 
-        // We subtract 1 to hide element 36 which is out of view.
-        for(int i = 0; i < contents.length-1; i++)
+        // Fill backwards so that it starts from lower left.
+        for(int i = contents.length-2; i >= 0; i--)
             if (contents[i] == null) 
                 free = i;
 
