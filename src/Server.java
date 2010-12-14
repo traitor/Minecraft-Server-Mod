@@ -276,6 +276,8 @@ public class Server {
                 toRet.add(new Boat((fm) o));
             } else if (o instanceof et) {
                 toRet.add(((et)o).getPlayer());
+            } else if (o instanceof cj) {
+                toRet.add(new TntEntity((cj) o));
             }
         }
         return toRet;
