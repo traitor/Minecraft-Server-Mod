@@ -645,4 +645,76 @@ public class Server {
     public boolean isBlockIndirectlyPowered(int x, int y, int z) {
         return this.server.e.n(x, y, z);
     }
+    
+    /**
+     * returns the light level of the given coordinates
+     *
+     * @param x a block x-coordinate
+     * @param y a block y-coordinate
+     * @param z a block z-coordinate
+     * @return the light level of the given coordinates
+     */
+    public int getLightLevel(int x, int y, int z) {
+    	return this.server.e.a(x, y, z);
+    }
+    
+    /**
+     * returns the light level of the given block
+     *
+     * @param block Block to check
+     * @return the light level of the given coordinates
+     */
+    public int getLightLevel(Block block) {
+    	return getLightLevel(block.getX(), block.getY(), block.getZ());
+    }
+    
+    /**
+     * Sets the light level of the given coordinates
+     *
+     * @param x a block x-coordinate
+     * @param y a block y-coordinate
+     * @param z a block z-coordinate
+     */
+    public void setLightLevel(int x, int y, int z, int newLevel) {
+    	this.server.e.b(dn.a, x, y, z, newLevel);
+    }
+    
+    /**
+     * Sets the light level of the given block. 
+     * A light level of 16 is total darkness, 0 total light.
+     *
+     * @param block Block to check
+     */
+    public void setLightLevel(Block block, int newLevel) {
+    	setLightLevel(block.getX(), block.getY(), block.getZ(), newLevel);
+    }
+    
+    /**
+     * returns true if it is daytime
+     */
+    public boolean isDayTime() {
+    	return this.server.e.b();
+    }
+    
+    /**
+     * Checks if the given coordinates are exposed to the sky
+     *
+     * @param x a block x-coordinate
+     * @param y a block y-coordinate
+     * @param z a block z-coordinate
+     * @return true if the given coordinates are exposed to the sky
+     */
+    public boolean isExposedToSky(int x, int y, int z) {
+    	return this.server.e.g(x, y, z);
+    }
+    
+    /**
+     * Checks if the given coordinates are exposed to the sky
+     *
+     * @param block Block to check
+     * @return true if the given coordinates are exposed to the sky
+     */
+    public boolean isExposedToSky(Block block) {
+    	return isExposedToSky(block.getX(), block.getY(), block.getZ());
+    }
 }

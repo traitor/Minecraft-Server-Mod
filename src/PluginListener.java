@@ -557,4 +557,17 @@ public abstract class PluginListener {
     public boolean onAttack(LivingEntity attacker, LivingEntity defender, Integer amount) {
         return false;
     }
+    
+    /**
+     * Called when the light level of a block is changed.
+     * Returning any integer value other than the newLevel will override the changed value
+     * 
+     * @param block the location
+     * @param oldLever the previous light level
+     * @param newLevel the new light level
+     * @return
+     */
+    public int onLightLevelChange(Block location, int oldLevel, int newLevel) {
+        return newLevel;
+    }
 }

@@ -192,6 +192,10 @@ public class PluginLoader {
         /**
          * Unused.
          */
+        LIGHT_LEVEL_CHANGE,
+        /**
+         * Calls onLightLevelChange
+         */
         NUM_HOOKS
     }
     
@@ -451,7 +455,10 @@ public class PluginLoader {
 
         if (h == Hook.REDSTONE_CHANGE) {
             toRet = (Integer) parameters[2];
-        } else if (h == Hook.LIQUID_DESTROY) {
+        } else if(h == Hook.LIGHT_LEVEL_CHANGE){
+        	toRet = (Integer) parameters[2];
+        }
+        else if (h == Hook.LIQUID_DESTROY) {
             toRet = HookResult.DEFAULT_ACTION;
         }
 
@@ -652,6 +659,9 @@ public class PluginLoader {
                                 if (listener.onAttack((LivingEntity) parameters[0], (LivingEntity) parameters[1], (Integer) parameters[2])) {
                                     toRet = true;
                                 }
+                                break;
+                            case LIGHT_LEVEL_CHANGE:
+                                toRet = listener.onLightLevelChange((Block) parameters[0], (Integer) parameters[1], (Integer) toRet);
                                 break;
                         }
                     } catch (UnsupportedOperationException ex) {
