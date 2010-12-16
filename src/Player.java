@@ -1393,10 +1393,7 @@ public class Player extends HumanEntity implements MessageReceiver {
             return false;
         }
         final Player other = (Player) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        return true;
+        return getName().equals( other.getName());
     }
 
     /**
