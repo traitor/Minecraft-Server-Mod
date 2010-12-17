@@ -12,7 +12,8 @@ public class gv {
     private ig b = new ig();
     private MinecraftServer c;
     private int d;
-
+    private Object mutex = new Object();
+    
     // hMod: New fields to store the runnables in.
     private static final DelayQueue<DelayedTask> delayQueue = new DelayQueue<DelayedTask>();
 
@@ -83,13 +84,15 @@ public class gv {
 
     public void a() {
         ArrayList localArrayList = new ArrayList();
-        for (Iterator localIterator1 = this.a.iterator(); localIterator1.hasNext();) {
-            gw localObject = (gw) localIterator1.next();
-            ((gw) localObject).a(this.c.e.d);
-            if ((((gw) localObject).p) && ((((gw) localObject).a instanceof et))) {
-                localArrayList.add(((gw) localObject).a);
-            }
-        }
+        synchronized (mutex) {
+	        for (Iterator localIterator1 = this.a.iterator(); localIterator1.hasNext();) {
+	        	gw localObject = (gw) localIterator1.next();
+	            ((gw) localObject).a(this.c.e.d);
+	            if ((((gw) localObject).p) && ((((gw) localObject).a instanceof et))) {
+	                localArrayList.add(((gw) localObject).a);
+	            }
+	        }
+        } 
         Object localObject;
         for (int i = 0; i < localArrayList.size(); i++) {
             localObject = localArrayList.get(i);
