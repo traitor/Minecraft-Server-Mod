@@ -186,10 +186,8 @@ public class BaseEntity {
             return null;
 
         et p = (et) entity;
-        Player player = etc.getServer().getPlayer(p.at);
-        player.setUser(p);
 
-        return player;
+        return p.getPlayer();
     }
 
     /**
