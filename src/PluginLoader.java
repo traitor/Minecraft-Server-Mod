@@ -190,9 +190,9 @@ public class PluginLoader {
          */
         ATTACK,
         /**
-         * Unused.
+         * Calls onDeathItemDrop
          */
-        NUM_HOOKS
+        DEATH_ITEM_DROP
     }
     
     /**
@@ -214,39 +214,39 @@ public class PluginLoader {
     }
     
     public enum DamageType {
-        /*
+        /**
          * Creeper explosion
          */
         CREEPER_EXPLOSION,
-        /*
+        /**
          * Damage dealt by another entity
          */
         ENTITY,
-        /*
+        /**
          * Damage caused by explosion
          */
         EXPLOSION,
-        /*
+        /**
          * Damage caused from falling (fall distance - 3.0)
          */
         FALL,
-        /*
+        /**
          * Damage caused by fire (1)
          */
         FIRE,
-        /*
+        /**
          * Low periodic damage caused by burning (1)
          */
         FIRE_TICK,
-        /*
+        /**
          * Damage caused from lava (4)
          */
         LAVA,
-        /*
+        /**
          * Damage caused from drowning (2)
          */
         WATER,
-        /*
+        /**
          * Damaged caused by cactus (1)
          */
         CACTUS
@@ -268,7 +268,7 @@ public class PluginLoader {
         properties = new PropertiesFile("server.properties");
         this.server = new Server(server);
 
-        for (int h = 0; h < Hook.NUM_HOOKS.ordinal(); ++h) {
+        for (int h = 0; h < Hook.values().length; ++h) {
             listeners.add(new ArrayList<PluginRegisteredListener>());
         }
     }
@@ -341,7 +341,7 @@ public class PluginLoader {
                 log.log(Level.SEVERE, "Exception while loading class", ex);
                 return false;
             }
-            Class c = child.loadClass(fileName);
+            Class<?> c = child.loadClass(fileName);
 
             Plugin plugin = (Plugin) c.newInstance();
             plugin.setName(fileName);
@@ -538,6 +538,16 @@ public class PluginLoader {
                                 break;
                             case ITEM_DROP:
                                 if (listener.onItemDrop((Player) parameters[0], (Item) parameters[1])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case DEATH_ITEM_DROP:
+                            if (listener.onDeathItemDrop(
+                                    (Player) parameters[0],
+                                    (Item[]) parameters[1],
+                                    (Item[]) parameters[2],
+                                    (Item[]) parameters[3],
+                                    (LivingEntity) parameters[4])) {
                                     toRet = true;
                                 }
                                 break;

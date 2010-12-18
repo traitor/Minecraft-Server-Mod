@@ -388,6 +388,32 @@ public abstract class PluginListener {
     }
 
     /**
+     * Called when a player drops all items just prior to death. This will not
+     * prevent items from leaving a player's inventory on death nor can it
+     * prevent death, but it will prevent items from a player's inventory from
+     * falling on the ground.
+     * 
+     * @param player
+     *            Player who is dropping all items as they die.
+     * @param inventoryContents
+     *            Contents of the player's inventory.
+     * @param craftingTableContents
+     *            Contents of the player's crafting table.
+     * @param equipmentContents
+     *            Contents of the player's current equipment.
+     * @param attacker
+     *            Entity that caused the player to die, or null if there was no
+     *            such entity.
+     * @return true if you want to prevent items from being dropped, false to
+     *         allow the game to handle item dropping.
+     */
+    public boolean onDeathItemDrop(Player player, Item[] inventoryContents,
+            Item[] craftingTableContents, Item[] equipmentContents,
+            LivingEntity attacker) {
+        return false;
+    }
+
+    /**
      * Called whenever a redstone source (wire, switch, torch) changes its
      * current.
      *

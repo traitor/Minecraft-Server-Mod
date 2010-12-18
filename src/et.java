@@ -75,8 +75,27 @@ public class et extends fz {
     @Override
     public void f(ea paramea) {
         // hMod: drops inventory on death.
-        // TODO: HOOK MEH
-        if (etc.getInstance().isHealthEnabled()) {
+        LivingEntity attacker = (paramea != null && paramea instanceof ka) ? new LivingEntity((ka) paramea) : null;
+
+        Player player = this.getPlayer();
+        Item[] inventory = player.getInventory().getContents();
+
+        // getCraftingTable().getContents() currently returns inventory, do it the hard way
+        hn playerCraftingTable[] = player.getCraftingTable().getArray();
+        Item[] craftingTable = new Item[playerCraftingTable.length];
+        for (int i = 0; i < playerCraftingTable.length; i++) {
+            craftingTable[i] = playerCraftingTable[i] == null ? null : new Item(playerCraftingTable[i], i);
+        }
+        
+        // getEquipment().getContents() currently returns inventory, do it the hard way
+        hn playerEquipment[] = player.getEquipment().getArray();
+        Item[] equipment = new Item[playerEquipment.length];
+        for (int i = 0; i < playerEquipment.length; i++) {
+            equipment[i] = playerEquipment[i] == null? null : new Item(playerEquipment[i], i);
+        }
+        if (etc.getInstance().isHealthEnabled()
+                && !(Boolean) etc.getLoader().callHook(
+                        PluginLoader.Hook.DEATH_ITEM_DROP, player, inventory, craftingTable, equipment, attacker)) {
             this.am.f();
         }
     }
