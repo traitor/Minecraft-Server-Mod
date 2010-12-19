@@ -190,6 +190,10 @@ public class PluginLoader {
          */
         ATTACK,
         /**
+         * Calls onEntityCollidesWithBlock
+         */
+        ENTITY_COLLIDES_WITH_BLOCK,
+        /**
          * Unused.
          */
         NUM_HOOKS
@@ -650,6 +654,11 @@ public class PluginLoader {
                                 break;
                             case ATTACK:
                                 if (listener.onAttack((LivingEntity) parameters[0], (LivingEntity) parameters[1], (Integer) parameters[2])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case ENTITY_COLLIDES_WITH_BLOCK:
+                                if (listener.onEntityCollidesWithBlock((BaseEntity) parameters[0], (Block) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;

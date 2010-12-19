@@ -557,4 +557,18 @@ public abstract class PluginListener {
     public boolean onAttack(LivingEntity attacker, LivingEntity defender, Integer amount) {
         return false;
     }
+    
+    /**
+     * Called when an entity collides (touches) a block.
+     * Returning true, you can prevent the natural effect of the block,
+     * for example, slow sand slowing down, or the damage of a cactus.
+     * 
+     * @param entity the entity colliding with the block
+     * @param block
+     * @return true to prevent natural block interaction
+     */
+    public boolean onEntityCollidesWithBlock(BaseEntity entity, Block block) {
+        return false;
+    }
+    
 }

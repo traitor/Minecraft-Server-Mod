@@ -399,7 +399,12 @@ public abstract class ea {
                 for (int i12 = i6; i12 <= i9; i12++) {
                     int i13 = this.l.a(i10, i11, i12);
                     if (i13 > 0) {
-                        gc.m[i13].a(this.l, i10, i11, i12, this);
+                        // hMod: onEntityCollidesWithBlock(entity, block)
+                        BaseEntity entity = new BaseEntity(this);
+                        Block block = etc.getServer().getBlockAt(i10, i11, i12);
+                        if (!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.ENTITY_COLLIDES_WITH_BLOCK, entity, block)) {
+                            gc.m[i13].a(this.l, i10, i11, i12, this);
+                        }
                     }
                 }
             }
