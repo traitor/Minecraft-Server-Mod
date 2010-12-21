@@ -4,14 +4,14 @@
  * @author James
  */
 public class Sign implements ComplexBlock {
-    private jn sign;
+    private ko sign;
 
     /**
      * Creates a sign interface
      * 
      * @param localav
      */
-    public Sign(jn localay) {
+    public Sign(ko localay) {
         this.sign = localay;
     }
 
@@ -56,7 +56,7 @@ public class Sign implements ComplexBlock {
     }
 
     public void update() {
-        sign.c();
+        sign.d();
     }
 
     /**

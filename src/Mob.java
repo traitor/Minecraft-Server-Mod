@@ -7,20 +7,20 @@ public class Mob extends LivingEntity {
     /**
      * Creates a mob interface
      * 
-     * @param localka name of mob
+     * @param locallb name of mob
      */
-    public Mob(ka localka) {
-        super(localka);
+    public Mob(lb locallb) {
+        super(locallb);
     }
     
     /**
-     * Creates a mob interface
+     * Creates a mob interface 
      * 
      * @param mob
      *            name of mob
      */
     public Mob(String mob) {
-        this((ka) hp.a(mob, etc.getMCServer().e));
+        this((lb) im.a(mob, etc.getMCServer().e));
     }
 
     /**
@@ -47,15 +47,15 @@ public class Mob extends LivingEntity {
      * @param rider
      */
     public void spawn(Mob rider) {
-        eq localeq = etc.getMCServer().e;
+        ff localff = etc.getMCServer().e;
 
         entity.c(getX() + 0.5f, getY(), getZ() + 0.5f, getRotation(), 0f);
-        localeq.a(entity);
+        localff.a(entity);
 
         if (rider != null) {
-            ka mob2 = rider.getMob();
+            lb mob2 = rider.getMob();
             mob2.c(getX(), getY(), getZ(), getRotation(), 0f);
-            localeq.a(mob2);
+            localff.a(mob2);
             mob2.e(entity);
         }
     }
@@ -66,7 +66,7 @@ public class Mob extends LivingEntity {
      * @return name
      */
     public String getName() {
-        return hp.b(entity);
+        return im.b(entity);
     }
 
     /**
@@ -88,7 +88,7 @@ public class Mob extends LivingEntity {
      * 
      * @return
      */
-    public ka getMob() {
+    public lb getMob() {
         return getEntity();
     }
 
@@ -103,6 +103,6 @@ public class Mob extends LivingEntity {
         if (mob == null) {
             return false;
         }
-        return hp.a(mob, etc.getMCServer().e) instanceof ka;
+        return im.a(mob, etc.getMCServer().e) instanceof lb;
     }
 }

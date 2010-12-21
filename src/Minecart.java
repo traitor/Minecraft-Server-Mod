@@ -50,7 +50,7 @@ public class Minecart extends BaseVehicle {
      * Creates an interface for minecart.
      * @param o
      */
-    public Minecart(jo o) {
+    public Minecart(kp o) {
         super(o);
     }
     
@@ -62,7 +62,7 @@ public class Minecart extends BaseVehicle {
      * @param Type 0=Minecart, 1=StorageCart, 2=PoweredMinecart
      */
     public Minecart(double x, double y, double z, Type type) {
-        super(new jo(etc.getMCServer().e, x, y, z, type.getType())); 
+        super(new kp(etc.getMCServer().e, x, y, z, type.getType()));
         etc.getMCServer().e.a(entity);        
     }
     
@@ -70,8 +70,8 @@ public class Minecart extends BaseVehicle {
      * Returns the entity we're wrapping.
      * @return
      */ 
-    public jo getEntity() {
-        return (jo) entity;
+    public kp getEntity() {
+        return (kp) entity;
     }
 
     /**

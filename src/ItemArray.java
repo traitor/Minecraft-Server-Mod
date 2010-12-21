@@ -4,7 +4,7 @@
  * 
  * @author James
  */
-public abstract class ItemArray<C extends Container<hn>> {
+public abstract class ItemArray<C extends Container<ik>> {
     protected C container;
     private int arraySize = 0;
     
@@ -34,12 +34,12 @@ public abstract class ItemArray<C extends Container<hn>> {
             if (item.getAmount() <= 0) {
                 _getArray()[slot] = null;
             } else if (Item.isValidItem(item.getItemId())) {
-                _getArray()[slot] = new hn(item.getItemId(), item.getAmount());
+                _getArray()[slot] = new ik(item.getItemId(), item.getAmount());
             }
         } else if (slot == -1) {
             int newSlot = getEmptySlot();
             if (newSlot != -1) {
-                _getArray()[newSlot] = new hn(item.getItemId(), item.getAmount());
+                _getArray()[newSlot] = new ik(item.getItemId(), item.getAmount());
                 item.setSlot(newSlot);
             }
         }
@@ -174,7 +174,7 @@ public abstract class ItemArray<C extends Container<hn>> {
      */
     public void setSlot(int itemId, int amount, int slot) {
         if (slot < _getArray().length && slot >= 0) {
-            _getArray()[slot] = new hn(itemId, (amount > 64 ? 64 : amount));
+            _getArray()[slot] = new ik(itemId, (amount > 64 ? 64 : amount));
         }
     }
 
@@ -325,9 +325,9 @@ public abstract class ItemArray<C extends Container<hn>> {
      * @param contents contents to set
      */
     public void setContents(Item[] contents) {
-        hn[] newcontents = new hn[arraySize];
+        ik[] newcontents = new ik[arraySize];
         for (int i = 0; i < arraySize; i++) {
-            newcontents[i] = (contents[i] != null) ? new hn(contents[i].getItemId(), contents[i].getAmount()) : null;
+            newcontents[i] = (contents[i] != null) ? new ik(contents[i].getItemId(), contents[i].getAmount()) : null;
         }
         _setArray(newcontents);
     }
@@ -337,11 +337,11 @@ public abstract class ItemArray<C extends Container<hn>> {
      * @return an array of raw items
      * @deprecated use getContents() instead
      */
-    public hn[] getArray() {
+    public ik[] getArray() {
         return _getArray();
     }
 
-    private hn[] _getArray() {
+    private ik[] _getArray() {
         return container.getContents();
     }
 
@@ -350,11 +350,11 @@ public abstract class ItemArray<C extends Container<hn>> {
      * @param values items to set
      * @deprecated use setContents(Item[]) instead
      */
-    public void setArray(hn[] values) {
+    public void setArray(ik[] values) {
         _setArray(values);
     }
 
-    public void _setArray(hn[] values) {
+    public void _setArray(ik[] values) {
         container.setContents(values);
     }
     

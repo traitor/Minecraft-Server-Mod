@@ -4,13 +4,13 @@
  */
 public class MobSpawner implements ComplexBlock {
 
-    cf spawner;
+    cq spawner;
 
     /**
      * Creates an interface for the spawner.
      * @param spawner
      */
-    public MobSpawner(cf spawner) {
+    public MobSpawner(cq spawner) {
         this.spawner = spawner;
     }
 
@@ -27,7 +27,7 @@ public class MobSpawner implements ComplexBlock {
     }
 
     public void update() {
-        spawner.c();
+        spawner.d();
     }
 
     /**

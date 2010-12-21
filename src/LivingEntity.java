@@ -13,7 +13,7 @@ public class LivingEntity extends BaseEntity {
      * Interface for living entities
      * @param livingEntity
      */
-    public LivingEntity(ka livingEntity) {
+    public LivingEntity(lb livingEntity) {
         super(livingEntity);
     }
     
@@ -21,8 +21,8 @@ public class LivingEntity extends BaseEntity {
      * Returns the entity we're wrapping.
      * @return
      */
-    public ka getEntity() {
-        return (ka)entity;
+    public lb getEntity() {
+        return (lb)entity;
     }
 
     /**
@@ -31,7 +31,7 @@ public class LivingEntity extends BaseEntity {
      * @return health
      */
     public int getHealth() {
-        return getEntity().aR;
+        return getEntity().ba;
     }
 
     /**
@@ -56,7 +56,7 @@ public class LivingEntity extends BaseEntity {
             health = -1;
         if (health > 20)
             health = 20;
-        getEntity().aR = health;
+        getEntity().ba = health;
     }
 
     /**
@@ -65,7 +65,7 @@ public class LivingEntity extends BaseEntity {
      * @return
      */
     public int getDeathTicks() {
-        return getEntity().aW;
+        return getEntity().bf;
     }
 
     /**
@@ -75,7 +75,7 @@ public class LivingEntity extends BaseEntity {
      * @param ticks
      */
     public void setDeathTicks(int ticks) {
-        getEntity().aW = ticks;
+        getEntity().bf = ticks;
     }
 
     /**
@@ -85,7 +85,7 @@ public class LivingEntity extends BaseEntity {
      * @return
      */
     public int getBaseNoDamageTicks() {
-        return getEntity().aw;
+        return getEntity().aF;
     }
 
     /**
@@ -95,7 +95,7 @@ public class LivingEntity extends BaseEntity {
      * @param ticks
      */
     public void setBaseNoDamageTicks(int ticks) {
-        getEntity().aw = ticks;
+        getEntity().aF = ticks;
     }
 
     /**
@@ -104,7 +104,7 @@ public class LivingEntity extends BaseEntity {
      * @return
      */
     public int getLastDamage() {
-        return getEntity().bn;
+        return getEntity().bw;
     }
 
     /**
@@ -114,6 +114,6 @@ public class LivingEntity extends BaseEntity {
      * @param amount
      */
     public void setLastDamage(int amount) {
-        getEntity().bn = amount;
+        getEntity().bw = amount;
     }
 }

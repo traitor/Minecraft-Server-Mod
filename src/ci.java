@@ -1,197 +1,153 @@
-import java.util.ArrayList;
+
+import java.lang.reflect.Constructor;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-public class ci {
-    public boolean a = false;
-    private Random h = new Random();
-    private eq i;
-    public double b;
-    public double c;
-    public double d;
-    public ea e;
-    public float f;
-    public Set g = new HashSet();
+public final class ci {
 
-    public ci(eq parameq, ea paramea, double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat) {
-        this.i = parameq;
-        this.e = paramea;
-        this.f = paramFloat;
-        this.b = paramDouble1;
-        this.c = paramDouble2;
-        this.d = paramDouble3;
+    // hMod: Add generic here, saves zillions of casts.
+    private static Set<lj> a = new HashSet<lj>();
+
+    protected static ip a(ff paramff, int paramInt1, int paramInt2) {
+        int i = paramInt1 + paramff.l.nextInt(16);
+        int j = paramff.l.nextInt(128);
+        int k = paramInt2 + paramff.l.nextInt(16);
+
+        return new ip(i, j, k);
     }
 
-    public void a() {
-        // hMod: allow explosion
-        Block block = new Block(this.i.a((int) Math.floor(this.b), (int) Math.floor(this.c), (int) Math.floor(this.d)), (int) Math.floor(this.b), (int) Math.floor(this.c), (int) Math.floor(this.d));
+    public static final int a(ff paramff) {
+        a.clear();
 
-        // hMod: preserve source through blockstatus.
-        if (this.e == null) {
-            block.setStatus(1); // TNT
-        } else if (this.e instanceof fo) {
-            block.setStatus(2); //Creeper
+        for (int i = 0; i < paramff.d.size(); i++) {
+            gp localgp = (gp) paramff.d.get(i);
+            int k = ib.b(localgp.p / 16.0D);
+            int m = ib.b(localgp.r / 16.0D);
+
+            int n = 8;
+            for (int i1 = -n; i1 <= n; i1++) {
+                for (int i2 = -n; i2 <= n; i2++) {
+                    a.add(new lj(i1 + k, i2 + m));
+                }
+            }
+        }
+        
+        // hMod: Cache config spawns to classes outside of the loop
+        etc config = etc.getInstance();
+        Class[] mobs = new Class[config.getMonsters().length];
+        Class[] animals = new Class[config.getAnimals().length];
+
+        for (int i = 0; i < mobs.length; i++) {
+            mobs[i] = im.getEntity(config.getMonsters()[i]);
+        }
+        for (int i = 0; i < animals.length; i++) {
+            animals[i] = im.getEntity(config.getAnimals()[i]);
         }
 
-        // hMod: call explode hook.
-        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.EXPLODE, block)) {
-            return;
-        }
+        int i = 0;
+        kt localkt;
+        for (int j = 0; j < kt.values().length; j++) {
+            localkt = kt.values()[j];
 
-        float f1 = this.f;
-
-        int j = 16;
-        double d6;
-        double d7;
-        double d8;
-        for (int k = 0; k < j; k++) {
-            for (int m = 0; m < j; m++) {
-                for (int n = 0; n < j; n++) {
-                    if ((k != 0) && (k != j - 1) && (m != 0) && (m != j - 1) && (n != 0) && (n != j - 1)) {
+            if (paramff.a(localkt.c) > localkt.d * a.size() / 256) {
+                continue;
+            }
+            for (lj locallj : a) {
+                // hMod: from nextInt(50) == 0 to nextInt(100) <= spawnRate, allow customisable value
+                if (paramff.l.nextInt(100) <= etc.getInstance().getMobSpawnRate()) {
+                    // hMod: ignore default spawns, load from config
+                    Class[] arrayOfClass = null;
+                    if (localkt == kt.a) {
+                        arrayOfClass = mobs;
+                    } else if (localkt == kt.b) {
+                        arrayOfClass = animals;
+                    } else {
                         continue;
                     }
-                    double d1 = k / (j - 1.0F) * 2.0F - 1.0F;
-                    double d2 = m / (j - 1.0F) * 2.0F - 1.0F;
-                    double d3 = n / (j - 1.0F) * 2.0F - 1.0F;
-                    double d4 = Math.sqrt(d1 * d1 + d2 * d2 + d3 * d3);
+                    
+                    int i3 = paramff.l.nextInt(arrayOfClass.length);
 
-                    d1 /= d4;
-                    d2 /= d4;
-                    d3 /= d4;
+                    ip localip = a(paramff, locallj.a * 16, locallj.b * 16);
+                    int i4 = localip.a;
+                    int i5 = localip.b;
+                    int i6 = localip.c;
 
-                    float f2 = this.f * (0.7F + this.i.l.nextFloat() * 0.6F);
-                    d6 = this.b;
-                    d7 = this.c;
-                    d8 = this.d;
+                    if ((paramff.d(i4, i5, i6))
+                            || (paramff.c(i4, i5, i6) != kz.a)) {
+                        continue;
+                    }
+                    int i7 = 0;
 
-                    float f3 = 0.3F;
-                    while (f2 > 0.0F) {
-                        int i11 = hh.b(d6);
-                        int i12 = hh.b(d7);
-                        int i13 = hh.b(d8);
-                        int i14 = this.i.a(i11, i12, i13);
-                        if (i14 > 0) {
-                            f2 -= (gc.m[i14].a(this.e) + 0.3F) * f3;
+                    for (int i8 = 0;; i8++) {
+                        if (i8 >= 3) {
+                            break;
                         }
-                        if (f2 > 0.0F) {
-                            this.g.add(new hs(i11, i12, i13));
-                        }
+                        int i9 = i4;
+                        int i10 = i5;
+                        int i11 = i6;
+                        int i12 = 6;
+                        for (int i13 = 0;; i13++) {
+                            if (i13 >= 4) {
+                                break;
+                            }
+                            i9 += paramff.l.nextInt(i12) - paramff.l.nextInt(i12);
+                            i10 += paramff.l.nextInt(1) - paramff.l.nextInt(1);
+                            i11 += paramff.l.nextInt(i12) - paramff.l.nextInt(i12);
 
-                        d6 += d1 * f3;
-                        d7 += d2 * f3;
-                        d8 += d3 * f3;
-                        f2 -= f3 * 0.75F;
+                            if ((paramff.d(i9, i10 - 1, i11)) && (!paramff.d(i9, i10, i11)) && (!paramff.c(i9, i10, i11).d()) && (!paramff.d(i9, i10 + 1, i11))) {
+                                float f1 = i9 + 0.5F;
+                                float f2 = i10;
+                                float f3 = i11 + 0.5F;
+                                if (paramff.a(f1, f2, f3, 24.0D) != null) {
+                                    continue;
+                                }
+                                float f4 = f1 - paramff.m;
+                                float f5 = f2 - paramff.n;
+                                float f6 = f3 - paramff.o;
+                                float f7 = f4 * f4 + f5 * f5 + f6 * f6;
+                                if (f7 < 576.0F) {
+                                    continue;
+                                }
+                                lb locallb = null;
+                                try {
+                                    //hMod : make sure we have something to spawn before fetching calling newInstance.
+                                    if(arrayOfClass != null && arrayOfClass[i3] != null) {
+                                        locallb = (lb) arrayOfClass[i3].getConstructor(new Class[]{ff.class}).newInstance(new Object[]{paramff});
+                                    }
+                                } catch (Exception localException) {
+                                    localException.printStackTrace();
+                                    return i;
+                                }
+
+                                if(locallb == null) continue;
+
+                                locallb.c(f1, f2, f3, paramff.l.nextFloat() * 360.0F, 0.0F);
+
+                                if (locallb.a()) {
+                                    // hMod: allow mobs to spawn!
+                                    if (!(Boolean) (etc.getLoader().callHook(PluginLoader.Hook.MOB_SPAWN, new Mob(locallb)))) {
+                                        i7++;
+                                        paramff.a(locallb);
+                                        if (((locallb instanceof ch)) && (paramff.l.nextInt(100) == 0)) {
+                                            fs localfs = new fs(paramff);
+                                            localfs.c(f1, f2, f3, locallb.v, 0.0F);
+                                            paramff.a(localfs);
+                                            localfs.e(locallb);
+                                        }
+                                        if (i7 >= locallb.i()) {
+                                            break;
+                                        }
+                                    }
+                                }
+                                i += i7;
+                            }
+                        }
                     }
                 }
             }
-
         }
-
-        this.f *= 2.0F;
-        int k = hh.b(this.b - this.f - 1.0D);
-        int m = hh.b(this.b + this.f + 1.0D);
-        int n = hh.b(this.c - this.f - 1.0D);
-        int i1 = hh.b(this.c + this.f + 1.0D);
-        int i2 = hh.b(this.d - this.f - 1.0D);
-        int i3 = hh.b(this.d + this.f + 1.0D);
-        List localList = this.i.b(this.e, dw.b(k, n, i2, m, i1, i3));
-        bd localbd = bd.b(this.b, this.c, this.d);
-        for (int i4 = 0; i4 < localList.size(); i4++) {
-            ea localea = (ea) localList.get(i4);
-            double d5 = localea.e(this.b, this.c, this.d) / this.f;
-            if (d5 <= 1.0D) {
-                d6 = localea.p - this.b;
-                d7 = localea.q - this.c;
-                d8 = localea.r - this.d;
-
-                double d9 = hh.a(d6 * d6 + d7 * d7 + d8 * d8);
-
-                d6 /= d9;
-                d7 /= d9;
-                d8 /= d9;
-
-                double d10 = this.i.a(localbd, localea.z);
-                double d11 = (1.0D - d5) * d10;
-
-                // hMod Damage hook: Explosions
-                int damage = (int) ((d11 * d11 + d11) / 2.0D * 8.0D * this.f + 1.0D);
-                BaseEntity exploder = new BaseEntity(localea);
-                PluginLoader.DamageType dmgType = (this.e instanceof fo) ? PluginLoader.DamageType.CREEPER_EXPLOSION : PluginLoader.DamageType.EXPLOSION;
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, dmgType, null, exploder, damage)) {
-                    localea.a(this.e, damage);
-                }
-
-                double d12 = d11;
-                localea.s += d6 * d12;
-                localea.t += d7 * d12;
-                localea.u += d8 * d12;
-            }
-        }
-        this.f = f1;
-
-        ArrayList localArrayList = new ArrayList();
-        localArrayList.addAll(this.g);
-
-        if (this.a) {
-            for (int i5 = localArrayList.size() - 1; i5 >= 0; i5--) {
-                hs localhs = (hs) localArrayList.get(i5);
-                int i6 = localhs.a;
-                int i7 = localhs.b;
-                int i8 = localhs.c;
-                int i9 = this.i.a(i6, i7, i8);
-                int i10 = this.i.a(i6, i7 - 1, i8);
-                if ((i9 == 0) && (gc.o[i10]) && (this.h.nextInt(3) == 0)) {
-                    this.i.d(i6, i7, i8, gc.ar.bh);
-                }
-            }
-        }
-    }
-
-    public void b() {
-        this.i.a(this.b, this.c, this.d, "random.explode", 4.0F, (1.0F + (this.i.l.nextFloat() - this.i.l.nextFloat()) * 0.2F) * 0.7F);
-
-        ArrayList localArrayList = new ArrayList();
-        localArrayList.addAll(this.g);
-        for (int j = localArrayList.size() - 1; j >= 0; j--) {
-            hs localhs = (hs) localArrayList.get(j);
-            int k = localhs.a;
-            int m = localhs.b;
-            int n = localhs.c;
-
-            int i1 = this.i.a(k, m, n);
-
-            for (int i2 = 0; i2 < 1; i2++) {
-                double d1 = k + this.i.l.nextFloat();
-                double d2 = m + this.i.l.nextFloat();
-                double d3 = n + this.i.l.nextFloat();
-
-                double d4 = d1 - this.b;
-                double d5 = d2 - this.c;
-                double d6 = d3 - this.d;
-
-                double d7 = hh.a(d4 * d4 + d5 * d5 + d6 * d6);
-
-                d4 /= d7;
-                d5 /= d7;
-                d6 /= d7;
-
-                double d8 = 0.5D / (d7 / this.f + 0.1D);
-                d8 *= (this.i.l.nextFloat() * this.i.l.nextFloat() + 0.3F);
-                d4 *= d8;
-                d5 *= d8;
-                d6 *= d8;
-
-                this.i.a("explode", (d1 + this.b * 1.0D) / 2.0D, (d2 + this.c * 1.0D) / 2.0D, (d3 + this.d * 1.0D) / 2.0D, d4, d5, d6);
-                this.i.a("smoke", d1, d2, d3, d4, d5, d6);
-            }
-
-            if (i1 > 0) {
-                gc.m[i1].a(this.i, k, m, n, this.i.b(k, m, n), 0.3F);
-                this.i.d(k, m, n, 0);
-                gc.m[i1].c(this.i, k, m, n);
-            }
-        }
+        return i;
     }
 }

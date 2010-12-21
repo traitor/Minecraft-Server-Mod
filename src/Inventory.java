@@ -3,7 +3,7 @@
  * 
  * @author James
  */
-public class Inventory extends ItemArray<hk> {
+public class Inventory extends ItemArray<ih> {
     /**
      * The type of inventory to use
      */
@@ -22,7 +22,7 @@ public class Inventory extends ItemArray<hk> {
          */
         Equipment
     }
-    private et user;
+    private fi user;
     private Inventory.Type type = Inventory.Type.Inventory;
 
     /**
@@ -32,7 +32,7 @@ public class Inventory extends ItemArray<hk> {
      * @param type
      */
     public Inventory(Player player, Type type) {
-        super(player.getUser().am, 37);
+        super(player.getUser().an, 37);
         this.user = player.getUser();
         this.type = type;
     }
@@ -117,7 +117,7 @@ public class Inventory extends ItemArray<hk> {
      * Sends the edited inventory to the client.
      */
     public void updateInventory() {
-        user.a.d();
+        user.k();
     }
 
     /**
@@ -171,12 +171,12 @@ public class Inventory extends ItemArray<hk> {
      * Overriding getArray as variable we're interested in depends on the type of inventory...
      */
     @Override 
-    public hn[] getArray() {
+    public ik[] getArray() {
         switch (type) {
         case Inventory:
             return container.a;
-        case CraftingTable:
-            return container.c;
+        /*case CraftingTable:
+            return container.c;*/ //Removed?
         case Equipment:
             return container.b;
         }
@@ -188,14 +188,14 @@ public class Inventory extends ItemArray<hk> {
      * Overriding setArray as the target array varies depending on type.
      */
     @Override
-    public void setArray(hn[] values) {
+    public void setArray(ik[] values) {
         switch (type) {
         case Inventory:
             container.a = values;
             break;
-        case CraftingTable:
+        /*case CraftingTable:
             container.c = values;
-            break;
+            break;*/ //Removed?
         case Equipment:
             container.b = values;
             break;

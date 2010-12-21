@@ -1,111 +1,98 @@
-import java.util.List;
-import java.util.Random;
 
-public class cf extends ay {
-    public int e = -1;
-    public String f;
-    public double g;
-    public double h = 0.0D;
+public class cf extends gl {
 
-    public cf() {
-        this.f = "Pig";
-        this.e = 20;
+    private int a;
+
+    public cf(int paramInt) {
+        super(paramInt);
+        this.a = (paramInt + 256);
+        a(gu.m[(paramInt + 256)].a(2));
     }
 
-    public boolean a() {
-        return this.a.a(this.b + 0.5D, this.c + 0.5D, this.d + 0.5D, 16.0D) != null;
-    }
-
-    @Override
-    public void b() {
-        this.h = this.g;
-
-        if (!a()) {
-            return;
+    public boolean a(ik paramik, gp paramgp, ff paramff, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+         // hMod: Bail if we have nothing of the items in hand
+        if (paramik.a == 0) {
+            return false;
         }
 
-        double d1 = this.b + this.a.l.nextFloat();
-        double d2 = this.c + this.a.l.nextFloat();
-        double d3 = this.d + this.a.l.nextFloat();
-        this.a.a("smoke", d1, d2, d3, 0.0D, 0.0D, 0.0D);
-        this.a.a("flame", d1, d2, d3, 0.0D, 0.0D, 0.0D);
+        // hMod: Store blockInfo of the one we clicked
+        int blockClickedId = paramff.a(paramInt1, paramInt2, paramInt3);
+        Block blockClicked = new Block(blockClickedId, paramInt1, paramInt2, paramInt3 );
 
-        this.g += 1000.0F / (this.e + 200.0F);
-        while (this.g > 360.0D) {
-            this.g -= 360.0D;
-            this.h -= 360.0D;
-        }
-
-        if (this.e == -1) {
-            d();
-        }
-
-        if (this.e > 0) {
-            this.e -= 1;
-            return;
-        }
-
-        int i = 4;
-        for (int j = 0; j < i; j++) {
-            ka localka = (ka) hp.a(this.f, this.a);
-            if (localka == null) {
-                return;
+        if (paramff.a(paramInt1, paramInt2, paramInt3) == gu.aS.bh) {
+            paramInt4 = 0;
+        } else {
+            if (paramInt4 == 0) {
+                paramInt2--;
             }
-
-            int k = this.a.a(localka.getClass(), dw.b(this.b, this.c, this.d, this.b + 1, this.c + 1, this.d + 1).b(8.0D, 4.0D, 8.0D)).size();
-            if (k >= 6) {
-                d();
-                return;
+            if (paramInt4 == 1) {
+                paramInt2++;
             }
+            if (paramInt4 == 2) {
+                paramInt3--;
+            }
+            if (paramInt4 == 3) {
+                paramInt3++;
+            }
+            if (paramInt4 == 4) {
+                paramInt1--;
+            }
+            if (paramInt4 == 5) {
+                paramInt1++;
+            }
+        }
 
-            if (localka != null) {
-                double d4 = this.b + (this.a.l.nextDouble() - this.a.l.nextDouble()) * 4.0D;
-                double d5 = this.c + this.a.l.nextInt(3) - 1;
-                double d6 = this.d + (this.a.l.nextDouble() - this.a.l.nextDouble()) * 4.0D;
+        if (paramik.a == 0) {
+            return false;
+        }
 
-                localka.c(d4, d5, d6, this.a.l.nextFloat() * 360.0F, 0.0F);
+        // hMod: Store faceClicked (must be here to have the 'snow' special case).
+        blockClicked.setFaceClicked(Block.Face.fromId( paramInt4 ));
 
-                if (localka.a()) {
-                    // hMod: allow entities to spawn
-                    if ((Boolean) (etc.getLoader().callHook(PluginLoader.Hook.MOB_SPAWN, new Mob(localka)))) {
-                        d();
-                        return;
+        // hMod: And the block we're about to place
+        Block blockPlaced = new Block( this.a, paramInt1, paramInt2, paramInt3 );
+
+        // hMod Store all the old settings 'externally' in case someone changes blockPlaced.
+        int oldMaterial = paramff.a(paramInt1, paramInt2, paramInt3);
+        int oldData = paramff.b(paramInt1, paramInt2, paramInt3);
+
+        if (paramff.a(this.a, paramInt1, paramInt2, paramInt3, false)) {
+            gu localgu = gu.m[this.a];
+
+            //hMod: Take over block placement
+            if (paramff.a(paramInt1, paramInt2, paramInt3, this.a)) {
+                // hMod: Check if this was playerPlaced and call the hook
+                if (paramgp instanceof fi && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PLACE, ((fi)paramgp).getPlayer(), blockPlaced, blockClicked, new Item(paramik))) {
+                    // hMod: Undo!
+
+                    // Specialcase iceblocks, replace with 'glass' first (so it doesnt explode into water)
+                    if (this.a == 79) {
+                        paramff.a(paramInt1, paramInt2, paramInt3, 20 );
                     }
-                    this.a.a(localka);
+                    paramff.a(paramInt1, paramInt2, paramInt3, oldMaterial );
+                    paramff.c(paramInt1, paramInt2, paramInt3, oldData );
 
-                    for (int m = 0; m < 20; m++) {
-                        d1 = this.b + 0.5D + (this.a.l.nextFloat() - 0.5D) * 2.0D;
-                        d2 = this.c + 0.5D + (this.a.l.nextFloat() - 0.5D) * 2.0D;
-                        d3 = this.d + 0.5D + (this.a.l.nextFloat() - 0.5D) * 2.0D;
+                    // hMod: Refund the item the player lost >.>
+                    // or not, this occasionally dupes items! we'll do this when notch implements serverside invs.
+                    //((fi)paramgp).a.b(new fh(paramhn, 1));
+                    return false;
+                } else {
+                    paramff.f(paramInt1, paramInt2, paramInt3);
+                    paramff.g(paramInt1, paramInt2, paramInt3, this.a);
 
-                        this.a.a("smoke", d1, d2, d3, 0.0D, 0.0D, 0.0D);
-                        this.a.a("flame", d1, d2, d3, 0.0D, 0.0D, 0.0D);
-                    }
-
-                    localka.J();
-                    d();
+                    gu.m[this.a].c(paramff, paramInt1, paramInt2, paramInt3, paramInt4);
+                    // hMod: Downcast demanded for inheritance to work >.>
+                    gu.m[this.a].a(paramff, paramInt1, paramInt2, paramInt3, paramgp);
+                    paramff.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localgu.bq.c(), (localgu.bq.a() + 1.0F) / 2.0F, localgu.bq.b() * 0.8F);
+                    paramik.a -= 1;
                 }
             }
         }
 
-        super.b();
+        return true;
     }
 
-    private void d() {
-        this.e = (200 + this.a.l.nextInt(600));
-    }
-
-    @Override
-    public void a(v paramv) {
-        super.a(paramv);
-        this.f = paramv.h("EntityId");
-        this.e = paramv.c("Delay");
-    }
-
-    @Override
-    public void b(v paramv) {
-        super.b(paramv);
-        paramv.a("EntityId", this.f);
-        paramv.a("Delay", (short) this.e);
+    public String a() {
+        return gu.m[this.a].e();
     }
 }

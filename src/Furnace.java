@@ -2,9 +2,9 @@
  * Furnace.java - Interface for furnaces
  * @author James
  */
-public class Furnace extends BaseContainerBlock<dv> {
+public class Furnace extends BaseContainerBlock<ek> {
     
-    public Furnace(dv furnace) {
+    public Furnace(ek furnace) {
         super(furnace, "Furnace", 3);
     }
     

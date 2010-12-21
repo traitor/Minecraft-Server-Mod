@@ -14,7 +14,7 @@ public class HumanEntity extends LivingEntity {
      * 
      * @param human
      */
-    public HumanEntity(fz human) {
+    public HumanEntity(gp human) {
         super(human);
     }
 
@@ -22,8 +22,8 @@ public class HumanEntity extends LivingEntity {
      * Returns the entity we're wrapping.
      * @return
      */
-    public fz getEntity() {
-        return (fz) entity;
+    public gp getEntity() {
+        return (gp) entity;
     }
 
     /**
@@ -32,6 +32,6 @@ public class HumanEntity extends LivingEntity {
      * @return
      */
     public String getName() {
-        return getEntity().at;
+        return getEntity().aw;
     }
 }

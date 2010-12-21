@@ -7,7 +7,7 @@ public class Boat extends BaseVehicle {
      * Interface for boats.
      * @param boat
      */
-    public Boat(fm boat) {
+    public Boat(gb boat) {
         super(boat);
     }
     
@@ -16,10 +16,9 @@ public class Boat extends BaseVehicle {
      * @param x
      * @param y
      * @param z
-     * @param Type Type of minecart (0=Minecart, 1=StorageCart, 2=PoweredMinecart)
      */
     public Boat(double x, double y, double z) {
-        super(new fm(etc.getMCServer().e, x, y, z)); 
+        super(new gb(etc.getMCServer().e, x, y, z));
         etc.getMCServer().e.a(entity);        
     }
     
@@ -27,7 +26,7 @@ public class Boat extends BaseVehicle {
      * Returns the entity we're wrapping.
      * @return
      */ 
-    public fm getEntity() {
-        return (fm) entity;
+    public gb getEntity() {
+        return (gb) entity;
     }
 }

@@ -4,7 +4,7 @@
  *
  * @param <C> The type of container we wish to wrap.
  */
-public abstract class BaseContainerBlock<C extends ay & ke & Container<hn>> extends ItemArray<C> implements ComplexBlock {
+public abstract class BaseContainerBlock<C extends bg & lf & Container<ik>> extends ItemArray<C> implements ComplexBlock {
     String name = "BaseContainerBlock";
 
     /**

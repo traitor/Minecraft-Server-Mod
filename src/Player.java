@@ -39,8 +39,8 @@ public class Player extends HumanEntity implements MessageReceiver {
      * Returns the entity we're wrapping.
      * @return
      */
-    public et getEntity() {
-        return (et)entity;
+    public fi getEntity() {
+        return (fi)entity;
     }
     
     /**
@@ -57,7 +57,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @param reason
      */
     public void kick(String reason) {
-        getEntity().a.c(reason);
+        getEntity().a.a(reason);
     }
     
     /**
@@ -394,7 +394,6 @@ public class Player extends HumanEntity implements MessageReceiver {
             } else if (split[0].equalsIgnoreCase("/tempban")) {
                 // /tempban MINUTES HOURS DAYS
                 if (split.length == 1) {
-                    // TODO;
                     return;
                 }
                 int minutes = 0, hours = 0, days = 0;
@@ -823,16 +822,16 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @param amount
      */
     public void giveItemDrop(int itemId, int amount) {
-        et player = getEntity();
+        fi player = getEntity();
         if (amount == -1) {
-            player.a(new hn(itemId, 255));
+            player.a(new ik(itemId, 255));
         } else {
             int temp = amount;
             do {
                 if (temp - 64 >= 64) {
-                    player.a(new hn(itemId, 64));
+                    player.a(new ik(itemId, 64));
                 } else {
-                    player.a(new hn(itemId, temp));
+                    player.a(new ik(itemId, temp));
                 }
                 temp -= 64;
             } while (temp > 0);
@@ -1254,7 +1253,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * 
      * @return
      */
-    public et getUser() {
+    public fi getUser() {
         return getEntity();
     }
 
@@ -1263,7 +1262,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * 
      * @param er
      */
-    public void setUser(et player) {
+    public void setUser(fi player) {
         this.entity = player;
         this.inventory = new Inventory(this, Inventory.Type.Inventory);
         this.craftingTable = new Inventory(this, Inventory.Type.CraftingTable);
@@ -1271,7 +1270,7 @@ public class Player extends HumanEntity implements MessageReceiver {
     }
 
     public void teleportTo(double x, double y, double z, float rotation, float pitch) {
-        et player = getEntity();
+        fi player = getEntity();
         
         // If player is in vehicle - eject them before they are teleported.
         if (player.k != null) {
