@@ -82,7 +82,7 @@ public class cf extends gl {
 
                     gu.m[this.a].c(paramff, paramInt1, paramInt2, paramInt3, paramInt4);
                     // hMod: Downcast demanded for inheritance to work >.>
-                    gu.m[this.a].a(paramff, paramInt1, paramInt2, paramInt3, paramgp);
+                    gu.m[this.a].a(paramff, paramInt1, paramInt2, paramInt3, (lb)paramgp);
                     paramff.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localgu.bq.c(), (localgu.bq.a() + 1.0F) / 2.0F, localgu.bq.b() * 0.8F);
                     paramik.a -= 1;
                 }

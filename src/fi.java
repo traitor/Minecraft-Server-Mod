@@ -274,7 +274,8 @@ public class fi extends gp
         // hMod: end of reflection block
         //this.ap = new if(this.an, this.l, paramInt1, paramInt2, paramInt3);
         this.ap.f = this.bH;
-        this.ap.a((gp)this);
+        // hMod: Make sure this gets cast correctly, or mutant puppies will spawn and eat your items.
+        this.ap.a((ec)this);
       }
 
   public void a(lf paramlf) {
@@ -282,7 +283,8 @@ public class fi extends gp
     this.a.b(new ig(this.bH, 0, paramlf.b(), paramlf.a()));
         this.ap = new bx(this.an, paramlf);
         this.ap.f = this.bH;
-        this.ap.a((gp)this);
+        // hMod: Make sure this gets cast correctly, or mutant puppies will spawn and eat your items.
+        this.ap.a((ec)this);
     }
 
     public void a(ek paramek) {
@@ -290,7 +292,8 @@ public class fi extends gp
         this.a.b(new ig(this.bH, 2, paramek.b(), paramek.a()));
         this.ap = new bj(this.an, paramek);
         this.ap.f = this.bH;
-        this.ap.a((gp)this);
+        // hMod: Make sure this gets cast correctly, or mutant puppies will spawn and eat your items.
+        this.ap.a((ec)this);
     }
 
     public void a(dw paramdw, int paramInt, ik paramik) {

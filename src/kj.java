@@ -36,10 +36,9 @@ public class kj extends fr
      * @return
      */
     public int getItemInHand() {
-        // TODO: actually get the item in hand...
-        /*if (k != null) { // Check to see if we are even holding anything
-            return k.c;
-        }*/
+        if (this.e.an.e() != null) {
+            return this.e.an.e().c;
+        }
         return -1;
     }
 
@@ -399,14 +398,15 @@ public class kj extends fr
                 i4 = i3;
             }
             // hMod: call BLOCK_RIGHTCLICKED
+            Item item = (localik != null) ? new Item(localik) : new Item();
             Player player = ((fi)this.e).getPlayer();
-            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_RIGHTCLICKED, player, blockClicked, new Item(new ik(paramgs.a)));
+            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_RIGHTCLICKED, player, blockClicked, item);
 
             // hMod: call original BLOCK_CREATED
-            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, player, blockPlaced, blockClicked, paramgs.a);
+            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, player, blockPlaced, blockClicked, item.getItemId());
 
             // hMod: If we were building inside spawn, bail! (unless ops/admin)
-            if (((i4 > etc.getInstance().getSpawnProtectionSize() && !etc.getInstance().isOnItemBlacklist(paramgs.a)) || bool) && player.canBuild()) {
+            if (((i4 > etc.getInstance().getSpawnProtectionSize() && !etc.getInstance().isOnItemBlacklist(item.getItemId())) || bool) && player.canBuild()) {
                 this.e.c.a(this.e, this.d.e, localik, m, n, i1, i2);
             } else {
                 // hMod: No point sending the client to update the blocks, you weren't allowed to place!
