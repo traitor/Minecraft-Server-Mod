@@ -346,7 +346,7 @@ public class kk extends fs
 
         // hMod: We allow admins and ops to build!
         boolean bool = d.e.B = (d.f.g(getPlayer().getName()) || getPlayer().isAdmin());
-
+/*
         // hMod: Store block data to call hooks
         Block blockClicked = null;
         Block blockPlaced = null;
@@ -379,15 +379,19 @@ public class kk extends fs
                 blockPlaced.setX(blockPlaced.getX() + 1);
             }
         }
-        
+*/        
         if (paramgs.d == 255) {
-            // hMod: call our version with extra blockClicked/blockPlaced
+/*            // hMod: call our version with extra blockClicked/blockPlaced
             if (blockPlaced != null) {
                 // Set the type of block to what it currently is
                 blockPlaced.setType(etc.getServer().getBlockIdAt(blockPlaced.getX(), blockPlaced.getY(), blockPlaced.getZ()));
             }
             if (localik == null) return;
             ((Digging)this.e.c).a(this.e, this.d.e, localik, blockPlaced, blockClicked);
+*/
+            if (localik == null) return;
+            this.e.c.a(this.e, this.d.e, localik);
+            
         } else {
             int m = paramgs.a;
             int n = paramgs.b;
@@ -398,7 +402,7 @@ public class kk extends fs
             if (i3 > i4) {
                 i4 = i3;
             }
-            // hMod: call BLOCK_RIGHTCLICKED
+/*            // hMod: call BLOCK_RIGHTCLICKED
             Item item = (localik != null) ? new Item(localik) : new Item();
             Player player = ((fi)this.e).getPlayer();
             etc.getLoader().callHook(PluginLoader.Hook.BLOCK_RIGHTCLICKED, player, blockClicked, item);
@@ -414,7 +418,11 @@ public class kk extends fs
                 this.d.e.B = false;
                 return;
             }
-
+*/
+      if ((i4 > 16) || (bool)) {
+        this.e.c.a(this.e, this.d.e, localik, m, n, i1, i2);
+      }
+            
             // hMod: these are the 'block changed' packets for the client.
             this.e.a.b(new gd(m, n, i1, this.d.e));
 
