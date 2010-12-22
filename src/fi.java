@@ -257,22 +257,7 @@ public class fi extends gq
     public void a(int paramInt1, int paramInt2, int paramInt3) {
         R();
         this.a.b(new ih(this.bH, 1, "Crafting", 9));
-        // hMod: access class 'if' via refactoring...
-        Class<?> ifClass;
-        Class<?>[] args = new Class[] {ii.class, ff.class, Integer.TYPE, Integer.TYPE, Integer.TYPE};
-        Object[] actualArgs = new Object[] {this.an, this.l, paramInt1, paramInt2, paramInt3};
-        Constructor<?> ifCtor;
-        Object ifObj = null;
-        try {
-            ifClass = Class.forName("if");
-            ifCtor = ifClass.getConstructor(args);
-            ifObj = ifCtor.newInstance(actualArgs);           
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        this.ap = (dw)ifObj;
-        // hMod: end of reflection block
-        //this.ap = new if(this.an, this.l, paramInt1, paramInt2, paramInt3);
+        this.ap = new ig(this.an, this.l, paramInt1, paramInt2, paramInt3);
         this.ap.f = this.bH;
         // hMod: Make sure this gets cast correctly, or mutant puppies will spawn and eat your items.
         this.ap.a((ec)this);

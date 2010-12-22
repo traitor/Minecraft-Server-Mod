@@ -30,11 +30,11 @@ public class hl {
     public hl(MinecraftServer paramMinecraftServer) {        
         etc.setServer(paramMinecraftServer);
         etc.getInstance().loadData();
-        a.log(Level.INFO, "Note: your current classpath is: {0}", System.getProperty("java.class.path", "*UNKNOWN*"));
+        a.info("Note: your current classpath is: " + System.getProperty("java.class.path", "*UNKNOWN*"));
         if (!etc.getInstance().getTainted()) {
-            a.log(Level.INFO, "Hey0 Server Mod Build {0}", etc.getInstance().getVersion());
+            a.info("Hey0 Server Mod Build " + etc.getInstance().getVersion());
         } else {
-            a.log(Level.INFO, "hMod Build Information: {0}", etc.getInstance().getVersionStr());
+            a.info("hMod Build Information: " + etc.getInstance().getVersionStr());
         }
         this.c = paramMinecraftServer;
         this.i = paramMinecraftServer.a("banned-players.txt");
