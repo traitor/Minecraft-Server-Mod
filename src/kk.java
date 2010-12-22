@@ -346,7 +346,7 @@ public class kk extends fs
 
         // hMod: We allow admins and ops to build!
         boolean bool = d.e.B = (d.f.g(getPlayer().getName()) || getPlayer().isAdmin());
-/*
+
         // hMod: Store block data to call hooks
         Block blockClicked = null;
         Block blockPlaced = null;
@@ -378,19 +378,15 @@ public class kk extends fs
             } else if (paramgs.d == 5) {
                 blockPlaced.setX(blockPlaced.getX() + 1);
             }
-        }
-*/        
+        }        
         if (paramgs.d == 255) {
-/*            // hMod: call our version with extra blockClicked/blockPlaced
+            // hMod: call our version with extra blockClicked/blockPlaced
             if (blockPlaced != null) {
                 // Set the type of block to what it currently is
                 blockPlaced.setType(etc.getServer().getBlockIdAt(blockPlaced.getX(), blockPlaced.getY(), blockPlaced.getZ()));
             }
             if (localik == null) return;
             ((Digging)this.e.c).a(this.e, this.d.e, localik, blockPlaced, blockClicked);
-*/
-            if (localik == null) return;
-            this.e.c.a(this.e, this.d.e, localik);
             
         } else {
             int m = paramgs.a;
