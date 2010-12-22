@@ -3,7 +3,7 @@
  * 
  * @author James
  */
-public class Inventory extends ItemArray<ih> {
+public class Inventory extends ItemArray<ii> {
     /**
      * The type of inventory to use
      */
@@ -107,7 +107,7 @@ public class Inventory extends ItemArray<ih> {
             temp -= 64;
         } while (temp > 0);
 
-        if (temp > 0) { // If the inventory's full it'll drop the rest on the
+        if (temp > 0) { // If the inventory's full it'lm drop the rest on the
             // ground.
             user.getPlayer().giveItemDrop(itemId, temp);
         }
@@ -171,7 +171,7 @@ public class Inventory extends ItemArray<ih> {
      * Overriding getArray as variable we're interested in depends on the type of inventory...
      */
     @Override 
-    public ik[] getArray() {
+    public il[] getArray() {
         switch (type) {
         case Inventory:
             return container.a;
@@ -188,7 +188,7 @@ public class Inventory extends ItemArray<ih> {
      * Overriding setArray as the target array varies depending on type.
      */
     @Override
-    public void setArray(ik[] values) {
+    public void setArray(il[] values) {
         switch (type) {
         case Inventory:
             container.a = values;

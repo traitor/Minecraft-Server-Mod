@@ -1,18 +1,18 @@
 
-public class ld extends gl {
+public class le extends gm {
 
     private int a;
 
-    public ld(int paramInt, gu paramgu) {
+    public le(int paramInt, gv paramgu) {
         super(paramInt);
         this.a = paramgu.bh;
     }
 
-    public boolean a(ik paramik, gp paramgp, ff paramff, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+    public boolean a(il paramik, gq paramgp, ff paramff, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         // hMod: Store blockClicked
         Block blockClicked = new Block(paramff.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
 
-        if (paramff.a(paramInt1, paramInt2, paramInt3) == gu.aS.bh) {
+        if (paramff.a(paramInt1, paramInt2, paramInt3) == gv.aS.bh) {
             paramInt4 = 0;
         } else {
             if (paramInt4 == 0) {
@@ -50,9 +50,9 @@ public class ld extends gl {
             int oldData = paramff.b(paramInt1, paramInt2, paramInt3);
 
             //hMod: Take over block placement
-            gu localgu = gu.m[this.a];
+            gv localgu = gv.m[this.a];
             if (paramff.d(paramInt1, paramInt2, paramInt3, this.a)) {
-                gu.m[this.a].c(paramff, paramInt1, paramInt2, paramInt3, paramInt4);
+                gv.m[this.a].c(paramff, paramInt1, paramInt2, paramInt3, paramInt4);
                 paramff.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localgu.bq.c(), (localgu.bq.a() + 1.0F) / 2.0F, localgu.bq.b() * 0.8F);
                 paramik.a -= 1;
             }

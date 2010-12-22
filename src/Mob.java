@@ -9,7 +9,7 @@ public class Mob extends LivingEntity {
      * 
      * @param locallb name of mob
      */
-    public Mob(lb locallb) {
+    public Mob(lc locallb) {
         super(locallb);
     }
     
@@ -20,7 +20,7 @@ public class Mob extends LivingEntity {
      *            name of mob
      */
     public Mob(String mob) {
-        this((lb) im.a(mob, etc.getMCServer().e));
+        this((lc) in.a(mob, etc.getMCServer().e));
     }
 
     /**
@@ -53,7 +53,7 @@ public class Mob extends LivingEntity {
         localff.a(entity);
 
         if (rider != null) {
-            lb mob2 = rider.getMob();
+            lc mob2 = rider.getMob();
             mob2.c(getX(), getY(), getZ(), getRotation(), 0f);
             localff.a(mob2);
             mob2.e(entity);
@@ -66,7 +66,7 @@ public class Mob extends LivingEntity {
      * @return name
      */
     public String getName() {
-        return im.b(entity);
+        return in.b(entity);
     }
 
     /**
@@ -88,7 +88,7 @@ public class Mob extends LivingEntity {
      * 
      * @return
      */
-    public lb getMob() {
+    public lc getMob() {
         return getEntity();
     }
 
@@ -103,6 +103,6 @@ public class Mob extends LivingEntity {
         if (mob == null) {
             return false;
         }
-        return im.a(mob, etc.getMCServer().e) instanceof lb;
+        return in.a(mob, etc.getMCServer().e) instanceof lc;
     }
 }

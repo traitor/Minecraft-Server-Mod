@@ -7,7 +7,7 @@ public class az extends dn {
     boolean[] b = new boolean[4];
     int[] c = new int[4];
 
-    protected az(int paramInt, kz paramkz) {
+    protected az(int paramInt, la paramkz) {
         super(paramInt, paramkz);
     }
 
@@ -25,7 +25,7 @@ public class az extends dn {
         int i = g(paramff, paramInt1, paramInt2, paramInt3);
 
         int j = 1;
-        if ((this.bs == kz.g) && (!paramff.q.d)) {
+        if ((this.bs == la.g) && (!paramff.q.d)) {
             j = 2;
         }
 
@@ -51,14 +51,14 @@ public class az extends dn {
                     n = i1 + 8;
                 }
             }
-            if ((this.a >= 2) && (this.bs == kz.f)) {
+            if ((this.a >= 2) && (this.bs == la.f)) {
                 if (paramff.d(paramInt1, paramInt2 - 1, paramInt3)) {
                     n = 0;
                 } else if ((paramff.c(paramInt1, paramInt2 - 1, paramInt3) == this.bs) && (paramff.b(paramInt1, paramInt2, paramInt3) == 0)) {
                     n = 0;
                 }
             }
-            if ((this.bs == kz.g)
+            if ((this.bs == la.g)
                     && (i < 8) && (n < 8)
                     && (n > i)
                     && (paramRandom.nextInt(4) != 0)) {
@@ -132,10 +132,10 @@ public class az extends dn {
         if (l(paramff, paramInt1, paramInt2, paramInt3)) {
             int i = paramff.a(paramInt1, paramInt2, paramInt3);
             if (i > 0) {
-                if (this.bs == kz.g) {
+                if (this.bs == la.g) {
                     h(paramff, paramInt1, paramInt2, paramInt3);
                 } else {
-                    gu.m[i].a_(paramff, paramInt1, paramInt2, paramInt3, paramff.b(paramInt1, paramInt2, paramInt3));
+                    gv.m[i].a_(paramff, paramInt1, paramInt2, paramInt3, paramff.b(paramInt1, paramInt2, paramInt3));
                 }
             }
             paramff.b(paramInt1, paramInt2, paramInt3, this.bh, paramInt4);
@@ -247,13 +247,13 @@ public class az extends dn {
         }
         
         int i = paramff.a(paramInt1, paramInt2, paramInt3);
-        if ((i == gu.aE.bh) || (i == gu.aL.bh) || (i == gu.aD.bh) || (i == gu.aF.bh) || (i == gu.aX.bh)) {
+        if ((i == gv.aE.bh) || (i == gv.aL.bh) || (i == gv.aD.bh) || (i == gv.aF.bh) || (i == gv.aX.bh)) {
             return true;
         }
         if (i == 0) {
             return false;
         }
-        kz localkz = gu.m[i].bs;
+        la localkz = gv.m[i].bs;
         return localkz.a();
     }
 
@@ -272,11 +272,11 @@ public class az extends dn {
     }
 
     private boolean l(ff paramff, int paramInt1, int paramInt2, int paramInt3) {
-        kz localkz = paramff.c(paramInt1, paramInt2, paramInt3);
+        la localkz = paramff.c(paramInt1, paramInt2, paramInt3);
         if (localkz == this.bs) {
             return false;
         }
-        if (localkz == kz.g) {
+        if (localkz == la.g) {
             return false;
         }
         return !k(paramff, paramInt1, paramInt2, paramInt3);

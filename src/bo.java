@@ -2,12 +2,12 @@
 import java.util.List;
 import java.util.Random;
 
-public class bo extends gu {
+public class bo extends gv {
 
     private ds a;
 
     protected bo(int paramInt1, int paramInt2, ds paramds) {
-        super(paramInt1, paramInt2, kz.d);
+        super(paramInt1, paramInt2, la.d);
         this.a = paramds;
         a(true);
 
@@ -80,10 +80,10 @@ public class bo extends gu {
             localList = paramff.b(null, el.b(paramInt1 + f, paramInt2, paramInt3 + f, paramInt1 + 1 - f, paramInt2 + 0.25D, paramInt3 + 1 - f));
         }
         if (this.a == ds.b) {
-            localList = paramff.a(lb.class, el.b(paramInt1 + f, paramInt2, paramInt3 + f, paramInt1 + 1 - f, paramInt2 + 0.25D, paramInt3 + 1 - f));
+            localList = paramff.a(lc.class, el.b(paramInt1 + f, paramInt2, paramInt3 + f, paramInt1 + 1 - f, paramInt2 + 0.25D, paramInt3 + 1 - f));
         }
         if (this.a == ds.c) {
-            localList = paramff.a(gp.class, el.b(paramInt1 + f, paramInt2, paramInt3 + f, paramInt1 + 1 - f, paramInt2 + 0.25D, paramInt3 + 1 - f));
+            localList = paramff.a(gq.class, el.b(paramInt1 + f, paramInt2, paramInt3 + f, paramInt1 + 1 - f, paramInt2 + 0.25D, paramInt3 + 1 - f));
         }
         if (localList.size() > 0) {
             j = 1;
@@ -128,7 +128,7 @@ public class bo extends gu {
         super.b(paramff, paramInt1, paramInt2, paramInt3);
     }
 
-    public void a(jw paramjw, int paramInt1, int paramInt2, int paramInt3) {
+    public void a(jx paramjw, int paramInt1, int paramInt2, int paramInt3) {
         int i = paramjw.b(paramInt1, paramInt2, paramInt3) == 1 ? 1 : 0;
 
         float f = 0.0625F;
@@ -139,7 +139,7 @@ public class bo extends gu {
         }
     }
 
-    public boolean b(jw paramjw, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+    public boolean b(jx paramjw, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         return paramjw.b(paramInt1, paramInt2, paramInt3) > 0;
     }
 

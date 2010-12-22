@@ -1,7 +1,7 @@
 
 import java.util.Random;
 
-public class bb extends gl {
+public class bb extends gm {
 
     private int a;
 
@@ -12,7 +12,7 @@ public class bb extends gl {
         this.a = paramInt2;
     }
 
-    public ik a(ik paramik, ff paramff, gp paramgp) {
+    public il a(il paramik, ff paramff, gq paramgp) {
         float f1 = 1.0F;
 
         float f2 = paramgp.y + (paramgp.w - paramgp.y) * f1;
@@ -24,10 +24,10 @@ public class bb extends gl {
 
         bn localbn1 = bn.b(d1, d2, d3);
 
-        float f4 = ib.b(-f3 * 0.01745329F - 3.141593F);
-        float f5 = ib.a(-f3 * 0.01745329F - 3.141593F);
-        float f6 = -ib.b(-f2 * 0.01745329F);
-        float f7 = ib.a(-f2 * 0.01745329F);
+        float f4 = ic.b(-f3 * 0.01745329F - 3.141593F);
+        float f5 = ic.a(-f3 * 0.01745329F - 3.141593F);
+        float f6 = -ic.b(-f2 * 0.01745329F);
+        float f7 = ic.a(-f2 * 0.01745329F);
 
         float f8 = f5 * f6;
         float f9 = f7;
@@ -35,7 +35,7 @@ public class bb extends gl {
 
         double d4 = 5.0D;
         bn localbn2 = localbn1.c(f8 * d4, f9 * d4, f10 * d4);
-        hj localhj = paramff.a(localbn1, localbn2, this.a == 0);
+        hk localhj = paramff.a(localbn1, localbn2, this.a == 0);
         if (localhj == null) {
             return paramik;
         }
@@ -55,27 +55,27 @@ public class bb extends gl {
             Block blockPlaced  = new Block(0, i, j, k );
 
             if (this.a == 0) {
-                if ((paramff.c(i, j, k) == kz.f) && (paramff.b(i, j, k) == 0)) {
+                if ((paramff.c(i, j, k) == la.f) && (paramff.b(i, j, k) == 0)) {
                     // Filling a bucket with water!
                     if (paramgp instanceof fi && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, ((fi)paramgp).getPlayer(), blockPlaced, blockClicked, new Item(paramik))) {
                         return paramik;
                     }
 
                     paramff.d(i, j, k, 0);
-                    return new ik(gl.av);
+                    return new il(gl.av);
                 }
-                if ((paramff.c(i, j, k) == kz.g) && (paramff.b(i, j, k) == 0)) {
+                if ((paramff.c(i, j, k) == la.g) && (paramff.b(i, j, k) == 0)) {
                     // Filling a bucket with lava!
                     if (paramgp instanceof fi && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, ((fi)paramgp).getPlayer(), blockPlaced, blockClicked, new Item(paramik))) {
                         return paramik;
                     }
 
                     paramff.d(i, j, k, 0);
-                    return new ik(gl.aw);
+                    return new il(gl.aw);
                 }
             } else {
                 if (this.a < 0) {
-                    return new ik(gl.au);
+                    return new il(gl.au);
                 }
                 if (localhj.e == 0) {
                     j--;
@@ -97,7 +97,7 @@ public class bb extends gl {
                 }
 
                 if ((paramff.e(i, j, k)) || (!paramff.c(i, j, k).a())) {
-                    if ((paramff.q.d) && (this.a == gu.A.bh)) {
+                    if ((paramff.q.d) && (this.a == gv.A.bh)) {
                         paramff.a(d1 + 0.5D, d2 + 0.5D, d3 + 0.5D, "random.fizz", 0.5F, 2.6F + (paramff.l.nextFloat() - paramff.l.nextFloat()) * 0.8F);
                         for (int m = 0; m < 8; m++) {
                             paramff.a("largesmoke", i + Math.random(), j + Math.random(), k + Math.random(), 0.0D, 0.0D, 0.0D);
@@ -111,13 +111,13 @@ public class bb extends gl {
                         
                         paramff.b(i, j, k, this.a, 0);
                     }
-                    return new ik(gl.au);
+                    return new il(gl.au);
                 }
             }
 
         } else if ((this.a == 0)
                 && ((localhj.g instanceof bp))) {
-            return new ik(gl.aE);
+            return new il(gl.aE);
         }
 
         return paramik;

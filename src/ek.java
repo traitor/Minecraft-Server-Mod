@@ -1,8 +1,8 @@
 
 public class ek extends bg
-        implements lf, Container<ik> {
+        implements lg, Container<il> {
 
-    private ik[] h = new ik[3];
+    private il[] h = new il[3];
     public int e = 0;
     public int f = 0;
     public int g = 0;
@@ -11,7 +11,7 @@ public class ek extends bg
      * Get contents of the furnace block
      * @return
      */
-    public ik[] getContents() {
+    public il[] getContents() {
         return h;
     }
 
@@ -19,7 +19,7 @@ public class ek extends bg
      * Set contents of the furnace block
      * @return
      */
-    public void setContents(ik[] e) {
+    public void setContents(il[] e) {
         this.h = e;
     }
 
@@ -27,18 +27,18 @@ public class ek extends bg
         return this.h.length;
     }
 
-    public ik a(int paramInt) {
+    public il a(int paramInt) {
         return this.h[paramInt];
     }
 
-    public ik a(int paramInt1, int paramInt2) {
+    public il a(int paramInt1, int paramInt2) {
         if (this.h[paramInt1] != null) {
             if (this.h[paramInt1].a <= paramInt2) {
-                ik localik = this.h[paramInt1];
+                il localik = this.h[paramInt1];
                 this.h[paramInt1] = null;
                 return localik;
             }
-            ik localik = this.h[paramInt1].a(paramInt2);
+            il localik = this.h[paramInt1].a(paramInt2);
             if (this.h[paramInt1].a == 0) {
                 this.h[paramInt1] = null;
             }
@@ -48,7 +48,7 @@ public class ek extends bg
         return null;
     }
 
-    public void a(int paramInt, ik paramik) {
+    public void a(int paramInt, il paramik) {
         this.h[paramInt] = paramik;
         if ((paramik != null) && (paramik.a > c())) {
             paramik.a = c();
@@ -62,14 +62,14 @@ public class ek extends bg
     public void a(ad paramad) {
         super.a(paramad);
         es locales = paramad.k("Items");
-        this.h = new ik[a()];
+        this.h = new il[a()];
         for (int i = 0; i < locales.b(); i++) {
             ad localad = (ad) locales.a(i);
             int j = localad.b("Slot");
             if ((j < 0) || (j >= this.h.length)) {
                 continue;
             }
-            this.h[j] = new ik(localad);
+            this.h[j] = new il(localad);
         }
 
         this.e = paramad.c("BurnTime");
@@ -162,7 +162,7 @@ public class ek extends bg
         if ((this.h[2].a < c()) && (this.h[2].a < this.h[2].b())) {
             return true;
         }
-        return this.h[2].a < gl.c[i].b();
+        return this.h[2].a < gm.c[i].b();
     }
 
     public void h() {
@@ -172,7 +172,7 @@ public class ek extends bg
 
         int i = b(this.h[0].a().aW);
         if (this.h[2] == null) {
-            this.h[2] = new ik(i, 1);
+            this.h[2] = new il(i, 1);
         } else if (this.h[2].c == i) {
             this.h[2].a += 1;
         }
@@ -184,59 +184,59 @@ public class ek extends bg
     }
 
     private int b(int paramInt) {
-        if (paramInt == gu.H.bh) {
-            return gl.m.aW;
+        if (paramInt == gv.H.bh) {
+            return gm.m.aW;
         }
-        if (paramInt == gu.G.bh) {
-            return gl.n.aW;
+        if (paramInt == gv.G.bh) {
+            return gm.n.aW;
         }
-        if (paramInt == gu.aw.bh) {
-            return gl.l.aW;
+        if (paramInt == gv.aw.bh) {
+            return gm.l.aW;
         }
-        if (paramInt == gu.E.bh) {
-            return gu.M.bh;
+        if (paramInt == gv.E.bh) {
+            return gv.M.bh;
         }
-        if (paramInt == gl.ao.aW) {
-            return gl.ap.aW;
+        if (paramInt == gm.ao.aW) {
+            return gm.ap.aW;
         }
-        if (paramInt == gl.aS.aW) {
-            return gl.aT.aW;
+        if (paramInt == gm.aS.aW) {
+            return gm.aT.aW;
         }
-        if (paramInt == gu.w.bh) {
-            return gu.t.bh;
+        if (paramInt == gv.w.bh) {
+            return gv.t.bh;
         }
-        if (paramInt == gl.aG.aW) {
-            return gl.aF.aW;
+        if (paramInt == gm.aG.aW) {
+            return gm.aF.aW;
         }
         return -1;
     }
 
-    private int a(ik paramik) {
+    private int a(il paramik) {
         if (paramik == null) {
             return 0;
         }
         int i = paramik.a().aW;
 
-        if ((i < 256) && (gu.m[i].bs == kz.c)) {
+        if ((i < 256) && (gv.m[i].bs == la.c)) {
             return 300;
         }
 
-        if (i == gl.B.aW) {
+        if (i == gm.B.aW) {
             return 100;
         }
 
-        if (i == gl.k.aW) {
+        if (i == gm.k.aW) {
             return 1600;
         }
 
-        if (i == gl.aw.aW) {
+        if (i == gm.aw.aW) {
             return 20000;
         }
 
         return 0;
     }
 
-    public boolean a_(gp paramgp) {
+    public boolean a_(gq paramgp) {
         if (this.a.l(this.b, this.c, this.d) != this) {
             return false;
         }

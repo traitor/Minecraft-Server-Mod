@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 
-public class kj extends fr
+public class kk extends fs
         implements fn {
 
     public static Logger a = Logger.getLogger("Minecraft");
@@ -22,7 +22,7 @@ public class kj extends fr
     private boolean j = true;
     private Map<Integer,Short> k = new HashMap<Integer,Short>();
 
-    public kj(MinecraftServer paramMinecraftServer, bs parambs, fi paramfi) {
+    public kk(MinecraftServer paramMinecraftServer, bs parambs, fi paramfi) {
         this.d = paramMinecraftServer;
         this.b = parambs;
         parambs.a(this);
@@ -59,19 +59,19 @@ public class kj extends fr
     public void a() {
         this.b.a();
         if (this.f++ % 20 == 0) {
-            this.b.a(new ll());
+            this.b.a(new lm());
         }
     }
 
     public void a(String paramString) {
-        this.b.a(new kx(paramString));
+        this.b.a(new ky(paramString));
         this.b.c();
-        this.d.f.a(new br("§e" + this.e.aw + " left the game."));
+        this.d.f.a(new br("\u00A7e" + this.e.aw + " left the game."));
         this.d.f.c(this.e);
         this.c = true;
     }
 
-    public void a(hx paramhx) {
+    public void a(hy paramhx) {
         if (!this.j) {
             double d1 = paramhx.b - this.h;
             if ((paramhx.a == this.g) && (d1 * d1 < 0.01D) && (paramhx.c == this.i)) {
@@ -241,7 +241,7 @@ public class kj extends fr
     // hMod: Store x/y/z
     int x, y, z, type;
 
-    public void a(jc paramjc) {
+    public void a(jd paramjc) {
         if (paramjc.e == 4) {
             this.e.L();
             return;
@@ -275,8 +275,8 @@ public class kj extends fr
         }
 
         int i3 = paramjc.d;
-        int i4 = (int) ib.e(n - this.d.e.m);
-        int i5 = (int) ib.e(i2 - this.d.e.o);
+        int i4 = (int) ic.e(n - this.d.e.m);
+        int i5 = (int) ic.e(i2 - this.d.e.o);
         if (i4 > i5) {
             i5 = i4;
         }
@@ -332,7 +332,7 @@ public class kj extends fr
             double d7 = this.e.r - (i2 + 0.5D);
             double d9 = d3 * d3 + d5 * d5 + d7 * d7;
             if (d9 < 256.0D) {
-                this.e.a.b(new gc(n, i1, i2, this.d.e));
+                this.e.a.b(new gd(n, i1, i2, this.d.e));
             }
         }
         this.d.e.B = false;
@@ -341,8 +341,8 @@ public class kj extends fr
     // hMod: Store the blocks between blockPlaced packets
     Block lastRightClicked;
     
-    public void a(gs paramgs) {
-        ik localik = this.e.an.e();
+    public void a(gt paramgs) {
+        il localik = this.e.an.e();
 
         // hMod: We allow admins and ops to build!
         boolean bool = d.e.B = (d.f.g(getPlayer().getName()) || getPlayer().isAdmin());
@@ -386,14 +386,15 @@ public class kj extends fr
                 // Set the type of block to what it currently is
                 blockPlaced.setType(etc.getServer().getBlockIdAt(blockPlaced.getX(), blockPlaced.getY(), blockPlaced.getZ()));
             }
+            if (localik == null) return;
             ((Digging)this.e.c).a(this.e, this.d.e, localik, blockPlaced, blockClicked);
         } else {
             int m = paramgs.a;
             int n = paramgs.b;
             int i1 = paramgs.c;
             int i2 = paramgs.d;
-            int i3 = (int) ib.e(m - this.d.e.m);
-            int i4 = (int) ib.e(i1 - this.d.e.o);
+            int i3 = (int) ic.e(m - this.d.e.m);
+            int i4 = (int) ic.e(i1 - this.d.e.o);
             if (i3 > i4) {
                 i4 = i3;
             }
@@ -415,7 +416,7 @@ public class kj extends fr
             }
 
             // hMod: these are the 'block changed' packets for the client.
-            this.e.a.b(new gc(m, n, i1, this.d.e));
+            this.e.a.b(new gd(m, n, i1, this.d.e));
 
             if (i2 == 0) {
                 n--;
@@ -436,20 +437,20 @@ public class kj extends fr
                 m++;
             }
 
-            this.e.a.b(new gc(m, n, i1, this.d.e));
+            this.e.a.b(new gd(m, n, i1, this.d.e));
         }
         if ((localik != null) && (localik.a == 0)) {
             this.e.an.a[this.e.an.c] = null;
         }
 
         this.e.am = true;
-        this.e.an.a[this.e.an.c] = ik.a(this.e.an.a[this.e.an.c]);
-        go localgo = this.e.ap.a(this.e.an, this.e.an.c);
+        this.e.an.a[this.e.an.c] = il.a(this.e.an.a[this.e.an.c]);
+        gp localgo = this.e.ap.a(this.e.an, this.e.an.c);
         this.e.ap.a();
         this.e.am = false;
 
-        if (!ik.a(this.e.an.e(), paramgs.e)) {
-            b(new hp(this.e.ap.f, localgo.c, this.e.an.e()));
+        if (!il.a(this.e.an.e(), paramgs.e)) {
+            b(new hq(this.e.ap.f, localgo.c, this.e.an.e()));
         }
 
         this.d.e.B = false;
@@ -459,21 +460,21 @@ public class kj extends fr
         // hMod: disconnect!
         etc.getLoader().callHook(PluginLoader.Hook.DISCONNECT, ((fi)e).getPlayer());
         a.info(this.e.aw + " lost connection: " + paramString);
-        this.d.f.a(new br("§e" + this.e.aw + " left the game."));
+        this.d.f.a(new br("\u00A7e" + this.e.aw + " left the game."));
         this.d.f.c(this.e);
         this.c = true;
     }
 
-    public void a(ju paramju) {
+    public void a(jv paramju) {
         a.warning(getClass() + " wasn't prepared to deal with a " + paramju.getClass());
         a("Protocol error, unexpected packet");
     }
 
-    public void b(ju paramju) {
+    public void b(jv paramju) {
         this.b.a(paramju);
     }
 
-    public void a(hm paramhm) {
+    public void a(hn paramhm) {
         this.e.an.c = paramhm.a;
     }
 
@@ -498,10 +499,10 @@ public class kj extends fr
                     paramString = paramString.substring(paramString.indexOf(" ")).trim();
                     paramString = paramString.substring(paramString.indexOf(" ")).trim();
 
-                    paramString = "§7" + this.e.aw + " whispers " + paramString;
+                    paramString = "\u00A77" + this.e.aw + " whispers " + paramString;
                     a.info(paramString + " to " + localObject[1]);
                     if (!this.d.f.a(localObject[1], new br(paramString))) {
-                        b(new br("§cThere's no player by that name online."));
+                        b(new br("\u00A7cThere's no player by that name online."));
                     }
                 }
             } else if (this.d.f.g(this.e.aw)) {
@@ -527,7 +528,7 @@ public class kj extends fr
         }
     }
 
-    public void a(kx paramkx) {
+    public void a(ky paramkx) {
         this.b.a("disconnect.quitting", new Object[0]);
     }
 
@@ -536,7 +537,7 @@ public class kj extends fr
     }
 
     public void b(String paramString) {
-        b(new br("§7" + paramString));
+        b(new br("\u00A77" + paramString));
     }
 
     public String c() {
@@ -569,9 +570,9 @@ public class kj extends fr
 
     public void a(cs paramcs) { // HMOD : TODO: Inventory crap
         if ((this.e.ap.f == paramcs.a) && (this.e.ap.c(this.e))) {
-            ik localik = this.e.ap.a(paramcs.b, paramcs.c, this.e);
+            il localik = this.e.ap.a(paramcs.b, paramcs.c, this.e);
 
-            if (ik.a(paramcs.e, localik)) {
+            if (il.a(paramcs.e, localik)) {
                 this.e.a.b(new ay(paramcs.a, paramcs.d, true));
                 this.e.am = true;
                 this.e.ap.a();
@@ -582,9 +583,9 @@ public class kj extends fr
                 this.e.a.b(new ay(paramcs.a, paramcs.d, false));
                 this.e.ap.a(this.e, false);
 
-                ArrayList<ik> localArrayList = new ArrayList<ik>();
+                ArrayList<il> localArrayList = new ArrayList<il>();
                 for (int m = 0; m < this.e.ap.e.size(); m++) {
-                    localArrayList.add(((go) this.e.ap.e.get(m)).c());
+                    localArrayList.add(((gp) this.e.ap.e.get(m)).c());
                 }
                 this.e.a(this.e.ap, localArrayList);
             }
@@ -598,7 +599,7 @@ public class kj extends fr
         }
     }
 
-    public void a(gm paramgm) {
+    public void a(gn paramgm) {
         if (this.d.e.f(paramgm.a, paramgm.b, paramgm.c)) {
             bg localbg = this.d.e.l(paramgm.a, paramgm.b, paramgm.c);
             int n;
@@ -609,7 +610,7 @@ public class kj extends fr
                     n = 0;
                 } else {
                     for (i1 = 0; i1 < paramgm.d[m].length(); i1++) {
-                        if (" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_'abcdefghijklmnopqrstuvwxyz{|}~âŒ‚Ã‡Ã¼Ã©Ã¢Ã¤Ã Ã¥Ã§ÃªÃ«Ã¨Ã¯Ã®Ã¬Ã„Ã…Ã‰Ã¦Ã†Ã´Ã¶Ã²Ã»Ã¹Ã¿Ã–ÃœÃ¸Â£Ã˜Ã—Æ’Ã¡Ã­Ã³ÃºÃ±Ã‘ÂªÂºÂ¿Â®Â¬Â½Â¼Â¡Â«Â»".indexOf(paramgm.d[m].charAt(i1)) < 0) {
+                        if (fq.a.indexOf(paramgm.d[m].charAt(i1)) < 0) {
                             n = 0;
                         }
                     }
@@ -618,11 +619,11 @@ public class kj extends fr
                     paramgm.d[m] = "!?";
                 }
             }
-            if ((localbg instanceof ko)) {
+            if ((localbg instanceof kp)) {
                 int m = paramgm.a;
                 n = paramgm.b;
                 i1 = paramgm.c;
-                ko localko = (ko) localbg;
+                kp localko = (kp) localbg;
                 for (int i2 = 0; i2 < 4; i2++) {
                     localko.e[i2] = paramgm.d[i2];
                 }

@@ -8,19 +8,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class kr
+public class ks
         implements cg {
 
     private Set a = new HashSet();
-    private kw b;
+    private kx b;
     private cg c;
     private bd d;
     private Map e = new HashMap();
     private List f = new ArrayList();
     private fm g;
 
-    public kr(fm paramfm, bd parambd, cg paramcg) {
-        this.b = new kw(paramfm, new byte[32768], 0, 0);
+    public ks(fm paramfm, bd parambd, cg paramcg) {
+        this.b = new kx(paramfm, new byte[32768], 0, 0);
         this.b.q = true;
         this.b.p = true;
 
@@ -30,7 +30,7 @@ public class kr
     }
 
     public boolean a(int paramInt1, int paramInt2) {
-        la localla = new la(paramInt1, paramInt2);
+        lb localla = new lb(paramInt1, paramInt2);
         return this.e.containsKey(localla);
     }
 
@@ -39,15 +39,15 @@ public class kr
         int j = paramInt2 * 16 + 8 - this.g.o;
         int k = 128;
         if ((i < -k) || (i > k) || (j < -k) || (j > k)) {
-            this.a.add(new la(paramInt1, paramInt2));
+            this.a.add(new lb(paramInt1, paramInt2));
         }
     }
 
-    public kw d(int paramInt1, int paramInt2) {
-        la localla = new la(paramInt1, paramInt2);
-        this.a.remove(new la(paramInt1, paramInt2));
+    public kx d(int paramInt1, int paramInt2) {
+        lb localla = new lb(paramInt1, paramInt2);
+        this.a.remove(new lb(paramInt1, paramInt2));
 
-        kw localkw = (kw) this.e.get(localla);
+        kx localkw = (kx) this.e.get(localla);
         if (localkw == null) {
             localkw = e(paramInt1, paramInt2);
             if (localkw == null) {
@@ -85,9 +85,9 @@ public class kr
         return localkw;
     }
 
-    public kw b(int paramInt1, int paramInt2) {
-        la localla = new la(paramInt1, paramInt2);
-        kw localkw = (kw) this.e.get(localla);
+    public kx b(int paramInt1, int paramInt2) {
+        lb localla = new lb(paramInt1, paramInt2);
+        kx localkw = (kx) this.e.get(localla);
 
         if (localkw == null) {
             if (this.g.x) {
@@ -99,12 +99,12 @@ public class kr
         return localkw;
     }
 
-    private kw e(int paramInt1, int paramInt2) {
+    private kx e(int paramInt1, int paramInt2) {
         if (this.d == null) {
             return null;
         }
         try {
-            kw localkw = this.d.a(this.g, paramInt1, paramInt2);
+            kx localkw = this.d.a(this.g, paramInt1, paramInt2);
             if (localkw != null) {
                 localkw.s = this.g.e;
             }
@@ -115,7 +115,7 @@ public class kr
         return null;
     }
 
-    private void a(kw paramkw) {
+    private void a(kx paramkw) {
         if (this.d == null) {
             return;
         }
@@ -126,7 +126,7 @@ public class kr
         }
     }
 
-    private void b(kw paramkw) {
+    private void b(kx paramkw) {
         if (this.d == null) {
             return;
         }
@@ -140,7 +140,7 @@ public class kr
     }
 
     public void a(cg paramcg, int paramInt1, int paramInt2) {
-        kw localkw = b(paramInt1, paramInt2);
+        kx localkw = b(paramInt1, paramInt2);
         if (!localkw.n) {
             localkw.n = true;
             if (this.c != null) {
@@ -150,10 +150,10 @@ public class kr
         }
     }
 
-    public boolean a(boolean paramBoolean, ke paramke) {
+    public boolean a(boolean paramBoolean, kf paramke) {
         int i = 0;
         for (int j = 0; j < this.f.size(); j++) {
-            kw localkw = (kw) this.f.get(j);
+            kx localkw = (kx) this.f.get(j);
             if ((paramBoolean) && (!localkw.p)) {
                 a(localkw);
             }
@@ -188,9 +188,9 @@ public class kr
         if (!this.g.C) {
             for (int i = 0; i < 100; i++) {
                 if (!this.a.isEmpty()) {
-                    la localla = (la) this.a.iterator().next();
+                    lb localla = (lb) this.a.iterator().next();
 
-                    kw localkw = b(localla.a, localla.b);
+                    kx localkw = b(localla.a, localla.b);
                     localkw.e();
                     b(localkw);
                     a(localkw);

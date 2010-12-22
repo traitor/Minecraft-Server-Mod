@@ -1,15 +1,15 @@
 
 import java.util.Random;
 
-public class kg extends gl {
+public class kh extends gm {
 
-    public kg(int paramInt) {
+    public kh(int paramInt) {
         super(paramInt);
         this.aX = 1;
         this.aY = 64;
     }
 
-    public boolean a(ik paramik, gp paramgp, ff paramff, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+    public boolean a(il paramik, gq paramgp, ff paramff, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         // hMod: Store block data clicked
         Block blockClicked = new Block(paramff.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3 );
         blockClicked.setFaceClicked(Block.Face.fromId( paramInt4 ));
@@ -48,7 +48,7 @@ public class kg extends gl {
                 return false;
             } else {
                 paramff.a(paramInt1 + 0.5D, paramInt2 + 0.5D, paramInt3 + 0.5D, "fire.ignite", 1.0F, b.nextFloat() * 0.4F + 0.8F);
-                paramff.d(paramInt1, paramInt2, paramInt3, gu.ar.bh);
+                paramff.d(paramInt1, paramInt2, paramInt3, gv.ar.bh);
             }
         }
 

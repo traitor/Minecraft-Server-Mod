@@ -48,7 +48,7 @@ public class cq extends bg {
 
         int i = 4;
         for (int j = 0; j < i; j++) {
-            lb locallb = (lb) (lb) im.a(this.f, this.a);
+            lc locallb = (lc) (lc) in.a(this.f, this.a);
             if (locallb == null) {
                 return;
             }

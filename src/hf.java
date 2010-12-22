@@ -1,16 +1,16 @@
 
 import java.util.Random;
 
-public class he extends ep {
+public class hf extends ep {
 
-    public ik a;
+    public il a;
     private int e;
     public int b = 0;
     public int c;
     private int f = 5;
     public float d = (float) (Math.random() * 3.141592653589793D * 2.0D);
 
-    public he(ff paramff, double paramDouble1, double paramDouble2, double paramDouble3, ik paramik) {
+    public hf(ff paramff, double paramDouble1, double paramDouble2, double paramDouble3, il paramik) {
         super(paramff);
         a(0.25F, 0.25F);
         this.H = (this.J / 2.0F);
@@ -25,7 +25,7 @@ public class he extends ep {
         this.M = false;
     }
 
-    public he(ff paramff) {
+    public hf(ff paramff) {
         super(paramff);
         a(0.25F, 0.25F);
         this.H = (this.J / 2.0F);
@@ -41,7 +41,7 @@ public class he extends ep {
         this.o = this.r;
 
         this.t -= 0.03999999910593033D;
-        if (this.l.c(ib.b(this.p), ib.b(this.q), ib.b(this.r)) == kz.g) {
+        if (this.l.c(ic.b(this.p), ic.b(this.q), ic.b(this.r)) == la.g) {
             this.t = 0.2000000029802322D;
             this.s = ((this.W.nextFloat() - this.W.nextFloat()) * 0.2F);
             this.u = ((this.W.nextFloat() - this.W.nextFloat()) * 0.2F);
@@ -54,9 +54,9 @@ public class he extends ep {
         float f1 = 0.98F;
         if (this.A) {
             f1 = 0.5880001F;
-            int i = this.l.a(ib.b(this.p), ib.b(this.z.b) - 1, ib.b(this.r));
+            int i = this.l.a(ic.b(this.p), ic.b(this.z.b) - 1, ic.b(this.r));
             if (i > 0) {
-                f1 = gu.m[i].bt * 0.98F;
+                f1 = gv.m[i].bt * 0.98F;
             }
         }
 
@@ -76,25 +76,25 @@ public class he extends ep {
     }
 
     public boolean r() {
-        return this.l.a(this.z, kz.f, this);
+        return this.l.a(this.z, la.f, this);
     }
 
     private boolean g(double paramDouble1, double paramDouble2, double paramDouble3) {
-        int i = ib.b(paramDouble1);
-        int j = ib.b(paramDouble2);
-        int k = ib.b(paramDouble3);
+        int i = ic.b(paramDouble1);
+        int j = ic.b(paramDouble2);
+        int k = ic.b(paramDouble3);
 
         double d1 = paramDouble1 - i;
         double d2 = paramDouble2 - j;
         double d3 = paramDouble3 - k;
 
-        if (gu.o[this.l.a(i, j, k)]) {
-            int m = !gu.o[this.l.a(i - 1, j, k)] ? 1 : 0;
-            int n = !gu.o[this.l.a(i + 1, j, k)] ? 1 : 0;
-            int i1 = !gu.o[this.l.a(i, j - 1, k)] ? 1 : 0;
-            int i2 = !gu.o[this.l.a(i, j + 1, k)] ? 1 : 0;
-            int i3 = !gu.o[this.l.a(i, j, k - 1)] ? 1 : 0;
-            int i4 = !gu.o[this.l.a(i, j, k + 1)] ? 1 : 0;
+        if (gv.o[this.l.a(i, j, k)]) {
+            int m = !gv.o[this.l.a(i - 1, j, k)] ? 1 : 0;
+            int n = !gv.o[this.l.a(i + 1, j, k)] ? 1 : 0;
+            int i1 = !gv.o[this.l.a(i, j - 1, k)] ? 1 : 0;
+            int i2 = !gv.o[this.l.a(i, j + 1, k)] ? 1 : 0;
+            int i3 = !gv.o[this.l.a(i, j, k - 1)] ? 1 : 0;
+            int i4 = !gv.o[this.l.a(i, j, k + 1)] ? 1 : 0;
 
             int i5 = -1;
             double d4 = 9999.0D;
@@ -171,10 +171,10 @@ public class he extends ep {
         this.f = (paramad.c("Health") & 0xFF);
         this.b = paramad.c("Age");
         ad localad = paramad.j("Item");
-        this.a = new ik(localad);
+        this.a = new il(localad);
     }
 
-    public void b(gp paramgp) {
+    public void b(gq paramgp) {
         if (this.l.z) {
             return;
         }

@@ -8,28 +8,28 @@ import java.util.Set;
 public final class ci {
 
     // hMod: Add generic here, saves zillions of casts.
-    private static Set<lj> a = new HashSet<lj>();
+    private static Set<lk> a = new HashSet<lk>();
 
-    protected static ip a(ff paramff, int paramInt1, int paramInt2) {
+    protected static iq a(ff paramff, int paramInt1, int paramInt2) {
         int i = paramInt1 + paramff.l.nextInt(16);
         int j = paramff.l.nextInt(128);
         int k = paramInt2 + paramff.l.nextInt(16);
 
-        return new ip(i, j, k);
+        return new iq(i, j, k);
     }
 
     public static final int a(ff paramff) {
         a.clear();
 
         for (int i = 0; i < paramff.d.size(); i++) {
-            gp localgp = (gp) paramff.d.get(i);
-            int k = ib.b(localgp.p / 16.0D);
-            int m = ib.b(localgp.r / 16.0D);
+            gq localgp = (gq) paramff.d.get(i);
+            int k = ic.b(localgp.p / 16.0D);
+            int m = ic.b(localgp.r / 16.0D);
 
             int n = 8;
             for (int i1 = -n; i1 <= n; i1++) {
                 for (int i2 = -n; i2 <= n; i2++) {
-                    a.add(new lj(i1 + k, i2 + m));
+                    a.add(new lk(i1 + k, i2 + m));
                 }
             }
         }
@@ -40,28 +40,28 @@ public final class ci {
         Class[] animals = new Class[config.getAnimals().length];
 
         for (int i = 0; i < mobs.length; i++) {
-            mobs[i] = im.getEntity(config.getMonsters()[i]);
+            mobs[i] = in.getEntity(config.getMonsters()[i]);
         }
         for (int i = 0; i < animals.length; i++) {
-            animals[i] = im.getEntity(config.getAnimals()[i]);
+            animals[i] = in.getEntity(config.getAnimals()[i]);
         }
 
         int i = 0;
-        kt localkt;
-        for (int j = 0; j < kt.values().length; j++) {
-            localkt = kt.values()[j];
+        ku localkt;
+        for (int j = 0; j < ku.values().length; j++) {
+            localkt = ku.values()[j];
 
             if (paramff.a(localkt.c) > localkt.d * a.size() / 256) {
                 continue;
             }
-            for (lj locallj : a) {
+            for (lk locallj : a) {
                 // hMod: from nextInt(50) == 0 to nextInt(100) <= spawnRate, allow customisable value
                 if (paramff.l.nextInt(100) <= etc.getInstance().getMobSpawnRate()) {
                     // hMod: ignore default spawns, load from config
                     Class[] arrayOfClass = null;
-                    if (localkt == kt.a) {
+                    if (localkt == ku.a) {
                         arrayOfClass = mobs;
-                    } else if (localkt == kt.b) {
+                    } else if (localkt == ku.b) {
                         arrayOfClass = animals;
                     } else {
                         continue;
@@ -69,13 +69,13 @@ public final class ci {
                     
                     int i3 = paramff.l.nextInt(arrayOfClass.length);
 
-                    ip localip = a(paramff, locallj.a * 16, locallj.b * 16);
+                    iq localip = a(paramff, locallj.a * 16, locallj.b * 16);
                     int i4 = localip.a;
                     int i5 = localip.b;
                     int i6 = localip.c;
 
                     if ((paramff.d(i4, i5, i6))
-                            || (paramff.c(i4, i5, i6) != kz.a)) {
+                            || (paramff.c(i4, i5, i6) != la.a)) {
                         continue;
                     }
                     int i7 = 0;
@@ -110,11 +110,11 @@ public final class ci {
                                 if (f7 < 576.0F) {
                                     continue;
                                 }
-                                lb locallb = null;
+                                lc locallb = null;
                                 try {
                                     //hMod : make sure we have something to spawn before fetching calling newInstance.
                                     if(arrayOfClass != null && arrayOfClass[i3] != null) {
-                                        locallb = (lb) arrayOfClass[i3].getConstructor(new Class[]{ff.class}).newInstance(new Object[]{paramff});
+                                        locallb = (lc) arrayOfClass[i3].getConstructor(new Class[]{ff.class}).newInstance(new Object[]{paramff});
                                     }
                                 } catch (Exception localException) {
                                     localException.printStackTrace();
@@ -131,7 +131,7 @@ public final class ci {
                                         i7++;
                                         paramff.a(locallb);
                                         if (((locallb instanceof ch)) && (paramff.l.nextInt(100) == 0)) {
-                                            fs localfs = new fs(paramff);
+                                            ft localfs = new ft(paramff);
                                             localfs.c(f1, f2, f3, locallb.v, 0.0F);
                                             paramff.a(localfs);
                                             localfs.e(locallb);

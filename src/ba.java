@@ -1,10 +1,10 @@
 
 import java.util.Random;
 
-public class ba extends gu {
+public class ba extends gv {
 
     protected ba(int paramInt1, int paramInt2) {
-        super(paramInt1, paramInt2, kz.u);
+        super(paramInt1, paramInt2, la.u);
         a(true);
     }
 
@@ -74,12 +74,12 @@ public class ba extends gu {
             return false;
         }
         int i = paramff.a(paramInt1, paramInt2 - 1, paramInt3);
-        return (i == gu.aV.bh) || (i == gu.E.bh);
+        return (i == gv.aV.bh) || (i == gv.E.bh);
     }
 
     public void a(ff paramff, int paramInt1, int paramInt2, int paramInt3, ep paramep) {
         // hMod Damage hook: Cactus
-        if (paramep instanceof lb && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.CACTUS, null, new LivingEntity((lb) paramep), 1)) {
+        if (paramep instanceof lc && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.CACTUS, null, new LivingEntity((lc) paramep), 1)) {
             return;
         }
         paramep.a(null, 1);

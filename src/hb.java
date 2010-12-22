@@ -6,12 +6,12 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ha {
+public class hb {
 
     public static Logger a = Logger.getLogger("Minecraft");
 
     public static void a() {
-        iv localiv = new iv();
+        iw localiv = new iw();
 
         a.setUseParentHandlers(false);
 

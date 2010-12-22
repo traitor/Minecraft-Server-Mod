@@ -21,7 +21,7 @@ public class eh {
     // hMod: These static methods are here because dx.java is calling them statically... >.>
     static ServerSocket a(eh self) { return self.d; }
     static int b(eh self) { return self.f; }
-    static void a(eh self, gh newgh) { ++self.f; self.a(newgh); }
+    static void a(eh self, gi newgh) { ++self.f; self.a(newgh); }
 
     public eh(MinecraftServer paramMinecraftServer, InetAddress paramInetAddress, int paramInt) {
         this.c = paramMinecraftServer;
@@ -39,11 +39,11 @@ public class eh {
         this.e.start();
     }
 
-    public void a(kj paramkj) {
+    public void a(kk paramkj) {
         this.h.add(paramkj);
     }
 
-    private void a(gh paramgh) {
+    private void a(gi paramgh) {
         if (paramgh == null) {
             throw new IllegalArgumentException("Got null pendingconnection!");
         }
@@ -53,27 +53,27 @@ public class eh {
     public void a() {
         Object localObject;
         for (int i = 0; i < this.g.size(); i++) {
-            localObject = (gh) this.g.get(i);
+            localObject = (gi) this.g.get(i);
             try {
-                ((gh) localObject).a();
+                ((gi) localObject).a();
             } catch (Exception localException1) {
-                ((gh) localObject).a("Internal server error");
+                ((gi) localObject).a("Internal server error");
                 a.log(Level.WARNING, "Failed to handle packet: " + localException1, localException1);
             }
-            if (((gh) localObject).c) {
+            if (((gi) localObject).c) {
                 this.g.remove(i--);
             }
         }
 
         for (int i = 0; i < this.h.size(); i++) {
-            localObject = (kj) this.h.get(i);
+            localObject = (kk) this.h.get(i);
             try {
-                ((kj) localObject).a();
+                ((kk) localObject).a();
             } catch (Exception localException2) {
                 a.log(Level.WARNING, "Failed to handle packet: " + localException2, localException2);
-                ((kj) localObject).a("Internal server error");
+                ((kk) localObject).a("Internal server error");
             }
-            if (((kj) localObject).c) {
+            if (((kk) localObject).c) {
                 this.h.remove(i--);
             }
         }

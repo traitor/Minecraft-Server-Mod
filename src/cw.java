@@ -33,7 +33,7 @@ public class cw {
         // hMod: preserve source through blockstatus.
         if (this.e == null) {
             block.setStatus(1); // TNT
-        } else if (this.e instanceof gd) {
+        } else if (this.e instanceof ge) {
             block.setStatus(2); //Creeper
         }
 
@@ -70,15 +70,15 @@ public class cw {
 
                     float f3 = 0.3F;
                     while (f2 > 0.0F) {
-                        int i11 = ib.b(d6);
-                        int i12 = ib.b(d7);
-                        int i13 = ib.b(d8);
+                        int i11 = ic.b(d6);
+                        int i12 = ic.b(d7);
+                        int i13 = ic.b(d8);
                         int i14 = this.i.a(i11, i12, i13);
                         if (i14 > 0) {
-                            f2 -= (gu.m[i14].a(this.e) + 0.3F) * f3;
+                            f2 -= (gv.m[i14].a(this.e) + 0.3F) * f3;
                         }
                         if (f2 > 0.0F) {
-                            this.g.add(new ip(i11, i12, i13));
+                            this.g.add(new iq(i11, i12, i13));
                         }
 
                         d6 += d1 * f3;
@@ -92,12 +92,12 @@ public class cw {
         }
 
         this.f *= 2.0F;
-        int k = ib.b(this.b - this.f - 1.0D);
-        int m = ib.b(this.b + this.f + 1.0D);
-        int n = ib.b(this.c - this.f - 1.0D);
-        int i1 = ib.b(this.c + this.f + 1.0D);
-        int i2 = ib.b(this.d - this.f - 1.0D);
-        int i3 = ib.b(this.d + this.f + 1.0D);
+        int k = ic.b(this.b - this.f - 1.0D);
+        int m = ic.b(this.b + this.f + 1.0D);
+        int n = ic.b(this.c - this.f - 1.0D);
+        int i1 = ic.b(this.c + this.f + 1.0D);
+        int i2 = ic.b(this.d - this.f - 1.0D);
+        int i3 = ic.b(this.d + this.f + 1.0D);
         List localList = this.i.b(this.e, el.b(k, n, i2, m, i1, i3));
         bn localbn = bn.b(this.b, this.c, this.d);
         for (int i4 = 0; i4 < localList.size(); i4++) {
@@ -108,7 +108,7 @@ public class cw {
                 d7 = localep.q - this.c;
                 d8 = localep.r - this.d;
 
-                double d9 = ib.a(d6 * d6 + d7 * d7 + d8 * d8);
+                double d9 = ic.a(d6 * d6 + d7 * d7 + d8 * d8);
 
                 d6 /= d9;
                 d7 /= d9;
@@ -120,7 +120,7 @@ public class cw {
                 // hMod Damage hook: Explosions
                 int damage = (int) ((d11 * d11 + d11) / 2.0D * 8.0D * this.f + 1.0D);
                 BaseEntity exploder = new BaseEntity(localep);
-                PluginLoader.DamageType dmgType = (this.e instanceof gd) ? PluginLoader.DamageType.CREEPER_EXPLOSION : PluginLoader.DamageType.EXPLOSION;
+                PluginLoader.DamageType dmgType = (this.e instanceof ge) ? PluginLoader.DamageType.CREEPER_EXPLOSION : PluginLoader.DamageType.EXPLOSION;
                 if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, dmgType, null, exploder, damage)) {
                     localep.a(this.e, damage);
                 }
@@ -138,14 +138,14 @@ public class cw {
 
         if (this.a) {
             for (int i5 = localArrayList.size() - 1; i5 >= 0; i5--) {
-                ip localip = (ip) localArrayList.get(i5);
+                iq localip = (iq) localArrayList.get(i5);
                 int i6 = localip.a;
                 int i7 = localip.b;
                 int i8 = localip.c;
                 int i9 = this.i.a(i6, i7, i8);
                 int i10 = this.i.a(i6, i7 - 1, i8);
-                if ((i9 == 0) && (gu.o[i10]) && (this.h.nextInt(3) == 0)) {
-                    this.i.d(i6, i7, i8, gu.ar.bh);
+                if ((i9 == 0) && (gv.o[i10]) && (this.h.nextInt(3) == 0)) {
+                    this.i.d(i6, i7, i8, gv.ar.bh);
                 }
             }
         }
@@ -157,7 +157,7 @@ public class cw {
         ArrayList localArrayList = new ArrayList();
         localArrayList.addAll(this.g);
         for (int j = localArrayList.size() - 1; j >= 0; j--) {
-            ip localip = (ip) localArrayList.get(j);
+            iq localip = (iq) localArrayList.get(j);
             int k = localip.a;
             int m = localip.b;
             int n = localip.c;
@@ -173,7 +173,7 @@ public class cw {
                 double d5 = d2 - this.c;
                 double d6 = d3 - this.d;
 
-                double d7 = ib.a(d4 * d4 + d5 * d5 + d6 * d6);
+                double d7 = ic.a(d4 * d4 + d5 * d5 + d6 * d6);
 
                 d4 /= d7;
                 d5 /= d7;
@@ -190,9 +190,9 @@ public class cw {
             }
 
             if (i1 > 0) {
-                gu.m[i1].a(this.i, k, m, n, this.i.b(k, m, n), 0.3F);
+                gv.m[i1].a(this.i, k, m, n, this.i.b(k, m, n), 0.3F);
                 this.i.d(k, m, n, 0);
-                gu.m[i1].c(this.i, k, m, n);
+                gv.m[i1].c(this.i, k, m, n);
             }
         }
     }

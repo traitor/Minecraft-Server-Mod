@@ -2,7 +2,7 @@
 import java.util.List;
 import java.util.Random;
 
-public class lb extends ep {
+public class lc extends ep {
 
     public int aF = 20;
     public float aG;
@@ -59,7 +59,7 @@ public class lb extends ep {
     private ep b;
     private int c = 0;
 
-    public lb(ff paramff) {
+    public lc(ff paramff) {
         super(paramff);
         this.ba = 10;
         this.i = true;
@@ -115,7 +115,7 @@ public class lb extends ep {
             this.Z = 0;
         }
         int i;
-        if ((x()) && (a(kz.f))) {
+        if ((x()) && (a(la.f))) {
             this.ad -= 1;
             if (this.ad == -20) {
                 this.ad = 0;
@@ -193,7 +193,7 @@ public class lb extends ep {
         double d1 = this.p - this.m;
         double d2 = this.r - this.o;
 
-        float f1 = ib.a(d1 * d1 + d2 * d2);
+        float f1 = ic.a(d1 * d1 + d2 * d2);
 
         float f2 = this.aJ;
 
@@ -292,7 +292,7 @@ public class lb extends ep {
         this.bn = 1.5F;
 
         // hMod damage entities.
-        LivingEntity attacker = (paramep != null && paramep instanceof lb) ? new LivingEntity((lb) paramep) : null;
+        LivingEntity attacker = (paramep != null && paramep instanceof lc) ? new LivingEntity((lc) paramep) : null;
         LivingEntity defender = new LivingEntity(this);
 
         // hMod attack by entity, but it might not do damage!
@@ -377,7 +377,7 @@ public class lb extends ep {
     }
 
     public void a(ep paramep, int paramInt, double paramDouble1, double paramDouble2) {
-        float f1 = ib.a(paramDouble1 * paramDouble1 + paramDouble2 * paramDouble2);
+        float f1 = ic.a(paramDouble1 * paramDouble1 + paramDouble2 * paramDouble2);
         float f2 = 0.4F;
 
         this.s /= 2.0D;
@@ -426,9 +426,9 @@ public class lb extends ep {
                 a(null, i);
             }
 
-            int j = this.l.a(ib.b(this.p), ib.b(this.q - 0.2000000029802322D - this.H), ib.b(this.r));
+            int j = this.l.a(ic.b(this.p), ic.b(this.q - 0.2000000029802322D - this.H), ic.b(this.r));
             if (j > 0) {
-                cp localcp = gu.m[j].bq;
+                cp localcp = gv.m[j].bq;
                 this.l.a(this, localcp.c(), localcp.a() * 0.5F, localcp.b() * 0.75F);
             }
         }
@@ -465,9 +465,9 @@ public class lb extends ep {
             float f1 = 0.91F;
             if (this.A) {
                 f1 = 0.5460001F;
-                int i = this.l.a(ib.b(this.p), ib.b(this.z.b) - 1, ib.b(this.r));
+                int i = this.l.a(ic.b(this.p), ic.b(this.z.b) - 1, ic.b(this.r));
                 if (i > 0) {
-                    f1 = gu.m[i].bt * 0.91F;
+                    f1 = gv.m[i].bt * 0.91F;
                 }
             }
 
@@ -477,9 +477,9 @@ public class lb extends ep {
             f1 = 0.91F;
             if (this.A) {
                 f1 = 0.5460001F;
-                int j = this.l.a(ib.b(this.p), ib.b(this.z.b) - 1, ib.b(this.r));
+                int j = this.l.a(ic.b(this.p), ic.b(this.z.b) - 1, ic.b(this.r));
                 if (j > 0) {
-                    f1 = gu.m[j].bt * 0.91F;
+                    f1 = gv.m[j].bt * 0.91F;
                 }
             }
 
@@ -505,7 +505,7 @@ public class lb extends ep {
         this.bm = this.bn;
         double d2 = this.p - this.m;
         double d3 = this.r - this.o;
-        float f3 = ib.a(d2 * d2 + d3 * d3) * 4.0F;
+        float f3 = ic.a(d2 * d2 + d3 * d3) * 4.0F;
         if (f3 > 1.0F) {
             f3 = 1.0F;
         }
@@ -514,10 +514,10 @@ public class lb extends ep {
     }
 
     public boolean d_() {
-        int i = ib.b(this.p);
-        int j = ib.b(this.z.b);
-        int k = ib.b(this.r);
-        return (this.l.a(i, j, k) == gu.aF.bh) || (this.l.a(i, j + 1, k) == gu.aF.bh);
+        int i = ic.b(this.p);
+        int j = ic.b(this.z.b);
+        int k = ic.b(this.r);
+        return (this.l.a(i, j, k) == gv.aF.bh) || (this.l.a(i, j + 1, k) == gv.aF.bh);
     }
 
     public void a(ad paramad) {
@@ -611,7 +611,7 @@ public class lb extends ep {
     protected void c() {
         this.bx += 1;
 
-        gp localgp = this.l.a(this, -1.0D);
+        gq localgp = this.l.a(this, -1.0D);
 
         if (localgp != null) {
             double d1 = localgp.p - this.p;
@@ -671,14 +671,14 @@ public class lb extends ep {
 
         double d3 = paramep.r - this.r;
         double d2;
-        if ((paramep instanceof lb)) {
-            lb locallb = (lb) paramep;
+        if ((paramep instanceof lc)) {
+            lc locallb = (lc) paramep;
             d2 = locallb.q + locallb.s() - (this.q + s());
         } else {
             d2 = (paramep.z.b + paramep.z.e) / 2.0D - (this.q + s());
         }
 
-        double d4 = ib.a(d1 * d1 + d3 * d3);
+        double d4 = ic.a(d1 * d1 + d3 * d3);
 
         float f1 = (float) (Math.atan2(d3, d1) * 180.0D / 3.141592741012573D) - 90.0F;
         float f2 = (float) (Math.atan2(d2, d4) * 180.0D / 3.141592741012573D);
@@ -722,20 +722,20 @@ public class lb extends ep {
         // hMod fix the static reference here with a null element.
         bn bn = null;
         if (paramFloat == 1.0F) {
-            float f1 = ib.b(-this.v * 0.01745329F - 3.141593F);
-            float f2 = ib.a(-this.v * 0.01745329F - 3.141593F);
-            float f3 = -ib.b(-this.w * 0.01745329F);
-            float f4 = ib.a(-this.w * 0.01745329F);
+            float f1 = ic.b(-this.v * 0.01745329F - 3.141593F);
+            float f2 = ic.a(-this.v * 0.01745329F - 3.141593F);
+            float f3 = -ic.b(-this.w * 0.01745329F);
+            float f4 = ic.a(-this.w * 0.01745329F);
 
             return bn.b(f2 * f3, f4, f1 * f3);
         }
         float f1 = this.y + (this.w - this.y) * paramFloat;
         float f2 = this.x + (this.v - this.x) * paramFloat;
 
-        float f3 = ib.b(-f2 * 0.01745329F - 3.141593F);
-        float f4 = ib.a(-f2 * 0.01745329F - 3.141593F);
-        float f5 = -ib.b(-f1 * 0.01745329F);
-        float f6 = ib.a(-f1 * 0.01745329F);
+        float f3 = ic.b(-f2 * 0.01745329F - 3.141593F);
+        float f4 = ic.a(-f2 * 0.01745329F - 3.141593F);
+        float f5 = -ic.b(-f1 * 0.01745329F);
+        float f6 = ic.a(-f1 * 0.01745329F);
 
         return bn.b(f4 * f5, f6, f3 * f5);
     }

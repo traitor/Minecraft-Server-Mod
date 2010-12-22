@@ -4,7 +4,7 @@ import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
-public class im {
+public class in {
 
     private static Map a = new HashMap();
     private static Map b = new HashMap();
@@ -65,30 +65,30 @@ public class im {
     static {
         a(en.class, "Arrow", 10);
         a(bq.class, "Snowball", 11);
-        a(he.class, "Item", 1);
+        a(hf.class, "Item", 1);
         a(ct.class, "Painting", 9);
 
-        a(lb.class, "Mob", 48);
-        a(gt.class, "Monster", 49);
+        a(lc.class, "Mob", 48);
+        a(gu.class, "Monster", 49);
 
-        a(gd.class, "Creeper", 50);
-        a(fs.class, "Skeleton", 51);
+        a(ge.class, "Creeper", 50);
+        a(ft.class, "Skeleton", 51);
         a(ch.class, "Spider", 52);
         a(z.class, "Giant", 53);
-        a(hc.class, "Zombie", 54);
-        a(gw.class, "Slime", 55);
+        a(hd.class, "Zombie", 54);
+        a(gx.class, "Slime", 55);
         a(bk.class, "Ghast", 56);
-        a(kb.class, "PigZombie", 57);
+        a(kc.class, "PigZombie", 57);
 
-        a(iq.class, "Pig", 90);
+        a(ir.class, "Pig", 90);
         a(dh.class, "Sheep", 91);
         a(bp.class, "Cow", 92);
-        a(jh.class, "Chicken", 93);
+        a(ji.class, "Chicken", 93);
 
         a(cx.class, "PrimedTnt", 20);
-        a(jb.class, "FallingSand", 21);
+        a(jc.class, "FallingSand", 21);
 
-        a(kp.class, "Minecart", 40);
-        a(gb.class, "Boat", 41);
+        a(kq.class, "Minecart", 40);
+        a(gc.class, "Boat", 41);
     }
 }

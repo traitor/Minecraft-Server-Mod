@@ -402,7 +402,7 @@ public class etc {
         @Override
         public void notify(String message) {
             // Strip the colors.
-            message = message.replaceAll("§[a-f0-9]", "");
+            message = message.replaceAll("\\u00A7[a-f0-9]", "");
             if (message != null)
                 log.info(message);
         }

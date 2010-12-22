@@ -1,15 +1,15 @@
 
-public class ja extends bg
-        implements lf, Container<ik> {
+public class jb extends bg
+        implements lg, Container<il> {
 
-    private ik[] e = new ik[36];
+    private il[] e = new il[36];
 
     /**
      * Get contents of the chest block
      *
      * @return
      */
-    public ik[] getContents() {
+    public il[] getContents() {
         return e;
     }
 
@@ -18,7 +18,7 @@ public class ja extends bg
      *
      * @return
      */
-    public void setContents(ik[] e) {
+    public void setContents(il[] e) {
         this.e = e;
     }
 
@@ -26,19 +26,19 @@ public class ja extends bg
         return 27;
     }
 
-    public ik a(int paramInt) {
+    public il a(int paramInt) {
         return this.e[paramInt];
     }
 
-    public ik a(int paramInt1, int paramInt2) {
+    public il a(int paramInt1, int paramInt2) {
         if (this.e[paramInt1] != null) {
             if (this.e[paramInt1].a <= paramInt2) {
-                ik localik = this.e[paramInt1];
+                il localik = this.e[paramInt1];
                 this.e[paramInt1] = null;
                 d();
                 return localik;
             }
-            ik localik = this.e[paramInt1].a(paramInt2);
+            il localik = this.e[paramInt1].a(paramInt2);
             if (this.e[paramInt1].a == 0) {
                 this.e[paramInt1] = null;
             }
@@ -49,7 +49,7 @@ public class ja extends bg
         return null;
     }
 
-    public void a(int paramInt, ik paramik) {
+    public void a(int paramInt, il paramik) {
         this.e[paramInt] = paramik;
         if ((paramik != null) && (paramik.a > c())) {
             paramik.a = c();
@@ -64,14 +64,14 @@ public class ja extends bg
     public void a(ad paramad) {
         super.a(paramad);
         es locales = paramad.k("Items");
-        this.e = new ik[a()];
+        this.e = new il[a()];
         for (int i = 0; i < locales.b(); i++) {
             ad localad = (ad) locales.a(i);
             int j = localad.b("Slot") & 0xFF;
             if ((j < 0) || (j >= this.e.length)) {
                 continue;
             }
-            this.e[j] = new ik(localad);
+            this.e[j] = new il(localad);
         }
     }
 
@@ -94,7 +94,7 @@ public class ja extends bg
         return 64;
     }
 
-    public boolean a_(gp paramgp) {
+    public boolean a_(gq paramgp) {
         if (this.a.l(this.b, this.c, this.d) != this) {
             return false;
         }

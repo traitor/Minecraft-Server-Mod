@@ -7,7 +7,7 @@ public class Boat extends BaseVehicle {
      * Interface for boats.
      * @param boat
      */
-    public Boat(gb boat) {
+    public Boat(gc boat) {
         super(boat);
     }
     
@@ -18,7 +18,7 @@ public class Boat extends BaseVehicle {
      * @param z
      */
     public Boat(double x, double y, double z) {
-        super(new gb(etc.getMCServer().e, x, y, z));
+        super(new gc(etc.getMCServer().e, x, y, z));
         etc.getMCServer().e.a(entity);        
     }
     
@@ -26,7 +26,7 @@ public class Boat extends BaseVehicle {
      * Returns the entity we're wrapping.
      * @return
      */ 
-    public gb getEntity() {
-        return (gb) entity;
+    public gc getEntity() {
+        return (gc) entity;
     }
 }

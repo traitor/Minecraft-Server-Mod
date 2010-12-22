@@ -2,11 +2,11 @@
 import java.util.List;
 import java.util.Random;
 
-public class kp extends ep
-        implements lf, Container<ik> {
+public class kq extends ep
+        implements lg, Container<il> {
 
     // hMod: need to be public!
-    public ik[] ak = new ik[36];
+    public il[] ak = new il[36];
     public int a = 0;
     public int b = 0;
     public int c = 1;
@@ -24,16 +24,16 @@ public class kp extends ep
     private double as;
 
     @Override
-    public ik[] getContents() {
+    public il[] getContents() {
         return ak;
     }
 
     @Override
-    public void setContents(ik[] values) {
+    public void setContents(il[] values) {
         ak = values;
     }
 
-    public kp(ff paramff) {
+    public kq(ff paramff) {
         super(paramff);
         this.i = true;
         a(0.98F, 0.7F);
@@ -53,7 +53,7 @@ public class kp extends ep
         return true;
     }
 
-    public kp(ff paramff, double paramDouble1, double paramDouble2, double paramDouble3, int paramInt) {
+    public kq(ff paramff, double paramDouble1, double paramDouble2, double paramDouble3, int paramInt) {
         this(paramff);
         a(paramDouble1, paramDouble2 + this.H, paramDouble3);
 
@@ -92,11 +92,11 @@ public class kp extends ep
         u();
         this.a += paramInt * 10;
         if (this.a > 40) {
-            a(gl.ax.aW, 1, 0.0F);
+            a(gm.ax.aW, 1, 0.0F);
             if (this.d == 1) {
-                a(gu.au.bh, 1, 0.0F);
+                a(gv.au.bh, 1, 0.0F);
             } else if (this.d == 2) {
-                a(gu.aB.bh, 1, 0.0F);
+                a(gv.aB.bh, 1, 0.0F);
             }
             l();
         }
@@ -113,7 +113,7 @@ public class kp extends ep
         etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_DESTROYED, cart);
 
         for (int i = 0; i < a(); i++) {
-            ik localik = a(i);
+            il localik = a(i);
             if (localik != null) {
                 float f1 = this.W.nextFloat() * 0.8F + 0.1F;
                 float f2 = this.W.nextFloat() * 0.8F + 0.1F;
@@ -126,7 +126,7 @@ public class kp extends ep
                     }
                     localik.a -= j;
 
-                    he localhe = new he(this.l, this.p + f1, this.q + f2, this.r + f3, new ik(localik.c, j, localik.d));
+                    hf localhe = new hf(this.l, this.p + f1, this.q + f2, this.r + f3, new il(localik.c, j, localik.d));
                     float f4 = 0.05F;
                     localhe.s = ((float) this.W.nextGaussian() * f4);
                     localhe.t = ((float) this.W.nextGaussian() * f4 + 0.2F);
@@ -182,10 +182,10 @@ public class kp extends ep
 
         this.t -= 0.03999999910593033D;
 
-        int i = ib.b(this.p);
-        int j = ib.b(this.q);
-        int k = ib.b(this.r);
-        if (this.l.a(i, j - 1, k) == gu.aG.bh) {
+        int i = ic.b(this.p);
+        int j = ic.b(this.q);
+        int k = ic.b(this.r);
+        if (this.l.a(i, j - 1, k) == gv.aG.bh) {
             j--;
         }
 
@@ -193,7 +193,7 @@ public class kp extends ep
         int m = 0;
 
         double d5 = 0.0078125D;
-        if (this.l.a(i, j, k) == gu.aG.bh) {
+        if (this.l.a(i, j, k) == gv.aG.bh) {
             bn localbn1 = g(this.p, this.q, this.r);
             int n = this.l.b(i, j, k);
             this.q = j;
@@ -279,9 +279,9 @@ public class kp extends ep
             }
             c(d19, 0.0D, d20);
 
-            if ((arrayOfInt[0][1] != 0) && (ib.b(this.p) - i == arrayOfInt[0][0]) && (ib.b(this.r) - k == arrayOfInt[0][2])) {
+            if ((arrayOfInt[0][1] != 0) && (ic.b(this.p) - i == arrayOfInt[0][0]) && (ic.b(this.r) - k == arrayOfInt[0][2])) {
                 a(this.p, this.q + arrayOfInt[0][1], this.r);
-            } else if ((arrayOfInt[1][1] != 0) && (ib.b(this.p) - i == arrayOfInt[1][0]) && (ib.b(this.r) - k == arrayOfInt[1][2])) {
+            } else if ((arrayOfInt[1][1] != 0) && (ic.b(this.p) - i == arrayOfInt[1][0]) && (ic.b(this.r) - k == arrayOfInt[1][2])) {
                 a(this.p, this.q + arrayOfInt[1][1], this.r);
             }
 
@@ -291,7 +291,7 @@ public class kp extends ep
                 this.u *= 0.996999979019165D;
             } else {
                 if (this.d == 2) {
-                    d21 = ib.a(this.f * this.f + this.aj * this.aj);
+                    d21 = ic.a(this.f * this.f + this.aj * this.aj);
                     if (d21 > 0.01D) {
                         m = 1;
                         this.f /= d21;
@@ -325,8 +325,8 @@ public class kp extends ep
                 a(this.p, localbn2.b, this.r);
             }
 
-            int i2 = ib.b(this.p);
-            int i3 = ib.b(this.r);
+            int i2 = ic.b(this.p);
+            int i3 = ic.b(this.r);
             if ((i2 != i) || (i3 != k)) {
                 d13 = Math.sqrt(this.s * this.s + this.u * this.u);
 
@@ -335,7 +335,7 @@ public class kp extends ep
             }
 
             if (this.d == 2) {
-                double d24 = ib.a(this.f * this.f + this.aj * this.aj);
+                double d24 = ic.a(this.f * this.f + this.aj * this.aj);
                 if ((d24 > 0.01D) && (this.s * this.s + this.u * this.u > 0.001D)) {
                     this.f /= d24;
                     this.aj /= d24;
@@ -403,7 +403,7 @@ public class kp extends ep
         if ((localList != null) && (localList.size() > 0)) {
             for (int i1 = 0; i1 < localList.size(); i1++) {
                 ep localep = (ep) localList.get(i1);
-                if ((localep != this.j) && (localep.v()) && ((localep instanceof kp))) {
+                if ((localep != this.j) && (localep.v()) && ((localep instanceof kq))) {
                     localep.c(this);
                 }
             }
@@ -425,19 +425,19 @@ public class kp extends ep
     }
 
     public bn g(double paramDouble1, double paramDouble2, double paramDouble3) {
-        int i = ib.b(paramDouble1);
-        int j = ib.b(paramDouble2);
-        int k = ib.b(paramDouble3);
+        int i = ic.b(paramDouble1);
+        int j = ic.b(paramDouble2);
+        int k = ic.b(paramDouble3);
 
         // hMod: Change of the cart
         Minecart minecart = new Minecart(this);
         etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_POSITIONCHANGE, minecart, i, j, k);
 
-        if (this.l.a(i, j - 1, k) == gu.aG.bh) {
+        if (this.l.a(i, j - 1, k) == gv.aG.bh) {
             j--;
         }
 
-        if (this.l.a(i, j, k) == gu.aG.bh) {
+        if (this.l.a(i, j, k) == gv.aG.bh) {
             int m = this.l.b(i, j, k);
             paramDouble2 = j;
             if ((m >= 2) && (m <= 5)) {
@@ -516,14 +516,14 @@ public class kp extends ep
             this.e = paramad.c("Fuel");
         } else if (this.d == 1) {
             es locales = paramad.k("Items");
-            this.ak = new ik[a()];
+            this.ak = new il[a()];
             for (int i = 0; i < locales.b(); i++) {
                 ad localad = (ad) locales.a(i);
                 int j = localad.b("Slot") & 0xFF;
                 if ((j < 0) || (j >= this.ak.length)) {
                     continue;
                 }
-                this.ak[j] = new ik(localad);
+                this.ak[j] = new il(localad);
             }
         }
     }
@@ -544,7 +544,7 @@ public class kp extends ep
             return;
         }
         
-        if (((paramep instanceof lb)) && (!(paramep instanceof gp)) && (this.d == 0) && (this.s * this.s + this.u * this.u > 0.01D)
+        if (((paramep instanceof lc)) && (!(paramep instanceof gq)) && (this.d == 0) && (this.s * this.s + this.u * this.u > 0.01D)
                 && (this.j == null) && (paramep.k == null)) {
             paramep.e(this);
         }
@@ -554,7 +554,7 @@ public class kp extends ep
 
         double d3 = d1 * d1 + d2 * d2;
         if (d3 >= 9.999999747378752E-005D) {
-            d3 = ib.a(d3);
+            d3 = ic.a(d3);
             d1 /= d3;
             d2 /= d3;
             double d4 = 1.0D / d3;
@@ -571,17 +571,17 @@ public class kp extends ep
             d1 *= 0.5D;
             d2 *= 0.5D;
 
-            if ((paramep instanceof kp)) {
+            if ((paramep instanceof kq)) {
                 double d5 = paramep.s + this.s;
                 double d6 = paramep.u + this.u;
 
-                if ((((kp) paramep).d == 2) && (this.d != 2)) {
+                if ((((kq) paramep).d == 2) && (this.d != 2)) {
                     this.s *= 0.2000000029802322D;
                     this.u *= 0.2000000029802322D;
                     f(paramep.s - d1, 0.0D, paramep.u - d2);
                     paramep.s *= 0.699999988079071D;
                     paramep.u *= 0.699999988079071D;
-                } else if ((((kp) paramep).d != 2) && (this.d == 2)) {
+                } else if ((((kq) paramep).d != 2) && (this.d == 2)) {
                     paramep.s *= 0.2000000029802322D;
                     paramep.u *= 0.2000000029802322D;
                     paramep.f(this.s + d1, 0.0D, this.u + d2);
@@ -608,18 +608,18 @@ public class kp extends ep
         return 27;
     }
 
-    public ik a(int paramInt) {
+    public il a(int paramInt) {
         return this.ak[paramInt];
     }
 
-    public ik a(int paramInt1, int paramInt2) {
+    public il a(int paramInt1, int paramInt2) {
         if (this.ak[paramInt1] != null) {
             if (this.ak[paramInt1].a <= paramInt2) {
-                ik localik = this.ak[paramInt1];
+                il localik = this.ak[paramInt1];
                 this.ak[paramInt1] = null;
                 return localik;
             }
-            ik localik = this.ak[paramInt1].a(paramInt2);
+            il localik = this.ak[paramInt1].a(paramInt2);
             if (this.ak[paramInt1].a == 0) {
                 this.ak[paramInt1] = null;
             }
@@ -629,7 +629,7 @@ public class kp extends ep
         return null;
     }
 
-    public void a(int paramInt, ik paramik) {
+    public void a(int paramInt, il paramik) {
         this.ak[paramInt] = paramik;
         if ((paramik != null) && (paramik.a > c())) {
             paramik.a = c();
@@ -647,14 +647,14 @@ public class kp extends ep
     public void d() {
     }
 
-    public boolean a(gp paramgp) {
+    public boolean a(gq paramgp) {
         // hMod: Entering the cart
         Minecart cart = new Minecart(this);
         HumanEntity player = new HumanEntity(paramgp);
         etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_ENTERED, cart, player);
         
         if (this.d == 0) {
-            if ((this.j != null) && ((this.j instanceof gp)) && (this.j != paramgp)) {
+            if ((this.j != null) && ((this.j instanceof gq)) && (this.j != paramgp)) {
                 return true;
             }
             if (!this.l.z) {
@@ -663,11 +663,11 @@ public class kp extends ep
         } else if (this.d == 1) {
             if (!this.l.z) {
                 // hMod cast this down to fix decompiler error.
-                paramgp.a((lf)this);
+                paramgp.a((lg)this);
             }
         } else if (this.d == 2) {
-            ik localik = paramgp.an.e();
-            if ((localik != null) && (localik.c == gl.k.aW)) {
+            il localik = paramgp.an.e();
+            if ((localik != null) && (localik.c == gm.k.aW)) {
                 if (--localik.a == 0) {
                     paramgp.an.a(paramgp.an.c, null);
                 }
@@ -680,7 +680,7 @@ public class kp extends ep
         return true;
     }
 
-    public boolean a_(gp paramgp) {
+    public boolean a_(gq paramgp) {
         if (this.G) {
             return false;
         }

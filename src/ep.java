@@ -125,12 +125,12 @@ public abstract class ep {
 
         if (r()) {
             if ((!this.ab) && (!this.c)) {
-                float f1 = ib.a(this.s * this.s * 0.2000000029802322D + this.t * this.t + this.u * this.u * 0.2000000029802322D) * 0.2F;
+                float f1 = ic.a(this.s * this.s * 0.2000000029802322D + this.t * this.t + this.u * this.u * 0.2000000029802322D) * 0.2F;
                 if (f1 > 1.0F) {
                     f1 = 1.0F;
                 }
                 this.l.a(this, "random.splash", f1, 1.0F + (this.W.nextFloat() - this.W.nextFloat()) * 0.4F);
-                float f2 = ib.b(this.z.b);
+                float f2 = ic.b(this.z.b);
                 float f3;
                 float f4;
                 for (int i1 = 0; i1 < 1.0F + this.I * 20.0F; i1++) {
@@ -186,7 +186,7 @@ public abstract class ep {
     protected void n() {
         if (!this.ae) {
             // hMod Damage hook: Lava
-            if (this instanceof lb) {
+            if (this instanceof lc) {
                 BaseEntity defender = new BaseEntity(this);
                 if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.LAVA, null, defender, 4)) {
                     return;
@@ -360,37 +360,37 @@ public abstract class ep {
         double d8 = this.r - d2;
 
         if ((this.M) && (i1 == 0)) {
-            this.L = (float) (this.L + ib.a(d7 * d7 + d8 * d8) * 0.6D);
-            int i4 = ib.b(this.p);
-            int i5 = ib.b(this.q - 0.2000000029802322D - this.H);
-            int i6 = ib.b(this.r);
+            this.L = (float) (this.L + ic.a(d7 * d7 + d8 * d8) * 0.6D);
+            int i4 = ic.b(this.p);
+            int i5 = ic.b(this.q - 0.2000000029802322D - this.H);
+            int i6 = ic.b(this.r);
             int i7 = this.l.a(i4, i5, i6);
             if ((this.L > this.b) && (i7 > 0)) {
                 this.b += 1;
-                cp localcp = gu.m[i7].bq;
-                if (this.l.a(i4, i5 + 1, i6) == gu.aS.bh) {
-                    localcp = gu.aS.bq;
+                cp localcp = gv.m[i7].bq;
+                if (this.l.a(i4, i5 + 1, i6) == gv.aS.bh) {
+                    localcp = gv.aS.bq;
                     this.l.a(this, localcp.c(), localcp.a() * 0.15F, localcp.b());
-                } else if (!gu.m[i7].bs.d()) {
+                } else if (!gv.m[i7].bs.d()) {
                     this.l.a(this, localcp.c(), localcp.a() * 0.15F, localcp.b());
                 }
-                gu.m[i7].b(this.l, i4, i5, i6, this);
+                gv.m[i7].b(this.l, i4, i5, i6, this);
             }
 
         }
 
-        int i4 = ib.b(this.z.a);
-        int i5 = ib.b(this.z.b);
-        int i6 = ib.b(this.z.c);
-        int i7 = ib.b(this.z.d);
-        int i8 = ib.b(this.z.e);
-        int i9 = ib.b(this.z.f);
+        int i4 = ic.b(this.z.a);
+        int i5 = ic.b(this.z.b);
+        int i6 = ic.b(this.z.c);
+        int i7 = ic.b(this.z.d);
+        int i8 = ic.b(this.z.e);
+        int i9 = ic.b(this.z.f);
         for (int i10 = i4; i10 <= i7; i10++) {
             for (int i11 = i5; i11 <= i8; i11++) {
                 for (int i12 = i6; i12 <= i9; i12++) {
                     int i13 = this.l.a(i10, i11, i12);
                     if (i13 > 0) {
-                        gu.m[i13].a(this.l, i10, i11, i12, this);
+                        gv.m[i13].a(this.l, i10, i11, i12, this);
                     }
                 }
             }
@@ -437,8 +437,8 @@ public abstract class ep {
 
     protected void b(int paramInt) {
         if (!this.ae) {
-            if (this instanceof lb) {
-                LivingEntity defender = new LivingEntity((lb) this);
+            if (this instanceof lc) {
+                LivingEntity defender = new LivingEntity((lc) this);
                 if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.FIRE, null, defender, paramInt)) {
                     return;
                 }
@@ -451,16 +451,16 @@ public abstract class ep {
     }
 
     public boolean r() {
-        return this.l.a(this.z.b(0.0D, -0.4000000059604645D, 0.0D), kz.f, this);
+        return this.l.a(this.z.b(0.0D, -0.4000000059604645D, 0.0D), la.f, this);
     }
 
-    public boolean a(kz paramkz) {
+    public boolean a(la paramkz) {
         double d1 = this.q + s();
-        int i1 = ib.b(this.p);
-        int i2 = ib.d(ib.b(d1));
-        int i3 = ib.b(this.r);
+        int i1 = ic.b(this.p);
+        int i2 = ic.d(ic.b(d1));
+        int i3 = ic.b(this.r);
         int i4 = this.l.a(i1, i2, i3);
-        if ((i4 != 0) && (gu.m[i4].bs == paramkz)) {
+        if ((i4 != 0) && (gv.m[i4].bs == paramkz)) {
             float f1 = dn.b(this.l.b(i1, i2, i3)) - 0.1111111F;
             float f2 = i2 + 1 - f1;
             return d1 < f2;
@@ -473,11 +473,11 @@ public abstract class ep {
     }
 
     public boolean t() {
-        return this.l.a(this.z.b(0.0D, -0.4000000059604645D, 0.0D), kz.g);
+        return this.l.a(this.z.b(0.0D, -0.4000000059604645D, 0.0D), la.g);
     }
 
     public void a(float paramFloat1, float paramFloat2, float paramFloat3) {
-        float f1 = ib.c(paramFloat1 * paramFloat1 + paramFloat2 * paramFloat2);
+        float f1 = ic.c(paramFloat1 * paramFloat1 + paramFloat2 * paramFloat2);
         if (f1 < 0.01F) {
             return;
         }
@@ -489,19 +489,19 @@ public abstract class ep {
         paramFloat1 *= f1;
         paramFloat2 *= f1;
 
-        float f2 = ib.a(this.v * 3.141593F / 180.0F);
-        float f3 = ib.b(this.v * 3.141593F / 180.0F);
+        float f2 = ic.a(this.v * 3.141593F / 180.0F);
+        float f3 = ic.b(this.v * 3.141593F / 180.0F);
 
         this.s += paramFloat1 * f3 - paramFloat2 * f2;
         this.u += paramFloat2 * f3 + paramFloat1 * f2;
     }
 
     public float b(float paramFloat) {
-        int i1 = ib.b(this.p);
+        int i1 = ic.b(this.p);
 
         double d1 = (this.z.e - this.z.b) * 0.66D;
-        int i2 = ib.b(this.q - this.H + d1);
-        int i3 = ib.b(this.r);
+        int i2 = ic.b(this.q - this.H + d1);
+        int i3 = ic.b(this.r);
         return this.l.k(i1, i2, i3);
     }
 
@@ -537,7 +537,7 @@ public abstract class ep {
         float f1 = (float) (this.p - paramep.p);
         float f2 = (float) (this.q - paramep.q);
         float f3 = (float) (this.r - paramep.r);
-        return ib.c(f1 * f1 + f2 * f2 + f3 * f3);
+        return ic.c(f1 * f1 + f2 * f2 + f3 * f3);
     }
 
     public double d(double paramDouble1, double paramDouble2, double paramDouble3) {
@@ -551,7 +551,7 @@ public abstract class ep {
         double d1 = this.p - paramDouble1;
         double d2 = this.q - paramDouble2;
         double d3 = this.r - paramDouble3;
-        return ib.a(d1 * d1 + d2 * d2 + d3 * d3);
+        return ic.a(d1 * d1 + d2 * d2 + d3 * d3);
     }
 
     public double b(ep paramep) {
@@ -561,7 +561,7 @@ public abstract class ep {
         return d1 * d1 + d2 * d2 + d3 * d3;
     }
 
-    public void b(gp paramgp) {
+    public void b(gq paramgp) {
     }
 
     public void c(ep paramep) {
@@ -572,10 +572,10 @@ public abstract class ep {
         double d1 = paramep.p - this.p;
         double d2 = paramep.r - this.r;
 
-        double d3 = ib.a(d1, d2);
+        double d3 = ic.a(d1, d2);
 
         if (d3 >= 0.009999999776482582D) {
-            d3 = ib.a(d3);
+            d3 = ic.a(d3);
             d1 /= d3;
             d2 /= d3;
 
@@ -674,7 +674,7 @@ public abstract class ep {
     }
 
     protected final String w() {
-        return im.b(this);
+        return in.b(this);
     }
 
     protected abstract void b(ad paramad);
@@ -697,12 +697,12 @@ public abstract class ep {
         return locales;
     }
 
-    public he b(int paramInt1, int paramInt2) {
+    public hf b(int paramInt1, int paramInt2) {
         return a(paramInt1, paramInt2, 0.0F);
     }
 
-    public he a(int paramInt1, int paramInt2, float paramFloat) {
-        he localhe = new he(this.l, this.p, this.q + paramFloat, this.r, new ik(paramInt1, paramInt2));
+    public hf a(int paramInt1, int paramInt2, float paramFloat) {
+        hf localhe = new hf(this.l, this.p, this.q + paramFloat, this.r, new il(paramInt1, paramInt2));
         localhe.c = 10;
         this.l.a(localhe);
         return localhe;
@@ -713,13 +713,13 @@ public abstract class ep {
     }
 
     public boolean y() {
-        int i1 = ib.b(this.p);
-        int i2 = ib.b(this.q + s());
-        int i3 = ib.b(this.r);
+        int i1 = ic.b(this.p);
+        int i2 = ic.b(this.q + s());
+        int i3 = ic.b(this.r);
         return this.l.d(i1, i2, i3);
     }
 
-    public boolean a(gp paramgp) {
+    public boolean a(gq paramgp) {
         return false;
     }
 

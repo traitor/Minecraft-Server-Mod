@@ -1,5 +1,5 @@
 
-public class dk extends gl {
+public class dk extends gm {
 
     public int a;
 
@@ -9,10 +9,10 @@ public class dk extends gl {
         this.a = paramInt2;
     }
 
-    public boolean a(ik paramik, gp paramgp, ff paramff, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+    public boolean a(il paramik, gq paramgp, ff paramff, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         int i = paramff.a(paramInt1, paramInt2, paramInt3);
 
-        if (i == gu.aG.bh) {
+        if (i == gv.aG.bh) {
             if (!paramff.z) {
                 // hMod: placing of a mine cart
                 Block block = new Block(i, paramInt1, paramInt2, paramInt3);
@@ -21,7 +21,7 @@ public class dk extends gl {
                     return false;
                 }
                 
-                paramff.a(new kp(paramff, paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, this.a));
+                paramff.a(new kq(paramff, paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, this.a));
             }
             paramik.a -= 1;
             return true;

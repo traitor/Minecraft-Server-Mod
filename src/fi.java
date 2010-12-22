@@ -7,12 +7,12 @@ import java.util.Random;
 import java.util.Set;
 import net.minecraft.server.MinecraftServer;
 
-public class fi extends gp
+public class fi extends gq
         implements ec {
 
-    public kj a;
+    public kk a;
     public MinecraftServer b;
-    public kv c;
+    public kw c;
     public double d;
     public double e;
     public List f = new LinkedList();
@@ -28,7 +28,7 @@ public class fi extends gp
     // hMod: Player storage
     private Player player;
 
-    public fi(MinecraftServer paramMinecraftServer, ff paramff, String paramString, kv paramkv) {
+    public fi(MinecraftServer paramMinecraftServer, ff paramff, String paramString, kw paramkv) {
         super(paramff);
 
         int i = paramff.m;
@@ -103,7 +103,7 @@ public class fi extends gp
         return c(this.an.b[(paramInt - 1)]);
     }
 
-    private int c(ik paramik) {
+    private int c(il paramik) {
         if (paramik == null) {
             return -1;
         }
@@ -123,12 +123,12 @@ public class fi extends gp
         }
 
         if (!this.b.n) {
-            if ((paramep instanceof gp)) {
+            if ((paramep instanceof gq)) {
                 return false;
             }
             if ((paramep instanceof en)) {
                 en localen = (en) paramep;
-                if ((localen.b instanceof gp)) {
+                if ((localen.b instanceof gq)) {
                     return false;
                 }
             }
@@ -143,16 +143,16 @@ public class fi extends gp
     public void F() {
         super.b_();
 
-        lj localObject1 = null;
+        lk localObject1 = null;
 
         double d1 = 0.0D;
-        lj localObject2;
+        lk localObject2;
         for (int i = 0; i < this.f.size(); i++) {
-            localObject2 = (lj) this.f.get(i);
-            double d2 = ((lj) localObject2).a(this);
+            localObject2 = (lk) this.f.get(i);
+            double d2 = ((lk) localObject2).a(this);
             if ((i == 0) || (d2 < d1)) {
                 localObject1 = localObject2;
-                d1 = ((lj) localObject2).a(this);
+                d1 = ((lk) localObject2).a(this);
             }
         }
 
@@ -195,7 +195,7 @@ public class fi extends gp
 
     private void a(bg parambg) {
         if (parambg != null) {
-            ju localju = parambg.f();
+            jv localju = parambg.f();
             if (localju != null) {
                 this.a.b(localju);
             }
@@ -210,7 +210,7 @@ public class fi extends gp
 
     public void c(ep paramep, int paramInt) {
         if (!paramep.G) {
-            if ((paramep instanceof he)) {
+            if ((paramep instanceof hf)) {
                 this.b.k.a(paramep, new de(paramep.g, this.g));
             }
             if ((paramep instanceof en)) {
@@ -256,10 +256,10 @@ public class fi extends gp
 
     public void a(int paramInt1, int paramInt2, int paramInt3) {
         R();
-        this.a.b(new ig(this.bH, 1, "Crafting", 9));
+        this.a.b(new ih(this.bH, 1, "Crafting", 9));
         // hMod: access class 'if' via refactoring...
         Class<?> ifClass;
-        Class<?>[] args = new Class[] {ih.class, ff.class, Integer.TYPE, Integer.TYPE, Integer.TYPE};
+        Class<?>[] args = new Class[] {ii.class, ff.class, Integer.TYPE, Integer.TYPE, Integer.TYPE};
         Object[] actualArgs = new Object[] {this.an, this.l, paramInt1, paramInt2, paramInt3};
         Constructor<?> ifCtor;
         Object ifObj = null;
@@ -278,9 +278,9 @@ public class fi extends gp
         this.ap.a((ec)this);
       }
 
-  public void a(lf paramlf) {
+  public void a(lg paramlf) {
     R();
-    this.a.b(new ig(this.bH, 0, paramlf.b(), paramlf.a()));
+    this.a.b(new ih(this.bH, 0, paramlf.b(), paramlf.a()));
         this.ap = new bx(this.an, paramlf);
         this.ap.f = this.bH;
         // hMod: Make sure this gets cast correctly, or mutant puppies will spawn and eat your items.
@@ -289,15 +289,15 @@ public class fi extends gp
 
     public void a(ek paramek) {
         R();
-        this.a.b(new ig(this.bH, 2, paramek.b(), paramek.a()));
+        this.a.b(new ih(this.bH, 2, paramek.b(), paramek.a()));
         this.ap = new bj(this.an, paramek);
         this.ap.f = this.bH;
         // hMod: Make sure this gets cast correctly, or mutant puppies will spawn and eat your items.
         this.ap.a((ec)this);
     }
 
-    public void a(dw paramdw, int paramInt, ik paramik) {
-        if ((paramdw.a(paramInt) instanceof lh)) {
+    public void a(dw paramdw, int paramInt, il paramik) {
+        if ((paramdw.a(paramInt) instanceof li)) {
             return;
         }
 
@@ -305,19 +305,19 @@ public class fi extends gp
             return;
         }
 
-        this.a.b(new hp(paramdw.f, paramInt, paramik));
+        this.a.b(new hq(paramdw.f, paramInt, paramik));
     }
 
     public void a(dw paramdw, List paramList) {
-        this.a.b(new jk(paramdw.f, paramList));
-        this.a.b(new hp(-1, -1, this.an.i()));
+        this.a.b(new jl(paramdw.f, paramList));
+        this.a.b(new hq(-1, -1, this.an.i()));
     }
 
     public void a(dw paramdw, int paramInt1, int paramInt2) {
         this.a.b(new m(paramdw.f, paramInt1, paramInt2));
     }
 
-    public void a(ik paramik) {
+    public void a(il paramik) {
     }
 
     public void I() {
@@ -329,11 +329,11 @@ public class fi extends gp
         if (this.am) {
             return;
         }
-        this.a.b(new hp(-1, -1, this.an.i()));
+        this.a.b(new hq(-1, -1, this.an.i()));
     }
 
     public void K() {
-        this.ap.a((gp)this);
+        this.ap.a((gq)this);
         this.ap = this.ao;
     }
 }

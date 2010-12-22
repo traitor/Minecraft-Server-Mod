@@ -1,27 +1,27 @@
 
-public class ih
-        implements lf, Container<ik> {
+public class ii
+        implements lg, Container<il> {
 
-    public ik[] a = new ik[36];
-    public ik[] b = new ik[4];
+    public il[] a = new il[36];
+    public il[] b = new il[4];
     public int c = 0;
-    private gp e;
-    private ik f;
+    private gq e;
+    private il f;
     public boolean d = false;
 
-    public ik[] getContents() {
+    public il[] getContents() {
         return a;
     }
 
-    public void setContents(ik[] values) {
+    public void setContents(il[] values) {
         a = values;
     }
 
-    public ih(gp paramgp) {
+    public ii(gq paramgp) {
         this.e = paramgp;
     }
 
-    public ik e() {
+    public il e() {
         return this.a[this.c];
     }
 
@@ -61,7 +61,7 @@ public class ih
             return paramInt2;
         }
         if (this.a[i] == null) {
-            this.a[i] = new ik(paramInt1, 0);
+            this.a[i] = new il(paramInt1, 0);
         }
 
         int j = paramInt2;
@@ -104,7 +104,7 @@ public class ih
         return true;
     }
 
-    public boolean a(ik paramik) {
+    public boolean a(il paramik) {
         if (paramik.d == 0) {
             paramik.a = b(paramik.c, paramik.a);
             if (paramik.a == 0) {
@@ -121,8 +121,8 @@ public class ih
         return false;
     }
 
-    public ik a(int paramInt1, int paramInt2) {
-        ik[] arrayOfik = this.a;
+    public il a(int paramInt1, int paramInt2) {
+        il[] arrayOfik = this.a;
         if (paramInt1 >= this.a.length) {
             arrayOfik = this.b;
             paramInt1 -= this.a.length;
@@ -130,11 +130,11 @@ public class ih
 
         if (arrayOfik[paramInt1] != null) {
             if (arrayOfik[paramInt1].a <= paramInt2) {
-                ik localik = arrayOfik[paramInt1];
+                il localik = arrayOfik[paramInt1];
                 arrayOfik[paramInt1] = null;
                 return localik;
             }
-            ik localik = arrayOfik[paramInt1].a(paramInt2);
+            il localik = arrayOfik[paramInt1].a(paramInt2);
             if (arrayOfik[paramInt1].a == 0) {
                 arrayOfik[paramInt1] = null;
             }
@@ -144,8 +144,8 @@ public class ih
         return null;
     }
 
-    public void a(int paramInt, ik paramik) {
-        ik[] arrayOfik = this.a;
+    public void a(int paramInt, il paramik) {
+        il[] arrayOfik = this.a;
         if (paramInt >= arrayOfik.length) {
             paramInt -= arrayOfik.length;
             arrayOfik = this.b;
@@ -154,7 +154,7 @@ public class ih
         arrayOfik[paramInt] = paramik;
     }
 
-    public float a(gu paramgu) {
+    public float a(gv paramgu) {
         float f1 = 1.0F;
         if (this.a[this.c] != null) {
             f1 *= this.a[this.c].a(paramgu);
@@ -184,12 +184,12 @@ public class ih
     }
 
     public void b(es parames) {
-        this.a = new ik[36];
-        this.b = new ik[4];
+        this.a = new il[36];
+        this.b = new il[4];
         for (int i = 0; i < parames.b(); i++) {
             ad localad = (ad) parames.a(i);
             int j = localad.b("Slot") & 0xFF;
-            ik localik = new ik(localad);
+            il localik = new il(localad);
             if (localik.a() != null) {
                 if ((j >= 0) && (j < this.a.length)) this.a[j] = localik;
                 if ((j < 100) || (j >= this.b.length + 100)) continue;
@@ -202,8 +202,8 @@ public class ih
         return this.a.length + 4;
     }
 
-    public ik a(int paramInt) {
-        ik[] arrayOfik = this.a;
+    public il a(int paramInt) {
+        il[] arrayOfik = this.a;
         if (paramInt >= arrayOfik.length) {
             paramInt -= arrayOfik.length;
             arrayOfik = this.b;
@@ -221,19 +221,19 @@ public class ih
     }
 
     public int a(ep paramep) {
-        ik localik = a(this.c);
+        il localik = a(this.c);
         if (localik != null) {
             return localik.a(paramep);
         }
         return 1;
     }
 
-    public boolean b(gu paramgu) {
-        if ((paramgu.bs != kz.d) && (paramgu.bs != kz.e) && (paramgu.bs != kz.t) && (paramgu.bs != kz.s)) {
+    public boolean b(gv paramgu) {
+        if ((paramgu.bs != la.d) && (paramgu.bs != la.e) && (paramgu.bs != la.t) && (paramgu.bs != la.s)) {
             return true;
         }
 
-        ik localik = a(this.c);
+        il localik = a(this.c);
         if (localik != null) {
             return localik.b(paramgu);
         }
@@ -245,7 +245,7 @@ public class ih
         int j = 0;
         int k = 0;
         for (int m = 0; m < this.b.length; m++) {
-            if ((this.b[m] != null) && ((this.b[m].a() instanceof ii))) {
+            if ((this.b[m] != null) && ((this.b[m].a() instanceof ij))) {
                 int n = this.b[m].c();
                 int i1 = this.b[m].d;
 
@@ -253,7 +253,7 @@ public class ih
                 j += i2;
                 k += n;
 
-                int i3 = ((ii) this.b[m].a()).bc;
+                int i3 = ((ij) this.b[m].a()).bc;
 
                 i += i3;
             }
@@ -266,7 +266,7 @@ public class ih
 
     public void c(int paramInt) {
         for (int i = 0; i < this.b.length; i++) {
-            if ((this.b[i] != null) && ((this.b[i].a() instanceof ii))) {
+            if ((this.b[i] != null) && ((this.b[i].a() instanceof ij))) {
                 this.b[i].b(paramInt);
                 if (this.b[i].a == 0) {
                     this.b[i].a(this.e);
@@ -295,16 +295,16 @@ public class ih
         this.d = true;
     }
 
-    public void b(ik paramik) {
+    public void b(il paramik) {
         this.f = paramik;
         this.e.a(paramik);
     }
 
-    public ik i() {
+    public il i() {
         return this.f;
     }
 
-    public boolean a_(gp paramgp) {
+    public boolean a_(gq paramgp) {
         if (this.e.G) {
             return false;
         }

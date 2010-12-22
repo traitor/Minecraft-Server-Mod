@@ -150,7 +150,7 @@ public class BaseEntity {
      * @return true if mob
      */
     public boolean isMob() {
-        return entity instanceof gt || entity instanceof gp;
+        return entity instanceof gu || entity instanceof gq;
     }
 
     /**
@@ -174,7 +174,7 @@ public class BaseEntity {
      * @return true if living entity
      */
     public boolean isLiving() {
-        return entity instanceof lb;
+        return entity instanceof lc;
     }
 
     /**

@@ -1,12 +1,12 @@
 
 import java.util.Random;
 
-public class em extends gu {
+public class em extends gv {
 
     private boolean a = true;
 
     public em(int paramInt1, int paramInt2) {
-        super(paramInt1, paramInt2, kz.n);
+        super(paramInt1, paramInt2, la.n);
         a(0.0F, 0.0F, 0.0F, 1.0F, 0.0625F, 1.0F);
     }
 
@@ -238,7 +238,7 @@ public class em extends gu {
     }
 
     public int a(int paramInt, Random paramRandom) {
-        return gl.aA.aW;
+        return gm.aA.aW;
     }
 
     public boolean d(ff paramff, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
@@ -246,10 +246,10 @@ public class em extends gu {
             return false;
         }
         // hMod: Forced downcast!
-        return b((jw)paramff, paramInt1, paramInt2, paramInt3, paramInt4);
+        return b((jx)paramff, paramInt1, paramInt2, paramInt3, paramInt4);
     }
 
-    public boolean b(jw paramjw, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+    public boolean b(jx paramjw, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         if (!this.a) {
             return false;
         }
@@ -300,14 +300,14 @@ public class em extends gu {
         return this.a;
     }
 
-    public static boolean b(jw paramjw, int paramInt1, int paramInt2, int paramInt3) {
+    public static boolean b(jx paramjw, int paramInt1, int paramInt2, int paramInt3) {
         int i = paramjw.a(paramInt1, paramInt2, paramInt3);
-        if (i == gu.av.bh) {
+        if (i == gv.av.bh) {
             return true;
         }
         if (i == 0) {
             return false;
         }
-        return gu.m[i].c();
+        return gv.m[i].c();
     }
 }

@@ -1,5 +1,5 @@
 
-public class di extends gl {
+public class di extends gm {
 
     private int a;
 
@@ -8,14 +8,14 @@ public class di extends gl {
         this.a = paramInt2;
     }
 
-    public boolean a(ik paramik, gp paramgp, ff paramff, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+    public boolean a(il paramik, gq paramgp, ff paramff, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         if (paramInt4 != 1) {
             return false;
         }
 
         int i = paramff.a(paramInt1, paramInt2, paramInt3);
 
-        if (i == gu.aA.bh) {
+        if (i == gv.aA.bh) {
             // hMod: Seeds
             Block blockClicked = new Block(i, paramInt1, paramInt2, paramInt3);
             blockClicked.setFaceClicked(Block.Face.fromId(paramInt4));

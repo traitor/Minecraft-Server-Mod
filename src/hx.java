@@ -1,11 +1,11 @@
 
-public class hw extends gl {
+public class hx extends gm {
 
-    public hw(int paramInt) {
+    public hx(int paramInt) {
         super(paramInt);
     }
 
-    public boolean a(ik paramik, gp paramgp, ff paramff, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+    public boolean a(il paramik, gq paramgp, ff paramff, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
 
         // hMod: Store block data clicked
         Block blockClicked = new Block(paramff.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3 );
@@ -32,7 +32,7 @@ public class hw extends gl {
         if (!paramff.e(paramInt1, paramInt2, paramInt3)) {
             return false;
         }
-        if (gu.av.a(paramff, paramInt1, paramInt2, paramInt3)) {
+        if (gv.av.a(paramff, paramInt1, paramInt2, paramInt3)) {
             // hMod: Redstone dust hook!
             Block blockPlaced = new Block(Block.Type.RedstoneWire.getType(), paramInt1, paramInt2, paramInt3);
             Player player = ((fi) paramgp).getPlayer();
@@ -41,7 +41,7 @@ public class hw extends gl {
             }
             
             paramik.a -= 1;
-            paramff.d(paramInt1, paramInt2, paramInt3, gu.av.bh);
+            paramff.d(paramInt1, paramInt2, paramInt3, gv.av.bh);
         }
 
         return true;

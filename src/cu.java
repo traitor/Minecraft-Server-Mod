@@ -3,18 +3,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class cu extends hu {
+public class cu extends hv {
 
     private boolean a = false;
     private static List b = new ArrayList();
 
     private boolean a(ff paramff, int paramInt1, int paramInt2, int paramInt3, boolean paramBoolean) {
         if (paramBoolean) {
-            b.add(new jz(paramInt1, paramInt2, paramInt3, paramff.e));
+            b.add(new ka(paramInt1, paramInt2, paramInt3, paramff.e));
         }
         int i = 0;
         for (int j = 0; j < b.size(); j++) {
-            jz localjz = (jz) b.get(j);
+            ka localjz = (ka) b.get(j);
             if ((localjz.a == paramInt1) && (localjz.b == paramInt2) && (localjz.c == paramInt3)) {
                 i++;
                 if (i >= 8) {
@@ -60,7 +60,7 @@ public class cu extends hu {
         }
     }
 
-    public boolean b(jw paramjw, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+    public boolean b(jx paramjw, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         if (!this.a) {
             return false;
         }
@@ -103,13 +103,13 @@ public class cu extends hu {
     public void a(ff paramff, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
         boolean bool = g(paramff, paramInt1, paramInt2, paramInt3);
 
-        while ((b.size() > 0) && (paramff.e - ((jz) b.get(0)).d > 100L)) {
+        while ((b.size() > 0) && (paramff.e - ((ka) b.get(0)).d > 100L)) {
             b.remove(0);
         }
 
         if (this.a) {
             if (bool) {
-                paramff.b(paramInt1, paramInt2, paramInt3, gu.aP.bh, paramff.b(paramInt1, paramInt2, paramInt3));
+                paramff.b(paramInt1, paramInt2, paramInt3, gv.aP.bh, paramff.b(paramInt1, paramInt2, paramInt3));
 
                 // hMod: Allow redstone torches to provide power
                 int current = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), 1, 0});
@@ -131,7 +131,7 @@ public class cu extends hu {
             // hMod: Allow redstone torches to provide power
             int current = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[]{new Block(this.bh, paramInt1, paramInt2, paramInt3), 0, 1});
             if (current > 0) {
-                paramff.b(paramInt1, paramInt2, paramInt3, gu.aQ.bh, paramff.b(paramInt1, paramInt2, paramInt3));
+                paramff.b(paramInt1, paramInt2, paramInt3, gv.aQ.bh, paramff.b(paramInt1, paramInt2, paramInt3));
             }
         }
     }
@@ -144,13 +144,13 @@ public class cu extends hu {
     public boolean d(ff paramff, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         if (paramInt4 == 0) {
             // hMod: forced downcast!
-            return b((jw) paramff, paramInt1, paramInt2, paramInt3, paramInt4);
+            return b((jx) paramff, paramInt1, paramInt2, paramInt3, paramInt4);
         }
         return false;
     }
 
     public int a(int paramInt, Random paramRandom) {
-        return gu.aQ.bh;
+        return gv.aQ.bh;
     }
 
     public boolean c() {

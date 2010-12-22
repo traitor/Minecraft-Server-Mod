@@ -2,7 +2,7 @@
 import java.util.List;
 import java.util.Random;
 
-public class gb extends ep {
+public class gc extends ep {
 
     public int a = 0;
     public int b = 0;
@@ -14,7 +14,7 @@ public class gb extends ep {
     private double ak;
     private double al;
 
-    public gb(ff paramff) {
+    public gc(ff paramff) {
         super(paramff);
         this.i = true;
         a(1.5F, 0.6F);
@@ -34,7 +34,7 @@ public class gb extends ep {
         return true;
     }
 
-    public gb(ff paramff, double paramDouble1, double paramDouble2, double paramDouble3) {
+    public gc(ff paramff, double paramDouble1, double paramDouble2, double paramDouble3) {
         this(paramff);
         a(paramDouble1, paramDouble2 + this.H, paramDouble3);
 
@@ -72,10 +72,10 @@ public class gb extends ep {
         u();
         if (this.a > 40) {
             for (int i = 0; i < 3; i++) {
-                a(gu.x.bh, 1, 0.0F);
+                a(gv.x.bh, 1, 0.0F);
             }
             for (int i = 0; i < 2; i++) {
-                a(gl.B.aW, 1, 0.0F);
+                a(gm.B.aW, 1, 0.0F);
             }
             l();
         }
@@ -116,7 +116,7 @@ public class gb extends ep {
             double d3 = this.z.b + (this.z.e - this.z.b) * (j + 0) / i - 0.125D;
             double d5 = this.z.b + (this.z.e - this.z.b) * (j + 1) / i - 0.125D;
             el localel = el.b(this.z.a, d3, this.z.c, this.z.d, d5, this.z.f);
-            if (this.l.b(localel, kz.f)) {
+            if (this.l.b(localel, la.f)) {
                 d1 += 1.0D / i;
             }
         }
@@ -212,10 +212,10 @@ public class gb extends ep {
             if (!this.l.z) {
                 l();
                 for (int k = 0; k < 3; k++) {
-                    a(gu.x.bh, 1, 0.0F);
+                    a(gv.x.bh, 1, 0.0F);
                 }
                 for (int k = 0; k < 2; k++) {
-                    a(gl.B.aW, 1, 0.0F);
+                    a(gm.B.aW, 1, 0.0F);
                 }
             }
         } else {
@@ -253,7 +253,7 @@ public class gb extends ep {
         if ((localList != null) && (localList.size() > 0)) {
             for (int n = 0; n < localList.size(); n++) {
                 ep localep = (ep) localList.get(n);
-                if ((localep != this.j) && (localep.v()) && ((localep instanceof gb))) {
+                if ((localep != this.j) && (localep.v()) && ((localep instanceof gc))) {
                     localep.c(this);
                 }
             }
@@ -293,13 +293,13 @@ public class gb extends ep {
         etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_COLLISION, boat, baseEntity);
     }
 
-    public boolean a(gp paramgp) {
+    public boolean a(gq paramgp) {
         // hMod: Entering the boat
         Boat boat = new Boat(this);
         HumanEntity player = new HumanEntity(paramgp);
         etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_ENTERED, boat, player);
         
-        if ((this.j != null) && ((this.j instanceof gp)) && (this.j != paramgp)) {
+        if ((this.j != null) && ((this.j instanceof gq)) && (this.j != paramgp)) {
             return true;
         }
         if (!this.l.z) {

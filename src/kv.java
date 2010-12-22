@@ -1,20 +1,20 @@
 
 import java.util.Random;
 
-public class ku extends gu {
+public class kv extends gv {
 
     private int[] a = new int[256];
     private int[] b = new int[256];
 
-    protected ku(int paramInt1, int paramInt2) {
-        super(paramInt1, paramInt2, kz.l);
+    protected kv(int paramInt1, int paramInt2) {
+        super(paramInt1, paramInt2, la.l);
 
-        a(gu.x.bh, 5, 20);
-        a(gu.J.bh, 5, 5);
-        a(gu.K.bh, 30, 60);
-        a(gu.an.bh, 30, 20);
-        a(gu.am.bh, 15, 100);
-        a(gu.ab.bh, 30, 60);
+        a(gv.x.bh, 5, 20);
+        a(gv.J.bh, 5, 5);
+        a(gv.K.bh, 30, 60);
+        a(gv.an.bh, 30, 20);
+        a(gv.am.bh, 15, 100);
+        a(gv.ab.bh, 30, 60);
 
         a(true);
     }
@@ -41,7 +41,7 @@ public class ku extends gu {
     }
 
     public void a(ff paramff, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
-        int i = paramff.a(paramInt1, paramInt2 - 1, paramInt3) == gu.bb.bh ? 1 : 0;
+        int i = paramff.a(paramInt1, paramInt2 - 1, paramInt3) == gv.bb.bh ? 1 : 0;
 
         int j = paramff.b(paramInt1, paramInt2, paramInt3);
         if (j < 15) {
@@ -56,7 +56,7 @@ public class ku extends gu {
         }
 
         // hMod: cast to fix decompiler error.
-        if ((i == 0) && (!b((jw)paramff, paramInt1, paramInt2 - 1, paramInt3))
+        if ((i == 0) && (!b((jx)paramff, paramInt1, paramInt2 - 1, paramInt3))
                 && (j == 15) && (paramRandom.nextInt(4) == 0)) {
             paramff.d(paramInt1, paramInt2, paramInt3, 0);
             return;
@@ -100,7 +100,7 @@ public class ku extends gu {
     private void a(ff paramff, int paramInt1, int paramInt2, int paramInt3, int paramInt4, Random paramRandom) {
         int i = this.b[paramff.a(paramInt1, paramInt2, paramInt3)];
         if (paramRandom.nextInt(paramInt4) < i) {
-            int j = paramff.a(paramInt1, paramInt2, paramInt3) == gu.am.bh ? 1 : 0;
+            int j = paramff.a(paramInt1, paramInt2, paramInt3) == gv.am.bh ? 1 : 0;
             if (paramRandom.nextInt(2) == 0) {
                 // hMod: VERY SLOW dynamic spreading of fire.
                 Block block = new Block(paramff.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
@@ -112,29 +112,29 @@ public class ku extends gu {
                 paramff.d(paramInt1, paramInt2, paramInt3, 0);
             }
             if (j != 0) {
-                gu.am.a(paramff, paramInt1, paramInt2, paramInt3, 0);
+                gv.am.a(paramff, paramInt1, paramInt2, paramInt3, 0);
             }
         }
     }
 
     private boolean g(ff paramff, int paramInt1, int paramInt2, int paramInt3) {
         // hMod: cast down to fix decompiler error.(6 times)
-        if (b((jw)paramff, paramInt1 + 1, paramInt2, paramInt3)) {
+        if (b((jx)paramff, paramInt1 + 1, paramInt2, paramInt3)) {
             return true;
         }
-        if (b((jw)paramff, paramInt1 - 1, paramInt2, paramInt3)) {
+        if (b((jx)paramff, paramInt1 - 1, paramInt2, paramInt3)) {
             return true;
         }
-        if (b((jw)paramff, paramInt1, paramInt2 - 1, paramInt3)) {
+        if (b((jx)paramff, paramInt1, paramInt2 - 1, paramInt3)) {
             return true;
         }
-        if (b((jw)paramff, paramInt1, paramInt2 + 1, paramInt3)) {
+        if (b((jx)paramff, paramInt1, paramInt2 + 1, paramInt3)) {
             return true;
         }
-        if (b((jw)paramff, paramInt1, paramInt2, paramInt3 - 1)) {
+        if (b((jx)paramff, paramInt1, paramInt2, paramInt3 - 1)) {
             return true;
         }
-        return b((jw)paramff, paramInt1, paramInt2, paramInt3 + 1);
+        return b((jx)paramff, paramInt1, paramInt2, paramInt3 + 1);
     }
 
     private int h(ff paramff, int paramInt1, int paramInt2, int paramInt3) {
@@ -157,7 +157,7 @@ public class ku extends gu {
         return false;
     }
 
-    public boolean b(jw paramjw, int paramInt1, int paramInt2, int paramInt3) {
+    public boolean b(jx paramjw, int paramInt1, int paramInt2, int paramInt3) {
         return this.a[paramjw.a(paramInt1, paramInt2, paramInt3)] > 0;
     }
 
@@ -181,8 +181,8 @@ public class ku extends gu {
     }
 
     public void e(ff paramff, int paramInt1, int paramInt2, int paramInt3) {
-        if ((paramff.a(paramInt1, paramInt2 - 1, paramInt3) == gu.ap.bh)
-                && (gu.be.a_(paramff, paramInt1, paramInt2, paramInt3))) {
+        if ((paramff.a(paramInt1, paramInt2 - 1, paramInt3) == gv.ap.bh)
+                && (gv.be.a_(paramff, paramInt1, paramInt2, paramInt3))) {
             return;
         }
 

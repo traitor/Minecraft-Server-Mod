@@ -1,12 +1,12 @@
 
 import java.util.Random;
 
-public class gk extends gu {
+public class gl extends gv {
 
     public static boolean a = false;
 
-    public gk(int paramInt1, int paramInt2) {
-        super(paramInt1, paramInt2, kz.m);
+    public gl(int paramInt1, int paramInt2) {
+        super(paramInt1, paramInt2, la.m);
     }
 
     public void e(ff paramff, int paramInt1, int paramInt2, int paramInt3) {
@@ -32,7 +32,7 @@ public class gk extends gu {
         int j = paramInt2;
         int k = paramInt3;
         if ((g(paramff, i, j - 1, k)) && (j >= 0)) {
-            jb localjb = new jb(paramff, paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, this.bh);
+            jc localjb = new jc(paramff, paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, this.bh);
             if (a) {
                 while (!localjb.G) {
                     localjb.b_();
@@ -51,13 +51,13 @@ public class gk extends gu {
         if (i == 0) {
             return true;
         }
-        if (i == gu.ar.bh) {
+        if (i == gv.ar.bh) {
             return true;
         }
-        kz localkz = gu.m[i].bs;
-        if (localkz == kz.f) {
+        la localkz = gv.m[i].bs;
+        if (localkz == la.f) {
             return true;
         }
-        return localkz == kz.g;
+        return localkz == la.g;
     }
 }

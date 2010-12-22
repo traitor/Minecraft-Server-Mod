@@ -3,7 +3,7 @@
  *  - Patch by Zeerix
  * @author James
  */
-public class Digging extends kv {
+public class Digging extends kw {
     /**
      * Creates a digging class
      * @param world
@@ -44,7 +44,7 @@ public class Digging extends kv {
      * @param item
      * @return
      */
-    public boolean a(gp player, ff world, ik item, Block blockToPlace, Block blockClicked) {
+    public boolean a(gq player, ff world, il item, Block blockToPlace, Block blockClicked) {
         // hMod: only call this hook if we're not using buckets/signs
         if (item != null) {
             if (item.a > 0 && item.c != Item.Type.Sign.getId() && item.c != Item.Type.Bucket.getId() && item.c != Item.Type.WaterBucket.getId() && item.c != Item.Type.LavaBucket.getId()) {

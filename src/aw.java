@@ -1,10 +1,10 @@
 
 import java.util.Random;
 
-public class aw extends gu {
+public class aw extends gv {
 
     protected aw(int paramInt1, int paramInt2) {
-        super(paramInt1, paramInt2, kz.n);
+        super(paramInt1, paramInt2, la.n);
         a(true);
     }
 
@@ -102,7 +102,7 @@ public class aw extends gu {
         return true;
     }
 
-    public void a(jw paramjw, int paramInt1, int paramInt2, int paramInt3) {
+    public void a(jx paramjw, int paramInt1, int paramInt2, int paramInt3) {
         int i = paramjw.b(paramInt1, paramInt2, paramInt3);
         int j = i & 0x7;
         int k = (i & 0x8) > 0 ? 1 : 0;
@@ -126,11 +126,11 @@ public class aw extends gu {
         }
     }
 
-    public void b(ff paramff, int paramInt1, int paramInt2, int paramInt3, gp paramgp) {
+    public void b(ff paramff, int paramInt1, int paramInt2, int paramInt3, gq paramgp) {
         a(paramff, paramInt1, paramInt2, paramInt3, paramgp);
     }
 
-    public boolean a(ff paramff, int paramInt1, int paramInt2, int paramInt3, gp paramgp) {
+    public boolean a(ff paramff, int paramInt1, int paramInt2, int paramInt3, gq paramgp) {
         if (paramff.z) {
             return true;
         }
@@ -191,7 +191,7 @@ public class aw extends gu {
         super.b(paramff, paramInt1, paramInt2, paramInt3);
     }
 
-    public boolean b(jw paramjw, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+    public boolean b(jx paramjw, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         return (paramjw.b(paramInt1, paramInt2, paramInt3) & 0x8) > 0;
     }
 

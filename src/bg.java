@@ -65,12 +65,12 @@ public class bg {
         for (Player player : etc.getServer().getPlayerList()) {
             bg localbg = this;
             ComplexBlock block = null;
-            if (localbg instanceof ja) {
-                block = new Chest((ja) localbg);
+            if (localbg instanceof jb) {
+                block = new Chest((jb) localbg);
             } else if (localbg instanceof ek) {
                 block = new Furnace((ek) localbg);
-            } else if (localbg instanceof ko) {
-                block = new Sign((ko) localbg);
+            } else if (localbg instanceof kp) {
+                block = new Sign((kp) localbg);
             } else if (localbg instanceof cq) {
                 block = new MobSpawner((cq) localbg);
             }
@@ -79,12 +79,12 @@ public class bg {
                     this.a.b(this.b, this.c, this.d, this);
                 } else {
                     bg toSend = null;
-                    if (localbg instanceof ja) {
-                        toSend = new ja();
+                    if (localbg instanceof jb) {
+                        toSend = new jb();
                     } else if (localbg instanceof ek) {
                         toSend = new ek();
-                    } else if (localbg instanceof ko) {
-                        toSend = new ko();
+                    } else if (localbg instanceof kp) {
+                        toSend = new kp();
                     } else if (localbg instanceof cq) {
                         toSend = new cq();
                     }
@@ -99,14 +99,14 @@ public class bg {
         }
     }
 
-    public ju f() {
+    public jv f() {
         return null;
     }
 
     static {
         a(ek.class, "Furnace");
-        a(ja.class, "Chest");
-        a(ko.class, "Sign");
+        a(jb.class, "Chest");
+        a(kp.class, "Sign");
         a(cq.class, "MobSpawner");
     }
 }

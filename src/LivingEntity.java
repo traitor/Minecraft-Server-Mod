@@ -13,7 +13,7 @@ public class LivingEntity extends BaseEntity {
      * Interface for living entities
      * @param livingEntity
      */
-    public LivingEntity(lb livingEntity) {
+    public LivingEntity(lc livingEntity) {
         super(livingEntity);
     }
     
@@ -21,8 +21,8 @@ public class LivingEntity extends BaseEntity {
      * Returns the entity we're wrapping.
      * @return
      */
-    public lb getEntity() {
-        return (lb)entity;
+    public lc getEntity() {
+        return (lc)entity;
     }
 
     /**

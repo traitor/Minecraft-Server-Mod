@@ -2,17 +2,17 @@
 import java.io.PrintStream;
 import java.util.Random;
 
-public class ao extends iw {
+public class ao extends ix {
 
     public ao(int paramInt1, int paramInt2) {
-        super(paramInt1, paramInt2, kz.x, false);
+        super(paramInt1, paramInt2, la.x, false);
     }
 
     public el d(ff paramff, int paramInt1, int paramInt2, int paramInt3) {
         return null;
     }
 
-    public void a(jw paramjw, int paramInt1, int paramInt2, int paramInt3) {
+    public void a(jx paramjw, int paramInt1, int paramInt2, int paramInt3) {
         float f1;
         float f2;
         if ((paramjw.a(paramInt1 - 1, paramInt2, paramInt3) == this.bh) || (paramjw.a(paramInt1 + 1, paramInt2, paramInt3) == this.bh)) {
@@ -33,10 +33,10 @@ public class ao extends iw {
     public boolean a_(ff paramff, int paramInt1, int paramInt2, int paramInt3) {
         int i = 0;
         int j = 0;
-        if ((paramff.a(paramInt1 - 1, paramInt2, paramInt3) == gu.ap.bh) || (paramff.a(paramInt1 + 1, paramInt2, paramInt3) == gu.ap.bh)) {
+        if ((paramff.a(paramInt1 - 1, paramInt2, paramInt3) == gv.ap.bh) || (paramff.a(paramInt1 + 1, paramInt2, paramInt3) == gv.ap.bh)) {
             i = 1;
         }
-        if ((paramff.a(paramInt1, paramInt2, paramInt3 - 1) == gu.ap.bh) || (paramff.a(paramInt1, paramInt2, paramInt3 + 1) == gu.ap.bh)) {
+        if ((paramff.a(paramInt1, paramInt2, paramInt3 - 1) == gv.ap.bh) || (paramff.a(paramInt1, paramInt2, paramInt3 + 1) == gv.ap.bh)) {
             j = 1;
         }
 
@@ -59,10 +59,10 @@ public class ao extends iw {
                 int i1 = paramff.a(paramInt1 + i * k, paramInt2 + m, paramInt3 + j * k);
 
                 if (n != 0) {
-                    if (i1 != gu.ap.bh) {
+                    if (i1 != gv.ap.bh) {
                         return false;
                     }
-                } else if ((i1 != 0) && (i1 != gu.ar.bh)) {
+                } else if ((i1 != 0) && (i1 != gv.ar.bh)) {
                     return false;
                 }
             }
@@ -72,7 +72,7 @@ public class ao extends iw {
         paramff.i = true;
         for (int k = 0; k < 2; k++) {
             for (m = 0; m < 3; m++) {
-                paramff.d(paramInt1 + i * k, paramInt2 + m, paramInt3 + j * k, gu.be.bh);
+                paramff.d(paramInt1 + i * k, paramInt2 + m, paramInt3 + j * k, gv.be.bh);
             }
         }
         paramff.i = false;
@@ -94,7 +94,7 @@ public class ao extends iw {
             while (paramff.a(paramInt1, k - 1, paramInt3) == this.bh) {
                 k--;
             }
-            if (paramff.a(paramInt1, k - 1, paramInt3) != gu.ap.bh) {
+            if (paramff.a(paramInt1, k - 1, paramInt3) != gv.ap.bh) {
                 paramff.d(paramInt1, paramInt2, paramInt3, 0);
                 return;
             }
@@ -103,7 +103,7 @@ public class ao extends iw {
             while ((m < 4) && (paramff.a(paramInt1, k + m, paramInt3) == this.bh)) {
                 m++;
             }
-            if ((m != 3) || (paramff.a(paramInt1, k + m, paramInt3) != gu.ap.bh)) {
+            if ((m != 3) || (paramff.a(paramInt1, k + m, paramInt3) != gv.ap.bh)) {
                 paramff.d(paramInt1, paramInt2, paramInt3, 0);
                 return;
             }
@@ -115,14 +115,14 @@ public class ao extends iw {
                 return;
             }
 
-            if (((paramff.a(paramInt1 + i, paramInt2, paramInt3 + j) != gu.ap.bh) || (paramff.a(paramInt1 - i, paramInt2, paramInt3 - j) != this.bh)) && ((paramff.a(paramInt1 - i, paramInt2, paramInt3 - j) != gu.ap.bh) || (paramff.a(paramInt1 + i, paramInt2, paramInt3 + j) != this.bh))) {
+            if (((paramff.a(paramInt1 + i, paramInt2, paramInt3 + j) != gv.ap.bh) || (paramff.a(paramInt1 - i, paramInt2, paramInt3 - j) != this.bh)) && ((paramff.a(paramInt1 - i, paramInt2, paramInt3 - j) != gv.ap.bh) || (paramff.a(paramInt1 + i, paramInt2, paramInt3 + j) != this.bh))) {
                 paramff.d(paramInt1, paramInt2, paramInt3, 0);
                 return;
             }
         }
     }
 
-    public boolean a(jw paramjw, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+    public boolean a(jx paramjw, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         return true;
     }
 

@@ -2,9 +2,9 @@
 import java.util.List;
 import java.util.Random;
 
-public abstract class gp extends lb {
+public abstract class gq extends lc {
 
-    public ih an = new ih(this);
+    public ii an = new ii(this);
     public dw ao;
     public dw ap;
     public byte aq = 0;
@@ -22,9 +22,9 @@ public abstract class gp extends lb {
     public double aC;
     public double aD;
     private int a = 0;
-    public li aE = null;
+    public lj aE = null;
 
-    public gp(ff paramff) {
+    public gq(ff paramff) {
         super(paramff);
 
         this.ao = new aa(this.an, !paramff.z);
@@ -122,7 +122,7 @@ public abstract class gp extends lb {
 
         super.G();
 
-        float f1 = ib.a(this.s * this.s + this.u * this.u);
+        float f1 = ic.a(this.s * this.s + this.u * this.u);
         float f2 = (float) Math.atan(-this.t * 0.2000000029802322D) * 15.0F;
         if (f1 > 0.1F) {
             f1 = 0.1F;
@@ -140,7 +140,10 @@ public abstract class gp extends lb {
             List localList = this.l.b(this, this.z.b(1.0D, 0.0D, 1.0D));
             if (localList != null) {
                 for (int i = 0; i < localList.size(); i++) {
-                    j((ep) localList.get(i));
+                    ep localep = (ep) localList.get(i);
+                    if (!localep.G) {
+                        j(localep);
+                    }
                 }
             }
         }
@@ -157,13 +160,13 @@ public abstract class gp extends lb {
         this.t = 0.1000000014901161D;
 
         if (this.aw.equals("Notch")) {
-            a(new ik(gl.h, 1), true);
+            a(new il(gm.h, 1), true);
         }
         this.an.h();
 
         if (paramep != null) {
-            this.s = (-ib.b((this.be + this.v) * 3.141593F / 180.0F) * 0.1F);
-            this.u = (-ib.a((this.be + this.v) * 3.141593F / 180.0F) * 0.1F);
+            this.s = (-ic.b((this.be + this.v) * 3.141593F / 180.0F) * 0.1F);
+            this.u = (-ic.a((this.be + this.v) * 3.141593F / 180.0F) * 0.1F);
         } else {
             this.s = (this.u = 0.0D);
         }
@@ -178,16 +181,16 @@ public abstract class gp extends lb {
         a(this.an.a(this.an.c, 1), false);
     }
 
-    public void b(ik paramik) {
+    public void b(il paramik) {
         a(paramik, false);
     }
 
-    public void a(ik paramik, boolean paramBoolean) {
+    public void a(il paramik, boolean paramBoolean) {
         if (paramik == null) {
             return;
         }
 
-        he localhe = new he(this.l, this.p, this.q - 0.300000011920929D + s(), this.r, paramik);
+        hf localhe = new hf(this.l, this.p, this.q - 0.300000011920929D + s(), this.r, paramik);
         localhe.c = 40;
 
         float f1 = 0.1F;
@@ -195,14 +198,14 @@ public abstract class gp extends lb {
         if (paramBoolean) {
             f2 = this.W.nextFloat() * 0.5F;
             float f3 = this.W.nextFloat() * 3.141593F * 2.0F;
-            localhe.s = (-ib.a(f3) * f2);
-            localhe.u = (ib.b(f3) * f2);
+            localhe.s = (-ic.a(f3) * f2);
+            localhe.u = (ic.b(f3) * f2);
             localhe.t = 0.2000000029802322D;
         } else {
             f1 = 0.3F;
-            localhe.s = (-ib.a(this.v / 180.0F * 3.141593F) * ib.b(this.w / 180.0F * 3.141593F) * f1);
-            localhe.u = (ib.b(this.v / 180.0F * 3.141593F) * ib.b(this.w / 180.0F * 3.141593F) * f1);
-            localhe.t = (-ib.a(this.w / 180.0F * 3.141593F) * f1 + 0.1F);
+            localhe.s = (-ic.a(this.v / 180.0F * 3.141593F) * ic.b(this.w / 180.0F * 3.141593F) * f1);
+            localhe.u = (ic.b(this.v / 180.0F * 3.141593F) * ic.b(this.w / 180.0F * 3.141593F) * f1);
+            localhe.t = (-ic.a(this.w / 180.0F * 3.141593F) * f1 + 0.1F);
             f1 = 0.02F;
 
             f2 = this.W.nextFloat() * 3.141593F * 2.0F;
@@ -215,13 +218,13 @@ public abstract class gp extends lb {
         a(localhe);
     }
 
-    protected void a(he paramhe) {
+    protected void a(hf paramhe) {
         this.l.a(paramhe);
     }
 
-    public float a(gu paramgu) {
+    public float a(gv paramgu) {
         float f = this.an.a(paramgu);
-        if (a(kz.f)) {
+        if (a(la.f)) {
             f /= 5.0F;
         }
         if (!this.A) {
@@ -231,7 +234,7 @@ public abstract class gp extends lb {
         return f;
     }
 
-    public boolean b(gu paramgu) {
+    public boolean b(gv paramgu) {
         return this.an.b(paramgu);
     }
 
@@ -248,7 +251,7 @@ public abstract class gp extends lb {
         paramad.a("Dimension", this.ax);
     }
 
-    public void a(lf paramlf) {
+    public void a(lg paramlf) {
     }
 
     public void a(int paramInt1, int paramInt2, int paramInt3) {
@@ -267,7 +270,7 @@ public abstract class gp extends lb {
             return false;
         }
 
-        if (((paramep instanceof gt)) || ((paramep instanceof en))) {
+        if (((paramep instanceof gu)) || ((paramep instanceof en))) {
             if (this.l.k == 0) {
                 paramInt = 0;
             }
@@ -298,14 +301,14 @@ public abstract class gp extends lb {
     public void a(ek paramek) {
     }
 
-    public void a(ko paramko) {
+    public void a(kp paramko) {
     }
 
     public void g(ep paramep) {
         paramep.a(this);
     }
 
-    public ik M() {
+    public il M() {
         return this.an.e();
     }
 
@@ -326,9 +329,9 @@ public abstract class gp extends lb {
         int i = this.an.a(paramep);
         if (i > 0) {
             paramep.a(this, i);
-            ik localik = M();
-            if ((localik != null) && ((paramep instanceof lb))) {
-                localik.a((lb) paramep);
+            il localik = M();
+            if ((localik != null) && ((paramep instanceof lc))) {
+                localik.a((lc) paramep);
                 if (localik.a <= 0) {
                     localik.a(this);
                     N();
@@ -337,7 +340,7 @@ public abstract class gp extends lb {
         }
     }
 
-    public void a(ik paramik) {
+    public void a(il paramik) {
     }
 
     public void l() {
