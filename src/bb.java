@@ -62,7 +62,7 @@ public class bb extends gm {
                     }
 
                     paramff.d(i, j, k, 0);
-                    return new il(gl.av);
+                    return new il(gm.av);
                 }
                 if ((paramff.c(i, j, k) == la.g) && (paramff.b(i, j, k) == 0)) {
                     // Filling a bucket with lava!
@@ -71,11 +71,11 @@ public class bb extends gm {
                     }
 
                     paramff.d(i, j, k, 0);
-                    return new il(gl.aw);
+                    return new il(gm.aw);
                 }
             } else {
                 if (this.a < 0) {
-                    return new il(gl.au);
+                    return new il(gm.au);
                 }
                 if (localhj.e == 0) {
                     j--;
@@ -111,13 +111,13 @@ public class bb extends gm {
                         
                         paramff.b(i, j, k, this.a, 0);
                     }
-                    return new il(gl.au);
+                    return new il(gm.au);
                 }
             }
 
         } else if ((this.a == 0)
                 && ((localhj.g instanceof bp))) {
-            return new il(gl.aE);
+            return new il(gm.aE);
         }
 
         return paramik;
