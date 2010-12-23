@@ -77,7 +77,7 @@ public class cf extends gm {
                     //((fi)paramgp).a.b(new fh(paramhn, 1));
                     return false;
                 } else {
-                    paramff.f(paramInt1, paramInt2, paramInt3);
+                    paramff.g(paramInt1, paramInt2, paramInt3);
                     paramff.g(paramInt1, paramInt2, paramInt3, this.a);
 
                     gv.m[this.a].c(paramff, paramInt1, paramInt2, paramInt3, paramInt4);
