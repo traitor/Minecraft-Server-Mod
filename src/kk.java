@@ -407,13 +407,13 @@ public class kk extends fs
             etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, player, blockPlaced, blockClicked, item.getItemId());
 
             // hMod: If we were building inside spawn, bail! (unless ops/admin)
-//            if (((i4 > etc.getInstance().getSpawnProtectionSize() && !etc.getInstance().isOnItemBlacklist(item.getItemId())) || bool) && player.canBuild()) {
+            if (((i4 > etc.getInstance().getSpawnProtectionSize() && !etc.getInstance().isOnItemBlacklist(item.getItemId())) || bool) && player.canBuild()) {
                 this.e.c.a(this.e, this.d.e, localik, m, n, i1, i2);
-//            } else {
+            } else {
                 // hMod: No point sending the client to update the blocks, you weren't allowed to place!
-//                this.d.e.B = false;
-//                return;
-//            }
+                this.d.e.B = false;
+                return;
+            }
             
             // hMod: these are the 'block changed' packets for the client.
             this.e.a.b(new gd(m, n, i1, this.d.e));
