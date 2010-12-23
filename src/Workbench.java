@@ -2,7 +2,7 @@ public class Workbench extends ItemArray<it> implements Inventory {
     private final ig workbench;
 
     public Workbench(ig block) {
-        super((it)block.b, 10);
+        super((it)block.b);
         workbench = block;
     }
 

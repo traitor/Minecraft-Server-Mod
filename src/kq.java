@@ -33,6 +33,18 @@ public class kq extends ep
         ak = values;
     }
 
+    public il getContentsAt(int index) {
+        return a(index);
+    }
+
+    public void setContentsAt(int index, il value) {
+        a(index, value);
+    }
+
+    public int getContentsSize() {
+        return a();
+    }
+
     public kq(ff paramff) {
         super(paramff);
         this.i = true;

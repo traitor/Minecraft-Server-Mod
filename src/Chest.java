@@ -4,8 +4,42 @@
  */
 public class Chest extends BaseContainerBlock<jb> implements ComplexBlock {
 
-    public Chest(jb chest, int size) {
-        super(chest, "Chest", 27);
+    public Chest(jb chest) {
+        super(chest, "Chest");
+    }
+
+    public DoubleChest findAttachedChest() {
+        Block block = getBlock();
+
+        DoubleChest result;
+
+        result = tryAttachedChest(block, Block.Face.Front);
+        if (result != null) return result;
+
+        result = tryAttachedChest(block, Block.Face.Back);
+        if (result != null) return result;
+
+        result = tryAttachedChest(block, Block.Face.Left);
+        if (result != null) return result;
+        
+        result = tryAttachedChest(block, Block.Face.Right);
+        if (result != null) return result;
+
+        return null;
+    }
+
+    private DoubleChest tryAttachedChest(Block origin, Block.Face face) {
+        Block block = origin.getFace(face);
+        
+        if (block.blockType == Block.Type.Chest) {
+            ComplexBlock cblock = etc.getServer().getOnlyComplexBlock(block);
+            if ((cblock != null) && (cblock instanceof Chest)) {
+                Chest chest = (Chest)cblock;
+                return new DoubleChest(new av("Hello World", this.container, chest.container));
+            }
+        }
+
+        return null;
     }
 
 }

@@ -9,7 +9,7 @@ public class StorageMinecart extends ItemArray<kq> {
      * @param jo
      */
     public StorageMinecart(kq cart) {
-        super(cart, 27);
+        super(cart);
     }
 
 }

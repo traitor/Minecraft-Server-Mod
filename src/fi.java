@@ -272,11 +272,13 @@ public class fi extends gq
     public void a(lg paramlf) {
         // hMod: Check if we can open this
         if (paramlf instanceof jb) {
-            if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), new Chest((jb)paramlf, 27))) {
+            if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), new Chest((jb)paramlf))) {
                 return;
             }
         } else if (paramlf instanceof av) {
-            // TODO: We can't do big chests yet.
+            if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), new DoubleChest((av)paramlf))) {
+                return;
+            }
         }
 
         R();

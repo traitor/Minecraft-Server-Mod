@@ -457,6 +457,14 @@ public class PluginLoader {
             toRet = (Integer) parameters[2];
         } else if (h == Hook.LIQUID_DESTROY) {
             toRet = HookResult.DEFAULT_ACTION;
+        } else if (h == Hook.OPEN_INVENTORY) {
+            Inventory inv = (Inventory)parameters[1];
+            Item[] items = inv.getContents();
+            System.out.println((Player)parameters[0] + " opened " + inv);
+            for (Item item : items) {
+                if (item != null) System.out.print(item + ", ");
+            }
+            System.out.println();
         }
 
         synchronized (lock) {

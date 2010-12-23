@@ -25,6 +25,7 @@ public interface Inventory {
     public void setSlot(Item item, int slot);
     public void setSlot(Item.Type type, int amount, int slot);
     public void setSlot(int itemId, int amount, int slot);
+    public void setSlot(int itemId, int amount, int damage, int slot);
     public void removeItem(Item item);
     public void removeItem(Item.Type type, int amount);
     public void removeItem(int id, int amount);
@@ -35,4 +36,5 @@ public interface Inventory {
     public boolean hasItem(int itemId, int minimum, int maximum);
     public Item[] getContents();
     public void setContents(Item[] contents);
+    public int getContentsSize();
 }

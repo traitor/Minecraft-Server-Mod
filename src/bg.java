@@ -1,5 +1,4 @@
 
-import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,7 +65,7 @@ public class bg {
             bg localbg = this;
             ComplexBlock block = null;
             if (localbg instanceof jb) {
-                block = new Chest((jb) localbg, 27);
+                block = new Chest((jb) localbg);
             } else if (localbg instanceof ek) {
                 block = new Furnace((ek) localbg);
             } else if (localbg instanceof kp) {

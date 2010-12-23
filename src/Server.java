@@ -426,7 +426,20 @@ public class Server {
 
     /**
      * Returns the complex block at the specified location. Null if there's no
-     * complex block there.
+     * complex block there. This will also find complex-blocks spanning multiple
+     * spaces, such as double chests.
+     *
+     * @param block
+     * @return complex block
+     */
+    public ComplexBlock getComplexBlock(Block block) {
+        return getComplexBlock(block.getX(), block.getY(), block.getZ());
+    }
+
+    /**
+     * Returns the complex block at the specified location. Null if there's no
+     * complex block there. This will also find complex-blocks spanning multiple
+     * spaces, such as double chests.
      * 
      * @param x
      *            x
@@ -437,10 +450,52 @@ public class Server {
      * @return complex block
      */
     public ComplexBlock getComplexBlock(int x, int y, int z) {
+        ComplexBlock result = getOnlyComplexBlock(x, y, z);
+
+        if (result != null) {
+            if (result instanceof Chest) {
+                Chest chest = (Chest)result;
+                result = chest.findAttachedChest();
+
+                if (result != null) {
+                    return result;
+                } else {
+                    return chest;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Returns the only complex block at the specified location. Null if there's
+     * no complex block there.
+     *
+     * @param block
+     * @return complex block
+     */
+    public ComplexBlock getOnlyComplexBlock(Block block) {
+        return getOnlyComplexBlock(block.getX(), block.getY(), block.getZ());
+    }
+
+    /**
+     * Returns the complex block at the specified location. Null if there's no
+     * complex block there.
+     *
+     * @param x
+     *            x
+     * @param y
+     *            y
+     * @param z
+     *            z
+     * @return complex block
+     */
+    public ComplexBlock getOnlyComplexBlock(int x, int y, int z) {
         bg localav = server.e.l(x, y, z);
         if (localav != null) {
             if (localav instanceof jb) {
-                return new Chest((jb) localav, 27);
+                return new Chest((jb) localav);
             } else if (localav instanceof kp) {
                 return new Sign((kp) localav);
             } else if (localav instanceof ek) {

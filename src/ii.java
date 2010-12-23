@@ -17,6 +17,18 @@ public class ii
         a = values;
     }
 
+    public il getContentsAt(int index) {
+        return a(index);
+    }
+
+    public void setContentsAt(int index, il value) {
+        a(index, value);
+    }
+
+    public int getContentsSize() {
+        return a();
+    }
+
     public ii(gq paramgp) {
         this.e = paramgp;
     }

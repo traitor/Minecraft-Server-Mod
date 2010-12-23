@@ -22,6 +22,18 @@ public class jb extends bg
         this.e = e;
     }
 
+    public il getContentsAt(int index) {
+        return a(index);
+    }
+
+    public void setContentsAt(int index, il value) {
+        a(index, value);
+    }
+
+    public int getContentsSize() {
+        return a();
+    }
+
     public int a() {
         return 27;
     }

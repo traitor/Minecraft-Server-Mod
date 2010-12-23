@@ -399,7 +399,7 @@ public class kk extends fs
                 i4 = i3;
             }
             // hMod: call BLOCK_RIGHTCLICKED
-            Item item = (localik != null) ? new Item(localik) : new Item();
+            Item item = (localik != null) ? new Item(localik) : new Item(Item.Type.Air);
             Player player = ((fi)this.e).getPlayer();
             etc.getLoader().callHook(PluginLoader.Hook.BLOCK_RIGHTCLICKED, player, blockClicked, item);
 
