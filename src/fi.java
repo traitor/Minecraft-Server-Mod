@@ -195,6 +195,12 @@ public class fi extends gq
 
     private void a(bg parambg) {
         if (parambg != null) {
+            // hMod: Let plugins know we're showing a sign
+            if (parambg instanceof kp) {
+                Sign sign = new Sign((kp)parambg);
+                etc.getLoader().callHook(PluginLoader.Hook.SIGN_SHOW, getPlayer(), sign);
+            }
+
             jv localju = parambg.f();
             if (localju != null) {
                 this.a.b(localju);

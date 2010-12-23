@@ -274,32 +274,6 @@ public class PluginListener {
     }
 
     /**
-     * Called when either a sign, chest or furnace is changed.
-     * 
-     * @param player
-     *            player who changed it
-     * @param block
-     *            complex block that changed
-     * @return true if you want any changes to be reverted
-     */
-    public boolean onComplexBlockChange(Player player, ComplexBlock block) {
-        return false;
-    }
-
-    /**
-     * Called when either a sign, chest or furnace is sent to a player
-     * 
-     * @param player
-     *            player who the block is being sent to
-     * @param block
-     *            complex block that's being sent
-     * @return true if you want the chest, furnace or sign to be empty
-     */
-    public boolean onSendComplexBlock(Player player, ComplexBlock block) {
-        return false;
-    }
-
-    /**
      * Called when either a lava block or a lighter tryes to light something on fire.
      * block status depends on the light source:
      * 1 = lava.
@@ -567,6 +541,27 @@ public class PluginListener {
      * @return
      */
     public boolean onOpenInventory(Player player, Inventory inventory) {
+        return false;
+    }
+
+    /**
+     * Called when a sign is shown to a player, most often when they come into
+     * range of a sign.
+     * 
+     * @param player Player who this sign is being shown to
+     * @param sign Sign which is being shown to the player
+     */
+    public void onSignShow(Player player, Sign sign) {
+    }
+
+    /**
+     * Called when a sign is changed by a player (Usually, when they first place it)
+     * 
+     * @param player Player who changed the sign
+     * @param sign Sign which had changed
+     * @return true if you wish to cancel this change
+     */
+    public boolean onSignChange(Player player, Sign sign) {
         return false;
     }
 }
