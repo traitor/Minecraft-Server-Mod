@@ -236,7 +236,7 @@ public class Player extends HumanEntity implements MessageReceiver {
 
                 Player toGive = this;
                 if (split.length > 2 && canIgnoreRestrictions()) {
-                    toGive = etc.getServer().matchPlayer(split[1]);
+                    toGive = etc.getServer().matchPlayer(split[2]);
                 }
 
                 Kit kit = etc.getDataSource().getKit(split[1]);
