@@ -66,7 +66,7 @@ public class bg {
             bg localbg = this;
             ComplexBlock block = null;
             if (localbg instanceof jb) {
-                block = new Chest((jb) localbg);
+                block = new Chest((jb) localbg, 27);
             } else if (localbg instanceof ek) {
                 block = new Furnace((ek) localbg);
             } else if (localbg instanceof kp) {

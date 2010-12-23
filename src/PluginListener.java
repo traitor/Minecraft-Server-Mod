@@ -4,7 +4,7 @@
  * 
  * @author Maine
  */
-public abstract class PluginListener {
+public class PluginListener {
 
     /**
      * Priority - Used for priority for plugin listeners
@@ -555,6 +555,18 @@ public abstract class PluginListener {
      * @return
      */
     public boolean onAttack(LivingEntity attacker, LivingEntity defender, Integer amount) {
+        return false;
+    }
+
+    /**
+     * Called when a player attempts to open an inventory; whether it's a
+     * workbench, a chest or their own player inventory
+     *
+     * @param player user who attempted to open the inventory
+     * @param inventory the inventory that they are attempting to open
+     * @return
+     */
+    public boolean onOpenInventory(Player player, Inventory inventory) {
         return false;
     }
 }

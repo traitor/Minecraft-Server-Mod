@@ -440,7 +440,7 @@ public class Server {
         bg localav = server.e.l(x, y, z);
         if (localav != null) {
             if (localav instanceof jb) {
-                return new Chest((jb) localav);
+                return new Chest((jb) localav, 27);
             } else if (localav instanceof kp) {
                 return new Sign((kp) localav);
             } else if (localav instanceof ek) {

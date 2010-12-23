@@ -255,17 +255,32 @@ public class fi extends gq
     }
 
     public void a(int paramInt1, int paramInt2, int paramInt3) {
+        // hMod: Check if we can open this. Will have to move a line from below to here.
+        ig temp = new ig(this.an, this.l, paramInt1, paramInt2, paramInt3);
+        if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), new Workbench(temp))) {
+            return;
+        }
+
         R();
         this.a.b(new ih(this.bH, 1, "Crafting", 9));
-        this.ap = new ig(this.an, this.l, paramInt1, paramInt2, paramInt3);
+        this.ap = temp;
         this.ap.f = this.bH;
         // hMod: Make sure this gets cast correctly, or mutant puppies will spawn and eat your items.
         this.ap.a((ec)this);
       }
 
-  public void a(lg paramlf) {
-    R();
-    this.a.b(new ih(this.bH, 0, paramlf.b(), paramlf.a()));
+    public void a(lg paramlf) {
+        // hMod: Check if we can open this
+        if (paramlf instanceof jb) {
+            if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), new Chest((jb)paramlf, 27))) {
+                return;
+            }
+        } else if (paramlf instanceof av) {
+            // TODO: We can't do big chests yet.
+        }
+
+        R();
+        this.a.b(new ih(this.bH, 0, paramlf.b(), paramlf.a()));
         this.ap = new bx(this.an, paramlf);
         this.ap.f = this.bH;
         // hMod: Make sure this gets cast correctly, or mutant puppies will spawn and eat your items.
@@ -273,11 +288,17 @@ public class fi extends gq
     }
 
     public void a(ek paramek) {
+        // hMod: Check if we can open this
+        if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), new Furnace(paramek))) {
+            return;
+        }
+
         R();
         this.a.b(new ih(this.bH, 2, paramek.b(), paramek.a()));
         this.ap = new bj(this.an, paramek);
         this.ap.f = this.bH;
         // hMod: Make sure this gets cast correctly, or mutant puppies will spawn and eat your items.
+
         this.ap.a((ec)this);
     }
 

@@ -26,6 +26,10 @@ public class MobSpawner implements ComplexBlock {
         return spawner.d;
     }
 
+    public Block getBlock() {
+        return etc.getServer().getBlockAt(getX(), getY(), getZ());
+    }
+
     public void update() {
         spawner.d();
     }

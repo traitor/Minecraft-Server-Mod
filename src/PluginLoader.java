@@ -190,6 +190,10 @@ public class PluginLoader {
          */
         ATTACK,
         /**
+         * Calls onOpenInventory
+         */
+        OPEN_INVENTORY,
+        /**
          * Unused.
          */
         NUM_HOOKS
@@ -650,6 +654,11 @@ public class PluginLoader {
                                 break;
                             case ATTACK:
                                 if (listener.onAttack((LivingEntity) parameters[0], (LivingEntity) parameters[1], (Integer) parameters[2])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case OPEN_INVENTORY:
+                                if (listener.onOpenInventory((Player) parameters[0], (Inventory) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;

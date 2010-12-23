@@ -55,6 +55,10 @@ public class Sign implements ComplexBlock {
         return sign.d;
     }
 
+    public Block getBlock() {
+        return etc.getServer().getBlockAt(getX(), getY(), getZ());
+    }
+
     public void update() {
         sign.d();
     }
