@@ -30,4 +30,11 @@ public interface ComplexBlock {
      * Sends the updated block information to clients.
      */
     public void update();
+
+    /**
+     * Returns the Block associated with this ComplexBlock
+     *
+     * @return Block
+     */
+    public Block getBlock();
 }

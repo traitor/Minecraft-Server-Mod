@@ -53,6 +53,9 @@ public class etc {
     private boolean tainted = true;
     private int version = 1; // Version is meant to be loaded from the file, this stays as 1.
     private String driver, username, password, db;
+    private String[] animals = new String[] {};
+    private String[] monsters = new String[] {};
+    private int mobSpawnRate = 2;
 
     private etc() {
         commands.put("/help", "[Page] - Shows a list of commands. 7 per page.");
@@ -153,6 +156,10 @@ public class etc {
             spawnProtectionSize = properties.getInt("spawn-protection-size", 16);
             logging = properties.getBoolean("logging", false);
             enableHealth = properties.getBoolean("enable-health", true);
+
+            animals = properties.getString("natural-animals", "Sheep,Pig,Chicken,Cow").split(",");
+            monsters = properties.getString("natural-monsters", "Spider,Zombie,Skeleton,Creeper").split(",");
+            mobSpawnRate = properties.getInt("natural-spawn-rate", mobSpawnRate);
 
             String autoHealString = properties.getString("auto-heal", "default");
             if (autoHealString.equalsIgnoreCase("true")) {
@@ -381,6 +388,26 @@ public class etc {
         whitelistEnabled = !whitelistEnabled;
         return whitelistEnabled;
     }
+    
+    /**
+     * Callback object for notifications sent by executed ServerCommands.
+     * so that they appear in server log.
+     */
+    private MessageReceiver serverConsole = new MessageReceiver() {
+        @Override
+        public String getName() {
+            return "<Server>";
+        }
+
+        @Override
+        public void notify(String message) {
+            // Strip the colors.
+            message = message.replaceAll("\\u00A7[a-f0-9]", "");
+            if (message != null)
+                log.info(message);
+        }
+        
+    };
 
     /**
      * Parses a console command
@@ -421,145 +448,10 @@ public class etc {
             log.info("enableplugin  Enables a plugin");
             log.info("disableplugin Disables a plugin");
             log.info("reloadplugin  Reloads a plugin");
-        } else if (split[0].equalsIgnoreCase("reload")) {
-            load();
-            loadData();
-            for (Player player : etc.getServer().getPlayerList()) {
-                player.getUser().reloadPlayer();
-            }
-
-            log.info("Reloaded mod");
-        } else if (split[0].equalsIgnoreCase("modify")) {
-            if (split.length < 4) {
-                log.info("Usage is: /modify [player] [key] [value]");
-                log.info("Keys:");
-                log.info("prefix: only the letter the color represents");
-                log.info("commands: list seperated by comma");
-                log.info("groups: list seperated by comma");
-                log.info("ignoresrestrictions: true or false");
-                log.info("admin: true or false");
-                log.info("modworld: true or false");
-                return true;
-            }
-
-            Player player = getServer().matchPlayer(split[1]);
-
-            if (player == null) {
-                log.info("Player does not exist.");
-                return true;
-            }
-
-            String key = split[2];
-            String value = split[3];
-            boolean newUser = false;
-
-            if (!etc.getDataSource().doesPlayerExist(player.getName())) {
-                if (!key.equalsIgnoreCase("groups") && !key.equalsIgnoreCase("g")) {
-                    log.info("When adding a new user, set their group(s) first.");
-                    return true;
-                }
-                log.info("Adding new user.");
-                newUser = true;
-            }
-
-            if (key.equalsIgnoreCase("prefix") || key.equalsIgnoreCase("p")) {
-                player.setPrefix(value);
-            } else if (key.equalsIgnoreCase("commands") || key.equalsIgnoreCase("c")) {
-                player.setCommands(value.split(","));
-            } else if (key.equalsIgnoreCase("groups") || key.equalsIgnoreCase("g")) {
-                player.setGroups(value.split(","));
-            } else if (key.equalsIgnoreCase("ignoresrestrictions") || key.equalsIgnoreCase("ir")) {
-                player.setIgnoreRestrictions(value.equalsIgnoreCase("true") || value.equals("1"));
-            } else if (key.equalsIgnoreCase("admin") || key.equalsIgnoreCase("a")) {
-                player.setAdmin(value.equalsIgnoreCase("true") || value.equals("1"));
-            } else if (key.equalsIgnoreCase("modworld") || key.equalsIgnoreCase("mw")) {
-                player.setCanModifyWorld(value.equalsIgnoreCase("true") || value.equals("1"));
-            }
-
-            if (newUser) {
-                etc.getDataSource().addPlayer(player);
-            } else {
-                etc.getDataSource().modifyPlayer(player);
-            }
-            log.info("Modifed user " + split[1] + ". " + key + " => " + value);
-        } else if (split[0].equalsIgnoreCase("whitelist")) {
-            if (split.length < 2) {
-                log.info("whitelist [operation (toggle, add or remove)] [player]");
-                return true;
-            }
-
-            if (split[1].equalsIgnoreCase("toggle")) {
-                log.info(toggleWhitelist() ? "Whitelist enabled" : "Whitelist disabled");
-            } else if (split.length == 3) {
-                if (split[1].equalsIgnoreCase("add")) {
-                    dataSource.addToWhitelist(split[2]);
-                    log.info(split[2] + " added to whitelist");
-                } else if (split[1].equalsIgnoreCase("remove")) {
-                    dataSource.removeFromWhitelist(split[2]);
-                    log.info(split[2] + " removed from whitelist");
-                } else {
-                    log.info("Invalid operation.");
-                }
-            } else {
-                log.info("Invalid operation.");
-            }
-        } else if (split[0].equalsIgnoreCase("reservelist")) {
-            if (split.length != 3) {
-                log.info("reservelist [operation (add or remove)] [player]");
-                return true;
-            }
-
-            if (split[1].equalsIgnoreCase("add")) {
-                dataSource.addToReserveList(split[2]);
-                log.info(split[2] + " added to reservelist");
-            } else if (split[1].equalsIgnoreCase("remove")) {
-                dataSource.removeFromReserveList(split[2]);
-                log.info(split[2] + " removed from reservelist");
-            } else {
-                log.info("Invalid operation.");
-            }
-        } else if (split[0].equalsIgnoreCase("listplugins")) {
-            log.info("Plugins: " + etc.getLoader().getPluginList());
-        } else if (split[0].equalsIgnoreCase("reloadplugin")) {
-            if (split.length < 2) {
-                log.info("Correct usage is: reloadplugin [plugin]");
-                return true;
-            }
-
-            if (etc.getLoader().reloadPlugin(split[1])) {
-                log.info("Plugin reloaded.");
-            } else {
-                log.info("Plugin failed to reload.");
-            }
-        } else if (split[0].equalsIgnoreCase("enableplugin")) {
-            if (split.length < 2) {
-                log.info("Correct usage is: enableplugin [plugin]");
-                return true;
-            }
-
-            if (etc.getLoader().enablePlugin(split[1])) {
-                log.info("Plugin enabled.");
-            } else {
-                log.info("Plugin failed to enable");
-            }
-        } else if (split[0].equalsIgnoreCase("disableplugin")) {
-            if (split.length < 2) {
-                log.info("Correct usage is: disableplugin [plugin]");
-                return true;
-            }
-
-            etc.getLoader().disablePlugin(split[1]);
-            log.info("Plugin disabled.");
-        } else if (split[0].equalsIgnoreCase("version")) {
-            if (tainted || version < 0) {
-                log.info("THIS IS AN UNOFFICIAL BUILD OF HMOD");
-                log.info("Build information: " + versionStr);
-            } else {
-                log.info("Hey0 Server Mod Build " + version);
-            }
         } else {
-            dontParseRegular = false;
+            dontParseRegular = ServerConsoleCommands.parseServerConsoleCommand(serverConsole, split[0], split);
         }
+        
         return dontParseRegular;
     }
 
@@ -997,6 +889,60 @@ public class etc {
      */
     public String getVersionStr() {
         return versionStr;
+    }
+
+    /**
+     * Returns a list of animals that are allowed to spawn naturally
+     *
+     * @return a list of animals
+     */
+    public String[] getAnimals() {
+        return animals;
+    }
+
+    /**
+     * Sets a list of animals that are allowed to spawn naturally
+     *
+     * @param animals a list of animals
+     */
+    public void setAnimals(String[] animals) {
+        this.animals = animals;
+    }
+
+    /**
+     * Returns a list of mobs that are allowed to spawn naturally
+     *
+     * @return a list of mobs
+     */
+    public String[] getMonsters() {
+        return monsters;
+    }
+
+    /**
+     * Sets a list of mobs that are allowed to spawn naturally
+     *
+     * @param monsters a list of mobs
+     */
+    public void setMonsters(String[] monsters) {
+        this.monsters = monsters;
+    }
+
+    /**
+     * Returns the % from 0 to 100 that a mob or animal will spawn
+     *
+     * @return a percentage from 0 to 100
+     */
+    public int getMobSpawnRate() {
+        return mobSpawnRate;
+    }
+
+    /**
+     * Sets the % from 0 to 100 that a mob or animal will spawn
+     *
+     * @param rate a percentage from 0 to 100
+     */
+    public void setMobSpawnRate(int rate) {
+        this.mobSpawnRate = rate;
     }
 
     private Connection _getSQLConnection() {

@@ -14,7 +14,7 @@ import net.minecraft.server.MinecraftServer;
  * 
  * @author James
  */
-public class Player extends HumanEntity {
+public class Player extends HumanEntity implements MessageReceiver {
     private static final Logger log = Logger.getLogger("Minecraft");
     private int id = -1;
     private String prefix = "";
@@ -25,7 +25,7 @@ public class Player extends HumanEntity {
     private boolean admin = false;
     private boolean canModifyWorld = false;
     private boolean muted = false;
-    private Inventory inventory, craftingTable, equipment;
+    private PlayerInventory inventory;
     private List<String> onlyOneUseKits = new ArrayList<String>();
     private Pattern badChatPattern = Pattern.compile("[^ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ\\[\\\\\\]^_'abcdefghijklmnopqrstuvwxyz{|}~\u2302\u00C7\u00FC\u00E9\u00E2\u00E4\u00E0\u00E5\u00E7\u00EA\u00EB\u00E8\u00EF\u00EE\u00EC\u00C4\u00C5\u00C9\u00E6\u00C6\u00F4\u00F6\u00F2\u00FB\u00F9\u00FF\u00D6\u00DC\u00F8\u00A3\u00D8\u00D7\u0192\u00E1\u00ED\u00F3\u00FA\u00F1\u00D1\u00AA\u00BA\u00BF\u00AE\u00AC\u00BD\u00BC\u00A1\u00AB\u00BB]");
 
@@ -39,8 +39,8 @@ public class Player extends HumanEntity {
      * Returns the entity we're wrapping.
      * @return
      */
-    public et getEntity() {
-        return (et)entity;
+    public fi getEntity() {
+        return (fi)entity;
     }
     
     /**
@@ -57,7 +57,17 @@ public class Player extends HumanEntity {
      * @param reason
      */
     public void kick(String reason) {
-        getEntity().a.c(reason);
+        getEntity().a.a(reason);
+    }
+    
+    /**
+     * Sends player a notification
+     * 
+     * @param message
+     */
+    public void notify(String message) {
+        if (message.length() > 0)
+            sendMessage(Colors.Rose + message);
     }
 
     /**
@@ -132,7 +142,11 @@ public class Player extends HumanEntity {
                 }
                 return;
             }
-            if (split[0].equalsIgnoreCase("/help")) {
+            
+            // Remove '/' before checking.
+            if (ServerConsoleCommands.parseServerConsoleCommand(this, split[0].substring(1), split)) {
+                // Command parsed successfully...
+            } else if (split[0].equalsIgnoreCase("/help")) {
                 // Meh, not the greatest way, but not the worst either.
                 List<String> availableCommands = new ArrayList<String>();
                 for (Entry<String, String> entry : etc.getInstance().getCommands().entrySet()) {
@@ -173,169 +187,6 @@ public class Player extends HumanEntity {
                             sendMessage(Colors.Rose + availableCommands.get(i));
                         }
                     }
-                }
-            } else if (split[0].equalsIgnoreCase("/reload")) {
-                etc.getInstance().load();
-                etc.getInstance().loadData();
-                for (Player player : etc.getServer().getPlayerList()) {
-                    player.getUser().reloadPlayer();
-                }
-                log.info("Reloaded config");
-                sendMessage("Successfuly reloaded config");
-            } else if ((split[0].equalsIgnoreCase("/modify") || split[0].equalsIgnoreCase("/mp"))) {
-                if (split.length > 2 && split[2].contains(":")) {
-                    for (int i = 3; i < split.length; i++) {
-                        if (!split[i].contains(":")) {
-                            sendMessage(Colors.Rose + "Usage is: /modify [player] [key] [value]");
-                            sendMessage(Colors.Rose + "Keys:");
-                            sendMessage(Colors.Rose + "prefix: only the letter the color represents");
-                            sendMessage(Colors.Rose + "commands: list seperated by comma");
-                            sendMessage(Colors.Rose + "groups: list seperated by comma");
-                            sendMessage(Colors.Rose + "ignoresrestrictions: true or false");
-                            sendMessage(Colors.Rose + "admin: true or false");
-                            sendMessage(Colors.Rose + "modworld: true or false");
-                            return;
-                        }
-                    }
-
-                    Player player = etc.getServer().matchPlayer(split[1]);
-
-                    if (player == null) {
-                        sendMessage(Colors.Rose + "Player does not exist.");
-                        return;
-                    }
-
-                    for (int i = 2; i < split.length; i++) {
-                        if (split[i].split(":").length != 2) {
-                            sendMessage("This key:value pair is deformed... " + split[i]);
-                            return;
-                        }
-                        String key = split[i].split(":")[0];
-                        String value = split[i].split(":")[1];
-                        boolean newUser = false;
-
-                        if (!etc.getDataSource().doesPlayerExist(player.getName())) {
-                            if (!key.equalsIgnoreCase("groups") && !key.equalsIgnoreCase("g")) {
-                                sendMessage(Colors.Rose + "When adding a new user, set their group(s) first.");
-                                return;
-                            }
-                            sendMessage(Colors.Rose + "Adding new user.");
-                            newUser = true;
-                            player.setCanModifyWorld(true);
-                        }
-
-                        if (key.equalsIgnoreCase("prefix") || key.equalsIgnoreCase("p")) {
-                            player.setPrefix(value);
-                        } else if (key.equalsIgnoreCase("commands") || key.equalsIgnoreCase("c")) {
-                            player.setCommands(value.split(","));
-                        } else if (key.equalsIgnoreCase("groups") || key.equalsIgnoreCase("g")) {
-                            player.setGroups(value.split(","));
-                        } else if (key.equalsIgnoreCase("ignoresrestrictions") || key.equalsIgnoreCase("ir")) {
-                            player.setIgnoreRestrictions(value.equalsIgnoreCase("true") || value.equals("1"));
-                        } else if (key.equalsIgnoreCase("admin") || key.equalsIgnoreCase("a")) {
-                            player.setAdmin(value.equalsIgnoreCase("true") || value.equals("1"));
-                        } else if (key.equalsIgnoreCase("modworld") || key.equalsIgnoreCase("mw")) {
-                            player.setCanModifyWorld(value.equalsIgnoreCase("true") || value.equals("1"));
-                        }
-
-                        if (newUser) {
-                            etc.getDataSource().addPlayer(player);
-                        } else {
-                            etc.getDataSource().modifyPlayer(player);
-                        }
-                        log.info("Modifed user " + split[1] + ". " + key + " => " + value + " by " + getName());
-                    }
-                    sendMessage(Colors.Rose + "Modified user.");
-                } else {
-                    if (split.length < 4) {
-                        sendMessage(Colors.Rose + "Usage is: /modify [player] [key] [value]");
-                        sendMessage(Colors.Rose + "Keys:");
-                        sendMessage(Colors.Rose + "prefix: only the letter the color represents");
-                        sendMessage(Colors.Rose + "commands: list seperated by comma");
-                        sendMessage(Colors.Rose + "groups: list seperated by comma");
-                        sendMessage(Colors.Rose + "ignoresrestrictions: true or false");
-                        sendMessage(Colors.Rose + "admin: true or false");
-                        sendMessage(Colors.Rose + "modworld: true or false");
-                        return;
-                    }
-
-                    Player player = etc.getServer().matchPlayer(split[1]);
-
-                    if (player == null) {
-                        sendMessage(Colors.Rose + "Player does not exist.");
-                        return;
-                    }
-
-                    String key = split[2];
-                    String value = split[3];
-                    boolean newUser = false;
-
-                    if (!etc.getDataSource().doesPlayerExist(player.getName())) {
-                        if (!key.equalsIgnoreCase("groups") && !key.equalsIgnoreCase("g")) {
-                            sendMessage(Colors.Rose + "When adding a new user, set their group(s) first.");
-                            return;
-                        }
-                        sendMessage(Colors.Rose + "Adding new user.");
-                        newUser = true;
-                    }
-
-                    if (key.equalsIgnoreCase("prefix") || key.equalsIgnoreCase("p")) {
-                        player.setPrefix(value);
-                    } else if (key.equalsIgnoreCase("commands") || key.equalsIgnoreCase("c")) {
-                        player.setCommands(value.split(","));
-                    } else if (key.equalsIgnoreCase("groups") || key.equalsIgnoreCase("g")) {
-                        player.setGroups(value.split(","));
-                    } else if (key.equalsIgnoreCase("ignoresrestrictions") || key.equalsIgnoreCase("ir")) {
-                        player.setIgnoreRestrictions(value.equalsIgnoreCase("true") || value.equals("1"));
-                    } else if (key.equalsIgnoreCase("admin") || key.equalsIgnoreCase("a")) {
-                        player.setAdmin(value.equalsIgnoreCase("true") || value.equals("1"));
-                    } else if (key.equalsIgnoreCase("modworld") || key.equalsIgnoreCase("mw")) {
-                        player.setCanModifyWorld(value.equalsIgnoreCase("true") || value.equals("1"));
-                    }
-
-                    if (newUser) {
-                        etc.getDataSource().addPlayer(player);
-                    } else {
-                        etc.getDataSource().modifyPlayer(player);
-                    }
-                    sendMessage(Colors.Rose + "Modified user.");
-                    log.info("Modifed user " + split[1] + ". " + key + " => " + value + " by " + getName());
-                }
-            } else if (split[0].equalsIgnoreCase("/whitelist")) {
-                if (split.length < 2) {
-                    sendMessage(Colors.Rose + "whitelist [operation (toggle, add or remove)] <player>");
-                    return;
-                }
-
-                if (split[1].equalsIgnoreCase("toggle")) {
-                    sendMessage(Colors.Rose + (etc.getInstance().toggleWhitelist() ? "Whitelist enabled" : "Whitelist disabled"));
-                } else if (split.length == 3) {
-                    if (split[1].equalsIgnoreCase("add")) {
-                        etc.getDataSource().addToWhitelist(split[2]);
-                        sendMessage(Colors.Rose + split[2] + " added to whitelist");
-                    } else if (split[1].equalsIgnoreCase("remove")) {
-                        etc.getDataSource().removeFromWhitelist(split[2]);
-                        sendMessage(Colors.Rose + split[2] + " removed from whitelist");
-                    } else {
-                        sendMessage(Colors.Rose + "Invalid operation.");
-                    }
-                } else {
-                    sendMessage(Colors.Rose + "Invalid operation.");
-                }
-            } else if (split[0].equalsIgnoreCase("/reservelist")) {
-                if (split.length != 3) {
-                    sendMessage(Colors.Rose + "reservelist [operation (add or remove)] [player]");
-                    return;
-                }
-
-                if (split[1].equalsIgnoreCase("add")) {
-                    etc.getDataSource().addToReserveList(split[2]);
-                    sendMessage(Colors.Rose + split[2] + " added to reservelist");
-                } else if (split[1].equalsIgnoreCase("remove")) {
-                    etc.getDataSource().removeFromReserveList(split[2]);
-                    sendMessage(Colors.Rose + split[2] + " removed from reservelist");
-                } else {
-                    sendMessage(Colors.Rose + "Invalid operation.");
                 }
             } else if (split[0].equalsIgnoreCase("/mute")) {
                 if (split.length != 2) {
@@ -385,7 +236,7 @@ public class Player extends HumanEntity {
 
                 Player toGive = this;
                 if (split.length > 2 && canIgnoreRestrictions()) {
-                    toGive = etc.getServer().matchPlayer(split[1]);
+                    toGive = etc.getServer().matchPlayer(split[2]);
                 }
 
                 Kit kit = etc.getDataSource().getKit(split[1]);
@@ -509,7 +360,14 @@ public class Player extends HumanEntity {
                         if (amount > 1024) {
                             amount = 1024; // 16 stacks worth. More than enough.
                         }
-                        boolean allowedItem = etc.getInstance().getAllowedItems().contains(itemId) && !etc.getInstance().getDisallowedItems().contains(itemId);
+                        
+                        boolean allowedItem = false;
+                        if ((!etc.getInstance().getAllowedItems().isEmpty()) && (!canIgnoreRestrictions()) && (etc.getInstance().getAllowedItems().contains(itemId))) {
+                            allowedItem = true;
+                        } else allowedItem = true;
+                        if ((!etc.getInstance().getDisallowedItems().isEmpty()) && (!canIgnoreRestrictions()) && (etc.getInstance().getDisallowedItems().contains(itemId)))
+                            allowedItem = false;
+                        
                         if (Item.isValidItem(itemId)) {
                             if (allowedItem || canIgnoreRestrictions()) {
                                 log.log(Level.INFO, "Giving " + toGive.getName() + " some " + itemId);
@@ -536,7 +394,6 @@ public class Player extends HumanEntity {
             } else if (split[0].equalsIgnoreCase("/tempban")) {
                 // /tempban MINUTES HOURS DAYS
                 if (split.length == 1) {
-                    // TODO;
                     return;
                 }
                 int minutes = 0, hours = 0, days = 0;
@@ -829,38 +686,6 @@ public class Player extends HumanEntity {
                     degreeRotation += 360.0;
                 }
                 sendMessage("Compass: " + etc.getCompassPointForDirection(degreeRotation) + " (" + (Math.round(degreeRotation * 10) / 10.0) + ")");
-            } else if (split[0].equalsIgnoreCase("/listplugins")) {
-                sendMessage(Colors.Rose + "Plugins" + Colors.White + ": " + etc.getLoader().getPluginList());
-            } else if (split[0].equalsIgnoreCase("/reloadplugin")) {
-                if (split.length < 2) {
-                    sendMessage(Colors.Rose + "Correct usage is: /reloadplugin [plugin]");
-                    return;
-                }
-
-                if (etc.getLoader().reloadPlugin(split[1])) {
-                    sendMessage(Colors.Rose + "Plugin reloaded.");
-                } else {
-                    sendMessage(Colors.Rose + "Unable to reload plugin. Check capitalization and/or server logfile.");
-                }
-            } else if (split[0].equalsIgnoreCase("/enableplugin")) {
-                if (split.length < 2) {
-                    sendMessage(Colors.Rose + "Correct usage is: /enableplugin [plugin]");
-                    return;
-                }
-
-                if (etc.getLoader().enablePlugin(split[1])) {
-                    sendMessage(Colors.Rose + "Plugin enabled.");
-                } else {
-                    sendMessage(Colors.Rose + "Unable to enable plugin. Check capitalization and/or server logfile.");
-                }
-            } else if (split[0].equalsIgnoreCase("/disableplugin")) {
-                if (split.length < 2) {
-                    sendMessage(Colors.Rose + "Correct usage is: /disableplugin [plugin]");
-                    return;
-                }
-
-                etc.getLoader().disablePlugin(split[1]);
-                sendMessage(Colors.Rose + "Plugin disabled.");
             } else if (split[0].equalsIgnoreCase("/compass")) {
                 double degreeRotation = ((getRotation() - 90) % 360);
                 if (degreeRotation < 0) {
@@ -924,11 +749,7 @@ public class Player extends HumanEntity {
                 if (target != null) {
                     Inventory inv = target.getInventory();
                     inv.clearContents();
-                    inv = target.getCraftingTable();
-                    inv.clearContents();
-                    inv = target.getEquipment();
-                    inv.clearContents();
-                    inv.updateInventory();
+                    inv.update();
                     if (!target.getName().equals(getName())) {
                         sendMessage(Colors.Rose + "Cleared " + target.getName() + "'s inventory.");
                     }
@@ -954,12 +775,6 @@ public class Player extends HumanEntity {
                 } else {
                     sendMessage(Colors.Rose + "You are not targeting a mob spawner.");
                 }
-            } else if (split[0].equalsIgnoreCase("/version")) {
-                if (!etc.getInstance().getTainted())
-                    sendMessage(Colors.Gold + "Hey0 Server Mod Build " + etc.getInstance().getVersion());
-                else {
-                    sendMessage(Colors.Gold + "Unofficial hMod Build " + etc.getInstance().getVersionStr());
-                }
             } else {
                 log.info(getName() + " tried command " + command);
                 if (etc.getInstance().showUnknownCommand()) {
@@ -984,7 +799,7 @@ public class Player extends HumanEntity {
      */
     public void giveItem(int itemId, int amount) {
         inventory.giveItem(itemId, amount);
-        inventory.updateInventory();
+        inventory.update();
     }
 
     /**
@@ -1003,16 +818,16 @@ public class Player extends HumanEntity {
      * @param amount
      */
     public void giveItemDrop(int itemId, int amount) {
-        et player = getEntity();
+        fi player = getEntity();
         if (amount == -1) {
-            player.a(new hn(itemId, 255));
+            player.a(new il(itemId, 255));
         } else {
             int temp = amount;
             do {
                 if (temp - 64 >= 64) {
-                    player.a(new hn(itemId, 64));
+                    player.a(new il(itemId, 64));
                 } else {
-                    player.a(new hn(itemId, temp));
+                    player.a(new il(itemId, temp));
                 }
                 temp -= 64;
             } while (temp > 0);
@@ -1434,7 +1249,7 @@ public class Player extends HumanEntity {
      * 
      * @return
      */
-    public et getUser() {
+    public fi getUser() {
         return getEntity();
     }
 
@@ -1443,15 +1258,13 @@ public class Player extends HumanEntity {
      * 
      * @param er
      */
-    public void setUser(et player) {
+    public void setUser(fi player) {
         this.entity = player;
-        this.inventory = new Inventory(this, Inventory.Type.Inventory);
-        this.craftingTable = new Inventory(this, Inventory.Type.CraftingTable);
-        this.equipment = new Inventory(this, Inventory.Type.Equipment);
+        this.inventory = new PlayerInventory(this);
     }
 
     public void teleportTo(double x, double y, double z, float rotation, float pitch) {
-        et player = getEntity();
+        fi player = getEntity();
         
         // If player is in vehicle - eject them before they are teleported.
         if (player.k != null) {
@@ -1513,21 +1326,21 @@ public class Player extends HumanEntity {
     }
 
     /**
-     * Returns this player's crafting table (2x2)
+     * Returns whether or not this Player is currently sneaking (crouching)
      * 
-     * @return inventory
+     * @return true if sneaking
      */
-    public Inventory getCraftingTable() {
-        return craftingTable;
+    public boolean getSneaking() {
+        return getEntity().al;
     }
 
     /**
-     * Returns this player's equipment
+     * Force this Player to be sneaking or not
      * 
-     * @return inventory
+     * @param sneaking true if sneaking
      */
-    public Inventory getEquipment() {
-        return equipment;
+    public void setSneaking(boolean sneaking) {
+        getEntity().al = sneaking;
     }
 
     /**
@@ -1555,10 +1368,7 @@ public class Player extends HumanEntity {
             return false;
         }
         final Player other = (Player) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        return true;
+        return getName().equals( other.getName());
     }
 
     /**

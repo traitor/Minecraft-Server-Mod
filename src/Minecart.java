@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Minecart - Used for manipulating minecarts
  *
@@ -11,31 +14,64 @@ public class Minecart extends BaseVehicle {
         /**
          * Base minecart.
          */
-        Minecart,
-        /**
-         * Powered minecart. Has storage for fuel.
-         */
-        PoweredMinecart,
+        Minecart(0),
         /**
          * Storage minecart. Has storage for items.
          */
-        StorageCart,
+        StorageCart(1),
+        /**
+         * Powered minecart. Has storage for fuel.
+         */
+        PoweredMinecart(2);
+        
+        private final int id;
+        private static final Map<Integer, Type> lookup = new HashMap<Integer, Type>();
+        
+        static {
+            for(Type t : Type.values()) {
+                lookup.put(t.getType(), t);
+            }
+        }
+
+        private Type(int id){
+            this.id = id;
+        }
+
+        public int getType() {
+            return id;
+        }
+
+        public static Type fromId(final int type) {
+            return lookup.get(type);
+        }
     }
 
     /**
      * Creates an interface for minecart.
      * @param o
      */
-    public Minecart(jo o) {
+    public Minecart(kq o) {
         super(o);
+    }
+    
+    /**
+     * Create a new Minecart at the given position
+     * @param x
+     * @param y
+     * @param z
+     * @param Type 0=Minecart, 1=StorageCart, 2=PoweredMinecart
+     */
+    public Minecart(double x, double y, double z, Type type) {
+        super(new kq(etc.getMCServer().e, x, y, z, type.getType()));
+        etc.getMCServer().e.a(entity);        
     }
     
     /**
      * Returns the entity we're wrapping.
      * @return
      */ 
-    public jo getEntity() {
-        return (jo) entity;
+    public kq getEntity() {
+        return (kq) entity;
     }
 
     /**
@@ -59,12 +95,7 @@ public class Minecart extends BaseVehicle {
      * @return type
      */
     public Type getType() {
-        switch (getEntity().d) {
-            case 1: return Type.Minecart;
-            case 2: return Type.StorageCart;
-            case 3: return Type.PoweredMinecart;
-            default: return Type.Minecart;
-        }
+       return Type.fromId(getEntity().d);
     }
 
     /**

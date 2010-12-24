@@ -1,23 +1,23 @@
+
 /**
  * Generic superclass for Chests and Furnaces, as they are really similar.
  * @author lightweight
  *
  * @param <C> The type of container we wish to wrap.
  */
-public abstract class BaseContainerBlock<C extends ay & ke & Container<hn>> extends ItemArray<C> implements ComplexBlock {
-    String name = "BaseContainerBlock";
+public abstract class BaseContainerBlock<C extends bg & lg & Container<il>> extends ItemArray<C> implements Inventory {
+    private final String name;
 
     /**
      * Create a BaseContainerBlock to act as a wrapper for a given container.
-     * @param container The in-world block to 'envelop'.
-     * @param name Shows in toString().
-     * @param size Number of item slots
+     * @param block The in-world block to 'envelop'.
+     * @param reference Shows in toString().
      */
-    public BaseContainerBlock(C container, String name, int size) {
-        super(container, size);
-        this.name = name;
+    public BaseContainerBlock(C block, String reference) {
+        super(block);
+        this.name = reference;
     }
-    
+
     public int getX() {
         return container.b;
     }
@@ -28,6 +28,10 @@ public abstract class BaseContainerBlock<C extends ay & ke & Container<hn>> exte
 
     public int getZ() {
         return container.d;
+    }
+
+    public Block getBlock() {
+        return etc.getServer().getBlockAt(getX(), getY(), getZ());
     }
 
     public void update() {
@@ -48,7 +52,6 @@ public abstract class BaseContainerBlock<C extends ay & ke & Container<hn>> exte
         if (getClass() != obj.getClass()) {
             return false;
         }
-        
         // Supress warning since we've already returned if class is wrong.
         @SuppressWarnings("unchecked")
         final BaseContainerBlock<C> other = (BaseContainerBlock<C>) obj;
@@ -77,7 +80,7 @@ public abstract class BaseContainerBlock<C extends ay & ke & Container<hn>> exte
         hash = 97 * hash + this.getZ();
         return hash;
     }
-    
+
     @Override
     public String toString() {
         return String.format(name + " [x=%d, y=%d, z=%d]", getX(), getY(), getZ());

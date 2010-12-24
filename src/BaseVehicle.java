@@ -5,10 +5,10 @@
  */
 public class BaseVehicle extends BaseEntity {
     /**
-     * Creates an interface for a vehicle
+     * Creptes an interface for a vehicle
      * @param entity
      */
-    public BaseVehicle(ea entity) {
+    public BaseVehicle(ep entity) {
         this.entity = entity;
     }
 
@@ -103,8 +103,8 @@ public class BaseVehicle extends BaseEntity {
      */
     public Player getPassenger() {
         if (entity.j != null)
-            if (entity.j instanceof et)
-                return ((et)entity.j).getPlayer();
+            if (entity.j instanceof fi)
+                return ((fi)entity.j).getPlayer();
         return null;
     }
 }

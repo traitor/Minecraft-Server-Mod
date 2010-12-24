@@ -74,22 +74,6 @@ public class PluginLoader {
          */
         ARM_SWING,
         /**
-         * Calls onComplexBlockChange
-         */
-        COMPLEX_BLOCK_CHANGE,
-        /**
-         * Calls onInventoryChange
-         */
-        INVENTORY_CHANGE,
-        /**
-         * Calls onCraftInventoryChange
-         */
-        CRAFTINVENTORY_CHANGE,
-        /**
-         * Calls onEquipmentChange
-         */
-        EQUIPMENT_CHANGE,
-        /**
          * Calls onItemDrop
          */
         ITEM_DROP,
@@ -97,10 +81,6 @@ public class PluginLoader {
          * Calls onItemPickUp
          */
         ITEM_PICK_UP,
-        /**
-         * Calls onSendComplexBlock
-         */
-        COMPLEX_BLOCK_SEND,
         /**
          * Calls onTeleport
          */
@@ -189,6 +169,18 @@ public class PluginLoader {
          * Calls onAttack
          */
         ATTACK,
+        /**
+         * Calls onOpenInventory
+         */
+        OPEN_INVENTORY,
+        /**
+         * Calls onSignShow
+         */
+        SIGN_SHOW,
+        /**
+         * Calls onSignChange
+         */
+        SIGN_CHANGE,
         /**
          * Unused.
          */
@@ -521,21 +513,6 @@ public class PluginLoader {
                             case ARM_SWING:
                                 listener.onArmSwing((Player) parameters[0]);
                                 break;
-                            case INVENTORY_CHANGE:
-                                if (listener.onInventoryChange((Player) parameters[0])) {
-                                    toRet = true;
-                                }
-                                break;
-                            case CRAFTINVENTORY_CHANGE:
-                                if (listener.onCraftInventoryChange((Player) parameters[0])) {
-                                    toRet = true;
-                                }
-                                break;
-                            case EQUIPMENT_CHANGE:
-                                if (listener.onEquipmentChange((Player) parameters[0])) {
-                                    toRet = true;
-                                }
-                                break;
                             case ITEM_DROP:
                                 if (listener.onItemDrop((Player) parameters[0], (Item) parameters[1])) {
                                     toRet = true;
@@ -543,16 +520,6 @@ public class PluginLoader {
                                 break;
                             case ITEM_PICK_UP:
                                 if (listener.onItemPickUp((Player) parameters[0], (Item) parameters[1])) {
-                                    toRet = true;
-                                }
-                                break;
-                            case COMPLEX_BLOCK_CHANGE:
-                                if (listener.onComplexBlockChange((Player) parameters[0], (ComplexBlock) parameters[1])) {
-                                    toRet = true;
-                                }
-                                break;
-                            case COMPLEX_BLOCK_SEND:
-                                if (listener.onSendComplexBlock((Player) parameters[0], (ComplexBlock) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
@@ -650,6 +617,19 @@ public class PluginLoader {
                                 break;
                             case ATTACK:
                                 if (listener.onAttack((LivingEntity) parameters[0], (LivingEntity) parameters[1], (Integer) parameters[2])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case OPEN_INVENTORY:
+                                if (listener.onOpenInventory((Player) parameters[0], (Inventory) parameters[1])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case SIGN_SHOW:
+                                listener.onSignShow((Player) parameters[0], (Sign) parameters[1]);
+                                break;
+                            case SIGN_CHANGE:
+                                if (listener.onSignChange((Player) parameters[0], (Sign) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
