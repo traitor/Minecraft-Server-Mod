@@ -6,13 +6,15 @@
  */
 public abstract class ItemArray<C extends Container<il>> {
     protected C container;
+    private int arraySize = 0;
     
-    public ItemArray(C c) {
+    public ItemArray(C c, int size) {
         this.container = c;
+        this.arraySize = size;
     }
-
-    public int getContentsSize() {
-        return container.getContentsSize();
+    
+    public int getContentSize() {
+        return arraySize;
     }
     
     /**
@@ -28,18 +30,16 @@ public abstract class ItemArray<C extends Container<il>> {
         }
 
         int slot = item.getSlot();
-        int size = getContentsSize();
-
-        if (slot < size && slot >= 0) {
+        if (slot < _getArray().length && slot >= 0) {
             if (item.getAmount() <= 0) {
-                setSlot(null, slot);
+                _getArray()[slot] = null;
             } else if (Item.isValidItem(item.getItemId())) {
-                setSlot(item, slot);
+                _getArray()[slot] = new il(item.getItemId(), item.getAmount());
             }
         } else if (slot == -1) {
             int newSlot = getEmptySlot();
             if (newSlot != -1) {
-                setSlot(item, newSlot);
+                _getArray()[newSlot] = new il(item.getItemId(), item.getAmount());
                 item.setSlot(newSlot);
             }
         }
@@ -52,15 +52,11 @@ public abstract class ItemArray<C extends Container<il>> {
      * @return item
      */
     public Item getItemFromSlot(int slot) {
-        int size = getContentsSize();
-
-        if (slot < size && slot >= 0) {
-            il result = container.getContentsAt(slot);
-            if (result != null) {
-                return new Item(result, slot);
+        if (slot < _getArray().length && slot >= 0) {
+            if (_getArray()[slot] != null) {
+                return new Item(_getArray()[slot], slot);
             }
         }
-
         return null;
     }
 
@@ -128,15 +124,12 @@ public abstract class ItemArray<C extends Container<il>> {
      * @return nearest empty slot
      */
     public int getEmptySlot() {
-        int size = getContentsSize();
-
-        for (int i = 0; size > i; i++) {
-            if (container.getContentsAt(i) != null) {
+        for (int i = 0; _getArray().length > i; i++) {
+            if (_getArray()[i] != null) {
                 continue;
             }
             return i;
         }
-
         return -1;
     }
 
@@ -146,10 +139,8 @@ public abstract class ItemArray<C extends Container<il>> {
      * @param slot slot to remove item from
      */
     public void removeItem(int slot) {
-        int size = getContentsSize();
-
-        if (slot < size && slot >= 0) {
-            container.setContentsAt(slot, null);
+        if (slot < _getArray().length && slot >= 0) {
+            _getArray()[slot] = null;
         }
     }
 
@@ -182,22 +173,8 @@ public abstract class ItemArray<C extends Container<il>> {
      * @param slot the id of the slot.
      */
     public void setSlot(int itemId, int amount, int slot) {
-        setSlot(itemId, amount, 0, slot);
-    }
-
-    /**
-     * Replaces the slot with the specified item.
-     *
-     * @param itemId item id of the item to put into the slot.
-     * @param amount amount of the item to put into the slot.
-     * @param damage remaining damage of the item to put into the slot.
-     * @param slot the id of the slot.
-     */
-    public void setSlot(int itemId, int amount, int damage, int slot) {
-        int size = getContentsSize();
-
-        if (slot < size && slot >= 0) {
-            container.setContentsAt(slot, new il(itemId, (amount > 64 ? 64 : amount), damage));
+        if (slot < _getArray().length && slot >= 0) {
+            _getArray()[slot] = new il(itemId, (amount > 64 ? 64 : amount));
         }
     }
 
@@ -329,15 +306,51 @@ public abstract class ItemArray<C extends Container<il>> {
         
         return false;
     }
+    
+    /**
+     * Checks the getArray() for the amount total of items
+     * 
+     * @param itemId The item we are looking for
+     * @return integer - Total amount of items
+     */
+    public int hasAmount() {
+	Item[] items = getContents();
+	int amount = 0;
+	
+	for(Item item : items) {
+	    if((item != null)) {
+		amount += item.getAmount();
+	    }
+	}
+	
+	return amount;
+    }
+
+    /**
+     * Checks the getArray() for the amount total of this item id.
+     *
+     * @param itemId The item we are looking for
+     * @return integer - Total amount of itemId in the array
+     */
+    public int hasAmount(int itemId) {
+	Item[] items = getContents();
+	int amount = 0;
+
+	for(Item item : items) {
+	    if((item != null) && item.getItemId() == itemId) {
+		amount += item.getAmount();
+	    }
+	}
+
+	return amount;
+    }
 
     /**
      * Returns the contents of this chest
      * @return contents
      */
     public Item[] getContents() {
-        int arraySize = getContentsSize();
         Item[] rt = new Item[arraySize];
-        
         for (int i = 0; i < arraySize; i++) {
             rt[i] = getItemFromSlot(i);
         }
@@ -350,18 +363,42 @@ public abstract class ItemArray<C extends Container<il>> {
      * @param contents contents to set
      */
     public void setContents(Item[] contents) {
-        int arraySize = getContentsSize();
-
+        il[] newcontents = new il[arraySize];
         for (int i = 0; i < arraySize; i++) {
-            setSlot(contents[i], i);
+            newcontents[i] = (contents[i] != null) ? new il(contents[i].getItemId(), contents[i].getAmount()) : null;
         }
+        _setArray(newcontents);
+    }
+
+    /**
+     * Gets the raw items in this array
+     * @return an array of raw items
+     * @deprecated use getContents() instead
+     */
+    public il[] getArray() {
+        return _getArray();
+    }
+
+    private il[] _getArray() {
+        return container.getContents();
+    }
+
+    /**
+     * Sets the raw items in this array
+     * @param values items to set
+     * @deprecated use setContents(Item[]) instead
+     */
+    public void setArray(il[] values) {
+        _setArray(values);
+    }
+
+    public void _setArray(il[] values) {
+        container.setContents(values);
     }
     
     public void clearContents() {
-        int size = getContentsSize();
-
-        for (int i = 0; size > i; i++) {
-            container.setContentsAt(i, null);
+        for (int i = 0; _getArray().length > i; i++) {
+            _getArray()[i] = null;
         }
     }
 }

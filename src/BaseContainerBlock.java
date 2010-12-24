@@ -12,9 +12,10 @@ public abstract class BaseContainerBlock<C extends bg & lg & Container<il>> exte
      * Create a BaseContainerBlock to act as a wrapper for a given container.
      * @param block The in-world block to 'envelop'.
      * @param reference Shows in toString().
+     * @param size Number of item slots
      */
-    public BaseContainerBlock(C block, String reference) {
-        super(block);
+    public BaseContainerBlock(C block, String reference, int size) {
+        super(block, size);
         this.name = reference;
     }
 

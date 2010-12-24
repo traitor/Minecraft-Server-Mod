@@ -1,7 +1,6 @@
 
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -400,7 +399,7 @@ public class kk extends fs
                 i4 = i3;
             }
             // hMod: call BLOCK_RIGHTCLICKED
-            Item item = (localik != null) ? new Item(localik) : new Item(Item.Type.Air);
+            Item item = (localik != null) ? new Item(localik) : new Item();
             Player player = ((fi)this.e).getPlayer();
             etc.getLoader().callHook(PluginLoader.Hook.BLOCK_RIGHTCLICKED, player, blockClicked, item);
 
@@ -607,11 +606,13 @@ public class kk extends fs
             int i1;
             for (int m = 0; m < 4; m++) {
                 n = 1;
-                // hMod: Remove the char limit, for plugins.
-                //if (paramgm.d[m].length() > 15) {
-                for (i1 = 0; i1 < paramgm.d[m].length(); i1++) {
-                    if (fq.a.indexOf(paramgm.d[m].charAt(i1)) < 0) {
-                        n = 0;
+                if (paramgm.d[m].length() > 15) {
+                    n = 0;
+                } else {
+                    for (i1 = 0; i1 < paramgm.d[m].length(); i1++) {
+                        if (fq.a.indexOf(paramgm.d[m].charAt(i1)) < 0) {
+                            n = 0;
+                        }
                     }
                 }
                 if (n == 0) {
@@ -623,20 +624,9 @@ public class kk extends fs
                 n = paramgm.b;
                 i1 = paramgm.c;
                 kp localko = (kp) localbg;
-
-                // hMod: Copy the old line text
-                String[] old = Arrays.copyOf(localko.e, localko.e.length);
-
                 for (int i2 = 0; i2 < 4; i2++) {
                     localko.e[i2] = paramgm.d[i2];
                 }
-
-                // hMod: Check if we can change it
-                Sign sign = new Sign(localko);
-                if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.SIGN_CHANGE, getPlayer(), sign)) {
-                    localko.e = Arrays.copyOf(old, old.length);
-                }
-
                 localko.d();
                 this.d.e.g(m, n, i1);
             }

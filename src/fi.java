@@ -195,12 +195,6 @@ public class fi extends gq
 
     private void a(bg parambg) {
         if (parambg != null) {
-            // hMod: Let plugins know we're showing a sign
-            if (parambg instanceof kp) {
-                Sign sign = new Sign((kp)parambg);
-                etc.getLoader().callHook(PluginLoader.Hook.SIGN_SHOW, getPlayer(), sign);
-            }
-
             jv localju = parambg.f();
             if (localju != null) {
                 this.a.b(localju);
@@ -278,13 +272,11 @@ public class fi extends gq
     public void a(lg paramlf) {
         // hMod: Check if we can open this
         if (paramlf instanceof jb) {
-            if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), new Chest((jb)paramlf))) {
+            if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), new Chest((jb)paramlf, 27))) {
                 return;
             }
         } else if (paramlf instanceof av) {
-            if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), new DoubleChest((av)paramlf))) {
-                return;
-            }
+            // TODO: We can't do big chests yet.
         }
 
         R();

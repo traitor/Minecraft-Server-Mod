@@ -1,4 +1,5 @@
 
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,7 +60,43 @@ public class bg {
 
     public void d() {
         if(this.a == null) return;
-        this.a.b(this.b, this.c, this.d, this);
+        // hMod: Allow visibility of 'complex blocks'??
+        // Hacky... but it works at least.
+        for (Player player : etc.getServer().getPlayerList()) {
+            bg localbg = this;
+            ComplexBlock block = null;
+            if (localbg instanceof jb) {
+                block = new Chest((jb) localbg, 27);
+            } else if (localbg instanceof ek) {
+                block = new Furnace((ek) localbg);
+            } else if (localbg instanceof kp) {
+                block = new Sign((kp) localbg);
+            } else if (localbg instanceof cq) {
+                block = new MobSpawner((cq) localbg);
+            }
+            if (block != null) {
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMPLEX_BLOCK_SEND, player, block) && player.canBuild()) {
+                    this.a.b(this.b, this.c, this.d, this);
+                } else {
+                    bg toSend = null;
+                    if (localbg instanceof jb) {
+                        toSend = new jb();
+                    } else if (localbg instanceof ek) {
+                        toSend = new ek();
+                    } else if (localbg instanceof kp) {
+                        toSend = new kp();
+                    } else if (localbg instanceof cq) {
+                        toSend = new cq();
+                    }
+                    toSend.b = b;
+                    toSend.c = c;
+                    toSend.d = d;
+                    this.a.b(this.b, this.c, this.d, toSend);
+                }
+            } else {
+                this.a.b(this.b, this.c, this.d, this);
+            }
+        }
     }
 
     public jv f() {

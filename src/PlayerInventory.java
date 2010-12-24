@@ -3,7 +3,7 @@ public class PlayerInventory extends ItemArray<ii> implements Inventory {
     private final fi user;
     
     public PlayerInventory(Player player) {
-        super(player.getUser().an);
+        super(player.getUser().an, 37);
         user = player.getUser();
     }
 

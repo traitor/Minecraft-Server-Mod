@@ -23,18 +23,6 @@ public class ek extends bg
         this.h = e;
     }
 
-    public il getContentsAt(int index) {
-        return a(index);
-    }
-
-    public void setContentsAt(int index, il value) {
-        a(index, value);
-    }
-
-    public int getContentsSize() {
-        return a();
-    }
-
     public int a() {
         return this.h.length;
     }
