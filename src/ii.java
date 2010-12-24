@@ -1,3 +1,4 @@
+// hMod: This class must extend Container<obfuscated_item> and implement the various methods within. They will not all be marked individually.
 
 public class ii
         implements lg, Container<il> {
@@ -8,6 +9,7 @@ public class ii
     private gq e;
     private il f;
     public boolean d = false;
+    private String name = "Inventory";
 
     public il[] getContents() {
         return a;
@@ -27,6 +29,14 @@ public class ii
 
     public int getContentsSize() {
         return a();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String value) {
+        name = value;
     }
 
     public ii(gq paramgp) {
@@ -225,7 +235,7 @@ public class ii
     }
 
     public String b() {
-        return "Inventory";
+        return getName(); //hMod: override with getName()
     }
 
     public int c() {
