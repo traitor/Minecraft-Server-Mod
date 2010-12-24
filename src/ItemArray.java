@@ -1,12 +1,12 @@
 /**
  * ItemArray.java - Interface to jh[] so I don't have to copy+paste this a bunch
  * of times
- * 
+ *
  * @author James
  */
 public abstract class ItemArray<C extends Container<il>> {
     protected C container;
-    
+
     public ItemArray(C c) {
         this.container = c;
     }
@@ -14,12 +14,12 @@ public abstract class ItemArray<C extends Container<il>> {
     public int getContentsSize() {
         return container.getContentsSize();
     }
-    
+
     /**
      * Adds the specified item. If the item doesn't have a slot, it will get the
      * nearest available slot. If amount is equal to 0, it will delete the item
      * if a slot is specified.
-     * 
+     *
      * @param item item to add
      */
     public void addItem(Item item) {
@@ -47,7 +47,7 @@ public abstract class ItemArray<C extends Container<il>> {
 
     /**
      * Retrieves from the slot
-     * 
+     *
      * @param slot slot to get item from
      * @return item
      */
@@ -66,7 +66,7 @@ public abstract class ItemArray<C extends Container<il>> {
 
     /**
      * Retrieves from the slot
-     * 
+     *
      * @param type
      * @return item
      */
@@ -76,7 +76,7 @@ public abstract class ItemArray<C extends Container<il>> {
 
     /**
      * Retrieves from the slot
-     * 
+     *
      * @param id
      * @return item
      */
@@ -94,7 +94,7 @@ public abstract class ItemArray<C extends Container<il>> {
 
     /**
      * Retrieves from the slot
-     * 
+     *
      * @param type
      * @param maxAmount
      * @return item
@@ -105,7 +105,7 @@ public abstract class ItemArray<C extends Container<il>> {
 
     /**
      * Retrieves from the slot
-     * 
+     *
      * @param id
      * @param maxAmount
      * @return item
@@ -124,7 +124,7 @@ public abstract class ItemArray<C extends Container<il>> {
 
     /**
      * Gets the nearest empty slot. -1 if there's no empty slots
-     * 
+     *
      * @return nearest empty slot
      */
     public int getEmptySlot() {
@@ -142,7 +142,7 @@ public abstract class ItemArray<C extends Container<il>> {
 
     /**
      * Removes the item from the slot
-     * 
+     *
      * @param slot slot to remove item from
      */
     public void removeItem(int slot) {
@@ -155,7 +155,7 @@ public abstract class ItemArray<C extends Container<il>> {
 
     /**
      * Sets the specified slot with item
-     * 
+     *
      * @param item item to set
      * @param slot slot to use
      */
@@ -204,7 +204,7 @@ public abstract class ItemArray<C extends Container<il>> {
     /**
      * Removes the item. No slot needed, it will go through the inventory until
      * the amount specified is removed.
-     * 
+     *
      * @param item item id and amount to remove
      */
     public void removeItem(Item item) {
@@ -214,7 +214,7 @@ public abstract class ItemArray<C extends Container<il>> {
     /**
      * Removes the item. No slot needed, it will go through the inventory until
      * the amount specified is removed.
-     * 
+     *
      * @param type item to remove
      * @param amount amount to remove
      */
@@ -225,7 +225,7 @@ public abstract class ItemArray<C extends Container<il>> {
     /**
      * Removes the item. No slot needed, it will go through the inventory until
      * the amount specified is removed.
-     * 
+     *
      * @param id item to remove
      * @param amount amount to remove
      */
@@ -251,7 +251,7 @@ public abstract class ItemArray<C extends Container<il>> {
 
     /**
      * Checks to see if this getArray() has one slot that has the given item type
-     * 
+     *
      * @param type
      * @return
      */
@@ -261,7 +261,7 @@ public abstract class ItemArray<C extends Container<il>> {
 
     /**
      * Checks to see if this getArray() has one slot that has the given item id
-     * 
+     *
      * @param itemId
      * @return
      */
@@ -292,7 +292,7 @@ public abstract class ItemArray<C extends Container<il>> {
     /**
      * Checks to see if this getArray() has one slot that has the item id and
      * equal or more to the amount.
-     * 
+     *
      * @param itemId item to look for
      * @param minimum amount of items that must be in the stack
      * @return
@@ -305,14 +305,14 @@ public abstract class ItemArray<C extends Container<il>> {
                 return true;
             }
         }
-        
+
         return false;
     }
 
     /**
      * Checks to see if this getArray() has one slot that has the item id and
      * equal or more to the amount.
-     * 
+     *
      * @param itemId
      * @param minimum
      * @param maximum
@@ -326,8 +326,65 @@ public abstract class ItemArray<C extends Container<il>> {
                 return true;
             }
         }
-        
+
         return false;
+    }
+
+    /**
+     * Checks the getArray() for the amount total of items
+     *
+     * @param itemId The item we are looking for
+     * @return integer - Total amount of items
+     */
+    public int hasAmount() {
+	Item[] items = getContents();
+	int amount = 0;
+
+	for(Item item : items) {
+	    if((item != null)) {
+		amount += item.getAmount();
+	    }
+	}
+
+	return amount;
+    }
+
+    /**
+     * Checks the getArray() for the amount total of this item id.
+     *
+     * @param itemId The item we are looking for
+     * @return integer - Total amount of itemId in the array
+     */
+    public int hasAmount(int itemId) {
+	Item[] items = getContents();
+	int amount = 0;
+
+	for(Item item : items) {
+	    if((item != null) && (item.getItemId() == itemId)) {
+		amount += item.getAmount();
+	    }
+	}
+
+	return amount;
+    }
+
+    /**
+     * Checks the getArray() for the amount total of this item type.
+     *
+     * @param type The item type we are looking for
+     * @return integer - Total amount of itemId in the array
+     */
+    public int hasAmount(Item.Type type) {
+	Item[] items = getContents();
+	int amount = 0;
+
+	for(Item item : items) {
+	    if((item != null) && (item.getType() == type)) {
+		amount += item.getAmount();
+	    }
+	}
+
+	return amount;
     }
 
     /**
@@ -337,7 +394,7 @@ public abstract class ItemArray<C extends Container<il>> {
     public Item[] getContents() {
         int arraySize = getContentsSize();
         Item[] rt = new Item[arraySize];
-        
+
         for (int i = 0; i < arraySize; i++) {
             rt[i] = getItemFromSlot(i);
         }
@@ -356,7 +413,7 @@ public abstract class ItemArray<C extends Container<il>> {
             setSlot(contents[i], i);
         }
     }
-    
+
     public void clearContents() {
         int size = getContentsSize();
 
