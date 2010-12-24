@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Logger;
 import java.io.FileInputStream;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -81,34 +82,9 @@ public final class PropertiesFile {
      * @return <code>map</code> - Simple Map HashMap of the entire <code>key=value</code> as <code>&lt;key (java.lang.String), value (java.lang.String)></code>
      * @throws Exception If the properties file doesn't exist.
      */
-//    public Map<String, String> returnMap() throws Exception {
-//        return props.
-//        Map<String, String> map = new HashMap<String, String>();
-//        BufferedReader reader = new BufferedReader(new FileReader(this.fileName));
-//        String line;
-//
-//        while ((line = reader.readLine()) != null) {
-//            if (line.trim().length() == 0) {
-//                continue;
-//            }
-//
-//            if (line.charAt(0) == '#') {
-//                continue;
-//            }
-//
-//            if (line.contains("=")) {
-//                int delimPosition = line.indexOf('=');
-//                String key = line.substring(0, delimPosition).trim();
-//                String value = line.substring(delimPosition + 1).trim();
-//                map.put(key, value);
-//            } else {
-//                continue;
-//            }
-//        }
-//
-//        reader.close();
-//        return map;
-//    }
+    public Map<String, String> returnMap() throws Exception {
+        return (Map<String, String>) props.clone();
+    }
 
     /**
      * Checks to see if the .[properties] file contains the given <code>key</code>.
@@ -130,83 +106,46 @@ public final class PropertiesFile {
         return (String)props.getProperty(var);
     }
 
-//    /**
-//     * Remove a key from the file if it exists.
-//     * This will save() which will invoke a load() on the file.
-//     *
-//     * @see #save()
-//     * @param var The <code>key</code> that will be removed from the file
-//     */
-//    public void removeKey(String var) {
-//        Boolean changed = false;
-//
-//        if (this.props.containsKey(var)) {
-//            this.props.remove(var);
-//            changed = true;
-//        }
-//
-//        // Use an iterator to prevent ConcurrentModification exceptions
-//        Iterator<String> it = this.lines.listIterator();
-//        while (it.hasNext()) {
-//            String line = it.next();
-//
-//            if (line.trim().length() == 0) {
-//                continue;
-//            }
-//
-//            if (line.charAt(0) == '#') {
-//                continue;
-//            }
-//
-//            if (line.contains("=")) {
-//                int delimPosition = line.indexOf('=');
-//                String key = line.substring(0, delimPosition).trim();
-//
-//                if (key.equals(var)) {
-//                    it.remove();
-//                    changed = true;
-//                }
-//            } else {
-//                continue;
-//            }
-//        }
-//
-//        // Save on change
-//        if (changed) {
-//            save();
-//        }
-//    }
-//
-//    /**
-//     * Checks the existance of a <code>key</code>.
-//     *
-//     * @see #containsKey(java.lang.String)
-//     * @param key The <code>key</code> in question of existance.
-//     * @return <code>Boolean</code> - True for existance, false for <code>key</code> found.
-//     */
-//    public boolean keyExists(String key) {
-//        try {
-//            return (this.containsKey(key)) ? true : false;
-//        } catch (Exception ex) {
-//            return false;
-//        }
-//    }
-//
-//    /**
-//     * Returns the value of the <code>key</code> given as a <code>String</code>,
-//     * however we do not set a string if no <code>key</code> is found.
-//     *
-//     * @see #getProperty(java.lang.String)
-//     * @param key The <code>key</code> we will retrieve the property from, if no <code>key</code> is found default to "" or empty.
-//     */
-//    public String getString(String key) {
-//        if (this.containsKey(key)) {
-//            return this.getProperty(key);
-//        }
-//
-//        return "";
-//    }
-//
+    /**
+     * Remove a key from the file if it exists.
+     * This will save() which will invoke a load() on the file.
+     *
+     * @see #save()
+     * @param var The <code>key</code> that will be removed from the file
+     */
+    public void removeKey(String var) {
+        if (this.props.containsKey(var)) {
+            this.props.remove(var);
+            save();
+        }
+    }
+
+    /**
+     * Checks the existance of a <code>key</code>.
+     *
+     * @see #containsKey(java.lang.String)
+     * @param key The <code>key</code> in question of existance.
+     * @return <code>Boolean</code> - True for existance, false for <code>key</code> found.
+     */
+    public boolean keyExists(String key) {
+        return containsKey(key);
+    }
+
+    /**
+     * Returns the value of the <code>key</code> given as a <code>String</code>,
+     * however we do not set a string if no <code>key</code> is found.
+     *
+     * @see #getProperty(java.lang.String)
+     * @param key The <code>key</code> we will retrieve the property from, if no <code>key</code> is found default to "" or empty.
+     */
+    public String getString(String key) {
+        if (this.containsKey(key)) {
+            return this.getProperty(key);
+        }
+
+        return "";
+    }
+
     /**
      * Returns the value of the <code>key</code> given as a <code>String</code>.
      * If it is not found, it will invoke saving the default <code>value</code> to the properties file.
