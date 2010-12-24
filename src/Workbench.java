@@ -14,4 +14,12 @@ public class Workbench extends ItemArray<it> implements Inventory {
     public void update(Player player) {
         workbench.a((gq)player.getUser());
     }
+
+    public String getName() {
+        return container.getName();
+    }
+
+    public void setName(String value) {
+        container.setName(value);
+    }
 }

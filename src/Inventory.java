@@ -37,4 +37,6 @@ public interface Inventory {
     public Item[] getContents();
     public void setContents(Item[] contents);
     public int getContentsSize();
+    public String getName();
+    public void setName(String value);
 }

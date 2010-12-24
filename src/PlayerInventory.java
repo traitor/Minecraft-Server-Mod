@@ -79,4 +79,12 @@ public class PlayerInventory extends ItemArray<ii> implements Inventory {
     public Player getPlayer() {
         return user.getPlayer();
     }
+
+    public String getName() {
+        return container.getName();
+    }
+
+    public void setName(String value) {
+        container.setName(value);
+    }
 }

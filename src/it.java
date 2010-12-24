@@ -1,8 +1,10 @@
+// hMod: This class must extend Container<obfuscated_item> and implement the various methods within. They will not all be marked individually.
 
 public class it
         implements lg, Container<il> {
 
     private il[] a = new il[1];
+    private String name = "Result";
 
     /**
      * Get contents of the chest block
@@ -34,6 +36,14 @@ public class it
         return a();
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String value) {
+        name = value;
+    }
+
     public int a() {
         return 1;
     }
@@ -43,7 +53,7 @@ public class it
     }
 
     public String b() {
-        return "Result";
+        return getName(); //hMod: override with getName()
     }
 
     public il a(int paramInt1, int paramInt2) {
