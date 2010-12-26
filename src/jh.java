@@ -31,6 +31,7 @@ public class jh {
 		return localap;
 	}
 
+	// hMod: bring back old "send packet to chunk" method from alpha
 	public void a(jv packetToSend, int globalx, int globaly, int globalz) {
 		// Get chunk coordinates
 		int chunkx = globalx >> 4;
@@ -42,6 +43,7 @@ public class jh {
 		if (localap != null)
 			localap.a(packetToSend);
 	}
+	// end hMod
 
 	public void a(int paramInt1, int paramInt2, int paramInt3) {
 		int i = paramInt1 >> 4;
