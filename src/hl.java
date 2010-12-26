@@ -408,5 +408,10 @@ public class hl {
     }
 
     public void a(int paramInt1, int paramInt2, int paramInt3, bg parambg) {
+		// Check if bg (TileEntity) is a Sign
+		if(parambg instanceof kp)
+		{
+			d.a(parambg.f(), paramInt1, paramInt2, paramInt3);
+		}
     }
 }
