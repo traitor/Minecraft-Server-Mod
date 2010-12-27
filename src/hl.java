@@ -412,7 +412,7 @@ public class hl {
 		// Check if bg (TileEntity) is a Sign
 		if(parambg instanceof kp)
 		{
-			d.a(parambg.f(), paramInt1, paramInt2, paramInt3);
+			d.sendPacketToChunk(((kp)parambg).f(), paramInt1, paramInt2, paramInt3);
 		}
 		// end hMod
     }
