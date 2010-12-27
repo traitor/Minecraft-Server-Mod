@@ -5,127 +5,135 @@ import net.minecraft.server.MinecraftServer;
 
 public class jh {
 
-	private List a = new ArrayList();
-	private fv b = new fv();
-	private List c = new ArrayList();
-	private MinecraftServer d;
-
-	public jh(MinecraftServer paramMinecraftServer) {
-		this.d = paramMinecraftServer;
+	public jh(MinecraftServer minecraftserver) {
+		// hMod: generificy
+		a = new ArrayList<fi>();
+		b = new fv();
+		c = new ArrayList<ap>();
+		d = minecraftserver;
 	}
 
 	public void a() {
-		for (int i = 0; i < this.c.size(); i++) {
-			((ap) this.c.get(i)).a();
+		for (int i = 0; i < c.size(); i++) {
+			// hMod: remove unnecessary cast
+			 c.get(i).a();
 		}
-		this.c.clear();
+		c.clear();
 	}
 
-	private ap a(int paramInt1, int paramInt2, boolean paramBoolean) {
-		long l = paramInt1 + 2147483647L | paramInt2 + 2147483647L << 32;
-		ap localap = (ap) this.b.a(l);
-		if ((localap == null) && (paramBoolean)) {
-			localap = new ap(this, paramInt1, paramInt2);
-			this.b.a(l, localap);
+	private ap a(int i, int j, boolean flag) {
+		long l = (long) i + 0x7fffffffL | (long) j + 0x7fffffffL << 32;
+		ap ap1 = (ap) b.a(l);
+		if (ap1 == null && flag) {
+			ap1 = new ap(this, i, j);
+			b.a(l, ap1);
 		}
-		return localap;
+		return ap1;
 	}
 
-	// hMod: bring back old "send packet to chunk" method from alpha
-	public void a(jv packetToSend, int globalx, int globaly, int globalz) {
-		// Get chunk coordinates
-		int chunkx = globalx >> 4;
-		int chunkz = globalz >> 4;
-		// Get the chunk
-		ap localap = a(chunkx, chunkz, false);
-
-		// if chunk != null, send packet
-		if (localap != null)
-			localap.a(packetToSend);
-	}
-	// end hMod
-
-	public void a(int paramInt1, int paramInt2, int paramInt3) {
-		int i = paramInt1 >> 4;
-		int j = paramInt3 >> 4;
-		ap localap = a(i, j, false);
-		if (localap != null)
-			localap.a(paramInt1 & 0xF, paramInt2, paramInt3 & 0xF);
+	public void a(int i, int j, int k) {
+		int l = i >> 4;
+		int i1 = k >> 4;
+		ap ap1 = a(l, i1, false);
+		if (ap1 != null)
+			ap1.a(i & 0xf, j, k & 0xf);
 	}
 
-	public void a(fi paramfi) {
-		int i = (int) paramfi.p >> 4;
-		int j = (int) paramfi.r >> 4;
-
-		paramfi.d = paramfi.p;
-		paramfi.e = paramfi.r;
-
+	public void a(fi fi1) {
+		int i = (int) fi1.p >> 4;
+		int j = (int) fi1.r >> 4;
+		fi1.d = fi1.p;
+		fi1.e = fi1.r;
 		for (int k = i - 10; k <= i + 10; k++) {
-			for (int m = j - 10; m <= j + 10; m++) {
-				a(k, m, true).a(paramfi);
+			for (int l = j - 10; l <= j + 10; l++) {
+				a(k, l, true).a(fi1);
 			}
 		}
-		this.a.add(paramfi);
+		a.add(fi1);
 	}
 
-	public void b(fi paramfi) {
-		int i = (int) paramfi.d >> 4;
-		int j = (int) paramfi.e >> 4;
-
+	public void b(fi fi1) {
+		int i = (int) fi1.d >> 4;
+		int j = (int) fi1.e >> 4;
 		for (int k = i - 10; k <= i + 10; k++) {
-			for (int m = j - 10; m <= j + 10; m++) {
-				ap localap = a(k, m, false);
-				if (localap == null)
-					continue;
-				localap.b(paramfi);
+			for (int l = j - 10; l <= j + 10; l++) {
+				ap ap1 = a(k, l, false);
+				if (ap1 != null)
+					ap1.b(fi1);
 			}
 		}
-		this.a.remove(paramfi);
+		a.remove(fi1);
 	}
 
-	private boolean a(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-		int i = paramInt1 - paramInt3;
-		int j = paramInt2 - paramInt4;
-		if ((i < -10) || (i > 10))
+	private boolean a(int i, int j, int k, int l) {
+		int i1 = i - k;
+		int j1 = j - l;
+		if (i1 < -10 || i1 > 10)
 			return false;
-		return (j >= -10) && (j <= 10);
+		return j1 >= -10 && j1 <= 10;
 	}
 
-	public void c(fi paramfi) {
-		int i = (int) paramfi.p >> 4;
-		int j = (int) paramfi.r >> 4;
-
-		double d1 = paramfi.d - paramfi.p;
-		double d2 = paramfi.e - paramfi.r;
+	public void c(fi fi1) {
+		int i = (int) fi1.p >> 4;
+		int j = (int) fi1.r >> 4;
+		double d1 = fi1.d - fi1.p;
+		double d2 = fi1.e - fi1.r;
 		double d3 = d1 * d1 + d2 * d2;
-		if (d3 < 64.0D)
+		if (d3 < 64D)
 			return;
-
-		int k = (int) paramfi.d >> 4;
-		int m = (int) paramfi.e >> 4;
-
-		int n = i - k;
-		int i1 = j - m;
-		if ((n == 0) && (i1 == 0))
+		int k = (int) fi1.d >> 4;
+		int l = (int) fi1.e >> 4;
+		int i1 = i - k;
+		int j1 = j - l;
+		if (i1 == 0 && j1 == 0)
 			return;
-
-		for (int i2 = i - 10; i2 <= i + 10; i2++) {
-			for (int i3 = j - 10; i3 <= j + 10; i3++) {
-				if (!a(i2, i3, k, m))
-					a(i2, i3, true).a(paramfi);
-				if (!a(i2 - n, i3 - i1, i, j)) {
-					ap localap = a(i2 - n, i3 - i1, false);
-					if (localap == null)
-						continue;
-					localap.b(paramfi);
-				}
+		for (int k1 = i - 10; k1 <= i + 10; k1++) {
+			for (int l1 = j - 10; l1 <= j + 10; l1++) {
+				if (!a(k1, l1, k, l))
+					a(k1, l1, true).a(fi1);
+				if (a(k1 - i1, l1 - j1, i, j))
+					continue;
+				ap ap1 = a(k1 - i1, l1 - j1, false);
+				if (ap1 != null)
+					ap1.b(fi1);
 			}
 		}
-		paramfi.d = paramfi.p;
-		paramfi.e = paramfi.r;
+		fi1.d = fi1.p;
+		fi1.e = fi1.r;
 	}
 
 	public int b() {
 		return 144;
 	}
+
+	static MinecraftServer a(jh jh1) {
+		return jh1.d;
+	}
+
+	static fv b(jh jh1) {
+		return jh1.b;
+	}
+
+	static List c(jh jh1) {
+		return jh1.c;
+	}
+
+	// hMod: generificy
+	private List<fi> a;
+	private fv b;
+	private List<ap> c;
+	private MinecraftServer d;
+
+	// hMod: bring back old "send packet to chunk" method from alpha
+	public void sendPacketToChunk(jv packetToSend, int globalx, int globaly, int globalz) {
+		// Get chunk coordinates
+		int chunkx = globalx >> 4;
+		int chunkz = globalz >> 4;
+		// Get the chunk
+		ap localap = a(chunkx, chunkz, false);
+		// if chunk != null, send packet
+		if (localap != null)
+			localap.a(packetToSend);
+	}
+	// end hMod
 }
