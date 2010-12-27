@@ -621,7 +621,7 @@ public class Server {
      * @return true if the chunk is loaded
      */
     public boolean isChunkLoaded(int x, int y, int z) {
-        return this.server.e.e(x, y, z);
+        return this.server.e.A.a(x >> 4, z >> 4);
     }
 
     /**
