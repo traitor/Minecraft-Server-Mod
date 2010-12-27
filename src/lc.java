@@ -306,7 +306,7 @@ public class lc extends ep {
                 return false;
             }
             // hMod: partial damage
-            if (attacker != null && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.ENTITY, attacker, defender, paramInt - bn)) {
+            if (attacker != null && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.ENTITY, attacker, defender, paramInt - bw)) {
                 return false;
             }
             d(paramInt - this.bw);
