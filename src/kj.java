@@ -20,11 +20,13 @@ public class kj extends gm
 			Block blockPlaced = new Block(paramff.a(paramInt1, paramInt2 + 1, paramInt3), paramInt1, paramInt2 + 1, paramInt3);	
 
 			// Call the hook
-			Player player = ((fi) paramgp).getPlayer();
-			if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, blockPlaced, blockClicked, new Item(paramik))) {
-				return false;
+			if (paramgp instanceof fi) {
+				Player player = ((fi) paramgp).getPlayer();
+				if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, blockPlaced, blockClicked, new Item(paramik))) {
+					return false;
+				}
 			}
-
+				
 			gv localgv = gv.aA;
 			paramff.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localgv.bq.c(), (localgv.bq.a() + 1.0F) / 2.0F, localgv.bq.b() * 0.8F);
 
