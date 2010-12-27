@@ -1,8 +1,10 @@
+// hMod: This class must extend Container<obfuscated_item> and implement the various methods within. They will not all be marked individually.
 
 public class jb extends bg
         implements lg, Container<il> {
 
     private il[] e = new il[36];
+    private String name = "Chest";
 
     /**
      * Get contents of the chest block
@@ -32,6 +34,14 @@ public class jb extends bg
 
     public int getContentsSize() {
         return a();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String value) {
+        name = value;
     }
 
     public int a() {
@@ -70,7 +80,7 @@ public class jb extends bg
     }
 
     public String b() {
-        return "Chest";
+        return getName(); //hMod: override with getName()
     }
 
     public void a(ad paramad) {
