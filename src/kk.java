@@ -249,7 +249,6 @@ public class kk extends fs
 			Item toDrop = rawil != null ? new Item(rawil) : null;
 			if (toDrop != null && toDrop.getAmount() >= 1) {
 				toDrop.setAmount(1);
-				System.err.println("ITEM_DROP: S*" + toDrop.getAmount());
 				if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_DROP, new Object[]{this.getPlayer(), toDrop})) {
 					getPlayer().getInventory().update();
 					this.e.J();
@@ -614,7 +613,6 @@ public class kk extends fs
 					Item toDrop = new Item(this.e.an.i());
 					if (!leftClick)
 						toDrop.setAmount(1);
-					System.err.println("ITEM_DROP: " + clickedSlot + "*" + toDrop.getAmount());
 					if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_DROP, new Object[]{this.getPlayer(), toDrop})) {
 						stage.update();
 						this.e.J();
@@ -632,7 +630,6 @@ public class kk extends fs
 					Item cursorItem = rawil != null ? new Item(rawil) : null;
 					Item slotItem = stage.getItemFromSlot(clickedSlot);
 					if (cursorItem != null && slotItem != null && slotItem.getItemId() != cursorItem.getItemId() && canItemInInvSlot(cursorItem.getItemId(), clickedSlot)) {
-						System.err.println("INVENTORY_SWAP: " + clickedSlot);
 						if (((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_SWAP, new Object[]{this.getPlayer(), stage, clickedSlot, slotItem, cursorItem}))) {
 							stage.update();
 							this.e.J();
@@ -650,14 +647,12 @@ public class kk extends fs
 
 						// place item
 						if (cursorItem.getAmount() > 0) {
-							System.err.println("INVENTORY_PLACE: " + clickedSlot + "*" + cursorItem.getAmount());
 							if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_PLACE, new Object[]{this.getPlayer(), stage, cursorItem, clickedSlot})) {
 								stage.update();
 								this.e.J();
 								return;
 							}
 						} else if (cursorItem.getAmount() < 0) {
-							System.err.println("INVENTORY_TAKE: " + clickedSlot + "*" + cursorItem.getAmount());
 							cursorItem.setAmount(Math.abs(slotItem.getAmount()));
 							if (((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_TAKE, new Object[]{this.getPlayer(), stage, cursorItem, clickedSlot}))) {
 								stage.update();
@@ -668,7 +663,6 @@ public class kk extends fs
 					} else if (cursorItem == null && slotItem != null) {
 						if (!leftClick)
 							slotItem.setAmount((slotItem.getAmount() + 1) / 2);
-						System.err.println("INVENTORY_TAKE: " + clickedSlot + "*" + slotItem.getAmount());
 						// take shit
 						if (((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_TAKE, new Object[]{this.getPlayer(), stage, slotItem, clickedSlot}))) {
 							stage.update();
