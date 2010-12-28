@@ -27,6 +27,8 @@ public class fi extends gq
 
     // hMod: Player storage
     private Player player;
+	// hMod: for the inventory move hook
+	private Inventory lastOpenedInventory;
 
     public fi(MinecraftServer paramMinecraftServer, ff paramff, String paramString, kw paramkv) {
         super(paramff);
@@ -267,7 +269,7 @@ public class fi extends gq
         if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), bench)) {
             return;
         }
-
+		this.lastOpenedInventory = bench;
         R();
         this.a.b(new ih(this.bH, 1, bench.getName(), 9));
         this.ap = temp;
@@ -295,7 +297,7 @@ public class fi extends gq
         if (inv != null) {
             name = inv.getName();
         }
-
+		this.lastOpenedInventory = inv;
         R();
         this.a.b(new ih(this.bH, 0, name, paramlf.a()));
         this.ap = new bx(this.an, paramlf);
@@ -315,7 +317,7 @@ public class fi extends gq
         if (inv != null) {
             name = inv.getName();
         }
-
+		this.lastOpenedInventory = inv;
         R();
         this.a.b(new ih(this.bH, 2, name, paramek.a()));
         this.ap = new bj(this.an, paramek);
@@ -365,4 +367,10 @@ public class fi extends gq
         this.ap.a((gq)this);
         this.ap = this.ao;
     }
+
+	// hMod: for inventory move hook
+	public Inventory getLastOpenedInventory()
+	{
+		return this.lastOpenedInventory;
+	}
 }

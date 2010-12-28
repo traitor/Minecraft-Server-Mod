@@ -244,6 +244,19 @@ public class kk extends fs
 
     public void a(jd paramjc) {
         if (paramjc.e == 4) {
+			// hMod: item_drop hook
+			il rawil = e.an.a[e.an.c];
+			Item toDrop = rawil != null ? new Item(rawil) : null;
+			if (toDrop != null && toDrop.getAmount() >= 1) {
+				toDrop.setAmount(1);
+				System.err.println("ITEM_DROP: S*" + toDrop.getAmount());
+				if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_DROP, new Object[]{this.getPlayer(), toDrop})) {
+					getPlayer().getInventory().update();
+					this.e.J();
+					return;
+				}
+			}
+			// end hMod
             this.e.L();
             return;
         }
@@ -569,29 +582,146 @@ public class kk extends fs
         this.e.K();
     }
 
-    public void a(cs paramcs) { // HMOD : TODO: Inventory crap
-        if ((this.e.ap.f == paramcs.a) && (this.e.ap.c(this.e))) {
-            il localik = this.e.ap.a(paramcs.b, paramcs.c, this.e);
+	public void a(cs paramcs) { // HMOD : TODO: Inventory crap
+		if ((this.e.ap.f == paramcs.a) && (this.e.ap.c(this.e))) {
+			// hMod: item drop & inventory move hooks
+			int clickedSlot = paramcs.b;
+			boolean leftClick = paramcs.c == 0;
+			// we don't have a wrapper for crafting inventory yet... so i'm ignoring it for now...
+			if (clickedSlot >= 5) {
+				// transform packet slot IDs to server slot IDs... ... why is notch so fucking crazy........
+				if (clickedSlot >= 36 && clickedSlot <= 44)
+					clickedSlot -= 36;
+				else
+					switch (clickedSlot) {
+						case 5:
+							clickedSlot = 39;
+							break;
+						case 6:
+							clickedSlot = 38;
+							break;
+						case 7:
+							clickedSlot = 37;
+							break;
+						case 8:
+							clickedSlot = 36;
+							break;
+					}
+				Inventory stage = paramcs.a == 0 ? getPlayer().getInventory() : e.getLastOpenedInventory();
 
-            if (il.a(paramcs.e, localik)) {
-                this.e.a.b(new ay(paramcs.a, paramcs.d, true));
-                this.e.am = true;
-                this.e.ap.a();
-                this.e.J();
-                this.e.am = false;
-            } else {
-                this.k.put(Integer.valueOf(this.e.ap.f), Short.valueOf(paramcs.d));
-                this.e.a.b(new ay(paramcs.a, paramcs.d, false));
-                this.e.ap.a(this.e, false);
+				if (clickedSlot == -999) {
+					// we're dropping item!
+					Item toDrop = new Item(this.e.an.i());
+					if (!leftClick)
+						toDrop.setAmount(1);
+					System.err.println("ITEM_DROP: " + clickedSlot + "*" + toDrop.getAmount());
+					if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_DROP, new Object[]{this.getPlayer(), toDrop})) {
+						stage.update();
+						this.e.J();
+						return;
+					}
+				} else {
+					/*
+					 * there are 3 operations here..
+					 * 1. pick up item (when slot is 1 and cursor is 0)
+					 * 2. put item (when slot is 0 and cursor is 1
+					 * 3. swap item (when slot and cursor is 1)
+					 */
 
-                ArrayList<il> localArrayList = new ArrayList<il>();
-                for (int m = 0; m < this.e.ap.e.size(); m++) {
-                    localArrayList.add(((gp) this.e.ap.e.get(m)).c());
-                }
-                this.e.a(this.e.ap, localArrayList);
-            }
-        }
-    }
+					il rawil = e.an.i();
+					Item cursorItem = rawil != null ? new Item(rawil) : null;
+					Item slotItem = stage.getItemFromSlot(clickedSlot);
+					if (cursorItem != null && slotItem != null && slotItem.getItemId() != cursorItem.getItemId() && canItemInInvSlot(cursorItem.getItemId(), clickedSlot)) {
+						System.err.println("INVENTORY_SWAP: " + clickedSlot);
+						if (((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_SWAP, new Object[]{this.getPlayer(), stage, clickedSlot, slotItem, cursorItem}))) {
+							stage.update();
+							this.e.J();
+							return;
+						}
+					} else if (((cursorItem != null && slotItem == null) || (cursorItem != null && slotItem != null && slotItem.getItemId() == cursorItem.getItemId()))
+							&& canItemInInvSlot(cursorItem.getItemId(), clickedSlot)) {
+						if (!leftClick)
+							cursorItem.setAmount(1);
+						if (slotItem != null) {
+							int maxInSlot = gm.c[cursorItem.getItemId()].b();
+							if (slotItem.getAmount() + cursorItem.getAmount() > maxInSlot)
+								cursorItem.setAmount(maxInSlot - slotItem.getAmount());
+						}
+
+						// place item
+						if (cursorItem.getAmount() > 0) {
+							System.err.println("INVENTORY_PLACE: " + clickedSlot + "*" + cursorItem.getAmount());
+							if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_PLACE, new Object[]{this.getPlayer(), stage, cursorItem, clickedSlot})) {
+								stage.update();
+								this.e.J();
+								return;
+							}
+						} else if (cursorItem.getAmount() < 0) {
+							System.err.println("INVENTORY_TAKE: " + clickedSlot + "*" + cursorItem.getAmount());
+							cursorItem.setAmount(Math.abs(slotItem.getAmount()));
+							if (((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_TAKE, new Object[]{this.getPlayer(), stage, cursorItem, clickedSlot}))) {
+								stage.update();
+								this.e.J();
+								return;
+							}
+						}
+					} else if (cursorItem == null && slotItem != null) {
+						if (!leftClick)
+							slotItem.setAmount((slotItem.getAmount() + 1) / 2);
+						System.err.println("INVENTORY_TAKE: " + clickedSlot + "*" + slotItem.getAmount());
+						// take shit
+						if (((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_TAKE, new Object[]{this.getPlayer(), stage, slotItem, clickedSlot}))) {
+							stage.update();
+							this.e.J();
+							return;
+						}
+					}
+
+				}
+			}
+
+			// end hMod
+
+			il localik = this.e.ap.a(paramcs.b, paramcs.c, this.e);
+
+			if (il.a(paramcs.e, localik)) {
+				this.e.a.b(new ay(paramcs.a, paramcs.d, true));
+				this.e.am = true;
+				this.e.ap.a();
+				this.e.J();
+				this.e.am = false;
+			} else {
+				this.k.put(Integer.valueOf(this.e.ap.f), Short.valueOf(paramcs.d));
+				this.e.a.b(new ay(paramcs.a, paramcs.d, false));
+				this.e.ap.a(this.e, false);
+
+				ArrayList<il> localArrayList = new ArrayList<il>();
+				for (int m = 0; m < this.e.ap.e.size(); m++) {
+					localArrayList.add(((gp) this.e.ap.e.get(m)).c());
+				}
+				this.e.a(this.e.ap, localArrayList);
+			}
+		}
+	}
+	
+	// hMod: utility function to see if an item can be put in invent slot. 
+	private static boolean canItemInInvSlot(int itemid, int slotid)
+	{
+		switch(slotid)
+		{
+			case 39: // Helmets
+				return itemid == 298 || itemid == 302 || itemid == 306 || itemid == 310 || itemid == 314;
+			case 38: // Chestplates
+				return itemid == 299 || itemid == 303 || itemid == 307 || itemid == 311 || itemid == 315;
+			case 37: // Leggings
+				return itemid == 300 || itemid == 304 || itemid == 308 || itemid == 312 || itemid == 316;
+			case 36: // Boots
+				return itemid == 301 || itemid == 305 || itemid == 309 || itemid == 313 || itemid == 317;
+			default:
+				return true;
+		}
+	}
+	// end hMod
 
     public void a(ay paramay) {
         Short localShort = (Short) this.k.get(Integer.valueOf(this.e.ap.f));
