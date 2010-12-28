@@ -610,13 +610,16 @@ public class kk extends fs
 
 				if (clickedSlot == -999) {
 					// we're dropping item!
-					Item toDrop = new Item(this.e.an.i());
-					if (!leftClick)
-						toDrop.setAmount(1);
-					if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_DROP, new Object[]{this.getPlayer(), toDrop})) {
-						stage.update();
-						this.e.J();
-						return;
+					il rawil = this.e.an.i();
+					if (rawil != null) {
+						Item toDrop = new Item();
+						if (!leftClick)
+							toDrop.setAmount(1);
+						if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_DROP, new Object[]{this.getPlayer(), toDrop})) {
+							stage.update();
+							this.e.J();
+							return;
+						}
 					}
 				} else {
 					/*
