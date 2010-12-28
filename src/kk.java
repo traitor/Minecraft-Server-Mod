@@ -588,7 +588,7 @@ public class kk extends fs
 			int clickedSlot = paramcs.b;
 			boolean leftClick = paramcs.c == 0;
 			// we don't have a wrapper for crafting inventory yet... so i'm ignoring it for now...
-			if (clickedSlot >= 5) {
+			if (clickedSlot >= 5 || clickedSlot == -999) {
 				// transform packet slot IDs to server slot IDs... ... why is notch so fucking crazy........
 				if (clickedSlot >= 36 && clickedSlot <= 44)
 					clickedSlot -= 36;
