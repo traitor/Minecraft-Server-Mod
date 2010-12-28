@@ -3,7 +3,7 @@
  * @author James
  */
 public class Chest extends BaseContainerBlock<jb> implements ComplexBlock {
-
+    
     public Chest(jb chest) {
         super(chest, "Chest");
     }
@@ -35,7 +35,7 @@ public class Chest extends BaseContainerBlock<jb> implements ComplexBlock {
             ComplexBlock cblock = etc.getServer().getOnlyComplexBlock(block);
             if ((cblock != null) && (cblock instanceof Chest)) {
                 Chest chest = (Chest)cblock;
-                return new DoubleChest(new av("Hello World", this.container, chest.container));
+                return new DoubleChest(new av(getName(), this.container, chest.container));
             }
         }
 

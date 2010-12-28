@@ -213,40 +213,6 @@ public class PluginListener {
     }
 
     /**
-     * Called when a player's inventory is modified.
-     * 
-     * @param player
-     *            player who's inventory was modified
-     * @return true if you want any changes to be reverted
-     */
-    public boolean onInventoryChange(Player player) {
-        return false;
-    }
-
-    /**
-     * Called when a player's crafting table inventory is modified. This is the
-     * 2x2 box in a player's inventory, not the actual 3x3 crafting table!
-     * 
-     * @param player
-     *            player who's crafting table was modified
-     * @return true if you want any changes to be reverted
-     */
-    public boolean onCraftInventoryChange(Player player) {
-        return false;
-    }
-
-    /**
-     * Called when a player's equipment inventory is modified.
-     * 
-     * @param player
-     *            player who's equipment was modified
-     * @return true if you want any changes to be reverted
-     */
-    public boolean onEquipmentChange(Player player) {
-        return false;
-    }
-
-    /**
      * Called when a player drops an item.
      * 
      * @param player

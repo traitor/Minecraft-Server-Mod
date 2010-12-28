@@ -1,3 +1,4 @@
+// hMod: This class must extend Container<obfuscated_item> and implement the various methods within. They will not all be marked individually.
 
 import java.util.List;
 import java.util.Random;
@@ -22,6 +23,7 @@ public class kq extends ep
     private double aq;
     private double ar;
     private double as;
+    private String name = "Minecart";
 
     @Override
     public il[] getContents() {
@@ -43,6 +45,14 @@ public class kq extends ep
 
     public int getContentsSize() {
         return a();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String value) {
+        name = value;
     }
 
     public kq(ff paramff) {
@@ -649,7 +659,7 @@ public class kq extends ep
     }
 
     public String b() {
-        return "Minecart";
+        return getName(); //hMod: override with getName()
     }
 
     public int c() {

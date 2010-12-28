@@ -8,4 +8,6 @@ public interface Container<T> {
     public T getContentsAt(int index);
     public void setContentsAt(int index, T value);
     public int getContentsSize();
+    public String getName();
+    public void setName(String value);
 }

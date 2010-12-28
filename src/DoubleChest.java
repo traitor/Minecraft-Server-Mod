@@ -1,10 +1,19 @@
 
 public class DoubleChest extends ItemArray<av> implements ComplexBlock, Inventory {
     private final Block block;
+    private String name = "Large Chest";
 
     public DoubleChest(av chest) {
         super(chest);
         block = chest.getChestBlock();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String value) {
+        name = value;
     }
 
     public int getX() {
