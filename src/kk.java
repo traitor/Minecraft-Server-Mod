@@ -581,43 +581,31 @@ public class kk extends fs
         this.e.K();
     }
 
-	public void a(cs paramcs) { // HMOD : TODO: Inventory crap
+	public void a(cs paramcs) {
 		if ((this.e.ap.f == paramcs.a) && (this.e.ap.c(this.e))) {
 			// hMod: item drop & inventory move hooks
 			int clickedSlot = paramcs.b;
+			System.err.println("RAWSLOT: " + clickedSlot);
 			boolean leftClick = paramcs.c == 0;
+			boolean haveExtraInv = paramcs.a != 0;
 			// we don't have a wrapper for crafting inventory yet... so i'm ignoring it for now...
-			if (clickedSlot >= 5 || clickedSlot == -999) {
+			if (((clickedSlot >= 5 || clickedSlot == -999) && !haveExtraInv) || haveExtraInv) {
+				System.err.println("INVENT: " + paramcs.a);
 				// transform packet slot IDs to server slot IDs... ... why is notch so fucking crazy........
-				if (clickedSlot >= 36 && clickedSlot <= 44)
-					clickedSlot -= 36;
-				else
-					switch (clickedSlot) {
-						case 5:
-							clickedSlot = 39;
-							break;
-						case 6:
-							clickedSlot = 38;
-							break;
-						case 7:
-							clickedSlot = 37;
-							break;
-						case 8:
-							clickedSlot = 36;
-							break;
-					}
-				Inventory stage = paramcs.a == 0 ? getPlayer().getInventory() : e.getLastOpenedInventory();
+				clickedSlot = calculateSlotId(haveExtraInv, clickedSlot);
+				Inventory stage = !haveExtraInv ? getPlayer().getInventory() : e.getLastOpenedInventory();
 
 				if (clickedSlot == -999) {
 					// we're dropping item!
 					il rawil = this.e.an.i();
 					if (rawil != null) {
-						Item toDrop = new Item();
+						Item toDrop = new Item(rawil);
 						if (!leftClick)
 							toDrop.setAmount(1);
+						System.err.println("ITEM_DROP");
 						if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_DROP, new Object[]{this.getPlayer(), toDrop})) {
-							stage.update();
-							this.e.J();
+							e.k();
+							e.J();
 							return;
 						}
 					}
@@ -631,15 +619,16 @@ public class kk extends fs
 
 					il rawil = e.an.i();
 					Item cursorItem = rawil != null ? new Item(rawil) : null;
-					Item slotItem = stage.getItemFromSlot(clickedSlot);
-					if (cursorItem != null && slotItem != null && slotItem.getItemId() != cursorItem.getItemId() && canItemInInvSlot(cursorItem.getItemId(), clickedSlot)) {
+					Item slotItem = getItemFromSlot(getPlayer(), stage, clickedSlot);
+					if (cursorItem != null && slotItem != null && slotItem.getItemId() != cursorItem.getItemId() && (canItemInInvSlot(cursorItem.getItemId(), clickedSlot) || haveExtraInv)) {
+						System.err.println("INV_SWAP");
 						if (((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_SWAP, new Object[]{this.getPlayer(), stage, clickedSlot, slotItem, cursorItem}))) {
-							stage.update();
-							this.e.J();
+							e.k();
+							e.J();
 							return;
 						}
 					} else if (((cursorItem != null && slotItem == null) || (cursorItem != null && slotItem != null && slotItem.getItemId() == cursorItem.getItemId()))
-							&& canItemInInvSlot(cursorItem.getItemId(), clickedSlot)) {
+							&& (canItemInInvSlot(cursorItem.getItemId(), clickedSlot) || haveExtraInv)) {
 						if (!leftClick)
 							cursorItem.setAmount(1);
 						if (slotItem != null) {
@@ -650,16 +639,18 @@ public class kk extends fs
 
 						// place item
 						if (cursorItem.getAmount() > 0) {
+							System.err.println("INV_PLACE");
 							if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_PLACE, new Object[]{this.getPlayer(), stage, cursorItem, clickedSlot})) {
-								stage.update();
-								this.e.J();
+								e.k();
+								e.J();
 								return;
 							}
 						} else if (cursorItem.getAmount() < 0) {
 							cursorItem.setAmount(Math.abs(slotItem.getAmount()));
+							System.err.println("INV_TAKE 1");
 							if (((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_TAKE, new Object[]{this.getPlayer(), stage, cursorItem, clickedSlot}))) {
-								stage.update();
-								this.e.J();
+								e.k();
+								e.J();
 								return;
 							}
 						}
@@ -667,11 +658,15 @@ public class kk extends fs
 						if (!leftClick)
 							slotItem.setAmount((slotItem.getAmount() + 1) / 2);
 						// take shit
+						System.err.println("INV_TAKE 2");
 						if (((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_TAKE, new Object[]{this.getPlayer(), stage, slotItem, clickedSlot}))) {
-							stage.update();
-							this.e.J();
+							e.k();
+							e.J();
 							return;
 						}
+					} else {
+						System.err.println("FAIL. " + (cursorItem != null) + " " + (slotItem != null) + " " + (stage != null));
+
 					}
 
 				}
@@ -717,6 +712,56 @@ public class kk extends fs
 			default:
 				return true;
 		}
+	}
+
+	private static Item getItemFromSlot(Player p, Inventory extraInv, int slot)
+	{
+		int extra = -1;
+		if(extraInv == null || extraInv instanceof PlayerInventory) extra = 0;
+		else if(extraInv instanceof Furnace)
+			extra = 3;
+		else if(extraInv instanceof Chest)
+			extra = 27;
+		else if(extraInv instanceof DoubleChest)
+			extra = 54;
+		else if(extraInv instanceof Workbench)
+			extra = 10;
+		if(extra == -1) throw new RuntimeException("kk.getItemFromSlot called but Inventory isn't any of the valid types!!");
+		if(slot >= extra)
+		{
+			int correctId = slot-extra;
+			if(correctId >= 0 && correctId < 27) correctId += 9;
+			else if(correctId >= 27 && correctId < 36) correctId -= 27;
+			System.err.println("SLOT: " + correctId);
+			return p.getInventory().getItemFromSlot(correctId);
+		} else {
+			System.err.println("SLOT: " + (slot));
+			return extraInv.getItemFromSlot(slot);
+		}
+	}
+
+	private static int calculateSlotId(boolean hasExtraInv, int slot2) {
+		int slot = slot2;
+		if (!hasExtraInv)
+			if (slot >= 36 && slot <= 44)
+				slot -= 36;
+			else
+				switch (slot) {
+					case 5:
+						slot = 39;
+						break;
+					case 6:
+						slot = 38;
+						break;
+					case 7:
+						slot = 37;
+						break;
+					case 8:
+						slot = 36;
+						break;
+				}
+
+		return slot;
 	}
 	// end hMod
 
