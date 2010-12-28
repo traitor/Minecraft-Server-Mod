@@ -587,6 +587,7 @@ public class kk extends fs
 			int clickedSlot = paramcs.b;
 			boolean leftClick = paramcs.c == 0;
 			boolean haveExtraInv = paramcs.a != 0;
+			Player p = getPlayer();
 			// we don't have a wrapper for crafting inventory yet... so i'm ignoring it for now...
 			if (((clickedSlot >= 5 || clickedSlot == -999) && !haveExtraInv) || haveExtraInv) {
 				// transform packet slot IDs to server slot IDs... ... why is notch so fucking crazy........
@@ -601,7 +602,7 @@ public class kk extends fs
 						if (!leftClick)
 							toDrop.setAmount(1);
 						if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_DROP, new Object[]{this.getPlayer(), toDrop})) {
-							e.k();
+							p.getInventory().update();
 							e.J();
 							return;
 						}
@@ -619,7 +620,7 @@ public class kk extends fs
 					Item slotItem = getItemFromSlot(getPlayer(), stage, clickedSlot);
 					if (cursorItem != null && slotItem != null && slotItem.getItemId() != cursorItem.getItemId() && (canItemInInvSlot(cursorItem.getItemId(), clickedSlot) || haveExtraInv)) {
 						if (((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_SWAP, new Object[]{this.getPlayer(), stage, clickedSlot, slotItem, cursorItem}))) {
-							e.k();
+							p.getInventory().update();
 							e.J();
 							return;
 						}
@@ -636,14 +637,14 @@ public class kk extends fs
 						// place item
 						if (cursorItem.getAmount() > 0) {
 							if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_PLACE, new Object[]{this.getPlayer(), stage, cursorItem, clickedSlot})) {
-								e.k();
+								p.getInventory().update();
 								e.J();
 								return;
 							}
 						} else if (cursorItem.getAmount() < 0) {
 							cursorItem.setAmount(Math.abs(slotItem.getAmount()));
 							if (((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_TAKE, new Object[]{this.getPlayer(), stage, cursorItem, clickedSlot}))) {
-								e.k();
+								p.getInventory().update();
 								e.J();
 								return;
 							}
@@ -653,7 +654,7 @@ public class kk extends fs
 							slotItem.setAmount((slotItem.getAmount() + 1) / 2);
 						// take shit
 						if (((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_TAKE, new Object[]{this.getPlayer(), stage, slotItem, clickedSlot}))) {
-							e.k();
+							p.getInventory().update();
 							e.J();
 							return;
 						}
