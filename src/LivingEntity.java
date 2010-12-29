@@ -40,7 +40,7 @@ public class LivingEntity extends BaseEntity {
      *          amount of health to increase the players health with.
      */
     public void increaseHealth(int health) {
-        getEntity().a(health);
+        getEntity().c(health);
     }
 
     /**
