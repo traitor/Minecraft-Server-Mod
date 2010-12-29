@@ -820,14 +820,14 @@ public class Player extends HumanEntity implements MessageReceiver {
     public void giveItemDrop(int itemId, int amount) {
         fi player = getEntity();
         if (amount == -1) {
-            player.a(new il(itemId, 255));
+            player.b(new il(itemId, 255));
         } else {
             int temp = amount;
             do {
                 if (temp - 64 >= 64) {
-                    player.a(new il(itemId, 64));
+                    player.b(new il(itemId, 64));
                 } else {
-                    player.a(new il(itemId, temp));
+                    player.b(new il(itemId, temp));
                 }
                 temp -= 64;
             } while (temp > 0);
