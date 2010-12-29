@@ -588,12 +588,47 @@ public class kk extends fs
 			boolean leftClick = paramcs.c == 0;
 			boolean haveExtraInv = paramcs.a != 0;
 			Player p = getPlayer();
+			Inventory stage = !haveExtraInv ? getPlayer().getInventory() : e.getLastOpenedInventory();
+			// are we accessing an pinv slot while in a window?
+			if ((stage instanceof Furnace && clickedSlot >= 3) || (stage instanceof Workbench && clickedSlot >= 10)
+					|| (stage instanceof Chest && clickedSlot >= 27) || (stage instanceof DoubleChest && clickedSlot >= 54)) {
+				// yes. we must transform the slot id accordingly...
+				if (stage instanceof Furnace)
+					clickedSlot -= 3;
+				else if (stage instanceof Workbench)
+					clickedSlot -= 10;
+				else if (stage instanceof Chest)
+					clickedSlot -= 27;
+				else if (stage instanceof DoubleChest)
+					clickedSlot -= 54;
+				if (clickedSlot >= 0 && clickedSlot < 27)
+					clickedSlot += 9;
+				else if (clickedSlot >= 27 && clickedSlot < 36)
+					clickedSlot -= 27;
+				// and then set the stage to the inventory.
+				stage = getPlayer().getInventory();
+				haveExtraInv = false;
+			} else if (!haveExtraInv)
+				// yes.. let's transform packet slot id > server slot id
+				if (clickedSlot >= 36 && clickedSlot <= 44)
+					clickedSlot -= 36;
+				else
+					switch (clickedSlot) {
+						case 5:
+							clickedSlot = 39;
+							break;
+						case 6:
+							clickedSlot = 38;
+							break;
+						case 7:
+							clickedSlot = 37;
+							break;
+						case 8:
+							clickedSlot = 36;
+							break;
+					}
 			// we don't have a wrapper for crafting inventory yet... so i'm ignoring it for now...
-			if (((clickedSlot >= 5 || clickedSlot == -999) && !haveExtraInv) || haveExtraInv) {
-				// transform packet slot IDs to server slot IDs... ... why is notch so fucking crazy........
-				clickedSlot = calculateSlotId(haveExtraInv, clickedSlot);
-				Inventory stage = !haveExtraInv ? getPlayer().getInventory() : e.getLastOpenedInventory();
-
+			if (((clickedSlot >= 5 || clickedSlot == -999) && !haveExtraInv) || haveExtraInv)
 				if (clickedSlot == -999) {
 					// we're dropping item!
 					il rawil = this.e.an.i();
@@ -614,53 +649,58 @@ public class kk extends fs
 					 * 2. put item (when slot is 0 and cursor is 1
 					 * 3. swap item (when slot and cursor is 1)
 					 */
-
+					boolean reject = false;
 					il rawil = e.an.i();
 					Item cursorItem = rawil != null ? new Item(rawil) : null;
-					Item slotItem = getItemFromSlot(getPlayer(), stage, clickedSlot);
-					if (cursorItem != null && slotItem != null && slotItem.getItemId() != cursorItem.getItemId() && (canItemInInvSlot(cursorItem.getItemId(), clickedSlot) || haveExtraInv)) {
-						if (((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_SWAP, new Object[]{this.getPlayer(), stage, clickedSlot, slotItem, cursorItem}))) {
-							p.getInventory().update();
-							e.J();
-							return;
+					Item slotItem = stage.getItemFromSlot(clickedSlot);
+					boolean validSlot = true;
+					if (!haveExtraInv && cursorItem != null) // if we are accessing player inventory, and cursorItem isn't null
+						switch (clickedSlot) { // and we are accessing the damn equip slots
+							// make sure we don't fire an event where nothing would have been done (can't put non-equips into equip slots)
+							case 39: // Helmets
+								validSlot = cursorItem.getItemId() == 298 || cursorItem.getItemId() == 302 || cursorItem.getItemId() == 306 || cursorItem.getItemId() == 310 || cursorItem.getItemId() == 314;
+								break;
+							case 38: // Chestplates
+								validSlot = cursorItem.getItemId() == 299 || cursorItem.getItemId() == 303 || cursorItem.getItemId() == 307 || cursorItem.getItemId() == 311 || cursorItem.getItemId() == 315;
+								break;
+							case 37: // Leggings
+								validSlot = cursorItem.getItemId() == 300 || cursorItem.getItemId() == 304 || cursorItem.getItemId() == 308 || cursorItem.getItemId() == 312 || cursorItem.getItemId() == 316;
+								break;
+							case 36: // Boots
+								validSlot = cursorItem.getItemId() == 301 || cursorItem.getItemId() == 305 || cursorItem.getItemId() == 309 || cursorItem.getItemId() == 313 || cursorItem.getItemId() == 317;
+								break;
 						}
-					} else if (((cursorItem != null && slotItem == null) || (cursorItem != null && slotItem != null && slotItem.getItemId() == cursorItem.getItemId()))
-							&& (canItemInInvSlot(cursorItem.getItemId(), clickedSlot) || haveExtraInv)) {
-						if (!leftClick)
-							cursorItem.setAmount(1);
-						if (slotItem != null) {
-							int maxInSlot = gm.c[cursorItem.getItemId()].b();
-							if (slotItem.getAmount() + cursorItem.getAmount() > maxInSlot)
-								cursorItem.setAmount(maxInSlot - slotItem.getAmount());
-						}
+					if (validSlot)
+						if (cursorItem != null && slotItem != null && slotItem.getItemId() != cursorItem.getItemId())
+							reject = (Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_SWAP, new Object[]{this.getPlayer(), stage, clickedSlot, slotItem, cursorItem});
+						else if (((cursorItem != null && slotItem == null) || (cursorItem != null && slotItem != null && slotItem.getItemId() == cursorItem.getItemId()))) {
+							if (!leftClick)
+								cursorItem.setAmount(1);
+							if (slotItem != null) {
+								int maxInSlot = gm.c[cursorItem.getItemId()].b();
+								if (slotItem.getAmount() + cursorItem.getAmount() > maxInSlot)
+									cursorItem.setAmount(maxInSlot - slotItem.getAmount());
+							}
 
-						// place item
-						if (cursorItem.getAmount() > 0) {
-							if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_PLACE, new Object[]{this.getPlayer(), stage, cursorItem, clickedSlot})) {
-								p.getInventory().update();
-								e.J();
-								return;
+							// place item
+							if (cursorItem.getAmount() > 0)
+								reject = (Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_PLACE, new Object[]{this.getPlayer(), stage, cursorItem, clickedSlot});
+							else if (cursorItem.getAmount() < 0) {
+								cursorItem.setAmount(Math.abs(slotItem.getAmount()));
+								reject = (Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_TAKE, new Object[]{this.getPlayer(), stage, cursorItem, clickedSlot});
 							}
-						} else if (cursorItem.getAmount() < 0) {
-							cursorItem.setAmount(Math.abs(slotItem.getAmount()));
-							if (((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_TAKE, new Object[]{this.getPlayer(), stage, cursorItem, clickedSlot}))) {
-								p.getInventory().update();
-								e.J();
-								return;
-							}
+						} else if (cursorItem == null && slotItem != null) {
+							if (!leftClick)
+								slotItem.setAmount((slotItem.getAmount() + 1) / 2);
+							// take shit
+							reject = (Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_TAKE, new Object[]{this.getPlayer(), stage, slotItem, clickedSlot});
 						}
-					} else if (cursorItem == null && slotItem != null) {
-						if (!leftClick)
-							slotItem.setAmount((slotItem.getAmount() + 1) / 2);
-						// take shit
-						if (((Boolean) etc.getLoader().callHook(PluginLoader.Hook.INVENTORY_TAKE, new Object[]{this.getPlayer(), stage, slotItem, clickedSlot}))) {
-							p.getInventory().update();
-							e.J();
-							return;
-						}
-					} 
+					if (reject) {
+						getPlayer().getInventory().update();
+						this.e.J();
+						return;
+					}
 				}
-			}
 
 			// end hMod
 
@@ -685,73 +725,6 @@ public class kk extends fs
 			}
 		}
 	}
-	
-	// hMod: utility function to see if an item can be put in invent slot. 
-	private static boolean canItemInInvSlot(int itemid, int slotid)
-	{
-		switch(slotid)
-		{
-			case 39: // Helmets
-				return itemid == 298 || itemid == 302 || itemid == 306 || itemid == 310 || itemid == 314;
-			case 38: // Chestplates
-				return itemid == 299 || itemid == 303 || itemid == 307 || itemid == 311 || itemid == 315;
-			case 37: // Leggings
-				return itemid == 300 || itemid == 304 || itemid == 308 || itemid == 312 || itemid == 316;
-			case 36: // Boots
-				return itemid == 301 || itemid == 305 || itemid == 309 || itemid == 313 || itemid == 317;
-			default:
-				return true;
-		}
-	}
-
-	private static Item getItemFromSlot(Player p, Inventory extraInv, int slot)
-	{
-		int extra = -1;
-		if(extraInv == null || extraInv instanceof PlayerInventory) extra = 0;
-		else if(extraInv instanceof Furnace)
-			extra = 3;
-		else if(extraInv instanceof Chest)
-			extra = 27;
-		else if(extraInv instanceof DoubleChest)
-			extra = 54;
-		else if(extraInv instanceof Workbench)
-			extra = 10;
-		if(extra == -1) throw new RuntimeException("kk.getItemFromSlot called but Inventory isn't any of the valid types!!");
-		if(slot >= extra)
-		{
-			int correctId = slot-extra;
-			if(correctId >= 0 && correctId < 27) correctId += 9;
-			else if(correctId >= 27 && correctId < 36) correctId -= 27;
-			return p.getInventory().getItemFromSlot(correctId);
-		} else {
-			return extraInv.getItemFromSlot(slot);
-		}
-	}
-
-	private static int calculateSlotId(boolean hasExtraInv, int slot2) {
-		int slot = slot2;
-		if (!hasExtraInv)
-			if (slot >= 36 && slot <= 44)
-				slot -= 36;
-			else
-				switch (slot) {
-					case 5:
-						slot = 39;
-						break;
-					case 6:
-						slot = 38;
-						break;
-					case 7:
-						slot = 37;
-						break;
-					case 8:
-						slot = 36;
-						break;
-				}
-
-		return slot;
-	}
-	// end hMod
 
     public void a(ay paramay) {
         Short localShort = (Short) this.k.get(Integer.valueOf(this.e.ap.f));
