@@ -530,4 +530,14 @@ public class PluginListener {
     public boolean onSignChange(Player player, Sign sign) {
         return false;
     }
+
+    /**
+     * Called when a leaf block is about to decay.
+     *
+     * @param block The leaf block about to decay
+     * @return true if you wish to stop the block from decaying
+     */
+    public boolean onLeafDecay(Block block) {
+        return false;
+    }
 }
