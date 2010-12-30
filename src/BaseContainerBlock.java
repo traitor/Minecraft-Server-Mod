@@ -38,6 +38,14 @@ public abstract class BaseContainerBlock<C extends bg & lg & Container<il>> exte
         container.c();
     }
 
+    public String getName() {
+        return container.getName();
+    }
+
+    public void setName(String value) {
+        container.setName(value);
+    }
+
     /**
      * Tests the given object to see if it equals this object
      * 

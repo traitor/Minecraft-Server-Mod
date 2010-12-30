@@ -197,7 +197,7 @@ public abstract class ItemArray<C extends Container<il>> {
         int size = getContentsSize();
 
         if (slot < size && slot >= 0) {
-            container.setContentsAt(slot, new il(itemId, (amount > 64 ? 64 : amount), damage));
+            container.setContentsAt(slot, new il(itemId, (amount > 64 ? (amount == 255 ? -1 : 64) : amount), damage));
         }
     }
 

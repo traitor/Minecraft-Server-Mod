@@ -1,3 +1,4 @@
+// hMod: This class must extend Container<obfuscated_item> and implement the various methods within. They will not all be marked individually.
 
 public class av
         implements lg, Container<il> {
@@ -49,6 +50,14 @@ public class av
         return null;
     }
 
+    public String getName() {
+        return a;
+    }
+
+    public void setName(String value) {
+        a = value;
+    }
+
     public av(String paramString, lg paramlg1, lg paramlg2) {
         this.a = paramString;
         this.b = paramlg1;
@@ -60,7 +69,7 @@ public class av
     }
 
     public String b() {
-        return this.a;
+        return getName(); //hMod: override with getName()
     }
 
     public il a(int paramInt) {

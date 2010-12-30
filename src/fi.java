@@ -263,12 +263,13 @@ public class fi extends gq
     public void a(int paramInt1, int paramInt2, int paramInt3) {
         // hMod: Check if we can open this. Will have to move a line from below to here.
         ig temp = new ig(this.an, this.l, paramInt1, paramInt2, paramInt3);
-        if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), new Workbench(temp))) {
+        Workbench bench = new Workbench(temp);
+        if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), bench)) {
             return;
         }
 
         R();
-        this.a.b(new ih(this.bH, 1, "Crafting", 9));
+        this.a.b(new ih(this.bH, 1, bench.getName(), 9));
         this.ap = temp;
         this.ap.f = this.bH;
         // hMod: Make sure this gets cast correctly, or mutant puppies will spawn and eat your items.
@@ -277,18 +278,26 @@ public class fi extends gq
 
     public void a(lg paramlf) {
         // hMod: Check if we can open this
+        Inventory inv = null;
+        String name = paramlf.b();
         if (paramlf instanceof jb) {
-            if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), new Chest((jb)paramlf))) {
+            inv = new Chest((jb)paramlf);
+            if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), inv)) {
                 return;
             }
         } else if (paramlf instanceof av) {
-            if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), new DoubleChest((av)paramlf))) {
+            inv = new DoubleChest((av)paramlf);
+            if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), inv)) {
                 return;
             }
         }
 
+        if (inv != null) {
+            name = inv.getName();
+        }
+
         R();
-        this.a.b(new ih(this.bH, 0, paramlf.b(), paramlf.a()));
+        this.a.b(new ih(this.bH, 0, name, paramlf.a()));
         this.ap = new bx(this.an, paramlf);
         this.ap.f = this.bH;
         // hMod: Make sure this gets cast correctly, or mutant puppies will spawn and eat your items.
@@ -297,12 +306,18 @@ public class fi extends gq
 
     public void a(ek paramek) {
         // hMod: Check if we can open this
-        if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), new Furnace(paramek))) {
+        Inventory inv = new Furnace(paramek);
+        String name = paramek.b();
+        if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), inv)) {
             return;
         }
 
+        if (inv != null) {
+            name = inv.getName();
+        }
+
         R();
-        this.a.b(new ih(this.bH, 2, paramek.b(), paramek.a()));
+        this.a.b(new ih(this.bH, 2, name, paramek.a()));
         this.ap = new bj(this.an, paramek);
         this.ap.f = this.bH;
         // hMod: Make sure this gets cast correctly, or mutant puppies will spawn and eat your items.

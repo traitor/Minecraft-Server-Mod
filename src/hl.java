@@ -408,5 +408,12 @@ public class hl {
     }
 
     public void a(int paramInt1, int paramInt2, int paramInt3, bg parambg) {
+		// hMod: fix sign updating in beta 1.1_02
+		// Check if bg (TileEntity) is a Sign
+		if(parambg instanceof kp)
+		{
+			d.sendPacketToChunk(((kp)parambg).f(), paramInt1, paramInt2, paramInt3);
+		}
+		// end hMod
     }
 }
