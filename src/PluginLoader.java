@@ -182,6 +182,10 @@ public class PluginLoader {
          */
         SIGN_CHANGE,
         /**
+         * Calls onLeafDecay
+         */
+        LEAF_DECAY,
+        /**
          * Unused.
          */
         NUM_HOOKS
@@ -630,6 +634,11 @@ public class PluginLoader {
                                 break;
                             case SIGN_CHANGE:
                                 if (listener.onSignChange((Player) parameters[0], (Sign) parameters[1])) {
+                                    toRet = true;
+                                }
+                                break;
+                            case LEAF_DECAY:
+                                if (listener.onLeafDecay((Block) parameters[0])) {
                                     toRet = true;
                                 }
                                 break;
