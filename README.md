@@ -1,6 +1,6 @@
-Minecraft Server Mod
+hMod
 ====================
-This is a server mod for the Minecraft Alpha server software. This is only the source code, if you don't know how to use this you won't find it useful.
+hMod is a server mod for the Minecraft Beta server software. This is only the source code, if you don't know how to use this you won't find it useful.
 
 Compiling
 ---------
