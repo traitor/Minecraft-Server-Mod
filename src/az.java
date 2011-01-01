@@ -237,15 +237,6 @@ public class az extends dn {
     }
 
     private boolean k(ff paramff, int paramInt1, int paramInt2, int paramInt3) {
-        // hMod: See if this liquid can destroy this block.
-        Block block = new Block(paramff.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
-        PluginLoader.HookResult ret = (PluginLoader.HookResult) etc.getLoader().callHook(PluginLoader.Hook.LIQUID_DESTROY, this.bh, block);
-        if (ret == PluginLoader.HookResult.PREVENT_ACTION) {
-            return false;
-        } else if (ret == PluginLoader.HookResult.ALLOW_ACTION) {
-            return true;
-        }
-        
         int i = paramff.a(paramInt1, paramInt2, paramInt3);
         if ((i == gv.aE.bh) || (i == gv.aL.bh) || (i == gv.aD.bh) || (i == gv.aF.bh) || (i == gv.aX.bh)) {
             return true;
@@ -272,6 +263,15 @@ public class az extends dn {
     }
 
     private boolean l(ff paramff, int paramInt1, int paramInt2, int paramInt3) {
+        // hMod: See if this liquid can destroy this block.
+        Block block = new Block(paramff.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
+        PluginLoader.HookResult ret = (PluginLoader.HookResult) etc.getLoader().callHook(PluginLoader.Hook.LIQUID_DESTROY, this.bh, block);
+        if (ret == PluginLoader.HookResult.PREVENT_ACTION) {
+            return false;
+        } else if (ret == PluginLoader.HookResult.ALLOW_ACTION) {
+            return true;
+        }
+
         la localkz = paramff.c(paramInt1, paramInt2, paramInt3);
         if (localkz == this.bs) {
             return false;
