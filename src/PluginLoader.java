@@ -181,18 +181,18 @@ public class PluginLoader {
          * Calls onSignChange
          */
         SIGN_CHANGE,
-		/**
-		 * Calls onInventoryPlaceItem
-		 */
-		INVENTORY_PLACE,
-		/**
-		 * Calls onInventoryTakeItem
-		 */
-		INVENTORY_TAKE,
-		/**
-		 * Calls onInventoryCursorSwap
-		 */
-		INVENTORY_SWAP,
+        /**
+         * Calls onInventoryPlaceItem
+         */
+        INVENTORY_PLACE,
+        /**
+         * Calls onInventoryTakeItem
+         */
+        INVENTORY_TAKE,
+        /**
+         * Calls onInventoryCursorSwap
+         */
+        INVENTORY_SWAP,
         /**
          * Calls onLeafDecay
          */
@@ -647,20 +647,21 @@ public class PluginLoader {
                                 if (listener.onSignChange((Player) parameters[0], (Sign) parameters[1])) {
                                     toRet = true;
                                 }
-							case INVENTORY_PLACE:
-								if(listener.onInventoryPlaceItem((Player) parameters[0], (Inventory) parameters[1], (Item) parameters[2], (Integer) parameters[3])) {
-									toRet = true;
-								}
                                 break;
-							case INVENTORY_TAKE:
-								if(listener.onInventoryTakeItem((Player) parameters[0], (Inventory) parameters[1], (Item) parameters[2], (Integer) parameters[3])) {
-									toRet = true;
-								}
+                            case INVENTORY_PLACE:
+                                if(listener.onInventoryPlaceItem((Player) parameters[0], (Inventory) parameters[1], (Item) parameters[2], (Integer) parameters[3])) {
+                                        toRet = true;
+                                }
                                 break;
-							case INVENTORY_SWAP:
-								if(listener.onInventoryCursorSwap((Player) parameters[0], (Inventory) parameters[1], (Integer) parameters[2], (Item) parameters[3], (Item) parameters[4])) {
-									toRet = true;
-								}
+                            case INVENTORY_TAKE:
+                                if(listener.onInventoryTakeItem((Player) parameters[0], (Inventory) parameters[1], (Item) parameters[2], (Integer) parameters[3])) {
+                                        toRet = true;
+                                }
+                                break;
+                            case INVENTORY_SWAP:
+                                if(listener.onInventoryCursorSwap((Player) parameters[0], (Inventory) parameters[1], (Integer) parameters[2], (Item) parameters[3], (Item) parameters[4])) {
+                                        toRet = true;
+                                }
                                 break;
                             case LEAF_DECAY:
                                 if (listener.onLeafDecay((Block) parameters[0])) {
