@@ -1,4 +1,4 @@
-krsmes hMod
+hMod
 ====================
 hMod is a server mod for the Minecraft Beta server software. This is only the source code, if you don't know how to use this you won't find it useful.
 
