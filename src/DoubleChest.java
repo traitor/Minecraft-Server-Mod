@@ -1,9 +1,9 @@
 
-public class DoubleChest extends ItemArray<av> implements ComplexBlock, Inventory {
+public class DoubleChest extends ItemArray<ay> implements ComplexBlock, Inventory {
     private final Block block;
     private String name = "Large Chest";
 
-    public DoubleChest(av chest) {
+    public DoubleChest(ay chest) {
         super(chest);
         block = chest.getChestBlock();
     }

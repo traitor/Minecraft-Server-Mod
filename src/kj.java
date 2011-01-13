@@ -1,55 +1,140 @@
 
-public class kj extends gm
-{
-	public kj(int paramInt1, int paramInt2)
-	{
-		super(paramInt1);
-		this.aX = 1;
-		this.aY = (32 << paramInt2);
-	}
+import java.util.ArrayList;
+import java.util.List;
+import net.minecraft.server.MinecraftServer;
 
-	public boolean a(il paramik, gq paramgp, ff paramff, int paramInt1, int paramInt2, int paramInt3, int paramInt4)
-	{
-		int i = paramff.a(paramInt1, paramInt2, paramInt3);
-		la localla = paramff.c(paramInt1, paramInt2 + 1, paramInt3);
+public class kj {
+    // hMod: generificy
 
-		if (((!localla.a()) && (i == gv.u.bh)) || (i == gv.v.bh)) {
-			// hMod: Hoes
-			Block blockClicked = new Block(i, paramInt1, paramInt2, paramInt3);
-			blockClicked.setFaceClicked(Block.Face.fromId(paramInt4));
-			Block blockPlaced = new Block(paramff.a(paramInt1, paramInt2 + 1, paramInt3), paramInt1, paramInt2 + 1, paramInt3);	
+    private List<fy> a = new ArrayList<fy>();
+    private gm b = new gm();
+    private List<at> c = new ArrayList<at>();
+    private MinecraftServer d;
 
-			// Call the hook
-			if (paramgp instanceof fi) {
-				Player player = ((fi) paramgp).getPlayer();
-				if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, blockPlaced, blockClicked, new Item(paramik))) {
-					return false;
-				}
-			}
-				
-			gv localgv = gv.aA;
-			paramff.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localgv.bq.c(), (localgv.bq.a() + 1.0F) / 2.0F, localgv.bq.b() * 0.8F);
+    public kj(MinecraftServer paramMinecraftServer) {
+        d = paramMinecraftServer;
+    }
 
-			if (paramff.z) return true;
-			paramff.d(paramInt1, paramInt2, paramInt3, localgv.bh);
-			paramik.b(1);
+    public void a() {
+        for (int i = 0; i < c.size(); i++) {
+            // hMod: remove unnecessary cast
+            c.get(i).a();
+        }
+        c.clear();
+    }
 
-			if ((paramff.l.nextInt(8) == 0) && (i == gv.u.bh)) {
-				int j = 1;
-				for (int k = 0; k < j; k++) {
-					float f1 = 0.7F;
-					float f2 = paramff.l.nextFloat() * f1 + (1.0F - f1) * 0.5F;
-					float f3 = 1.2F;
-					float f4 = paramff.l.nextFloat() * f1 + (1.0F - f1) * 0.5F;
-					hf localhf = new hf(paramff, paramInt1 + f2, paramInt2 + f3, paramInt3 + f4, new il(gm.Q));
-					localhf.c = 10;
-					paramff.a(localhf);
-				}
-			}
+    private at a(int paramInt1, int paramInt2, boolean paramBoolean) {
+        long l = paramInt1 + 2147483647L | paramInt2 + 2147483647L << 32;
+        at localat = (at) b.a(l);
+        if ((localat == null) && (paramBoolean)) {
+            localat = new at(this, paramInt1, paramInt2);
+            b.a(l, localat);
+        }
+        return localat;
+    }
 
-			return true;
-		}
+    public void a(int paramInt1, int paramInt2, int paramInt3) {
+        int i = paramInt1 >> 4;
+        int j = paramInt3 >> 4;
+        at localat = a(i, j, false);
+        if (localat != null) {
+            localat.a(paramInt1 & 0xF, paramInt2, paramInt3 & 0xF);
+        }
+    }
 
-		return false;
-	}
+    public void a(fy paramfy) {
+        int i = (int) paramfy.p >> 4;
+        int j = (int) paramfy.r >> 4;
+
+        paramfy.d = paramfy.p;
+        paramfy.e = paramfy.r;
+
+        for (int k = i - 10; k <= i + 10; k++) {
+            for (int m = j - 10; m <= j + 10; m++) {
+                a(k, m, true).a(paramfy);
+            }
+        }
+        a.add(paramfy);
+    }
+
+    public void b(fy paramfy) {
+        int i = (int) paramfy.d >> 4;
+        int j = (int) paramfy.e >> 4;
+
+        for (int k = i - 10; k <= i + 10; k++) {
+            for (int m = j - 10; m <= j + 10; m++) {
+                at localat = a(k, m, false);
+                if (localat == null) {
+                    continue;
+                }
+                localat.b(paramfy);
+            }
+        }
+        a.remove(paramfy);
+    }
+
+    private boolean a(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+        int i = paramInt1 - paramInt3;
+        int j = paramInt2 - paramInt4;
+        if ((i < -10) || (i > 10)) {
+            return false;
+        }
+        return (j >= -10) && (j <= 10);
+    }
+
+    public void c(fy paramfy) {
+        int i = (int) paramfy.p >> 4;
+        int j = (int) paramfy.r >> 4;
+
+        double d1 = paramfy.d - paramfy.p;
+        double d2 = paramfy.e - paramfy.r;
+        double d3 = d1 * d1 + d2 * d2;
+        if (d3 < 64.0D) {
+            return;
+        }
+
+        int k = (int) paramfy.d >> 4;
+        int m = (int) paramfy.e >> 4;
+
+        int n = i - k;
+        int i1 = j - m;
+        if ((n == 0) && (i1 == 0)) {
+            return;
+        }
+
+        for (int i2 = i - 10; i2 <= i + 10; i2++) {
+            for (int i3 = j - 10; i3 <= j + 10; i3++) {
+                if (!a(i2, i3, k, m)) {
+                    a(i2, i3, true).a(paramfy);
+                }
+                if (!a(i2 - n, i3 - i1, i, j)) {
+                    at localat = a(i2 - n, i3 - i1, false);
+                    if (localat == null) {
+                        continue;
+                    }
+                    localat.b(paramfy);
+                }
+            }
+        }
+        paramfy.d = paramfy.p;
+        paramfy.e = paramfy.r;
+    }
+
+    public int b() {
+        return 144;
+    }
+    // hMod: bring back old "send packet to chunk" method from alpha
+
+    public void sendPacketToChunk(jv packetToSend, int globalx, int globaly, int globalz) {
+        // Get chunk coordinates
+        int chunkx = globalx >> 4;
+        int chunkz = globalz >> 4;
+        // Get the chunk
+        at localat = a(chunkx, chunkz, false);
+        // if chunk != null, send packet
+        if (localat != null) {
+            localat.a(packetToSend);
+        }
+    }
+    // end hMod
 }

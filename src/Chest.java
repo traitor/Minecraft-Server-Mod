@@ -2,9 +2,9 @@
  * Chest.java - Interface to chests.
  * @author James
  */
-public class Chest extends BaseContainerBlock<jb> implements ComplexBlock {
+public class Chest extends BaseContainerBlock<kc> implements ComplexBlock {
     
-    public Chest(jb chest) {
+    public Chest(kc chest) {
         super(chest, "Chest");
     }
 
@@ -35,7 +35,7 @@ public class Chest extends BaseContainerBlock<jb> implements ComplexBlock {
             ComplexBlock cblock = etc.getServer().getOnlyComplexBlock(block);
             if ((cblock != null) && (cblock instanceof Chest)) {
                 Chest chest = (Chest)cblock;
-                return new DoubleChest(new av(getName(), this.container, chest.container));
+                return new DoubleChest(new ay(getName(), this.container, chest.container));
             }
         }
 

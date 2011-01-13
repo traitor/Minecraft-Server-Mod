@@ -1,419 +1,366 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashSet;
+
 import java.util.List;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import net.minecraft.server.MinecraftServer;
+import java.util.Random;
 
-public class hl {
-    public static Logger a = Logger.getLogger("Minecraft");
-    // hMod set list to contain <fi> objects.
-    public List<fi> b = new ArrayList<fi>();
-    private MinecraftServer c;
-    private jh d;
-    private int e;
-    // hMod set these to Set<String> to remove errors and warnings.
-    private Set<String> f = new HashSet<String>();
-    private Set<String> g = new HashSet<String>();
-    private Set<String> h = new HashSet<String>();
-    private File i;
-    private File j;
-    private File k;
-    private dm l;
+public abstract class hl extends mj {
 
-    public hl(MinecraftServer paramMinecraftServer) {        
-        etc.setServer(paramMinecraftServer);
-        etc.getInstance().loadData();
-        a.info("Note: your current classpath is: " + System.getProperty("java.class.path", "*UNKNOWN*"));
-        if (!etc.getInstance().getTainted()) {
-            a.info("Hey0 Server Mod Build " + etc.getInstance().getVersion());
+    public ji an = new ji(this);
+    public ei ao;
+    public ei ap;
+    public byte aq = 0;
+    public int ar = 0;
+    public float as;
+    public float at;
+    public boolean au = false;
+    public int av = 0;
+    public String aw;
+    public int ax;
+    public double ay;
+    public double az;
+    public double aA;
+    public double aB;
+    public double aC;
+    public double aD;
+    private int a = 0;
+    public mq aE = null;
+
+    public hl(fv paramfv) {
+        super(paramfv);
+
+        ao = new ae(an, !paramfv.z);
+
+        ap = ao;
+
+        H = 1.62F;
+        c(paramfv.m + 0.5D, paramfv.n + 1, paramfv.o + 0.5D, 0.0F, 0.0F);
+
+        aZ = 20;
+        aS = "humanoid";
+        aR = 180.0F;
+        Y = 20;
+
+        aP = "/mob/char.png";
+    }
+
+    public void b_() {
+        super.b_();
+
+        if ((!l.z)
+                && (ap != null) && (!ap.b(this))) {
+            L();
+            ap = ao;
+        }
+
+        ay = aB;
+        az = aC;
+        aA = aD;
+
+        double d1 = p - aB;
+        double d2 = q - aC;
+        double d3 = r - aD;
+
+        double d4 = 10.0D;
+        if (d1 > d4) {
+            ay = (this.aB = p);
+        }
+        if (d3 > d4) {
+            aA = (this.aD = r);
+        }
+        if (d2 > d4) {
+            az = (this.aC = q);
+        }
+        if (d1 < -d4) {
+            ay = (this.aB = p);
+        }
+        if (d3 < -d4) {
+            aA = (this.aD = r);
+        }
+        if (d2 < -d4) {
+            az = (this.aC = q);
+        }
+
+        aB += d1 * 0.25D;
+        aD += d3 * 0.25D;
+        aC += d2 * 0.25D;
+    }
+
+    protected void L() {
+        ap = ao;
+    }
+
+    public void D() {
+        super.D();
+        as = at;
+        at = 0.0F;
+    }
+
+    protected void d() {
+        if (au) {
+            av += 1;
+            if (av == 8) {
+                av = 0;
+                au = false;
+            }
         } else {
-            a.info("hMod Build Information: " + etc.getInstance().getVersionStr());
-        }
-        this.c = paramMinecraftServer;
-        this.i = paramMinecraftServer.a("banned-players.txt");
-        this.j = paramMinecraftServer.a("banned-ips.txt");
-        this.k = paramMinecraftServer.a("ops.txt");
-        this.d = new jh(paramMinecraftServer);
-        this.e = paramMinecraftServer.d.a("max-players", 20);
-        e();
-        g();
-        i();
-        f();
-        h();
-        j();
-    }
-
-    public void a(fm paramfm) {
-        this.l = new dm(new File(paramfm.t, "players"));
-    }
-
-    public int a() {
-        return this.d.b();
-    }
-
-    public void a(fi paramfi) {
-        this.b.add(paramfi);
-        this.l.b(paramfi);
-
-        this.c.e.A.d((int) paramfi.p >> 4, (int) paramfi.r >> 4);
-
-        while (this.c.e.a(paramfi, paramfi.z).size() != 0) {
-            paramfi.a(paramfi.p, paramfi.q + 1.0D, paramfi.r);
-        }
-        this.c.e.a(paramfi);
-        this.d.a(paramfi);
-        
-        // hMod: Handle login (send MOTD and call hook)
-        String[] motd = etc.getInstance().getMotd();
-        if (!(motd.length == 1 && motd[0].equals(""))) {
-            for (String str : etc.getInstance().getMotd()) {
-                paramfi.a.b(new br(str));
-            }
-        }
-        etc.getLoader().callHook(PluginLoader.Hook.LOGIN, paramfi.getPlayer());
-    }
-
-    public void b(fi paramfi) {
-        this.d.c(paramfi);
-    }
-
-    public void c(fi paramfi) {
-        this.l.a(paramfi);
-        this.c.e.d(paramfi);
-        this.b.remove(paramfi);
-        this.d.b(paramfi);
-    }
-
-    public fi a(gi paramgh, String paramString1, String paramString2) {
-        if (this.f.contains(paramString1.trim().toLowerCase())) {
-            paramgh.a("You are banned from this server!");
-            return null;
-        }
-        
-        //hMod: whole section below is modified to handle whitelists etc
-        fi temp = new fi(this.c, this.c.e, paramString1, new kw(this.c.e));
-        Player player = temp.getPlayer();
-        
-        String str = paramgh.b.b().toString();
-        str = str.substring(str.indexOf("/") + 1);
-        str = str.substring(0, str.indexOf(":"));
-        if (this.g.contains(str)) {
-            paramgh.a("Your IP address is banned from this server!");
-            return null;
+            av = 0;
         }
 
-        for (int m = 0; m < this.b.size(); m++) {
-            fi localfi = this.b.get(m);
-            if (localfi.aw.equalsIgnoreCase(paramString1)) {
-                localfi.a.a("You logged in from another location");
+        aY = (av / 8.0F);
+    }
+
+    public void o() {
+        // hMod: adjust 'healing over time' independent of monster-spawn=true/false (nice notchup!)
+        PluginLoader.HookResult autoHeal = etc.getInstance().autoHeal();
+        if ((l.k == 0) && (autoHeal == PluginLoader.HookResult.DEFAULT_ACTION) || autoHeal == PluginLoader.HookResult.ALLOW_ACTION) {
+            if ((aZ < 20) && (X % 20 * 12 == 0)) {
+                d(1);
             }
         }
 
-        //hMod whitelist block
-        if (etc.getInstance().isWhitelistEnabled() && !(etc.getDataSource().isUserOnWhitelist(paramString1) || player.isAdmin())) {
-            paramgh.a(etc.getInstance().getWhitelistMessage());
-            return null;
-        } else if (this.b.size() >= this.e && !(player.isAdmin() || etc.getDataSource().isUserOnReserveList(paramString1))) {
-            paramgh.a("The server is full!");
-            return null;
-        }
+        an.f();
+        as = at;
 
-        if (!player.getIps()[0].equals("")) {
-            boolean kick = true;
-            for (int i = 0; i < player.getIps().length; i++) {
-                if (!player.getIps()[i].equals("") && str.equals(player.getIps()[i])) {
-                    kick = false;
+        super.o();
+
+        float f1 = iz.a(s * s + u * u);
+        float f2 = (float) Math.atan(-t * 0.2000000029802322D) * 15.0F;
+        if (f1 > 0.1F) {
+            f1 = 0.1F;
+        }
+        if ((!A) || (aZ <= 0)) {
+            f1 = 0.0F;
+        }
+        if ((A) || (aZ <= 0)) {
+            f2 = 0.0F;
+        }
+        at += (f1 - at) * 0.4F;
+        bh += (f2 - bh) * 0.8F;
+
+        if (aZ > 0) {
+            List localList = l.b(this, z.b(1.0D, 0.0D, 1.0D));
+            if (localList != null) {
+                for (int i = 0; i < localList.size(); i++) {
+                    fe localfe = (fe) localList.get(i);
+                    if (!localfe.G) {
+                        j(localfe);
+                    }
                 }
             }
-            if (kick) {
-                paramgh.a("IP doesn't match specified IP.");
-                return null;
-            }
-        } 
-
-        //hMod: user passed basic login check, inform plugins.
-        Object obj = etc.getLoader().callHook(PluginLoader.Hook.LOGINCHECK, paramString1);
-        if (obj instanceof String) {
-            String result = (String) obj;
-            if (result != null && !result.equals("")) {
-                paramgh.a(result);
-                return null;
-            }
         }
-        
-        return new fi(this.c, this.c.e, paramString1, new kw(this.c.e));
-    }
-    
-    /**
-     * Returns the list of bans
-     * 
-     * @return
-     */
-    public String getBans() {
-        StringBuilder builder = new StringBuilder();
-        int l = 0;
-        for (Object o : f) {
-            if (l > 0) {
-                builder.append(", ");
-            }
-            builder.append(o);
-            l++;
-        }
-        return builder.toString();
     }
 
-    /**
-     * Returns the list of IP bans
-     * 
-     * @return
-     */
-    public String getIpBans() {
-        StringBuilder builder = new StringBuilder();
-        int l = 0;
-        for (Object o : g) {
-            if (l > 0) {
-                builder.append(", ");
-            }
-            builder.append(o);
-            l++;
-        }
-        return builder.toString();
+    private void j(fe paramfe) {
+        paramfe.b(this);
     }
 
-    public fi d(fi paramfi) {
-        this.c.k.a(paramfi);
-        this.c.k.b(paramfi);
-        this.d.b(paramfi);
-        this.b.remove(paramfi);
-        this.c.e.e(paramfi);
-
-        fi localfi = new fi(this.c, this.c.e, paramfi.aw, new kw(this.c.e));
-        localfi.g = paramfi.g;
-        localfi.a = paramfi.a;
-
-        this.c.e.A.d((int) localfi.p >> 4, (int) localfi.r >> 4);
-
-        while (this.c.e.a(localfi, localfi.z).size() != 0) {
-            localfi.a(localfi.p, localfi.q + 1.0D, localfi.r);
+    public void f(fe paramfe) {
+        super.f(paramfe);
+        a(0.2F, 0.2F);
+        a(p, q, r);
+        t = 0.1000000014901161D;
+        // gives player with name "Notch" an free apple; god may know why.
+        if (aw.equals("Notch")) {
+            a(new jl(hg.h, 1), true);
         }
+        an.h();
 
-        localfi.a.b(new bh());
-        localfi.a.a(localfi.p, localfi.q, localfi.r, localfi.v, localfi.w);
-
-        this.d.a(localfi);
-        this.c.e.a(localfi);
-        this.b.add(localfi);
-
-        localfi.k();
-        return localfi;
+        if (paramfe != null) {
+            s = (-iz.b((bd + v) * 3.141593F / 180.0F) * 0.1F);
+            u = (-iz.a((bd + v) * 3.141593F / 180.0F) * 0.1F);
+        } else {
+            s = (this.u = 0.0D);
+        }
+        H = 0.1F;
     }
 
-    public void b() {
-        this.d.a();
+    public void b(fe paramfe, int paramInt) {
+        ar += paramInt;
+    }
+
+    public void O() {
+        a(an.b(an.c, 1), false);
+    }
+
+    public void b(jl paramjl) {
+        a(paramjl, false);
+    }
+
+    public void a(jl paramjl, boolean paramBoolean) {
+        if (paramjl == null) {
+            return;
+        }
+
+        ic localic = new ic(l, p, q - 0.300000011920929D + w(), r, paramjl);
+        localic.c = 40;
+
+        float f1 = 0.1F;
+        float f2;
+        if (paramBoolean) {
+            f2 = W.nextFloat() * 0.5F;
+            float f3 = W.nextFloat() * 3.141593F * 2.0F;
+            localic.s = (-iz.a(f3) * f2);
+            localic.u = (iz.b(f3) * f2);
+            localic.t = 0.2000000029802322D;
+        } else {
+            f1 = 0.3F;
+            localic.s = (-iz.a(v / 180.0F * 3.141593F) * iz.b(w / 180.0F * 3.141593F) * f1);
+            localic.u = (iz.b(v / 180.0F * 3.141593F) * iz.b(w / 180.0F * 3.141593F) * f1);
+            localic.t = (-iz.a(w / 180.0F * 3.141593F) * f1 + 0.1F);
+            f1 = 0.02F;
+
+            f2 = W.nextFloat() * 3.141593F * 2.0F;
+            f1 *= W.nextFloat();
+            localic.s += Math.cos(f2) * f1;
+            localic.t += (W.nextFloat() - W.nextFloat()) * 0.1F;
+            localic.u += Math.sin(f2) * f1;
+        }
+
+        a(localic);
+    }
+
+    protected void a(ic paramic) {
+        l.a(paramic);
+    }
+
+    public float a(hr paramhr) {
+        float f = an.a(paramhr);
+        if (a(mh.f)) {
+            f /= 5.0F;
+        }
+        if (!A) {
+            f /= 5.0F;
+        }
+
+        return f;
+    }
+
+    public boolean b(hr paramhr) {
+        return an.b(paramhr);
+    }
+
+    public void b(ah paramah) {
+        super.b(paramah);
+        fh localfh = paramah.k("Inventory");
+        an.b(localfh);
+        ax = paramah.d("Dimension");
+    }
+
+    public void a(ah paramah) {
+        super.a(paramah);
+        paramah.a("Inventory", an.a(new fh()));
+        paramah.a("Dimension", ax);
+    }
+
+    public void a(mn parammn) {
     }
 
     public void a(int paramInt1, int paramInt2, int paramInt3) {
-        this.d.a(paramInt1, paramInt2, paramInt3);
     }
 
-    public void a(jv paramju) {
-        for (int m = 0; m < this.b.size(); m++) {
-            fi localfi = this.b.get(m);
-            localfi.a.b(paramju);
+    public void c(fe paramfe, int paramInt) {
+    }
+
+    public float w() {
+        return 0.12F;
+    }
+
+    public boolean a(fe paramfe, int paramInt) {
+        bw = 0;
+        if (aZ <= 0) {
+            return false;
         }
-    }
 
-    public String c() {
-        String str = "";
-        for (int m = 0; m < this.b.size(); m++) {
-            if (m > 0) {
-                str = str + ", ";
+        if (((paramfe instanceof hq)) || ((paramfe instanceof fc))) {
+            if (l.k == 0) {
+                paramInt = 0;
             }
-            str = str + (this.b.get(m)).aw;
-        }
-        return str;
-    }
-
-    public void a(String paramString) {
-        this.f.add(paramString.toLowerCase());
-        f();
-    }
-
-    public void b(String paramString) {
-        this.f.remove(paramString.toLowerCase());
-        f();
-    }
-
-    private void e() {
-        try {
-            this.f.clear();
-            BufferedReader localBufferedReader = new BufferedReader(new FileReader(this.i));
-            String str = "";
-            while ((str = localBufferedReader.readLine()) != null) {
-                this.f.add(str.trim().toLowerCase());
+            if (l.k == 1) {
+                paramInt = paramInt / 3 + 1;
             }
-            localBufferedReader.close();
-        } catch (Exception localException) {
-            a.warning("Failed to load ban list: " + localException);
-        }
-    }
-
-    private void f() {
-        try {
-            PrintWriter localPrintWriter = new PrintWriter(new FileWriter(this.i, false));
-            for (String str : this.f) {
-                localPrintWriter.println(str);
-            }
-            localPrintWriter.close();
-        } catch (Exception localException) {
-            a.warning("Failed to save ban list: " + localException);
-        }
-    }
-
-    public void c(String paramString) {
-        this.g.add(paramString.toLowerCase());
-        h();
-    }
-
-    public void d(String paramString) {
-        this.g.remove(paramString.toLowerCase());
-        h();
-    }
-
-    private void g() {
-        try {
-            this.g.clear();
-            BufferedReader localBufferedReader = new BufferedReader(new FileReader(this.j));
-            String str = "";
-            while ((str = localBufferedReader.readLine()) != null) {
-                this.g.add(str.trim().toLowerCase());
-            }
-            localBufferedReader.close();
-        } catch (Exception localException) {
-            a.warning("Failed to load ip ban list: " + localException);
-        }
-    }
-
-    private void h() {
-        try {
-            PrintWriter localPrintWriter = new PrintWriter(new FileWriter(this.j, false));
-            for (String str : this.g) {
-                localPrintWriter.println(str);
-            }
-            localPrintWriter.close();
-        } catch (Exception localException) {
-            a.warning("Failed to save ip ban list: " + localException);
-        }
-    }
-
-    public void e(String paramString) {
-        this.h.add(paramString.toLowerCase());
-        j();
-    }
-
-    public void f(String paramString) {
-        this.h.remove(paramString.toLowerCase());
-        j();
-    }
-
-    private void i() {
-        try {
-            this.h.clear();
-            BufferedReader localBufferedReader = new BufferedReader(new FileReader(this.k));
-            String str = "";
-            while ((str = localBufferedReader.readLine()) != null) {
-                this.h.add(str.trim().toLowerCase());
-            }
-            localBufferedReader.close();
-        } catch (Exception localException) {
-            a.warning("Failed to load ip ban list: " + localException);
-        }
-    }
-
-    private void j() {
-        try {
-            PrintWriter localPrintWriter = new PrintWriter(new FileWriter(this.k, false));
-            for (String str : this.h) {
-                localPrintWriter.println(str);
-            }
-            localPrintWriter.close();
-        } catch (Exception localException) {
-            a.warning("Failed to save ip ban list: " + localException);
-        }
-    }
-
-    public boolean g(String paramString) {
-        return this.h.contains(paramString.trim().toLowerCase());
-    }
-
-    public fi h(String paramString) {
-        for (int m = 0; m < this.b.size(); m++) {
-            fi localfi = this.b.get(m);
-            if (localfi.aw.equalsIgnoreCase(paramString)) {
-                return localfi;
+            if (l.k == 3) {
+                paramInt = paramInt * 3 / 2;
             }
         }
-        return null;
-    }
 
-    public void a(String paramString1, String paramString2) {
-        fi localfi = h(paramString1);
-        if (localfi != null) {
-            localfi.a.b(new br(paramString2));
+        if (paramInt == 0) {
+            return false;
         }
+
+        return super.a(paramfe, paramInt);
     }
 
-    public void a(double paramDouble1, double paramDouble2, double paramDouble3, double paramDouble4, jv paramju) {
-        for (int m = 0; m < this.b.size(); m++) {
-            fi localfi = this.b.get(m);
-            double d1 = paramDouble1 - localfi.p;
-            double d2 = paramDouble2 - localfi.q;
-            double d3 = paramDouble3 - localfi.r;
-            if (d1 * d1 + d2 * d2 + d3 * d3 < paramDouble4 * paramDouble4) {
-                localfi.a.b(paramju);
+    protected void e(int paramInt) {
+        int i = 25 - an.g();
+        int j = paramInt * i + a;
+        an.c(paramInt);
+        paramInt = j / 25;
+        a = (j % 25);
+        super.e(paramInt);
+    }
+
+    public void a(ez paramez) {
+    }
+
+    public void a(bf parambf) {
+    }
+
+    public void a(lv paramlv) {
+    }
+
+    public void g(fe paramfe) {
+        if (paramfe.a(this)) {
+            return;
+        }
+        jl localjl = P();
+        if ((localjl != null) && ((paramfe instanceof mj))) {
+            localjl.b((mj) paramfe);
+            if (localjl.a <= 0) {
+                localjl.a(this);
+                Q();
             }
         }
     }
 
-    public void i(String paramString) {
-        br localbr = new br(paramString);
-        for (int m = 0; m < this.b.size(); m++) {
-            fi localfi = this.b.get(m);
-            if (g(localfi.aw)) {
-                localfi.a.b(localbr);
+    public jl P() {
+        return an.e();
+    }
+
+    public void Q() {
+        an.a(an.c, null);
+    }
+
+    public double F() {
+        return H - 0.5F;
+    }
+
+    public void K() {
+        av = -1;
+        au = true;
+    }
+
+    public void h(fe paramfe) {
+        int i = an.a(paramfe);
+        if (i > 0) {
+            paramfe.a(this, i);
+            jl localjl = P();
+            if ((localjl != null) && ((paramfe instanceof mj))) {
+                localjl.a((mj) paramfe);
+                if (localjl.a <= 0) {
+                    localjl.a(this);
+                    Q();
+                }
             }
         }
     }
 
-    public boolean a(String paramString, jv paramju) {
-        fi localfi = h(paramString);
-        if (localfi != null) {
-            localfi.a.b(paramju);
-            return true;
-        }
-        return false;
+    public void a(jl paramjl) {
     }
 
-    public void d() {
-        for (int m = 0; m < this.b.size(); m++) {
-            this.l.a(this.b.get(m));
+    public void q() {
+        super.q();
+        ao.a(this);
+        if (ap != null) {
+            ap.a(this);
         }
-    }
-
-    public void a(int paramInt1, int paramInt2, int paramInt3, bg parambg) {
-		// hMod: fix sign updating in beta 1.1_02
-		// Check if bg (TileEntity) is a Sign
-		if(parambg instanceof kp)
-		{
-			d.sendPacketToChunk(((kp)parambg).f(), paramInt1, paramInt2, paramInt3);
-		}
-		// end hMod
     }
 }

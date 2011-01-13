@@ -262,10 +262,10 @@ public class Item {
      * Creates an item from the actual item class
      * @param hn
      */
-    public Item(il hn) {
+    public Item(jl hn) {
         itemId = hn.c;
         amount = hn.a;
-        damage = hn.d;
+        damage = hn.g();
         this.itemType = Type.fromId(itemId);
     }
 
@@ -274,7 +274,7 @@ public class Item {
      * @param hn
      * @param slot
      */
-    public Item(il hn, int slot) {
+    public Item(jl hn, int slot) {
         this(hn);
         this.slot = slot;
     }
@@ -318,8 +318,8 @@ public class Item {
      * @return
      */
     public static boolean isValidItem(int itemId) {
-        if (itemId < gb.c.length) {
-            return gb.c[itemId] != null;
+        if (itemId < hg.c.length) {
+            return hg.c[itemId] != null;
         }
         return false;
     }

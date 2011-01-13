@@ -9,7 +9,7 @@ public class Mob extends LivingEntity {
      * 
      * @param locallb name of mob
      */
-    public Mob(lc locallb) {
+    public Mob(mj locallb) {
         super(locallb);
     }
     
@@ -20,7 +20,7 @@ public class Mob extends LivingEntity {
      *            name of mob
      */
     public Mob(String mob) {
-        this((lc) in.a(mob, etc.getMCServer().e));
+        this((mj) jn.a(mob, etc.getMCServer().e));
     }
 
     /**
@@ -47,13 +47,13 @@ public class Mob extends LivingEntity {
      * @param rider
      */
     public void spawn(Mob rider) {
-        ff localff = etc.getMCServer().e;
+        fv localff = etc.getMCServer().e;
 
         entity.c(getX() + 0.5f, getY(), getZ() + 0.5f, getRotation(), 0f);
         localff.a(entity);
 
         if (rider != null) {
-            lc mob2 = rider.getMob();
+            mj mob2 = rider.getMob();
             mob2.c(getX(), getY(), getZ(), getRotation(), 0f);
             localff.a(mob2);
             mob2.e(entity);
@@ -66,7 +66,7 @@ public class Mob extends LivingEntity {
      * @return name
      */
     public String getName() {
-        return in.b(entity);
+        return jn.b(entity);
     }
 
     /**
@@ -88,7 +88,7 @@ public class Mob extends LivingEntity {
      * 
      * @return
      */
-    public lc getMob() {
+    public mj getMob() {
         return getEntity();
     }
 
@@ -103,6 +103,6 @@ public class Mob extends LivingEntity {
         if (mob == null) {
             return false;
         }
-        return in.a(mob, etc.getMCServer().e) instanceof lc;
+        return jn.a(mob, etc.getMCServer().e) instanceof mj;
     }
 }

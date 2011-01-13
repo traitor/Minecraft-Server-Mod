@@ -1,8 +1,9 @@
-public class Workbench extends ItemArray<it> implements Inventory {
-    private final ig workbench;
+//public class Workbench extends ItemArray<ju> implements Inventory {
+public class Workbench {
+/*private final jg workbench;
 
     public Workbench(ig block) {
-        super((it)block.b);
+        super((ju)block.b);
         workbench = block;
     }
 
@@ -12,7 +13,7 @@ public class Workbench extends ItemArray<it> implements Inventory {
     }
 
     public void update(Player player) {
-        workbench.a((gq)player.getUser());
+        workbench.a((hl)player.getUser());
     }
 
     public String getName() {
@@ -21,5 +22,5 @@ public class Workbench extends ItemArray<it> implements Inventory {
 
     public void setName(String value) {
         container.setName(value);
-    }
+    }*/
 }

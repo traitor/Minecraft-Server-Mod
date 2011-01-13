@@ -39,8 +39,8 @@ public class Player extends HumanEntity implements MessageReceiver {
      * Returns the entity we're wrapping.
      * @return
      */
-    public fi getEntity() {
-        return (fi)entity;
+    public fy getEntity() {
+        return (fy)entity;
     }
     
     /**
@@ -818,16 +818,16 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @param amount
      */
     public void giveItemDrop(int itemId, int amount) {
-        fi player = getEntity();
+        fy player = getEntity();
         if (amount == -1) {
-            player.b(new il(itemId, 255));
+            player.a(new jl(itemId, 255,0));
         } else {
             int temp = amount;
             do {
                 if (temp - 64 >= 64) {
-                    player.b(new il(itemId, 64));
+                    player.a(new jl(itemId, 64,0));
                 } else {
-                    player.b(new il(itemId, temp));
+                    player.a(new jl(itemId, temp,0));
                 }
                 temp -= 64;
             } while (temp > 0);
@@ -1249,7 +1249,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * 
      * @return
      */
-    public fi getUser() {
+    public fy getUser() {
         return getEntity();
     }
 
@@ -1258,13 +1258,13 @@ public class Player extends HumanEntity implements MessageReceiver {
      * 
      * @param er
      */
-    public void setUser(fi player) {
+    public void setUser(fy player) {
         this.entity = player;
         this.inventory = new PlayerInventory(this);
     }
 
     public void teleportTo(double x, double y, double z, float rotation, float pitch) {
-        fi player = getEntity();
+        fy player = getEntity();
         
         // If player is in vehicle - eject them before they are teleported.
         if (player.k != null) {
@@ -1331,7 +1331,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @return true if sneaking
      */
     public boolean getSneaking() {
-        return getEntity().al;
+        return getEntity().am;
     }
 
     /**
@@ -1340,7 +1340,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @param sneaking true if sneaking
      */
     public void setSneaking(boolean sneaking) {
-        getEntity().al = sneaking;
+        getEntity().am = sneaking;
     }
 
     /**

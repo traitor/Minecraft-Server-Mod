@@ -14,7 +14,7 @@ public class HumanEntity extends LivingEntity {
      * 
      * @param human
      */
-    public HumanEntity(gq human) {
+    public HumanEntity(hl human) {
         super(human);
     }
 
@@ -22,8 +22,8 @@ public class HumanEntity extends LivingEntity {
      * Returns the entity we're wrapping.
      * @return
      */
-    public gq getEntity() {
-        return (gq) entity;
+    public hl getEntity() {
+        return (hl) entity;
     }
 
     /**

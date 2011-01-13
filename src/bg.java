@@ -1,75 +1,87 @@
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Random;
 
-public class bg {
+public class bg extends hr {
 
-    private static Map e = new HashMap();
-    private static Map f = new HashMap();
-    public ff a;
-    public int b;
-    public int c;
-    public int d;
-
-    private static void a(Class paramClass, String paramString) {
-        if (f.containsKey(paramString)) {
-            throw new IllegalArgumentException("Duplicate id: " + paramString);
-        }
-        e.put(paramString, paramClass);
-        f.put(paramClass, paramString);
+    protected bg(int paramInt1, int paramInt2) {
+        super(paramInt1, paramInt2, mh.u);
+        a(true);
     }
 
-    public void a(ad paramad) {
-        this.b = paramad.d("x");
-        this.c = paramad.d("y");
-        this.d = paramad.d("z");
-    }
-
-    public void b(ad paramad) {
-        String str = (String) f.get(getClass());
-        if (str == null) {
-            throw new RuntimeException(getClass() + " is missing a mapping! This is a bug!");
-        }
-        paramad.a("id", str);
-        paramad.a("x", this.b);
-        paramad.a("y", this.c);
-        paramad.a("z", this.d);
-    }
-
-    public void e() {
-    }
-
-    public static bg c(ad paramad) {
-        bg localbg = null;
-        try {
-            Class localClass = (Class) e.get(paramad.h("id"));
-            if (localClass != null) {
-                localbg = (bg) localClass.newInstance();
+    public void a(fv paramfv, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
+        if (paramfv.e(paramInt1, paramInt2 + 1, paramInt3)) {
+            int i = 1;
+            while (paramfv.a(paramInt1, paramInt2 - i, paramInt3) == bi) {
+                i++;
             }
-        } catch (Exception localException) {
-            localException.printStackTrace();
+            if (i < 3) {
+                int j = paramfv.b(paramInt1, paramInt2, paramInt3);
+                if (j == 15) {
+                    paramfv.e(paramInt1, paramInt2 + 1, paramInt3, bi);
+                    paramfv.c(paramInt1, paramInt2, paramInt3, 0);
+                } else {
+                    paramfv.c(paramInt1, paramInt2, paramInt3, j + 1);
+                }
+            }
         }
-        if (localbg != null) {
-            localbg.a(paramad);
-        } else {
-            System.out.println("Skipping TileEntity with id " + paramad.h("id"));
+    }
+
+    public fa d(fv paramfv, int paramInt1, int paramInt2, int paramInt3) {
+        float f = 0.0625F;
+        return fa.b(paramInt1 + f, paramInt2, paramInt3 + f, paramInt1 + 1 - f, paramInt2 + 1 - f, paramInt3 + 1 - f);
+    }
+
+    public int a(int paramInt) {
+        if (paramInt == 1) {
+            return bh - 1;
         }
-        return localbg;
+        if (paramInt == 0) {
+            return bh + 1;
+        }
+        return bh;
     }
 
-    public void d() {
-        if(this.a == null) return;
-        this.a.b(this.b, this.c, this.d, this);
+    public boolean a() {
+        return false;
     }
 
-    public jv f() {
-        return null;
+    public boolean a(fv paramfv, int paramInt1, int paramInt2, int paramInt3) {
+        if (!super.a(paramfv, paramInt1, paramInt2, paramInt3)) {
+            return false;
+        }
+
+        return f(paramfv, paramInt1, paramInt2, paramInt3);
     }
 
-    static {
-        a(ek.class, "Furnace");
-        a(jb.class, "Chest");
-        a(kp.class, "Sign");
-        a(cq.class, "MobSpawner");
+    public void b(fv paramfv, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+        if (!f(paramfv, paramInt1, paramInt2, paramInt3)) {
+            a_(paramfv, paramInt1, paramInt2, paramInt3, paramfv.b(paramInt1, paramInt2, paramInt3));
+            paramfv.e(paramInt1, paramInt2, paramInt3, 0);
+        }
+    }
+
+    public boolean f(fv paramfv, int paramInt1, int paramInt2, int paramInt3) {
+        if (paramfv.c(paramInt1 - 1, paramInt2, paramInt3).a()) {
+            return false;
+        }
+        if (paramfv.c(paramInt1 + 1, paramInt2, paramInt3).a()) {
+            return false;
+        }
+        if (paramfv.c(paramInt1, paramInt2, paramInt3 - 1).a()) {
+            return false;
+        }
+        if (paramfv.c(paramInt1, paramInt2, paramInt3 + 1).a()) {
+            return false;
+        }
+        int i = paramfv.a(paramInt1, paramInt2 - 1, paramInt3);
+        return (i == hr.aV.bi) || (i == hr.E.bi);
+    }
+
+    public void a(fv paramfv, int paramInt1, int paramInt2, int paramInt3, fe paramfe) {
+        // hMod Damage hook: Cactus
+        if (paramfe instanceof mj && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.CACTUS, null, new LivingEntity((mj) paramfe), 1)) {
+            return;
+        }
+        paramfe.a((fe)null, 1);
     }
 }

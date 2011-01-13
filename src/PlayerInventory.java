@@ -1,6 +1,6 @@
 
-public class PlayerInventory extends ItemArray<ii> implements Inventory {
-    private final fi user;
+public class PlayerInventory extends ItemArray<ji> implements Inventory {
+    private final fy user;
     
     public PlayerInventory(Player player) {
         super(player.getUser().an);

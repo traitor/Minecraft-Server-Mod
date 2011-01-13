@@ -4,13 +4,13 @@
  */
 public class MobSpawner implements ComplexBlock {
 
-    cq spawner;
+    db spawner;
 
     /**
      * Creates an interface for the spawner.
      * @param spawner
      */
-    public MobSpawner(cq spawner) {
+    public MobSpawner(db spawner) {
         this.spawner = spawner;
     }
 
@@ -39,15 +39,17 @@ public class MobSpawner implements ComplexBlock {
      * @param spawn
      */
     public void setSpawn(String spawn) {
-        spawner.f = spawn;
+        spawner.a(spawn);
     }
     
     /**
      * Returns the spawn used.
+     * This DOESN't work anymore.
      * @return
      */
+    @Deprecated
     public String getSpawn() {
-        return spawner.f;
+        return "";
     }
 
     /**

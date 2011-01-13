@@ -2,8 +2,8 @@
  * Furnace.java - Interface for furnaces
  * @author James
  */
-public class Furnace extends BaseContainerBlock<ek> implements ComplexBlock {
-    public Furnace(ek furnace) {
+public class Furnace extends BaseContainerBlock<ez> implements ComplexBlock {
+    public Furnace(ez furnace) {
         super(furnace, "Furnace");
     }
 }
