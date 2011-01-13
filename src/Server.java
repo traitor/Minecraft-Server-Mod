@@ -193,6 +193,27 @@ public class Server {
         return user == null ? null : user.getPlayer();
     }
 
+
+	protected static boolean isPlayer(Object obj) {
+		return obj instanceof fi;
+	}
+
+	protected static boolean isMob(Object obj) {
+		return !isPlayer(obj) && (obj instanceof lc && (in.a((lc)obj) / 10 == 5));
+	}
+
+	protected static boolean isAnimal(Object obj) {
+		return !isPlayer(obj) && (obj instanceof lc && (in.a((lc)obj) / 10 == 9));
+	}
+
+	protected static boolean isMinecart(Object obj) {
+		return obj instanceof kq;
+	}
+
+	protected static boolean isBoat(Object obj) {
+		return obj instanceof fl;
+	}
+
     /**
      * Returns the player list.
      * @return list of players
@@ -211,9 +232,9 @@ public class Server {
      */
     public List<Mob> getMobList() {
         List<Mob> toRet = new ArrayList<Mob>();
-        for (Object o : server.e.b) {
-            if (o instanceof gu || o instanceof bk) {
-                toRet.add(new Mob((lc) o));
+        for (Object obj : server.e.b) {
+			if (isMob(obj)) {
+				toRet.add(new Mob((lc) obj));
             }
         }
         return toRet;
@@ -225,9 +246,9 @@ public class Server {
      */
     public List<Mob> getAnimalList() {
         List<Mob> toRet = new ArrayList<Mob>();
-        for (Object o : server.e.b) {
-            if (o instanceof bf) {
-                toRet.add(new Mob((lc) o));
+        for (Object obj : server.e.b) {
+			if (isAnimal(obj)) {
+				toRet.add(new Mob((lc) obj));
             }
         }
         return toRet;
@@ -239,9 +260,9 @@ public class Server {
      */
     public List<Minecart> getMinecartList() {
         List<Minecart> toRet = new ArrayList<Minecart>();
-        for (Object o : server.e.b) {
-            if (o instanceof kq) {
-                toRet.add(new Minecart((kq) o));
+        for (Object obj : server.e.b) {
+            if (isMinecart(obj)) {
+                toRet.add(new Minecart((kq) obj));
             }
         }
         return toRet;
@@ -253,9 +274,9 @@ public class Server {
      */
     public List<Boat> getBoatList() {
         List<Boat> toRet = new ArrayList<Boat>();
-        for (Object o : server.e.b) {
-            if (o instanceof gc) {
-                toRet.add(new Boat((gc) o));
+        for (Object obj : server.e.b) {
+            if (isBoat(obj)) {
+                toRet.add(new Boat((gc) obj));
             }
         }
         return toRet;
@@ -267,15 +288,18 @@ public class Server {
      */
     public List<BaseEntity> getEntityList() {
         List<BaseEntity> toRet = new ArrayList<BaseEntity>();
-        for (Object o : server.e.b) {
-            if (o instanceof gu || o instanceof bk || o instanceof bf) {
-                toRet.add(new Mob((lc) o));
-            } else if (o instanceof kq) {
-                toRet.add(new Minecart((kq) o));
-            } else if (o instanceof gc) {
-                toRet.add(new Boat((gc) o));
-            } else if (o instanceof fi) {
-                toRet.add(((fi)o).getPlayer());
+        for (Object obj : server.e.b) {
+            if (isPlayer(obj)) {
+				toRet.add(((fi)obj).getPlayer());
+            }
+			else if (isMob(obj) || isAnimal(obj)) {
+                toRet.add(new Mob((lc) obj));
+            }
+			else if (isMinecart(obj)) {
+                toRet.add(new Minecart((kq) obj));
+            }
+			else if (isBoat(obj)) {
+                toRet.add(new Boat((gc) obj));
             }
         }
         return toRet;
@@ -287,13 +311,10 @@ public class Server {
      */
     public List<LivingEntity> getLivingEntityList() {
         List<LivingEntity> toRet = new ArrayList<LivingEntity>();
-        for (Object o : server.e.b) {
-            if (o instanceof gu || o instanceof bk || o instanceof bf) {
-                toRet.add(new Mob((lc) o));
-            } else if (o instanceof fi) {
-                toRet.add(((fi)o).getPlayer());
-            }
-        }
+        for (Object obj : server.e.b) {
+			if (isPlayer(obj)) { toRet.add(((fi)obj).getPlayer()); }
+			else if (isAnimal(obj) || isMob(obj)) { toRet.add(new Mob((lc) obj)); }
+		}
         return toRet;
     }
 
@@ -303,11 +324,11 @@ public class Server {
      */
     public List<BaseVehicle> getVehicleEntityList() {
         List<BaseVehicle> toRet = new ArrayList<BaseVehicle>();
-        for (Object o : server.e.b) {
-            if (o instanceof kq) {
-                toRet.add(new Minecart((kq) o));
-            } else if (o instanceof gc) {
-                toRet.add(new Boat((gc) o));
+        for (Object obj : server.e.b) {
+            if (isMinecart(obj)) {
+                toRet.add(new Minecart((kq) obj));
+            } else if (isBoat(obj)) {
+                toRet.add(new Boat((gc) obj));
             }
         }
         return toRet;
