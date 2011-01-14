@@ -29,6 +29,7 @@ public class Digging extends md {
      * @param z
      * @return
      */
+    @Override
     public boolean c(int x, int y, int z) {
         Block block = etc.getServer().getBlockAt(x, y, z);
         if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, ((fy) a).getPlayer(), block)) {

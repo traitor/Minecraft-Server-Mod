@@ -851,13 +851,11 @@ public abstract class fe {
     }
 
     protected boolean c(int paramInt) {
-        return true;
-        //class cast exception here ???
-        //return (af.a((byte)0) & 1 << paramInt) != 0
+        return (af.a(0) & 1 << paramInt) != 0;
     }
 
     protected void a(int paramInt, boolean paramBoolean) {
-        int i1 = af.a((byte)0);
+        int i1 = af.a(0);
         if (paramBoolean) {
             af.b(0, Byte.valueOf((byte) (i1 | 1 << paramInt)));
         } else {

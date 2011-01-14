@@ -304,6 +304,7 @@ public class fy extends hl
     }
     /*
      * new type of inventory ?
+     * TODO: fix dispensers
      */
 
     public void a(bf parambf) {

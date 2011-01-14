@@ -212,7 +212,8 @@ public class Server {
     public List<Mob> getMobList() {
         List<Mob> toRet = new ArrayList<Mob>();
         for (Object o : server.e.b) {
-            if (o instanceof gu || o instanceof bk) {
+            //TODO: fix.
+            if (o instanceof hq || o instanceof br) {
                 toRet.add(new Mob((mj) o));
             }
         }
@@ -226,7 +227,7 @@ public class Server {
     public List<Mob> getAnimalList() {
         List<Mob> toRet = new ArrayList<Mob>();
         for (Object o : server.e.b) {
-            if (o instanceof bf) {
+            if (o instanceof bl) {
                 toRet.add(new Mob((mj) o));
             }
         }
@@ -240,7 +241,7 @@ public class Server {
     public List<Minecart> getMinecartList() {
         List<Minecart> toRet = new ArrayList<Minecart>();
         for (Object o : server.e.b) {
-            if (o instanceof kq) {
+            if (o instanceof lw) {
                 toRet.add(new Minecart((lw) o));
             }
         }
@@ -254,7 +255,7 @@ public class Server {
     public List<Boat> getBoatList() {
         List<Boat> toRet = new ArrayList<Boat>();
         for (Object o : server.e.b) {
-            if (o instanceof gc) {
+            if (o instanceof gu) {
                 toRet.add(new Boat((gu) o));
             }
         }
@@ -268,7 +269,7 @@ public class Server {
     public List<BaseEntity> getEntityList() {
         List<BaseEntity> toRet = new ArrayList<BaseEntity>();
         for (Object o : server.e.b) {
-            if (o instanceof gu || o instanceof bk || o instanceof bf) {
+            if (o instanceof hq || o instanceof br || o instanceof bl) {
                 toRet.add(new Mob((mj) o));
             } else if (o instanceof lw) {
                 toRet.add(new Minecart((lw) o));
@@ -288,7 +289,7 @@ public class Server {
     public List<LivingEntity> getLivingEntityList() {
         List<LivingEntity> toRet = new ArrayList<LivingEntity>();
         for (Object o : server.e.b) {
-            if (o instanceof gu || o instanceof bk || o instanceof bf) {
+            if (o instanceof hq || o instanceof br || o instanceof bl) {
                 toRet.add(new Mob((mj) o));
             } else if (o instanceof fy) {
                 toRet.add(((fy)o).getPlayer());
@@ -571,7 +572,7 @@ public class Server {
      * @param data the new data for the block
      */
     public void updateBlockPhysics(int x, int y, int z, int data) {
-        server.e.b(x, y, z, data);
+        server.e.c(x, y, z, data);
     }
 
     /**

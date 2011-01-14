@@ -123,6 +123,18 @@ public class kj {
     public int b() {
         return 144;
     }
+
+    static MinecraftServer a(kj jh1) {
+        return jh1.d;
+    }
+
+    static gm b(kj jh1) {
+        return jh1.b;
+    }
+
+    static List c(kj jh1) {
+        return jh1.c;
+    }
     // hMod: bring back old "send packet to chunk" method from alpha
 
     public void sendPacketToChunk(jv packetToSend, int globalx, int globaly, int globalz) {
