@@ -105,13 +105,13 @@ public class bb extends hr {
     public void a(la paramla, int paramInt1, int paramInt2, int paramInt3) {
         int i = paramla.b(paramInt1, paramInt2, paramInt3);
         int j = i & 0x7;
-        int k = (i & 0x8) > 0 ? 1 : 0;
+        boolean flag = (i & 8) > 0;
 
         float f1 = 0.375F;
         float f2 = 0.625F;
         float f3 = 0.1875F;
         float f4 = 0.125F;
-        if (k != 0) {
+        if (flag) {
             f4 = 0.0625F;
         }
 

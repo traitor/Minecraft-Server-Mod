@@ -5,7 +5,8 @@ import java.util.Random;
 public class db extends bm {
 
     public int e = -1;
-    private String h;
+    //HMOD: make this public
+    public String h;
     public double f;
     public double g = 0.0D;
 

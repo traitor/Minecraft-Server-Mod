@@ -247,6 +247,12 @@ public class fy extends hl
     }
     // TODO : fix workbenches
     public void a(int paramInt1, int paramInt2, int paramInt3) {
+        jg temp = new jg(this.an, this.l, paramInt1, paramInt2, paramInt3);
+        Workbench bench = new Workbench(temp);
+        if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), bench)) {
+            return;
+        }
+
         U();
         a.b(new jh(bG, 1, "Crafting", 9));
         ap = new jg(an, l, paramInt1, paramInt2, paramInt3);
@@ -308,8 +314,18 @@ public class fy extends hl
      */
 
     public void a(bf parambf) {
+        Dispenser dis = new Dispenser(parambf);
+        String name = parambf.b();
+        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), dis)) {
+            return;
+        }
+
+        if (dis != null) {
+            name = dis.getName();
+        }
+        this.lastOpenedInventory = dis;
         U();
-        a.b(new jh(bG, 3, parambf.b(), parambf.h_()));
+        a.b(new jh(bG, 3, name, parambf.h_()));
         ap = new ew(an, parambf);
         ap.f = bG;
         // hMod: Make sure this gets cast correctly, or mutant puppies will spawn and eat your items.

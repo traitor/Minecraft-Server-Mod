@@ -1,3 +1,4 @@
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -6,12 +7,14 @@ import java.util.Map;
  * @author James
  */
 public class Item {
+
     /**
      * Type - Used to identify items
      */
     public enum Type {
-        Air (0),
-        Stone (1),
+
+        Air(0),
+        Stone(1),
         Grass(2),
         Dirt(3),
         Cobblestone(4),
@@ -31,7 +34,13 @@ public class Item {
         Leaves(18),
         Sponge(19),
         Glass(20),
+        LapisLazuliOre(21),
+        LapisLazuliBlock(22),
+        Dispenser(23),
+        NoteBlock(25),
+        BlackCloth(34),
         Cloth(35),
+        WhiteCloth(36),
         YellowFlower(37),
         RedRose(38),
         BrownMushroom(39),
@@ -87,7 +96,7 @@ public class Item {
         LightStone(89),
         Portal(90),
         JackOLantern(91),
-
+        CakeBlock(92),
         IronSpade(256),
         IronPickaxe(257),
         IronAxe(258),
@@ -183,24 +192,25 @@ public class Item {
         LightstoneDust(348),
         RawFish(349),
         CookedFish(350),
-
+        InkSack(351),
+        Bone(352),
+        Sugar(353),
+        Cake(354),
         GoldRecord(2256),
-        GreenRecord(2257)
-        ;
-
+        GreenRecord(2257);
         private int id;
         private static Map<Integer, Type> map;
 
-        private Type(int id){
+        private Type(int id) {
             this.id = id;
-            add( id, this );
+            add(id, this);
         }
 
-        private static void add( int type, Type name ) {
+        private static void add(int type, Type name) {
             if (map == null) {
                 map = new HashMap<Integer, Type>();
             }
-            
+
             map.put(type, name);
         }
 
@@ -212,10 +222,9 @@ public class Item {
             return map.get(id);
         }
     }
-
     private int itemId = 1, amount = 1, slot = -1, damage = 0;
-
     public Type itemType = Type.fromId(itemId);
+
     /**
      * Create an item with an id of 1 and amount of 1
      */
@@ -229,7 +238,7 @@ public class Item {
     public Item(Type itemType) {
         this(itemType, 1);
     }
-    
+
     public Item(Type itemType, int amount) {
         this(itemType.getId(), amount);
     }
@@ -242,7 +251,7 @@ public class Item {
     public Item(int itemId, int amount) {
         this.itemId = itemId;
         this.amount = amount;
-        this.itemType= Type.fromId(itemId);
+        this.itemType = Type.fromId(itemId);
     }
 
     /**
@@ -411,7 +420,7 @@ public class Item {
      * Returns this item type
      * @return the item type
      */
-    public Type getType(){
+    public Type getType() {
         return this.itemType;
     }
 
@@ -419,7 +428,7 @@ public class Item {
      * Set the item type
      * @param itemType the item type
      */
-    public void setType(Type itemType){
+    public void setType(Type itemType) {
         this.itemType = itemType;
         this.itemId = itemType.getId();
     }

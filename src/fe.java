@@ -67,53 +67,53 @@ public abstract class fe {
     public int aj;
 
     public fe(fv paramfv) {
-        l = paramfv;
+        this.l = paramfv;
 
         a(0.0D, 0.0D, 0.0D);
 
-        af.a(0, 0);
+        this.af.a(0, (byte) 0);
         a();
     }
 
     protected abstract void a();
 
     public gx p() {
-        return af;
+        return this.af;
     }
 
     public boolean equals(Object paramObject) {
         if ((paramObject instanceof fe)) {
-            return ((fe) paramObject).g == g;
+            return ((fe) paramObject).g == this.g;
         }
         return false;
     }
 
     public int hashCode() {
-        return g;
+        return this.g;
     }
 
     public void q() {
-        G = true;
+        this.G = true;
     }
 
     protected void a(float paramFloat1, float paramFloat2) {
-        I = paramFloat1;
-        J = paramFloat2;
+        this.I = paramFloat1;
+        this.J = paramFloat2;
     }
 
     protected void b(float paramFloat1, float paramFloat2) {
-        v = paramFloat1;
-        w = paramFloat2;
+        this.v = paramFloat1;
+        this.w = paramFloat2;
     }
 
     public void a(double paramDouble1, double paramDouble2, double paramDouble3) {
-        p = paramDouble1;
-        q = paramDouble2;
-        r = paramDouble3;
-        float f1 = I / 2.0F;
-        float f2 = J;
+        this.p = paramDouble1;
+        this.q = paramDouble2;
+        this.r = paramDouble3;
+        float f1 = this.I / 2.0F;
+        float f2 = this.J;
 
-        z.c(paramDouble1 - f1, paramDouble2 - H + R, paramDouble3 - f1, paramDouble1 + f1, paramDouble2 - H + R + f2, paramDouble3 + f1);
+        this.z.c(paramDouble1 - f1, paramDouble2 - this.H + this.R, paramDouble3 - f1, paramDouble1 + f1, paramDouble2 - this.H + this.R + f2, paramDouble3 + f1);
     }
 
     public void b_() {
@@ -121,62 +121,64 @@ public abstract class fe {
     }
 
     public void r() {
-        if ((k != null) && (k.G)) {
-            k = null;
+        if ((this.k != null) && (this.k.G)) {
+            this.k = null;
         }
 
-        X += 1;
-        K = L;
-        m = p;
-        n = q;
-        o = r;
-        y = w;
-        x = v;
+        this.X += 1;
+        this.K = this.L;
+        this.m = this.p;
+        this.n = this.q;
+        this.o = this.r;
+        this.y = this.w;
+        this.x = this.v;
 
         if (v()) {
-            if ((!ab) && (!c)) {
-                float f1 = iz.a(s * s * 0.2000000029802322D + t * t + u * u * 0.2000000029802322D) * 0.2F;
+            if ((!this.ab) && (!this.c)) {
+                float f1 = iz.a(this.s * this.s * 0.2000000029802322D + this.t * this.t + this.u * this.u * 0.2000000029802322D) * 0.2F;
                 if (f1 > 1.0F) {
                     f1 = 1.0F;
                 }
-                l.a(this, "random.splash", f1, 1.0F + (W.nextFloat() - W.nextFloat()) * 0.4F);
-                float f2 = iz.b(z.b);
+                this.l.a(this, "random.splash", f1, 1.0F + (this.W.nextFloat() - this.W.nextFloat()) * 0.4F);
+                float f2 = iz.b(this.z.b);
                 float f3;
                 float f4;
-                for (int i1 = 0; i1 < 1.0F + I * 20.0F; i1++) {
-                    f3 = (W.nextFloat() * 2.0F - 1.0F) * I;
-                    f4 = (W.nextFloat() * 2.0F - 1.0F) * I;
-                    l.a("bubble", p + f3, f2 + 1.0F, r + f4, s, t - W.nextFloat() * 0.2F, u);
+                for (int i1 = 0; i1 < 1.0F + this.I * 20.0F; i1++) {
+                    f3 = (this.W.nextFloat() * 2.0F - 1.0F) * this.I;
+                    f4 = (this.W.nextFloat() * 2.0F - 1.0F) * this.I;
+                    this.l.a("bubble", this.p + f3, f2 + 1.0F, this.r + f4, this.s, this.t - this.W.nextFloat() * 0.2F, this.u);
                 }
-                for (int i1 = 0; i1 < 1.0F + I * 20.0F; i1++) {
-                    f3 = (W.nextFloat() * 2.0F - 1.0F) * I;
-                    f4 = (W.nextFloat() * 2.0F - 1.0F) * I;
-                    l.a("splash", p + f3, f2 + 1.0F, r + f4, s, t, u);
+                for (int i1 = 0; i1 < 1.0F + this.I * 20.0F; i1++) {
+                    f3 = (this.W.nextFloat() * 2.0F - 1.0F) * this.I;
+                    f4 = (this.W.nextFloat() * 2.0F - 1.0F) * this.I;
+                    this.l.a("splash", this.p + f3, f2 + 1.0F, this.r + f4, this.s, this.t, this.u);
                 }
             }
-            N = 0.0F;
-            ab = true;
-            Z = 0;
+            this.N = 0.0F;
+            this.ab = true;
+            this.Z = 0;
         } else {
-            ab = false;
+            this.ab = false;
         }
 
-        if (l.z) {
-            Z = 0;
-        } else if (Z > 0) {
-            if (ae) {
-                Z -= 4;
-                if (Z < 0) {
-                    Z = 0;
+        if (this.l.z) {
+            this.Z = 0;
+        } else if (this.Z > 0) {
+            if (this.ae) {
+                this.Z -= 4;
+                if (this.Z < 0) {
+                    this.Z = 0;
                 }
             } else {
-                if (Z % 20 == 0) {
+                if (this.Z % 20 == 0) {
+                    // hMod Damage hook: Periodic burn damage
                     BaseEntity burner = new BaseEntity(this);
                     if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.FIRE_TICK, null, burner, 1)) {
                         a((fe) null, 1);
                     }
+
                 }
-                Z -= 1;
+                this.Z -= 1;
             }
 
         }
@@ -185,20 +187,20 @@ public abstract class fe {
             s();
         }
 
-        if (q < -64.0D) {
+        if (this.q < -64.0D) {
             t();
         }
 
-        if (!l.z) {
-            a(0, Z > 0);
-            a(2, k != null);
+        if (!this.l.z) {
+            a(0, this.Z > 0);
+            a(2, this.k != null);
         }
 
-        c = false;
+        this.c = false;
     }
 
     protected void s() {
-        if (!ae) {
+        if (!this.ae) {
             // hMod Damage hook: Lava
             if (this instanceof mj) {
                 BaseEntity defender = new BaseEntity(this);
@@ -206,8 +208,8 @@ public abstract class fe {
                     return;
                 }
             }
-            a((fe)null, 4);
-            Z = 600;
+            a((fe) null, 4);
+            this.Z = 600;
         }
     }
 
@@ -216,37 +218,37 @@ public abstract class fe {
     }
 
     public boolean b(double paramDouble1, double paramDouble2, double paramDouble3) {
-        fa localfa = z.c(paramDouble1, paramDouble2, paramDouble3);
-        List localList = l.a(this, localfa);
+        fa localfa = this.z.c(paramDouble1, paramDouble2, paramDouble3);
+        List localList = this.l.a(this, localfa);
         if (localList.size() > 0) {
             return false;
         }
-        return !l.b(localfa);
+        return !this.l.b(localfa);
     }
 
     public void c(double paramDouble1, double paramDouble2, double paramDouble3) {
-        if (T) {
-            z.d(paramDouble1, paramDouble2, paramDouble3);
-            p = ((z.a + z.d) / 2.0D);
-            q = (z.b + H - R);
-            r = ((z.c + z.f) / 2.0D);
+        if (this.T) {
+            this.z.d(paramDouble1, paramDouble2, paramDouble3);
+            this.p = ((this.z.a + this.z.d) / 2.0D);
+            this.q = (this.z.b + this.H - this.R);
+            this.r = ((this.z.c + this.z.f) / 2.0D);
             return;
         }
 
-        double d1 = p;
-        double d2 = r;
+        double d1 = this.p;
+        double d2 = this.r;
 
         double d3 = paramDouble1;
         double d4 = paramDouble2;
         double d5 = paramDouble3;
 
-        fa localfa1 = z.b();
+        fa localfa1 = this.z.b();
 
-        int i1 = (A) && (J()) ? 1 : 0;
+        int i1 = (this.A) && (J()) ? 1 : 0;
 
         if (i1 != 0) {
             double d6 = 0.05D;
-            while ((paramDouble1 != 0.0D) && (l.a(this, z.c(paramDouble1, -1.0D, 0.0D)).size() == 0)) {
+            while ((paramDouble1 != 0.0D) && (this.l.a(this, this.z.c(paramDouble1, -1.0D, 0.0D)).size() == 0)) {
                 if ((paramDouble1 < d6) && (paramDouble1 >= -d6)) {
                     paramDouble1 = 0.0D;
                 } else if (paramDouble1 > 0.0D) {
@@ -256,7 +258,7 @@ public abstract class fe {
                 }
                 d3 = paramDouble1;
             }
-            while ((paramDouble3 != 0.0D) && (l.a(this, z.c(0.0D, -1.0D, paramDouble3)).size() == 0)) {
+            while ((paramDouble3 != 0.0D) && (this.l.a(this, this.z.c(0.0D, -1.0D, paramDouble3)).size() == 0)) {
                 if ((paramDouble3 < d6) && (paramDouble3 >= -d6)) {
                     paramDouble3 = 0.0D;
                 } else if (paramDouble3 > 0.0D) {
@@ -268,74 +270,75 @@ public abstract class fe {
             }
         }
 
-        List localList = l.a(this, z.a(paramDouble1, paramDouble2, paramDouble3));
+        List localList = this.l.a(this, this.z.a(paramDouble1, paramDouble2, paramDouble3));
 
         for (int i2 = 0; i2 < localList.size(); i2++) {
-            paramDouble2 = ((fa) localList.get(i2)).b(z, paramDouble2);
+            paramDouble2 = ((fa) localList.get(i2)).b(this.z, paramDouble2);
         }
-        z.d(0.0D, paramDouble2, 0.0D);
+        this.z.d(0.0D, paramDouble2, 0.0D);
 
-        if ((!F) && (d4 != paramDouble2)) {
+        if ((!this.F) && (d4 != paramDouble2)) {
             paramDouble1 = paramDouble2 = paramDouble3 = 0.0D;
         }
 
-        int i2 = (A) || ((d4 != paramDouble2) && (d4 < 0.0D)) ? 1 : 0;
+        int i2 = (this.A) || ((d4 != paramDouble2) && (d4 < 0.0D)) ? 1 : 0;
 
         for (int i3 = 0; i3 < localList.size(); i3++) {
-            paramDouble1 = ((fa) localList.get(i3)).a(z, paramDouble1);
+            paramDouble1 = ((fa) localList.get(i3)).a(this.z, paramDouble1);
         }
-        z.d(paramDouble1, 0.0D, 0.0D);
+        this.z.d(paramDouble1, 0.0D, 0.0D);
 
-        if ((!F) && (d3 != paramDouble1)) {
+        if ((!this.F) && (d3 != paramDouble1)) {
             paramDouble1 = paramDouble2 = paramDouble3 = 0.0D;
         }
 
         for (int i3 = 0; i3 < localList.size(); i3++) {
-            paramDouble3 = ((fa) localList.get(i3)).c(z, paramDouble3);
+            paramDouble3 = ((fa) localList.get(i3)).c(this.z, paramDouble3);
         }
-        z.d(0.0D, 0.0D, paramDouble3);
+        this.z.d(0.0D, 0.0D, paramDouble3);
 
-        if ((!F) && (d5 != paramDouble3)) {
+        if ((!this.F) && (d5 != paramDouble3)) {
             paramDouble1 = paramDouble2 = paramDouble3 = 0.0D;
         }
 
-        if ((S > 0.0F) && (i2 != 0) && (R < 0.05F) && ((d3 != paramDouble1) || (d5 != paramDouble3))) {
+        if ((this.S > 0.0F) && (i2 != 0) && (this.R < 0.05F) && ((d3 != paramDouble1) || (d5 != paramDouble3))) {
             double d7 = paramDouble1;
             double d8 = paramDouble2;
             double d9 = paramDouble3;
 
             paramDouble1 = d3;
-            paramDouble2 = S;
+            paramDouble2 = this.S;
             paramDouble3 = d5;
-
-            fa localfa2 = z.b();
-            z.b(localfa1);
-            localList = l.a(this, z.a(paramDouble1, paramDouble2, paramDouble3));
             int i7;
-            for (i7 = 0; i7 < localList.size(); i7++) {
-                paramDouble2 = ((fa) localList.get(i7)).b(z, paramDouble2);
-            }
-            z.d(0.0D, paramDouble2, 0.0D);
 
-            if ((!F) && (d4 != paramDouble2)) {
+            fa localfa2 = this.z.b();
+            this.z.b(localfa1);
+            localList = this.l.a(this, this.z.a(paramDouble1, paramDouble2, paramDouble3));
+
+            for (i7 = 0; i7 < localList.size(); i7++) {
+                paramDouble2 = ((fa) localList.get(i7)).b(this.z, paramDouble2);
+            }
+            this.z.d(0.0D, paramDouble2, 0.0D);
+
+            if ((!this.F) && (d4 != paramDouble2)) {
                 paramDouble1 = paramDouble2 = paramDouble3 = 0.0D;
             }
 
             for (i7 = 0; i7 < localList.size(); i7++) {
-                paramDouble1 = ((fa) localList.get(i7)).a(z, paramDouble1);
+                paramDouble1 = ((fa) localList.get(i7)).a(this.z, paramDouble1);
             }
-            z.d(paramDouble1, 0.0D, 0.0D);
+            this.z.d(paramDouble1, 0.0D, 0.0D);
 
-            if ((!F) && (d3 != paramDouble1)) {
+            if ((!this.F) && (d3 != paramDouble1)) {
                 paramDouble1 = paramDouble2 = paramDouble3 = 0.0D;
             }
 
             for (i7 = 0; i7 < localList.size(); i7++) {
-                paramDouble3 = ((fa) localList.get(i7)).c(z, paramDouble3);
+                paramDouble3 = ((fa) localList.get(i7)).c(this.z, paramDouble3);
             }
-            z.d(0.0D, 0.0D, paramDouble3);
+            this.z.d(0.0D, 0.0D, paramDouble3);
 
-            if ((!F) && (d5 != paramDouble3)) {
+            if ((!this.F) && (d5 != paramDouble3)) {
                 paramDouble1 = paramDouble2 = paramDouble3 = 0.0D;
             }
 
@@ -343,104 +346,104 @@ public abstract class fe {
                 paramDouble1 = d7;
                 paramDouble2 = d8;
                 paramDouble3 = d9;
-                z.b(localfa2);
+                this.z.b(localfa2);
             } else {
-                R = (float) (R + 0.5D);
+                this.R = (float) (this.R + 0.5D);
             }
 
         }
 
-        p = ((z.a + z.d) / 2.0D);
-        q = (z.b + H - R);
-        r = ((z.c + z.f) / 2.0D);
+        this.p = ((this.z.a + this.z.d) / 2.0D);
+        this.q = (this.z.b + this.H - this.R);
+        this.r = ((this.z.c + this.z.f) / 2.0D);
 
-        B = ((d3 != paramDouble1) || (d5 != paramDouble3));
-        C = (d4 != paramDouble2);
-        A = ((d4 != paramDouble2) && (d4 < 0.0D));
-        D = ((B) || (C));
-        a(paramDouble2, A);
+        this.B = ((d3 != paramDouble1) || (d5 != paramDouble3));
+        this.C = (d4 != paramDouble2);
+        this.A = ((d4 != paramDouble2) && (d4 < 0.0D));
+        this.D = ((this.B) || (this.C));
+        a(paramDouble2, this.A);
 
         if (d3 != paramDouble1) {
-            s = 0.0D;
+            this.s = 0.0D;
         }
         if (d4 != paramDouble2) {
-            t = 0.0D;
+            this.t = 0.0D;
         }
         if (d5 != paramDouble3) {
-            u = 0.0D;
+            this.u = 0.0D;
         }
 
-        double d7 = p - d1;
-        double d8 = r - d2;
+        double d7 = this.p - d1;
+        double d8 = this.r - d2;
 
-        if ((M) && (i1 == 0)) {
-            L = (float) (L + iz.a(d7 * d7 + d8 * d8) * 0.6D);
-            int i4 = iz.b(p);
-            int i5 = iz.b(q - 0.2000000029802322D - H);
-            int i6 = iz.b(r);
-            int i7 = l.a(i4, i5, i6);
-            if ((L > b) && (i7 > 0)) {
-                b += 1;
+        if ((this.M) && (i1 == 0)) {
+            this.L = (float) (this.L + iz.a(d7 * d7 + d8 * d8) * 0.6D);
+            int i4 = iz.b(this.p);
+            int i5 = iz.b(this.q - 0.2000000029802322D - this.H);
+            int i6 = iz.b(this.r);
+            int i7 = this.l.a(i4, i5, i6);
+            if ((this.L > this.b) && (i7 > 0)) {
+                this.b += 1;
                 cy localcy = hr.m[i7].br;
-                if (l.a(i4, i5 + 1, i6) == hr.aS.bi) {
+                if (this.l.a(i4, i5 + 1, i6) == hr.aS.bi) {
                     localcy = hr.aS.br;
-                    l.a(this, localcy.c(), localcy.a() * 0.15F, localcy.b());
+                    this.l.a(this, localcy.c(), localcy.a() * 0.15F, localcy.b());
                 } else if (!hr.m[i7].bt.d()) {
-                    l.a(this, localcy.c(), localcy.a() * 0.15F, localcy.b());
+                    this.l.a(this, localcy.c(), localcy.a() * 0.15F, localcy.b());
                 }
-                hr.m[i7].b(l, i4, i5, i6, this);
+                hr.m[i7].b(this.l, i4, i5, i6, this);
             }
 
         }
 
-        int i4 = iz.b(z.a);
-        int i5 = iz.b(z.b);
-        int i6 = iz.b(z.c);
-        int i7 = iz.b(z.d);
-        int i8 = iz.b(z.e);
-        int i9 = iz.b(z.f);
+        int i4 = iz.b(this.z.a);
+        int i5 = iz.b(this.z.b);
+        int i6 = iz.b(this.z.c);
+        int i7 = iz.b(this.z.d);
+        int i8 = iz.b(this.z.e);
+        int i9 = iz.b(this.z.f);
 
-        if (l.a(i4, i5, i6, i7, i8, i9)) {
+        if (this.l.a(i4, i5, i6, i7, i8, i9)) {
             for (int i10 = i4; i10 <= i7; i10++) {
                 for (int i11 = i5; i11 <= i8; i11++) {
                     for (int i12 = i6; i12 <= i9; i12++) {
-                        int i13 = l.a(i10, i11, i12);
+                        int i13 = this.l.a(i10, i11, i12);
                         if (i13 > 0) {
-                            hr.m[i13].a(l, i10, i11, i12, this);
+                            hr.m[i13].a(this.l, i10, i11, i12, this);
                         }
                     }
                 }
             }
         }
-        R *= 0.4F;
+        this.R *= 0.4F;
 
         boolean bool = v();
-        if (l.c(z)) {
+        if (this.l.c(this.z)) {
             b(1);
             if (!bool) {
-                Z += 1;
-                if (Z == 0) {
-                    Z = 300;
+                this.Z += 1;
+                if (this.Z == 0) {
+                    this.Z = 300;
                 }
             }
-        } else if (Z <= 0) {
-            Z = (-Y);
+        } else if (this.Z <= 0) {
+            this.Z = (-this.Y);
         }
 
-        if ((bool) && (Z > 0)) {
-            l.a(this, "random.fizz", 0.7F, 1.6F + (W.nextFloat() - W.nextFloat()) * 0.4F);
-            Z = (-Y);
+        if ((bool) && (this.Z > 0)) {
+            this.l.a(this, "random.fizz", 0.7F, 1.6F + (this.W.nextFloat() - this.W.nextFloat()) * 0.4F);
+            this.Z = (-this.Y);
         }
     }
 
     protected void a(double paramDouble, boolean paramBoolean) {
         if (paramBoolean) {
-            if (N > 0.0F) {
-                a(N);
-                N = 0.0F;
+            if (this.N > 0.0F) {
+                a(this.N);
+                this.N = 0.0F;
             }
         } else if (paramDouble < 0.0D) {
-            N = (float) (N - paramDouble);
+            this.N = (float) (this.N - paramDouble);
         }
     }
 
@@ -449,8 +452,8 @@ public abstract class fe {
     }
 
     protected void b(int paramInt) {
-        if (!ae) {
-            a((fe)null, paramInt);
+        if (!this.ae) {
+            a((fe) null, paramInt);
         }
     }
 
@@ -458,17 +461,17 @@ public abstract class fe {
     }
 
     public boolean v() {
-        return l.a(z.b(0.0D, -0.4000000059604645D, 0.0D), mh.f, this);
+        return this.l.a(this.z.b(0.0D, -0.4000000059604645D, 0.0D), mh.f, this);
     }
 
     public boolean a(mh parammh) {
-        double d1 = q + w();
-        int i1 = iz.b(p);
+        double d1 = this.q + w();
+        int i1 = iz.b(this.p);
         int i2 = iz.d(iz.b(d1));
-        int i3 = iz.b(r);
-        int i4 = l.a(i1, i2, i3);
+        int i3 = iz.b(this.r);
+        int i4 = this.l.a(i1, i2, i3);
         if ((i4 != 0) && (hr.m[i4].bt == parammh)) {
-            float f1 = dz.c(l.b(i1, i2, i3)) - 0.1111111F;
+            float f1 = dz.c(this.l.b(i1, i2, i3)) - 0.1111111F;
             float f2 = i2 + 1 - f1;
             return d1 < f2;
         }
@@ -480,7 +483,7 @@ public abstract class fe {
     }
 
     public boolean x() {
-        return l.a(z.b(-0.1000000014901161D, -0.4000000059604645D, -0.1000000014901161D), mh.g);
+        return this.l.a(this.z.b(-0.1000000014901161D, -0.4000000059604645D, -0.1000000014901161D), mh.g);
     }
 
     public void a(float paramFloat1, float paramFloat2, float paramFloat3) {
@@ -496,78 +499,78 @@ public abstract class fe {
         paramFloat1 *= f1;
         paramFloat2 *= f1;
 
-        float f2 = iz.a(v * 3.141593F / 180.0F);
-        float f3 = iz.b(v * 3.141593F / 180.0F);
+        float f2 = iz.a(this.v * 3.141593F / 180.0F);
+        float f3 = iz.b(this.v * 3.141593F / 180.0F);
 
-        s += paramFloat1 * f3 - paramFloat2 * f2;
-        u += paramFloat2 * f3 + paramFloat1 * f2;
+        this.s += paramFloat1 * f3 - paramFloat2 * f2;
+        this.u += paramFloat2 * f3 + paramFloat1 * f2;
     }
 
     public float b(float paramFloat) {
-        int i1 = iz.b(p);
+        int i1 = iz.b(this.p);
 
-        double d1 = (z.e - z.b) * 0.66D;
-        int i2 = iz.b(q - H + d1);
-        int i3 = iz.b(r);
-        if (l.a(iz.b(z.a), iz.b(z.b), iz.b(z.c), iz.b(z.d), iz.b(z.e), iz.b(z.f))) {
-            return l.l(i1, i2, i3);
+        double d1 = (this.z.e - this.z.b) * 0.66D;
+        int i2 = iz.b(this.q - this.H + d1);
+        int i3 = iz.b(this.r);
+        if (this.l.a(iz.b(this.z.a), iz.b(this.z.b), iz.b(this.z.c), iz.b(this.z.d), iz.b(this.z.e), iz.b(this.z.f))) {
+            return this.l.l(i1, i2, i3);
         }
         return 0.0F;
     }
 
     public void b(double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat1, float paramFloat2) {
-        m = (this.p = paramDouble1);
-        n = (this.q = paramDouble2);
-        o = (this.r = paramDouble3);
-        x = (this.v = paramFloat1);
-        y = (this.w = paramFloat2);
-        R = 0.0F;
+        this.m = (this.p = paramDouble1);
+        this.n = (this.q = paramDouble2);
+        this.o = (this.r = paramDouble3);
+        this.x = (this.v = paramFloat1);
+        this.y = (this.w = paramFloat2);
+        this.R = 0.0F;
 
-        double d1 = x - paramFloat1;
+        double d1 = this.x - paramFloat1;
         if (d1 < -180.0D) {
-            x += 360.0F;
+            this.x += 360.0F;
         }
         if (d1 >= 180.0D) {
-            x -= 360.0F;
+            this.x -= 360.0F;
         }
-        a(p, q, r);
+        a(this.p, this.q, this.r);
         b(paramFloat1, paramFloat2);
     }
 
     public void c(double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat1, float paramFloat2) {
-        O = (this.m = this.p = paramDouble1);
-        P = (this.n = this.q = paramDouble2 + H);
-        Q = (this.o = this.r = paramDouble3);
-        v = paramFloat1;
-        w = paramFloat2;
-        a(p, q, r);
+        this.O = (this.m = this.p = paramDouble1);
+        this.P = (this.n = this.q = paramDouble2 + this.H);
+        this.Q = (this.o = this.r = paramDouble3);
+        this.v = paramFloat1;
+        this.w = paramFloat2;
+        a(this.p, this.q, this.r);
     }
 
     public float a(fe paramfe) {
-        float f1 = (float) (p - paramfe.p);
-        float f2 = (float) (q - paramfe.q);
-        float f3 = (float) (r - paramfe.r);
+        float f1 = (float) (this.p - paramfe.p);
+        float f2 = (float) (this.q - paramfe.q);
+        float f3 = (float) (this.r - paramfe.r);
         return iz.c(f1 * f1 + f2 * f2 + f3 * f3);
     }
 
     public double d(double paramDouble1, double paramDouble2, double paramDouble3) {
-        double d1 = p - paramDouble1;
-        double d2 = q - paramDouble2;
-        double d3 = r - paramDouble3;
+        double d1 = this.p - paramDouble1;
+        double d2 = this.q - paramDouble2;
+        double d3 = this.r - paramDouble3;
         return d1 * d1 + d2 * d2 + d3 * d3;
     }
 
     public double e(double paramDouble1, double paramDouble2, double paramDouble3) {
-        double d1 = p - paramDouble1;
-        double d2 = q - paramDouble2;
-        double d3 = r - paramDouble3;
+        double d1 = this.p - paramDouble1;
+        double d2 = this.q - paramDouble2;
+        double d3 = this.r - paramDouble3;
         return iz.a(d1 * d1 + d2 * d2 + d3 * d3);
     }
 
     public double b(fe paramfe) {
-        double d1 = p - paramfe.p;
-        double d2 = q - paramfe.q;
-        double d3 = r - paramfe.r;
+        double d1 = this.p - paramfe.p;
+        double d2 = this.q - paramfe.q;
+        double d3 = this.r - paramfe.r;
         return d1 * d1 + d2 * d2 + d3 * d3;
     }
 
@@ -579,8 +582,8 @@ public abstract class fe {
             return;
         }
 
-        double d1 = paramfe.p - p;
-        double d2 = paramfe.r - r;
+        double d1 = paramfe.p - this.p;
+        double d2 = paramfe.r - this.r;
 
         double d3 = iz.a(d1, d2);
 
@@ -599,8 +602,8 @@ public abstract class fe {
             d1 *= 0.0500000007450581D;
             d2 *= 0.0500000007450581D;
 
-            d1 *= (1.0F - U);
-            d2 *= (1.0F - U);
+            d1 *= (1.0F - this.U);
+            d2 *= (1.0F - this.U);
 
             f(-d1, 0.0D, -d2);
             paramfe.f(d1, 0.0D, d2);
@@ -608,13 +611,13 @@ public abstract class fe {
     }
 
     public void f(double paramDouble1, double paramDouble2, double paramDouble3) {
-        s += paramDouble1;
-        t += paramDouble2;
-        u += paramDouble3;
+        this.s += paramDouble1;
+        this.t += paramDouble2;
+        this.u += paramDouble3;
     }
 
     protected void y() {
-        E = true;
+        this.E = true;
     }
 
     public boolean a(fe paramfe, int paramInt) {
@@ -635,7 +638,7 @@ public abstract class fe {
 
     public boolean c(ah paramah) {
         String str = A();
-        if ((G) || (str == null)) {
+        if ((this.G) || (str == null)) {
             return false;
         }
         paramah.a("id", str);
@@ -644,14 +647,14 @@ public abstract class fe {
     }
 
     public void d(ah paramah) {
-        paramah.a("Pos", a(new double[]{p, q, r}));
-        paramah.a("Motion", a(new double[]{s, t, u}));
-        paramah.a("Rotation", a(new float[]{v, w}));
+        paramah.a("Pos", a(new double[]{this.p, this.q, this.r}));
+        paramah.a("Motion", a(new double[]{this.s, this.t, this.u}));
+        paramah.a("Rotation", a(new float[]{this.v, this.w}));
 
-        paramah.a("FallDistance", N);
-        paramah.a("Fire", (short) Z);
-        paramah.a("Air", (short) ad);
-        paramah.a("OnGround", A);
+        paramah.a("FallDistance", this.N);
+        paramah.a("Fire", (short) this.Z);
+        paramah.a("Air", (short) this.ad);
+        paramah.a("OnGround", this.A);
 
         a(paramah);
     }
@@ -662,23 +665,23 @@ public abstract class fe {
         fh localfh3 = paramah.k("Rotation");
         a(0.0D, 0.0D, 0.0D);
 
-        s = ((fo) localfh2.a(0)).a;
-        t = ((fo) localfh2.a(1)).a;
-        u = ((fo) localfh2.a(2)).a;
+        this.s = ((fo) localfh2.a(0)).a;
+        this.t = ((fo) localfh2.a(1)).a;
+        this.u = ((fo) localfh2.a(2)).a;
 
-        m = (this.O = this.p = ((fo) localfh1.a(0)).a);
-        n = (this.P = this.q = ((fo) localfh1.a(1)).a);
-        o = (this.Q = this.r = ((fo) localfh1.a(2)).a);
+        this.m = (this.O = this.p = ((fo) localfh1.a(0)).a);
+        this.n = (this.P = this.q = ((fo) localfh1.a(1)).a);
+        this.o = (this.Q = this.r = ((fo) localfh1.a(2)).a);
 
-        x = (this.v = ((u) localfh3.a(0)).a);
-        y = (this.w = ((u) localfh3.a(1)).a);
+        this.x = (this.v = ((u) localfh3.a(0)).a);
+        this.y = (this.w = ((u) localfh3.a(1)).a);
 
-        N = paramah.f("FallDistance");
-        Z = paramah.c("Fire");
-        ad = paramah.c("Air");
-        A = paramah.l("OnGround");
+        this.N = paramah.f("FallDistance");
+        this.Z = paramah.c("Fire");
+        this.ad = paramah.c("Air");
+        this.A = paramah.l("OnGround");
 
-        a(p, q, r);
+        a(this.p, this.q, this.r);
 
         b(paramah);
     }
@@ -716,21 +719,21 @@ public abstract class fe {
     }
 
     public ic a(jl paramjl, float paramFloat) {
-        ic localic = new ic(l, p, q + paramFloat, r, paramjl);
+        ic localic = new ic(this.l, this.p, this.q + paramFloat, this.r, paramjl);
         localic.c = 10;
-        l.a(localic);
+        this.l.a(localic);
         return localic;
     }
 
     public boolean B() {
-        return !G;
+        return !this.G;
     }
 
     public boolean C() {
-        int i1 = iz.b(p);
-        int i2 = iz.b(q + w());
-        int i3 = iz.b(r);
-        return l.d(i1, i2, i3);
+        int i1 = iz.b(this.p);
+        int i2 = iz.b(this.q + w());
+        int i3 = iz.b(this.r);
+        return this.l.d(i1, i2, i3);
     }
 
     public boolean a(hl paramhl) {
@@ -742,33 +745,33 @@ public abstract class fe {
     }
 
     public void D() {
-        if (k.G) {
-            k = null;
+        if (this.k.G) {
+            this.k = null;
             return;
         }
-        s = 0.0D;
-        t = 0.0D;
-        u = 0.0D;
+        this.s = 0.0D;
+        this.t = 0.0D;
+        this.u = 0.0D;
         b_();
-        k.E();
+        this.k.E();
 
-        e += k.v - k.x;
-        d += k.w - k.y;
+        this.e += this.k.v - this.k.x;
+        this.d += this.k.w - this.k.y;
 
-        while (e >= 180.0D) {
-            e -= 360.0D;
+        while (this.e >= 180.0D) {
+            this.e -= 360.0D;
         }
-        while (e < -180.0D) {
-            e += 360.0D;
+        while (this.e < -180.0D) {
+            this.e += 360.0D;
         }
-        while (d >= 180.0D) {
-            d -= 360.0D;
+        while (this.d >= 180.0D) {
+            this.d -= 360.0D;
         }
-        while (d < -180.0D) {
-            d += 360.0D;
+        while (this.d < -180.0D) {
+            this.d += 360.0D;
         }
-        double d1 = e * 0.5D;
-        double d2 = d * 0.5D;
+        double d1 = this.e * 0.5D;
+        double d2 = this.d * 0.5D;
 
         float f = 10.0F;
         if (d1 > f) {
@@ -784,50 +787,50 @@ public abstract class fe {
             d2 = -f;
         }
 
-        e -= d1;
-        d -= d2;
+        this.e -= d1;
+        this.d -= d2;
 
-        v = (float) (v + d1);
-        w = (float) (w + d2);
+        this.v = (float) (this.v + d1);
+        this.w = (float) (this.w + d2);
     }
 
     public void E() {
-        j.a(p, q + k() + j.F(), r);
+        this.j.a(this.p, this.q + k() + this.j.F(), this.r);
     }
 
     public double F() {
-        return H;
+        return this.H;
     }
 
     public double k() {
-        return J * 0.75D;
+        return this.J * 0.75D;
     }
 
     public void e(fe paramfe) {
-        d = 0.0D;
-        e = 0.0D;
+        this.d = 0.0D;
+        this.e = 0.0D;
 
         if (paramfe == null) {
-            if (k != null) {
-                c(k.p, k.z.b + k.J, k.r, v, w);
-                k.j = null;
+            if (this.k != null) {
+                c(this.k.p, this.k.z.b + this.k.J, this.k.r, this.v, this.w);
+                this.k.j = null;
             }
-            k = null;
+            this.k = null;
             return;
         }
-        if (k == paramfe) {
-            k.j = null;
-            k = null;
-            c(paramfe.p, paramfe.z.b + paramfe.J, paramfe.r, v, w);
+        if (this.k == paramfe) {
+            this.k.j = null;
+            this.k = null;
+            c(paramfe.p, paramfe.z.b + paramfe.J, paramfe.r, this.v, this.w);
             return;
         }
-        if (k != null) {
-            k.j = null;
+        if (this.k != null) {
+            this.k.j = null;
         }
         if (paramfe.j != null) {
             paramfe.j.k = null;
         }
-        k = paramfe;
+        this.k = paramfe;
         paramfe.j = this;
     }
 
@@ -851,15 +854,15 @@ public abstract class fe {
     }
 
     protected boolean c(int paramInt) {
-        return (af.a(0) & 1 << paramInt) != 0;
+        return (this.af.a(0) & 1 << paramInt) != 0;
     }
 
     protected void a(int paramInt, boolean paramBoolean) {
-        int i1 = af.a(0);
+        int i1 = this.af.a(0);
         if (paramBoolean) {
-            af.b(0, Byte.valueOf((byte) (i1 | 1 << paramInt)));
+            this.af.b(0, Byte.valueOf((byte) (i1 | 1 << paramInt)));
         } else {
-            af.b(0, Byte.valueOf((byte) (i1 & (1 << paramInt ^ 0xFFFFFFFF))));
+            this.af.b(0, Byte.valueOf((byte) (i1 & (1 << paramInt ^ 0xFFFFFFFF))));
         }
     }
 }

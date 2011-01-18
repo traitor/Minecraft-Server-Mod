@@ -40,7 +40,7 @@ public class as extends jy {
             j = 1;
         }
 
-        System.out.println(i + ", " + j);
+        System.out.println((new StringBuilder()).append(i).append(", ").append(j).toString());
         if (i == j) {
             return false;
         }

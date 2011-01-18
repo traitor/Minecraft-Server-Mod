@@ -57,25 +57,25 @@ public class cp extends hg {
         if (paramfv.a(a, paramInt1, paramInt2, paramInt3, false)) {
             hr localhr = hr.m[a];
             //hMod: Take over block placement
-            if (paramfv.a(paramInt1, paramInt2, paramInt3, this.a)) {
+            if (paramfv.b(paramInt1, paramInt2, paramInt3, a, a(paramjl.h()))) {
                 // hMod: Check if this was playerPlaced and call the hook
                 if (paramhl instanceof fy && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PLACE, ((fy) paramhl).getPlayer(), blockPlaced, blockClicked, new Item(paramjl))) {
                     // hMod: Undo!
 
                     // Specialcase iceblocks, replace with 'glass' first (so it doesnt explode into water)
                     if (this.a == 79) {
-                        paramfv.a(paramInt1, paramInt2, paramInt3, 20);
+                        paramfv.b(paramInt1, paramInt2, paramInt3, 20);
                     }
-                    paramfv.a(paramInt1, paramInt2, paramInt3, oldMaterial);
-                    paramfv.c(paramInt1, paramInt2, paramInt3, oldData);
+                    paramfv.b(paramInt1, paramInt2, paramInt3, oldMaterial);
+                    paramfv.d(paramInt1, paramInt2, paramInt3, oldData);
 
                     // hMod: Refund the item the player lost >.>
                     // or not, this occasionally dupes items! we'lm do this when notch implements serverside invs.
                     //((fi)paramgp).a.b(new fh(paramhn, 1));
                     return false;
                 } else {
-                    paramfv.g(paramInt1, paramInt2, paramInt3);
-                    paramfv.g(paramInt1, paramInt2, paramInt3, this.a);
+                    //paramfv.g(paramInt1, paramInt2, paramInt3);
+                    //paramfv.g(paramInt1, paramInt2, paramInt3, this.a);
 
                     hr.m[this.a].c(paramfv, paramInt1, paramInt2, paramInt3, paramInt4);
                     // hMod: Downcast demanded for inheritance to work >.>

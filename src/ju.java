@@ -1,5 +1,5 @@
 public class ju
-  implements mn
+  implements mn, Container<jl>
 {
   private jl[] a = new jl[1];
   private String name = "Result";

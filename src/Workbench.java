@@ -1,8 +1,7 @@
-//public class Workbench extends ItemArray<ju> implements Inventory {
-public class Workbench {
-/*private final jg workbench;
+public class Workbench extends ItemArray<ju> implements Inventory {
+    private final jg workbench;
 
-    public Workbench(ig block) {
+    public Workbench(jg block) {
         super((ju)block.b);
         workbench = block;
     }
@@ -22,5 +21,5 @@ public class Workbench {
 
     public void setName(String value) {
         container.setName(value);
-    }*/
+    }
 }

@@ -39,17 +39,15 @@ public class MobSpawner implements ComplexBlock {
      * @param spawn
      */
     public void setSpawn(String spawn) {
-        spawner.a(spawn);
+        spawner.h = spawn;
     }
     
     /**
      * Returns the spawn used.
-     * This DOESN't work anymore.
      * @return
      */
-    @Deprecated
     public String getSpawn() {
-        return "";
+        return spawner.h;
     }
 
     /**

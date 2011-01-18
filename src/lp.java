@@ -78,6 +78,27 @@ public class lp extends gi
                 j = true;
             }
         }
+        // hMod: Notice player movement
+        if ((int) Math.floor(this.g) != (int) Math.floor(getPlayer().getX())
+                || (int) Math.floor(this.h) != (int) Math.floor(getPlayer().getY())
+                || (int) Math.floor(this.i) != (int) Math.floor(getPlayer().getZ())) {
+            Location from = new Location();
+            from.x = (int) Math.floor(this.g);
+            from.y = (int) Math.floor(this.h);
+            from.z = (int) Math.floor(this.i);
+            from.rotX = getPlayer().getRotation();
+            from.rotY = getPlayer().getPitch();
+
+            Location to = new Location();
+            to.x = (int) Math.floor(this.e.p);
+            to.y = (int) Math.floor(this.e.q);
+            to.z = (int) Math.floor(this.e.r);
+            to.rotX = getPlayer().getRotation();
+            to.rotY = getPlayer().getPitch();
+
+            etc.getLoader().callHook(PluginLoader.Hook.PLAYER_MOVE,
+                    ((fy) this.e).getPlayer(), from, to);
+        }
         if (j) {
             if (e.k != null) {
                 float f1 = e.v;
@@ -99,11 +120,18 @@ public class lp extends gi
 
                 e.A = paramiv.g;
 
+                // hMod: Make tmp copy of e.k as it sets k to null but has to
+                // run first :/
+                fe tmp = this.e.k;
+
                 e.n();
                 e.c(d6, 0.0D, d7);
                 e.b(d3, d4, d5, f1, f2);
                 e.s = d6;
                 e.u = d7;
+                // hMod: set player as no longer in vehicle (that of tmp).
+                this.d.e.b(tmp, true);
+
                 if (e.k != null) {
                     d.e.b(e.k, true);
                 }
@@ -192,6 +220,19 @@ public class lp extends gi
     }
 
     public void a(double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat1, float paramFloat2) {
+        // hMod: Teleportation hook
+        Location from = new Location();
+        from.x = paramDouble1;
+        from.y = paramDouble2;
+        from.z = paramDouble3;
+        from.rotX = paramFloat1;
+        from.rotY = paramFloat2;
+        Player player = getPlayer();
+        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.TELEPORT,
+                player, player.getLocation(), from)) {
+            return;
+        }
+
         j = false;
         g = paramDouble1;
         h = paramDouble2;
@@ -199,13 +240,17 @@ public class lp extends gi
         e.b(paramDouble1, paramDouble2, paramDouble3, paramFloat1, paramFloat2);
         e.a.b(new fl(paramDouble1, paramDouble2 + 1.620000004768372D, paramDouble2, paramDouble3, paramFloat1, paramFloat2, false));
     }
+// hMod: Store x/y/z
+    int x, y, z, type;
 
     public void a(kf paramkf) {
         if (paramkf.e == 4) {
             e.O();
             return;
         }
-        boolean bool = d.e.B = d.f.g(e.aw);
+        // hMod: We allow admins and ops to dig!
+        boolean bool = this.d.e.B = this.d.f.g(this.e.aw)
+                || getPlayer().isAdmin();
         int m = 0;
         if (paramkf.e == 0) {
             m = 1;
@@ -238,52 +283,154 @@ public class lp extends gi
         if (i4 > i5) {
             i5 = i4;
         }
+        // hMod: the player
+        Player player = getPlayer();
+
         if (paramkf.e == 0) {
-            if ((i5 > 16) || (bool)) {
-                e.c.a(n, i1, i2);
+            // hMod: Start digging
+            // No buildrights
+            if (!getPlayer().canBuild()) {
+                return;
+            }
+            // hMod: Custom spawn prot size
+            if ((i5 > etc.getInstance().getSpawnProtectionSize()) || (bool)) {
+                // hMod: Dig hooks
+                Block block = etc.getServer().getBlockAt(n, i1, i2);
+                block.setStatus(0); // Started digging
+                x = block.getX();
+                y = block.getY();
+                z = block.getZ();
+                type = block.getType();
+                if (!(Boolean) etc.getLoader().callHook(
+                        PluginLoader.Hook.BLOCK_DESTROYED, player, block)) {
+                    this.e.c.a(n, i1, i2);
+                }
             }
         } else if (paramkf.e == 2) {
-            e.c.a();
+            // hMod: Stop digging
+            Block block = etc.getServer().getBlockAt(n, i1, i2);
+            block.setStatus(2); // Stopped digging
+            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, player,
+                    block);
+
+            this.e.c.a();
         } else if (paramkf.e == 1) {
-            if ((i5 > 16) || (bool)) {
-                e.c.a(n, i1, i2, i3);
+            // hMod: Continue digging - don't forget spawn size
+            if (!getPlayer().canBuild()) {
+                return;
             }
+            if ((i5 > etc.getInstance().getSpawnProtectionSize()) || (bool)) {
+                Block block = etc.getServer().getBlockAt(n, i1, i2);
+                block.setStatus(1); // Digging
+                if (!(Boolean) etc.getLoader().callHook(
+                        PluginLoader.Hook.BLOCK_DESTROYED, player, block)) {
+                    this.e.c.a(n, i1, i2, i3);
+                }
+            }
+
         } else if (paramkf.e == 3) {
-            double d3 = e.p - (n + 0.5D);
-            double d5 = e.q - (i1 + 0.5D);
-            double d7 = e.r - (i2 + 0.5D);
+            // hMod: Break block
+            Block block = new Block(type, x, y, z);
+            block.setStatus(3);
+            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, player,
+                    block);
+
+            double d3 = this.e.p - (n + 0.5D);
+            double d5 = this.e.q - (i1 + 0.5D);
+            double d7 = this.e.r - (i2 + 0.5D);
             double d9 = d3 * d3 + d5 * d5 + d7 * d7;
             if (d9 < 256.0D) {
-                e.a.b(new gw(n, i1, i2, d.e));
+                this.e.a.b(new gw(n, i1, i2, this.d.e));
             }
         }
-        d.e.B = false;
+        this.d.e.B = false;
     }
+    // hMod: Store the blocks between blockPlaced packets
+    Block lastRightClicked;
 
     public void a(hp paramhp) {
-        jl localjl = e.an.e();
+        jl localjl = this.e.an.e();
 
-        boolean bool = d.e.B = d.f.g(e.aw);
+        // hMod: We allow admins and ops to build!
+        boolean bool = d.e.B = (d.f.g(getPlayer().getName()) || getPlayer().isAdmin());
+
+        // hMod: Store block data to call hooks
+        //hMod START
+        Block blockClicked = null;
+        Block blockPlaced = null;
+
         if (paramhp.d == 255) {
+            // ITEM_USE -- if we have a lastRightClicked then it could be a usable location
+            blockClicked = lastRightClicked;
+            lastRightClicked = null;
+        } else {
+            // RIGHTCLICK or BLOCK_PLACE .. or nothing
+            blockClicked = new Block(etc.getServer().getBlockIdAt(paramhp.a, paramhp.b, paramhp.c), paramhp.a, paramhp.b, paramhp.c);
+            blockClicked.setFaceClicked(Block.Face.fromId(paramhp.d));
+            lastRightClicked = blockClicked;
+        }
+
+        // If we clicked on something then we also have a location to place the block
+        if (blockClicked != null && localjl != null) {
+            blockPlaced = new Block(localjl.c, blockClicked.getX(), blockClicked.getY(), blockClicked.getZ());
+            if (paramhp.d == 0) {
+                blockPlaced.setY(blockPlaced.getY() - 1);
+            } else if (paramhp.d == 1) {
+                blockPlaced.setY(blockPlaced.getY() + 1);
+            } else if (paramhp.d == 2) {
+                blockPlaced.setZ(blockPlaced.getZ() - 1);
+            } else if (paramhp.d == 3) {
+                blockPlaced.setZ(blockPlaced.getZ() + 1);
+            } else if (paramhp.d == 4) {
+                blockPlaced.setX(blockPlaced.getX() - 1);
+            } else if (paramhp.d == 5) {
+                blockPlaced.setX(blockPlaced.getX() + 1);
+            }
+        }
+        //hMod: END
+
+        //boolean bool = this.d.e.B = this.d.f.g(this.e.aw);
+        if (paramhp.d == 255) {
+            // hMod: call our version with extra blockClicked/blockPlaced
+            if (blockPlaced != null) {
+                // Set the type of block to what it currently is
+                blockPlaced.setType(etc.getServer().getBlockIdAt(blockPlaced.getX(), blockPlaced.getY(), blockPlaced.getZ()));
+            }
             if (localjl == null) {
                 return;
             }
-            e.c.a(e, d.e, localjl);
+            //this.e.c.a(this.e, this.d.e, localjl);
+            ((Digging)this.e.c).a(this.e, this.d.e, localjl, blockPlaced, blockClicked);
         } else {
             int m = paramhp.a;
             int n = paramhp.b;
             int i1 = paramhp.c;
             int i2 = paramhp.d;
-            int i3 = (int) iz.e(m - d.e.m);
-            int i4 = (int) iz.e(i1 - d.e.o);
+            int i3 = (int) iz.e(m - this.d.e.m);
+            int i4 = (int) iz.e(i1 - this.d.e.o);
             if (i3 > i4) {
                 i4 = i3;
             }
-            if ((i4 > 16) || (bool)) {
-                e.c.a(e, d.e, localjl, m, n, i1, i2);
+
+            // hMod: call BLOCK_RIGHTCLICKED
+            Item item = (localjl != null) ? new Item(localjl) : new Item(Item.Type.Air);
+            Player player = ((fy) this.e).getPlayer();
+            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_RIGHTCLICKED, player, blockClicked, item);
+
+            // hMod: call original BLOCK_CREATED
+            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, player, blockPlaced, blockClicked, item.getItemId());
+            // hMod: If we were building inside spawn, bail! (unless ops/admin)
+            if (((i4 > etc.getInstance().getSpawnProtectionSize() && !etc.getInstance().isOnItemBlacklist(item.getItemId())) || bool) && player.canBuild()) {
+                this.e.c.a(this.e, this.d.e, localjl, m, n, i1, i2);
+            } else {
+                // hMod: No point sending the client to update the blocks, you weren't allowed to place!
+                this.d.e.B = false;
+                return;
             }
 
-            e.a.b(new gw(m, n, i1, d.e));
+            // hMod: these are the 'block changed' packets for the client.
+
+            this.e.a.b(new gw(m, n, i1, this.d.e));
 
             if (i2 == 0) {
                 n--;
@@ -304,23 +451,23 @@ public class lp extends gi
                 m++;
             }
 
-            e.a.b(new gw(m, n, i1, d.e));
+            this.e.a.b(new gw(m, n, i1, this.d.e));
         }
         if ((localjl != null) && (localjl.a == 0)) {
-            e.an.a[e.an.c] = null;
+            this.e.an.a[this.e.an.c] = null;
         }
 
-        e.am = true;
-        e.an.a[e.an.c] = jl.b(e.an.a[e.an.c]);
-        hj localhj = e.ap.a(e.an, e.an.c);
-        e.ap.a();
-        e.am = false;
+        this.e.am = true;
+        this.e.an.a[this.e.an.c] = jl.b(this.e.an.a[this.e.an.c]);
+        hj localhj = this.e.ap.a(this.e.an, this.e.an.c);
+        this.e.ap.a();
+        this.e.am = false;
 
-        if (!jl.a(e.an.e(), paramhp.e)) {
-            b(new in(e.ap.f, localhj.c, e.an.e()));
+        if (!jl.a(this.e.an.e(), paramhp.e)) {
+            b(new in(this.e.ap.f, localhj.c, this.e.an.e()));
         }
 
-        d.e.B = false;
+        this.d.e.B = false;
     }
 
     public void a(String paramString, Object[] paramArrayOfObject) {
@@ -331,6 +478,9 @@ public class lp extends gi
     }
 
     public void a(kx paramkx) {
+        // hMod: disconnect!
+        etc.getLoader().callHook(PluginLoader.Hook.DISCONNECT,
+                ((fy) e).getPlayer());
         a.warning(getClass() + " wasn't prepared to deal with a " + paramkx.getClass());
         a("Protocol error, unexpected packet");
     }
@@ -351,6 +501,9 @@ public class lp extends gi
 
     public void a(z paramz) {
         if (paramz.b == 1) {
+            // hMod: Swing the arm!
+            etc.getLoader().callHook(PluginLoader.Hook.ARM_SWING,
+                    ((fy) e).getPlayer());
             e.K();
         }
     }

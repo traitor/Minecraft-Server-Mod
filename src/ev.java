@@ -21,7 +21,7 @@ public class ev
   // hMod: These static methods are here because dx.java is calling them statically... >.>
     static ServerSocket a(ev self) { return self.d; }
     static int b(ev self) { return self.f; }
-    static void a(ev self, hc newgi) { ++self.f; self.a(newgi); }
+    static void a(ev self, hc newhc) { ++self.f; self.a(newhc); }
 
   public ev(MinecraftServer paramMinecraftServer, InetAddress paramInetAddress, int paramInt)
   {
