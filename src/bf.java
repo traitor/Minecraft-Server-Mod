@@ -8,7 +8,6 @@ public class bf extends bm
     private Random f = new Random();
     public String name = "Trap";
 
-
     @Override
     public jl[] getContents() {
         int size = getContentsSize();
@@ -29,7 +28,7 @@ public class bf extends bm
         }
     }
 
-   public jl getContentsAt(int index) {
+    public jl getContentsAt(int index) {
         return a(index);
     }
 

@@ -400,7 +400,7 @@ public class lp extends gi
                 return;
             }
             //this.e.c.a(this.e, this.d.e, localjl);
-            ((Digging)this.e.c).a(this.e, this.d.e, localjl, blockPlaced, blockClicked);
+            ((Digging) this.e.c).a(this.e, this.d.e, localjl, blockPlaced, blockClicked);
         } else {
             int m = paramhp.a;
             int n = paramhp.b;

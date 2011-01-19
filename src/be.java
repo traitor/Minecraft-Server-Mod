@@ -20,7 +20,7 @@ public class be extends dz {
 
     public void a(fv paramfv, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
         // hMod: Store originating block
-        Block blockFrom = new Block(this.bh, paramInt1, paramInt2, paramInt3);
+        Block blockFrom = new Block(this.bi, paramInt1, paramInt2, paramInt3);
 
         int i = g(paramfv, paramInt1, paramInt2, paramInt3);
 
@@ -265,7 +265,7 @@ public class be extends dz {
     private boolean l(fv paramfv, int paramInt1, int paramInt2, int paramInt3) {
         // hMod: See if this liquid can destroy this block.
         Block block = new Block(paramfv.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
-        PluginLoader.HookResult ret = (PluginLoader.HookResult) etc.getLoader().callHook(PluginLoader.Hook.LIQUID_DESTROY, this.bh, block);
+        PluginLoader.HookResult ret = (PluginLoader.HookResult) etc.getLoader().callHook(PluginLoader.Hook.LIQUID_DESTROY, this.bi, block);
         if (ret == PluginLoader.HookResult.PREVENT_ACTION) {
             return false;
         } else if (ret == PluginLoader.HookResult.ALLOW_ACTION) {

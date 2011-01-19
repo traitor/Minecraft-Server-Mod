@@ -11,14 +11,14 @@ public class hf extends hr {
 
     public void e(fv paramfv, int paramInt1, int paramInt2, int paramInt3) {
         // hMod: Physics
-        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Block(bh, paramInt1, paramInt2, paramInt3), true)) {
+        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Block(bi, paramInt1, paramInt2, paramInt3), true)) {
             paramfv.i(paramInt1, paramInt2, paramInt3, bi);
         }
     }
 
     public void b(fv paramfv, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         // hMod: Physics
-        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Block(bh, paramInt1, paramInt2, paramInt3), false)) {
+        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Block(bi, paramInt1, paramInt2, paramInt3), false)) {
 
             paramfv.i(paramInt1, paramInt2, paramInt3, bi);
         }

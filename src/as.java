@@ -82,7 +82,7 @@ public class as extends jy {
 
     public void b(fv paramfv, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         // hMod: Block Physics
-        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Block(this.bh, paramInt1, paramInt2, paramInt3), false)) {
+        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Block(this.bi, paramInt1, paramInt2, paramInt3), false)) {
             int i = 0;
             int j = 1;
             if ((paramfv.a(paramInt1 - 1, paramInt2, paramInt3) == bi) || (paramfv.a(paramInt1 + 1, paramInt2, paramInt3) == bi)) {

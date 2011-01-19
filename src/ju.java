@@ -1,10 +1,11 @@
-public class ju
-  implements mn, Container<jl>
-{
-  private jl[] a = new jl[1];
-  private String name = "Result";
 
-  /**
+public class ju
+        implements mn, Container<jl> {
+
+    private jl[] a = new jl[1];
+    private String name = "Result";
+
+    /**
      * Get contents of the chest block
      *
      * @return
@@ -42,39 +43,39 @@ public class ju
         name = value;
     }
 
-  public int h_() {
-    return 1;
-  }
-
-  public jl a(int paramInt) {
-    return a[paramInt];
-  }
-
-  public String b() {
-    return getName(); //hMod: override with getName()
-  }
-
-  public jl b(int paramInt1, int paramInt2) {
-    if (a[paramInt1] != null) {
-      jl localjl = a[paramInt1];
-      a[paramInt1] = null;
-      return localjl;
+    public int h_() {
+        return 1;
     }
-    return null;
-  }
 
-  public void a(int paramInt, jl paramjl) {
-    a[paramInt] = paramjl;
-  }
+    public jl a(int paramInt) {
+        return a[paramInt];
+    }
 
-  public int c() {
-    return 64;
-  }
+    public String b() {
+        return getName(); //hMod: override with getName()
+    }
 
-  public void d() {
-  }
+    public jl b(int paramInt1, int paramInt2) {
+        if (a[paramInt1] != null) {
+            jl localjl = a[paramInt1];
+            a[paramInt1] = null;
+            return localjl;
+        }
+        return null;
+    }
 
-  public boolean a_(hl paramhl) {
-    return true;
-  }
+    public void a(int paramInt, jl paramjl) {
+        a[paramInt] = paramjl;
+    }
+
+    public int c() {
+        return 64;
+    }
+
+    public void d() {
+    }
+
+    public boolean a_(hl paramhl) {
+        return true;
+    }
 }

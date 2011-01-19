@@ -1,20 +1,19 @@
 // hMod: This class must extend Container<obfuscated_item> and implement the various methods within. They will not all be marked individually.
 
 public class ay
-  implements mn, Container<jl>
-{
-  private String a;
-  private mn b;
-  private mn c;
+        implements mn, Container<jl> {
 
-  public jl[] getContents() {
+    private String a;
+    private mn b;
+    private mn c;
+
+    public jl[] getContents() {
         int size = getContentsSize();
         jl[] result = new jl[size];
 
         for (int i = 0; i < size; i++) {
             result[i] = getContentsAt(i);
         }
-
         return result;
     }
 
@@ -40,11 +39,11 @@ public class ay
 
     public Block getChestBlock() {
         if (this.b instanceof kc) {
-            kc block = (kc)b;
+            kc block = (kc) b;
             return etc.getServer().getBlockAt(block.b, block.c, block.d);
         }
         if (this.c instanceof kc) {
-            kc block = (kc)c;
+            kc block = (kc) c;
             return etc.getServer().getBlockAt(block.b, block.c, block.d);
         }
         return null;
@@ -58,46 +57,52 @@ public class ay
         a = value;
     }
 
-  public ay(String paramString, mn parammn1, mn parammn2)
-  {
-    a = paramString;
-    b = parammn1;
-    c = parammn2;
-  }
+    public ay(String paramString, mn parammn1, mn parammn2) {
+        a = paramString;
+        b = parammn1;
+        c = parammn2;
+    }
 
-  public int h_() {
-    return b.h_() + c.h_();
-  }
+    public int h_() {
+        return b.h_() + c.h_();
+    }
 
-  public String b() {
-    return a;
-  }
+    public String b() {
+        return a;
+    }
 
-  public jl a(int paramInt) {
-    if (paramInt >= b.h_()) return c.a(paramInt - b.h_());
-    return b.a(paramInt);
-  }
+    public jl a(int paramInt) {
+        if (paramInt >= b.h_()) {
+            return c.a(paramInt - b.h_());
+        }
+        return b.a(paramInt);
+    }
 
-  public jl b(int paramInt1, int paramInt2) {
-    if (paramInt1 >= b.h_()) return c.b(paramInt1 - b.h_(), paramInt2);
-    return b.b(paramInt1, paramInt2);
-  }
+    public jl b(int paramInt1, int paramInt2) {
+        if (paramInt1 >= b.h_()) {
+            return c.b(paramInt1 - b.h_(), paramInt2);
+        }
+        return b.b(paramInt1, paramInt2);
+    }
 
-  public void a(int paramInt, jl paramjl) {
-    if (paramInt >= b.h_()) c.a(paramInt - b.h_(), paramjl); else
-      b.a(paramInt, paramjl);
-  }
+    public void a(int paramInt, jl paramjl) {
+        if (paramInt >= b.h_()) {
+            c.a(paramInt - b.h_(), paramjl);
+        } else {
+            b.a(paramInt, paramjl);
+        }
+    }
 
-  public int c() {
-    return b.c();
-  }
+    public int c() {
+        return b.c();
+    }
 
-  public void d() {
-    b.d();
-    c.d();
-  }
+    public void d() {
+        b.d();
+        c.d();
+    }
 
-  public boolean a_(hl paramhl) {
-    return (b.a_(paramhl)) && (c.a_(paramhl));
-  }
+    public boolean a_(hl paramhl) {
+        return (b.a_(paramhl)) && (c.a_(paramhl));
+    }
 }

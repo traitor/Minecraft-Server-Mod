@@ -140,7 +140,7 @@ public class lc extends hr {
         // hMod: Allow the lever to change the current
         int old = (k != 8) ? 1 : 0;
         int current = (k == 8) ? 1 : 0;
-        current = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(this.bh, paramInt1, paramInt2, paramInt3), old, current);
+        current = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(this.bi, paramInt1, paramInt2, paramInt3), old, current);
 
         if ((current > 0) == (k == 8)) {
             paramfv.c(paramInt1, paramInt2, paramInt3, j + k);

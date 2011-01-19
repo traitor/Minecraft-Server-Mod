@@ -82,6 +82,6 @@ public class bg extends hr {
         if (paramfe instanceof mj && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.CACTUS, null, new LivingEntity((mj) paramfe), 1)) {
             return;
         }
-        paramfe.a((mj)null, 1);
+        paramfe.a((mj) null, 1);
     }
 }

@@ -246,10 +246,11 @@ public class fy extends hl
         bG = (bG % 100 + 1);
     }
     // TODO : fix workbenches
+
     public void a(int paramInt1, int paramInt2, int paramInt3) {
         jg temp = new jg(this.an, this.l, paramInt1, paramInt2, paramInt3);
         Workbench bench = new Workbench(temp);
-        if ((Boolean)etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), bench)) {
+        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), bench)) {
             return;
         }
 

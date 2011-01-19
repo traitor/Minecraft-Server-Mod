@@ -90,7 +90,7 @@ public class bw extends hr {
         }
         // hMod: Allow pressure plate interaction to power redstone
         if (j != i) {
-            j = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(this.bh, paramInt1, paramInt2, paramInt3), i, j);
+            j = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(this.bi, paramInt1, paramInt2, paramInt3), i, j);
             if (j > 0) {
                 j = 1;
             }
