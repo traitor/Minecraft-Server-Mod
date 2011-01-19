@@ -408,7 +408,7 @@ public class ii {
         // hMod: fix sign updating in beta 1.1_02
         // Check if bg (TileEntity) is a Sign
         if (parambm instanceof lv) {
-            d.sendPacketToChunk((jv) parambm.g(), paramInt1, paramInt2, paramInt3);
+        	d.sendPacketToChunk(((lv)parambm).g(), paramInt1, paramInt2, paramInt3);
         }
         // end hMod
     }

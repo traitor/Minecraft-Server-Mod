@@ -137,7 +137,7 @@ public class kj {
     }
     // hMod: bring back old "send packet to chunk" method from alpha
 
-    public void sendPacketToChunk(jv packetToSend, int globalx, int globaly, int globalz) {
+    public void sendPacketToChunk(kx packetToSend, int globalx, int globaly, int globalz) {
         // Get chunk coordinates
         int chunkx = globalx >> 4;
         int chunkz = globalz >> 4;
