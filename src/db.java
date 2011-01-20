@@ -74,7 +74,7 @@ public class db extends bm {
                 if (localmj.b()) {
                     // hMod: allow entities to spawn
                     if ((Boolean) (etc.getLoader().callHook(PluginLoader.Hook.MOB_SPAWN, new Mob(localmj)))) {
-                        d();
+                        b();
                         return;
                     }
                     a.a(localmj);

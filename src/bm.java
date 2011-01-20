@@ -71,7 +71,7 @@ public class bm {
     static {
         a(ez.class, "Furnace");
         a(kc.class, "Chest");
-        a(bf.class, "Trap");
+        a(bf.class, "Trap");    //Dispencer
         a(lv.class, "Sign");
         a(db.class, "MobSpawner");
         a(gl.class, "Music");

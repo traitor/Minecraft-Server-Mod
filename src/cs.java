@@ -102,11 +102,14 @@ public final class cs {
                             localmj.c(f1, f2, f3, paramfv.l.nextFloat() * 360.0F, 0.0F);
 
                             if (localmj.b()) {
-                                i6++;
-                                paramfv.a(localmj);
-                                a(localmj, paramfv, f1, f2, f3);
-                                if (i6 >= localmj.j()) {
-                                    break;
+                                // hMod: allow mobs to spawn!
+                                if (!(Boolean) (etc.getLoader().callHook(PluginLoader.Hook.MOB_SPAWN, new Mob(localmj)))) {
+                                    i6++;
+                                    paramfv.a(localmj);
+                                    a(localmj, paramfv, f1, f2, f3);
+                                    if (i6 >= localmj.j()) {
+                                        break;
+                                    }
                                 }
                             }
                             i += i6;
@@ -126,16 +129,15 @@ public final class cs {
     }
 
     private static void a(mj parammj, fv paramfv, float paramFloat1, float paramFloat2, float paramFloat3) {
-        // hMod: allow mobs to spawn!
-        if (!(Boolean) (etc.getLoader().callHook(PluginLoader.Hook.MOB_SPAWN, new Mob(parammj)))) {
+            //spiders getting ridden by a skeleton have a 1/100 th chance
             if (((parammj instanceof cr)) && (paramfv.l.nextInt(100) == 0)) {
                 gj localgj = new gj(paramfv);
                 localgj.c(paramFloat1, paramFloat2, paramFloat3, parammj.v, 0.0F);
                 paramfv.a(localgj);
                 localgj.e(parammj);
+            // randomize sheep color
             } else if ((parammj instanceof dv)) {
                 ((dv) parammj).a(dv.a(paramfv.l));
             }
-        }
     }
 }
