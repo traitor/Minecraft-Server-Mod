@@ -22,6 +22,18 @@ public final class cs {
             return 0;
         }
 
+        // hMod: Cache config spawns to classes outside of the loop
+        etc config = etc.getInstance();
+        Class[] mobs = new Class[config.getMonsters().length];
+        Class[] animals = new Class[config.getAnimals().length];
+
+        for (int i = 0; i < mobs.length; i++) {
+            mobs[i] = jn.getEntity(config.getMonsters()[i]);
+        }
+        for (int i = 0; i < animals.length; i++) {
+            animals[i] = jn.getEntity(config.getAnimals()[i]);
+        }
+
         a.clear();
         Object localObject;
         int j;
@@ -50,7 +62,19 @@ public final class cs {
             }
             for (mr localmr : a) {
                 kt localkt = paramfv.a().a(localmr);
-                Class[] arrayOfClass = localkt.a(localma);
+                Class[] arrayOfClass = null;
+
+                //Monsters
+                if (localma == ma.a) {
+                    arrayOfClass = mobs;
+                //Animals
+                } else if (localma == ma.b) {
+                    arrayOfClass = animals;
+                //Water mobs
+                } else if (localma == ma.c){
+                    arrayOfClass = new Class[]{ le.class };
+                }
+
                 if ((arrayOfClass == null) || (arrayOfClass.length == 0)) {
                     continue;
                 }
