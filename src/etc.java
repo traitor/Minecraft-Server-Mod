@@ -159,6 +159,12 @@ public class etc {
             enableHealth = properties.getBoolean("enable-health", true);
 
             animals = properties.getString("natural-animals", "Sheep,Pig,Chicken,Cow").split(",");
+            for(String i : animals)
+                if(i.equalsIgnoreCase("Squid"))
+                {
+                    System.out.println("Please remove 'Squid' from natural-animals!");
+                    System.exit(0);
+                }
             monsters = properties.getString("natural-monsters", "Spider,Zombie,Skeleton,Creeper").split(",");
             waterAnimals = properties.getString("natural-wateranimals", "Squid").split(",");
             mobSpawnRate = properties.getInt("natural-spawn-rate", mobSpawnRate);

@@ -506,6 +506,9 @@ public class ONetServerHandler extends ONetHandler
 
     public void a(OPacket18ArmAnimation paramOPacket18ArmAnimation) {
         if (paramOPacket18ArmAnimation.b == 1) {
+            // hMod: Swing the arm!
+            etc.getLoader().callHook(PluginLoader.Hook.ARM_SWING,
+                    getPlayer());
             e.K();
         }
     }
