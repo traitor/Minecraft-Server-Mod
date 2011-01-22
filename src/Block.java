@@ -32,6 +32,11 @@ public class Block {
         Leaves(18),
         Sponge(19),
         Glass(20),
+        LapisLazuliOre(21),
+        LapisLazuliBlock(22),
+        Dispenser(23),
+        SandStone(24),
+        NoteBlock(25),
         Cloth(35),
         YellowFlower(37),
         RedRose(38),
@@ -86,7 +91,8 @@ public class Block {
         SlowSand(88),
         LightStone(89),
         Portal(90),
-        JackOLantern(91)
+        JackOLantern(91),
+        Cake(92)
         ;
 
         private int id;
@@ -219,6 +225,51 @@ public class Block {
         this.x = x;
         this.y = y;
         this.z = z;
+        this.data = data;
+    }
+
+    /**
+     * Creates a block of specified type and specified x, y and z
+     *
+     * @param type
+     *            Type of block
+     * @param x
+     * @param y
+     * @param z
+     * @param data
+     */
+    public Block(Type type, int x, int y, int z, int data) {
+        this.type = type.getType();
+        this.blockType = type;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.data = data;
+    }
+    
+    
+    /**
+     * Creates a block of specified type and specified
+     *
+     * @param type
+     *            Type of block
+     * @param data
+     */
+    public Block(Type type, int data) {
+        this.type = type.getType();
+        this.blockType = type;
+        this.data = data;
+    }
+
+    /**
+     * Creates a block of specified type and specified
+     *
+     * @param type
+     *            Type of block
+     */
+    public Block(Type type) {
+        this.type = type.getType();
+        this.blockType = type;
         this.data = data;
     }
 
@@ -479,6 +530,17 @@ public class Block {
         hash = 97 * hash + this.y;
         hash = 97 * hash + this.z;
         return hash;
+    }
+
+    public boolean isCloth(){
+        return this.blockType == Type.Cloth;
+    }
+
+    public Cloth.Color getColor(){
+        if(!isCloth())
+            return null;
+        else
+            return Cloth.Color.getColor(this.data);
     }
 
 }

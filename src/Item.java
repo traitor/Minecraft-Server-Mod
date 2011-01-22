@@ -37,10 +37,9 @@ public class Item {
         LapisLazuliOre(21),
         LapisLazuliBlock(22),
         Dispenser(23),
+        SandStone(24),
         NoteBlock(25),
-        BlackCloth(34),
         Cloth(35),
-        WhiteCloth(36),
         YellowFlower(37),
         RedRose(38),
         BrownMushroom(39),
@@ -243,6 +242,14 @@ public class Item {
         this(itemType.getId(), amount);
     }
 
+    public Item(Type itemType, int amount, int slot) {
+        this(itemType.getId(), amount, slot);
+    }
+
+    public Item(Type itemType, int amount, int slot,int damage) {
+        this(itemType.getId(), amount, slot, damage);
+    }
+
     /**
      * Creates an item with specified id and amount
      * @param itemId
@@ -267,6 +274,21 @@ public class Item {
         this.slot = slot;
         itemType = Type.fromId(itemId);
     }
+
+    /**
+     * Creates an item with specified id, amount and slot
+     * @param itemId
+     * @param amount
+     * @param slot
+     */
+    public Item(int itemId, int amount, int slot, int damage) {
+        this.itemId = itemId;
+        this.amount = amount;
+        this.slot = slot;
+        this.damage = damage;
+        itemType = Type.fromId(itemId);
+    }
+
 
     /**
      * Creates an item from the actual item class
@@ -433,5 +455,20 @@ public class Item {
     public void setType(Type itemType) {
         this.itemType = itemType;
         itemId = itemType.getId();
+    }
+
+    public boolean isCloth(){
+        return this.itemType == Type.Cloth;
+    }
+
+    public Cloth.Color getColor(){
+        if(!isCloth())
+            return null;
+        else
+            return Cloth.Color.getColor(this.damage);
+    }
+
+    public OItemStack getBaseItem(){
+        return new OItemStack(itemId,amount,damage);
     }
 }
