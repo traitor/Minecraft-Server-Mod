@@ -1,0 +1,87 @@
+
+import java.util.Random;
+
+public class OBlockCactus extends OBlock {
+
+    protected OBlockCactus(int paramInt1, int paramInt2) {
+        super(paramInt1, paramInt2, OMaterial.u);
+        a(true);
+    }
+
+    public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
+        if (paramOWorld.e(paramInt1, paramInt2 + 1, paramInt3)) {
+            int i = 1;
+            while (paramOWorld.a(paramInt1, paramInt2 - i, paramInt3) == bi) {
+                i++;
+            }
+            if (i < 3) {
+                int j = paramOWorld.b(paramInt1, paramInt2, paramInt3);
+                if (j == 15) {
+                    paramOWorld.e(paramInt1, paramInt2 + 1, paramInt3, bi);
+                    paramOWorld.c(paramInt1, paramInt2, paramInt3, 0);
+                } else {
+                    paramOWorld.c(paramInt1, paramInt2, paramInt3, j + 1);
+                }
+            }
+        }
+    }
+
+    public OAxisAlignedBB d(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
+        float f = 0.0625F;
+        return OAxisAlignedBB.b(paramInt1 + f, paramInt2, paramInt3 + f, paramInt1 + 1 - f, paramInt2 + 1 - f, paramInt3 + 1 - f);
+    }
+
+    public int a(int paramInt) {
+        if (paramInt == 1) {
+            return bh - 1;
+        }
+        if (paramInt == 0) {
+            return bh + 1;
+        }
+        return bh;
+    }
+
+    public boolean a() {
+        return false;
+    }
+
+    public boolean a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
+        if (!super.a(paramOWorld, paramInt1, paramInt2, paramInt3)) {
+            return false;
+        }
+
+        return f(paramOWorld, paramInt1, paramInt2, paramInt3);
+    }
+
+    public void b(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+        if (!f(paramOWorld, paramInt1, paramInt2, paramInt3)) {
+            a_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
+            paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
+        }
+    }
+
+    public boolean f(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
+        if (paramOWorld.c(paramInt1 - 1, paramInt2, paramInt3).a()) {
+            return false;
+        }
+        if (paramOWorld.c(paramInt1 + 1, paramInt2, paramInt3).a()) {
+            return false;
+        }
+        if (paramOWorld.c(paramInt1, paramInt2, paramInt3 - 1).a()) {
+            return false;
+        }
+        if (paramOWorld.c(paramInt1, paramInt2, paramInt3 + 1).a()) {
+            return false;
+        }
+        int i = paramOWorld.a(paramInt1, paramInt2 - 1, paramInt3);
+        return (i == OBlock.aV.bi) || (i == OBlock.E.bi);
+    }
+
+    public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, OEntity paramOEntity) {
+        // hMod Damage hook: Cactus
+        if (paramOEntity instanceof OEntityLiving && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.CACTUS, null, new LivingEntity((OEntityLiving) paramOEntity), 1)) {
+            return;
+        }
+        paramOEntity.a((OEntity)null, 1);
+    }
+}

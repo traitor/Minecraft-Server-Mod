@@ -251,7 +251,8 @@ public class Item {
     public Item(int itemId, int amount) {
         this.itemId = itemId;
         this.amount = amount;
-        this.itemType = Type.fromId(itemId);
+        damage = 0;
+        itemType = Type.fromId(itemId);
     }
 
     /**
@@ -264,18 +265,19 @@ public class Item {
         this.itemId = itemId;
         this.amount = amount;
         this.slot = slot;
-        this.itemType = Type.fromId(itemId);
+        itemType = Type.fromId(itemId);
     }
 
     /**
      * Creates an item from the actual item class
      * @param hn
      */
-    public Item(jl hn) {
+    public Item(OItemStack hn) {
         itemId = hn.c;
         amount = hn.a;
+        slot = hn.b;
         damage = hn.g();
-        this.itemType = Type.fromId(itemId);
+        itemType = Type.fromId(itemId);
     }
 
     /**
@@ -283,7 +285,7 @@ public class Item {
      * @param hn
      * @param slot
      */
-    public Item(jl hn, int slot) {
+    public Item(OItemStack hn, int slot) {
         this(hn);
         this.slot = slot;
     }
@@ -302,7 +304,7 @@ public class Item {
      */
     public void setItemId(int itemId) {
         this.itemId = itemId;
-        this.itemType = Type.fromId(itemId);
+        itemType = Type.fromId(itemId);
     }
 
     /**
@@ -327,8 +329,8 @@ public class Item {
      * @return
      */
     public static boolean isValidItem(int itemId) {
-        if (itemId < hg.c.length) {
-            return hg.c[itemId] != null;
+        if (itemId < OItem.c.length) {
+            return OItem.c[itemId] != null;
         }
         return false;
     }
@@ -390,13 +392,13 @@ public class Item {
             return false;
         }
         final Item other = (Item) obj;
-        if (this.itemId != other.itemId) {
+        if (itemId != other.itemId) {
             return false;
         }
-        if (this.amount != other.amount) {
+        if (amount != other.amount) {
             return false;
         }
-        if (this.slot != other.slot) {
+        if (slot != other.slot) {
             return false;
         }
         return true;
@@ -410,9 +412,9 @@ public class Item {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + this.itemId;
-        hash = 97 * hash + this.amount;
-        hash = 97 * hash + this.slot;
+        hash = 97 * hash + itemId;
+        hash = 97 * hash + amount;
+        hash = 97 * hash + slot;
         return hash;
     }
 
@@ -421,7 +423,7 @@ public class Item {
      * @return the item type
      */
     public Type getType() {
-        return this.itemType;
+        return itemType;
     }
 
     /**
@@ -430,6 +432,6 @@ public class Item {
      */
     public void setType(Type itemType) {
         this.itemType = itemType;
-        this.itemId = itemType.getId();
+        itemId = itemType.getId();
     }
 }

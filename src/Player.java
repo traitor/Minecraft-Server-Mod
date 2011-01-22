@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +16,7 @@ import net.minecraft.server.MinecraftServer;
  * @author James
  */
 public class Player extends HumanEntity implements MessageReceiver {
+
     private static final Logger log = Logger.getLogger("Minecraft");
     private int id = -1;
     private String prefix = "";
@@ -34,15 +36,15 @@ public class Player extends HumanEntity implements MessageReceiver {
      */
     public Player() {
     }
-    
+
     /**
      * Returns the entity we're wrapping.
      * @return
      */
-    public fy getEntity() {
-        return (fy)entity;
+    public OEntityPlayerMP getEntity() {
+        return (OEntityPlayerMP) entity;
     }
-    
+
     /**
      * Returns if the player is still connected
      * @return
@@ -59,15 +61,16 @@ public class Player extends HumanEntity implements MessageReceiver {
     public void kick(String reason) {
         getEntity().a.a(reason);
     }
-    
+
     /**
      * Sends player a notification
      * 
      * @param message
      */
     public void notify(String message) {
-        if (message.length() > 0)
+        if (message.length() > 0) {
             sendMessage(Colors.Rose + message);
+        }
     }
 
     /**
@@ -142,7 +145,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                 }
                 return;
             }
-            
+
             // Remove '/' before checking.
             if (ServerConsoleCommands.parseServerConsoleCommand(this, split[0].substring(1), split)) {
                 // Command parsed successfully...
@@ -360,14 +363,17 @@ public class Player extends HumanEntity implements MessageReceiver {
                         if (amount > 1024) {
                             amount = 1024; // 16 stacks worth. More than enough.
                         }
-                        
+
                         boolean allowedItem = false;
                         if ((!etc.getInstance().getAllowedItems().isEmpty()) && (!canIgnoreRestrictions()) && (etc.getInstance().getAllowedItems().contains(itemId))) {
                             allowedItem = true;
-                        } else allowedItem = true;
-                        if ((!etc.getInstance().getDisallowedItems().isEmpty()) && (!canIgnoreRestrictions()) && (etc.getInstance().getDisallowedItems().contains(itemId)))
+                        } else {
+                            allowedItem = true;
+                        }
+                        if ((!etc.getInstance().getDisallowedItems().isEmpty()) && (!canIgnoreRestrictions()) && (etc.getInstance().getDisallowedItems().contains(itemId))) {
                             allowedItem = false;
-                        
+                        }
+
                         if (Item.isValidItem(itemId)) {
                             if (allowedItem || canIgnoreRestrictions()) {
                                 log.log(Level.INFO, "Giving " + toGive.getName() + " some " + itemId);
@@ -770,8 +776,9 @@ public class Player extends HumanEntity implements MessageReceiver {
                 Block block = hb.getTargetBlock();
                 if (block.getType() == 52) { // mob spawner
                     MobSpawner ms = (MobSpawner) etc.getServer().getComplexBlock(block.getX(), block.getY(), block.getZ());
-                    if (ms != null)
+                    if (ms != null) {
                         ms.setSpawn(split[1]);
+                    }
                 } else {
                     sendMessage(Colors.Rose + "You are not targeting a mob spawner.");
                 }
@@ -818,16 +825,16 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @param amount
      */
     public void giveItemDrop(int itemId, int amount) {
-        fy player = getEntity();
+        OEntityPlayerMP player = getEntity();
         if (amount == -1) {
-            player.a(new jl(itemId, 255,0));
+            player.a(new OItemStack(itemId, 255, 0));
         } else {
             int temp = amount;
             do {
                 if (temp - 64 >= 64) {
-                    player.a(new jl(itemId, 64,0));
+                    player.a(new OItemStack(itemId, 64, 0));
                 } else {
-                    player.a(new jl(itemId, temp,0));
+                    player.a(new OItemStack(itemId, temp, 0));
                 }
                 temp -= 64;
             } while (temp > 0);
@@ -1249,7 +1256,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * 
      * @return
      */
-    public fy getUser() {
+    public OEntityPlayerMP getUser() {
         return getEntity();
     }
 
@@ -1258,14 +1265,14 @@ public class Player extends HumanEntity implements MessageReceiver {
      * 
      * @param er
      */
-    public void setUser(fy player) {
+    public void setUser(OEntityPlayerMP player) {
         this.entity = player;
         this.inventory = new PlayerInventory(this);
     }
 
     public void teleportTo(double x, double y, double z, float rotation, float pitch) {
-        fy player = getEntity();
-        
+        OEntityPlayerMP player = getEntity();
+
         // If player is in vehicle - eject them before they are teleported.
         if (player.k != null) {
             player.e(player.k);
@@ -1368,7 +1375,7 @@ public class Player extends HumanEntity implements MessageReceiver {
             return false;
         }
         final Player other = (Player) obj;
-        return getName().equals( other.getName());
+        return getName().equals(other.getName());
     }
 
     /**

@@ -5,7 +5,7 @@
  *
  * @param <C> The type of container we wish to wrap.
  */
-public abstract class BaseContainerBlock<C extends bm & mn & Container<jl>> extends ItemArray<C> implements Inventory {
+public abstract class BaseContainerBlock<C extends OTileEntity & OIInventory & Container<OItemStack>> extends ItemArray<C> implements Inventory {
     private final String name;
 
     /**

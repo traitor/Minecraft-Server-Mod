@@ -27,7 +27,7 @@ public class Server {
      *            Message text to send
      */
     public void messageAll(String msg) {
-        this.server.f.a(new bz(msg));
+        this.server.f.a(new OPacket3Chat(msg));
     }
 
     /**
@@ -162,11 +162,11 @@ public class Server {
         name = name.toLowerCase();
 
         for (Object player : server.f.b) {
-            String playerName = ((fy) player).aw;
+            String playerName = ((OEntityPlayerMP) player).aw;
 
             if (playerName.toLowerCase().equals(name)) {
                 // Perfect match found
-                lastPlayer = ((fy) player).getPlayer();
+                lastPlayer = ((OEntityPlayerMP) player).getPlayer();
                 break;
             }
             if (playerName.toLowerCase().indexOf(name.toLowerCase()) != -1) {
@@ -175,7 +175,7 @@ public class Server {
                     // Found multiple
                     return null;
                 }
-                lastPlayer = ((fy) player).getPlayer();
+                lastPlayer = ((OEntityPlayerMP) player).getPlayer();
             }
         }
 
@@ -189,7 +189,7 @@ public class Server {
      * @return
      */
     public Player getPlayer(String name) {
-        fy user = server.f.h(name);
+        OEntityPlayerMP user = server.f.h(name);
         return user == null ? null : user.getPlayer();
     }
 
@@ -200,7 +200,7 @@ public class Server {
     public List<Player> getPlayerList() {
         List<Player> toRet = new ArrayList<Player>();
         for (Object o : server.f.b) {
-            toRet.add(((fy) o).getPlayer());
+            toRet.add(((OEntityPlayerMP) o).getPlayer());
         }
         return toRet;
     }
@@ -213,8 +213,8 @@ public class Server {
         List<Mob> toRet = new ArrayList<Mob>();
         for (Object o : server.e.b) {
             //TODO: fix.
-            if (o instanceof hq || o instanceof br) {
-                toRet.add(new Mob((mj) o));
+            if (o instanceof OEntityMobs || o instanceof OEntityGhast) {
+                toRet.add(new Mob((OEntityLiving) o));
             }
         }
         return toRet;
@@ -227,8 +227,8 @@ public class Server {
     public List<Mob> getAnimalList() {
         List<Mob> toRet = new ArrayList<Mob>();
         for (Object o : server.e.b) {
-            if (o instanceof bl) {
-                toRet.add(new Mob((mj) o));
+            if (o instanceof OEntityAnimals) {
+                toRet.add(new Mob((OEntityLiving) o));
             }
         }
         return toRet;
@@ -241,8 +241,8 @@ public class Server {
     public List<Minecart> getMinecartList() {
         List<Minecart> toRet = new ArrayList<Minecart>();
         for (Object o : server.e.b) {
-            if (o instanceof lw) {
-                toRet.add(new Minecart((lw) o));
+            if (o instanceof OEntityMinecart) {
+                toRet.add(new Minecart((OEntityMinecart) o));
             }
         }
         return toRet;
@@ -255,8 +255,8 @@ public class Server {
     public List<Boat> getBoatList() {
         List<Boat> toRet = new ArrayList<Boat>();
         for (Object o : server.e.b) {
-            if (o instanceof gu) {
-                toRet.add(new Boat((gu) o));
+            if (o instanceof OEntityBoat) {
+                toRet.add(new Boat((OEntityBoat) o));
             }
         }
         return toRet;
@@ -269,14 +269,14 @@ public class Server {
     public List<BaseEntity> getEntityList() {
         List<BaseEntity> toRet = new ArrayList<BaseEntity>();
         for (Object o : server.e.b) {
-            if (o instanceof hq || o instanceof br || o instanceof bl) {
-                toRet.add(new Mob((mj) o));
-            } else if (o instanceof lw) {
-                toRet.add(new Minecart((lw) o));
-            } else if (o instanceof gu) {
-                toRet.add(new Boat((gu) o));
-            } else if (o instanceof fy) {
-                toRet.add(((fy)o).getPlayer());
+            if (o instanceof OEntityMobs || o instanceof OEntityGhast || o instanceof OEntityAnimals) {
+                toRet.add(new Mob((OEntityLiving) o));
+            } else if (o instanceof OEntityMinecart) {
+                toRet.add(new Minecart((OEntityMinecart) o));
+            } else if (o instanceof OEntityBoat) {
+                toRet.add(new Boat((OEntityBoat) o));
+            } else if (o instanceof OEntityPlayerMP) {
+                toRet.add(((OEntityPlayerMP)o).getPlayer());
             }
         }
         return toRet;
@@ -289,10 +289,10 @@ public class Server {
     public List<LivingEntity> getLivingEntityList() {
         List<LivingEntity> toRet = new ArrayList<LivingEntity>();
         for (Object o : server.e.b) {
-            if (o instanceof hq || o instanceof br || o instanceof bl) {
-                toRet.add(new Mob((mj) o));
-            } else if (o instanceof fy) {
-                toRet.add(((fy)o).getPlayer());
+            if (o instanceof OEntityMobs || o instanceof OEntityGhast || o instanceof OEntityAnimals) {
+                toRet.add(new Mob((OEntityLiving) o));
+            } else if (o instanceof OEntityPlayerMP) {
+                toRet.add(((OEntityPlayerMP)o).getPlayer());
             }
         }
         return toRet;
@@ -305,10 +305,10 @@ public class Server {
     public List<BaseVehicle> getVehicleEntityList() {
         List<BaseVehicle> toRet = new ArrayList<BaseVehicle>();
         for (Object o : server.e.b) {
-            if (o instanceof lw) {
-                toRet.add(new Minecart((lw) o));
-            } else if (o instanceof gu) {
-                toRet.add(new Boat((gu) o));
+            if (o instanceof OEntityMinecart) {
+                toRet.add(new Minecart((OEntityMinecart) o));
+            } else if (o instanceof OEntityBoat) {
+                toRet.add(new Boat((OEntityBoat) o));
             }
         }
         return toRet;
@@ -381,7 +381,7 @@ public class Server {
      */
     public boolean setBlockData(int x, int y, int z, int data) {
         boolean toRet = server.e.d(x, y, z, data);
-        etc.getMCServer().f.a(new gw(x, y, z, etc.getMCServer().e));
+        etc.getMCServer().f.a(new OPacket53BlockChange(x, y, z, etc.getMCServer().e));
         ComplexBlock block = getComplexBlock(x, y, z);
         if (block != null) {
             block.update();
@@ -493,16 +493,18 @@ public class Server {
      * @return complex block
      */
     public ComplexBlock getOnlyComplexBlock(int x, int y, int z) {
-        bm localav = server.e.m(x, y, z);
+        OTileEntity localav = server.e.m(x, y, z);
         if (localav != null) {
-            if (localav instanceof kc) {
-                return new Chest((kc) localav);
-            } else if (localav instanceof lv) {
-                return new Sign((lv) localav);
-            } else if (localav instanceof ez) {
-                return new Furnace((ez) localav);
-            } else if (localav instanceof db) {
-                return new MobSpawner((db) localav);
+            if (localav instanceof OTileEntityChest) {
+                return new Chest((OTileEntityChest) localav);
+            } else if (localav instanceof OTileEntitySign) {
+                return new Sign((OTileEntitySign) localav);
+            } else if (localav instanceof OTileEntityFurnace) {
+                return new Furnace((OTileEntityFurnace) localav);
+            } else if (localav instanceof OTileEntityMobSpawner) {
+                return new MobSpawner((OTileEntityMobSpawner) localav);
+            } else if (localav instanceof OTileEntityDispenser) {
+                return new Dispenser((OTileEntityDispenser) localav);
             }
         }
         return null;
@@ -551,7 +553,7 @@ public class Server {
         double d2 = server.e.l.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
         double d3 = server.e.l.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
 
-        ic localgl = new ic(server.e, x + d1, y + d2, z + d3, new jl(itemId, quantity,0));
+        OEntityItem localgl = new OEntityItem(server.e, x + d1, y + d2, z + d3, new OItemStack(itemId, quantity,0));
         localgl.c = 10;
         server.e.a(localgl);
     }
@@ -591,7 +593,7 @@ public class Server {
      * @param delayMillis - the delay in milliseconds
      */
     public void addToServerQueue(Runnable r, long delayMillis) {
-        im.add(r, delayMillis);
+        OEntityTracker.add(r, delayMillis);
     }
     
     /**

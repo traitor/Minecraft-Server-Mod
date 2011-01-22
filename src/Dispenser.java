@@ -3,9 +3,9 @@
  *
  * @author Meaglin
  */
-public class Dispenser extends BaseContainerBlock<bf> {
+public class Dispenser extends BaseContainerBlock<OTileEntityDispenser> implements ComplexBlock {
 
-    public Dispenser(bf disp){
+    public Dispenser(OTileEntityDispenser disp){
         super(disp, "Trap");
     }
 }

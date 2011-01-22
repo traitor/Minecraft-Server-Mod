@@ -4,7 +4,7 @@
  * 
  * @author James
  */
-public abstract class ItemArray<C extends Container<jl>> {
+public abstract class ItemArray<C extends Container<OItemStack>> {
     protected C container;
     
     public ItemArray(C c) {
@@ -55,7 +55,7 @@ public abstract class ItemArray<C extends Container<jl>> {
         int size = getContentsSize();
 
         if (slot < size && slot >= 0) {
-            jl result = container.getContentsAt(slot);
+            OItemStack result = container.getContentsAt(slot);
             if (result != null) {
                 return new Item(result, slot);
             }
@@ -197,7 +197,7 @@ public abstract class ItemArray<C extends Container<jl>> {
         int size = getContentsSize();
 
         if (slot < size && slot >= 0) {
-            container.setContentsAt(slot, new jl(itemId, (amount > 64 ? (amount == 255 ? -1 : 64) : amount), damage));
+            container.setContentsAt(slot, new OItemStack(itemId, (amount > 64 ? (amount == 255 ? -1 : 64) : amount), damage));
         }
     }
 

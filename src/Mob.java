@@ -9,7 +9,7 @@ public class Mob extends LivingEntity {
      * 
      * @param locallb name of mob
      */
-    public Mob(mj locallb) {
+    public Mob(OEntityLiving locallb) {
         super(locallb);
     }
     
@@ -20,7 +20,7 @@ public class Mob extends LivingEntity {
      *            name of mob
      */
     public Mob(String mob) {
-        this((mj) jn.a(mob, etc.getMCServer().e));
+        this((OEntityLiving) OEntityList.a(mob, etc.getMCServer().e));
     }
 
     /**
@@ -47,13 +47,13 @@ public class Mob extends LivingEntity {
      * @param rider
      */
     public void spawn(Mob rider) {
-        fv localff = etc.getMCServer().e;
+        OWorld localff = etc.getMCServer().e;
 
         entity.c(getX() + 0.5f, getY(), getZ() + 0.5f, getRotation(), 0f);
         localff.a(entity);
 
         if (rider != null) {
-            mj mob2 = rider.getMob();
+            OEntityLiving mob2 = rider.getMob();
             mob2.c(getX(), getY(), getZ(), getRotation(), 0f);
             localff.a(mob2);
             mob2.e(entity);
@@ -66,7 +66,7 @@ public class Mob extends LivingEntity {
      * @return name
      */
     public String getName() {
-        return jn.b(entity);
+        return OEntityList.b(entity);
     }
 
     /**
@@ -88,8 +88,8 @@ public class Mob extends LivingEntity {
      * 
      * @return
      */
-    public mj getMob() {
-        return getEntity();
+    public OEntityLiving getMob() {
+        return (OEntityLiving)getEntity();
     }
 
     /**
@@ -103,6 +103,6 @@ public class Mob extends LivingEntity {
         if (mob == null) {
             return false;
         }
-        return jn.a(mob, etc.getMCServer().e) instanceof mj;
+        return OEntityList.a(mob, etc.getMCServer().e) instanceof OEntityMobs;
     }
 }

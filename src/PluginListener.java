@@ -245,6 +245,7 @@ public class PluginListener {
      * 1 = lava.
      * 2 = lighter (flint + steel).
      * 3 = spread (dynamic spreading of fire).
+     * 4 = fire destroying a block.
      * @param block block that the fire wants to spawn in.
      * @param player player
      * @return true if you dont want the fire to ignite.

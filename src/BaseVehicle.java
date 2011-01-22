@@ -8,7 +8,7 @@ public class BaseVehicle extends BaseEntity {
      * Creptes an interface for a vehicle
      * @param entity
      */
-    public BaseVehicle(fe entity) {
+    public BaseVehicle(OEntity entity) {
         this.entity = entity;
     }
 
@@ -103,8 +103,9 @@ public class BaseVehicle extends BaseEntity {
      */
     public Player getPassenger() {
         if (entity.j != null)
-            if (entity.j instanceof fy)
-                return ((fy)entity.j).getPlayer();
+            if (isPlayer())
+                return ((OEntityPlayerMP)entity.j).getPlayer();
+        
         return null;
     }
 }

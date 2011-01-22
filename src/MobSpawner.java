@@ -4,13 +4,13 @@
  */
 public class MobSpawner implements ComplexBlock {
 
-    db spawner;
+    OTileEntityMobSpawner spawner;
 
     /**
      * Creates an interface for the spawner.
      * @param spawner
      */
-    public MobSpawner(db spawner) {
+    public MobSpawner(OTileEntityMobSpawner spawner) {
         this.spawner = spawner;
     }
 

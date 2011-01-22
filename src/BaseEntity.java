@@ -5,13 +5,13 @@
  * @author James
  */
 public class BaseEntity {
-    fe entity;
+    OEntity entity;
     
     /**
      * Creates an interface for an entity
      * @param entity
      */
-    public BaseEntity(fe entity) {
+    public BaseEntity(OEntity entity) {
         this.entity = entity;
     }
 
@@ -141,7 +141,7 @@ public class BaseEntity {
      * Returns the entity we're wrapping.
      * @return
      */
-    public fe getEntity() {
+    public OEntity getEntity() {
         return entity;
     }
 
@@ -150,7 +150,7 @@ public class BaseEntity {
      * @return true if mob
      */
     public boolean isMob() {
-        return entity instanceof hq || entity instanceof hl;
+        return entity instanceof OIMobs;
     }
 
     /**
@@ -158,7 +158,7 @@ public class BaseEntity {
      * @return true if animal
      */
     public boolean isAnimal() {
-        return entity instanceof bl;
+        return entity instanceof OIAnimals;
     }
 
     /**
@@ -166,7 +166,7 @@ public class BaseEntity {
      * @return true if player
      */
     public boolean isPlayer() {
-        return entity instanceof fy;
+        return entity instanceof OEntityPlayerMP;
     }
 	
     /**
@@ -174,7 +174,7 @@ public class BaseEntity {
      * @return true if living entity
      */
     public boolean isLiving() {
-        return entity instanceof mj;
+        return entity instanceof OEntityLiving;
     }
 
     /**
@@ -185,7 +185,7 @@ public class BaseEntity {
         if (!isPlayer())
             return null;
 
-        fy p = (fy) entity;
+        OEntityPlayerMP p = (OEntityPlayerMP) entity;
 
         return p.getPlayer();
     }
