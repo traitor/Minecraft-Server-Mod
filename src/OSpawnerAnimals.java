@@ -7,6 +7,7 @@ import java.util.Set;
 
 public final class OSpawnerAnimals {
 
+    // hMod: Add generic here, saves zillions of casts.
     private static Set<OChunkCoordIntPair> a = new HashSet<OChunkCoordIntPair>();
 
     protected static OChunkPosition a(OWorld paramOWorld, int paramInt1, int paramInt2) {
@@ -22,20 +23,8 @@ public final class OSpawnerAnimals {
             return 0;
         }
 
-        // hMod: Cache config spawns to classes outside of the loop
-        etc config = etc.getInstance();
-        Class[] mobs = new Class[config.getMonsters().length];
-        Class[] animals = new Class[config.getAnimals().length];
-
-        for (int i = 0; i < mobs.length; i++) {
-            mobs[i] = OEntityList.getEntity(config.getMonsters()[i]);
-        }
-        for (int i = 0; i < animals.length; i++) {
-            animals[i] = OEntityList.getEntity(config.getAnimals()[i]);
-        }
-
         a.clear();
-        Object localObject;
+                Object localObject;
         int j;
         int k;
         for (int i = 0; i < paramOWorld.d.size(); i++) {
@@ -50,6 +39,23 @@ public final class OSpawnerAnimals {
                 }
             }
         }
+
+        // hMod: Cache config spawns to classes outside of the loop
+        etc config = etc.getInstance();
+        Class[] mobs = new Class[config.getMonsters().length];
+        Class[] animals = new Class[config.getAnimals().length];
+        Class[] waterAnimals = new Class[config.getWaterAnimals().length];
+
+        for (int i = 0; i < mobs.length; i++) {
+            mobs[i] = OEntityList.getEntity(config.getMonsters()[i]);
+        }
+        for (int i = 0; i < animals.length; i++) {
+            animals[i] = OEntityList.getEntity(config.getAnimals()[i]);
+        }
+        for (int i = 0; i < waterAnimals.length; i++) {
+            waterAnimals[i] = OEntityList.getEntity(config.getWaterAnimals()[i]);
+        }
+
         int i = 0;
         OEnumCreatureType localOEnumCreatureType;
         for (j = 0; j < OEnumCreatureType.values().length; j++) {
@@ -61,9 +67,9 @@ public final class OSpawnerAnimals {
                 continue;
             }
             for (OChunkCoordIntPair localOChunkCoordIntPair : a) {
-                OMobSpawnerBase localOMobSpawnerBase = paramOWorld.a().a(localOChunkCoordIntPair);
-                Class[] arrayOfClass = localOMobSpawnerBase.a(localOEnumCreatureType);
-
+                //OMobSpawnerBase localOMobSpawnerBase = paramOWorld.a().a(localOChunkCoordIntPair);
+                //Class[] arrayOfClass = localOMobSpawnerBase.a(localOEnumCreatureType);
+                Class[] arrayOfClass = null;
                 //Monsters
                 if (localOEnumCreatureType == OEnumCreatureType.a) {
                     arrayOfClass = mobs;
@@ -72,7 +78,7 @@ public final class OSpawnerAnimals {
                     arrayOfClass = animals;
                 //Water mobs
                 } else if (localOEnumCreatureType == OEnumCreatureType.c){
-                    arrayOfClass = new Class[]{ OEntitySquid.class };
+                    arrayOfClass = waterAnimals;
                 }
 
                 if ((arrayOfClass == null) || (arrayOfClass.length == 0)) {
@@ -122,6 +128,9 @@ public final class OSpawnerAnimals {
                                 localException.printStackTrace();
                                 return i;
                             }
+
+                            //hMod : make sure we have something to spawn before trying to spawn anything
+                            if(localOEntityLiving == null) continue;
 
                             localOEntityLiving.c(f1, f2, f3, paramOWorld.l.nextFloat() * 360.0F, 0.0F);
 

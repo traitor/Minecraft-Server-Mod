@@ -55,6 +55,7 @@ public class etc {
     private String driver, username, password, db;
     private String[] animals = new String[] {};
     private String[] monsters = new String[] {};
+    private String[] waterAnimals = new String[] {};
     private int mobSpawnRate = 2;
 
     private etc() {
@@ -159,6 +160,7 @@ public class etc {
 
             animals = properties.getString("natural-animals", "Sheep,Pig,Chicken,Cow").split(",");
             monsters = properties.getString("natural-monsters", "Spider,Zombie,Skeleton,Creeper").split(",");
+            waterAnimals = properties.getString("natural-wateranimals", "Squid").split(",");
             mobSpawnRate = properties.getInt("natural-spawn-rate", mobSpawnRate);
 
             String autoHealString = properties.getString("auto-heal", "default");
@@ -907,6 +909,24 @@ public class etc {
      */
     public void setAnimals(String[] animals) {
         this.animals = animals;
+    }
+
+        /**
+     * Returns a list of animals that are allowed to spawn naturally
+     *
+     * @return a list of animals
+     */
+    public String[] getWaterAnimals() {
+        return waterAnimals;
+    }
+
+    /**
+     * Sets a list of animals that are allowed to spawn naturally
+     *
+     * @param animals a list of animals
+     */
+    public void setWaterAnimals(String[] animals) {
+        this.waterAnimals = animals;
     }
 
     /**

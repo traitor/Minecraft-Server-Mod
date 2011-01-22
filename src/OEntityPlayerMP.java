@@ -24,8 +24,6 @@ public class OEntityPlayerMP extends OEntityPlayer
     public boolean am;
     // hMod: Player storage
     private Player player;
-    // hMod: for the inventory move hook
-    private Inventory lastOpenedInventory;
 
 
     public OEntityPlayerMP(MinecraftServer paramMinecraftServer, OWorld paramOWorld, String paramString, OItemInWorldManager paramOItemInWorldManager) {
@@ -367,7 +365,7 @@ public class OEntityPlayerMP extends OEntityPlayer
     }
 
     public void N() {
-        ap.a((OICrafting)this);
+        ap.a((OEntityPlayer)this);
         ap = ao;
     }
 }
