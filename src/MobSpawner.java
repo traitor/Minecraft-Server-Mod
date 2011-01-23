@@ -40,6 +40,7 @@ public class MobSpawner implements ComplexBlock {
      */
     public void setSpawn(String spawn) {
         spawner.h = spawn;
+        update();
     }
     
     /**

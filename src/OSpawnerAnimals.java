@@ -118,6 +118,7 @@ public final class OSpawnerAnimals {
                             float f5 = f2 - paramOWorld.n;
                             float f6 = f3 - paramOWorld.o;
                             float f7 = f4 * f4 + f5 * f5 + f6 * f6;
+                            //hMod: mobs can't spawn to close to the spawn ?
                             if (f7 < 576.0F) {
                                 continue;
                             }
