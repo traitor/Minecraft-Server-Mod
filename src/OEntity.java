@@ -451,7 +451,11 @@ public abstract class OEntity {
 
     protected void b(int paramInt) {
         if (!ae) {
-            a((OEntity)null, paramInt);
+            BaseEntity defender = new BaseEntity(this);
+            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.FIRE, null, defender, paramInt)) {
+                a((OEntity) null, paramInt);
+            }
+
         }
     }
 

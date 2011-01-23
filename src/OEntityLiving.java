@@ -107,7 +107,11 @@ public abstract class OEntityLiving extends OEntity {
         }
 
         if ((B()) && (C())) {
-            a((OEntity)null, 1);
+            // hMod Damage hook: Suffocation
+            LivingEntity defender = new LivingEntity(this);
+            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.SUFFOCATION, null, defender, 1)) {
+                a((OEntity)null, 1);
+            }
         }
 
         if ((ae) || (l.z)) {
