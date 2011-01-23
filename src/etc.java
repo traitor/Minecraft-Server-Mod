@@ -71,7 +71,8 @@ public class etc {
         commands.put("/tp", "[Player] - Teleports to player. Credits to Zet from SA");
         commands.put("/tphere", "[Player] - Teleports the player to you");
         commands.put("/kick", "[Player] <Reason> - Kicks player");
-        commands.put("/item", "[ID] [Amount] <Player> - Gives items");
+        commands.put("/item", "[ID] <Amount> <Damage> <Player> - Gives items");
+        commands.put("/cloth", "[Amount] [Color] - Gives cloth");
         commands.put("/kit", "[Kit] - Gives a kit. To get a list of kits type /kit");
         commands.put("/listwarps", "- Gives a list of available warps");
         commands.put("/home", "- Teleports you home");

@@ -396,7 +396,7 @@ public class Item {
      */
     @Override
     public String toString() {
-        return String.format("Item[id=%d, amount=%d, slot=%d]", itemId, amount, slot);
+        return String.format("Item[id=%d, amount=%d, slot=%d, damage=%d]", itemId, amount, slot, damage);
     }
 
     /**

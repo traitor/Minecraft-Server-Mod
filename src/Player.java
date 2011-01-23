@@ -88,7 +88,8 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @param item
      */
     public void giveItem(Item item) {
-        giveItem(item.getItemId(), item.getAmount());
+        inventory.addItem(item);
+        inventory.update();
     }
 
     /**
@@ -327,32 +328,25 @@ public class Player extends HumanEntity implements MessageReceiver {
             } else if (split[0].equalsIgnoreCase("/item") || split[0].equalsIgnoreCase("/i") || split[0].equalsIgnoreCase("/give")) {
                 if (split.length < 2) {
                     if (canIgnoreRestrictions()) {
-                        sendMessage(Colors.Rose + "Correct usage is: /item [itemid] <amount> <player> (optional)");
+                        sendMessage(Colors.Rose + "Correct usage is: /item [itemid] <amount> <damage> <player> (optional)");
                     } else {
-                        sendMessage(Colors.Rose + "Correct usage is: /item [itemid] <amount>");
+                        sendMessage(Colors.Rose + "Correct usage is: /item [itemid] <amount> <damage>");
                     }
                     return;
                 }
 
                 Player toGive = this;
-                if (split.length == 4 && canIgnoreRestrictions()) {
-                    toGive = etc.getServer().matchPlayer(split[3]);
-                }
-
-                if (toGive != null) {
-                    try {
-                        int itemId = 0;
+                int itemId = 0, amount = 1, damage = 0;
+                try {
+                    if (split.length > 1) {
                         try {
                             itemId = Integer.parseInt(split[1]);
                         } catch (NumberFormatException n) {
                             itemId = etc.getDataSource().getItem(split[1]);
                         }
-                        int amount = 1;
-                        if (split.length > 2) {
-                            amount = Integer.parseInt(split[2]);
-                        }
-
-                        String itemIdstr = Integer.toString(itemId);
+                    }
+                    if (split.length > 2) {
+                        amount = Integer.parseInt(split[2]);
                         if (amount <= 0 && !isAdmin()) {
                             amount = 1;
                         }
@@ -363,40 +357,104 @@ public class Player extends HumanEntity implements MessageReceiver {
                         if (amount > 1024) {
                             amount = 1024; // 16 stacks worth. More than enough.
                         }
-
-                        boolean allowedItem = false;
-                        if ((!etc.getInstance().getAllowedItems().isEmpty()) && (!canIgnoreRestrictions()) && (etc.getInstance().getAllowedItems().contains(itemId))) {
-                            allowedItem = true;
-                        } else {
-                            allowedItem = true;
-                        }
-                        if ((!etc.getInstance().getDisallowedItems().isEmpty()) && (!canIgnoreRestrictions()) && (etc.getInstance().getDisallowedItems().contains(itemId))) {
-                            allowedItem = false;
-                        }
-
-                        if (Item.isValidItem(itemId)) {
-                            if (allowedItem || canIgnoreRestrictions()) {
-                                log.log(Level.INFO, "Giving " + toGive.getName() + " some " + itemId);
-                                toGive.giveItem(itemId, amount);
-
-                                if (toGive.getName().equalsIgnoreCase(getName())) {
-                                    sendMessage(Colors.Rose + "There you go c:");
-                                } else {
-                                    sendMessage(Colors.Rose + "Gift given! :D");
-                                    toGive.sendMessage(Colors.Rose + "Enjoy your gift! :D");
-                                }
-                            } else if (!allowedItem && !canIgnoreRestrictions()) {
-                                sendMessage(Colors.Rose + "You are not allowed to spawn that item.");
-                            }
-                        } else {
-                            sendMessage(Colors.Rose + "No item with ID " + split[1]);
-                        }
-                    } catch (NumberFormatException localNumberFormatException) {
-                        sendMessage(Colors.Rose + "Improper ID and/or amount.");
                     }
+                    if (split.length == 4) {
+                        int temp = -1;
+                        try {
+                            temp = Integer.parseInt(split[3]);
+                        } catch (NumberFormatException n) {
+                            if (canIgnoreRestrictions()) {
+                                toGive = etc.getServer().matchPlayer(split[3]);
+                            }
+                        }
+                        if (temp > -1 && temp < 50) {
+                            damage = temp;
+                        }
+                    } else if (split.length == 5) {
+                        damage = Integer.parseInt(split[3]);
+                        if (damage < 0 && damage > 49) {
+                            damage = 0;
+                        }
+                        if (canIgnoreRestrictions()) {
+                            toGive = etc.getServer().matchPlayer(split[4]);
+                        }
+                    }
+
+                } catch (NumberFormatException localNumberFormatException) {
+                    sendMessage(Colors.Rose + "Improper ID and/or amount.");
+                    return;
+                }
+
+                if (toGive != null && itemId > 0) {
+
+                    boolean allowedItem = false;
+                    if ((!etc.getInstance().getAllowedItems().isEmpty()) && (!canIgnoreRestrictions()) && (etc.getInstance().getAllowedItems().contains(itemId))) {
+                        allowedItem = true;
+                    } else {
+                        allowedItem = true;
+                    }
+                    if ((!etc.getInstance().getDisallowedItems().isEmpty()) && (!canIgnoreRestrictions()) && (etc.getInstance().getDisallowedItems().contains(itemId))) {
+                        allowedItem = false;
+                    }
+
+                    if (Item.isValidItem(itemId)) {
+                        if (allowedItem || canIgnoreRestrictions()) {
+                            Item i = new Item(itemId, amount, -1, damage);
+                            log.log(Level.INFO, "Giving " + toGive.getName() + " some " + i.toString());
+                            //toGive.giveItem(itemId, amount);
+                            toGive.giveItem(i);
+                            if (toGive.getName().equalsIgnoreCase(getName())) {
+                                sendMessage(Colors.Rose + "There you go "+getName()+".");
+                            } else {
+                                sendMessage(Colors.Rose + "Gift given! :D");
+                                toGive.sendMessage(Colors.Rose + "Enjoy your gift! :D");
+                            }
+                        } else if (!allowedItem && !canIgnoreRestrictions()) {
+                            sendMessage(Colors.Rose + "You are not allowed to spawn that item.");
+                        }
+                    } else {
+                        sendMessage(Colors.Rose + "No item with ID " + split[1]);
+                    }
+
                 } else {
                     sendMessage(Colors.Rose + "Can't find user " + split[3]);
                 }
+            } else if (split[0].equalsIgnoreCase("/cloth")){
+                if (split.length < 3) {
+                    sendMessage(Colors.Rose + "Correct usage is: /cloth [amount] [color]");
+                    return;
+                }
+                try {
+                    int amount = Integer.parseInt(split[1]);
+                    if (amount <= 0 && !isAdmin()) {
+                        amount = 1;
+                    }
+
+                    if (amount > 64 && !canIgnoreRestrictions()) {
+                        amount = 64;
+                    }
+                    if (amount > 1024) {
+                        amount = 1024; // 16 stacks worth. More than enough.
+                    }
+
+                    String color = split[2];
+                    if (split.length > 3) {
+                        color += " " + split[3];
+                    }
+                    Cloth.Color c = Cloth.Color.getColor(color.toLowerCase());
+                    if (c == null) {
+                        sendMessage(Colors.Rose + "Invalid color name!");
+                        return;
+                    }
+                    Item i = c.getItem();
+                    i.setAmount(amount);
+                    log.log(Level.INFO, "Giving " + getName() + " some " + i.toString());
+                    giveItem(i);
+                    sendMessage(Colors.Rose + "There you go "+getName()+".");
+                } catch (NumberFormatException localNumberFormatException) {
+                    sendMessage(Colors.Rose + "Improper ID and/or amount.");
+                }
+
             } else if (split[0].equalsIgnoreCase("/tempban")) {
                 // /tempban MINUTES HOURS DAYS
                 if (split.length == 1) {

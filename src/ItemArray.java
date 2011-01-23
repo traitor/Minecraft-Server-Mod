@@ -160,7 +160,7 @@ public abstract class ItemArray<C extends Container<OItemStack>> {
      * @param slot slot to use
      */
     public void setSlot(Item item, int slot) {
-        setSlot(item.getItemId(), item.getAmount(), slot);
+        setSlot(item.getItemId(), item.getAmount(),item.getDamage(), slot);
     }
 
     /**
