@@ -1,0 +1,1 @@
+run jarjar.bat or java -jar jarjar.jar process rules.rules minecraft_server.jar minecraft_servero.jar in the console to get minecraft_servero.jar
