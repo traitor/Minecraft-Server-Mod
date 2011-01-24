@@ -175,7 +175,7 @@ public class OEntityPlayerMP extends OEntityPlayer
                 this.aZ = 20;
                 this.bi = false;
             } else {
-                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.HEALTH_CHANGE, getPlayer(), bD, aZ)) {
+                if ((Boolean) manager.callHook(PluginLoader.Hook.HEALTH_CHANGE, getPlayer(), bD, aZ)) {
                     aZ = bD;
                 } else {
                     a.b(new OPacket8(aZ));
@@ -190,7 +190,7 @@ public class OEntityPlayerMP extends OEntityPlayer
             // hMod: Let plugins know we're showing a sign
             if (paramOTileEntity instanceof OTileEntitySign) {
                 Sign sign = new Sign((OTileEntitySign) paramOTileEntity);
-                etc.getLoader().callHook(PluginLoader.Hook.SIGN_SHOW, getPlayer(), sign);
+                manager.callHook(PluginLoader.Hook.SIGN_SHOW, getPlayer(), sign);
             }
 
             OPacket localOPacket = paramOTileEntity.g();
@@ -251,7 +251,7 @@ public class OEntityPlayerMP extends OEntityPlayer
     public void a(int paramInt1, int paramInt2, int paramInt3) {
         OCraftingInventoryWorkbenchCB temp = new OCraftingInventoryWorkbenchCB(this.an, this.l, paramInt1, paramInt2, paramInt3);
         Workbench bench = new Workbench(temp);
-        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), bench)) {
+        if ((Boolean) manager.callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), bench)) {
             return;
         }
 
@@ -268,12 +268,12 @@ public class OEntityPlayerMP extends OEntityPlayer
         String name = paramOIInventory.b();
         if (paramOIInventory instanceof OTileEntityChest) {
             inv = new Chest((OTileEntityChest) paramOIInventory);
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), inv)) {
+            if ((Boolean) manager.callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), inv)) {
                 return;
             }
         } else if (paramOIInventory instanceof OInventoryLargeChest) {
             inv = new DoubleChest((OInventoryLargeChest) paramOIInventory);
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), inv)) {
+            if ((Boolean) manager.callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), inv)) {
                 return;
             }
         }
@@ -294,7 +294,7 @@ public class OEntityPlayerMP extends OEntityPlayer
         // hMod: Check if we can open this
         Inventory inv = new Furnace(paramOTileEntityFurnace);
         String name = paramOTileEntityFurnace.b();
-        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), inv)) {
+        if ((Boolean) manager.callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), inv)) {
             return;
         }
 
@@ -313,7 +313,7 @@ public class OEntityPlayerMP extends OEntityPlayer
     public void a(OTileEntityDispenser paramOTileEntityDispenser) {
         Dispenser dis = new Dispenser(paramOTileEntityDispenser);
         String name = paramOTileEntityDispenser.b();
-        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), dis)) {
+        if ((Boolean) manager.callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), dis)) {
             return;
         }
 

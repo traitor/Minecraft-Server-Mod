@@ -14,6 +14,10 @@ public class OEntityBoat extends OEntity {
     private double al;
     private double am;
 
+    //hMod Start
+    Boat boat = new Boat(this);
+    //hMod end
+
     public OEntityBoat(OWorld paramOWorld) {
         super(paramOWorld);
         i = true;
@@ -49,8 +53,7 @@ public class OEntityBoat extends OEntity {
         n = paramDouble2;
         o = paramDouble3;
         // hMod: Creation of the boat
-        Boat boat = new Boat(this);
-        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_CREATE, new Object[]{boat});
+        manager.callHook(PluginLoader.Hook.VEHICLE_CREATE, boat);
     }
 
     public double k() {
@@ -59,9 +62,7 @@ public class OEntityBoat extends OEntity {
 
     public boolean a(OEntity paramOEntity, int paramInt) {
         // hMod: Attack of the boat
-        BaseEntity attacker = new BaseEntity(paramOEntity);
-        Boat boat = new Boat(this);
-        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_DAMAGE, boat, attacker, paramInt)) {
+        if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_DAMAGE, boat, paramOEntity.entity, paramInt)) {
             return true;
         }
 
@@ -90,8 +91,7 @@ public class OEntityBoat extends OEntity {
 
     public void b_() {
         // hMod: Update of the boat
-        Boat boat = new Boat(this);
-        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_UPDATE, boat);
+        manager.callHook(PluginLoader.Hook.VEHICLE_UPDATE, boat);
 
         super.b_();
         if (b > 0) {
@@ -277,9 +277,7 @@ public class OEntityBoat extends OEntity {
 
     public boolean a(OEntityPlayer paramOEntityPlayer) {
         // hMod: Entering the boat
-        Boat boat = new Boat(this);
-        HumanEntity player = new HumanEntity(paramOEntityPlayer);
-        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_ENTERED, boat, player);
+        manager.callHook(PluginLoader.Hook.VEHICLE_ENTERED, boat, paramOEntityPlayer.entity);
 
         if ((j != null) && ((j instanceof OEntityPlayer)) && (j != paramOEntityPlayer)) {
             return true;

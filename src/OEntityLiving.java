@@ -58,6 +58,10 @@ public abstract class OEntityLiving extends OEntity {
     private OEntity b;
     private int c = 0;
 
+    //hMod Start
+    LivingEntity entity = new LivingEntity(this);
+    //hMod end
+
     public OEntityLiving(OWorld paramOWorld) {
         super(paramOWorld);
         aZ = 10;
@@ -108,8 +112,7 @@ public abstract class OEntityLiving extends OEntity {
 
         if ((B()) && (C())) {
             // hMod Damage hook: Suffocation
-            LivingEntity defender = new LivingEntity(this);
-            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.SUFFOCATION, null, defender, 1)) {
+            if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.SUFFOCATION, null, entity, 1)) {
                 a((OEntity)null, 1);
             }
         }
@@ -129,8 +132,7 @@ public abstract class OEntityLiving extends OEntity {
                     l.a("bubble", p + f1, q + f2, r + f3, s, t, u);
                 }
                 // hMod Damage hook: Drowning
-                LivingEntity defender = new LivingEntity(this);
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.WATER, null, defender, 2)) {
+                if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.WATER, null, entity, 2)) {
                     a((OEntity) null, 2);
                 }
             }
@@ -296,10 +298,9 @@ public abstract class OEntityLiving extends OEntity {
 
         // hMod damage entities.
         LivingEntity attacker = (paramOEntity != null && paramOEntity instanceof OEntityLiving) ? new LivingEntity((OEntityLiving) paramOEntity) : null;
-        LivingEntity defender = new LivingEntity(this);
 
         // hMod attack by entity, but it might not do damage!
-        if (attacker != null && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ATTACK, attacker, defender, paramInt)) {
+        if (attacker != null && (Boolean) manager.callHook(PluginLoader.Hook.ATTACK, attacker, entity, paramInt)) {
             return false;
         }
 
@@ -309,7 +310,7 @@ public abstract class OEntityLiving extends OEntity {
                 return false;
             }
             // hMod: partial damage
-            if (attacker != null && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.ENTITY, attacker, defender, paramInt - bv)) {
+            if (attacker != null && (Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.ENTITY, attacker, entity, paramInt - bv)) {
                 return false;
             }
             e(paramInt - bv);
@@ -317,7 +318,7 @@ public abstract class OEntityLiving extends OEntity {
             i = 0;
         } else {
             // hMod: partial damage
-            if (attacker != null && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.ENTITY, attacker, defender, paramInt - bv)) {
+            if (attacker != null && (Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.ENTITY, attacker, entity, paramInt)) {
                 return false;
             }
 
@@ -429,8 +430,7 @@ public abstract class OEntityLiving extends OEntity {
         int i = (int) Math.ceil(paramFloat - 3.0F);
         if (i > 0) {
             // hMod Damage hook: Falling
-            LivingEntity defender = new LivingEntity(this);
-            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.FALL, null, defender, i)) {
+            if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.FALL, null, entity, i)) {
                 a((OEntity) null, i);
             }
 

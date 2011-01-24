@@ -265,7 +265,7 @@ public class OBlockFlowing extends OBlockFluids {
 
     private boolean l(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         // hMod: See if this liquid can destroy this block.
-        Block block = new Block(etc.getServer().getBlockIdAt(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
+        Block block = new Block(paramOWorld.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
         PluginLoader.HookResult ret = (PluginLoader.HookResult) etc.getLoader().callHook(PluginLoader.Hook.LIQUID_DESTROY, this.bi, block);
         if (ret == PluginLoader.HookResult.PREVENT_ACTION) {
             return false;

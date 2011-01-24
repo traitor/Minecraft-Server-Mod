@@ -66,6 +66,11 @@ public abstract class OEntity {
     public int ai;
     public int aj;
 
+    //hMod Start
+    BaseEntity entity = new BaseEntity(this);
+    PluginLoader manager = etc.getLoader();
+    //hMod end
+
     public OEntity(OWorld paramOWorld) {
         l = paramOWorld;
 
@@ -172,8 +177,7 @@ public abstract class OEntity {
             } else {
                 if (Z % 20 == 0) {
                     // hMod Damage hook: Periodic burn damage
-                    BaseEntity burner = new BaseEntity(this);
-                    if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.FIRE_TICK, null, burner, 1)) {
+                    if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.FIRE_TICK, null, entity, 1)) {
                         a((OEntity) null, 1);
                     }
                 }
@@ -202,8 +206,7 @@ public abstract class OEntity {
         if (!ae) {
             // hMod Damage hook: Lava
             if (this instanceof OEntityLiving) {
-                BaseEntity defender = new BaseEntity(this);
-                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.LAVA, null, defender, 4)) {
+                if ((Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.LAVA, null, entity, 4)) {
                     return;
                 }
             }
@@ -451,8 +454,7 @@ public abstract class OEntity {
 
     protected void b(int paramInt) {
         if (!ae) {
-            BaseEntity defender = new BaseEntity(this);
-            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.FIRE, null, defender, paramInt)) {
+            if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.FIRE, null, entity, paramInt)) {
                 a((OEntity) null, paramInt);
             }
 

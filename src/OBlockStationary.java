@@ -32,7 +32,7 @@ public class OBlockStationary extends OBlockFluids {
         if (bt == OMaterial.g) {
             int i = paramRandom.nextInt(3);
             // hMod: prevent lava from putting something on fire.
-            Block block = new Block(etc.getServer().getBlockIdAt(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
+            Block block = new Block(paramOWorld.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
             block.setStatus(1);
             if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, block, null)) {
                 for (int j = 0; j < i; j++) {

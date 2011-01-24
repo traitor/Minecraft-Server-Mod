@@ -23,6 +23,10 @@ public class OEntityMinecart extends OEntity
     private double at;
     private String name = "Minecart";
 
+    //hMod start
+    Minecart cart = new Minecart(this);
+    //hMod end
+
     @Override
     public OItemStack[] getContents() {
         return al;
@@ -90,8 +94,8 @@ public class OEntityMinecart extends OEntity
         d = paramInt;
         
         // hMod: Creation of the cart
-        Minecart cart = new Minecart(this);
-        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_CREATE, cart);
+        
+        manager.callHook(PluginLoader.Hook.VEHICLE_CREATE, cart);
     }
 
     public double k() {
@@ -100,10 +104,7 @@ public class OEntityMinecart extends OEntity
 
     public boolean a(OEntity paramOEntity, int paramInt) {
         // hMod: Attack of the cart
-        BaseEntity attacker = new BaseEntity(paramOEntity);
-        Minecart cart = new Minecart(this);
-
-        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_DAMAGE, cart, attacker, paramInt)) {
+        if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_DAMAGE, cart, paramOEntity.entity, paramInt)) {
             return true;
         }
 
@@ -132,8 +133,7 @@ public class OEntityMinecart extends OEntity
 
     public void q() {
         // hMod: Destruction of the cart
-        Minecart cart = new Minecart(this);
-        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_DESTROYED, cart);
+        manager.callHook(PluginLoader.Hook.VEHICLE_DESTROYED, cart);
         
         for (int i = 0; i < h_(); i++) {
             OItemStack localOItemStack = a(i);
@@ -163,8 +163,7 @@ public class OEntityMinecart extends OEntity
 
     public void b_() {
         // hMod: Update of the cart
-        Minecart cart = new Minecart(this);
-        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_UPDATE, cart);
+        manager.callHook(PluginLoader.Hook.VEHICLE_UPDATE, cart);
         
         if (b > 0) {
             b -= 1;
@@ -452,8 +451,7 @@ public class OEntityMinecart extends OEntity
         int j = OMathHelper.b(paramDouble2);
         int k = OMathHelper.b(paramDouble3);
         // hMod: Change of the cart
-        Minecart minecart = new Minecart(this);
-        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_POSITIONCHANGE, minecart, i, j, k);
+        manager.callHook(PluginLoader.Hook.VEHICLE_POSITIONCHANGE, cart, i, j, k);
 
         
         if (l.a(i, j - 1, k) == OBlock.aG.bi) {
@@ -560,9 +558,7 @@ public class OEntityMinecart extends OEntity
             return;
         }
         // hMod: Collision of a cart
-        Minecart cart = new Minecart(this);
-        BaseEntity baseEntity = new BaseEntity(paramOEntity);
-        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_COLLISION, cart, baseEntity)) {
+        if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_COLLISION, cart, paramOEntity.entity)) {
             return;
         }
 
@@ -671,9 +667,7 @@ public class OEntityMinecart extends OEntity
 
     public boolean a(OEntityPlayer paramOEntityPlayer) {
         // hMod: Entering the cart
-        Minecart cart = new Minecart(this);
-        HumanEntity player = new HumanEntity(paramOEntityPlayer);
-        etc.getLoader().callHook(PluginLoader.Hook.VEHICLE_ENTERED, cart, player);
+        manager.callHook(PluginLoader.Hook.VEHICLE_ENTERED, cart, paramOEntityPlayer.entity);
 
         if (d == 0) {
             if ((j != null) && ((j instanceof OEntityPlayer)) && (j != paramOEntityPlayer)) {

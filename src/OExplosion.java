@@ -118,9 +118,8 @@ public class OExplosion {
                 double d11 = (1.0D - d8) * d10;
                 // hMod Damage hook: Explosions
                 int damage = (int) ((d11 * d11 + d11) / 2.0D * 8.0D * this.f + 1.0D);
-                BaseEntity exploder = new BaseEntity(localOEntity);
                 PluginLoader.DamageType dmgType = (e instanceof OEntityCreeper) ? PluginLoader.DamageType.CREEPER_EXPLOSION : PluginLoader.DamageType.EXPLOSION;
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, dmgType, null, exploder, damage)) {
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, dmgType, null, localOEntity.entity, damage)) {
                     localOEntity.a(e, damage);
                 }
 

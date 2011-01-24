@@ -103,7 +103,7 @@ public class BaseVehicle extends BaseEntity {
      */
     public Player getPassenger() {
         if (entity.j != null)
-            if (isPlayer())
+            if (isPlayer(entity.j))
                 return ((OEntityPlayerMP)entity.j).getPlayer();
         
         return null;

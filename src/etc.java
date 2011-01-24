@@ -277,7 +277,6 @@ public class etc {
     public static PluginLoader getLoader() {
         if (instance.loader == null) {
             instance.loader = new PluginLoader(server);
-            instance.loader.loadPlugins();
         }
 
         return instance.loader;

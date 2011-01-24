@@ -260,6 +260,8 @@ public class PluginLoader {
     private Server server;
     private PropertiesFile properties;
 
+    private boolean loaded = false;
+
     /**
      * Creates a plugin loader
      * @param server server to use
@@ -277,6 +279,9 @@ public class PluginLoader {
      * Loads all plugins.
      */
     public void loadPlugins() {
+        if(loaded)
+            return;
+        log.info("hMod: Loading plugins...");
         String[] classes = properties.getString("plugins", "").split(",");
         for (String sclass : classes) {
             if (sclass.equals("")) {
@@ -284,6 +289,8 @@ public class PluginLoader {
             }
             loadPlugin(sclass.trim());
         }
+        log.info("hMod: Loaded "+plugins.size()+" plugins.");
+        loaded = true;
     }
 
     /**
@@ -447,6 +454,8 @@ public class PluginLoader {
      * @return Object returned by call
      */
     public Object callHook(Hook h, Object... parameters) {
+        
+
         Object toRet = false;
 
         if (h == Hook.REDSTONE_CHANGE) {
@@ -454,6 +463,8 @@ public class PluginLoader {
         } else if (h == Hook.LIQUID_DESTROY) {
             toRet = HookResult.DEFAULT_ACTION;
         }
+        if(!loaded)
+            return toRet;
 
         synchronized (lock) {
             PluginListener listener = null;

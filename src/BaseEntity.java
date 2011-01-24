@@ -153,11 +153,19 @@ public class BaseEntity {
         return entity instanceof OIMobs;
     }
 
+    public static boolean isMob(OEntity entity){
+        return entity instanceof OIMobs;
+    }
+
     /**
      * Returns whether or not this entity is an animal
      * @return true if animal
      */
     public boolean isAnimal() {
+        return entity instanceof OIAnimals;
+    }
+
+    public static boolean isAnimal(OEntity entity){
         return entity instanceof OIAnimals;
     }
 
@@ -168,12 +176,20 @@ public class BaseEntity {
     public boolean isPlayer() {
         return entity instanceof OEntityPlayerMP;
     }
+
+    public static boolean isPlayer(OEntity entity){
+        return entity instanceof OEntityPlayerMP;
+    }
 	
     /**
      * Returns whether or not this entity is alive
      * @return true if living entity
      */
     public boolean isLiving() {
+        return entity instanceof OEntityLiving;
+    }
+
+    public static boolean isLiving(OEntity entity){
         return entity instanceof OEntityLiving;
     }
 

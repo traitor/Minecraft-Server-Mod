@@ -97,7 +97,7 @@ public class ONetServerHandler extends ONetHandler
             to.rotX = getPlayer().getRotation();
             to.rotY = getPlayer().getPitch();
 
-            etc.getLoader().callHook(PluginLoader.Hook.PLAYER_MOVE,
+            e.manager.callHook(PluginLoader.Hook.PLAYER_MOVE,
                     getPlayer(), from, to);
         }
         if (j) {
@@ -230,7 +230,7 @@ public class ONetServerHandler extends ONetHandler
         from.rotX = paramFloat1;
         from.rotY = paramFloat2;
         Player player = getPlayer();
-        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.TELEPORT,
+        if ((Boolean) e.manager.callHook(PluginLoader.Hook.TELEPORT,
                 player, player.getLocation(), from)) {
             return;
         }
@@ -304,7 +304,7 @@ public class ONetServerHandler extends ONetHandler
                 y = block.getY();
                 z = block.getZ();
                 type = block.getType();
-                if (!(Boolean) etc.getLoader().callHook(
+                if (!(Boolean) e.manager.callHook(
                         PluginLoader.Hook.BLOCK_DESTROYED, player, block)) {
                     e.c.a(n, i1, i2);
                 }
@@ -313,7 +313,7 @@ public class ONetServerHandler extends ONetHandler
             // hMod: Stop digging
             Block block = etc.getServer().getBlockAt(n, i1, i2);
             block.setStatus(2); // Stopped digging
-            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, player,
+            e.manager.callHook(PluginLoader.Hook.BLOCK_DESTROYED, player,
                     block);
 
             e.c.a();
@@ -325,7 +325,7 @@ public class ONetServerHandler extends ONetHandler
             if ((i5 > etc.getInstance().getSpawnProtectionSize()) || (bool)) {
                 Block block = etc.getServer().getBlockAt(n, i1, i2);
                 block.setStatus(1); // Digging
-                if (!(Boolean) etc.getLoader().callHook(
+                if (!(Boolean) e.manager.callHook(
                         PluginLoader.Hook.BLOCK_DESTROYED, player, block)) {
                     e.c.a(n, i1, i2, i3);
                 }
@@ -334,7 +334,7 @@ public class ONetServerHandler extends ONetHandler
             // hMod: Break block
             Block block = new Block(type, x, y, z);
             block.setStatus(3);
-            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_DESTROYED, player,
+            e.manager.callHook(PluginLoader.Hook.BLOCK_DESTROYED, player,
                     block);
 
             double d6 = e.p - (n + 0.5D);
@@ -419,10 +419,10 @@ public class ONetServerHandler extends ONetHandler
             // hMod: call BLOCK_RIGHTCLICKED
             Item item = (localOItemStack != null) ? new Item(localOItemStack) : new Item(Item.Type.Air);
             Player player = getPlayer();
-            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_RIGHTCLICKED, player, blockClicked, item);
+            e.manager.callHook(PluginLoader.Hook.BLOCK_RIGHTCLICKED, player, blockClicked, item);
 
             // hMod: call original BLOCK_CREATED
-            etc.getLoader().callHook(PluginLoader.Hook.BLOCK_CREATED, player, blockPlaced, blockClicked, item.getItemId());
+            e.manager.callHook(PluginLoader.Hook.BLOCK_CREATED, player, blockPlaced, blockClicked, item.getItemId());
             // hMod: If we were building inside spawn, bail! (unless ops/admin)
             if (((i4 > etc.getInstance().getSpawnProtectionSize() && !etc.getInstance().isOnItemBlacklist(item.getItemId())) || bool) && player.canBuild()) {
                 e.c.a(e, d.e, localOItemStack, m, n, i1, i2);
@@ -477,7 +477,7 @@ public class ONetServerHandler extends ONetHandler
 
     public void a(String paramString, Object[] paramArrayOfObject) {
         // hMod: disconnect!
-        etc.getLoader().callHook(PluginLoader.Hook.DISCONNECT,getPlayer());
+        e.manager.callHook(PluginLoader.Hook.DISCONNECT,getPlayer());
         a.info(e.aw + " lost connection: " + paramString);
         d.f.a(new OPacket3Chat("\u00A7e" + e.aw + " left the game."));
         d.f.c(e);
@@ -507,7 +507,7 @@ public class ONetServerHandler extends ONetHandler
     public void a(OPacket18ArmAnimation paramOPacket18ArmAnimation) {
         if (paramOPacket18ArmAnimation.b == 1) {
             // hMod: Swing the arm!
-            etc.getLoader().callHook(PluginLoader.Hook.ARM_SWING,
+            e.manager.callHook(PluginLoader.Hook.ARM_SWING,
                     getPlayer());
             e.K();
         }
@@ -625,7 +625,7 @@ public class ONetServerHandler extends ONetHandler
                 }
                 // hMod: Check if we can change it
                 Sign sign = new Sign(localOTileEntitySign);
-                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.SIGN_CHANGE, getPlayer(), sign)) {
+                if ((Boolean) e.manager.callHook(PluginLoader.Hook.SIGN_CHANGE, getPlayer(), sign)) {
                     localOTileEntitySign.e = Arrays.copyOf(old, old.length);
                 }
                 

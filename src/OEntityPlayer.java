@@ -24,6 +24,10 @@ public abstract class OEntityPlayer extends OEntityLiving {
     private int a = 0;
     public OEntityFish aE = null;
 
+    //hMod start
+    HumanEntity entity = new HumanEntity(this);
+    //hMod end
+
     public OEntityPlayer(OWorld paramOWorld) {
         super(paramOWorld);
 
@@ -216,7 +220,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
             localOEntityItem.u += Math.sin(f2) * f1;
         }
 
-        if(!(Boolean)etc.getLoader().callHook(PluginLoader.Hook.ITEM_DROP, ((OEntityPlayerMP)this).getPlayer(),new Item(paramOItemStack)))
+        if(!(Boolean)manager.callHook(PluginLoader.Hook.ITEM_DROP, ((OEntityPlayerMP)this).getPlayer(),new Item(paramOItemStack)))
              a(localOEntityItem);
         // return the item to the inventory.
         else

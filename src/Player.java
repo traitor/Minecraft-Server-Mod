@@ -37,6 +37,9 @@ public class Player extends HumanEntity implements MessageReceiver {
     public Player() {
     }
 
+    public Player(OEntityPlayerMP player){
+        setUser(player);
+    }
     /**
      * Returns the entity we're wrapping.
      * @return
@@ -385,7 +388,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                     return;
                 }
 
-                if (toGive != null && itemId > 0) {
+                if (toGive != null) {
 
                     boolean allowedItem = false;
                     if ((!etc.getInstance().getAllowedItems().isEmpty()) && (!canIgnoreRestrictions()) && (etc.getInstance().getAllowedItems().contains(itemId))) {
@@ -402,7 +405,14 @@ public class Player extends HumanEntity implements MessageReceiver {
                             Item i = new Item(itemId, amount, -1, damage);
                             log.log(Level.INFO, "Giving " + toGive.getName() + " some " + i.toString());
                             //toGive.giveItem(itemId, amount);
-                            toGive.giveItem(i);
+                           i.setAmount(64);
+                            while(amount > 64){
+                                amount -= 64;
+                                toGive.giveItem(i);
+                                i.setSlot(-1);
+                            }
+                           i.setAmount(amount);
+                           toGive.giveItem(i);
                             if (toGive.getName().equalsIgnoreCase(getName())) {
                                 sendMessage(Colors.Rose + "There you go "+getName()+".");
                             } else {
@@ -449,7 +459,15 @@ public class Player extends HumanEntity implements MessageReceiver {
                     Item i = c.getItem();
                     i.setAmount(amount);
                     log.log(Level.INFO, "Giving " + getName() + " some " + i.toString());
+                    i.setAmount(64);
+                    while (amount > 64) {
+                        amount -= 64;
+                        giveItem(i);
+                        i.setSlot(-1);
+                    }
+                    i.setAmount(amount);
                     giveItem(i);
+
                     sendMessage(Colors.Rose + "There you go "+getName()+".");
                 } catch (NumberFormatException localNumberFormatException) {
                     sendMessage(Colors.Rose + "Improper ID and/or amount.");
