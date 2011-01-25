@@ -1,6 +1,7 @@
 
 import java.util.List;
 import java.util.Random;
+import net.minecraft.server.MinecraftServer;
 
 public class OEntityMinecart extends OEntity
         implements OIInventory, Container<OItemStack> {
@@ -464,7 +465,11 @@ public class OEntityMinecart extends OEntity
             if ((m >= 2) && (m <= 5)) {
                 paramDouble2 = j + 1;
             }
-
+            if(m > 9){
+                MinecraftServer.a.warning("hMod Warning: Scambled minecart track data at (" + i + "," + j + "," + k + ") data " + m);
+                m = 9;
+            }
+            //index out of bounds exception ?
             int[][] arrayOfInt = an[m];
 
             double d1 = 0.0D;

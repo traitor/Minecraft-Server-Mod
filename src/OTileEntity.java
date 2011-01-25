@@ -5,15 +5,15 @@ import java.util.Map;
 
 public class OTileEntity {
 
-    private static Map e = new HashMap();
-    private static Map f = new HashMap();
+    private static Map<String, Class> e = new HashMap<String, Class>();
+    private static Map<Class, String> f = new HashMap<Class, String>();
     public OWorld a;
     public int b;
     public int c;
     public int d;
 
     private static void a(Class paramClass, String paramString) {
-        if (f.containsKey(paramString)) {
+        if (e.containsKey(paramString)) {
             throw new IllegalArgumentException("Duplicate id: " + paramString);
         }
         e.put(paramString, paramClass);
@@ -27,7 +27,7 @@ public class OTileEntity {
     }
 
     public void b(ONBTTagCompound paramONBTTagCompound) {
-        String str = (String) f.get(getClass());
+        String str = f.get(getClass());
         if (str == null) {
             throw new RuntimeException(getClass() + " is missing a mapping! This is a bug!");
         }
@@ -43,7 +43,7 @@ public class OTileEntity {
     public static OTileEntity c(ONBTTagCompound paramONBTTagCompound) {
         OTileEntity localOTileEntity = null;
         try {
-            Class localClass = (Class) e.get(paramONBTTagCompound.h("id"));
+            Class localClass = e.get(paramONBTTagCompound.h("id"));
             if (localClass != null) {
                 localOTileEntity = (OTileEntity) localClass.newInstance();
             }

@@ -36,7 +36,6 @@ public class etc {
     
     private String[] motd = null;
     private boolean saveHomes = true;
-    private boolean firstLoad = true;
     private boolean whitelistEnabled = false;
     private int playerLimit = 20;
     private int spawnProtectionSize = 16;
@@ -988,4 +987,15 @@ public class etc {
     public static Connection getSQLConnection() {
         return getInstance()._getSQLConnection();
     }
+
+    public static int floor(float paramFloat) {
+        int i = (int) paramFloat;
+        return paramFloat < i ? i - 1 : i;
+    }
+
+    public static int floor(double paramDouble) {
+        int i = (int) paramDouble;
+        return paramDouble < i ? i - 1 : i;
+    }
+
 }

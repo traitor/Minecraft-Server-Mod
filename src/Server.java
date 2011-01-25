@@ -212,7 +212,6 @@ public class Server {
     public List<Mob> getMobList() {
         List<Mob> toRet = new ArrayList<Mob>();
         for (Object o : server.e.b) {
-            //TODO: fix.
             if (o instanceof OEntityMobs || o instanceof OEntityGhast) {
                 toRet.add(new Mob((OEntityLiving) o));
             }
@@ -242,7 +241,7 @@ public class Server {
         List<Minecart> toRet = new ArrayList<Minecart>();
         for (Object o : server.e.b) {
             if (o instanceof OEntityMinecart) {
-                toRet.add(new Minecart((OEntityMinecart) o));
+                toRet.add(((OEntityMinecart) o).cart);
             }
         }
         return toRet;
@@ -256,7 +255,7 @@ public class Server {
         List<Boat> toRet = new ArrayList<Boat>();
         for (Object o : server.e.b) {
             if (o instanceof OEntityBoat) {
-                toRet.add(new Boat((OEntityBoat) o));
+                toRet.add(((OEntityBoat) o).boat);
             }
         }
         return toRet;
@@ -272,9 +271,9 @@ public class Server {
             if (o instanceof OEntityMobs || o instanceof OEntityGhast || o instanceof OEntityAnimals) {
                 toRet.add(new Mob((OEntityLiving) o));
             } else if (o instanceof OEntityMinecart) {
-                toRet.add(new Minecart((OEntityMinecart) o));
+                toRet.add(((OEntityMinecart) o).cart);
             } else if (o instanceof OEntityBoat) {
-                toRet.add(new Boat((OEntityBoat) o));
+                toRet.add(((OEntityBoat) o).boat);
             } else if (o instanceof OEntityPlayerMP) {
                 toRet.add(((OEntityPlayerMP)o).getPlayer());
             }
@@ -306,9 +305,9 @@ public class Server {
         List<BaseVehicle> toRet = new ArrayList<BaseVehicle>();
         for (Object o : server.e.b) {
             if (o instanceof OEntityMinecart) {
-                toRet.add(new Minecart((OEntityMinecart) o));
+                toRet.add(((OEntityMinecart) o).cart);
             } else if (o instanceof OEntityBoat) {
-                toRet.add(new Boat((OEntityBoat) o));
+                toRet.add(((OEntityBoat) o).boat);
             }
         }
         return toRet;

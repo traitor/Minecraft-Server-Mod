@@ -33,6 +33,7 @@ public class Main {
         } catch (Throwable t) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, t);
         }
+        new DeadLockDetector();
     }
 
     public static boolean checkForUpdate() {

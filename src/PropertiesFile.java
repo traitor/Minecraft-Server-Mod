@@ -2,6 +2,7 @@
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.FileInputStream;
 import java.util.Map;
@@ -34,6 +35,7 @@ public final class PropertiesFile {
 
         try {
             if (file.exists()) {
+
                 load();
             } else {
                 save();
@@ -50,7 +52,17 @@ public final class PropertiesFile {
      * @throws IOException
      */
     public void load() throws IOException {
-        props.load(new FileInputStream(fileName));
+            FileInputStream stream = null;
+        try {
+            stream = new FileInputStream(fileName);
+            props.load(stream);
+        }catch(IOException ex) {
+        }finally{
+            try {
+                if(stream != null)
+                    stream.close();
+            } catch (IOException ex) {}
+        }
     }
 
     /**
@@ -58,9 +70,16 @@ public final class PropertiesFile {
      * a .[properties] file in UTF8.
      */
     public void save() {
+            FileOutputStream stream = null;
         try {
-        props.store(new FileOutputStream(fileName), null);
+            stream = new FileOutputStream(fileName);
+            props.store(stream , null);
         }catch(IOException ex) {
+        }finally{
+            try {
+                if(stream != null)
+                    stream.close();
+            } catch (IOException ex) {}
         }
     }
 

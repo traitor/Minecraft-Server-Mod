@@ -456,13 +456,19 @@ public class PluginLoader {
     public Object callHook(Hook h, Object... parameters) {
         
 
-        Object toRet = false;
-
-        if (h == Hook.REDSTONE_CHANGE) {
-            toRet = (Integer) parameters[2];
-        } else if (h == Hook.LIQUID_DESTROY) {
-            toRet = HookResult.DEFAULT_ACTION;
+        Object toRet;
+        switch(h){
+            case REDSTONE_CHANGE:
+                toRet = (Integer) parameters[2];
+                break;
+            case LIQUID_DESTROY:
+                toRet = HookResult.DEFAULT_ACTION;
+                break;
+            default:
+                toRet = false;
+                break;
         }
+
         if(!loaded)
             return toRet;
 

@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -92,22 +93,31 @@ public class OEntityTracker {
     }
 
     public void a() {
-        ArrayList localArrayList = new ArrayList();
-        for (Iterator localIterator1 = a.iterator(); localIterator1.hasNext();) {
-            OEntityTrackerEntry localObject = (OEntityTrackerEntry) localIterator1.next();
-            ((OEntityTrackerEntry) localObject).a(c.e.d);
-            if ((((OEntityTrackerEntry) localObject).m) && ((((OEntityTrackerEntry) localObject).a instanceof OEntityPlayerMP))) {
-                localArrayList.add((OEntityPlayerMP) ((OEntityTrackerEntry) localObject).a);
-            }
-        }
-        Object localObject;
-        for (int i = 0; i < localArrayList.size(); i++) {
-            localObject = (OEntityPlayerMP) localArrayList.get(i);
-            for (OEntityTrackerEntry localOEntityTrackerEntry : a) {
-                if (localOEntityTrackerEntry.a != localObject) {
-                    localOEntityTrackerEntry.b((OEntityPlayerMP) localObject);
+        try {
+            synchronized(a){
+                ArrayList localArrayList = new ArrayList();
+                OEntityTrackerEntry localObject;
+                for (Iterator localIterator1 = a.iterator(); localIterator1.hasNext();) {
+                    localObject = (OEntityTrackerEntry) localIterator1.next();
+                    localObject.a(c.e.d);
+                    if ((localObject.m) && ((localObject.a instanceof OEntityPlayerMP))) {
+                        localArrayList.add((OEntityPlayerMP) localObject.a);
+                    }
+                }
+                OEntityPlayerMP localObject2;
+                for (int i = 0; i < localArrayList.size(); i++) {
+                    localObject2 = (OEntityPlayerMP) localArrayList.get(i);
+                    for (OEntityTrackerEntry localOEntityTrackerEntry : a) {
+                        if (localOEntityTrackerEntry.a != localObject2) {
+                            localOEntityTrackerEntry.b(localObject2);
+                        }
+                    }
                 }
             }
+        }catch(ConcurrentModificationException e){
+            //people seem to get this exception often, lets just catch so it doesn't crash the server.
+            MinecraftServer.a.warning("hMod WARNING: ConcurrentModificationException in OEntityTracker:");
+            e.printStackTrace();
         }
         // hMod: Execute runnables contained in eventQueue.
         for (DelayedTask task = delayQueue.poll(); task != null; task = delayQueue.poll()) {

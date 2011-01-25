@@ -21,7 +21,7 @@ public class ONetServerHandler extends ONetHandler
     private double h;
     private double i;
     private boolean j = true;
-    private Map k = new HashMap();
+    private Map<Integer, Short> k = new HashMap<Integer, Short>();
 
     public ONetServerHandler(MinecraftServer paramMinecraftServer, ONetworkManager paramONetworkManager, OEntityPlayerMP paramOEntityPlayerMP) {
         d = paramMinecraftServer;
@@ -80,20 +80,20 @@ public class ONetServerHandler extends ONetHandler
             }
         }
         // hMod: Notice player movement
-        if ((int) Math.floor(g) != (int) Math.floor(getPlayer().getX())
-                || (int) Math.floor(h) != (int) Math.floor(getPlayer().getY())
-                || (int) Math.floor(i) != (int) Math.floor(getPlayer().getZ())) {
+        if (etc.floor(g) != etc.floor(getPlayer().getX())
+                || etc.floor(h) != etc.floor(getPlayer().getY())
+                || etc.floor(i) != etc.floor(getPlayer().getZ())) {
             Location from = new Location();
-            from.x = (int) Math.floor(g);
-            from.y = (int) Math.floor(h);
-            from.z = (int) Math.floor(i);
+            from.x = etc.floor(g);
+            from.y = etc.floor(h);
+            from.z = etc.floor(i);
             from.rotX = getPlayer().getRotation();
             from.rotY = getPlayer().getPitch();
 
             Location to = new Location();
-            to.x = (int) Math.floor(e.p);
-            to.y = (int) Math.floor(e.q);
-            to.z = (int) Math.floor(e.r);
+            to.x = etc.floor(e.p);
+            to.y = etc.floor(e.q);
+            to.z = etc.floor(e.r);
             to.rotX = getPlayer().getRotation();
             to.rotY = getPlayer().getPitch();
 
@@ -376,18 +376,25 @@ public class ONetServerHandler extends ONetHandler
         // If we clicked on something then we also have a location to place the block
         if (blockClicked != null && localOItemStack != null) {
             blockPlaced = new Block(localOItemStack.c, blockClicked.getX(), blockClicked.getY(), blockClicked.getZ());
-            if (paramOPacket15Place.d == 0) {
-                blockPlaced.setY(blockPlaced.getY() - 1);
-            } else if (paramOPacket15Place.d == 1) {
-                blockPlaced.setY(blockPlaced.getY() + 1);
-            } else if (paramOPacket15Place.d == 2) {
-                blockPlaced.setZ(blockPlaced.getZ() - 1);
-            } else if (paramOPacket15Place.d == 3) {
-                blockPlaced.setZ(blockPlaced.getZ() + 1);
-            } else if (paramOPacket15Place.d == 4) {
-                blockPlaced.setX(blockPlaced.getX() - 1);
-            } else if (paramOPacket15Place.d == 5) {
-                blockPlaced.setX(blockPlaced.getX() + 1);
+            switch (paramOPacket15Place.d) {
+                case 0:
+                    blockPlaced.setY(blockPlaced.getY() - 1);
+                    break;
+                case 1:
+                    blockPlaced.setY(blockPlaced.getY() + 1);
+                    break;
+                case 2:
+                    blockPlaced.setZ(blockPlaced.getZ() - 1);
+                    break;
+                case 3:
+                    blockPlaced.setZ(blockPlaced.getZ() + 1);
+                    break;
+                case 4:
+                    blockPlaced.setX(blockPlaced.getX() - 1);
+                    break;
+                case 5:
+                    blockPlaced.setX(blockPlaced.getX() + 1);
+                    break;
             }
         }
         //hMod: END
@@ -586,7 +593,7 @@ public class ONetServerHandler extends ONetHandler
     }
 
     public void a(OPacket106 paramOPacket106) {
-        Short localShort = (Short) k.get(Integer.valueOf(e.ap.f));
+        Short localShort = k.get(Integer.valueOf(e.ap.f));
         if ((localShort != null) && (paramOPacket106.b == localShort.shortValue()) && (e.ap.f == paramOPacket106.a) && (!e.ap.c(e))) {
             e.ap.a(e, true);
         }
