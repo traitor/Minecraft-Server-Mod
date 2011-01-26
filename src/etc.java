@@ -24,7 +24,7 @@ import net.minecraft.server.MinecraftServer;
 public class etc {
 
     private static final Logger log = Logger.getLogger("Minecraft");
-    private static volatile etc instance;
+    private static final etc instance = new etc();
     private static MinecraftServer server;
     private String usersLoc = "users.txt", kitsLoc = "kits.txt", homeLoc = "homes.txt", warpLoc = "warps.txt", itemLoc = "items.txt", groupLoc = "groups.txt";
     private String whitelistLoc = "whitelist.txt", reservelistLoc = "reservelist.txt";
@@ -161,14 +161,15 @@ public class etc {
             enableHealth = properties.getBoolean("enable-health", true);
 
             animals = properties.getString("natural-animals", "Sheep,Pig,Chicken,Cow").split(",");
-            for(String i : animals)
-                if(i.equalsIgnoreCase("Squid"))
-                {
-                    System.out.println("Please remove 'Squid' from natural-animals!");
-                    System.exit(0);
-                }
+            validateMobGroup(animals,"natural-animals",OEntityAnimals.class);
+
             monsters = properties.getString("natural-monsters", "Spider,Zombie,Skeleton,Creeper").split(",");
+            validateMobGroup(monsters,"natural-monsters",OIMobs.class);
+            
             waterAnimals = properties.getString("natural-wateranimals", "Squid").split(",");
+            validateMobGroup(waterAnimals,"natural-wateranimals",OEntityWaterMob.class);
+
+
             mobSpawnRate = properties.getInt("natural-spawn-rate", mobSpawnRate);
 
             String autoHealString = properties.getString("auto-heal", "default");
@@ -194,6 +195,8 @@ public class etc {
                     versionStr = Integer.toString(version); // and back to a string.
                     tainted = false; // looks official. We hope.
                 }
+                ins.close();
+                bufferedReader.close();
             } else {
                 // I'm a tainted build, probably.
                 version = -1;
@@ -227,10 +230,6 @@ public class etc {
      * @return
      */
     public static etc getInstance() {
-        if (instance == null) {
-            instance = new etc();
-        }
-
         return instance;
     }
 
@@ -1007,6 +1006,23 @@ public class etc {
     public static int floor(double paramDouble) {
         int i = (int) paramDouble;
         return paramDouble < i ? i - 1 : i;
+    }
+
+    private static void validateMobGroup(String[] mobs,String groupname,Class supergroup){
+        for(String i : mobs){
+            if(!isInValidLivingGroup(i,supergroup))
+            {
+                log.warning("Invalid mobType '"+ i + "' in group '" + groupname + "', please remove it from your config file!");
+                System.exit(0);
+            }
+        }
+    }
+    public static boolean isInValidLivingGroup(String classname,Class objectgroup){
+        Class entity = OEntityList.getEntity(classname);
+        if(entity != null){
+            return objectgroup.isAssignableFrom(entity);
+        }else
+            return false;
     }
 
 }
