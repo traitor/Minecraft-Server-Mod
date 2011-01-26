@@ -37,6 +37,7 @@ public class etc {
     private String[] motd = null;
     private boolean saveHomes = true;
     private boolean whitelistEnabled = false;
+    private boolean reservelistEnabled = false;
     private int playerLimit = 20;
     private int spawnProtectionSize = 16;
     private LinkedHashMap<String, String> commands = new LinkedHashMap<String, String>();
@@ -138,6 +139,7 @@ public class etc {
             saveHomes = properties.getBoolean("save-homes", true);
             whitelistEnabled = properties.getBoolean("whitelist", false);
             whitelistMessage = properties.getString("whitelist-message", "Not on whitelist.");
+            reservelistEnabled = properties.getBoolean("reservelist", false);
             if (dataSourceType.equalsIgnoreCase("flatfile")) {
                 usersLoc = properties.getString("admintxtlocation", "users.txt");
                 kitsLoc = properties.getString("kitstxtlocation", "kits.txt");
@@ -602,6 +604,15 @@ public class etc {
      */
     public int getPlayerLimit() {
         return playerLimit;
+    }
+
+    /**
+     * Return reservelist enabled.
+     *
+     * @return true if enabled.
+     */
+    public boolean isReservelistEnabled(){
+        return reservelistEnabled;
     }
 
     /**

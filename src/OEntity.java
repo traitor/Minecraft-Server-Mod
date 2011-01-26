@@ -68,7 +68,7 @@ public abstract class OEntity {
 
     //hMod Start
     BaseEntity entity = new BaseEntity(this);
-    PluginLoader manager = etc.getLoader();
+    public static PluginLoader manager = etc.getLoader();
     //hMod end
 
     public OEntity(OWorld paramOWorld) {

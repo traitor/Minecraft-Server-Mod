@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -1070,8 +1071,9 @@ public class FlatFileSource extends DataSource {
                 if (line.startsWith("#") || line.equals("") || line.startsWith("﻿")) {
                     continue;
                 }
-                if (line.startsWith("@") && player.isInGroup(line.substring(1)))
+                if (line.startsWith("@") && player.isInGroup(line.substring(1))) {
                     return true;
+                }
                 if (line.equalsIgnoreCase(user)) {
                     return true;
                 }
@@ -1085,5 +1087,87 @@ public class FlatFileSource extends DataSource {
 
     public void modifyBan(Ban ban) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    // Reservelist
+    public boolean isUserOnReserveList(String user) {
+        String location = etc.getInstance().getReservelistLocation();
+        Player player = getPlayer(user);
+        try {
+            Scanner scanner = new Scanner(new File(location));
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.startsWith("#") || line.equals("") || line.startsWith("﻿")) {
+                    continue;
+                }
+                if (line.startsWith("@") && player.isInGroup(line.substring(1))) {
+                    return true;
+                }
+                if (line.equalsIgnoreCase(user)) {
+                    return true;
+                }
+            }
+            scanner.close();
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "Exception while reading " + location, e);
+        }
+        return false;
+    }
+
+    public void addToReserveList(String name) {
+        if (isUserOnReserveList(name)) {
+            return;
+        }
+        BufferedWriter bw = null;
+        String location = etc.getInstance().getReservelistLocation();
+        try {
+            bw = new BufferedWriter(new FileWriter(location, true));
+            bw.newLine();
+            bw.append(name);
+        } catch (Exception e2) {
+            log.log(Level.SEVERE, "Exception while writing new user to " + location, e2);
+        } finally {
+            try {
+                if (bw != null) {
+                    bw.close();
+                }
+            } catch (IOException ex) {
+            }
+        }
+    }
+
+    public void removeFromReserveList(String name) {
+        if (!isUserOnReserveList(name)) {
+            return;
+        }
+
+        FileWriter writer = null;
+        String location = etc.getInstance().getReservelistLocation();
+
+        try {
+            // Now to save...
+            BufferedReader reader = new BufferedReader(new FileReader(new File(location)));
+            String line = "";
+            StringBuilder toSave = new StringBuilder();
+
+            while ((line = reader.readLine()) != null) {
+                if (!line.equalsIgnoreCase(name.toLowerCase())) {
+                    toSave.append(line).append("\r\n");
+                }
+            }
+            reader.close();
+
+            writer = new FileWriter(location);
+            writer.write(toSave.toString());
+        } catch (Exception e1) {
+            log.log(Level.SEVERE, "Exception while removing player '" + name + "' from " + location, e1);
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException ex) {
+            }
+        }
     }
 }

@@ -428,4 +428,26 @@ public abstract class DataSource {
         }
         return null;
     }
+
+        /**
+     * Adds player to reservelist
+     *
+     * @param name
+     */
+    abstract public void addToReserveList(String name);
+
+    /**
+     * Removes player from reservelist
+     *
+     * @param name
+     */
+    abstract public void removeFromReserveList(String name);
+
+    /**
+     * Returns true if player is on reservelist
+     *
+     * @param user
+     * @return true if player is on reserve list
+     */
+    abstract public boolean isUserOnReserveList(String user);
 }

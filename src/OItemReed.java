@@ -10,9 +10,10 @@ public class OItemReed extends OItem {
 
     public boolean a(OItemStack paramOItemStack, OEntityPlayer paramOEntityPlayer, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         // hMod: Store blockClicked
-        Block blockClicked = new Block(paramOWorld.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
+        int clicked = paramOWorld.a(paramInt1, paramInt2, paramInt3);
+        Block blockClicked = new Block(clicked, paramInt1, paramInt2, paramInt3);
 
-        if (paramOWorld.a(paramInt1, paramInt2, paramInt3) == OBlock.aS.bi) {
+        if (clicked == OBlock.aS.bi) {
             paramInt4 = 0;
         } else {
             if (paramInt4 == 0) {

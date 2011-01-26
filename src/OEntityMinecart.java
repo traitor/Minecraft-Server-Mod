@@ -95,7 +95,6 @@ public class OEntityMinecart extends OEntity
         d = paramInt;
         
         // hMod: Creation of the cart
-        
         manager.callHook(PluginLoader.Hook.VEHICLE_CREATE, cart);
     }
 

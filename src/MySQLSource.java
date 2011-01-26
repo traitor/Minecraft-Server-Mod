@@ -14,7 +14,7 @@ import java.util.logging.Level;
  */
 public class MySQLSource extends DataSource {
 
-    private String table_groups, table_users, table_items, table_kits, table_warps, table_homes, table_whitelist, table_bans;
+    private String table_groups, table_users, table_items, table_kits, table_warps, table_homes, table_reservelist, table_whitelist, table_bans;
 
     public void initialize() {
         PropertiesFile properties = new PropertiesFile("mysql.properties");
@@ -25,6 +25,7 @@ public class MySQLSource extends DataSource {
         table_warps = properties.getString("warps", "warps");
         table_homes = properties.getString("homes", "homes");
         table_whitelist = properties.getString("whitelist", "whitelist");
+        table_reservelist = properties.getString("reservelist", "reservelist");
         table_bans = properties.getString("bans", "bans");
         loadGroups();
         loadKits();
@@ -730,5 +731,99 @@ public class MySQLSource extends DataSource {
 
     public void modifyBan(Ban ban) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean isUserOnReserveList(String user) {
+        boolean toRet = false;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = etc.getSQLConnection();
+            ps = conn.prepareStatement("SELECT * FROM " + table_reservelist + " WHERE name = ?");
+            ps.setString(1, user);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                toRet = true;
+            }
+        } catch (SQLException ex) {
+            log.log(Level.SEVERE, "Unable to check if user is on reservelist", ex);
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+            }
+        }
+        if (toRet || user.charAt(0) == '@')
+            return toRet;
+        Player pl = getPlayer(user);
+        String[] groups = pl.getGroups();
+        for (int i = 0; i < groups.length; ++i) {
+            if (isUserOnReserveList("@" + groups[i]))
+                return true;
+        }
+        return toRet;
+    }
+    // Reservelist
+    public void addToReserveList(String name) {
+        if (isUserOnReserveList(name)) {
+            return;
+        }
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = etc.getSQLConnection();
+            ps = conn.prepareStatement("INSERT INTO " + table_reservelist + " VALUES(?)");
+            ps.setString(1, name);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            log.log(Level.SEVERE, "Unable to update reservelist", ex);
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+            }
+        }
+    }
+
+    public void removeFromReserveList(String name) {
+        if (!isUserOnReserveList(name)) {
+            return;
+        }
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = etc.getSQLConnection();
+            ps = conn.prepareStatement("DELETE FROM " + table_reservelist + " WHERE name = ?");
+            ps.setString(1, name);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            log.log(Level.SEVERE, "Unable to update reservelist", ex);
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+            }
+        }
     }
 }
