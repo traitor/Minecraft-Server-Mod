@@ -62,7 +62,7 @@ public class OEntityBoat extends OEntity {
 
     public boolean a(OEntity paramOEntity, int paramInt) {
         // hMod: Attack of the boat
-        if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_DAMAGE, boat, paramOEntity.entity, paramInt)) {
+        if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_DAMAGE, boat, paramOEntity == null ? null : paramOEntity.entity, paramInt)) {
             return true;
         }
 

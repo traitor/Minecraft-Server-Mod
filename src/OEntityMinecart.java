@@ -104,7 +104,7 @@ public class OEntityMinecart extends OEntity
 
     public boolean a(OEntity paramOEntity, int paramInt) {
         // hMod: Attack of the cart
-        if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_DAMAGE, cart, paramOEntity.entity, paramInt)) {
+        if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_DAMAGE, cart, paramOEntity == null ? null : paramOEntity.entity, paramInt)) {
             return true;
         }
 

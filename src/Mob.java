@@ -104,6 +104,6 @@ public class Mob extends LivingEntity {
             return false;
         }
         OEntity c = OEntityList.a(mob, etc.getMCServer().e);
-        return c instanceof OEntityMobs || c instanceof OEntityAnimals;
+        return c instanceof OIMobs || c instanceof OIAnimals;
     }
 }

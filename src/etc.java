@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -161,13 +162,16 @@ public class etc {
             enableHealth = properties.getBoolean("enable-health", true);
 
             animals = properties.getString("natural-animals", "Sheep,Pig,Chicken,Cow").split(",");
-            validateMobGroup(animals,"natural-animals",OEntityAnimals.class);
+            if(animals.length == 1 && (animals[0].equals(" ") || animals[0].equals("")))animals = new String[]{};
+            validateMobGroup(animals,"natural-animals",new String[] { "Sheep", "Pig", "Chicken", "Cow" });
 
             monsters = properties.getString("natural-monsters", "Spider,Zombie,Skeleton,Creeper").split(",");
-            validateMobGroup(monsters,"natural-monsters",OIMobs.class);
+            if(monsters.length == 1 && (monsters[0].equals(" ") || monsters[0].equals("")))monsters = new String[]{};
+            validateMobGroup(monsters,"natural-monsters",new String[] { "Spider", "Zombie", "Skeleton", "Creeper" });
             
             waterAnimals = properties.getString("natural-wateranimals", "Squid").split(",");
-            validateMobGroup(waterAnimals,"natural-wateranimals",OEntityWaterMob.class);
+            if(waterAnimals.length == 1 && (waterAnimals[0].equals(" ") || waterAnimals[0].equals("")))waterAnimals = new String[]{};
+            validateMobGroup(waterAnimals,"natural-wateranimals",new String[] { "Squid" });
 
 
             mobSpawnRate = properties.getInt("natural-spawn-rate", mobSpawnRate);
@@ -180,9 +184,9 @@ public class etc {
             }
 
             showUnknownCommand = properties.getBoolean("show-unknown-command", true);
-            URL url = this.getClass().getResource("/version.txt");
-            if (url != null) {
-                InputStreamReader ins = new InputStreamReader(url.openStream());
+            File file = new File("version.txt");
+            if (file.exists()) {
+                InputStreamReader ins = new InputStreamReader(file.toURI().toURL().openStream());
                 BufferedReader bufferedReader = new BufferedReader(ins);
                 String versionParam = bufferedReader.readLine();
                 if (versionParam.startsWith("git-")) { // recommended version.txt for git builds: git-<gituser>-<shorttag>
@@ -222,6 +226,10 @@ public class etc {
         }
 
         dataSource.initialize();
+    }
+
+    public String getDataSourceType(){
+        return dataSourceType;
     }
 
     /**
@@ -1008,13 +1016,14 @@ public class etc {
         return paramDouble < i ? i - 1 : i;
     }
 
-    private static void validateMobGroup(String[] mobs,String groupname,Class supergroup){
-        for(String i : mobs){
-            if(!isInValidLivingGroup(i,supergroup))
-            {
-                log.warning("Invalid mobType '"+ i + "' in group '" + groupname + "', please remove it from your config file!");
-                System.exit(0);
+    private static void validateMobGroup(String[] mobs,String groupname,String[] allowed){
+        lb1: for(String i : mobs){
+            lb2: for(String al : allowed){
+                if(al.equals(i))
+                    continue lb1;
             }
+            log.warning("Invalid mobType '"+ i + "' in group '" + groupname + "', please remove it from your config file!");
+            System.exit(0);
         }
     }
     public static boolean isInValidLivingGroup(String classname,Class objectgroup){

@@ -118,7 +118,7 @@ public class OServerConfigurationManager {
         if (etc.getInstance().isWhitelistEnabled() && !(etc.getDataSource().isUserOnWhitelist(paramString1) || player.isAdmin())) {
             paramONetLoginHandler.a(etc.getInstance().getWhitelistMessage());
             return null;
-        } else if (b.size() >= e && (!etc.getInstance().isReservelistEnabled() || etc.getDataSource().isUserOnReserveList(paramString1))) {
+        } else if (b.size() >= e && (!etc.getInstance().isReservelistEnabled() || !etc.getDataSource().isUserOnReserveList(paramString1))) {
             paramONetLoginHandler.a("The server is full!");
             return null;
         }

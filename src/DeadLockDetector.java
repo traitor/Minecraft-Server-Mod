@@ -31,7 +31,7 @@ import java.util.logging.Logger;
  */
 public class DeadLockDetector extends Thread
 {
-	private static Logger _log = Logger.getLogger(DeadLockDetector.class.getName());
+	private static Logger _log = Logger.getLogger("Minecraft");
 	
 	private static final int _sleepTime = 5*1000;
 	

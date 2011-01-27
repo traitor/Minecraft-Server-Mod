@@ -14,6 +14,7 @@ public class ServerConsoleCommands {
         add("disableplugin", disableplugin);
         add("modify",        modify);
         add("mp",            modify);
+        add("reservelist",   reservelist);
         add("whitelist",     whitelist);
         add("version",       version);
     }
@@ -214,7 +215,23 @@ public class ServerConsoleCommands {
             }
         }
     };
-    
+
+    public final static BaseCommand reservelist = new BaseCommand("[operation (add or remove)] [player]", "reservelist [operation (add or remove)] [player]", 3, 3) {
+
+        @Override
+        void execute(MessageReceiver caller, String[] parameters) {
+            if (parameters[1].equalsIgnoreCase("add")) {
+                etc.getDataSource().addToReserveList(parameters[2]);
+                caller.notify(parameters[2] + " added to reservelist");
+            } else if (parameters[1].equalsIgnoreCase("remove")) {
+                etc.getDataSource().removeFromReserveList(parameters[2]);
+                caller.notify(parameters[2] + " removed from reservelist");
+            } else {
+                caller.notify("Invalid operation.");
+            }
+        }
+    };
+
     public final static BaseCommand listplugins = new BaseCommand("- Lists all plugins") {
         @Override        
         void execute(MessageReceiver caller, String[] parameters) {
