@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="hMod JarFile Compiler" default="jar" basedir=".">
+	<description>
+		This script will build the hMod jarfile.
+	</description>
+
+	<property name="src" location="src" />
+	<property name="lib" location="lib" />
+	<property name="build" location="build" />
+	<property name="dist" location="dist" />
+
+
+	<path id="classpath">
+		<fileset dir="jarjar">
+			<include name="minecraft_servero.jar" />
+			<include name="jarjar.jar" />
+		</fileset>
+	</path>
+
+	<target name="verifyRequirements" description="Checks if the necessary requirements for building Handler are fulfilled">
+		<available classname="javax.script.ScriptContext" property="JDK6.present" />
+		<fail unless="JDK6.present" message="JDK 6 or greater is required." />
+	</target>
+
+	<target name="init" depends="clean, verifyRequirements" description="Create the output directories.">
+		<mkdir dir="${build}" />
+		<mkdir dir="${build}/classes" />
+		<mkdir dir="${dist}" />
+	</target>
+
+	<target name="compile" depends="init" description="Compile the source.">
+		<javac destdir="${build}/classes" optimize="on" debug="on" debuglevel="lines,vars,source" source="1.6" target="1.6" nowarn="off">
+			<src path="${src}" />
+			<classpath refid="classpath" />
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile" description="Create the jar file">
+		<jar destfile="${dist}/Minecraft_Mod.jar">
+			<fileset dir="${build}/classes" />
+			<manifest>
+				<attribute name="Main-Class" value="Main" />
+				<attribute name="Class-Path" value="minecraft_servero.jar jarjar.jar mysql-connector-java-bin.jar plugins/" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="clean" description="Remove the output directories">
+		<delete dir="${build}" />
+		<delete dir="${dist}" />
+	</target>
+</project>
