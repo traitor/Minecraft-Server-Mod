@@ -1,8 +1,4 @@
-
-import java.lang.reflect.Constructor;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 public final class OSpawnerAnimals {
@@ -19,25 +15,22 @@ public final class OSpawnerAnimals {
     }
 
     public static final int a(OWorld paramOWorld, boolean paramBoolean1, boolean paramBoolean2) {
-        if ((!paramBoolean1) && (!paramBoolean2)) {
+        if ((!paramBoolean1) && (!paramBoolean2))
             return 0;
-        }
 
         a.clear();
-                Object localObject;
+        Object localObject;
         int j;
         int k;
         for (int i = 0; i < paramOWorld.d.size(); i++) {
-            localObject = (OEntityPlayer) paramOWorld.d.get(i);
+            localObject = paramOWorld.d.get(i);
             j = OMathHelper.b(((OEntityPlayer) localObject).p / 16.0D);
             k = OMathHelper.b(((OEntityPlayer) localObject).r / 16.0D);
 
             int m = 8;
-            for (int n = -m; n <= m; n++) {
-                for (int i1 = -m; i1 <= m; i1++) {
+            for (int n = -m; n <= m; n++)
+                for (int i1 = -m; i1 <= m; i1++)
                     a.add(new OChunkCoordIntPair(n + j, i1 + k));
-                }
-            }
         }
 
         // hMod: Cache config spawns to classes outside of the loop
@@ -46,44 +39,39 @@ public final class OSpawnerAnimals {
         Class[] animals = new Class[config.getAnimals().length];
         Class[] waterAnimals = new Class[config.getWaterAnimals().length];
 
-        for (int i = 0; i < mobs.length; i++) {
+        for (int i = 0; i < mobs.length; i++)
             mobs[i] = OEntityList.getEntity(config.getMonsters()[i]);
-        }
-        for (int i = 0; i < animals.length; i++) {
+        for (int i = 0; i < animals.length; i++)
             animals[i] = OEntityList.getEntity(config.getAnimals()[i]);
-        }
-        for (int i = 0; i < waterAnimals.length; i++) {
+        for (int i = 0; i < waterAnimals.length; i++)
             waterAnimals[i] = OEntityList.getEntity(config.getWaterAnimals()[i]);
-        }
 
         int i = 0;
         OEnumCreatureType localOEnumCreatureType;
         for (j = 0; j < OEnumCreatureType.values().length; j++) {
             localOEnumCreatureType = OEnumCreatureType.values()[j];
-            if (((localOEnumCreatureType.d()) && (!paramBoolean2)) || ((!localOEnumCreatureType.d()) && (!paramBoolean1))) {
+            if (((localOEnumCreatureType.d()) && (!paramBoolean2)) || ((!localOEnumCreatureType.d()) && (!paramBoolean1)))
                 continue;
-            }
-            if (paramOWorld.a(localOEnumCreatureType.a()) > localOEnumCreatureType.b() * a.size() / 256) {
+            if (paramOWorld.a(localOEnumCreatureType.a()) > localOEnumCreatureType.b() * a.size() / 256)
                 continue;
-            }
             for (OChunkCoordIntPair localOChunkCoordIntPair : a) {
-                //OMobSpawnerBase localOMobSpawnerBase = paramOWorld.a().a(localOChunkCoordIntPair);
-                //Class[] arrayOfClass = localOMobSpawnerBase.a(localOEnumCreatureType);
+                // OMobSpawnerBase localOMobSpawnerBase =
+                // paramOWorld.a().a(localOChunkCoordIntPair);
+                // Class[] arrayOfClass =
+                // localOMobSpawnerBase.a(localOEnumCreatureType);
                 Class[] arrayOfClass = null;
-                //Monsters
-                if (localOEnumCreatureType == OEnumCreatureType.a) {
+                // Monsters
+                if (localOEnumCreatureType == OEnumCreatureType.a)
                     arrayOfClass = mobs;
-                //Animals
-                } else if (localOEnumCreatureType == OEnumCreatureType.b) {
+                // Animals
+                else if (localOEnumCreatureType == OEnumCreatureType.b)
                     arrayOfClass = animals;
-                //Water mobs
-                } else if (localOEnumCreatureType == OEnumCreatureType.c){
+                // Water mobs
+                else if (localOEnumCreatureType == OEnumCreatureType.c)
                     arrayOfClass = waterAnimals;
-                }
 
-                if ((arrayOfClass == null) || (arrayOfClass.length == 0)) {
+                if ((arrayOfClass == null) || (arrayOfClass.length == 0))
                     continue;
-                }
                 int i2 = paramOWorld.l.nextInt(arrayOfClass.length);
 
                 OChunkPosition localOChunkPosition = a(paramOWorld, localOChunkCoordIntPair.a * 16, localOChunkCoordIntPair.b * 16);
@@ -91,10 +79,8 @@ public final class OSpawnerAnimals {
                 int i4 = localOChunkPosition.b;
                 int i5 = localOChunkPosition.c;
 
-                if ((paramOWorld.d(i3, i4, i5))
-                        || (paramOWorld.c(i3, i4, i5) != localOEnumCreatureType.c())) {
+                if ((paramOWorld.d(i3, i4, i5)) || (paramOWorld.c(i3, i4, i5) != localOEnumCreatureType.c()))
                     continue;
-                }
                 int i6 = 0;
 
                 for (int i7 = 0; i7 < 3; i7++) {
@@ -111,41 +97,39 @@ public final class OSpawnerAnimals {
                             float f1 = i8 + 0.5F;
                             float f2 = i9;
                             float f3 = i10 + 0.5F;
-                            if (paramOWorld.a(f1, f2, f3, 24.0D) != null) {
+                            if (paramOWorld.a(f1, f2, f3, 24.0D) != null)
                                 continue;
-                            }
                             float f4 = f1 - paramOWorld.m;
                             float f5 = f2 - paramOWorld.n;
                             float f6 = f3 - paramOWorld.o;
                             float f7 = f4 * f4 + f5 * f5 + f6 * f6;
-                            //hMod: mobs can't spawn to close to the spawn ?
-                            if (f7 < 576.0F) {
+                            // hMod: mobs can't spawn to close to the spawn ?
+                            if (f7 < 576.0F)
                                 continue;
-                            }
                             OEntityLiving localOEntityLiving;
                             try {
-                                localOEntityLiving = (OEntityLiving) arrayOfClass[i2].getConstructor(new Class[]{OWorld.class}).newInstance(new Object[]{paramOWorld});
+                                localOEntityLiving = (OEntityLiving) arrayOfClass[i2].getConstructor(new Class[] { OWorld.class }).newInstance(new Object[] { paramOWorld });
                             } catch (Exception localException) {
                                 localException.printStackTrace();
                                 return i;
                             }
 
-                            //hMod : make sure we have something to spawn before trying to spawn anything
-                            if(localOEntityLiving == null) continue;
+                            // hMod : make sure we have something to spawn
+                            // before trying to spawn anything
+                            if (localOEntityLiving == null)
+                                continue;
 
                             localOEntityLiving.c(f1, f2, f3, paramOWorld.l.nextFloat() * 360.0F, 0.0F);
 
-                            if (localOEntityLiving.b()) {
+                            if (localOEntityLiving.b())
                                 // hMod: allow mobs to spawn!
                                 if (!(Boolean) (etc.getLoader().callHook(PluginLoader.Hook.MOB_SPAWN, new Mob(localOEntityLiving)))) {
                                     i6++;
                                     paramOWorld.a(localOEntityLiving);
                                     a(localOEntityLiving, paramOWorld, f1, f2, f3);
-                                    if (i6 >= localOEntityLiving.j()) {
+                                    if (i6 >= localOEntityLiving.j())
                                         break;
-                                    }
                                 }
-                            }
                             i += i6;
                         }
                     }
@@ -156,9 +140,8 @@ public final class OSpawnerAnimals {
     }
 
     private static boolean a(OEnumCreatureType paramOEnumCreatureType, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        if (paramOEnumCreatureType.c() == OMaterial.f) {
+        if (paramOEnumCreatureType.c() == OMaterial.f)
             return (paramOWorld.c(paramInt1, paramInt2, paramInt3).d()) && (!paramOWorld.d(paramInt1, paramInt2 + 1, paramInt3));
-        }
         return (paramOWorld.d(paramInt1, paramInt2 - 1, paramInt3)) && (!paramOWorld.d(paramInt1, paramInt2, paramInt3)) && (!paramOWorld.c(paramInt1, paramInt2, paramInt3).d()) && (!paramOWorld.d(paramInt1, paramInt2 + 1, paramInt3));
     }
 
@@ -168,8 +151,7 @@ public final class OSpawnerAnimals {
             localOEntitySkeleton.c(paramFloat1, paramFloat2, paramFloat3, paramOEntityLiving.v, 0.0F);
             paramOWorld.a(localOEntitySkeleton);
             localOEntitySkeleton.e(paramOEntityLiving);
-        } else if ((paramOEntityLiving instanceof OEntitySheep)) {
+        } else if ((paramOEntityLiving instanceof OEntitySheep))
             ((OEntitySheep) paramOEntityLiving).a(OEntitySheep.a(paramOWorld.l));
-        }
     }
 }

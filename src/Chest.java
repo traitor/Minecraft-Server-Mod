@@ -1,6 +1,6 @@
-
 /**
  * Chest.java - Interface to chests.
+ * 
  * @author James
  */
 public class Chest extends BaseContainerBlock<OTileEntityChest> implements ComplexBlock {
@@ -15,24 +15,20 @@ public class Chest extends BaseContainerBlock<OTileEntityChest> implements Compl
         DoubleChest result;
 
         result = tryAttachedChest(block, Block.Face.Front);
-        if (result != null) {
+        if (result != null)
             return result;
-        }
 
         result = tryAttachedChest(block, Block.Face.Back);
-        if (result != null) {
+        if (result != null)
             return result;
-        }
 
         result = tryAttachedChest(block, Block.Face.Left);
-        if (result != null) {
+        if (result != null)
             return result;
-        }
 
         result = tryAttachedChest(block, Block.Face.Right);
-        if (result != null) {
+        if (result != null)
             return result;
-        }
 
         return null;
     }
@@ -44,7 +40,7 @@ public class Chest extends BaseContainerBlock<OTileEntityChest> implements Compl
             ComplexBlock cblock = etc.getServer().getOnlyComplexBlock(block);
             if ((cblock != null) && (cblock instanceof Chest)) {
                 Chest chest = (Chest) cblock;
-                return new DoubleChest(new OInventoryLargeChest(getName(), this.container, chest.container));
+                return new DoubleChest(new OInventoryLargeChest(getName(), container, chest.container));
             }
         }
 

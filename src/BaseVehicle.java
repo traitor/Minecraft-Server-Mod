@@ -1,11 +1,12 @@
-
 /**
  * BaseVehicle - Base class for interfacing boats and minecarts
+ * 
  * @author James
  */
 public class BaseVehicle extends BaseEntity {
     /**
      * Creptes an interface for a vehicle
+     * 
      * @param entity
      */
     public BaseVehicle(OEntity entity) {
@@ -20,6 +21,7 @@ public class BaseVehicle extends BaseEntity {
 
     /**
      * Returns the x-motion of this vehicle
+     * 
      * @return x-motion
      */
     public double getMotionX() {
@@ -28,6 +30,7 @@ public class BaseVehicle extends BaseEntity {
 
     /**
      * Returns the y-motion of this vehicle
+     * 
      * @return y-motion
      */
     public double getMotionY() {
@@ -36,6 +39,7 @@ public class BaseVehicle extends BaseEntity {
 
     /**
      * Returns the z-motion of this vehicle
+     * 
      * @return z-motion
      */
     public double getMotionZ() {
@@ -44,7 +48,9 @@ public class BaseVehicle extends BaseEntity {
 
     /**
      * Sets the x-motion of this vehicle
-     * @param motion motion to set
+     * 
+     * @param motion
+     *            motion to set
      */
     public void setMotionX(double motion) {
         entity.s = motion;
@@ -52,7 +58,9 @@ public class BaseVehicle extends BaseEntity {
 
     /**
      * Sets the y-motion of this vehicle
-     * @param motion motion to set
+     * 
+     * @param motion
+     *            motion to set
      */
     public void setMotionY(double motion) {
         entity.t = motion;
@@ -60,7 +68,9 @@ public class BaseVehicle extends BaseEntity {
 
     /**
      * Sets the z-motion of this vehicle
-     * @param motion motion to set
+     * 
+     * @param motion
+     *            motion to set
      */
     public void setMotionZ(double motion) {
         entity.u = motion;
@@ -68,6 +78,7 @@ public class BaseVehicle extends BaseEntity {
 
     /**
      * Set vehicle motion
+     * 
      * @param motionX
      * @param motionY
      * @param motionZ
@@ -87,25 +98,27 @@ public class BaseVehicle extends BaseEntity {
 
     /**
      * Checks if this vehicle is empty (unoccupied)
+     * 
      * @return true if unoccupied.
      */
     public boolean isEmpty() {
-        if (entity.j == null) {
+        if (entity.j == null)
             return true;
-        } else {
+        else
             return false;
-        }
     }
 
     /**
-     * Returns the passenger. If there is no passenger this function returns null.
+     * Returns the passenger. If there is no passenger this function returns
+     * null.
+     * 
      * @return passenger
      */
     public Player getPassenger() {
         if (entity.j != null)
             if (isPlayer(entity.j))
-                return ((OEntityPlayerMP)entity.j).getPlayer();
-        
+                return ((OEntityPlayerMP) entity.j).getPlayer();
+
         return null;
     }
 }

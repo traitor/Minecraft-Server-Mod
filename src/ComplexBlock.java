@@ -33,7 +33,7 @@ public interface ComplexBlock {
 
     /**
      * Returns the Block associated with this ComplexBlock
-     *
+     * 
      * @return Block
      */
     public Block getBlock();

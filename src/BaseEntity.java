@@ -1,14 +1,15 @@
-
 /**
  * BaseEntity.java - Class for accessing things that all entities share - X, Y,
  * Z, health.
+ * 
  * @author James
  */
 public class BaseEntity {
     OEntity entity;
-    
+
     /**
      * Creates an interface for an entity
+     * 
      * @param entity
      */
     public BaseEntity(OEntity entity) {
@@ -23,6 +24,7 @@ public class BaseEntity {
 
     /**
      * Returns the ID for this mob
+     * 
      * @return id
      */
     public int getId() {
@@ -31,6 +33,7 @@ public class BaseEntity {
 
     /**
      * Teleports to the provided location
+     * 
      * @param x
      * @param rotation
      * @param y
@@ -43,7 +46,9 @@ public class BaseEntity {
 
     /**
      * Teleports to the other entity
-     * @param ent entity to teleport to
+     * 
+     * @param ent
+     *            entity to teleport to
      */
     public void teleportTo(BaseEntity ent) {
         teleportTo(ent.getX(), ent.getY(), ent.getZ(), ent.getRotation(), ent.getPitch());
@@ -51,7 +56,9 @@ public class BaseEntity {
 
     /**
      * Teleports to the provided location
-     * @param location location to teleport to
+     * 
+     * @param location
+     *            location to teleport to
      */
     public void teleportTo(Location location) {
         teleportTo(location.x, location.y, location.z, location.rotX, location.rotY);
@@ -59,6 +66,7 @@ public class BaseEntity {
 
     /**
      * Returns the entity's X
+     * 
      * @return x
      */
     public double getX() {
@@ -67,7 +75,9 @@ public class BaseEntity {
 
     /**
      * Sets the entity's X
-     * @param x x to set
+     * 
+     * @param x
+     *            x to set
      */
     public void setX(double x) {
         teleportTo(x, getY(), getZ(), getRotation(), getPitch());
@@ -75,6 +85,7 @@ public class BaseEntity {
 
     /**
      * Returns the entity's Y
+     * 
      * @return y
      */
     public double getY() {
@@ -83,7 +94,9 @@ public class BaseEntity {
 
     /**
      * Sets the entity's Y
-     * @param y y to set
+     * 
+     * @param y
+     *            y to set
      */
     public void setY(double y) {
         teleportTo(getX(), y, getZ(), getRotation(), getPitch());
@@ -91,6 +104,7 @@ public class BaseEntity {
 
     /**
      * Returns the entity's Z
+     * 
      * @return z
      */
     public double getZ() {
@@ -99,7 +113,9 @@ public class BaseEntity {
 
     /**
      * Sets the entity's Z
-     * @param z z to set
+     * 
+     * @param z
+     *            z to set
      */
     public void setZ(double z) {
         teleportTo(getX(), getY(), z, getRotation(), getPitch());
@@ -107,6 +123,7 @@ public class BaseEntity {
 
     /**
      * Returns the entity's pitch
+     * 
      * @return pitch
      */
     public float getPitch() {
@@ -115,7 +132,9 @@ public class BaseEntity {
 
     /**
      * Sets the entity's pitch
-     * @param pitch pitch to set
+     * 
+     * @param pitch
+     *            pitch to set
      */
     public void setPitch(float pitch) {
         teleportTo(getX(), getY(), getZ(), getRotation(), pitch);
@@ -123,6 +142,7 @@ public class BaseEntity {
 
     /**
      * Returns the entity's rotation
+     * 
      * @return rotation
      */
     public float getRotation() {
@@ -131,14 +151,17 @@ public class BaseEntity {
 
     /**
      * Sets the entity's rotation
-     * @param rotation rotation to set
+     * 
+     * @param rotation
+     *            rotation to set
      */
     public void setRotation(float rotation) {
         teleportTo(getX(), getY(), getZ(), rotation, getPitch());
     }
-    
+
     /**
      * Returns the entity we're wrapping.
+     * 
      * @return
      */
     public OEntity getEntity() {
@@ -147,54 +170,59 @@ public class BaseEntity {
 
     /**
      * Returns whether or not this entity is a mob
+     * 
      * @return true if mob
      */
     public boolean isMob() {
         return entity instanceof OIMobs;
     }
 
-    public static boolean isMob(OEntity entity){
+    public static boolean isMob(OEntity entity) {
         return entity instanceof OIMobs;
     }
 
     /**
      * Returns whether or not this entity is an animal
+     * 
      * @return true if animal
      */
     public boolean isAnimal() {
         return entity instanceof OIAnimals;
     }
 
-    public static boolean isAnimal(OEntity entity){
+    public static boolean isAnimal(OEntity entity) {
         return entity instanceof OIAnimals;
     }
 
     /**
      * Returns true if this entity is a player
+     * 
      * @return true if player
      */
     public boolean isPlayer() {
         return entity instanceof OEntityPlayerMP;
     }
 
-    public static boolean isPlayer(OEntity entity){
+    public static boolean isPlayer(OEntity entity) {
         return entity instanceof OEntityPlayerMP;
     }
-	
+
     /**
      * Returns whether or not this entity is alive
+     * 
      * @return true if living entity
      */
     public boolean isLiving() {
         return entity instanceof OEntityLiving;
     }
 
-    public static boolean isLiving(OEntity entity){
+    public static boolean isLiving(OEntity entity) {
         return entity instanceof OEntityLiving;
     }
 
     /**
      * Returns the player for this entity
+     * 
      * @return player
      */
     public Player getPlayer() {
@@ -207,8 +235,7 @@ public class BaseEntity {
     }
 
     /**
-     * Get the default amount of AirTicks for this entity
-     * 20 ticks per second.
+     * Get the default amount of AirTicks for this entity 20 ticks per second.
      * 
      * @return
      */
@@ -217,8 +244,7 @@ public class BaseEntity {
     }
 
     /**
-     * Set the default amount of AirTicks for this entity
-     * 20 ticks per second.
+     * Set the default amount of AirTicks for this entity 20 ticks per second.
      * 
      * @param ticks
      */
@@ -229,9 +255,9 @@ public class BaseEntity {
     /**
      * Get the current NoDamageTicks for this entity
      * 
-     * This gets lowered every game tick, until its smaller than half the BaseNoDamageTicks
-     * it only registers any damage more than {@link LivingEntity#getLastDamage()}.
-     * 20 ticks per second.
+     * This gets lowered every game tick, until its smaller than half the
+     * BaseNoDamageTicks it only registers any damage more than
+     * {@link LivingEntity#getLastDamage()}. 20 ticks per second.
      * 
      * @return
      */
@@ -242,9 +268,9 @@ public class BaseEntity {
     /**
      * Set the current NoDamageTicks for this entity
      * 
-     * This gets lowered every game tick, until its smaller than half the BaseNoDamageTicks
-     * it only registers any damage more than {@link LivingEntity#getLastDamage()}.
-     * 20 ticks per second.
+     * This gets lowered every game tick, until its smaller than half the
+     * BaseNoDamageTicks it only registers any damage more than
+     * {@link LivingEntity#getLastDamage()}. 20 ticks per second.
      * 
      * @param ticks
      */
@@ -255,8 +281,8 @@ public class BaseEntity {
     /**
      * Get the amount of AirTicks left.
      * 
-     * This gets lowered every game tick when you are under water. 
-     * 20 ticks per second.
+     * This gets lowered every game tick when you are under water. 20 ticks per
+     * second.
      * 
      * @return
      */
@@ -267,8 +293,8 @@ public class BaseEntity {
     /**
      * Set the amount of AirTicks left.
      * 
-     * This gets lowered every game tick when you are under water. 
-     * 20 ticks per second.
+     * This gets lowered every game tick when you are under water. 20 ticks per
+     * second.
      * 
      * @return
      */
@@ -279,8 +305,8 @@ public class BaseEntity {
     /**
      * Get the amount of FireTicks left.
      * 
-     * This gets lowered every game tick when you are on fire. 
-     * 20 ticks per second.
+     * This gets lowered every game tick when you are on fire. 20 ticks per
+     * second.
      * 
      * @return
      */
@@ -291,8 +317,8 @@ public class BaseEntity {
     /**
      * Set the amount of FireTicks left.
      * 
-     * This gets lowered every game tick when you are on fire. 
-     * 20 ticks per second.
+     * This gets lowered every game tick when you are on fire. 20 ticks per
+     * second.
      * 
      * @return
      */

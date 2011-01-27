@@ -1,8 +1,6 @@
+public class OInventoryLargeChest implements OIInventory, Container<OItemStack> {
 
-public class OInventoryLargeChest
-        implements OIInventory, Container<OItemStack> {
-
-    private String a;
+    private String      a;
     private OIInventory b;
     private OIInventory c;
 
@@ -16,18 +14,16 @@ public class OInventoryLargeChest
         int size = getContentsSize();
         OItemStack[] result = new OItemStack[size];
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++)
             result[i] = getContentsAt(i);
-        }
         return result;
     }
 
     public void setContents(OItemStack[] values) {
         int size = getContentsSize();
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++)
             setContentsAt(i, values[i]);
-        }
     }
 
     public OItemStack getContentsAt(int index) {
@@ -43,11 +39,11 @@ public class OInventoryLargeChest
     }
 
     public Block getChestBlock() {
-        if (this.b instanceof OTileEntityChest) {
+        if (b instanceof OTileEntityChest) {
             OTileEntityChest block = (OTileEntityChest) b;
             return etc.getServer().getBlockAt(block.b, block.c, block.d);
         }
-        if (this.c instanceof OTileEntityChest) {
+        if (c instanceof OTileEntityChest) {
             OTileEntityChest block = (OTileEntityChest) c;
             return etc.getServer().getBlockAt(block.b, block.c, block.d);
         }
@@ -71,25 +67,22 @@ public class OInventoryLargeChest
     }
 
     public OItemStack a(int paramInt) {
-        if (paramInt >= b.h_()) {
+        if (paramInt >= b.h_())
             return c.a(paramInt - b.h_());
-        }
         return b.a(paramInt);
     }
 
     public OItemStack b(int paramInt1, int paramInt2) {
-        if (paramInt1 >= b.h_()) {
+        if (paramInt1 >= b.h_())
             return c.b(paramInt1 - b.h_(), paramInt2);
-        }
         return b.b(paramInt1, paramInt2);
     }
 
     public void a(int paramInt, OItemStack paramOItemStack) {
-        if (paramInt >= b.h_()) {
+        if (paramInt >= b.h_())
             c.a(paramInt - b.h_(), paramOItemStack);
-        } else {
+        else
             b.a(paramInt, paramOItemStack);
-        }
     }
 
     public int c() {

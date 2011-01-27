@@ -2,7 +2,7 @@ public class Workbench extends ItemArray<OInventoryCraftResult> implements Inven
     private final OCraftingInventoryWorkbenchCB workbench;
 
     public Workbench(OCraftingInventoryWorkbenchCB block) {
-        super((OInventoryCraftResult)block.b);
+        super((OInventoryCraftResult) block.b);
         workbench = block;
     }
 
@@ -12,7 +12,7 @@ public class Workbench extends ItemArray<OInventoryCraftResult> implements Inven
     }
 
     public void update(Player player) {
-        workbench.a((OEntityPlayer)player.getUser());
+        workbench.a((OEntityPlayer) player.getUser());
     }
 
     public String getName() {

@@ -9,17 +9,19 @@ import java.util.concurrent.TimeUnit;
 public class DelayedTask implements Runnable, Delayed {
 
     private final Runnable task;
-    private final long endOfDelay;
+    private final long     endOfDelay;
 
     /**
      * Wraps a Runnable task so you can put it into a DelayQueue
      * 
-     * @param task the task that needs to be run after the delay
-     * @param delayMillis the delay in milliseconds
+     * @param task
+     *            the task that needs to be run after the delay
+     * @param delayMillis
+     *            the delay in milliseconds
      */
     DelayedTask(Runnable task, long delayMillis) {
         this.task = task;
-        this.endOfDelay = System.currentTimeMillis() + delayMillis;
+        endOfDelay = System.currentTimeMillis() + delayMillis;
     }
 
     /**
@@ -33,7 +35,8 @@ public class DelayedTask implements Runnable, Delayed {
     /**
      * Returns how long this task needs to be delayed
      * 
-     * @param unit the TimeUnit of the result
+     * @param unit
+     *            the TimeUnit of the result
      */
     @Override
     public long getDelay(TimeUnit unit) {
@@ -43,14 +46,15 @@ public class DelayedTask implements Runnable, Delayed {
     /**
      * Compares order of two DelayedTasks
      * 
-     * @param delayed the other object to compare to
+     * @param delayed
+     *            the other object to compare to
      */
     @Override
     public int compareTo(Delayed delayed) {
         DelayedTask other = (DelayedTask) delayed;
-        if (this.endOfDelay < other.endOfDelay)
+        if (endOfDelay < other.endOfDelay)
             return -1;
-        else if (this.endOfDelay > other.endOfDelay)
+        else if (endOfDelay > other.endOfDelay)
             return 1;
         return 0;
     }

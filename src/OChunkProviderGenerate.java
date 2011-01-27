@@ -1,32 +1,30 @@
-
 import java.util.Random;
 
-public class OChunkProviderGenerate
-        implements OIChunkProvider {
+public class OChunkProviderGenerate implements OIChunkProvider {
 
-    private Random j;
+    private Random                 j;
     private ONoiseGeneratorOctaves k;
     private ONoiseGeneratorOctaves l;
     private ONoiseGeneratorOctaves m;
     private ONoiseGeneratorOctaves n;
     private ONoiseGeneratorOctaves o;
-    public ONoiseGeneratorOctaves a;
-    public ONoiseGeneratorOctaves b;
-    public ONoiseGeneratorOctaves c;
-    private OWorld p;
-    private double[] q;
-    private double[] r = new double[256];
-    private double[] s = new double[256];
-    private double[] t = new double[256];
-    private OMapGenBase u = new OMapGenCaves();
-    private OMobSpawnerBase[] v;
-    double[] d;
-    double[] e;
-    double[] f;
-    double[] g;
-    double[] h;
-    int[][] i = new int[32][32];
-    private double[] w;
+    public ONoiseGeneratorOctaves  a;
+    public ONoiseGeneratorOctaves  b;
+    public ONoiseGeneratorOctaves  c;
+    private OWorld                 p;
+    private double[]               q;
+    private double[]               r = new double[256];
+    private double[]               s = new double[256];
+    private double[]               t = new double[256];
+    private OMapGenBase            u = new OMapGenCaves();
+    private OMobSpawnerBase[]      v;
+    double[]                       d;
+    double[]                       e;
+    double[]                       f;
+    double[]                       g;
+    double[]                       h;
+    int[][]                        i = new int[32][32];
+    private double[]               w;
 
     public OChunkProviderGenerate(OWorld paramOWorld, long paramLong) {
         p = paramOWorld;
@@ -53,8 +51,8 @@ public class OChunkProviderGenerate
         int i5 = i1 + 1;
         q = a(q, paramInt1 * i1, 0, paramInt2 * i1, i3, i4, i5);
 
-        for (int i6 = 0; i6 < i1; i6++) {
-            for (int i7 = 0; i7 < i1; i7++) {
+        for (int i6 = 0; i6 < i1; i6++)
+            for (int i7 = 0; i7 < i1; i7++)
                 for (int i8 = 0; i8 < 16; i8++) {
                     double d1 = 0.125D;
                     double d2 = q[(((i6 + 0) * i5 + (i7 + 0)) * i4 + (i8 + 0))];
@@ -85,16 +83,13 @@ public class OChunkProviderGenerate
                             for (int i13 = 0; i13 < 4; i13++) {
                                 double d18 = paramArrayOfDouble[((i6 * 4 + i10) * 16 + (i7 * 4 + i13))];
                                 int i14 = 0;
-                                if (i8 * 8 + i9 < i2) {
-                                    if ((d18 < 0.5D) && (i8 * 8 + i9 >= i2 - 1)) {
+                                if (i8 * 8 + i9 < i2)
+                                    if ((d18 < 0.5D) && (i8 * 8 + i9 >= i2 - 1))
                                         i14 = OBlock.aT.bi;
-                                    } else {
+                                    else
                                         i14 = OBlock.B.bi;
-                                    }
-                                }
-                                if (d16 > 0.0D) {
+                                if (d16 > 0.0D)
                                     i14 = OBlock.t.bi;
-                                }
 
                                 paramArrayOfByte[i11] = (byte) i14;
                                 i11 += i12;
@@ -110,8 +105,6 @@ public class OChunkProviderGenerate
                         d5 += d9;
                     }
                 }
-            }
-        }
     }
 
     public void a(int paramInt1, int paramInt2, byte[] paramArrayOfByte, OMobSpawnerBase[] paramArrayOfOMobSpawnerBase) {
@@ -119,11 +112,11 @@ public class OChunkProviderGenerate
 
         double d1 = 0.03125D;
         r = n.a(r, paramInt1 * 16, paramInt2 * 16, 0.0D, 16, 16, 1, d1, d1, 1.0D);
-        //hMod fix chunk generation
+        // hMod fix chunk generation
         s = n.a(s, paramInt1 * 16, 109.0134D, paramInt2 * 16, 16, 1, 16, d1, 1.0D, d1);
         t = o.a(t, paramInt1 * 16, paramInt2 * 16, 0.0D, 16, 16, 1, d1 * 2.0D, d1 * 2.0D, d1 * 2.0D);
 
-        for (int i2 = 0; i2 < 16; i2++) {
+        for (int i2 = 0; i2 < 16; i2++)
             for (int i3 = 0; i3 < 16; i3++) {
                 OMobSpawnerBase localOMobSpawnerBase = paramArrayOfOMobSpawnerBase[(i2 + i3 * 16)];
                 int i4 = r[(i2 + i3 * 16)] + j.nextDouble() * 0.2D > 0.0D ? 1 : 0;
@@ -136,17 +129,17 @@ public class OChunkProviderGenerate
                 int i9 = localOMobSpawnerBase.p;
 
                 for (int i10 = 127; i10 >= 0; i10--) {
-                    //hMod: fix chunk generation
+                    // hMod: fix chunk generation
                     int i11 = (i2 + 16 * i3) * 128 + i10;
 
-                    if (i10 <= 0 + j.nextInt(5)) {
+                    if (i10 <= 0 + j.nextInt(5))
                         paramArrayOfByte[i11] = (byte) OBlock.z.bi;
-                    } else {
+                    else {
                         int i12 = paramArrayOfByte[i11];
 
-                        if (i12 == 0) {
+                        if (i12 == 0)
                             i7 = -1;
-                        } else if (i12 == OBlock.t.bi) {
+                        else if (i12 == OBlock.t.bi)
                             if (i7 == -1) {
                                 if (i6 <= 0) {
                                     i8 = 0;
@@ -154,39 +147,31 @@ public class OChunkProviderGenerate
                                 } else if ((i10 >= i1 - 4) && (i10 <= i1 + 1)) {
                                     i8 = localOMobSpawnerBase.o;
                                     i9 = localOMobSpawnerBase.p;
-                                    if (i5 != 0) {
+                                    if (i5 != 0)
                                         i8 = 0;
-                                    }
-                                    if (i5 != 0) {
+                                    if (i5 != 0)
                                         i9 = (byte) OBlock.F.bi;
-                                    }
-                                    if (i4 != 0) {
+                                    if (i4 != 0)
                                         i8 = (byte) OBlock.E.bi;
-                                    }
-                                    if (i4 != 0) {
+                                    if (i4 != 0)
                                         i9 = (byte) OBlock.E.bi;
-                                    }
                                 }
 
-                                if ((i10 < i1) && (i8 == 0)) {
+                                if ((i10 < i1) && (i8 == 0))
                                     i8 = (byte) OBlock.B.bi;
-                                }
 
                                 i7 = i6;
-                                if (i10 >= i1 - 1) {
+                                if (i10 >= i1 - 1)
                                     paramArrayOfByte[i11] = (byte) i8;
-                                } else {
+                                else
                                     paramArrayOfByte[i11] = (byte) i9;
-                                }
                             } else if (i7 > 0) {
                                 i7--;
                                 paramArrayOfByte[i11] = (byte) i9;
                             }
-                        }
                     }
                 }
             }
-        }
     }
 
     public OChunk b(int paramInt1, int paramInt2) {
@@ -208,9 +193,8 @@ public class OChunkProviderGenerate
     }
 
     private double[] a(double[] paramArrayOfDouble, int paramInt1, int paramInt2, int paramInt3, int paramInt4, int paramInt5, int paramInt6) {
-        if (paramArrayOfDouble == null) {
+        if (paramArrayOfDouble == null)
             paramArrayOfDouble = new double[paramInt4 * paramInt5 * paramInt6];
-        }
 
         double d1 = 684.41200000000003D;
         double d2 = 684.41200000000003D;
@@ -242,34 +226,29 @@ public class OChunkProviderGenerate
 
                 double d6 = (g[i2] + 256.0D) / 512.0D;
                 d6 *= d5;
-                if (d6 > 1.0D) {
+                if (d6 > 1.0D)
                     d6 = 1.0D;
-                }
 
                 double d7 = h[i2] / 8000.0D;
-                if (d7 < 0.0D) {
+                if (d7 < 0.0D)
                     d7 = -d7 * 0.3D;
-                }
                 d7 = d7 * 3.0D - 2.0D;
 
                 if (d7 < 0.0D) {
                     d7 /= 2.0D;
-                    if (d7 < -1.0D) {
+                    if (d7 < -1.0D)
                         d7 = -1.0D;
-                    }
                     d7 /= 1.4D;
                     d7 /= 2.0D;
                     d6 = 0.0D;
                 } else {
-                    if (d7 > 1.0D) {
+                    if (d7 > 1.0D)
                         d7 = 1.0D;
-                    }
                     d7 /= 8.0D;
                 }
 
-                if (d6 < 0.0D) {
+                if (d6 < 0.0D)
                     d6 = 0.0D;
-                }
                 d6 += 0.5D;
                 d7 = d7 * paramInt5 / 16.0D;
 
@@ -281,21 +260,19 @@ public class OChunkProviderGenerate
                     double d9 = 0.0D;
 
                     double d10 = (i8 - d8) * 12.0D / d6;
-                    if (d10 < 0.0D) {
+                    if (d10 < 0.0D)
                         d10 *= 4.0D;
-                    }
 
                     double d11 = e[i1] / 512.0D;
                     double d12 = f[i1] / 512.0D;
 
                     double d13 = (d[i1] / 10.0D + 1.0D) / 2.0D;
-                    if (d13 < 0.0D) {
+                    if (d13 < 0.0D)
                         d9 = d11;
-                    } else if (d13 > 1.0D) {
+                    else if (d13 > 1.0D)
                         d9 = d12;
-                    } else {
+                    else
                         d9 = d11 + (d12 - d11) * d13;
-                    }
                     d9 -= d10;
 
                     if (i8 > paramInt5 - 4) {
@@ -339,9 +316,8 @@ public class OChunkProviderGenerate
             i3 = i1 + j.nextInt(16) + 8;
             i4 = j.nextInt(j.nextInt(120) + 8);
             i5 = i2 + j.nextInt(16) + 8;
-            if ((i4 < 64) || (j.nextInt(10) == 0)) {
+            if ((i4 < 64) || (j.nextInt(10) == 0))
                 new OWorldGenLakes(OBlock.D.bi).a(p, j, i3, i4, i5);
-            }
         }
 
         for (i3 = 0; i3 < 8; i3++) {
@@ -418,32 +394,24 @@ public class OChunkProviderGenerate
         i3 = (int) ((c.a(i1 * d1, i2 * d1) / 8.0D + j.nextDouble() * 4.0D + 4.0D) / 3.0D);
 
         i4 = 0;
-        if (j.nextInt(10) == 0) {
+        if (j.nextInt(10) == 0)
             i4++;
-        }
 
-        if (localOMobSpawnerBase == OMobSpawnerBase.d) {
+        if (localOMobSpawnerBase == OMobSpawnerBase.d)
             i4 += i3 + 5;
-        }
-        if (localOMobSpawnerBase == OMobSpawnerBase.a) {
+        if (localOMobSpawnerBase == OMobSpawnerBase.a)
             i4 += i3 + 5;
-        }
-        if (localOMobSpawnerBase == OMobSpawnerBase.c) {
+        if (localOMobSpawnerBase == OMobSpawnerBase.c)
             i4 += i3 + 2;
-        }
-        if (localOMobSpawnerBase == OMobSpawnerBase.g) {
+        if (localOMobSpawnerBase == OMobSpawnerBase.g)
             i4 += i3 + 5;
-        }
 
-        if (localOMobSpawnerBase == OMobSpawnerBase.h) {
+        if (localOMobSpawnerBase == OMobSpawnerBase.h)
             i4 -= 20;
-        }
-        if (localOMobSpawnerBase == OMobSpawnerBase.k) {
+        if (localOMobSpawnerBase == OMobSpawnerBase.k)
             i4 -= 20;
-        }
-        if (localOMobSpawnerBase == OMobSpawnerBase.i) {
+        if (localOMobSpawnerBase == OMobSpawnerBase.i)
             i4 -= 20;
-        }
         int i7;
         for (i5 = 0; i5 < i4; i5++) {
             i6 = i1 + j.nextInt(16) + 8;
@@ -496,9 +464,8 @@ public class OChunkProviderGenerate
         }
 
         i5 = 0;
-        if (localOMobSpawnerBase == OMobSpawnerBase.h) {
+        if (localOMobSpawnerBase == OMobSpawnerBase.h)
             i5 += 10;
-        }
         int i9;
         for (i6 = 0; i6 < i5; i6++) {
             i7 = i1 + j.nextInt(16) + 8;
@@ -522,21 +489,16 @@ public class OChunkProviderGenerate
         }
 
         w = p.a().a(w, i1 + 8, i2 + 8, 16, 16);
-        for (i6 = i1 + 8; i6 < i1 + 8 + 16; i6++) {
+        for (i6 = i1 + 8; i6 < i1 + 8 + 16; i6++)
             for (i7 = i2 + 8; i7 < i2 + 8 + 16; i7++) {
                 i8 = i6 - (i1 + 8);
                 i9 = i7 - (i2 + 8);
                 int i10 = p.e(i6, i7);
                 double d2 = w[(i8 * 16 + i9)] - (i10 - 64) / 64.0D * 0.3D;
-                if ((d2 >= 0.5D)
-                        || (i10 <= 0) || (i10 >= 128) || (!p.e(i6, i10, i7)) || (!p.c(i6, i10 - 1, i7).c())
-                        || (p.c(i6, i10 - 1, i7) == OMaterial.r)) {
+                if ((d2 >= 0.5D) || (i10 <= 0) || (i10 >= 128) || (!p.e(i6, i10, i7)) || (!p.c(i6, i10 - 1, i7).c()) || (p.c(i6, i10 - 1, i7) == OMaterial.r))
                     continue;
-                }
                 p.e(i6, i10, i7, OBlock.aS.bi);
             }
-
-        }
 
         OBlockSand.a = false;
     }

@@ -1,7 +1,6 @@
-
 public class DoubleChest extends ItemArray<OInventoryLargeChest> implements ComplexBlock, Inventory {
     private final Block block;
-    private String name = "Large Chest";
+    private String      name = "Large Chest";
 
     public DoubleChest(OInventoryLargeChest chest) {
         super(chest);

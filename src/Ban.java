@@ -1,4 +1,3 @@
-
 /**
  * Ban.java - The ban class! Ban! Ban! Ban!
  * 
@@ -7,7 +6,7 @@
 public class Ban {
 
     private String name = "N/A", ip = "", reason = "N/A";
-    private int id = -1, timestamp = -1;
+    private int    id   = -1, timestamp = -1;
 
     /**
      * Returns the specified IP address for this ban. Will be empty if no IP ban

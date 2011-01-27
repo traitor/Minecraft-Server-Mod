@@ -1,4 +1,3 @@
-
 import java.util.Random;
 
 public class OBlockFire extends OBlock {
@@ -24,22 +23,27 @@ public class OBlockFire extends OBlock {
         b[paramInt1] = paramInt3;
     }
 
+    @Override
     public OAxisAlignedBB d(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         return null;
     }
 
+    @Override
     public boolean a() {
         return false;
     }
 
+    @Override
     public int a(Random paramRandom) {
         return 0;
     }
 
+    @Override
     public int b() {
         return 10;
     }
 
+    @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
         int i = paramOWorld.a(paramInt1, paramInt2 - 1, paramInt3) == OBlock.bb.bi ? 1 : 0;
 
@@ -49,14 +53,12 @@ public class OBlockFire extends OBlock {
             paramOWorld.i(paramInt1, paramInt2, paramInt3, bi);
         }
         if ((i == 0) && (!g(paramOWorld, paramInt1, paramInt2, paramInt3))) {
-            if ((!paramOWorld.d(paramInt1, paramInt2 - 1, paramInt3)) || (j > 3)) {
+            if ((!paramOWorld.d(paramInt1, paramInt2 - 1, paramInt3)) || (j > 3))
                 paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
-            }
             return;
         }
 
-        if ((i == 0) && (!b((OIBlockAccess)paramOWorld, paramInt1, paramInt2 - 1, paramInt3))
-                && (j == 15) && (paramRandom.nextInt(4) == 0)) {
+        if ((i == 0) && (!b((OIBlockAccess) paramOWorld, paramInt1, paramInt2 - 1, paramInt3)) && (j == 15) && (paramRandom.nextInt(4) == 0)) {
             paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
             return;
         }
@@ -69,16 +71,14 @@ public class OBlockFire extends OBlock {
             a(paramOWorld, paramInt1, paramInt2, paramInt3 - 1, 300, paramRandom);
             a(paramOWorld, paramInt1, paramInt2, paramInt3 + 1, 300, paramRandom);
 
-            for (int k = paramInt1 - 1; k <= paramInt1 + 1; k++) {
-                for (int m = paramInt3 - 1; m <= paramInt3 + 1; m++) {
+            for (int k = paramInt1 - 1; k <= paramInt1 + 1; k++)
+                for (int m = paramInt3 - 1; m <= paramInt3 + 1; m++)
                     for (int n = paramInt2 - 1; n <= paramInt2 + 4; n++) {
-                        if ((k == paramInt1) && (n == paramInt2) && (m == paramInt3)) {
+                        if ((k == paramInt1) && (n == paramInt2) && (m == paramInt3))
                             continue;
-                        }
                         int i1 = 100;
-                        if (n > paramInt2 + 1) {
+                        if (n > paramInt2 + 1)
                             i1 += (n - (paramInt2 + 1)) * 100;
-                        }
 
                         int i2 = h(paramOWorld, k, n, m);
                         if ((i2 > 0) && (paramRandom.nextInt(i1) <= i2)) {
@@ -86,13 +86,10 @@ public class OBlockFire extends OBlock {
                             // avg call amount per placed block of fire ~ 4
                             Block block = new Block(paramOWorld.a(k, n, m), k, n, m);
                             block.setStatus(3);
-                            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, block, null)) {
+                            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, block, null))
                                 paramOWorld.e(k, n, m, bi);
-                            }
                         }
                     }
-                }
-            }
         }
     }
 
@@ -104,48 +101,39 @@ public class OBlockFire extends OBlock {
                 // hMod: VERY SLOW dynamic spreading of fire.
                 Block block = new Block(paramOWorld.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
                 block.setStatus(3);
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, block, null)) {
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, block, null))
                     paramOWorld.e(paramInt1, paramInt2, paramInt3, bi);
-                }
             } else {
                 // hMod: fire destroying a block.
                 Block block = new Block(paramOWorld.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
                 block.setStatus(4);
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, block, null)) {
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, block, null))
                     paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
-                }
             }
-            if (j != 0) {
+            if (j != 0)
                 OBlock.am.a(paramOWorld, paramInt1, paramInt2, paramInt3, 0);
-            }
         }
     }
 
     private boolean g(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         // hMod: cast down to fix decompiler error.(6 times)
-        if (b((OIBlockAccess)paramOWorld, paramInt1 + 1, paramInt2, paramInt3)) {
+        if (b((OIBlockAccess) paramOWorld, paramInt1 + 1, paramInt2, paramInt3))
             return true;
-        }
-        if (b((OIBlockAccess)paramOWorld, paramInt1 - 1, paramInt2, paramInt3)) {
+        if (b((OIBlockAccess) paramOWorld, paramInt1 - 1, paramInt2, paramInt3))
             return true;
-        }
-        if (b((OIBlockAccess)paramOWorld, paramInt1, paramInt2 - 1, paramInt3)) {
+        if (b((OIBlockAccess) paramOWorld, paramInt1, paramInt2 - 1, paramInt3))
             return true;
-        }
-        if (b((OIBlockAccess)paramOWorld, paramInt1, paramInt2 + 1, paramInt3)) {
+        if (b((OIBlockAccess) paramOWorld, paramInt1, paramInt2 + 1, paramInt3))
             return true;
-        }
-        if (b((OIBlockAccess)paramOWorld, paramInt1, paramInt2, paramInt3 - 1)) {
+        if (b((OIBlockAccess) paramOWorld, paramInt1, paramInt2, paramInt3 - 1))
             return true;
-        }
-        return b((OIBlockAccess)paramOWorld, paramInt1, paramInt2, paramInt3 + 1);
+        return b((OIBlockAccess) paramOWorld, paramInt1, paramInt2, paramInt3 + 1);
     }
 
     private int h(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         int i = 0;
-        if (!paramOWorld.e(paramInt1, paramInt2, paramInt3)) {
+        if (!paramOWorld.e(paramInt1, paramInt2, paramInt3))
             return 0;
-        }
 
         i = f(paramOWorld, paramInt1 + 1, paramInt2, paramInt3, i);
         i = f(paramOWorld, paramInt1 - 1, paramInt2, paramInt3, i);
@@ -157,6 +145,7 @@ public class OBlockFire extends OBlock {
         return i;
     }
 
+    @Override
     public boolean d() {
         return false;
     }
@@ -167,16 +156,17 @@ public class OBlockFire extends OBlock {
 
     public int f(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         int i = a[paramOWorld.a(paramInt1, paramInt2, paramInt3)];
-        if (i > paramInt4) {
+        if (i > paramInt4)
             return i;
-        }
         return paramInt4;
     }
 
+    @Override
     public boolean a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         return (paramOWorld.d(paramInt1, paramInt2 - 1, paramInt3)) || (g(paramOWorld, paramInt1, paramInt2, paramInt3));
     }
 
+    @Override
     public void b(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         if ((!paramOWorld.d(paramInt1, paramInt2 - 1, paramInt3)) && (!g(paramOWorld, paramInt1, paramInt2, paramInt3))) {
             paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
@@ -184,11 +174,10 @@ public class OBlockFire extends OBlock {
         }
     }
 
+    @Override
     public void e(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        if ((paramOWorld.a(paramInt1, paramInt2 - 1, paramInt3) == OBlock.ap.bi)
-                && (OBlock.be.b_(paramOWorld, paramInt1, paramInt2, paramInt3))) {
+        if ((paramOWorld.a(paramInt1, paramInt2 - 1, paramInt3) == OBlock.ap.bi) && (OBlock.be.b_(paramOWorld, paramInt1, paramInt2, paramInt3)))
             return;
-        }
 
         if ((!paramOWorld.d(paramInt1, paramInt2 - 1, paramInt3)) && (!g(paramOWorld, paramInt1, paramInt2, paramInt3))) {
             paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);

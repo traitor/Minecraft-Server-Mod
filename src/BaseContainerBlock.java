@@ -1,17 +1,21 @@
-
 /**
  * Generic superclass for Chests and Furnaces, as they are really similar.
+ * 
  * @author lightweight
- *
- * @param <C> The type of container we wish to wrap.
+ * 
+ * @param <C>
+ *            The type of container we wish to wrap.
  */
 public abstract class BaseContainerBlock<C extends OTileEntity & OIInventory & Container<OItemStack>> extends ItemArray<C> implements Inventory {
     private final String name;
 
     /**
      * Create a BaseContainerBlock to act as a wrapper for a given container.
-     * @param block The in-world block to 'envelop'.
-     * @param reference Shows in toString().
+     * 
+     * @param block
+     *            The in-world block to 'envelop'.
+     * @param reference
+     *            Shows in toString().
      */
     public BaseContainerBlock(C block, String reference) {
         super(block);
@@ -49,29 +53,25 @@ public abstract class BaseContainerBlock<C extends OTileEntity & OIInventory & C
     /**
      * Tests the given object to see if it equals this object
      * 
-     * @param obj the object to test
+     * @param obj
+     *            the object to test
      * @return true if the two objects match
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
+        if (obj == null)
             return false;
-        }
-        if (getClass() != obj.getClass()) {
+        if (getClass() != obj.getClass())
             return false;
-        }
         // Supress warning since we've already returned if class is wrong.
         @SuppressWarnings("unchecked")
         final BaseContainerBlock<C> other = (BaseContainerBlock<C>) obj;
-        if (this.getX() != other.getX()) {
+        if (this.getX() != other.getX())
             return false;
-        }
-        if (this.getY() != other.getY()) {
+        if (this.getY() != other.getY())
             return false;
-        }
-        if (this.getZ() != other.getZ()) {
+        if (this.getZ() != other.getZ())
             return false;
-        }
         return true;
     }
 

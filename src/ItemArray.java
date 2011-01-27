@@ -6,7 +6,7 @@
  */
 public abstract class ItemArray<C extends Container<OItemStack>> {
     protected C container;
-    
+
     public ItemArray(C c) {
         this.container = c;
     }
@@ -14,28 +14,27 @@ public abstract class ItemArray<C extends Container<OItemStack>> {
     public int getContentsSize() {
         return container.getContentsSize();
     }
-    
+
     /**
      * Adds the specified item. If the item doesn't have a slot, it will get the
      * nearest available slot. If amount is equal to 0, it will delete the item
      * if a slot is specified.
      * 
-     * @param item item to add
+     * @param item
+     *            item to add
      */
     public void addItem(Item item) {
-        if (item == null) {
+        if (item == null)
             return;
-        }
 
         int slot = item.getSlot();
         int size = getContentsSize();
 
         if (slot < size && slot >= 0) {
-            if (item.getAmount() <= 0) {
+            if (item.getAmount() <= 0)
                 setSlot(null, slot);
-            } else if (Item.isValidItem(item.getItemId())) {
+            else if (Item.isValidItem(item.getItemId()))
                 setSlot(item, slot);
-            }
         } else if (slot == -1) {
             int newSlot = getEmptySlot();
             if (newSlot != -1) {
@@ -48,7 +47,8 @@ public abstract class ItemArray<C extends Container<OItemStack>> {
     /**
      * Retrieves from the slot
      * 
-     * @param slot slot to get item from
+     * @param slot
+     *            slot to get item from
      * @return item
      */
     public Item getItemFromSlot(int slot) {
@@ -56,9 +56,8 @@ public abstract class ItemArray<C extends Container<OItemStack>> {
 
         if (slot < size && slot >= 0) {
             OItemStack result = container.getContentsAt(slot);
-            if (result != null) {
+            if (result != null)
                 return new Item(result, slot);
-            }
         }
 
         return null;
@@ -83,11 +82,9 @@ public abstract class ItemArray<C extends Container<OItemStack>> {
     public Item getItemFromId(int id) {
         Item[] items = getContents();
 
-        for (Item item : items) {
-            if ((item != null) && (item.getItemId() == id)) {
+        for (Item item : items)
+            if ((item != null) && (item.getItemId() == id))
                 return item;
-            }
-        }
 
         return null;
     }
@@ -113,11 +110,9 @@ public abstract class ItemArray<C extends Container<OItemStack>> {
     public Item getItemFromId(int id, int maxAmount) {
         Item[] items = getContents();
 
-        for (Item item : items) {
-            if ((item != null) && (item.getItemId() == id) && (item.getAmount() <= maxAmount)) {
+        for (Item item : items)
+            if ((item != null) && (item.getItemId() == id) && (item.getAmount() <= maxAmount))
                 return item;
-            }
-        }
 
         return null;
     }
@@ -131,9 +126,8 @@ public abstract class ItemArray<C extends Container<OItemStack>> {
         int size = getContentsSize();
 
         for (int i = 0; size > i; i++) {
-            if (container.getContentsAt(i) != null) {
+            if (container.getContentsAt(i) != null)
                 continue;
-            }
             return i;
         }
 
@@ -143,32 +137,37 @@ public abstract class ItemArray<C extends Container<OItemStack>> {
     /**
      * Removes the item from the slot
      * 
-     * @param slot slot to remove item from
+     * @param slot
+     *            slot to remove item from
      */
     public void removeItem(int slot) {
         int size = getContentsSize();
 
-        if (slot < size && slot >= 0) {
+        if (slot < size && slot >= 0)
             container.setContentsAt(slot, null);
-        }
     }
 
     /**
      * Sets the specified slot with item
      * 
-     * @param item item to set
-     * @param slot slot to use
+     * @param item
+     *            item to set
+     * @param slot
+     *            slot to use
      */
     public void setSlot(Item item, int slot) {
-        setSlot(item.getItemId(), item.getAmount(),item.getDamage(), slot);
+        setSlot(item.getItemId(), item.getAmount(), item.getDamage(), slot);
     }
 
     /**
      * Replaces the slot with the specified item.
-     *
-     * @param type type of the item to put into the slot.
-     * @param amount amount of the item to put into the slot.
-     * @param slot the id of the slot.
+     * 
+     * @param type
+     *            type of the item to put into the slot.
+     * @param amount
+     *            amount of the item to put into the slot.
+     * @param slot
+     *            the id of the slot.
      */
     public void setSlot(Item.Type type, int amount, int slot) {
         setSlot(type.getId(), amount, slot);
@@ -176,10 +175,13 @@ public abstract class ItemArray<C extends Container<OItemStack>> {
 
     /**
      * Replaces the slot with the specified item.
-     *
-     * @param itemId item id of the item to put into the slot.
-     * @param amount amount of the item to put into the slot.
-     * @param slot the id of the slot.
+     * 
+     * @param itemId
+     *            item id of the item to put into the slot.
+     * @param amount
+     *            amount of the item to put into the slot.
+     * @param slot
+     *            the id of the slot.
      */
     public void setSlot(int itemId, int amount, int slot) {
         setSlot(itemId, amount, 0, slot);
@@ -187,25 +189,29 @@ public abstract class ItemArray<C extends Container<OItemStack>> {
 
     /**
      * Replaces the slot with the specified item.
-     *
-     * @param itemId item id of the item to put into the slot.
-     * @param amount amount of the item to put into the slot.
-     * @param damage remaining damage of the item to put into the slot.
-     * @param slot the id of the slot.
+     * 
+     * @param itemId
+     *            item id of the item to put into the slot.
+     * @param amount
+     *            amount of the item to put into the slot.
+     * @param damage
+     *            remaining damage of the item to put into the slot.
+     * @param slot
+     *            the id of the slot.
      */
     public void setSlot(int itemId, int amount, int damage, int slot) {
         int size = getContentsSize();
 
-        if (slot < size && slot >= 0) {
+        if (slot < size && slot >= 0)
             container.setContentsAt(slot, new OItemStack(itemId, (amount > 64 ? (amount == 255 ? -1 : 64) : amount), damage));
-        }
     }
 
     /**
      * Removes the item. No slot needed, it will go through the inventory until
      * the amount specified is removed.
      * 
-     * @param item item id and amount to remove
+     * @param item
+     *            item id and amount to remove
      */
     public void removeItem(Item item) {
         removeItem(item.getItemId(), item.getAmount());
@@ -215,8 +221,10 @@ public abstract class ItemArray<C extends Container<OItemStack>> {
      * Removes the item. No slot needed, it will go through the inventory until
      * the amount specified is removed.
      * 
-     * @param type item to remove
-     * @param amount amount to remove
+     * @param type
+     *            item to remove
+     * @param amount
+     *            amount to remove
      */
     public void removeItem(Item.Type type, int amount) {
         removeItem(type.getId(), amount);
@@ -226,15 +234,17 @@ public abstract class ItemArray<C extends Container<OItemStack>> {
      * Removes the item. No slot needed, it will go through the inventory until
      * the amount specified is removed.
      * 
-     * @param id item to remove
-     * @param amount amount to remove
+     * @param id
+     *            item to remove
+     * @param amount
+     *            amount to remove
      */
     public void removeItem(int id, int amount) {
         Item[] items = getContents();
         int remaining = amount;
 
-        for (Item item : items) {
-            if ((item != null) && (item.getItemId() == id)) {
+        for (Item item : items)
+            if ((item != null) && (item.getItemId() == id))
                 if (item.getAmount() == remaining) {
                     removeItem(item.getSlot());
                     return;
@@ -245,12 +255,11 @@ public abstract class ItemArray<C extends Container<OItemStack>> {
                     removeItem(item.getSlot());
                     remaining -= item.getAmount();
                 }
-            }
-        }
     }
 
     /**
-     * Checks to see if this getArray() has one slot that has the given item type
+     * Checks to see if this getArray() has one slot that has the given item
+     * type
      * 
      * @param type
      * @return
@@ -272,19 +281,19 @@ public abstract class ItemArray<C extends Container<OItemStack>> {
     /**
      * Checks to see if this getArray() has one slot that has the item id and
      * equal or more to the amount.
-     *
-     * @param type item to look for
-     * @param minimum amount of items that must be in the stack
+     * 
+     * @param type
+     *            item to look for
+     * @param minimum
+     *            amount of items that must be in the stack
      * @return
      */
     public boolean hasItem(Item.Type type, int minimum) {
         Item[] items = getContents();
 
-        for (Item item : items) {
-            if ((item != null) && (item.getType() == type) && (item.getAmount() >= minimum)) {
+        for (Item item : items)
+            if ((item != null) && (item.getType() == type) && (item.getAmount() >= minimum))
                 return true;
-            }
-        }
 
         return false;
     }
@@ -293,19 +302,19 @@ public abstract class ItemArray<C extends Container<OItemStack>> {
      * Checks to see if this getArray() has one slot that has the item id and
      * equal or more to the amount.
      * 
-     * @param itemId item to look for
-     * @param minimum amount of items that must be in the stack
+     * @param itemId
+     *            item to look for
+     * @param minimum
+     *            amount of items that must be in the stack
      * @return
      */
     public boolean hasItem(int itemId, int minimum) {
         Item[] items = getContents();
 
-        for (Item item : items) {
-            if ((item != null) && (item.getItemId() == itemId) && (item.getAmount() >= minimum)) {
+        for (Item item : items)
+            if ((item != null) && (item.getItemId() == itemId) && (item.getAmount() >= minimum))
                 return true;
-            }
-        }
-        
+
         return false;
     }
 
@@ -321,47 +330,45 @@ public abstract class ItemArray<C extends Container<OItemStack>> {
     public boolean hasItem(int itemId, int minimum, int maximum) {
         Item[] items = getContents();
 
-        for (Item item : items) {
-            if ((item != null) && (item.getItemId() == itemId) && (item.getAmount() >= minimum) && (item.getAmount() <= maximum)) {
+        for (Item item : items)
+            if ((item != null) && (item.getItemId() == itemId) && (item.getAmount() >= minimum) && (item.getAmount() <= maximum))
                 return true;
-            }
-        }
-        
+
         return false;
     }
 
     /**
      * Returns the contents of this chest
+     * 
      * @return contents
      */
     public Item[] getContents() {
         int arraySize = getContentsSize();
         Item[] rt = new Item[arraySize];
-        
-        for (int i = 0; i < arraySize; i++) {
+
+        for (int i = 0; i < arraySize; i++)
             rt[i] = getItemFromSlot(i);
-        }
 
         return rt;
     }
 
     /**
      * Sets the contents
-     * @param contents contents to set
+     * 
+     * @param contents
+     *            contents to set
      */
     public void setContents(Item[] contents) {
         int arraySize = getContentsSize();
 
-        for (int i = 0; i < arraySize; i++) {
+        for (int i = 0; i < arraySize; i++)
             setSlot(contents[i], i);
-        }
     }
-    
+
     public void clearContents() {
         int size = getContentsSize();
 
-        for (int i = 0; size > i; i++) {
+        for (int i = 0; size > i; i++)
             container.setContentsAt(i, null);
-        }
     }
 }

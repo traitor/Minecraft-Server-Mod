@@ -1,14 +1,11 @@
-
-import java.util.Random;
-
 public class OEntityItem extends OEntity {
 
     public OItemStack a;
-    private int e;
-    public int b = 0;
-    public int c;
-    private int f = 5;
-    public float d = (float) (Math.random() * 3.141592653589793D * 2.0D);
+    private int       e;
+    public int        b = 0;
+    public int        c;
+    private int       f = 5;
+    public float      d = (float) (Math.random() * 3.141592653589793D * 2.0D);
 
     public OEntityItem(OWorld paramOWorld, double paramDouble1, double paramDouble2, double paramDouble3, OItemStack paramOItemStack) {
         super(paramOWorld);
@@ -31,14 +28,15 @@ public class OEntityItem extends OEntity {
         H = (J / 2.0F);
     }
 
+    @Override
     protected void a() {
     }
 
+    @Override
     public void b_() {
         super.b_();
-        if (c > 0) {
+        if (c > 0)
             c -= 1;
-        }
         m = p;
         n = q;
         o = r;
@@ -57,26 +55,24 @@ public class OEntityItem extends OEntity {
         if (A) {
             f1 = 0.5880001F;
             int i = l.a(OMathHelper.b(p), OMathHelper.b(z.b) - 1, OMathHelper.b(r));
-            if (i > 0) {
+            if (i > 0)
                 f1 = OBlock.m[i].bu * 0.98F;
-            }
         }
 
         s *= f1;
         t *= 0.9800000190734863D;
         u *= f1;
 
-        if (A) {
+        if (A)
             t *= -0.5D;
-        }
 
         e += 1;
         b += 1;
-        if (b >= 6000) {
+        if (b >= 6000)
             q();
-        }
     }
 
+    @Override
     public boolean v() {
         return l.a(z, OMaterial.f, this);
     }
@@ -126,49 +122,46 @@ public class OEntityItem extends OEntity {
             }
 
             float f1 = W.nextFloat() * 0.2F + 0.1F;
-            if (i5 == 0) {
+            if (i5 == 0)
                 s = (-f1);
-            }
-            if (i5 == 1) {
+            if (i5 == 1)
                 s = f1;
-            }
-            if (i5 == 2) {
+            if (i5 == 2)
                 t = (-f1);
-            }
-            if (i5 == 3) {
+            if (i5 == 3)
                 t = f1;
-            }
-            if (i5 == 4) {
+            if (i5 == 4)
                 u = (-f1);
-            }
-            if (i5 == 5) {
+            if (i5 == 5)
                 u = f1;
-            }
         }
 
         return false;
     }
 
+    @Override
     protected void b(int paramInt) {
-        //hMod check this.
-        a((OEntity)null, paramInt);
+        // hMod check this.
+        a((OEntity) null, paramInt);
     }
 
+    @Override
     public boolean a(OEntity paramOEntity, int paramInt) {
         y();
         f -= paramInt;
-        if (f <= 0) {
+        if (f <= 0)
             q();
-        }
         return false;
     }
 
+    @Override
     public void a(ONBTTagCompound paramONBTTagCompound) {
         paramONBTTagCompound.a("Health", (short) (byte) f);
         paramONBTTagCompound.a("Age", (short) b);
         paramONBTTagCompound.a("Item", a.a(new ONBTTagCompound()));
     }
 
+    @Override
     public void b(ONBTTagCompound paramONBTTagCompound) {
         f = (paramONBTTagCompound.c("Health") & 0xFF);
         b = paramONBTTagCompound.c("Age");
@@ -176,10 +169,10 @@ public class OEntityItem extends OEntity {
         a = new OItemStack(localONBTTagCompound);
     }
 
+    @Override
     public void b(OEntityPlayer paramOEntityPlayer) {
-        if (l.z) {
+        if (l.z)
             return;
-        }
 
         int i = a.a;
         if ((c == 0) && (paramOEntityPlayer.an.a(a))) {

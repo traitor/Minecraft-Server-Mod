@@ -160,9 +160,9 @@ public class PluginListener {
     }
 
     /**
-     * Called when someone presses right click aimed at a block.
-     * You can intercept this to add your own right click actions
-     * to different item types (see itemInHand)
+     * Called when someone presses right click aimed at a block. You can
+     * intercept this to add your own right click actions to different item
+     * types (see itemInHand)
      * 
      * @param player
      * @param blockPlaced
@@ -228,7 +228,7 @@ public class PluginListener {
 
     /**
      * Called when a player picks up an item.
-     *
+     * 
      * @param player
      *            player who picked up the item
      * @param item
@@ -240,14 +240,15 @@ public class PluginListener {
     }
 
     /**
-     * Called when either a lava block or a lighter tryes to light something on fire.
-     * block status depends on the light source:
-     * 1 = lava.
-     * 2 = lighter (flint + steel).
-     * 3 = spread (dynamic spreading of fire).
-     * 4 = fire destroying a block.
-     * @param block block that the fire wants to spawn in.
-     * @param player player
+     * Called when either a lava block or a lighter tryes to light something on
+     * fire. block status depends on the light source: 1 = lava. 2 = lighter
+     * (flint + steel). 3 = spread (dynamic spreading of fire). 4 = fire
+     * destroying a block.
+     * 
+     * @param block
+     *            block that the fire wants to spawn in.
+     * @param player
+     *            player
      * @return true if you dont want the fire to ignite.
      */
     public boolean onIgnite(Block block, Player player) {
@@ -255,13 +256,12 @@ public class PluginListener {
     }
 
     /**
-     * Called when a dynamite block or a creeper is triggerd.
-     * block status depends on explosive compound:
-     * 1 = dynamite.
-     * 2 = creeper.
+     * Called when a dynamite block or a creeper is triggerd. block status
+     * depends on explosive compound: 1 = dynamite. 2 = creeper.
+     * 
      * @param block
-     *          dynamite block/creeper location block.
-     *
+     *            dynamite block/creeper location block.
+     * 
      * @return true if you dont the block to explode.
      */
     public boolean onExplode(Block block) {
@@ -269,16 +269,15 @@ public class PluginListener {
     }
 
     /**
-     * Called when fluid wants to flow to a certain block.
-     * (10 & 11 for lava and 8 & 9 for water)
+     * Called when fluid wants to flow to a certain block. (10 & 11 for lava and
+     * 8 & 9 for water)
      * 
      * @param blockFrom
-     *              the block where the fluid came from.
-     *              (blocktype = fluid type)
+     *            the block where the fluid came from. (blocktype = fluid type)
      * @param blockTo
-     *              the block where fluid wants to flow to.
-     *
-     *
+     *            the block where fluid wants to flow to.
+     * 
+     * 
      * @return true if you dont want the substance to flow.
      */
     public boolean onFlow(Block blockFrom, Block blockTo) {
@@ -286,7 +285,8 @@ public class PluginListener {
     }
 
     /**
-     * @param mob Mob attempting to spawn.
+     * @param mob
+     *            Mob attempting to spawn.
      * @return true if you dont want mob to spawn.
      */
     public boolean onMobSpawn(Mob mob) {
@@ -294,18 +294,17 @@ public class PluginListener {
     }
 
     /**
-     * Called when a living object is attacked.
-     * tip:
-     * Use isMob() and isPlayer() and getPlayer().
+     * Called when a living object is attacked. tip: Use isMob() and isPlayer()
+     * and getPlayer().
      * 
-     * @param type 
-     *          type of damage dealt.
+     * @param type
+     *            type of damage dealt.
      * @param attacker
-     *          object that is attacking.
+     *            object that is attacking.
      * @param defender
-     *          object that is defending.
+     *            object that is defending.
      * @param amount
-     *          amount of damage dealt.
+     *            amount of damage dealt.
      * 
      * @return
      */
@@ -315,14 +314,14 @@ public class PluginListener {
 
     /**
      * Called when a players health changes.
+     * 
      * @param player
-     *              the player which health is changed.
+     *            the player which health is changed.
      * @param oldValue
-     *              old lives value
+     *            old lives value
      * @param newValue
-     *              new lives value
-     * @return
-     *      return true to stop the change.
+     *            new lives value
+     * @return return true to stop the change.
      */
     public boolean onHealthChange(Player player, int oldValue, int newValue) {
         return false;
@@ -331,17 +330,19 @@ public class PluginListener {
     /**
      * Called whenever a redstone source (wire, switch, torch) changes its
      * current.
-     *
-     * Standard values for wires are 0 for no current, and 14 for a strong current.
-     * Default behaviour for redstone wire is to lower the current by one every
-     * block.
-     *
+     * 
+     * Standard values for wires are 0 for no current, and 14 for a strong
+     * current. Default behaviour for redstone wire is to lower the current by
+     * one every block.
+     * 
      * For other blocks which provide a source of redstone current, the current
      * value will be 1 or 0 for on and off respectively.
-     *
+     * 
      * @param block
-     * @param oldLevel the old current
-     * @param newLevel the new current
+     * @param oldLevel
+     *            the old current
+     * @param newLevel
+     *            the new current
      * @return the new current to use (newLevel to leave as-is)
      */
     public int onRedstoneChange(Block block, int oldLevel, int newLevel) {
@@ -349,13 +350,15 @@ public class PluginListener {
     }
 
     /**
-     * Called when the game is checking the physics for a certain block.
-     * This method is called frequently whenever a nearby block is changed,
-     * or if the block has just been placed.
-     * Currently the only supported blocks are sand, gravel and portals.
-     *
-     * @param block Block which requires special physics
-     * @param placed True if block was just placed
+     * Called when the game is checking the physics for a certain block. This
+     * method is called frequently whenever a nearby block is changed, or if the
+     * block has just been placed. Currently the only supported blocks are sand,
+     * gravel and portals.
+     * 
+     * @param block
+     *            Block which requires special physics
+     * @param placed
+     *            True if block was just placed
      * @return true if you do want to stop the default physics for this block
      */
     public boolean onBlockPhysics(Block block, boolean placed) {
@@ -365,7 +368,8 @@ public class PluginListener {
     /**
      * Called when you place a vehicle.
      * 
-     * @param vehicle the vehicle placed
+     * @param vehicle
+     *            the vehicle placed
      */
     public void onVehicleCreate(BaseVehicle vehicle) {
 
@@ -375,7 +379,8 @@ public class PluginListener {
      * Called when vehicle receives damage
      * 
      * @param vehicle
-     * @param attacker entity that dealt the damage
+     * @param attacker
+     *            entity that dealt the damage
      * @param damage
      * @return false to set damage
      */
@@ -386,7 +391,8 @@ public class PluginListener {
     /**
      * Called when a vehicle changes speed
      * 
-     * @param vehicle the vehicle
+     * @param vehicle
+     *            the vehicle
      */
     public void onVehicleUpdate(BaseVehicle vehicle) {
 
@@ -395,7 +401,8 @@ public class PluginListener {
     /**
      * Called when a collision occurs with a vehicle and an entity.
      * 
-     * @param vehicle the vehicle
+     * @param vehicle
+     *            the vehicle
      * @param collisioner
      * @return false to ignore damage
      */
@@ -406,7 +413,8 @@ public class PluginListener {
     /**
      * Called when a vehicle is destroyed
      * 
-     * @param vehicle the vehicle
+     * @param vehicle
+     *            the vehicle
      */
     public void onVehicleDestroyed(BaseVehicle vehicle) {
 
@@ -415,18 +423,26 @@ public class PluginListener {
     /**
      * Called when a player enter or leaves a vehicle
      * 
-     * @param vehicle the vehicle
-     * @param player the player
+     * @param vehicle
+     *            the vehicle
+     * @param player
+     *            the player
      */
     public void onVehicleEnter(BaseVehicle vehicle, HumanEntity player) {
 
     }
+
     /**
      * Called when a vehicle changes block
-     * @param vehicle the vehicle
-     * @param x coordinate x
-     * @param y coordinate y
-     * @param z coordinate z
+     * 
+     * @param vehicle
+     *            the vehicle
+     * @param x
+     *            coordinate x
+     * @param y
+     *            coordinate y
+     * @param z
+     *            coordinate z
      */
     public void onVehiclePositionChange(BaseVehicle vehicle, int x, int y, int z) {
 
@@ -434,10 +450,14 @@ public class PluginListener {
 
     /**
      * Called when a player uses an item (rightclick with item in hand)
-     * @param player the player
-     * @param blockPlaced where a block would end up when the item was a bucket
+     * 
+     * @param player
+     *            the player
+     * @param blockPlaced
+     *            where a block would end up when the item was a bucket
      * @param blockClicked
-     * @param item the item being used (in hand)
+     * @param item
+     *            the item being used (in hand)
      * @return true to prevent using the item.
      */
     public boolean onItemUse(Player player, Block blockPlaced, Block blockClicked, Item item) {
@@ -458,9 +478,9 @@ public class PluginListener {
     }
 
     /**
-     * Called when someone presses right click aimed at a block.
-     * You can intercept this to add your own right click actions
-     * to different item types (see itemInHand)
+     * Called when someone presses right click aimed at a block. You can
+     * intercept this to add your own right click actions to different item
+     * types (see itemInHand)
      * 
      * @param player
      * @param blockClicked
@@ -475,24 +495,31 @@ public class PluginListener {
      * crushing of torches, railways, flowers etc. You can alternatively allow
      * to let normally solid blocks be crushed.
      * 
-     * @param currentState the current tristate, once it's set to a non DEFAULT_ACTION it is final.
-     * @param liquidBlock the type of the attacking block
-     * @param targetBlock the block to be destroyed
+     * @param currentState
+     *            the current tristate, once it's set to a non DEFAULT_ACTION it
+     *            is final.
+     * @param liquidBlock
+     *            the type of the attacking block
+     * @param targetBlock
+     *            the block to be destroyed
      * @return final after a non DEFAULT_ACTION
      */
-    public PluginLoader.HookResult onLiquidDestroy( PluginLoader.HookResult currentState, int liquidBlockId, Block targetBlock )  {
+    public PluginLoader.HookResult onLiquidDestroy(PluginLoader.HookResult currentState, int liquidBlockId, Block targetBlock) {
         return PluginLoader.HookResult.DEFAULT_ACTION;
     }
 
     /**
      * Called when an entity (attacker) tries to hurt a player (defender).
-     * Returning 'true' prevents all damage, returning 'false' lets the game handle it.
-     * Remember that the damage will be lessened by the amount of {@link LivingEntity#getLastDamage()}
-     * the defender has.
+     * Returning 'true' prevents all damage, returning 'false' lets the game
+     * handle it. Remember that the damage will be lessened by the amount of
+     * {@link LivingEntity#getLastDamage()} the defender has.
      * 
-     * @param attacker the giver
-     * @param defender the taker
-     * @param amount of damage the entity tries to do
+     * @param attacker
+     *            the giver
+     * @param defender
+     *            the taker
+     * @param amount
+     *            of damage the entity tries to do
      * @return
      */
     public boolean onAttack(LivingEntity attacker, LivingEntity defender, Integer amount) {
@@ -502,9 +529,11 @@ public class PluginListener {
     /**
      * Called when a player attempts to open an inventory; whether it's a
      * workbench, a chest or their own player inventory
-     *
-     * @param player user who attempted to open the inventory
-     * @param inventory the inventory that they are attempting to open
+     * 
+     * @param player
+     *            user who attempted to open the inventory
+     * @param inventory
+     *            the inventory that they are attempting to open
      * @return
      */
     public boolean onOpenInventory(Player player, Inventory inventory) {
@@ -515,31 +544,37 @@ public class PluginListener {
      * Called when a sign is shown to a player, most often when they come into
      * range of a sign.
      * 
-     * @param player Player who this sign is being shown to
-     * @param sign Sign which is being shown to the player
+     * @param player
+     *            Player who this sign is being shown to
+     * @param sign
+     *            Sign which is being shown to the player
      */
     public void onSignShow(Player player, Sign sign) {
     }
 
     /**
-     * Called when a sign is changed by a player (Usually, when they first place it)
+     * Called when a sign is changed by a player (Usually, when they first place
+     * it)
      * 
-     * @param player Player who changed the sign
-     * @param sign Sign which had changed
+     * @param player
+     *            Player who changed the sign
+     * @param sign
+     *            Sign which had changed
      * @return true if you wish to cancel this change
      */
     public boolean onSignChange(Player player, Sign sign) {
         return false;
     }
-	
+
     /**
      * Called when a leaf block is about to decay.
-     *
-     * @param block The leaf block about to decay
+     * 
+     * @param block
+     *            The leaf block about to decay
      * @return true if you wish to stop the block from decaying
      */
     public boolean onLeafDecay(Block block) {
         return false;
     }
-	
+
 }

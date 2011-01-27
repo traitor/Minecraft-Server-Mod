@@ -12,7 +12,7 @@ public class Sign implements ComplexBlock {
      * @param localav
      */
     public Sign(OTileEntitySign localay) {
-        this.sign = localay;
+        sign = localay;
     }
 
     /**
@@ -24,9 +24,8 @@ public class Sign implements ComplexBlock {
      *            text
      */
     public void setText(int index, String text) {
-        if (index >= 0 && sign.e.length > index) {
+        if (index >= 0 && sign.e.length > index)
             sign.e[index] = text;
-        }
     }
 
     /**
@@ -37,9 +36,8 @@ public class Sign implements ComplexBlock {
      * @return text
      */
     public String getText(int index) {
-        if (index >= 0 && sign.e.length > index) {
+        if (index >= 0 && sign.e.length > index)
             return sign.e[index];
-        }
         return "";
     }
 
@@ -65,7 +63,7 @@ public class Sign implements ComplexBlock {
 
     /**
      * Returns a String value representing this Block
-     *
+     * 
      * @return String representation of this block
      */
     @Override
@@ -75,42 +73,38 @@ public class Sign implements ComplexBlock {
 
     /**
      * Tests the given object to see if it equals this object
-     *
-     * @param obj the object to test
+     * 
+     * @param obj
+     *            the object to test
      * @return true if the two objects match
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
+        if (obj == null)
             return false;
-        }
-        if (getClass() != obj.getClass()) {
+        if (getClass() != obj.getClass())
             return false;
-        }
         final Sign other = (Sign) obj;
-        if (this.getX() != other.getX()) {
+        if (getX() != other.getX())
             return false;
-        }
-        if (this.getY() != other.getY()) {
+        if (getY() != other.getY())
             return false;
-        }
-        if (this.getZ() != other.getZ()) {
+        if (getZ() != other.getZ())
             return false;
-        }
         return true;
     }
 
     /**
      * Returns a semi-unique hashcode for this block
-     *
+     * 
      * @return hashcode
      */
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + this.getX();
-        hash = 97 * hash + this.getY();
-        hash = 97 * hash + this.getZ();
+        hash = 97 * hash + getX();
+        hash = 97 * hash + getY();
+        hash = 97 * hash + getZ();
         return hash;
     }
 }

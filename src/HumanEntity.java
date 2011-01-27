@@ -1,6 +1,6 @@
 /**
- *
- * @author 
+ * 
+ * @author
  */
 public class HumanEntity extends LivingEntity {
     /**
@@ -20,8 +20,10 @@ public class HumanEntity extends LivingEntity {
 
     /**
      * Returns the entity we're wrapping.
+     * 
      * @return
      */
+    @Override
     public OEntityPlayer getEntity() {
         return (OEntityPlayer) entity;
     }

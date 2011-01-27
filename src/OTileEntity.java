@@ -1,5 +1,3 @@
-
-import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,15 +5,14 @@ public class OTileEntity {
 
     private static Map<String, Class> e = new HashMap<String, Class>();
     private static Map<Class, String> f = new HashMap<Class, String>();
-    public OWorld a;
-    public int b;
-    public int c;
-    public int d;
+    public OWorld                     a;
+    public int                        b;
+    public int                        c;
+    public int                        d;
 
     private static void a(Class paramClass, String paramString) {
-        if (e.containsKey(paramString)) {
+        if (e.containsKey(paramString))
             throw new IllegalArgumentException("Duplicate id: " + paramString);
-        }
         e.put(paramString, paramClass);
         f.put(paramClass, paramString);
     }
@@ -28,9 +25,8 @@ public class OTileEntity {
 
     public void b(ONBTTagCompound paramONBTTagCompound) {
         String str = f.get(getClass());
-        if (str == null) {
+        if (str == null)
             throw new RuntimeException(getClass() + " is missing a mapping! This is a bug!");
-        }
         paramONBTTagCompound.a("id", str);
         paramONBTTagCompound.a("x", b);
         paramONBTTagCompound.a("y", c);
@@ -44,24 +40,21 @@ public class OTileEntity {
         OTileEntity localOTileEntity = null;
         try {
             Class localClass = e.get(paramONBTTagCompound.h("id"));
-            if (localClass != null) {
+            if (localClass != null)
                 localOTileEntity = (OTileEntity) localClass.newInstance();
-            }
         } catch (Exception localException) {
             localException.printStackTrace();
         }
-        if (localOTileEntity != null) {
+        if (localOTileEntity != null)
             localOTileEntity.a(paramONBTTagCompound);
-        } else {
+        else
             System.out.println("Skipping TileEntity with id " + paramONBTTagCompound.h("id"));
-        }
         return localOTileEntity;
     }
 
     public void d() {
-        if (a != null) {
+        if (a != null)
             a.b(b, c, d, this);
-        }
     }
 
     public OPacket g() {

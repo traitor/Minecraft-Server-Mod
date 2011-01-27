@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -45,9 +44,8 @@ public class FlatFileSource extends DataSource {
                 log.log(Level.SEVERE, "Exception while creating " + location, e);
             } finally {
                 try {
-                    if (writer != null) {
+                    if (writer != null)
                         writer.close();
-                    }
                 } catch (IOException e) {
                     log.log(Level.SEVERE, "Exception while closing writer for " + location, e);
                 }
@@ -63,9 +61,8 @@ public class FlatFileSource extends DataSource {
                 log.log(Level.SEVERE, "Exception while creating " + location, e);
             } finally {
                 try {
-                    if (writer != null) {
+                    if (writer != null)
                         writer.close();
-                    }
                 } catch (IOException e) {
                     log.log(Level.SEVERE, "Exception while closing writer for " + location, e);
                 }
@@ -96,9 +93,8 @@ public class FlatFileSource extends DataSource {
                 log.log(Level.SEVERE, "Exception while creating " + location, e);
             } finally {
                 try {
-                    if (writer != null) {
+                    if (writer != null)
                         writer.close();
-                    }
                 } catch (IOException e) {
                     log.log(Level.SEVERE, "Exception while closing writer for " + location, e);
                 }
@@ -111,35 +107,30 @@ public class FlatFileSource extends DataSource {
                 Scanner scanner = new Scanner(new File(location));
                 while (scanner.hasNextLine()) {
                     String line = scanner.nextLine();
-                    if (line.startsWith("#") || line.equals("") || line.startsWith("﻿")) {
+                    if (line.startsWith("#") || line.equals("") || line.startsWith("﻿"))
                         continue;
-                    }
 
                     String[] split = line.split(":");
                     Group group = new Group();
                     group.Name = split[0];
                     group.Prefix = split[1];
                     group.Commands = split[2].split(",");
-                    if (split.length >= 4) {
+                    if (split.length >= 4)
                         group.InheritedGroups = split[3].split(",");
-                    }
-                    if (split.length >= 5) {
-                        if (split[4].equals("1")) {
+                    if (split.length >= 5)
+                        if (split[4].equals("1"))
                             group.IgnoreRestrictions = true;
-                        } else if (split[4].equals("2")) {
+                        else if (split[4].equals("2"))
                             group.Administrator = true;
-                        } else if (split[4].equals("-1")) {
+                        else if (split[4].equals("-1"))
                             group.CanModifyWorld = false;
-                        }
-                    }
 
                     // kind of a shitty way, but whatever.
-                    if (group.InheritedGroups != null) {
+                    if (group.InheritedGroups != null)
                         if (group.InheritedGroups[0].equalsIgnoreCase(group.Name)) {
-                            group.InheritedGroups = new String[]{""};
+                            group.InheritedGroups = new String[] { "" };
                             group.DefaultGroup = true;
                         }
-                    }
 
                     groups.add(group);
                 }
@@ -167,9 +158,8 @@ public class FlatFileSource extends DataSource {
                 log.log(Level.SEVERE, "Exception while creating " + location, e);
             } finally {
                 try {
-                    if (writer != null) {
+                    if (writer != null)
                         writer.close();
-                    }
                 } catch (IOException e) {
                 }
             }
@@ -181,18 +171,15 @@ public class FlatFileSource extends DataSource {
                 Scanner scanner = new Scanner(new File(location));
                 while (scanner.hasNextLine()) {
                     String line = scanner.nextLine();
-                    if (line.startsWith("#") || line.equals("")) // Skip it.
-                    {
+                    if (line.startsWith("#") || line.equals(""))
                         continue;
-                    }
                     String[] split = line.split(":");
                     String name = split[0];
                     String[] ids = split[1].split(",");
                     int delay = Integer.parseInt(split[2]);
                     String group = "";
-                    if (split.length == 4) {
+                    if (split.length == 4)
                         group = split[3];
-                    }
                     Kit kit = new Kit();
                     kit.Name = name;
                     kit.IDs = new HashMap<String, Integer>();
@@ -202,9 +189,8 @@ public class FlatFileSource extends DataSource {
                         if (str.contains(" ")) {
                             id = str.split(" ")[0];
                             amount = Integer.parseInt(str.split(" ")[1]);
-                        } else {
+                        } else
                             id = str;
-                        }
                         kit.IDs.put(id, amount);
                     }
                     kit.Delay = delay;
@@ -221,23 +207,20 @@ public class FlatFileSource extends DataSource {
     public void loadHomes() {
         synchronized (homeLock) {
             homes = new ArrayList<Warp>();
-            if (!etc.getInstance().canSaveHomes()) {
+            if (!etc.getInstance().canSaveHomes())
                 return;
-            }
 
             String location = etc.getInstance().getHomeLocation();
-            if (new File(location).exists()) {
+            if (new File(location).exists())
                 try {
                     Scanner scanner = new Scanner(new File(location));
                     while (scanner.hasNextLine()) {
                         String line = scanner.nextLine();
-                        if (line.startsWith("#") || line.equals("")) {
+                        if (line.startsWith("#") || line.equals(""))
                             continue;
-                        }
                         String[] split = line.split(":");
-                        if (split.length < 4) {
+                        if (split.length < 4)
                             continue;
-                        }
                         Location loc = new Location();
                         loc.x = Double.parseDouble(split[1]);
                         loc.y = Double.parseDouble(split[2]);
@@ -249,18 +232,16 @@ public class FlatFileSource extends DataSource {
                         Warp home = new Warp();
                         home.Name = split[0];
                         home.Location = loc;
-                        if (split.length >= 7) {
+                        if (split.length >= 7)
                             home.Group = split[6];
-                        } else {
+                        else
                             home.Group = "";
-                        }
                         homes.add(home);
                     }
                     scanner.close();
                 } catch (Exception e) {
                     log.log(Level.SEVERE, "Exception while reading " + location, e);
                 }
-            }
         }
     }
 
@@ -269,18 +250,16 @@ public class FlatFileSource extends DataSource {
             warps = new ArrayList<Warp>();
             String location = etc.getInstance().getWarpLocation();
 
-            if (new File(location).exists()) {
+            if (new File(location).exists())
                 try {
                     Scanner scanner = new Scanner(new File(location));
                     while (scanner.hasNextLine()) {
                         String line = scanner.nextLine();
-                        if (line.startsWith("#") || line.equals("")) {
+                        if (line.startsWith("#") || line.equals(""))
                             continue;
-                        }
                         String[] split = line.split(":");
-                        if (split.length < 4) {
+                        if (split.length < 4)
                             continue;
-                        }
 
                         Location loc = new Location();
                         loc.x = Double.parseDouble(split[1]);
@@ -293,18 +272,16 @@ public class FlatFileSource extends DataSource {
                         Warp warp = new Warp();
                         warp.Name = split[0];
                         warp.Location = loc;
-                        if (split.length >= 7) {
+                        if (split.length >= 7)
                             warp.Group = split[6];
-                        } else {
+                        else
                             warp.Group = "";
-                        }
                         warps.add(warp);
                     }
                     scanner.close();
                 } catch (Exception e) {
                     log.log(Level.SEVERE, "Exception while reading " + location, e);
                 }
-            }
         }
     }
 
@@ -535,13 +512,12 @@ public class FlatFileSource extends DataSource {
             } catch (Exception e) {
                 log.log(Level.SEVERE, "Exception while creating " + location, e);
             } finally {
-                if (writer != null) {
+                if (writer != null)
                     try {
                         writer.close();
                     } catch (IOException e) {
                         log.log(Level.SEVERE, "Exception while closing writer for " + location, e);
                     }
-                }
             }
         }
 
@@ -552,16 +528,14 @@ public class FlatFileSource extends DataSource {
                 Scanner scanner = new Scanner(new File(location));
                 while (scanner.hasNextLine()) {
                     String line = scanner.nextLine();
-                    if (line.startsWith("#")) {
+                    if (line.startsWith("#"))
                         continue;
-                    }
-                    if (line.equals("")) {
+                    if (line.equals(""))
                         continue;
-                    }
                     String[] split = line.split(":");
                     String name = split[0];
 
-                    this.items.put(name, Integer.parseInt(split[1]));
+                    items.put(name, Integer.parseInt(split[1]));
                 }
                 scanner.close();
             } catch (Exception e) {
@@ -578,15 +552,12 @@ public class FlatFileSource extends DataSource {
                 Scanner scanner = new Scanner(new File("banned-players.txt"));
                 while (scanner.hasNextLine()) {
                     String line = scanner.nextLine();
-                    if (line.startsWith("#") || line.equals("")) // Skip it.
-                    {
+                    if (line.startsWith("#") || line.equals(""))
                         continue;
-                    }
                     String[] split = line.split(":");
                     Ban ban = new Ban();
-                    if (split.length >= 1) {
+                    if (split.length >= 1)
                         ban.setName(split[0]);
-                    }
                     if (split.length == 4) {
                         ban.setIp(split[1]);
                         ban.setReason(split[2]);
@@ -603,16 +574,13 @@ public class FlatFileSource extends DataSource {
                 Scanner scanner = new Scanner(new File("banned-ips.txt"));
                 while (scanner.hasNextLine()) {
                     String line = scanner.nextLine();
-                    if (line.startsWith("#") || line.equals("")) // Skip it.
-                    {
+                    if (line.startsWith("#") || line.equals(""))
                         continue;
-                    }
                     String[] split = line.split(":");
 
                     Ban ban = new Ban();
-                    if (split.length >= 1) {
+                    if (split.length >= 1)
                         ban.setIp(split[0]);
-                    }
                     if (split.length == 4) {
                         ban.setName(split[1]);
                         ban.setReason(split[2]);
@@ -639,15 +607,14 @@ public class FlatFileSource extends DataSource {
             builder.append(":");
             builder.append(etc.combineSplit(0, player.getGroups(), ","));
             builder.append(":");
-            if (player.getAdmin()) {
+            if (player.getAdmin())
                 builder.append("2");
-            } else if (player.ignoreRestrictions()) {
+            else if (player.ignoreRestrictions())
                 builder.append("1");
-            } else if (!player.canModifyWorld()) {
+            else if (!player.canModifyWorld())
                 builder.append("-1");
-            } else {
+            else
                 builder.append("0");
-            }
             builder.append(":");
             builder.append(player.getPrefix());
             builder.append(":");
@@ -668,31 +635,29 @@ public class FlatFileSource extends DataSource {
             BufferedReader reader = new BufferedReader(new FileReader(new File(loc)));
             StringBuilder toWrite = new StringBuilder();
             String line = "";
-            while ((line = reader.readLine()) != null) {
-                if (!line.split(":")[0].equalsIgnoreCase(player.getName())) {
+            while ((line = reader.readLine()) != null)
+                if (!line.split(":")[0].equalsIgnoreCase(player.getName()))
                     toWrite.append(line).append("\r\n");
-                } else {
+                else {
                     StringBuilder builder = new StringBuilder();
                     builder.append(player.getName());
                     builder.append(":");
                     builder.append(etc.combineSplit(0, player.getGroups(), ","));
                     builder.append(":");
-                    if (player.getAdmin()) {
+                    if (player.getAdmin())
                         builder.append("2");
-                    } else if (player.ignoreRestrictions()) {
+                    else if (player.ignoreRestrictions())
                         builder.append("1");
-                    } else if (!player.canModifyWorld()) {
+                    else if (!player.canModifyWorld())
                         builder.append("-1");
-                    } else {
+                    else
                         builder.append("0");
-                    }
                     builder.append(":");
                     builder.append(player.getPrefix());
                     builder.append(":");
                     builder.append(etc.combineSplit(0, player.getCommands(), ","));
                     toWrite.append(builder.toString()).append("\r\n");
                 }
-            }
             reader.close();
 
             FileWriter writer = new FileWriter(loc);
@@ -709,13 +674,11 @@ public class FlatFileSource extends DataSource {
             Scanner scanner = new Scanner(new File(location));
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                if (line.startsWith("#") || line.equals("") || line.startsWith("﻿")) {
+                if (line.startsWith("#") || line.equals("") || line.startsWith("﻿"))
                     continue;
-                }
                 String[] split = line.split(":");
-                if (!split[0].equalsIgnoreCase(player)) {
+                if (!split[0].equalsIgnoreCase(player))
                     continue;
-                }
                 return true;
             }
             scanner.close();
@@ -733,35 +696,28 @@ public class FlatFileSource extends DataSource {
             Scanner scanner = new Scanner(new File(location));
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                if (line.startsWith("#") || line.equals("") || line.startsWith("﻿")) {
+                if (line.startsWith("#") || line.equals("") || line.startsWith("﻿"))
                     continue;
-                }
                 String[] split = line.split(":");
-                if (!split[0].equalsIgnoreCase(name)) {
+                if (!split[0].equalsIgnoreCase(name))
                     continue;
-                }
 
                 player.setGroups(split[1].split(","));
 
-                if (split.length >= 3) {
-                    if (split[2].equals("1")) {
+                if (split.length >= 3)
+                    if (split[2].equals("1"))
                         player.setIgnoreRestrictions(true);
-                    } else if (split[2].equals("2")) {
+                    else if (split[2].equals("2"))
                         player.setAdmin(true);
-                    } else if (split[2].equals("-1")) {
+                    else if (split[2].equals("-1"))
                         player.setCanModifyWorld(false);
-                    }
-                }
 
-                if (split.length >= 4) {
+                if (split.length >= 4)
                     player.setPrefix(split[3]);
-                }
-                if (split.length >= 5) {
+                if (split.length >= 5)
                     player.setCommands(split[4].split(","));
-                }
-                if (split.length >= 6) {
+                if (split.length >= 6)
                     player.setIps(split[5].split(","));
-                }
             }
             scanner.close();
         } catch (Exception e) {
@@ -823,14 +779,11 @@ public class FlatFileSource extends DataSource {
     public void changeHome(Warp home) {
         synchronized (homeLock) {
             Warp toRem = null;
-            for (Warp h : homes) {
-                if (h.Name.equalsIgnoreCase(home.Name)) {
+            for (Warp h : homes)
+                if (h.Name.equalsIgnoreCase(home.Name))
                     toRem = h;
-                }
-            }
-            if (toRem != null) {
+            if (toRem != null)
                 homes.remove(toRem);
-            }
             homes.add(home);
         }
         FileWriter writer = null;
@@ -841,10 +794,10 @@ public class FlatFileSource extends DataSource {
                 BufferedReader reader = new BufferedReader(new FileReader(new File(homeLoc)));
                 StringBuilder toWrite = new StringBuilder();
                 String line = "";
-                while ((line = reader.readLine()) != null) {
-                    if (!line.split(":")[0].equalsIgnoreCase(home.Name)) {
+                while ((line = reader.readLine()) != null)
+                    if (!line.split(":")[0].equalsIgnoreCase(home.Name))
                         toWrite.append(line).append("\r\n");
-                    } else {
+                    else {
                         StringBuilder builder = new StringBuilder();
                         builder.append(home.Name);
                         builder.append(":");
@@ -861,7 +814,6 @@ public class FlatFileSource extends DataSource {
                         builder.append(home.Group);
                         toWrite.append(builder.toString()).append("\r\n");
                     }
-                }
                 reader.close();
 
                 writer = new FileWriter(homeLoc);
@@ -872,9 +824,8 @@ public class FlatFileSource extends DataSource {
             log.log(Level.SEVERE, "Exception while editing user home in " + homeLoc, e1);
         } finally {
             try {
-                if (writer != null) {
+                if (writer != null)
                     writer.close();
-                }
             } catch (IOException ex) {
             }
         }
@@ -913,14 +864,11 @@ public class FlatFileSource extends DataSource {
     public void changeWarp(Warp warp) {
         synchronized (warpLock) {
             Warp toRem = null;
-            for (Warp h : warps) {
-                if (h.Name.equalsIgnoreCase(warp.Name)) {
+            for (Warp h : warps)
+                if (h.Name.equalsIgnoreCase(warp.Name))
                     toRem = h;
-                }
-            }
-            if (toRem != null) {
+            if (toRem != null)
                 warps.remove(toRem);
-            }
             warps.add(warp);
         }
         FileWriter writer = null;
@@ -930,10 +878,10 @@ public class FlatFileSource extends DataSource {
             BufferedReader reader = new BufferedReader(new FileReader(new File(warpLoc)));
             StringBuilder toWrite = new StringBuilder();
             String line = "";
-            while ((line = reader.readLine()) != null) {
-                if (!line.split(":")[0].equalsIgnoreCase(warp.Name)) {
+            while ((line = reader.readLine()) != null)
+                if (!line.split(":")[0].equalsIgnoreCase(warp.Name))
                     toWrite.append(line).append("\r\n");
-                } else {
+                else {
                     StringBuilder builder = new StringBuilder();
                     builder.append(warp.Name);
                     builder.append(":");
@@ -950,7 +898,6 @@ public class FlatFileSource extends DataSource {
                     builder.append(warp.Group);
                     toWrite.append(builder.toString()).append("\r\n");
                 }
-            }
             reader.close();
 
             writer = new FileWriter(warpLoc);
@@ -960,9 +907,8 @@ public class FlatFileSource extends DataSource {
             log.log(Level.SEVERE, "Exception while editing warp in " + warpLoc, e1);
         } finally {
             try {
-                if (writer != null) {
+                if (writer != null)
                     writer.close();
-                }
             } catch (IOException ex) {
             }
         }
@@ -976,11 +922,9 @@ public class FlatFileSource extends DataSource {
             BufferedReader reader = new BufferedReader(new FileReader(new File(warpLoc)));
             StringBuilder toWrite = new StringBuilder();
             String line = "";
-            while ((line = reader.readLine()) != null) {
-                if (!line.split(":")[0].equalsIgnoreCase(warp.Name)) {
+            while ((line = reader.readLine()) != null)
+                if (!line.split(":")[0].equalsIgnoreCase(warp.Name))
                     toWrite.append(line).append("\r\n");
-                }
-            }
             reader.close();
 
             writer = new FileWriter(warpLoc);
@@ -990,9 +934,8 @@ public class FlatFileSource extends DataSource {
             log.log(Level.SEVERE, "Exception while delete warp from " + warpLoc, e1);
         } finally {
             try {
-                if (writer != null) {
+                if (writer != null)
                     writer.close();
-                }
             } catch (IOException ex) {
             }
         }
@@ -1004,9 +947,8 @@ public class FlatFileSource extends DataSource {
 
     // Whitelist
     public void addToWhitelist(String name) {
-        if (isUserOnWhitelist(name)) {
+        if (isUserOnWhitelist(name))
             return;
-        }
 
         BufferedWriter bw = null;
         String location = etc.getInstance().getWhitelistLocation();
@@ -1018,18 +960,16 @@ public class FlatFileSource extends DataSource {
             log.log(Level.SEVERE, "Exception while writing new user to " + location, e2);
         } finally {
             try {
-                if (bw != null) {
+                if (bw != null)
                     bw.close();
-                }
             } catch (IOException ex) {
             }
         }
     }
 
     public void removeFromWhitelist(String name) {
-        if (!isUserOnWhitelist(name)) {
+        if (!isUserOnWhitelist(name))
             return;
-        }
 
         FileWriter writer = null;
         String location = etc.getInstance().getWhitelistLocation();
@@ -1040,11 +980,9 @@ public class FlatFileSource extends DataSource {
             String line = "";
             StringBuilder toSave = new StringBuilder();
 
-            while ((line = reader.readLine()) != null) {
-                if (!line.equalsIgnoreCase(name.toLowerCase())) {
+            while ((line = reader.readLine()) != null)
+                if (!line.equalsIgnoreCase(name.toLowerCase()))
                     toSave.append(line).append("\r\n");
-                }
-            }
             reader.close();
 
             writer = new FileWriter(location);
@@ -1053,9 +991,8 @@ public class FlatFileSource extends DataSource {
             log.log(Level.SEVERE, "Exception while removing player '" + name + "' from " + location, e1);
         } finally {
             try {
-                if (writer != null) {
+                if (writer != null)
                     writer.close();
-                }
             } catch (IOException ex) {
             }
         }
@@ -1068,15 +1005,12 @@ public class FlatFileSource extends DataSource {
             Scanner scanner = new Scanner(new File(location));
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                if (line.startsWith("#") || line.equals("") || line.startsWith("﻿")) {
+                if (line.startsWith("#") || line.equals("") || line.startsWith("﻿"))
                     continue;
-                }
-                if (line.startsWith("@") && player.isInGroup(line.substring(1))) {
+                if (line.startsWith("@") && player.isInGroup(line.substring(1)))
                     return true;
-                }
-                if (line.equalsIgnoreCase(user)) {
+                if (line.equalsIgnoreCase(user))
                     return true;
-                }
             }
             scanner.close();
         } catch (Exception e) {
@@ -1097,15 +1031,12 @@ public class FlatFileSource extends DataSource {
             Scanner scanner = new Scanner(new File(location));
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                if (line.startsWith("#") || line.equals("") || line.startsWith("﻿")) {
+                if (line.startsWith("#") || line.equals("") || line.startsWith("﻿"))
                     continue;
-                }
-                if (line.startsWith("@") && player.isInGroup(line.substring(1))) {
+                if (line.startsWith("@") && player.isInGroup(line.substring(1)))
                     return true;
-                }
-                if (line.equalsIgnoreCase(user)) {
+                if (line.equalsIgnoreCase(user))
                     return true;
-                }
             }
             scanner.close();
         } catch (Exception e) {
@@ -1115,9 +1046,8 @@ public class FlatFileSource extends DataSource {
     }
 
     public void addToReserveList(String name) {
-        if (isUserOnReserveList(name)) {
+        if (isUserOnReserveList(name))
             return;
-        }
         BufferedWriter bw = null;
         String location = etc.getInstance().getReservelistLocation();
         try {
@@ -1128,18 +1058,16 @@ public class FlatFileSource extends DataSource {
             log.log(Level.SEVERE, "Exception while writing new user to " + location, e2);
         } finally {
             try {
-                if (bw != null) {
+                if (bw != null)
                     bw.close();
-                }
             } catch (IOException ex) {
             }
         }
     }
 
     public void removeFromReserveList(String name) {
-        if (!isUserOnReserveList(name)) {
+        if (!isUserOnReserveList(name))
             return;
-        }
 
         FileWriter writer = null;
         String location = etc.getInstance().getReservelistLocation();
@@ -1150,11 +1078,9 @@ public class FlatFileSource extends DataSource {
             String line = "";
             StringBuilder toSave = new StringBuilder();
 
-            while ((line = reader.readLine()) != null) {
-                if (!line.equalsIgnoreCase(name.toLowerCase())) {
+            while ((line = reader.readLine()) != null)
+                if (!line.equalsIgnoreCase(name.toLowerCase()))
                     toSave.append(line).append("\r\n");
-                }
-            }
             reader.close();
 
             writer = new FileWriter(location);
@@ -1163,9 +1089,8 @@ public class FlatFileSource extends DataSource {
             log.log(Level.SEVERE, "Exception while removing player '" + name + "' from " + location, e1);
         } finally {
             try {
-                if (writer != null) {
+                if (writer != null)
                     writer.close();
-                }
             } catch (IOException ex) {
             }
         }

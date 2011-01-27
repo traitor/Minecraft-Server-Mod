@@ -1,6 +1,3 @@
-
-import java.util.Random;
-
 public class OItemHoe extends OItem {
 
     public OItemHoe(int paramInt, OEnumToolMaterial paramOEnumToolMaterial) {
@@ -9,6 +6,7 @@ public class OItemHoe extends OItem {
         bc = paramOEnumToolMaterial.a();
     }
 
+    @Override
     public boolean a(OItemStack paramOItemStack, OEntityPlayer paramOEntityPlayer, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         int i = paramOWorld.a(paramInt1, paramInt2, paramInt3);
         OMaterial localOMaterial = paramOWorld.c(paramInt1, paramInt2 + 1, paramInt3);
@@ -22,17 +20,15 @@ public class OItemHoe extends OItem {
             // Call the hook
             if (paramOEntityPlayer instanceof OEntityPlayerMP) {
                 Player player = ((OEntityPlayerMP) paramOEntityPlayer).getPlayer();
-                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, blockPlaced, blockClicked, new Item(paramOItemStack))) {
+                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, blockPlaced, blockClicked, new Item(paramOItemStack)))
                     return false;
-                }
             }
-            
+
             OBlock localOBlock = OBlock.aA;
             paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localOBlock.br.c(), (localOBlock.br.a() + 1.0F) / 2.0F, localOBlock.br.b() * 0.8F);
 
-            if (paramOWorld.z) {
+            if (paramOWorld.z)
                 return true;
-            }
             paramOWorld.e(paramInt1, paramInt2, paramInt3, localOBlock.bi);
             paramOItemStack.b(1);
 

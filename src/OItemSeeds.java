@@ -1,4 +1,3 @@
-
 public class OItemSeeds extends OItem {
 
     private int a;
@@ -8,10 +7,10 @@ public class OItemSeeds extends OItem {
         a = paramInt2;
     }
 
+    @Override
     public boolean a(OItemStack paramOItemStack, OEntityPlayer paramOEntityPlayer, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        if (paramInt4 != 1) {
+        if (paramInt4 != 1)
             return false;
-        }
 
         int i = paramOWorld.a(paramInt1, paramInt2, paramInt3);
 
@@ -23,9 +22,8 @@ public class OItemSeeds extends OItem {
 
             // Call the hook
             Player player = ((OEntityPlayerMP) paramOEntityPlayer).getPlayer();
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, blockPlaced, blockClicked, new Item(paramOItemStack))) {
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, blockPlaced, blockClicked, new Item(paramOItemStack)))
                 return false;
-            }
 
             paramOWorld.e(paramInt1, paramInt2 + 1, paramInt3, a);
             paramOItemStack.a -= 1;

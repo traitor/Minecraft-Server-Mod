@@ -1,9 +1,8 @@
-
 public final class OItemStack {
 
-    public int a = 0;
-    public int b;
-    public int c;
+    public int  a = 0;
+    public int  b;
+    public int  c;
     private int d;
 
     public OItemStack(OBlock paramOBlock) {
@@ -107,16 +106,14 @@ public final class OItemStack {
     }
 
     public void b(int paramInt) {
-        if (!d()) {
+        if (!d())
             return;
-        }
 
         d += paramInt;
         if (d > i()) {
             a -= 1;
-            if (a < 0) {
+            if (a < 0)
                 a = 0;
-            }
             d = 0;
         }
     }
@@ -149,22 +146,18 @@ public final class OItemStack {
     }
 
     public static boolean a(OItemStack paramOItemStack1, OItemStack paramOItemStack2) {
-        if ((paramOItemStack1 == null) && (paramOItemStack2 == null)) {
+        if ((paramOItemStack1 == null) && (paramOItemStack2 == null))
             return true;
-        }
-        if ((paramOItemStack1 == null) || (paramOItemStack2 == null)) {
+        if ((paramOItemStack1 == null) || (paramOItemStack2 == null))
             return false;
-        }
         return paramOItemStack1.c(paramOItemStack2);
     }
 
     private boolean c(OItemStack paramOItemStack) {
-        if (a != paramOItemStack.a) {
+        if (a != paramOItemStack.a)
             return false;
-        }
-        if (c != paramOItemStack.c) {
+        if (c != paramOItemStack.c)
             return false;
-        }
         return d == paramOItemStack.d;
     }
 
@@ -176,6 +169,7 @@ public final class OItemStack {
         return paramOItemStack == null ? null : paramOItemStack.j();
     }
 
+    @Override
     public String toString() {
         return a + "OBlockIce" + OItem.c[c].a() + "@" + d;
     }

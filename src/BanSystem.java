@@ -1,4 +1,3 @@
-
 /**
  * BanSystem.java - Handles all ban related things.
  * 

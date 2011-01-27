@@ -19,9 +19,9 @@ public class Location {
      * @param Z
      */
     public Location(double X, double Y, double Z) {
-        this.x = X;
-        this.y = Y;
-        this.z = Z;
+        x = X;
+        y = Y;
+        z = Z;
     }
 
     /**
@@ -34,12 +34,13 @@ public class Location {
      * @param pitch
      */
     public Location(double X, double Y, double Z, float rotation, float pitch) {
-        this.x = X;
-        this.y = Y;
-        this.z = Z;
-        this.rotX = rotation;
-        this.rotY = pitch;
+        x = X;
+        y = Y;
+        z = Z;
+        rotX = rotation;
+        rotY = pitch;
     }
+
     /**
      * X location
      */
@@ -55,9 +56,9 @@ public class Location {
     /**
      * Rotation
      */
-    public float rotX;
+    public float  rotX;
     /**
      * Pitch
      */
-    public float rotY;
+    public float  rotY;
 }

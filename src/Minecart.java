@@ -3,7 +3,7 @@ import java.util.Map;
 
 /**
  * Minecart - Used for manipulating minecarts
- *
+ * 
  * @author tw1nk
  */
 public class Minecart extends BaseVehicle {
@@ -23,17 +23,16 @@ public class Minecart extends BaseVehicle {
          * Powered minecart. Has storage for fuel.
          */
         PoweredMinecart(2);
-        
-        private final int id;
+
+        private final int                       id;
         private static final Map<Integer, Type> lookup = new HashMap<Integer, Type>();
-        
+
         static {
-            for(Type t : Type.values()) {
+            for (Type t : Type.values())
                 lookup.put(t.getType(), t);
-            }
         }
 
-        private Type(int id){
+        private Type(int id) {
             this.id = id;
         }
 
@@ -48,35 +47,42 @@ public class Minecart extends BaseVehicle {
 
     /**
      * Creates an interface for minecart.
+     * 
      * @param o
      */
     public Minecart(OEntityMinecart o) {
         super(o);
     }
-    
+
     /**
      * Create a new Minecart at the given position
+     * 
      * @param x
      * @param y
      * @param z
-     * @param Type 0=Minecart, 1=StorageCart, 2=PoweredMinecart
+     * @param Type
+     *            0=Minecart, 1=StorageCart, 2=PoweredMinecart
      */
     public Minecart(double x, double y, double z, Type type) {
         super(new OEntityMinecart(etc.getMCServer().e, x, y, z, type.getType()));
-        etc.getMCServer().e.a(entity);        
+        etc.getMCServer().e.a(entity);
     }
-    
+
     /**
      * Returns the entity we're wrapping.
+     * 
      * @return
-     */ 
+     */
+    @Override
     public OEntityMinecart getEntity() {
         return (OEntityMinecart) entity;
     }
 
     /**
      * Set damage on Mineentity
-     * @param damage over 40 and you "kill" the mineentity
+     * 
+     * @param damage
+     *            over 40 and you "kill" the mineentity
      */
     public void setDamage(int damage) {
         getEntity().a = damage;
@@ -84,6 +90,7 @@ public class Minecart extends BaseVehicle {
 
     /**
      * Returns damage for mineentity
+     * 
      * @return returns current damage
      */
     public int getDamage() {
@@ -92,15 +99,17 @@ public class Minecart extends BaseVehicle {
 
     /**
      * Returns the type of this minecart.
+     * 
      * @return type
      */
     public Type getType() {
-       return Type.fromId(getEntity().d);
+        return Type.fromId(getEntity().d);
     }
 
     /**
-     * Returns the storage for this minecart. Returns null if minecart is not a storage or powered
-     * minecart.
+     * Returns the storage for this minecart. Returns null if minecart is not a
+     * storage or powered minecart.
+     * 
      * @return storage
      */
     public StorageMinecart getStorage() {

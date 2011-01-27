@@ -1,4 +1,3 @@
-
 public class OItemBoat extends OItem {
 
     public OItemBoat(int paramInt) {
@@ -6,6 +5,7 @@ public class OItemBoat extends OItem {
         bb = 1;
     }
 
+    @Override
     public OItemStack a(OItemStack paramOItemStack, OWorld paramOWorld, OEntityPlayer paramOEntityPlayer) {
         float f1 = 1.0F;
 
@@ -30,9 +30,8 @@ public class OItemBoat extends OItem {
         double d4 = 5.0D;
         OVec3D localOVec3D2 = localOVec3D1.c(f8 * d4, f9 * d4, f10 * d4);
         OMovingObjectPosition localOMovingObjectPosition = paramOWorld.a(localOVec3D1, localOVec3D2, true);
-        if (localOMovingObjectPosition == null) {
+        if (localOMovingObjectPosition == null)
             return paramOItemStack;
-        }
 
         if (localOMovingObjectPosition.a == OEnumMovingObjectType.a) {
             int i = localOMovingObjectPosition.b;
@@ -45,9 +44,8 @@ public class OItemBoat extends OItem {
                 blockClicked.setFaceClicked(Block.Face.fromId(localOMovingObjectPosition.e));
                 Block blockPlaced = new Block(0, i, j, k);
                 // hMod: Call hook
-                if (paramOEntityPlayer instanceof OEntityPlayerMP && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, ((OEntityPlayerMP) paramOEntityPlayer).getPlayer(), blockPlaced, blockClicked, new Item(paramOItemStack))) {
+                if (paramOEntityPlayer instanceof OEntityPlayerMP && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, ((OEntityPlayerMP) paramOEntityPlayer).getPlayer(), blockPlaced, blockClicked, new Item(paramOItemStack)))
                     return paramOItemStack;
-                }
                 paramOWorld.a(new OEntityBoat(paramOWorld, i + 0.5F, j + 1.5F, k + 0.5F));
             }
             paramOItemStack.a -= 1;

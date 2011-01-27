@@ -8,15 +8,15 @@ public class Group {
     /**
      * Group ID - used for database transactions
      */
-    public int ID;
+    public int      ID;
     /**
      * Group Name
      */
-    public String Name;
+    public String   Name;
     /**
      * Group Prefix/Color
      */
-    public String Prefix;
+    public String   Prefix;
     /**
      * List of commands this group can use
      */
@@ -28,18 +28,18 @@ public class Group {
     /**
      * Is true if it's the default group
      */
-    public boolean DefaultGroup;
+    public boolean  DefaultGroup;
     /**
      * If true all players within this group ignore restrictions
      */
-    public boolean IgnoreRestrictions;
+    public boolean  IgnoreRestrictions;
     /**
      * If true all players within this group have administrator privileges
      */
-    public boolean Administrator;
+    public boolean  Administrator;
     /**
      * If false this player can not modify chests or furnaces and can not
      * destroy/create blocks
      */
-    public boolean CanModifyWorld = true;
+    public boolean  CanModifyWorld = true;
 }

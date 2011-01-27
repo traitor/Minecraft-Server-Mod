@@ -11,102 +11,21 @@ public class Block {
      * Type - Used to identify blocks
      */
     public enum Type {
-        Air(0),
-        Stone(1),
-        Grass(2),
-        Dirt(3),
-        Cobblestone(4),
-        Wood(5),
-        Sapling(6),
-        Bedrock(7),
-        Water(8),
-        StationaryWater(9),
-        Lava(10),
-        StationaryLava(11),
-        Sand(12),
-        Gravel(13),
-        GoldOre(14),
-        IronOre(15),
-        CoalOre(16),
-        Log(17),
-        Leaves(18),
-        Sponge(19),
-        Glass(20),
-        LapisLazuliOre(21),
-        LapisLazuliBlock(22),
-        Dispenser(23),
-        SandStone(24),
-        NoteBlock(25),
-        Cloth(35),
-        YellowFlower(37),
-        RedRose(38),
-        BrownMushroom(39),
-        RedMushroom(40),
-        GoldBlock(41),
-        IronBlock(42),
-        DoubleStep(43),
-        Step(44),
-        Brick(45),
-        TNT(46),
-        BookShelf(47),
-        MossyCobblestone(48),
-        Obsidian(49),
-        Torch(50),
-        Fire(51),
-        MobSpawner(52),
-        WoodStairs(53),
-        Chest(54),
-        RedstoneWire(55),
-        DiamondOre(56),
-        Workbench(58),
-        Crops(59),
-        Soil(60),
-        Furnace(61),
-        BurningFurnace(62),
-        SignPost(63),
-        WoodDoor(64),
-        Ladder(65),
-        Rails(66),
-        CobblestoneStairs(67),
-        WallSign(68),
-        Lever(69),
-        StonePlate(70),
-        IronDoor(71),
-        WoodPlate(72),
-        RedstoneOre(73),
-        GlowingRedstoneOre(74),
-        RedstoneTorchOff(75),
-        RedstoneTorchOn(76),
-        StoneButton(77),
-        Snow(78),
-        Ice(79),
-        SnowBlock(80),
-        Cactus(81),
-        Clay(82),
-        Reed(83),
-        Jukebox(84),
-        Fence(85),
-        Pumpkin(86),
-        Netherstone(87),
-        SlowSand(88),
-        LightStone(89),
-        Portal(90),
-        JackOLantern(91),
-        Cake(92)
-        ;
+        Air(0), Stone(1), Grass(2), Dirt(3), Cobblestone(4), Wood(5), Sapling(6), Bedrock(7), Water(8), StationaryWater(9), Lava(10), StationaryLava(11), Sand(12), Gravel(13), GoldOre(14), IronOre(15), CoalOre(16), Log(17), Leaves(18), Sponge(19), Glass(20), LapisLazuliOre(21), LapisLazuliBlock(22), Dispenser(23), SandStone(24), NoteBlock(25), Cloth(35), YellowFlower(37), RedRose(38), BrownMushroom(39), RedMushroom(40), GoldBlock(41), IronBlock(42), DoubleStep(43), Step(44), Brick(45), TNT(46), BookShelf(
+                47), MossyCobblestone(48), Obsidian(49), Torch(50), Fire(51), MobSpawner(52), WoodStairs(53), Chest(54), RedstoneWire(55), DiamondOre(56), Workbench(58), Crops(59), Soil(60), Furnace(61), BurningFurnace(62), SignPost(63), WoodDoor(64), Ladder(65), Rails(66), CobblestoneStairs(67), WallSign(68), Lever(69), StonePlate(70), IronDoor(71), WoodPlate(72), RedstoneOre(73), GlowingRedstoneOre(74), RedstoneTorchOff(75), RedstoneTorchOn(76), StoneButton(77), Snow(78), Ice(79), SnowBlock(
+                80), Cactus(81), Clay(82), Reed(83), Jukebox(84), Fence(85), Pumpkin(86), Netherstone(87), SlowSand(88), LightStone(89), Portal(90), JackOLantern(91), Cake(92);
 
-        private int id;
+        private int                       id;
         private static Map<Integer, Type> map;
 
-        private Type(int id){
+        private Type(int id) {
             this.id = id;
-            add( id, this );
+            add(id, this);
         }
 
-        private static void add( int type, Type name ) {
-            if (map == null) {
+        private static void add(int type, Type name) {
+            if (map == null)
                 map = new HashMap<Integer, Type>();
-            }
 
             map.put(type, name);
         }
@@ -163,18 +82,17 @@ public class Block {
          * @return face
          */
         public static Face fromId(final int id) {
-            for (Face e : Face.values()) {
-                if (e.id == id) {
+            for (Face e : Face.values())
+                if (e.id == id)
                     return e;
-                }
-            }
             return null;
         }
     }
-    private int type, x, y, z;
+
+    private int  type, x, y, z;
     private Face faceClicked;
-    public Type blockType;
-    private int status, data;
+    public Type  blockType;
+    private int  status, data;
 
     /**
      * Create a block with no type, x, y or z.
@@ -189,7 +107,7 @@ public class Block {
      */
     public Block(int type) {
         this.type = type;
-        this.blockType = Type.fromId(type);
+        blockType = Type.fromId(type);
     }
 
     /**
@@ -203,7 +121,7 @@ public class Block {
      */
     public Block(int type, int x, int y, int z) {
         this.type = type;
-        this.blockType = Type.fromId(type);
+        blockType = Type.fromId(type);
         this.x = x;
         this.y = y;
         this.z = z;
@@ -221,7 +139,7 @@ public class Block {
      */
     public Block(int type, int x, int y, int z, int data) {
         this.type = type;
-        this.blockType = Type.fromId(type);
+        blockType = Type.fromId(type);
         this.x = x;
         this.y = y;
         this.z = z;
@@ -230,7 +148,7 @@ public class Block {
 
     /**
      * Creates a block of specified type and specified x, y and z
-     *
+     * 
      * @param type
      *            Type of block
      * @param x
@@ -240,37 +158,35 @@ public class Block {
      */
     public Block(Type type, int x, int y, int z, int data) {
         this.type = type.getType();
-        this.blockType = type;
+        blockType = type;
         this.x = x;
         this.y = y;
         this.z = z;
         this.data = data;
     }
-    
-    
+
     /**
      * Creates a block of specified type and specified
-     *
+     * 
      * @param type
      *            Type of block
      * @param data
      */
     public Block(Type type, int data) {
         this.type = type.getType();
-        this.blockType = type;
+        blockType = type;
         this.data = data;
     }
 
     /**
      * Creates a block of specified type and specified
-     *
+     * 
      * @param type
      *            Type of block
      */
     public Block(Type type) {
         this.type = type.getType();
-        this.blockType = type;
-        this.data = data;
+        blockType = type;
     }
 
     /**
@@ -288,7 +204,7 @@ public class Block {
      * @param type
      */
     public void setType(int type) {
-        this.blockType = Type.fromId(type);
+        blockType = Type.fromId(type);
         this.type = type;
     }
 
@@ -416,11 +332,13 @@ public class Block {
     /**
      * Returns the block at the given Face
      * 
-     * @param face the block face of which to return
+     * @param face
+     *            the block face of which to return
      * @return Block at the specified Face
      */
     public Block getFace(Face face) {
-        if (face == null) return null;
+        if (face == null)
+            return null;
 
         switch (face) {
             case Front:
@@ -441,8 +359,8 @@ public class Block {
     }
 
     /**
-     * Synchronises this Block with the server, abandoning all local
-     * changes and refreshing the data with the current actual values
+     * Synchronises this Block with the server, abandoning all local changes and
+     * refreshing the data with the current actual values
      */
     public void refresh() {
         type = etc.getServer().getBlockIdAt(x, y, z);
@@ -453,14 +371,17 @@ public class Block {
     /**
      * Finds a Block relative to this Block
      * 
-     * @param x amount to shift the x coordinate
-     * @param y amount to shift the y coordinate
-     * @param z amount to shift the z coordinate
+     * @param x
+     *            amount to shift the x coordinate
+     * @param y
+     *            amount to shift the y coordinate
+     * @param z
+     *            amount to shift the z coordinate
      * 
      * @return Block at the requested location
      */
     public Block getRelative(int x, int y, int z) {
-        return etc.getServer().getBlockAt(this.getX() + x, this.getY() + y, this.getZ() + z);
+        return etc.getServer().getBlockAt(getX() + x, getY() + y, getZ() + z);
     }
 
     /**
@@ -474,7 +395,7 @@ public class Block {
 
     /**
      * Checks if this block is being indirectly powered through redstone
-     *
+     * 
      * @return true if the block is being indirectly powered
      */
     public boolean isIndirectlyPowered() {
@@ -494,27 +415,23 @@ public class Block {
     /**
      * Tests the given object to see if it equals this object
      * 
-     * @param obj the object to test
+     * @param obj
+     *            the object to test
      * @return true if the two objects match
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
+        if (obj == null)
             return false;
-        }
-        if (getClass() != obj.getClass()) {
+        if (getClass() != obj.getClass())
             return false;
-        }
         final Block other = (Block) obj;
-        if (this.x != other.x) {
+        if (x != other.x)
             return false;
-        }
-        if (this.y != other.y) {
+        if (y != other.y)
             return false;
-        }
-        if (this.z != other.z) {
+        if (z != other.z)
             return false;
-        }
         return true;
     }
 
@@ -526,21 +443,21 @@ public class Block {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + this.x;
-        hash = 97 * hash + this.y;
-        hash = 97 * hash + this.z;
+        hash = 97 * hash + x;
+        hash = 97 * hash + y;
+        hash = 97 * hash + z;
         return hash;
     }
 
-    public boolean isCloth(){
-        return this.blockType == Type.Cloth;
+    public boolean isCloth() {
+        return blockType == Type.Cloth;
     }
 
-    public Cloth.Color getColor(){
-        if(!isCloth())
+    public Cloth.Color getColor() {
+        if (!isCloth())
             return null;
         else
-            return Cloth.Color.getColor(this.data);
+            return Cloth.Color.getColor(data);
     }
 
 }

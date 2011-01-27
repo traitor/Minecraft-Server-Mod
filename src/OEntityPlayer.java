@@ -1,32 +1,31 @@
-
 import java.util.List;
-import java.util.Random;
 
 public abstract class OEntityPlayer extends OEntityLiving {
 
-    public OInventoryPlayer an = new OInventoryPlayer(this);
+    public OInventoryPlayer     an     = new OInventoryPlayer(this);
     public OCraftingInventoryCB ao;
     public OCraftingInventoryCB ap;
-    public byte aq = 0;
-    public int ar = 0;
-    public float as;
-    public float at;
-    public boolean au = false;
-    public int av = 0;
-    public String aw;
-    public int ax;
-    public double ay;
-    public double az;
-    public double aA;
-    public double aB;
-    public double aC;
-    public double aD;
-    private int a = 0;
-    public OEntityFish aE = null;
+    public byte                 aq     = 0;
+    public int                  ar     = 0;
+    public float                as;
+    public float                at;
+    public boolean              au     = false;
+    public int                  av     = 0;
+    public String               aw;
+    public int                  ax;
+    public double               ay;
+    public double               az;
+    public double               aA;
+    public double               aB;
+    public double               aC;
+    public double               aD;
+    private int                 a      = 0;
+    public OEntityFish          aE     = null;
 
-    //hMod start
-    HumanEntity entity = new HumanEntity(this);
-    //hMod end
+    // hMod start
+    HumanEntity                 entity = new HumanEntity(this);
+
+    // hMod end
 
     public OEntityPlayer(OWorld paramOWorld) {
         super(paramOWorld);
@@ -46,11 +45,11 @@ public abstract class OEntityPlayer extends OEntityLiving {
         aP = "/mob/char.png";
     }
 
+    @Override
     public void b_() {
         super.b_();
 
-        if ((!l.z)
-                && (ap != null) && (!ap.b(this))) {
+        if ((!l.z) && (ap != null) && (!ap.b(this))) {
             L();
             ap = ao;
         }
@@ -64,24 +63,18 @@ public abstract class OEntityPlayer extends OEntityLiving {
         double d3 = r - aD;
 
         double d4 = 10.0D;
-        if (d1 > d4) {
-            ay = (this.aB = p);
-        }
-        if (d3 > d4) {
-            aA = (this.aD = r);
-        }
-        if (d2 > d4) {
-            az = (this.aC = q);
-        }
-        if (d1 < -d4) {
-            ay = (this.aB = p);
-        }
-        if (d3 < -d4) {
-            aA = (this.aD = r);
-        }
-        if (d2 < -d4) {
-            az = (this.aC = q);
-        }
+        if (d1 > d4)
+            ay = (aB = p);
+        if (d3 > d4)
+            aA = (aD = r);
+        if (d2 > d4)
+            az = (aC = q);
+        if (d1 < -d4)
+            ay = (aB = p);
+        if (d3 < -d4)
+            aA = (aD = r);
+        if (d2 < -d4)
+            az = (aC = q);
 
         aB += d1 * 0.25D;
         aD += d3 * 0.25D;
@@ -92,12 +85,14 @@ public abstract class OEntityPlayer extends OEntityLiving {
         ap = ao;
     }
 
+    @Override
     public void D() {
         super.D();
         as = at;
         at = 0.0F;
     }
 
+    @Override
     protected void d() {
         if (au) {
             av += 1;
@@ -105,21 +100,20 @@ public abstract class OEntityPlayer extends OEntityLiving {
                 av = 0;
                 au = false;
             }
-        } else {
+        } else
             av = 0;
-        }
 
         aY = (av / 8.0F);
     }
 
+    @Override
     public void o() {
-        // hMod: adjust 'healing over time' independent of monster-spawn=true/false (nice notchup!)
+        // hMod: adjust 'healing over time' independent of
+        // monster-spawn=true/false (nice notchup!)
         PluginLoader.HookResult autoHeal = etc.getInstance().autoHeal();
-        if ((l.k == 0) && (autoHeal == PluginLoader.HookResult.DEFAULT_ACTION) || autoHeal == PluginLoader.HookResult.ALLOW_ACTION) {
-            if ((aZ < 20) && (X % 20 * 12 == 0)) {
+        if ((l.k == 0) && (autoHeal == PluginLoader.HookResult.DEFAULT_ACTION) || autoHeal == PluginLoader.HookResult.ALLOW_ACTION)
+            if ((aZ < 20) && (X % 20 * 12 == 0))
                 d(1);
-            }
-        }
 
         an.f();
         as = at;
@@ -128,28 +122,23 @@ public abstract class OEntityPlayer extends OEntityLiving {
 
         float f1 = OMathHelper.a(s * s + u * u);
         float f2 = (float) Math.atan(-t * 0.2000000029802322D) * 15.0F;
-        if (f1 > 0.1F) {
+        if (f1 > 0.1F)
             f1 = 0.1F;
-        }
-        if ((!A) || (aZ <= 0)) {
+        if ((!A) || (aZ <= 0))
             f1 = 0.0F;
-        }
-        if ((A) || (aZ <= 0)) {
+        if ((A) || (aZ <= 0))
             f2 = 0.0F;
-        }
         at += (f1 - at) * 0.4F;
         bh += (f2 - bh) * 0.8F;
 
         if (aZ > 0) {
             List localList = l.b(this, z.b(1.0D, 0.0D, 1.0D));
-            if (localList != null) {
+            if (localList != null)
                 for (int i = 0; i < localList.size(); i++) {
                     OEntity localOEntity = (OEntity) localList.get(i);
-                    if (!localOEntity.G) {
+                    if (!localOEntity.G)
                         j(localOEntity);
-                    }
                 }
-            }
         }
     }
 
@@ -157,6 +146,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
         paramOEntity.b(this);
     }
 
+    @Override
     public void f(OEntity paramOEntity) {
         super.f(paramOEntity);
         a(0.2F, 0.2F);
@@ -164,20 +154,19 @@ public abstract class OEntityPlayer extends OEntityLiving {
         t = 0.1000000014901161D;
 
         // gives player with name "Notch" an free apple; god may know why.
-        if (aw.equals("Notch")) {
+        if (aw.equals("Notch"))
             a(new OItemStack(OItem.h, 1), true);
-        }
         an.h();
 
         if (paramOEntity != null) {
             s = (-OMathHelper.b((bd + v) * 3.141593F / 180.0F) * 0.1F);
             u = (-OMathHelper.a((bd + v) * 3.141593F / 180.0F) * 0.1F);
-        } else {
-            s = (this.u = 0.0D);
-        }
+        } else
+            s = (u = 0.0D);
         H = 0.1F;
     }
 
+    @Override
     public void b(OEntity paramOEntity, int paramInt) {
         ar += paramInt;
     }
@@ -191,9 +180,8 @@ public abstract class OEntityPlayer extends OEntityLiving {
     }
 
     public void a(OItemStack paramOItemStack, boolean paramBoolean) {
-        if (paramOItemStack == null) {
+        if (paramOItemStack == null)
             return;
-        }
 
         OEntityItem localOEntityItem = new OEntityItem(l, p, q - 0.300000011920929D + w(), r, paramOItemStack);
         localOEntityItem.c = 40;
@@ -220,8 +208,8 @@ public abstract class OEntityPlayer extends OEntityLiving {
             localOEntityItem.u += Math.sin(f2) * f1;
         }
 
-        if(!(Boolean)manager.callHook(PluginLoader.Hook.ITEM_DROP, ((OEntityPlayerMP)this).getPlayer(),new Item(paramOItemStack)))
-             a(localOEntityItem);
+        if (!(Boolean) manager.callHook(PluginLoader.Hook.ITEM_DROP, ((OEntityPlayerMP) this).getPlayer(), new Item(paramOItemStack)))
+            a(localOEntityItem);
         // return the item to the inventory.
         else
             an.a(paramOItemStack);
@@ -233,12 +221,10 @@ public abstract class OEntityPlayer extends OEntityLiving {
 
     public float a(OBlock paramOBlock) {
         float f = an.a(paramOBlock);
-        if (a(OMaterial.f)) {
+        if (a(OMaterial.f))
             f /= 5.0F;
-        }
-        if (!A) {
+        if (!A)
             f /= 5.0F;
-        }
 
         return f;
     }
@@ -247,6 +233,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
         return an.b(paramOBlock);
     }
 
+    @Override
     public void b(ONBTTagCompound paramONBTTagCompound) {
         super.b(paramONBTTagCompound);
         ONBTTagList localONBTTagList = paramONBTTagCompound.k("Inventory");
@@ -254,6 +241,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
         ax = paramONBTTagCompound.d("Dimension");
     }
 
+    @Override
     public void a(ONBTTagCompound paramONBTTagCompound) {
         super.a(paramONBTTagCompound);
         paramONBTTagCompound.a("Inventory", an.a(new ONBTTagList()));
@@ -269,35 +257,33 @@ public abstract class OEntityPlayer extends OEntityLiving {
     public void c(OEntity paramOEntity, int paramInt) {
     }
 
+    @Override
     public float w() {
         return 0.12F;
     }
 
+    @Override
     public boolean a(OEntity paramOEntity, int paramInt) {
         bw = 0;
-        if (aZ <= 0) {
+        if (aZ <= 0)
             return false;
-        }
 
         if (((paramOEntity instanceof OEntityMobs)) || ((paramOEntity instanceof OEntityArrow))) {
-            if (l.k == 0) {
+            if (l.k == 0)
                 paramInt = 0;
-            }
-            if (l.k == 1) {
+            if (l.k == 1)
                 paramInt = paramInt / 3 + 1;
-            }
-            if (l.k == 3) {
+            if (l.k == 3)
                 paramInt = paramInt * 3 / 2;
-            }
         }
 
-        if (paramInt == 0) {
+        if (paramInt == 0)
             return false;
-        }
 
         return super.a(paramOEntity, paramInt);
     }
 
+    @Override
     protected void e(int paramInt) {
         int i = 25 - an.g();
         int j = paramInt * i + a;
@@ -317,9 +303,8 @@ public abstract class OEntityPlayer extends OEntityLiving {
     }
 
     public void g(OEntity paramOEntity) {
-        if (paramOEntity.a(this)) {
+        if (paramOEntity.a(this))
             return;
-        }
         OItemStack localOItemStack = P();
         if ((localOItemStack != null) && ((paramOEntity instanceof OEntityLiving))) {
             localOItemStack.b((OEntityLiving) paramOEntity);
@@ -338,6 +323,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
         an.a(an.c, null);
     }
 
+    @Override
     public double F() {
         return H - 0.5F;
     }
@@ -365,11 +351,11 @@ public abstract class OEntityPlayer extends OEntityLiving {
     public void a(OItemStack paramOItemStack) {
     }
 
+    @Override
     public void q() {
         super.q();
         ao.a(this);
-        if (ap != null) {
+        if (ap != null)
             ap.a(this);
-        }
     }
 }

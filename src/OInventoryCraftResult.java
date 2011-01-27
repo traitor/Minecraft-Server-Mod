@@ -1,9 +1,7 @@
+public class OInventoryCraftResult implements OIInventory, Container<OItemStack> {
 
-public class OInventoryCraftResult
-        implements OIInventory, Container<OItemStack> {
-
-    private OItemStack[] a = new OItemStack[1];
-    private String name = "Result";
+    private OItemStack[] a    = new OItemStack[1];
+    private String       name = "Result";
 
     public int h_() {
         return 1;
@@ -18,7 +16,7 @@ public class OInventoryCraftResult
     }
 
     public void setContents(OItemStack[] e) {
-        this.a = e;
+        a = e;
     }
 
     public OItemStack getContentsAt(int index) {

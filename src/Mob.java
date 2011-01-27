@@ -7,14 +7,15 @@ public class Mob extends LivingEntity {
     /**
      * Creates a mob interface
      * 
-     * @param locallb name of mob
+     * @param locallb
+     *            name of mob
      */
     public Mob(OEntityLiving locallb) {
         super(locallb);
     }
-    
+
     /**
-     * Creates a mob interface 
+     * Creates a mob interface
      * 
      * @param mob
      *            name of mob
@@ -26,8 +27,10 @@ public class Mob extends LivingEntity {
     /**
      * Creates a mob interface
      * 
-     * @param mobName name of mob
-     * @param location location of mob
+     * @param mobName
+     *            name of mob
+     * @param location
+     *            location of mob
      */
     public Mob(String mobName, Location location) {
         this(mobName);
@@ -75,12 +78,12 @@ public class Mob extends LivingEntity {
     public void dropLoot() {
         getEntity().f(null);
     }
-    
+
+    @Override
     public void setHealth(int health) {
         super.setHealth(health);
-        if (health <= 0) {
+        if (health <= 0)
             dropLoot();
-        }
     }
 
     /**
@@ -89,7 +92,7 @@ public class Mob extends LivingEntity {
      * @return
      */
     public OEntityLiving getMob() {
-        return (OEntityLiving)getEntity();
+        return getEntity();
     }
 
     /**
@@ -100,9 +103,8 @@ public class Mob extends LivingEntity {
      * @return true of mob is valid
      */
     public static boolean isValid(String mob) {
-        if (mob == null) {
+        if (mob == null)
             return false;
-        }
         OEntity c = OEntityList.a(mob, etc.getMCServer().e);
         return c instanceof OIMobs || c instanceof OIAnimals;
     }
