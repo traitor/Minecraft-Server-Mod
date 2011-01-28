@@ -166,7 +166,7 @@ public class etc {
             monsters = properties.getString("natural-monsters", "Spider,Zombie,Skeleton,Creeper").split(",");
             if (monsters.length == 1 && (monsters[0].equals(" ") || monsters[0].equals("")))
                 monsters = new String[] {};
-            validateMobGroup(monsters, "natural-monsters", new String[] { "Spider", "Zombie", "Skeleton", "Creeper" });
+            validateMobGroup(monsters, "natural-monsters", new String[] {"PigZombie", "Ghast", "Slime", "Giant", "Spider", "Zombie", "Skeleton", "Creeper" });
 
             waterAnimals = properties.getString("natural-wateranimals", "Squid").split(",");
             if (waterAnimals.length == 1 && (waterAnimals[0].equals(" ") || waterAnimals[0].equals("")))
