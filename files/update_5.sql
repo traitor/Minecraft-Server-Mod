@@ -5,7 +5,7 @@ INSERT INTO `items` (`name`, `itemid`) VALUES
 ('sandstone', 24), 
 ('noteblock', 25), 
 ('cakeblock', 92),
-('cookedfish',350)
+('cookedfish',350),
 ('inksack', 351), 
 ('dye', 351), 
 ('bone', 352), 
