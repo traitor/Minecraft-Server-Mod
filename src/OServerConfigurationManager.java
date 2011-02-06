@@ -88,6 +88,9 @@ public class OServerConfigurationManager {
     }
 
     public OEntityPlayerMP a(ONetLoginHandler paramONetLoginHandler, String paramString1, String paramString2) {
+        if(!etc.getLoader().isLoaded())
+            paramONetLoginHandler.a("The server is not finished loading yet!");
+            
         if (f.contains(paramString1.trim().toLowerCase())) {
             paramONetLoginHandler.a("You are banned from this server!");
             return null;

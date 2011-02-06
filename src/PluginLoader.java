@@ -262,7 +262,7 @@ public class PluginLoader {
     private Server                               server;
     private PropertiesFile                       properties;
 
-    private boolean                              loaded          = false;
+    private volatile boolean                     loaded          = false;
 
     /**
      * Creates a plugin loader
@@ -763,5 +763,8 @@ public class PluginLoader {
         synchronized (lock) {
             customListeners.remove(name);
         }
+    }
+    public boolean isLoaded(){
+        return loaded;
     }
 }

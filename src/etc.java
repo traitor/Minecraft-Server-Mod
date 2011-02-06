@@ -58,6 +58,9 @@ public class etc {
     private String[]                      waterAnimals        = new String[] {};
     private int                           mobSpawnRate        = 2;
 
+    private boolean                       mobReload           = false;
+    private Class<?>[]                    animalsClass, monsterClass, waterAnimalsClass;
+    
     private etc() {
         commands.put("/help", "[Page] - Shows a list of commands. 7 per page.");
         commands.put("/playerlist", "- Shows a list of players");
@@ -173,6 +176,8 @@ public class etc {
                 waterAnimals = new String[] {};
             validateMobGroup(waterAnimals, "natural-wateranimals", new String[] { "Squid" });
 
+            mobReload = true;
+            
             mobSpawnRate = properties.getInt("natural-spawn-rate", mobSpawnRate);
 
             String autoHealString = properties.getString("auto-heal", "default");
@@ -953,6 +958,34 @@ public class etc {
         return monsters;
     }
 
+    public Class<?>[] getMonstersClass(){
+        if(mobReload) reloadMonsterClass();
+        return monsterClass;
+    }
+    public Class<?>[] getAnimalsClass(){
+        if(mobReload) reloadMonsterClass();
+        return animalsClass;
+    }
+    public Class<?>[] getWaterAnimalsClass(){
+        if(mobReload) reloadMonsterClass();
+        return waterAnimalsClass;
+    }
+    
+    private void reloadMonsterClass(){
+        monsterClass = new Class[getMonsters().length];
+        animalsClass = new Class[getAnimals().length];
+        waterAnimalsClass = new Class[getWaterAnimals().length];
+
+        for (int i = 0; i < monsterClass.length; i++)
+            monsterClass[i] = OEntityList.getEntity(getMonsters()[i]);
+        for (int i = 0; i < animalsClass.length; i++)
+            animalsClass[i] = OEntityList.getEntity(getAnimals()[i]);
+        for (int i = 0; i < waterAnimalsClass.length; i++)
+            waterAnimalsClass[i] = OEntityList.getEntity(getWaterAnimals()[i]);
+        
+        mobReload = false;
+    }
+    
     /**
      * Sets a list of mobs that are allowed to spawn naturally
      * 

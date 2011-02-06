@@ -7,7 +7,22 @@ import java.util.Map;
  */
 public class Cloth {
     public enum Color {
-        WHITE("white", 0), ORANGE("Orange", 1), MAGENTA("Magenta", 2), LIGHT_BLUE("Light Blue", 3), YELLOW("Yellow", 4), LIGHT_GREEN("Light Green", 5), PINK("Pink", 6), GRAY("Gray", 7), LIGHT_GRAY("Light Gray", 8), CYAN("Cyan", 9), PURPLE("Purple", 10), BLUE("Blue", 11), BROWN("Brown", 12), DARK_GREEN("Dark Green", 13), RED("Red", 14), BLACK("Black", 15);
+        WHITE("white", 0), //
+        ORANGE("Orange", 1), //
+        MAGENTA("Magenta", 2), //
+        LIGHT_BLUE("Light Blue", 3), //
+        YELLOW("Yellow", 4), //
+        LIGHT_GREEN("Light Green", 5), //
+        PINK("Pink", 6), //
+        GRAY("Gray", 7), //
+        LIGHT_GRAY("Light Gray", 8), //
+        CYAN("Cyan", 9), //
+        PURPLE("Purple", 10), //
+        BLUE("Blue", 11), //
+        BROWN("Brown", 12), //
+        DARK_GREEN("Dark Green", 13), //
+        RED("Red", 14), //
+        BLACK("Black", 15);
 
         private String                    name;
         private int                       data;

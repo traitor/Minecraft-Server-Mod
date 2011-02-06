@@ -139,19 +139,22 @@ public class Player extends HumanEntity implements MessageReceiver {
         try {
             if (etc.getInstance().isLogging())
                 log.info("Command used by " + getName() + " " + command);
+            
             String[] split = command.split(" ");
+            String cmd = split[0];
+            
             if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMMAND, new Object[] { this, split }))
                 return; // No need to go on, commands were parsed.
-            if (!canUseCommand(split[0]) && !split[0].startsWith("/#")) {
+            if (!canUseCommand(cmd) && !cmd.startsWith("/#")) {
                 if (etc.getInstance().showUnknownCommand())
                     sendMessage(Colors.Rose + "Unknown command.");
                 return;
             }
 
             // Remove '/' before checking.
-            if (ServerConsoleCommands.parseServerConsoleCommand(this, split[0].substring(1), split)) {
+            if (ServerConsoleCommands.parseServerConsoleCommand(this, cmd.substring(1), split)) {
                 // Command parsed successfully...
-            } else if (split[0].equalsIgnoreCase("/help")) {
+            } else if (cmd.equalsIgnoreCase("/help")) {
                 // Meh, not the greatest way, but not the worst either.
                 List<String> availableCommands = new ArrayList<String>();
                 for (Entry<String, String> entry : etc.getInstance().getCommands().entrySet())
@@ -184,7 +187,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                     for (int i = 0; i < 7; i++)
                         if (availableCommands.size() > i)
                             sendMessage(Colors.Rose + availableCommands.get(i));
-            } else if (split[0].equalsIgnoreCase("/mute")) {
+            } else if (cmd.equalsIgnoreCase("/mute")) {
                 if (split.length != 2) {
                     sendMessage(Colors.Rose + "Correct usage is: /mute [player]");
                     return;
@@ -199,7 +202,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                         sendMessage(Colors.Rose + "player was unmuted");
                 } else
                     sendMessage(Colors.Rose + "Can't find player " + split[1]);
-            } else if ((split[0].equalsIgnoreCase("/msg") || split[0].equalsIgnoreCase("/tell")) || split[0].equalsIgnoreCase("/m")) {
+            } else if ((cmd.equalsIgnoreCase("/msg") || cmd.equalsIgnoreCase("/tell")) || cmd.equalsIgnoreCase("/m")) {
                 if (split.length < 3) {
                     sendMessage(Colors.Rose + "Correct usage is: /msg [player] [message]");
                     return;
@@ -221,7 +224,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                     sendMessage("(MSG) " + getColor() + "<" + getName() + "> " + Colors.White + etc.combineSplit(2, split, " "));
                 } else
                     sendMessage(Colors.Rose + "Couldn't find player " + split[1]);
-            } else if (split[0].equalsIgnoreCase("/kit") && etc.getDataSource().hasKits()) {
+            } else if (cmd.equalsIgnoreCase("/kit") && etc.getDataSource().hasKits()) {
                 if (split.length != 2 && split.length != 3) {
                     sendMessage(Colors.Rose + "Available kits" + Colors.White + ": " + etc.getDataSource().getKitNames(this));
                     return;
@@ -268,7 +271,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                         sendMessage(Colors.Rose + "That kit does not exist.");
                 } else
                     sendMessage(Colors.Rose + "That user does not exist.");
-            } else if (split[0].equalsIgnoreCase("/tp")) {
+            } else if (cmd.equalsIgnoreCase("/tp")) {
                 if (split.length < 2) {
                     sendMessage(Colors.Rose + "Correct usage is: /tp [player]");
                     return;
@@ -286,7 +289,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                     teleportTo(player);
                 } else
                     sendMessage(Colors.Rose + "Can't find user " + split[1] + ".");
-            } else if ((split[0].equalsIgnoreCase("/tphere") || split[0].equalsIgnoreCase("/s"))) {
+            } else if ((cmd.equalsIgnoreCase("/tphere") || cmd.equalsIgnoreCase("/s"))) {
                 if (split.length < 2) {
                     sendMessage(Colors.Rose + "Correct usage is: /tphere [player]");
                     return;
@@ -304,9 +307,9 @@ public class Player extends HumanEntity implements MessageReceiver {
                     player.teleportTo(this);
                 } else
                     sendMessage(Colors.Rose + "Can't find user " + split[1] + ".");
-            } else if (split[0].equalsIgnoreCase("/playerlist") || split[0].equalsIgnoreCase("/who"))
+            } else if (cmd.equalsIgnoreCase("/playerlist") || cmd.equalsIgnoreCase("/who"))
                 sendMessage(Colors.Rose + "Player list (" + etc.getMCServer().f.b.size() + "/" + etc.getInstance().getPlayerLimit() + "): " + Colors.White + etc.getMCServer().f.c());
-            else if (split[0].equalsIgnoreCase("/item") || split[0].equalsIgnoreCase("/i") || split[0].equalsIgnoreCase("/give")) {
+            else if (cmd.equalsIgnoreCase("/item") || cmd.equalsIgnoreCase("/i") || cmd.equalsIgnoreCase("/give")) {
                 if (split.length < 2) {
                     if (canIgnoreRestrictions())
                         sendMessage(Colors.Rose + "Correct usage is: /item [itemid] <amount> <damage> <player> (optional)");
@@ -372,14 +375,35 @@ public class Player extends HumanEntity implements MessageReceiver {
                             Item i = new Item(itemId, amount, -1, damage);
                             log.log(Level.INFO, "Giving " + toGive.getName() + " some " + i.toString());
                             // toGive.giveItem(itemId, amount);
-                            i.setAmount(64);
-                            while (amount > 64) {
-                                amount -= 64;
-                                toGive.giveItem(i);
-                                i.setSlot(-1);
+                            Inventory inv = toGive.getInventory();
+                            ArrayList<Item> list = new ArrayList<Item>();
+                            for(Item it : inv.getContents())
+                                if(it != null && it.getItemId() == i.getItemId() && it.getDamage() == i.getDamage())
+                                    list.add(it);
+                            
+                            for(Item it : list){
+                                if(it.getAmount() < 64){
+                                    if(amount >= 64 - it.getAmount()){
+                                        amount -= 64 - it.getAmount();
+                                        it.setAmount(64);
+                                        toGive.giveItem(it);
+                                    }else{
+                                        it.setAmount(it.getAmount() + amount);
+                                        amount = 0;
+                                        toGive.giveItem(it);
+                                    }
+                                }
                             }
-                            i.setAmount(amount);
-                            toGive.giveItem(i);
+                            if(amount != 0){
+                                i.setAmount(64);
+                                while (amount > 64) {
+                                    amount -= 64;
+                                    toGive.giveItem(i);
+                                    i.setSlot(-1);
+                                }
+                                i.setAmount(amount);
+                                toGive.giveItem(i);
+                            }
                             if (toGive.getName().equalsIgnoreCase(getName()))
                                 sendMessage(Colors.Rose + "There you go " + getName() + ".");
                             else {
@@ -393,9 +417,9 @@ public class Player extends HumanEntity implements MessageReceiver {
 
                 } else
                     sendMessage(Colors.Rose + "Can't find user " + split[3]);
-            } else if (split[0].equalsIgnoreCase("/cloth")) {
+            } else if (cmd.equalsIgnoreCase("/cloth") || cmd.equalsIgnoreCase("/dye")) {
                 if (split.length < 3) {
-                    sendMessage(Colors.Rose + "Correct usage is: /cloth [amount] [color]");
+                    sendMessage(Colors.Rose + "Correct usage is: "+cmd+" [amount] [color]");
                     return;
                 }
                 try {
@@ -417,23 +441,47 @@ public class Player extends HumanEntity implements MessageReceiver {
                         return;
                     }
                     Item i = c.getItem();
+                    
+                    if(cmd.equalsIgnoreCase("/dye"))
+                        i.setType(Item.Type.InkSack);
                     i.setAmount(amount);
                     log.log(Level.INFO, "Giving " + getName() + " some " + i.toString());
-                    i.setAmount(64);
-                    while (amount > 64) {
-                        amount -= 64;
-                        giveItem(i);
-                        i.setSlot(-1);
+                    
+                    Inventory inv = getInventory();
+                    ArrayList<Item> list = new ArrayList<Item>();
+                    for(Item it : inv.getContents())
+                        if(it != null && it.getItemId() == i.getItemId() && it.getDamage() == i.getDamage())
+                            list.add(it);
+                    
+                    for(Item it : list){
+                        if(it.getAmount() < 64){
+                            if(amount >= 64 - it.getAmount()){
+                                amount -= 64 - it.getAmount();
+                                it.setAmount(64);
+                                giveItem(it);
+                            }else{
+                                it.setAmount(it.getAmount() + amount);
+                                amount = 0;
+                                giveItem(it);
+                            }
+                        }
                     }
-                    i.setAmount(amount);
-                    giveItem(i);
-
+                    if(amount != 0){
+                        i.setAmount(64);
+                        while (amount > 64) {
+                            amount -= 64;
+                            giveItem(i);
+                            i.setSlot(-1);
+                        }
+                        i.setAmount(amount);
+                        giveItem(i);
+                    }
                     sendMessage(Colors.Rose + "There you go " + getName() + ".");
                 } catch (NumberFormatException localNumberFormatException) {
                     sendMessage(Colors.Rose + "Improper ID and/or amount.");
                 }
 
-            } else if (split[0].equalsIgnoreCase("/tempban")) {
+            } else if (cmd.equalsIgnoreCase("/tempban")) {
                 // /tempban MINUTES HOURS DAYS
                 if (split.length == 1)
                     return;
@@ -446,7 +494,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                     days = Integer.parseInt(split[3]);
                 Date date = new Date();
                 // date.
-            } else if (split[0].equalsIgnoreCase("/banlist")) {
+            } else if (cmd.equalsIgnoreCase("/banlist")) {
                 byte type = 0;
                 if (split.length == 2)
                     if (split[1].equalsIgnoreCase("ips"))
@@ -455,7 +503,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                     sendMessage(Colors.Blue + "Ban list:" + Colors.White + " " + etc.getMCServer().f.getBans());
                 else
                     sendMessage(Colors.Blue + "IP Ban list:" + Colors.White + " " + etc.getMCServer().f.getIpBans());
-            } else if (split[0].equalsIgnoreCase("/banip")) {
+            } else if (cmd.equalsIgnoreCase("/banip")) {
                 if (split.length < 2) {
                     sendMessage(Colors.Rose + "Correct usage is: /banip [player] <reason> (optional) NOTE: this permabans IPs.");
                     return;
@@ -482,7 +530,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                         player.kick("IP Banned by " + getName() + ".");
                 } else
                     sendMessage(Colors.Rose + "Can't find user " + split[1] + ".");
-            } else if (split[0].equalsIgnoreCase("/ban")) {
+            } else if (cmd.equalsIgnoreCase("/ban")) {
                 if (split.length < 2) {
                     sendMessage(Colors.Rose + "Correct usage is: /ban [player] <reason> (optional)");
                     return;
@@ -514,21 +562,21 @@ public class Player extends HumanEntity implements MessageReceiver {
                     log.log(Level.INFO, "Banning " + split[1]);
                     sendMessage(Colors.Rose + "Banning " + split[1]);
                 }
-            } else if (split[0].equalsIgnoreCase("/unban")) {
+            } else if (cmd.equalsIgnoreCase("/unban")) {
                 if (split.length != 2) {
                     sendMessage(Colors.Rose + "Correct usage is: /unban [player]");
                     return;
                 }
                 etc.getServer().unban(split[1]);
                 sendMessage(Colors.Rose + "Unbanned " + split[1]);
-            } else if (split[0].equalsIgnoreCase("/unbanip")) {
+            } else if (cmd.equalsIgnoreCase("/unbanip")) {
                 if (split.length != 2) {
                     sendMessage(Colors.Rose + "Correct usage is: /unbanip [ip]");
                     return;
                 }
                 etc.getMCServer().f.d(split[1]);
                 sendMessage(Colors.Rose + "Unbanned " + split[1]);
-            } else if (split[0].equalsIgnoreCase("/kick")) {
+            } else if (cmd.equalsIgnoreCase("/kick")) {
                 if (split.length < 2) {
                     sendMessage(Colors.Rose + "Correct usage is: /kick [player] <reason> (optional)");
                     return;
@@ -552,7 +600,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                     sendMessage(Colors.Rose + "Kicking " + player.getName());
                 } else
                     sendMessage(Colors.Rose + "Can't find user " + split[1] + ".");
-            } else if (split[0].equalsIgnoreCase("/me")) {
+            } else if (cmd.equalsIgnoreCase("/me")) {
                 if (isMuted()) {
                     sendMessage(Colors.Rose + "You are currently muted.");
                     return;
@@ -562,7 +610,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                 String paramString2 = "* " + getColor() + getName() + Colors.White + " " + command.substring(command.indexOf(" ")).trim();
                 log.info("* " + getName() + " " + command.substring(command.indexOf(" ")).trim());
                 etc.getServer().messageAll(paramString2);
-            } else if (split[0].equalsIgnoreCase("/sethome")) {
+            } else if (cmd.equalsIgnoreCase("/sethome")) {
                 // player.k, player.l, player.m
                 // x, y, z
                 Warp home = new Warp();
@@ -571,9 +619,9 @@ public class Player extends HumanEntity implements MessageReceiver {
                 home.Name = getName();
                 etc.getInstance().changeHome(home);
                 sendMessage(Colors.Rose + "Your home has been set.");
-            } else if (split[0].equalsIgnoreCase("/spawn"))
+            } else if (cmd.equalsIgnoreCase("/spawn"))
                 teleportTo(etc.getServer().getSpawnLocation());
-            else if (split[0].equalsIgnoreCase("/setspawn")) {
+            else if (cmd.equalsIgnoreCase("/setspawn")) {
                 etc.getMCServer().e.m = (int) Math.ceil(getX());
                 etc.getMCServer().e.o = (int) Math.ceil(getZ());
                 // Too lazy to actually update this considering it's not even
@@ -583,7 +631,7 @@ public class Player extends HumanEntity implements MessageReceiver {
 
                 log.info("Spawn position changed.");
                 sendMessage(Colors.Rose + "You have set the spawn to your current position.");
-            } else if (split[0].equalsIgnoreCase("/home")) {
+            } else if (cmd.equalsIgnoreCase("/home")) {
                 Warp home = null;
                 if (split.length > 1 && isAdmin())
                     home = etc.getDataSource().getHome(split[1]);
@@ -596,7 +644,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                     sendMessage(Colors.Rose + "That player home does not exist");
                 else
                     teleportTo(etc.getServer().getSpawnLocation());
-            } else if (split[0].equalsIgnoreCase("/warp")) {
+            } else if (cmd.equalsIgnoreCase("/warp")) {
                 if (split.length < 2) {
                     sendMessage(Colors.Rose + "Correct usage is: /warp [warpname]");
                     return;
@@ -620,12 +668,12 @@ public class Player extends HumanEntity implements MessageReceiver {
                         sendMessage(Colors.Rose + "Warp not found");
                 } else
                     sendMessage(Colors.Rose + "Player not found.");
-            } else if (split[0].equalsIgnoreCase("/listwarps") && etc.getDataSource().hasWarps()) {
+            } else if (cmd.equalsIgnoreCase("/listwarps") && etc.getDataSource().hasWarps()) {
                 if (split.length != 2 && split.length != 3) {
                     sendMessage(Colors.Rose + "Available warps: " + Colors.White + etc.getDataSource().getWarpNames(this));
                     return;
                 }
-            } else if (split[0].equalsIgnoreCase("/setwarp")) {
+            } else if (cmd.equalsIgnoreCase("/setwarp")) {
                 if (split.length < 2) {
                     if (canIgnoreRestrictions())
                         sendMessage(Colors.Rose + "Correct usage is: /setwarp [warpname] [group]");
@@ -646,7 +694,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                     warp.Group = "";
                 etc.getInstance().setWarp(warp);
                 sendMessage(Colors.Rose + "Created warp point " + split[1] + ".");
-            } else if (split[0].equalsIgnoreCase("/removewarp")) {
+            } else if (cmd.equalsIgnoreCase("/removewarp")) {
                 if (split.length < 2) {
                     sendMessage(Colors.Rose + "Correct usage is: /removewarp [warpname]");
                     return;
@@ -657,7 +705,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                     sendMessage(Colors.Blue + "Warp removed.");
                 } else
                     sendMessage(Colors.Rose + "That warp does not exist");
-            } else if (split[0].equalsIgnoreCase("/lighter")) {
+            } else if (cmd.equalsIgnoreCase("/lighter")) {
                 if (MinecraftServer.b.containsKey(getName() + " lighter")) {
                     log.info(getName() + " failed to iron!");
                     sendMessage(Colors.Rose + "You can't create another lighter again so soon");
@@ -671,7 +719,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                 String str = command.substring(2);
                 log.info(getName() + " issued server command: " + str);
                 etc.getMCServer().a(str, getEntity().a);
-            } else if (split[0].equalsIgnoreCase("/time")) {
+            } else if (cmd.equalsIgnoreCase("/time")) {
                 if (split.length == 2) {
                     if (split[1].equalsIgnoreCase("day"))
                         etc.getServer().setRelativeTime(0);
@@ -696,7 +744,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                     sendMessage(Colors.Rose + "Correct usage is: /time [time|'day|night|check|raw'] (rawtime)");
                     return;
                 }
-            } else if (split[0].equalsIgnoreCase("/getpos")) {
+            } else if (cmd.equalsIgnoreCase("/getpos")) {
                 sendMessage("Pos X: " + getX() + " Y: " + getY() + " Z: " + getZ());
                 sendMessage("Rotation: " + getRotation() + " Pitch: " + getPitch());
 
@@ -704,16 +752,16 @@ public class Player extends HumanEntity implements MessageReceiver {
                 if (degreeRotation < 0)
                     degreeRotation += 360.0;
                 sendMessage("Compass: " + etc.getCompassPointForDirection(degreeRotation) + " (" + (Math.round(degreeRotation * 10) / 10.0) + ")");
-            } else if (split[0].equalsIgnoreCase("/compass")) {
+            } else if (cmd.equalsIgnoreCase("/compass")) {
                 double degreeRotation = ((getRotation() - 90) % 360);
                 if (degreeRotation < 0)
                     degreeRotation += 360.0;
 
                 sendMessage(Colors.Rose + "Compass: " + etc.getCompassPointForDirection(degreeRotation));
-            } else if (split[0].equalsIgnoreCase("/motd"))
+            } else if (cmd.equalsIgnoreCase("/motd"))
                 for (String str : etc.getInstance().getMotd())
                     sendMessage(str);
-            else if (split[0].equalsIgnoreCase("/spawnmob")) {
+            else if (cmd.equalsIgnoreCase("/spawnmob")) {
                 if (split.length == 1) {
                     sendMessage(Colors.Rose + "Correct usage is: /spawnmob [name] <amount>");
                     return;
@@ -755,7 +803,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                     } catch (NumberFormatException nfe) {
                         sendMessage(Colors.Rose + "Invalid number of mobs.");
                     }
-            } else if (split[0].equalsIgnoreCase("/clearinventory")) {
+            } else if (cmd.equalsIgnoreCase("/clearinventory")) {
                 Player target = this;
                 if (split.length >= 2 && isAdmin())
                     target = etc.getServer().matchPlayer(split[1]);
@@ -767,7 +815,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                         sendMessage(Colors.Rose + "Cleared " + target.getName() + "'s inventory.");
                 } else
                     sendMessage(Colors.Rose + "Target not found");
-            } else if (split[0].equals("/mspawn")) {
+            } else if (cmd.equals("/mspawn")) {
                 if (split.length != 2) {
                     sendMessage(Colors.Rose + "You must specify what to change the mob spawner to.");
                     return;
