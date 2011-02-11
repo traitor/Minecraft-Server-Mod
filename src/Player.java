@@ -442,8 +442,11 @@ public class Player extends HumanEntity implements MessageReceiver {
                     }
                     Item i = c.getItem();
                     
-                    if(cmd.equalsIgnoreCase("/dye"))
+                    if(cmd.equalsIgnoreCase("/dye")){
                         i.setType(Item.Type.InkSack);
+                        //some1 had fun inverting this i guess .....
+                        i.setDamage(15 - i.getDamage());
+                    }
                     i.setAmount(amount);
                     log.log(Level.INFO, "Giving " + getName() + " some " + i.toString());
                     
