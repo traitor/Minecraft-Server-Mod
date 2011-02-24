@@ -5,11 +5,11 @@ import java.util.Random;
 import net.minecraft.server.MinecraftServer;
 
 public class OWorldServer extends OWorld {
-    public OChunkProviderServer A;
-    public boolean              B = false;
-    public boolean              C;
-    private MinecraftServer     D;
-    private OMCHashTable        E = new OMCHashTable();
+    public OChunkProviderServer u;
+    public boolean              v = false;
+    public boolean              w;
+    private MinecraftServer     x;
+    private OMCHashTable        y = new OMCHashTable();
 
     public OWorldServer(MinecraftServer paramMinecraftServer, File paramFile, String paramString, int paramInt) {
         super(paramFile, paramString, new Random().nextLong(), OWorldProvider.a(paramInt));

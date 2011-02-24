@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -8,6 +7,7 @@ public class OBlockRedstoneTorch extends OBlockTorch {
     private boolean a = false;
     private static List b = new ArrayList();
 
+    @Override
     public int a(int paramInt1, int paramInt2) {
         if (paramInt1 == 1) {
             return OBlock.av.a(paramInt1, paramInt2);
@@ -38,10 +38,12 @@ public class OBlockRedstoneTorch extends OBlockTorch {
         a(true);
     }
 
+    @Override
     public int b() {
         return 2;
     }
 
+    @Override
     public void e(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         if (paramOWorld.b(paramInt1, paramInt2, paramInt3) == 0) {
             super.e(paramOWorld, paramInt1, paramInt2, paramInt3);
@@ -56,6 +58,7 @@ public class OBlockRedstoneTorch extends OBlockTorch {
         }
     }
 
+    @Override
     public void b(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         if (a) {
             paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bk);
@@ -67,6 +70,7 @@ public class OBlockRedstoneTorch extends OBlockTorch {
         }
     }
 
+    @Override
     public boolean b(OIBlockAccess paramOIBlockAccess, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         if (!a) {
             return false;
@@ -107,6 +111,7 @@ public class OBlockRedstoneTorch extends OBlockTorch {
         return (i == 2) && (paramOWorld.j(paramInt1 + 1, paramInt2, paramInt3, 5));
     }
 
+    @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
         boolean bool = g(paramOWorld, paramInt1, paramInt2, paramInt3);
 
@@ -141,11 +146,13 @@ public class OBlockRedstoneTorch extends OBlockTorch {
         }
     }
 
+    @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         super.a(paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
         paramOWorld.c(paramInt1, paramInt2, paramInt3, bk, b());
     }
 
+    @Override
     public boolean c(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         if (paramInt4 == 0) {
             // hMod: forced downcast!
@@ -154,10 +161,12 @@ public class OBlockRedstoneTorch extends OBlockTorch {
         return false;
     }
 
+    @Override
     public int a(int paramInt, Random paramRandom) {
         return OBlock.aQ.bk;
     }
 
+    @Override
     public boolean c() {
         return true;
     }
