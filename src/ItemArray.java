@@ -32,7 +32,7 @@ public abstract class ItemArray<C extends Container<OItemStack>> {
 
         if (slot < size && slot >= 0) {
             if (item.getAmount() <= 0)
-                setSlot(null, slot);
+                removeItem(slot);
             else if (Item.isValidItem(item.getItemId()))
                 setSlot(item, slot);
         } else if (slot == -1) {
