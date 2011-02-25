@@ -9,12 +9,13 @@ public class OItemSeeds extends OItem {
 
     @Override
     public boolean a(OItemStack paramOItemStack, OEntityPlayer paramOEntityPlayer, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        if (paramInt4 != 1)
+        if (paramInt4 != 1) {
             return false;
+        }
 
         int i = paramOWorld.a(paramInt1, paramInt2, paramInt3);
 
-        if ((i == OBlock.aA.bi) && (paramOWorld.e(paramInt1, paramInt2 + 1, paramInt3))) {
+        if ((i == OBlock.aA.bk) && (paramOWorld.e(paramInt1, paramInt2 + 1, paramInt3))) {
             // hMod: Seeds
             Block blockClicked = new Block(i, paramInt1, paramInt2, paramInt3);
             blockClicked.setFaceClicked(Block.Face.fromId(paramInt4));

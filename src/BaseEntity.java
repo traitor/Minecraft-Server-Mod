@@ -28,7 +28,7 @@ public class BaseEntity {
      * @return id
      */
     public int getId() {
-        return entity.g;
+        return entity.aA;
     }
 
     /**
@@ -70,7 +70,7 @@ public class BaseEntity {
      * @return x
      */
     public double getX() {
-        return entity.p;
+        return entity.aJ;
     }
 
     /**
@@ -89,7 +89,7 @@ public class BaseEntity {
      * @return y
      */
     public double getY() {
-        return entity.q;
+        return entity.aK;
     }
 
     /**
@@ -108,7 +108,7 @@ public class BaseEntity {
      * @return z
      */
     public double getZ() {
-        return entity.r;
+        return entity.aL;
     }
 
     /**
@@ -127,7 +127,7 @@ public class BaseEntity {
      * @return pitch
      */
     public float getPitch() {
-        return entity.w;
+        return entity.aQ;
     }
 
     /**
@@ -146,7 +146,7 @@ public class BaseEntity {
      * @return rotation
      */
     public float getRotation() {
-        return entity.v;
+        return entity.aS;
     }
 
     /**
@@ -240,7 +240,7 @@ public class BaseEntity {
      * @return
      */
     public int getBaseAirTicks() {
-        return getEntity().aa;
+        return getEntity().bu;
     }
 
     /**
@@ -249,7 +249,7 @@ public class BaseEntity {
      * @param ticks
      */
     public void setBaseAirTicks(int ticks) {
-        getEntity().aa = ticks;
+        getEntity().bu = ticks;
     }
 
     /**
@@ -262,7 +262,7 @@ public class BaseEntity {
      * @return
      */
     public int getNoDamageTicks() {
-        return getEntity().ac;
+        return getEntity().bw;
     }
 
     /**
@@ -275,7 +275,7 @@ public class BaseEntity {
      * @param ticks
      */
     public void setNoDamageTicks(int ticks) {
-        getEntity().ac = ticks;
+        getEntity().bw = ticks;
     }
 
     /**
@@ -287,7 +287,7 @@ public class BaseEntity {
      * @return
      */
     public int getAirTicks() {
-        return getEntity().ad;
+        return getEntity().bx;
     }
 
     /**
@@ -299,7 +299,7 @@ public class BaseEntity {
      * @return
      */
     public void setAirTicks(int ticks) {
-        getEntity().ad = ticks;
+        getEntity().bx = ticks;
     }
 
     /**
@@ -311,7 +311,7 @@ public class BaseEntity {
      * @return
      */
     public int getFireTicks() {
-        return getEntity().Z;
+        return getEntity().bt;
     }
 
     /**
@@ -323,6 +323,6 @@ public class BaseEntity {
      * @return
      */
     public void setFireTicks(int ticks) {
-        getEntity().Z = ticks;
+        getEntity().bt = ticks;
     }
 }

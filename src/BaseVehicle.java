@@ -25,7 +25,7 @@ public class BaseVehicle extends BaseEntity {
      * @return x-motion
      */
     public double getMotionX() {
-        return entity.s;
+        return entity.aM;
     }
 
     /**
@@ -34,7 +34,7 @@ public class BaseVehicle extends BaseEntity {
      * @return y-motion
      */
     public double getMotionY() {
-        return entity.t;
+        return entity.aN;
     }
 
     /**
@@ -43,7 +43,7 @@ public class BaseVehicle extends BaseEntity {
      * @return z-motion
      */
     public double getMotionZ() {
-        return entity.u;
+        return entity.aO;
     }
 
     /**
@@ -53,7 +53,7 @@ public class BaseVehicle extends BaseEntity {
      *            motion to set
      */
     public void setMotionX(double motion) {
-        entity.s = motion;
+        entity.aM = motion;
     }
 
     /**
@@ -63,7 +63,7 @@ public class BaseVehicle extends BaseEntity {
      *            motion to set
      */
     public void setMotionY(double motion) {
-        entity.t = motion;
+        entity.aN = motion;
     }
 
     /**
@@ -73,7 +73,7 @@ public class BaseVehicle extends BaseEntity {
      *            motion to set
      */
     public void setMotionZ(double motion) {
-        entity.u = motion;
+        entity.aO = motion;
     }
 
     /**
@@ -84,16 +84,16 @@ public class BaseVehicle extends BaseEntity {
      * @param motionZ
      */
     public void setMotion(double motionX, double motionY, double motionZ) {
-        entity.s = motionX;
-        entity.t = motionY;
-        entity.u = motionZ;
+        entity.aN = motionX;
+        entity.aM = motionY;
+        entity.aO = motionZ;
     }
 
     /**
      * Destroys this vehicle
      */
     public void destroy() {
-        entity.q();
+        entity.C();
     }
 
     /**
@@ -102,7 +102,7 @@ public class BaseVehicle extends BaseEntity {
      * @return true if unoccupied.
      */
     public boolean isEmpty() {
-        if (entity.j == null)
+        if (entity.aD == null)
             return true;
         else
             return false;
@@ -115,9 +115,9 @@ public class BaseVehicle extends BaseEntity {
      * @return passenger
      */
     public Player getPassenger() {
-        if (entity.j != null)
-            if (isPlayer(entity.j))
-                return ((OEntityPlayerMP) entity.j).getPlayer();
+        if (entity.aD != null)
+            if (isPlayer(entity.aD))
+                return ((OEntityPlayerMP) entity.aD).getPlayer();
 
         return null;
     }

@@ -36,7 +36,8 @@ public class Block {
         LapisLazuliBlock(22), // 
         Dispenser(23), // 
         SandStone(24), // 
-        NoteBlock(25), // 
+        NoteBlock(25), //
+        Bed(26), //
         Cloth(35), // 
         YellowFlower(37), // 
         RedRose(38), // 

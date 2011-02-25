@@ -625,12 +625,9 @@ public class Player extends HumanEntity implements MessageReceiver {
             } else if (cmd.equalsIgnoreCase("/spawn"))
                 teleportTo(etc.getServer().getSpawnLocation());
             else if (cmd.equalsIgnoreCase("/setspawn")) {
-                etc.getMCServer().e.m = (int) Math.ceil(getX());
-                etc.getMCServer().e.o = (int) Math.ceil(getZ());
-                // Too lazy to actually update this considering it's not even
-                // used anyways.
-                // this.d.e.n = (int) Math.ceil(e.m); //Not that the Y axis
-                // really matters since it tries to get the highest point iirc.
+                // New system in beta 1.3: WorldInfo.
+                OWorldInfo info = etc.getMCServer().e.q;
+                info.a((int) getX(), info.d(), (int) getZ());
 
                 log.info("Spawn position changed.");
                 sendMessage(Colors.Rose + "You have set the spawn to your current position.");
@@ -1288,8 +1285,8 @@ public class Player extends HumanEntity implements MessageReceiver {
         OEntityPlayerMP player = getEntity();
 
         // If player is in vehicle - eject them before they are teleported.
-        if (player.k != null)
-            player.e(player.k);
+        if (player.aE != null)
+            player.b(player.aE);
         player.a.a(x, y, z, rotation, pitch);
     }
 
@@ -1349,7 +1346,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @return true if sneaking
      */
     public boolean getSneaking() {
-        return getEntity().am;
+        return getEntity().h;
     }
 
     /**
@@ -1359,7 +1356,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      *            true if sneaking
      */
     public void setSneaking(boolean sneaking) {
-        getEntity().am = sneaking;
+        getEntity().h = sneaking;
     }
 
     /**
