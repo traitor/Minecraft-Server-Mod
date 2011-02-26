@@ -93,7 +93,9 @@ public class Block {
         LightStone(89), // 
         Portal(90), // 
         JackOLantern(91), // 
-        Cake(92);
+        Cake(92), //
+        RedstoneRepeaterOff(93), //
+        RedstoneRepeaterOn(94);
 
         private int                       id;
         private static Map<Integer, Type> map;

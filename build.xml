@@ -31,7 +31,7 @@
 	</target>
 
 	<target name="compile" depends="init" description="Compile the source.">
-		<javac destdir="${build}/classes" optimize="on" debug="on" debuglevel="lines,vars,source" source="1.6" target="1.6" nowarn="off">
+		<javac destdir="${build}/classes" optimize="on" debug="on" debuglevel="lines,vars,source" source="1.6" target="1.6" nowarn="off" includeantruntime="false">
 			<src path="${src}" />
 			<classpath refid="classpath" />
 		</javac>

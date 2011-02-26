@@ -24,8 +24,8 @@ public class Sign implements ComplexBlock {
      *            text
      */
     public void setText(int index, String text) {
-        if (index >= 0 && sign.e.length > index)
-            sign.e[index] = text;
+        if (index >= 0 && sign.a.length > index)
+            sign.a[index] = text;
     }
 
     /**
@@ -36,21 +36,21 @@ public class Sign implements ComplexBlock {
      * @return text
      */
     public String getText(int index) {
-        if (index >= 0 && sign.e.length > index)
-            return sign.e[index];
+        if (index >= 0 && sign.a.length > index)
+            return sign.a[index];
         return "";
     }
 
     public int getX() {
-        return sign.b;
+        return sign.e;
     }
 
     public int getY() {
-        return sign.c;
+        return sign.f;
     }
 
     public int getZ() {
-        return sign.d;
+        return sign.g;
     }
 
     public Block getBlock() {
@@ -58,7 +58,7 @@ public class Sign implements ComplexBlock {
     }
 
     public void update() {
-        sign.d();
+        sign.h();
     }
 
     /**

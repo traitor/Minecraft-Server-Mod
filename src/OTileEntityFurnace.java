@@ -1,6 +1,6 @@
 
 public class OTileEntityFurnace extends OTileEntity
-        implements OIInventory {
+        implements OIInventory, Container<OItemStack> {
 
     private OItemStack[] h = new OItemStack[3];
     public int a = 0;

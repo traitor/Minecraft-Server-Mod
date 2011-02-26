@@ -3,7 +3,7 @@ import java.util.List;
 import net.minecraft.server.MinecraftServer;
 
 public class OEntityMinecart extends OEntity
-        implements OIInventory {
+        implements OIInventory, Container<OItemStack> {
 
     private OItemStack[] h = new OItemStack[36];
     public int a = 0;
@@ -27,6 +27,36 @@ public class OEntityMinecart extends OEntity
     Minecart                       cart = new Minecart(this);
 
     // hMod end
+
+    @Override
+    public OItemStack[] getContents() {
+        return h;
+    }
+
+    @Override
+    public void setContents(OItemStack[] values) {
+        h = values;
+    }
+
+    public OItemStack getContentsAt(int index) {
+        return c_(index);
+    }
+
+    public void setContentsAt(int index, OItemStack value) {
+        a(index, value);
+    }
+
+    public int getContentsSize() {
+        return m_();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String value) {
+        name = value;
+    }
 
     public OEntityMinecart(OWorld paramOWorld) {
         super(paramOWorld);

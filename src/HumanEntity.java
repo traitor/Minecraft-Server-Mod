@@ -34,6 +34,6 @@ public class HumanEntity extends LivingEntity {
      * @return
      */
     public String getName() {
-        return getEntity().aw;
+        return getEntity().r;
     }
 }
