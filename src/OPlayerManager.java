@@ -145,7 +145,19 @@ public class OPlayerManager {
         return 144;
     }
 
-    // Static methods weren't called by anything apparently.
+    // Stupid me, not checking. *slaps self*
+    // hMod: OPlayerInstance calls these statically
+    static MinecraftServer a(OPlayerManager jh1) {
+        return jh1.d;
+    }
+
+    static OMCHashTable2 b(OPlayerManager jh1) {
+        return jh1.b;
+    }
+
+    static List c(OPlayerManager jh1) {
+        return jh1.c;
+    }
 
     // hMod: bring back old "send packet to chunk" method from alpha
 

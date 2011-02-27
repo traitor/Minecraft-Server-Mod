@@ -253,7 +253,7 @@ public class ONetServerHandler extends ONetHandler
             return;
         }
         // hMod: We allow admins and ops to dig!
-        boolean bool = d.e.v = d.f.h(e.r) || getPlayer().isAdmin();
+        boolean bool = d.e.v = d.f.h(getPlayer().getName()) || getPlayer().isAdmin();
         int n = 0;
         if (paramOPacket14BlockDig.e == 0) {
             n = 1;
@@ -292,7 +292,7 @@ public class ONetServerHandler extends ONetHandler
             // hMod: Custom spawn prot size
             if ((i5 > etc.getInstance().getSpawnProtectionSize()) || (bool)) {
                 // hMod: Dig hooks
-                Block block = etc.getServer().getBlockAt(n, i1, i2);
+                Block block = etc.getServer().getBlockAt(i1, i2, i3);
                 block.setStatus(0); // Started digging
                 x = block.getX();
                 y = block.getY();
@@ -303,7 +303,7 @@ public class ONetServerHandler extends ONetHandler
             }
         } else if (paramOPacket14BlockDig.e == 2) {
             // hMod: Stop digging
-            Block block = etc.getServer().getBlockAt(n, i1, i2);
+            Block block = etc.getServer().getBlockAt(i1, i2, i3);
             block.setStatus(2); // Stopped digging
             OEntity.manager.callHook(PluginLoader.Hook.BLOCK_DESTROYED, player, block);
 
@@ -386,19 +386,19 @@ public class ONetServerHandler extends ONetHandler
             if (localOItemStack == null) {
                 return;
             }
-            ((Digging) e.c).a(e, d.e, localOItemStack);
+            ((Digging) e.c).a(e, d.e, localOItemStack, blockPlaced, blockClicked);
         } else {
-            int m = paramOPacket15Place.a;
-            int n = paramOPacket15Place.b;
-            int i1 = paramOPacket15Place.c;
-            int i2 = paramOPacket15Place.d;
+            int n = paramOPacket15Place.a;
+            int i1 = paramOPacket15Place.b;
+            int i2 = paramOPacket15Place.c;
+            int i3 = paramOPacket15Place.d;
+            OChunkCoordinates localOChunkCoordinates = d.e.l();
             // hMod : Fix stupid buggy spawn protection.
-            int i3 = (int) OMathHelper.e((i2 == 4 ? (m - 1) : (i2 == 5 ? (m + 1) : m)) - d.e.q.c());
+            int i4 = (int) OMathHelper.e((i3 == 4 ? n - 1 : (i3 == 5 ? (n + 1) : n)) - localOChunkCoordinates.a);
             // hMod : Fix stupid buggy spawn protection.
-            int i4 = (int) OMathHelper.e((i2 == 2 ? (i1 - 1) : (i2 == 3 ? (i1 + 1) : i1)) - d.e.q.e());
-            if (i3 > i4) {
-                i4 = i3;
-            }
+            int i5 = (int) OMathHelper.e((i3 == 2 ? i2 - 1 : (i3 == 3 ? (i2 + 1) : i2)) - localOChunkCoordinates.c);
+            if (i4 > i5)
+                i5 = i4;
             // hMod: call BLOCK_RIGHTCLICKED
             Item item = (localOItemStack != null) ? new Item(localOItemStack) : new Item(Item.Type.Air);
             Player player = getPlayer();
@@ -408,7 +408,7 @@ public class ONetServerHandler extends ONetHandler
             OEntity.manager.callHook(PluginLoader.Hook.BLOCK_CREATED, player, blockPlaced, blockClicked, item.getItemId());
             // hMod: If we were building inside spawn, bail! (unless ops/admin)
 
-            if (((i4 > etc.getInstance().getSpawnProtectionSize() && !etc.getInstance().isOnItemBlacklist(item.getItemId())) || bool) && player.canBuild()) {
+            if (((i5 > etc.getInstance().getSpawnProtectionSize() && !etc.getInstance().isOnItemBlacklist(item.getItemId())) || bool) && player.canBuild()) {
                 e.c.a(e, d.e, localOItemStack, n, i1, i2, i3);
             } else {
                 // hMod: No point sending the client to update the blocks, you

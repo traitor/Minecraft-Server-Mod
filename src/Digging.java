@@ -37,7 +37,7 @@ public class Digging extends OItemInWorldManager {
         Block block = etc.getServer().getBlockAt(x, y, z);
         if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_BROKEN, ((OEntityPlayerMP) a).getPlayer(), block))
             return true;
-        return super.c(x, y, z);
+        return super.d(x, y, z);
     }
 
     /**

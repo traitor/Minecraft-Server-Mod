@@ -172,6 +172,6 @@ public final class OItemStack {
     }
 
     public String toString() {
-        return a + "ONoiseGeneratorPerlin" + OItem.c[c].a() + "@" + d;
+        return a + "x" + OItem.c[c].a() + "@" + d;
     }
 }
