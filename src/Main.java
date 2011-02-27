@@ -43,7 +43,7 @@ public class Main {
 
             if (!fileExists("minecraft_server.jar")) {
                 log("Missing minecraft_servero.jar, Downloading minecraft_server.jar...");
-                downloadFile("http://minecraft.net/download/minecraft_server.jar", "minecraft_server.jar");
+                downloadFile("https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar", "minecraft_server.jar");
                 checkCRC32("minecraft_server.jar", minecraft_server);
 
                 log("Finished downloading minecraft_server.jar, start converting minecraft_server.jar to minecraft_servero.jar...");
