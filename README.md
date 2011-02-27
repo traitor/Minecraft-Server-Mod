@@ -10,3 +10,7 @@ Add a new project from existing sources in whatever IDE you use. Add minecraft_s
 minecraft_servero.jar
 ---------
 You can get this file by running jarjar.bat in the jarjar folder and it will automaticly make minecraft_servero.jar
+
+update_6.sql
+---------
+Run update_6.sql on your MySQL database to have BedBlock (26), Bed (26), redstonerepeater is the same thing as redstonerepeateron, and redstonerepeateroff for the off version
