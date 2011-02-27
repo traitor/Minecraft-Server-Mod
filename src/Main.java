@@ -16,7 +16,7 @@ public class Main {
 
     public static final long   minecraft_server                   = 280458825L;
 
-    public static final long   minecraft_servero                  = 1632250977L;
+    public static final long   minecraft_servero                  = 1253042995L;
 
     public static final long   minecraft_servero_runecraft        = 2581072959L;
     public static final long   minecraft_servero_runecraft_winrar = 3296853903L;
