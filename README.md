@@ -13,4 +13,4 @@ You can get this file by running jarjar.bat in the jarjar folder and it will aut
 
 update_6.sql
 ---------
-Run update_6.sql on your MySQL database to have BedBlock (26), Bed (26), redstonerepeater is the same thing as redstonerepeateron, and redstonerepeateroff for the off version
+Run update_6.sql on your MySQL database to have BedBlock(26), Bed(355), RedstoneRepeaterOff(93), RedstoneRepeaterOn(94) and RedstoneRepeater(256) added to your item names.
