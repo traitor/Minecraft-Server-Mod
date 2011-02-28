@@ -1,3 +1,5 @@
+import java.io.PrintStream;
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +10,7 @@ public class OEntityList {
     private static Map<Integer, Class<?>> c = new HashMap<Integer, Class<?>>();
     private static Map<Class<?>, Integer> d = new HashMap<Class<?>, Integer>();
 
-    private static void a(Class<?> paramClass, String paramString, int paramInt) {
+    private static void a(Class paramClass, String paramString, int paramInt) {
         a.put(paramString, paramClass);
         b.put(paramClass, paramString);
         c.put(Integer.valueOf(paramInt), paramClass);
@@ -18,9 +20,10 @@ public class OEntityList {
     public static OEntity a(String paramString, OWorld paramOWorld) {
         OEntity localOEntity = null;
         try {
-            Class<?> localClass = a.get(paramString);
-            if (localClass != null)
+            Class localClass = (Class) a.get(paramString);
+            if (localClass != null) {
                 localOEntity = (OEntity) localClass.getConstructor(new Class[] { OWorld.class }).newInstance(new Object[] { paramOWorld });
+            }
         } catch (Exception localException) {
             localException.printStackTrace();
         }
@@ -30,25 +33,27 @@ public class OEntityList {
     public static OEntity a(ONBTTagCompound paramONBTTagCompound, OWorld paramOWorld) {
         OEntity localOEntity = null;
         try {
-            Class<?> localClass = a.get(paramONBTTagCompound.h("id"));
-            if (localClass != null)
+            Class localClass = (Class) a.get(paramONBTTagCompound.i("ONBTTagInt"));
+            if (localClass != null) {
                 localOEntity = (OEntity) localClass.getConstructor(new Class[] { OWorld.class }).newInstance(new Object[] { paramOWorld });
+            }
         } catch (Exception localException) {
             localException.printStackTrace();
         }
-        if (localOEntity != null)
+        if (localOEntity != null) {
             localOEntity.e(paramONBTTagCompound);
-        else
-            System.out.println("Skipping Entity with id " + paramONBTTagCompound.h("id"));
+        } else {
+            System.out.println("Skipping Entity with id " + paramONBTTagCompound.i("ONBTTagInt"));
+        }
         return localOEntity;
     }
 
     public static int a(OEntity paramOEntity) {
-        return d.get(paramOEntity.getClass()).intValue();
+        return ((Integer) d.get(paramOEntity.getClass())).intValue();
     }
 
     public static String b(OEntity paramOEntity) {
-        return b.get(paramOEntity.getClass());
+        return (String) b.get(paramOEntity.getClass());
     }
 
     // hMod: Let us do a name->class lookup for mob spawning

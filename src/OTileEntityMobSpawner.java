@@ -1,118 +1,109 @@
 public class OTileEntityMobSpawner extends OTileEntity {
 
-    public int    e = -1;
+    public int    a = -1;
+    // hMod: make public to allow reading
     public String h;
-    public double f;
-    public double g = 0.0D;
+    public double b;
+    public double c = 0.0D;
 
     public OTileEntityMobSpawner() {
         h = "Pig";
-        e = 20;
+        a = 20;
     }
 
     public void a(String paramString) {
         h = paramString;
     }
 
-    // check if there are no nearby players.
     public boolean a() {
-        return a.a(b + 0.5D, c + 0.5D, d + 0.5D, 16.0D) != null;
+        return d.a(e + 0.5D, f + 0.5D, g + 0.5D, 16.0D) != null;
     }
 
     @Override
-    public void f() {
-        g = f;
+    public void i_() {
+        c = b;
 
-        // do nothing if there are no players nearby
-        if (!a())
+        if (!a()) {
             return;
-
-        double d1 = b + a.l.nextFloat();
-        double d2 = c + a.l.nextFloat();
-        double d3 = d + a.l.nextFloat();
-        a.a("smoke", d1, d2, d3, 0.0D, 0.0D, 0.0D);
-        a.a("flame", d1, d2, d3, 0.0D, 0.0D, 0.0D);
-
-        f += 1000.0F / (e + 200.0F);
-        while (f > 360.0D) {
-            f -= 360.0D;
-            g -= 360.0D;
         }
 
-        if (e == -1)
-            b();
+        double d1 = e + d.k.nextFloat();
+        double d2 = f + d.k.nextFloat();
+        double d3 = g + d.k.nextFloat();
+        d.a("smoke", d1, d2, d3, 0.0D, 0.0D, 0.0D);
+        d.a("flame", d1, d2, d3, 0.0D, 0.0D, 0.0D);
 
-        if (e > 0) {
-            e -= 1;
+        b += 1000.0F / (a + 200.0F);
+        while (b > 360.0D) {
+            b -= 360.0D;
+            c -= 360.0D;
+        }
+
+        if (a == -1) {
+            c();
+        }
+
+        if (a > 0) {
+            a -= 1;
             return;
         }
 
         int i = 4;
         for (int j = 0; j < i; j++) {
-            OEntityLiving localOEntityLiving = (OEntityLiving) OEntityList.a(h, a);
-            if (localOEntityLiving == null)
+            OEntityLiving localOEntityLiving = (OEntityLiving) (OEntityLiving) OEntityList.a(h, d);
+            if (localOEntityLiving == null) {
                 return;
+            }
 
-            // get the light level inside the mob cage.
-            int k = a.a(localOEntityLiving.getClass(), OAxisAlignedBB.b(b, c, d, b + 1, c + 1, d + 1).b(8.0D, 4.0D, 8.0D)).size();
+            int k = d.a(localOEntityLiving.getClass(), OAxisAlignedBB.b(e, f, g, e + 1, f + 1, g + 1).b(8.0D, 4.0D, 8.0D)).size();
             if (k >= 6) {
-                b();
+                c();
                 return;
             }
 
             if (localOEntityLiving != null) {
-                // generate a random location inside the mob room.
-                double d4 = b + (a.l.nextDouble() - a.l.nextDouble()) * 4.0D;
-                double d5 = c + a.l.nextInt(3) - 1;
-                double d6 = d + (a.l.nextDouble() - a.l.nextDouble()) * 4.0D;
+                double d4 = e + (d.k.nextDouble() - d.k.nextDouble()) * 4.0D;
+                double d5 = f + d.k.nextInt(3) - 1;
+                double d6 = g + (d.k.nextDouble() - d.k.nextDouble()) * 4.0D;
 
-                // set the location of the mob.
-                localOEntityLiving.c(d4, d5, d6, a.l.nextFloat() * 360.0F, 0.0F);
+                localOEntityLiving.c(d4, d5, d6, d.k.nextFloat() * 360.0F, 0.0F);
 
                 if (localOEntityLiving.b()) {
-                    // hMod: allow entities to spawn
-                    if ((Boolean) (etc.getLoader().callHook(PluginLoader.Hook.MOB_SPAWN, new Mob(localOEntityLiving)))) {
-                        b();
-                        return;
-                    }
-                    // Spawn the mob.
-                    a.a(localOEntityLiving);
+                    d.a(localOEntityLiving);
 
-                    // "create" the smoke around the mobcage.
                     for (int m = 0; m < 20; m++) {
-                        d1 = b + 0.5D + (a.l.nextFloat() - 0.5D) * 2.0D;
-                        d2 = c + 0.5D + (a.l.nextFloat() - 0.5D) * 2.0D;
-                        d3 = d + 0.5D + (a.l.nextFloat() - 0.5D) * 2.0D;
+                        d1 = e + 0.5D + (d.k.nextFloat() - 0.5D) * 2.0D;
+                        d2 = f + 0.5D + (d.k.nextFloat() - 0.5D) * 2.0D;
+                        d3 = g + 0.5D + (d.k.nextFloat() - 0.5D) * 2.0D;
 
-                        a.a("smoke", d1, d2, d3, 0.0D, 0.0D, 0.0D);
-                        a.a("flame", d1, d2, d3, 0.0D, 0.0D, 0.0D);
+                        d.a("smoke", d1, d2, d3, 0.0D, 0.0D, 0.0D);
+                        d.a("flame", d1, d2, d3, 0.0D, 0.0D, 0.0D);
                     }
-                    // random effects around the spawning mob.
-                    localOEntityLiving.R();
-                    // reinitialize the timer.
-                    b();
+
+                    localOEntityLiving.I();
+                    c();
                 }
             }
         }
 
-        super.f();
+        super.i_();
     }
 
-    private void b() {
-        e = (200 + a.l.nextInt(600));
+    private void c() {
+        a = (200 + d.k.nextInt(600));
     }
 
     @Override
     public void a(ONBTTagCompound paramONBTTagCompound) {
         super.a(paramONBTTagCompound);
-        h = paramONBTTagCompound.h("EntityId");
-        e = paramONBTTagCompound.c("Delay");
+        h = paramONBTTagCompound.i("EntityId");
+        a = paramONBTTagCompound.d("Delay");
     }
 
     @Override
     public void b(ONBTTagCompound paramONBTTagCompound) {
         super.b(paramONBTTagCompound);
         paramONBTTagCompound.a("EntityId", h);
-        paramONBTTagCompound.a("Delay", (short) e);
+        paramONBTTagCompound.a("Delay", (short) a);
     }
 }

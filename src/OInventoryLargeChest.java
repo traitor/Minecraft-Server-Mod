@@ -27,7 +27,7 @@ public class OInventoryLargeChest implements OIInventory, Container<OItemStack> 
     }
 
     public OItemStack getContentsAt(int index) {
-        return a(index);
+        return c_(index);
     }
 
     public void setContentsAt(int index, OItemStack value) {
@@ -35,17 +35,17 @@ public class OInventoryLargeChest implements OIInventory, Container<OItemStack> 
     }
 
     public int getContentsSize() {
-        return h_();
+        return m_();
     }
 
     public Block getChestBlock() {
         if (b instanceof OTileEntityChest) {
             OTileEntityChest block = (OTileEntityChest) b;
-            return etc.getServer().getBlockAt(block.b, block.c, block.d);
+            return etc.getServer().getBlockAt(block.e, block.f, block.g);
         }
         if (c instanceof OTileEntityChest) {
             OTileEntityChest block = (OTileEntityChest) c;
-            return etc.getServer().getBlockAt(block.b, block.c, block.d);
+            return etc.getServer().getBlockAt(block.e, block.f, block.g);
         }
         return null;
     }
@@ -58,40 +58,43 @@ public class OInventoryLargeChest implements OIInventory, Container<OItemStack> 
         a = value;
     }
 
-    public int h_() {
-        return b.h_() + c.h_();
+    public int m_() {
+        return b.m_() + c.m_();
     }
 
-    public String b() {
+    public String c() {
         return a;
     }
 
-    public OItemStack a(int paramInt) {
-        if (paramInt >= b.h_())
-            return c.a(paramInt - b.h_());
-        return b.a(paramInt);
+    public OItemStack c_(int paramInt) {
+        if (paramInt >= b.m_()) {
+            return c.c_(paramInt - b.m_());
+        }
+        return b.c_(paramInt);
     }
 
-    public OItemStack b(int paramInt1, int paramInt2) {
-        if (paramInt1 >= b.h_())
-            return c.b(paramInt1 - b.h_(), paramInt2);
-        return b.b(paramInt1, paramInt2);
+    public OItemStack a(int paramInt1, int paramInt2) {
+        if (paramInt1 >= b.m_()) {
+            return c.a(paramInt1 - b.m_(), paramInt2);
+        }
+        return b.a(paramInt1, paramInt2);
     }
 
     public void a(int paramInt, OItemStack paramOItemStack) {
-        if (paramInt >= b.h_())
-            c.a(paramInt - b.h_(), paramOItemStack);
-        else
+        if (paramInt >= b.m_()) {
+            c.a(paramInt - b.m_(), paramOItemStack);
+        } else {
             b.a(paramInt, paramOItemStack);
+        }
     }
 
-    public int c() {
-        return b.c();
+    public int n_() {
+        return b.n_();
     }
 
-    public void d() {
-        b.d();
-        c.d();
+    public void h() {
+        b.h();
+        c.h();
     }
 
     public boolean a_(OEntityPlayer paramOEntityPlayer) {

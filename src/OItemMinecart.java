@@ -4,7 +4,7 @@ public class OItemMinecart extends OItem {
 
     public OItemMinecart(int paramInt1, int paramInt2) {
         super(paramInt1);
-        bb = 1;
+        bd = 1;
         a = paramInt2;
     }
 
@@ -12,8 +12,8 @@ public class OItemMinecart extends OItem {
     public boolean a(OItemStack paramOItemStack, OEntityPlayer paramOEntityPlayer, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         int i = paramOWorld.a(paramInt1, paramInt2, paramInt3);
 
-        if (i == OBlock.aG.bi) {
-            if (!paramOWorld.z) {
+        if (i == OBlock.aG.bk) {
+            if (!paramOWorld.t) {
                 // hMod: placing of a mine cart
                 Block block = new Block(i, paramInt1, paramInt2, paramInt3);
                 Player player = ((OEntityPlayerMP) paramOEntityPlayer).getPlayer();

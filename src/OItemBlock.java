@@ -8,7 +8,6 @@ public class OItemBlock extends OItem {
         b(OBlock.m[(paramInt + 256)].a(2));
     }
 
-    @Override
     public boolean a(OItemStack paramOItemStack, OEntityPlayer paramOEntityPlayer, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         // hMod: Bail if we have nothing of the items in hand
         if (paramOItemStack.a == 0)
@@ -17,25 +16,32 @@ public class OItemBlock extends OItem {
         int blockClickedId = paramOWorld.a(paramInt1, paramInt2, paramInt3);
         Block blockClicked = new Block(blockClickedId, paramInt1, paramInt2, paramInt3);
 
-        if (paramOWorld.a(paramInt1, paramInt2, paramInt3) == OBlock.aS.bi)
+        if (paramOWorld.a(paramInt1, paramInt2, paramInt3) == OBlock.aS.bk) {
             paramInt4 = 0;
-        else {
-            if (paramInt4 == 0)
+        } else {
+            if (paramInt4 == 0) {
                 paramInt2--;
-            if (paramInt4 == 1)
+            }
+            if (paramInt4 == 1) {
                 paramInt2++;
-            if (paramInt4 == 2)
+            }
+            if (paramInt4 == 2) {
                 paramInt3--;
-            if (paramInt4 == 3)
+            }
+            if (paramInt4 == 3) {
                 paramInt3++;
-            if (paramInt4 == 4)
+            }
+            if (paramInt4 == 4) {
                 paramInt1--;
-            if (paramInt4 == 5)
+            }
+            if (paramInt4 == 5) {
                 paramInt1++;
+            }
         }
 
-        if (paramOItemStack.a == 0)
+        if (paramOItemStack.a == 0) {
             return false;
+        }
 
         // hMod: Store faceClicked (must be here to have the 'snow' special
         // case).
@@ -51,8 +57,8 @@ public class OItemBlock extends OItem {
 
         if (paramOWorld.a(a, paramInt1, paramInt2, paramInt3, false)) {
             OBlock localOBlock = OBlock.m[a];
-            // hMod: Take over block placement
-            if (paramOWorld.b(paramInt1, paramInt2, paramInt3, a, a(paramOItemStack.h())))
+            // hMod: take over block placement
+            if (paramOWorld.b(paramInt1, paramInt2, paramInt3, a, a(paramOItemStack.h()))) {
                 // hMod: Check if this was playerPlaced and call the hook
                 if (paramOEntityPlayer instanceof OEntityPlayerMP && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PLACE, ((OEntityPlayerMP) paramOEntityPlayer).getPlayer(), blockPlaced, blockClicked, new Item(paramOItemStack))) {
                     // hMod: Undo!
@@ -70,22 +76,18 @@ public class OItemBlock extends OItem {
                     // ((fi)paramgp).a.b(new fh(paramhn, 1));
                     return false;
                 } else {
-                    // paramfv.g(paramInt1, paramInt2, paramInt3);
-                    // paramfv.g(paramInt1, paramInt2, paramInt3, this.a);
-
-                    OBlock.m[a].c(paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
-                    // hMod: Downcast demanded for inheritance to work >.>
+                    OBlock.m[a].d(paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
                     OBlock.m[a].a(paramOWorld, paramInt1, paramInt2, paramInt3, (OEntityLiving) paramOEntityPlayer);
-                    paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localOBlock.br.c(), (localOBlock.br.a() + 1.0F) / 2.0F, localOBlock.br.b() * 0.8F);
+                    paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localOBlock.bt.c(), (localOBlock.bt.a() + 1.0F) / 2.0F, localOBlock.bt.b() * 0.8F);
                     paramOItemStack.a -= 1;
                 }
+            }
 
         }
 
         return true;
     }
 
-    @Override
     public String a() {
         return OBlock.m[a].e();
     }

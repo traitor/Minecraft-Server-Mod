@@ -36,7 +36,8 @@ public class Block {
         LapisLazuliBlock(22), // 
         Dispenser(23), // 
         SandStone(24), // 
-        NoteBlock(25), // 
+        NoteBlock(25), //
+        Bed(26), //
         Cloth(35), // 
         YellowFlower(37), // 
         RedRose(38), // 
@@ -92,7 +93,9 @@ public class Block {
         LightStone(89), // 
         Portal(90), // 
         JackOLantern(91), // 
-        Cake(92);
+        Cake(92), //
+        RedstoneRepeaterOff(93), //
+        RedstoneRepeaterOn(94);
 
         private int                       id;
         private static Map<Integer, Type> map;

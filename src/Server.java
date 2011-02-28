@@ -103,7 +103,7 @@ public class Server {
      * @return time server time
      */
     public long getTime() {
-        return server.e.e;
+        return server.e.k(); // Thank you Bukkit
     }
 
     /**
@@ -112,7 +112,7 @@ public class Server {
      * @return time server time
      */
     public long getRelativeTime() {
-        long time = (server.e.e % 24000);
+        long time = (getTime() % 24000);
         // Java modulus is stupid.
         if (time < 0)
             time += 24000;
@@ -126,7 +126,7 @@ public class Server {
      *            time (-2^63 to 2^63-1)
      */
     public void setTime(long time) {
-        server.e.e = time;
+        server.e.a(time); // Again, thank you Bukkit
     }
 
     /**
@@ -136,11 +136,11 @@ public class Server {
      *            time (0-24000)
      */
     public void setRelativeTime(long time) {
-        long margin = (time - server.e.e) % 24000;
+        long margin = (time - getTime()) % 24000;
         // Java modulus is stupid.
         if (margin < 0)
             margin += 24000;
-        server.e.e += margin;
+        setTime(getTime() + margin);
     }
 
     /**
@@ -163,7 +163,7 @@ public class Server {
         name = name.toLowerCase();
 
         for (Object player : server.f.b) {
-            String playerName = ((OEntityPlayerMP) player).aw;
+            String playerName = ((OEntityPlayerMP) player).r;
 
             if (playerName.toLowerCase().equals(name)) {
                 // Perfect match found
@@ -189,7 +189,7 @@ public class Server {
      * @return
      */
     public Player getPlayer(String name) {
-        OEntityPlayerMP user = server.f.h(name);
+        OEntityPlayerMP user = server.f.i(name);
         return user == null ? null : user.getPlayer();
     }
 
@@ -313,10 +313,12 @@ public class Server {
      * @return Location object for spawn
      */
     public Location getSpawnLocation() {
+        // More structure ftw
+        OWorldInfo info = server.e.q;
         Location spawn = new Location();
-        spawn.x = (server.e.m + 0.5D);
-        spawn.y = server.e.e(server.e.m, server.e.o) + 1.5D;
-        spawn.z = server.e.o + 0.5D;
+        spawn.x = (info.c() + 0.5D);
+        spawn.y = server.e.e(info.c(), info.e()) + 1.5D;
+        spawn.z = info.e() + 0.5D;
         spawn.rotX = 0.0F;
         spawn.rotY = 0.0F;
         return spawn;
@@ -541,9 +543,9 @@ public class Server {
      * @param quantity
      */
     public void dropItem(double x, double y, double z, int itemId, int quantity) {
-        double d1 = server.e.l.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
-        double d2 = server.e.l.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
-        double d3 = server.e.l.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d1 = server.e.k.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d2 = server.e.k.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d3 = server.e.k.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
 
         OEntityItem localgl = new OEntityItem(server.e, x + d1, y + d2, z + d3, new OItemStack(itemId, quantity, 0));
         localgl.c = 10;
@@ -631,7 +633,7 @@ public class Server {
      * @return true if the chunk is loaded
      */
     public boolean isChunkLoaded(int x, int y, int z) {
-        return server.e.A.a(x >> 4, z >> 4);
+        return server.e.u.a(x >> 4, z >> 4);
     }
 
     /**
@@ -670,7 +672,7 @@ public class Server {
      *            a chunk z-coordinate
      */
     public void loadChunk(int x, int z) {
-        server.e.A.d(x, z);
+        server.e.u.d(x, z);
     }
 
     /**

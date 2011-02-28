@@ -8,25 +8,27 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
-
 import net.minecraft.server.MinecraftServer;
 
 public class OServerConfigurationManager {
 
     public static Logger         a = Logger.getLogger("Minecraft");
     // hMod set list to contain <OEntityPlayerMP> objects.
-    public List<OEntityPlayerMP> b = new ArrayList<OEntityPlayerMP>();
+    public List<OEntityPlayerMP> b = new ArrayList();
     private MinecraftServer      c;
     private OPlayerManager       d;
     private int                  e;
     // hMod set these to Set<String> to remove errors and warnings.
-    private Set<String>          f = new HashSet<String>();
-    private Set<String>          g = new HashSet<String>();
-    private Set<String>          h = new HashSet<String>();
-    private File                 i;
+    private Set<String>          f = new HashSet();
+    private Set<String>          g = new HashSet();
+    private Set<String>          h = new HashSet();
+    private Set<String>          i = new HashSet();
     private File                 j;
     private File                 k;
-    private OPlayerNBTManager    l;
+    private File                 l;
+    private File                 m;
+    private OIPlayerFileData     n;
+    private boolean              o;
 
     public OServerConfigurationManager(MinecraftServer paramMinecraftServer) {
         etc.setServer(paramMinecraftServer);
@@ -37,21 +39,25 @@ public class OServerConfigurationManager {
         else
             a.info("hMod Build Information: " + etc.getInstance().getVersionStr());
         c = paramMinecraftServer;
-        i = paramMinecraftServer.a("banned-players.txt");
-        j = paramMinecraftServer.a("banned-ips.txt");
-        k = paramMinecraftServer.a("ops.txt");
+        j = paramMinecraftServer.a("banned-players.txt");
+        k = paramMinecraftServer.a("banned-ips.txt");
+        l = paramMinecraftServer.a("ops.txt");
+        m = paramMinecraftServer.a("white-list.txt");
         d = new OPlayerManager(paramMinecraftServer);
         e = paramMinecraftServer.d.a("max-players", 20);
-        e();
+        o = paramMinecraftServer.d.a("white-list", false);
         g();
         i();
-        f();
+        k();
+        m();
         h();
         j();
+        l();
+        n();
     }
 
     public void a(OWorldServer paramOWorldServer) {
-        l = new OPlayerNBTManager(new File(paramOWorldServer.t, "players"));
+        n = paramOWorldServer.m().d();
     }
 
     public int a() {
@@ -60,12 +66,13 @@ public class OServerConfigurationManager {
 
     public void a(OEntityPlayerMP paramOEntityPlayerMP) {
         b.add(paramOEntityPlayerMP);
-        l.b(paramOEntityPlayerMP);
+        n.b(paramOEntityPlayerMP);
 
-        c.e.A.d((int) paramOEntityPlayerMP.p >> 4, (int) paramOEntityPlayerMP.r >> 4);
+        c.e.u.d((int) paramOEntityPlayerMP.aJ >> 4, (int) paramOEntityPlayerMP.aL >> 4);
 
-        while (c.e.a(paramOEntityPlayerMP, paramOEntityPlayerMP.z).size() != 0)
-            paramOEntityPlayerMP.a(paramOEntityPlayerMP.p, paramOEntityPlayerMP.q + 1.0D, paramOEntityPlayerMP.r);
+        while (c.e.a(paramOEntityPlayerMP, paramOEntityPlayerMP.aT).size() != 0) {
+            paramOEntityPlayerMP.a(paramOEntityPlayerMP.aJ, paramOEntityPlayerMP.aK + 1.0D, paramOEntityPlayerMP.aL);
+        }
         c.e.a(paramOEntityPlayerMP);
         d.a(paramOEntityPlayerMP);
         // hMod: Handle login (send MOTD and call hook)
@@ -81,7 +88,7 @@ public class OServerConfigurationManager {
     }
 
     public void c(OEntityPlayerMP paramOEntityPlayerMP) {
-        l.a(paramOEntityPlayerMP);
+        n.a(paramOEntityPlayerMP);
         c.e.d(paramOEntityPlayerMP);
         b.remove(paramOEntityPlayerMP);
         d.b(paramOEntityPlayerMP);
@@ -106,14 +113,8 @@ public class OServerConfigurationManager {
             paramONetLoginHandler.a("Your IP address is banned from this server!");
             return null;
         }
-        for (int m = 0; m < b.size(); m++) {
-            OEntityPlayerMP localfy = b.get(m);
-            if (localfy.aw.equalsIgnoreCase(paramString1))
-                localfy.a.a("You logged in from another location");
-        }
 
-        // hMod whitelist block
-        if (etc.getInstance().isWhitelistEnabled() && !(etc.getDataSource().isUserOnWhitelist(paramString1) || player.isAdmin())) {
+        if (!g(paramString1) || (etc.getInstance().isWhitelistEnabled() && !(etc.getDataSource().isUserOnWhitelist(paramString1) || player.isAdmin()))) {
             paramONetLoginHandler.a(etc.getInstance().getWhitelistMessage());
             return null;
         } else if (b.size() >= e && (!etc.getInstance().isReservelistEnabled() || !etc.getDataSource().isUserOnReserveList(paramString1))) {
@@ -131,6 +132,14 @@ public class OServerConfigurationManager {
                 return null;
             }
         }
+
+        for (int i1 = 0; i1 < b.size(); i1++) {
+            OEntityPlayerMP localOEntityPlayerMP = (OEntityPlayerMP) b.get(i1);
+            if (localOEntityPlayerMP.r.equalsIgnoreCase(paramString1)) {
+                localOEntityPlayerMP.a.a("You logged in from another location");
+            }
+        }
+
         // hMod: user passed basic login check, inform plugins.
         Object obj = etc.getLoader().callHook(PluginLoader.Hook.LOGINCHECK, paramString1);
         if (obj instanceof String) {
@@ -184,23 +193,25 @@ public class OServerConfigurationManager {
         b.remove(paramOEntityPlayerMP);
         c.e.e(paramOEntityPlayerMP);
 
-        OEntityPlayerMP localOEntityPlayerMP = new OEntityPlayerMP(c, c.e, paramOEntityPlayerMP.aw, new OItemInWorldManager(c.e));
-        localOEntityPlayerMP.g = paramOEntityPlayerMP.g;
+        OEntityPlayerMP localOEntityPlayerMP = new OEntityPlayerMP(c, c.e, paramOEntityPlayerMP.r, new OItemInWorldManager(c.e));
+        localOEntityPlayerMP.aA = paramOEntityPlayerMP.aA;
         localOEntityPlayerMP.a = paramOEntityPlayerMP.a;
 
-        c.e.A.d((int) localOEntityPlayerMP.p >> 4, (int) localOEntityPlayerMP.r >> 4);
+        c.e.u.d((int) localOEntityPlayerMP.aJ >> 4, (int) localOEntityPlayerMP.aL >> 4);
 
-        while (c.e.a(localOEntityPlayerMP, localOEntityPlayerMP.z).size() != 0)
-            localOEntityPlayerMP.a(localOEntityPlayerMP.p, localOEntityPlayerMP.q + 1.0D, localOEntityPlayerMP.r);
+        while (c.e.a(localOEntityPlayerMP, localOEntityPlayerMP.aT).size() != 0) {
+            localOEntityPlayerMP.a(localOEntityPlayerMP.aJ, localOEntityPlayerMP.aK + 1.0D, localOEntityPlayerMP.aL);
+        }
 
         localOEntityPlayerMP.a.b(new OPacket9());
-        localOEntityPlayerMP.a.a(localOEntityPlayerMP.p, localOEntityPlayerMP.q, localOEntityPlayerMP.r, localOEntityPlayerMP.v, localOEntityPlayerMP.w);
+        localOEntityPlayerMP.a.a(localOEntityPlayerMP.aJ, localOEntityPlayerMP.aK, localOEntityPlayerMP.aL, localOEntityPlayerMP.aP, localOEntityPlayerMP.aQ);
 
         d.a(localOEntityPlayerMP);
         c.e.a(localOEntityPlayerMP);
         b.add(localOEntityPlayerMP);
 
         localOEntityPlayerMP.l();
+        localOEntityPlayerMP.s();
         return localOEntityPlayerMP;
     }
 
@@ -213,48 +224,50 @@ public class OServerConfigurationManager {
     }
 
     public void a(OPacket paramOPacket) {
-        for (int m = 0; m < b.size(); m++) {
-            OEntityPlayerMP localOEntityPlayerMP = b.get(m);
+        for (int i1 = 0; i1 < b.size(); i1++) {
+            OEntityPlayerMP localOEntityPlayerMP = b.get(i1);
             localOEntityPlayerMP.a.b(paramOPacket);
         }
     }
 
     public String c() {
         String str = "";
-        for (int m = 0; m < b.size(); m++) {
-            if (m > 0)
+        for (int i1 = 0; i1 < b.size(); i1++) {
+            if (i1 > 0) {
                 str = str + ", ";
-            str = str + (b.get(m)).aw;
+            }
+            str = str + b.get(i1).r;
         }
         return str;
     }
 
     public void a(String paramString) {
         f.add(paramString.toLowerCase());
-        f();
+        h();
     }
 
     public void b(String paramString) {
         f.remove(paramString.toLowerCase());
-        f();
+        h();
     }
 
-    private void e() {
+    private void g() {
         try {
             f.clear();
-            BufferedReader localBufferedReader = new BufferedReader(new FileReader(i));
+            BufferedReader localBufferedReader = new BufferedReader(new FileReader(j));
             String str = "";
-            while ((str = localBufferedReader.readLine()) != null)
+            while ((str = localBufferedReader.readLine()) != null) {
                 f.add(str.trim().toLowerCase());
+            }
             localBufferedReader.close();
         } catch (Exception localException) {
             a.warning("Failed to load ban list: " + localException);
         }
     }
 
-    private void f() {
+    private void h() {
         try {
-            PrintWriter localPrintWriter = new PrintWriter(new FileWriter(i, false));
+            PrintWriter localPrintWriter = new PrintWriter(new FileWriter(j, false));
             for (String str : f)
                 localPrintWriter.println(str);
             localPrintWriter.close();
@@ -265,18 +278,18 @@ public class OServerConfigurationManager {
 
     public void c(String paramString) {
         g.add(paramString.toLowerCase());
-        h();
+        j();
     }
 
     public void d(String paramString) {
         g.remove(paramString.toLowerCase());
-        h();
+        j();
     }
 
-    private void g() {
+    private void i() {
         try {
             g.clear();
-            BufferedReader localBufferedReader = new BufferedReader(new FileReader(j));
+            BufferedReader localBufferedReader = new BufferedReader(new FileReader(k));
             String str = "";
             while ((str = localBufferedReader.readLine()) != null)
                 g.add(str.trim().toLowerCase());
@@ -286,11 +299,12 @@ public class OServerConfigurationManager {
         }
     }
 
-    private void h() {
+    private void j() {
         try {
-            PrintWriter localPrintWriter = new PrintWriter(new FileWriter(j, false));
-            for (String str : g)
+            PrintWriter localPrintWriter = new PrintWriter(new FileWriter(k, false));
+            for (String str : g) {
                 localPrintWriter.println(str);
+            }
             localPrintWriter.close();
         } catch (Exception localException) {
             a.warning("Failed to save ip ban list: " + localException);
@@ -299,79 +313,116 @@ public class OServerConfigurationManager {
 
     public void e(String paramString) {
         h.add(paramString.toLowerCase());
-        j();
+        l();
     }
 
     public void f(String paramString) {
         h.remove(paramString.toLowerCase());
-        j();
+        l();
     }
 
-    private void i() {
+    private void k() {
         try {
             h.clear();
-            BufferedReader localBufferedReader = new BufferedReader(new FileReader(k));
+            BufferedReader localBufferedReader = new BufferedReader(new FileReader(l));
             String str = "";
-            while ((str = localBufferedReader.readLine()) != null)
+            while ((str = localBufferedReader.readLine()) != null) {
                 h.add(str.trim().toLowerCase());
+            }
             localBufferedReader.close();
         } catch (Exception localException) {
             a.warning("Failed to load ip ban list: " + localException);
         }
     }
 
-    private void j() {
+    private void l() {
         try {
-            PrintWriter localPrintWriter = new PrintWriter(new FileWriter(k, false));
-            for (String str : h)
+            PrintWriter localPrintWriter = new PrintWriter(new FileWriter(l, false));
+            for (String str : h) {
                 localPrintWriter.println(str);
+            }
             localPrintWriter.close();
         } catch (Exception localException) {
             a.warning("Failed to save ip ban list: " + localException);
         }
     }
 
+    private void m() {
+        try {
+            i.clear();
+            BufferedReader localBufferedReader = new BufferedReader(new FileReader(m));
+            String str = "";
+            while ((str = localBufferedReader.readLine()) != null) {
+                i.add(str.trim().toLowerCase());
+            }
+            localBufferedReader.close();
+        } catch (Exception localException) {
+            a.warning("Failed to load white-list: " + localException);
+        }
+    }
+
+    private void n() {
+        try {
+            PrintWriter localPrintWriter = new PrintWriter(new FileWriter(m, false));
+            for (String str : i) {
+                localPrintWriter.println(str);
+            }
+            localPrintWriter.close();
+        } catch (Exception localException) {
+            a.warning("Failed to save white-list: " + localException);
+        }
+    }
+
     public boolean g(String paramString) {
+        paramString = paramString.trim().toLowerCase();
+        return (!o) || (h.contains(paramString)) || (i.contains(paramString));
+    }
+
+    public boolean h(String paramString) {
         return h.contains(paramString.trim().toLowerCase());
     }
 
-    public OEntityPlayerMP h(String paramString) {
-        for (int m = 0; m < b.size(); m++) {
-            OEntityPlayerMP localOEntityPlayerMP = b.get(m);
-            if (localOEntityPlayerMP.aw.equalsIgnoreCase(paramString))
+    public OEntityPlayerMP i(String paramString) {
+        for (int i1 = 0; i1 < b.size(); i1++) {
+            OEntityPlayerMP localOEntityPlayerMP = b.get(i1);
+            if (localOEntityPlayerMP.r.equalsIgnoreCase(paramString)) {
                 return localOEntityPlayerMP;
+            }
         }
         return null;
     }
 
     public void a(String paramString1, String paramString2) {
-        OEntityPlayerMP localOEntityPlayerMP = h(paramString1);
-        if (localOEntityPlayerMP != null)
+        OEntityPlayerMP localOEntityPlayerMP = i(paramString1);
+        if (localOEntityPlayerMP != null) {
             localOEntityPlayerMP.a.b(new OPacket3Chat(paramString2));
-    }
-
-    public void a(double paramDouble1, double paramDouble2, double paramDouble3, double paramDouble4, OPacket paramOPacket) {
-        for (int m = 0; m < b.size(); m++) {
-            OEntityPlayerMP localOEntityPlayerMP = b.get(m);
-            double d1 = paramDouble1 - localOEntityPlayerMP.p;
-            double d2 = paramDouble2 - localOEntityPlayerMP.q;
-            double d3 = paramDouble3 - localOEntityPlayerMP.r;
-            if (d1 * d1 + d2 * d2 + d3 * d3 < paramDouble4 * paramDouble4)
-                localOEntityPlayerMP.a.b(paramOPacket);
         }
     }
 
-    public void i(String paramString) {
+    public void a(double paramDouble1, double paramDouble2, double paramDouble3, double paramDouble4, OPacket paramOPacket) {
+        for (int i1 = 0; i1 < b.size(); i1++) {
+            OEntityPlayerMP localOEntityPlayerMP = b.get(i1);
+            double d1 = paramDouble1 - localOEntityPlayerMP.aJ;
+            double d2 = paramDouble2 - localOEntityPlayerMP.aK;
+            double d3 = paramDouble3 - localOEntityPlayerMP.aL;
+            if (d1 * d1 + d2 * d2 + d3 * d3 < paramDouble4 * paramDouble4) {
+                localOEntityPlayerMP.a.b(paramOPacket);
+            }
+        }
+    }
+
+    public void j(String paramString) {
         OPacket3Chat localOPacket3Chat = new OPacket3Chat(paramString);
-        for (int m = 0; m < b.size(); m++) {
-            OEntityPlayerMP localOEntityPlayerMP = b.get(m);
-            if (g(localOEntityPlayerMP.aw))
+        for (int i1 = 0; i1 < b.size(); i1++) {
+            OEntityPlayerMP localOEntityPlayerMP = (OEntityPlayerMP) b.get(i1);
+            if (h(localOEntityPlayerMP.r)) {
                 localOEntityPlayerMP.a.b(localOPacket3Chat);
+            }
         }
     }
 
     public boolean a(String paramString, OPacket paramOPacket) {
-        OEntityPlayerMP localOEntityPlayerMP = h(paramString);
+        OEntityPlayerMP localOEntityPlayerMP = i(paramString);
         if (localOEntityPlayerMP != null) {
             localOEntityPlayerMP.a.b(paramOPacket);
             return true;
@@ -380,14 +431,33 @@ public class OServerConfigurationManager {
     }
 
     public void d() {
-        for (int m = 0; m < b.size(); m++)
-            l.a(b.get(m));
+        for (int i1 = 0; i1 < b.size(); i1++) {
+            n.a((OEntityPlayer) b.get(i1));
+        }
     }
 
     public void a(int paramInt1, int paramInt2, int paramInt3, OTileEntity paramOTileEntity) {
         // hMod: fix sign updating in beta 1.1_02
         // Check if bg (TileEntity) is a Sign
         if (paramOTileEntity instanceof OTileEntitySign)
-            d.sendPacketToChunk(((OTileEntitySign) paramOTileEntity).g(), paramInt1, paramInt2, paramInt3);
+            d.sendPacketToChunk(((OTileEntitySign) paramOTileEntity).e(), paramInt1, paramInt2, paramInt3);
+    }
+
+    public void k(String paramString) {
+        i.add(paramString);
+        n();
+    }
+
+    public void l(String paramString) {
+        i.remove(paramString);
+        n();
+    }
+
+    public Set e() {
+        return i;
+    }
+
+    public void f() {
+        m();
     }
 }

@@ -16,7 +16,7 @@ public class Main {
 
     public static final long   minecraft_server                   = 280458825L;
 
-    public static final long   minecraft_servero                  = 2976914608L;
+    public static final long   minecraft_servero                  = 1253042995L;
 
     public static final long   minecraft_servero_runecraft        = 2581072959L;
     public static final long   minecraft_servero_runecraft_winrar = 3296853903L;
@@ -25,7 +25,7 @@ public class Main {
 
     public static final long   mysql                              = 3001390372L;
     public static final long   jarjar                             = 233379283L;
-    public static final long   rules                              = 2575805698L;
+    public static final long   rules                              = 3379329792L;
 
     public static final Logger log                                = Logger.getLogger("Minecraft");
 
@@ -43,7 +43,7 @@ public class Main {
 
             if (!fileExists("minecraft_server.jar")) {
                 log("Missing minecraft_servero.jar, Downloading minecraft_server.jar...");
-                downloadFile("http://minecraft.net/download/minecraft_server.jar", "minecraft_server.jar");
+                downloadFile("https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar", "minecraft_server.jar");
                 checkCRC32("minecraft_server.jar", minecraft_server);
 
                 log("Finished downloading minecraft_server.jar, start converting minecraft_server.jar to minecraft_servero.jar...");

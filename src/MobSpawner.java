@@ -17,15 +17,15 @@ public class MobSpawner implements ComplexBlock {
     }
 
     public int getX() {
-        return spawner.b;
+        return spawner.e;
     }
 
     public int getY() {
-        return spawner.c;
+        return spawner.f;
     }
 
     public int getZ() {
-        return spawner.d;
+        return spawner.g;
     }
 
     public Block getBlock() {
@@ -33,7 +33,7 @@ public class MobSpawner implements ComplexBlock {
     }
 
     public void update() {
-        spawner.d();
+        spawner.h();
     }
 
     /**
@@ -63,6 +63,6 @@ public class MobSpawner implements ComplexBlock {
      * @param delay
      */
     public void setDelay(int delay) {
-        spawner.e = delay;
+        spawner.a = delay;
     }
 }

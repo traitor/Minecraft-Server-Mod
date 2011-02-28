@@ -10,23 +10,23 @@ public final class OItemStack {
     }
 
     public OItemStack(OBlock paramOBlock, int paramInt) {
-        this(paramOBlock.bi, paramInt, 0);
+        this(paramOBlock.bk, paramInt, 0);
     }
 
     public OItemStack(OBlock paramOBlock, int paramInt1, int paramInt2) {
-        this(paramOBlock.bi, paramInt1, paramInt2);
+        this(paramOBlock.bk, paramInt1, paramInt2);
     }
 
     public OItemStack(OItem paramOItem) {
-        this(paramOItem.ba, 1, 0);
+        this(paramOItem.bc, 1, 0);
     }
 
     public OItemStack(OItem paramOItem, int paramInt) {
-        this(paramOItem.ba, paramInt, 0);
+        this(paramOItem.bc, paramInt, 0);
     }
 
     public OItemStack(OItem paramOItem, int paramInt1, int paramInt2) {
-        this(paramOItem.ba, paramInt1, paramInt2);
+        this(paramOItem.bc, paramInt1, paramInt2);
     }
 
     public OItemStack(int paramInt1, int paramInt2, int paramInt3) {
@@ -68,9 +68,9 @@ public final class OItemStack {
     }
 
     public void b(ONBTTagCompound paramONBTTagCompound) {
-        c = paramONBTTagCompound.c("id");
-        a = paramONBTTagCompound.b("Count");
-        d = paramONBTTagCompound.c("Damage");
+        c = paramONBTTagCompound.d("id");
+        a = paramONBTTagCompound.c("Count");
+        d = paramONBTTagCompound.d("Damage");
     }
 
     public int b() {
@@ -154,10 +154,12 @@ public final class OItemStack {
     }
 
     private boolean c(OItemStack paramOItemStack) {
-        if (a != paramOItemStack.a)
+        if (a != paramOItemStack.a) {
             return false;
-        if (c != paramOItemStack.c)
+        }
+        if (c != paramOItemStack.c) {
             return false;
+        }
         return d == paramOItemStack.d;
     }
 
@@ -169,8 +171,7 @@ public final class OItemStack {
         return paramOItemStack == null ? null : paramOItemStack.j();
     }
 
-    @Override
     public String toString() {
-        return a + "OBlockIce" + OItem.c[c].a() + "@" + d;
+        return a + "x" + OItem.c[c].a() + "@" + d;
     }
 }

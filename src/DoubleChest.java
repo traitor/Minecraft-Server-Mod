@@ -28,7 +28,7 @@ public class DoubleChest extends ItemArray<OInventoryLargeChest> implements Comp
     }
 
     public void update() {
-        container.d();
+        container.h();
     }
 
     public Block getBlock() {

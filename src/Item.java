@@ -39,6 +39,7 @@ public class Item {
         Dispenser(23), //
         SandStone(24), //
         NoteBlock(25), //
+        BedBlock(26), // //
         Cloth(35), //
         YellowFlower(37), //
         RedRose(38), //
@@ -96,6 +97,8 @@ public class Item {
         Portal(90), //
         JackOLantern(91), //
         CakeBlock(92), //
+        RedstoneRepeaterOff(93), //
+        RedstoneRepeaterOn(94), //
         IronSpade(256), //
         IronPickaxe(257), //
         IronAxe(258), //
@@ -195,6 +198,8 @@ public class Item {
         Bone(352), //
         Sugar(353), //
         Cake(354), //
+        Bed(355), //
+        RedstoneRepeater(356), //
         GoldRecord(2256), //
         GreenRecord(2257);
 

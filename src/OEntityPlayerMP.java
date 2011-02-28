@@ -1,8 +1,8 @@
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
-
 import net.minecraft.server.MinecraftServer;
 
 public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
@@ -13,36 +13,36 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     public double              d;
     public double              e;
     public List                f  = new LinkedList();
-    public Set                 ak = new HashSet();
-    public double              al;
-    private int                bD = -99999999;
-    private int                bE = 60;
-    private OItemStack[]       bF = { null, null, null, null, null };
-    private int                bG = 0;
-    public boolean             am;
+    public Set                 g  = new HashSet();
+    private int                bE = -99999999;
+    private int                bF = 60;
+    private OItemStack[]       bG = { null, null, null, null, null };
+    private int                bH = 0;
+    public boolean             h;
     // hMod: Player storage
     private Player             player;
 
     public OEntityPlayerMP(MinecraftServer paramMinecraftServer, OWorld paramOWorld, String paramString, OItemInWorldManager paramOItemInWorldManager) {
         super(paramOWorld);
 
-        int i = paramOWorld.m;
-        int j = paramOWorld.o;
-        int k = paramOWorld.n;
+        OChunkCoordinates localOChunkCoordinates = paramOWorld.l();
+        int i = localOChunkCoordinates.a;
+        int j = localOChunkCoordinates.c;
+        int k = localOChunkCoordinates.b;
 
-        if (!paramOWorld.q.e) {
-            i += W.nextInt(etc.getInstance().getSpawnProtectionSize() * 2 + 1) - etc.getInstance().getSpawnProtectionSize();
+        if (!paramOWorld.m.e) {
+            i += bq.nextInt(20) - 10;
             k = paramOWorld.e(i, j);
-            j += W.nextInt(etc.getInstance().getSpawnProtectionSize() * 2 + 1) - etc.getInstance().getSpawnProtectionSize();
+            j += bq.nextInt(20) - 10;
         }
         c(i + 0.5D, k, j + 0.5D, 0.0F, 0.0F);
 
         b = paramMinecraftServer;
-        S = 0.0F;
+        bm = 0.0F;
         paramOItemInWorldManager.a = this;
-        aw = paramString;
+        r = paramString;
         c = paramOItemInWorldManager;
-        H = 0.0F;
+        bb = 0.0F;
 
         // hMod: So we don't conflict with runecraft
         c = new Digging(paramOWorld, this);
@@ -50,7 +50,6 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         // hMod: Store player
         player = etc.getDataSource().getPlayer(paramString);
         player.setUser(this);
-
     }
 
     /**
@@ -66,114 +65,114 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
      * Reloads the player
      */
     public void reloadPlayer() {
-        player = etc.getDataSource().getPlayer(aw);
+        player = etc.getDataSource().getPlayer(r);
         player.setUser(this);
     }
 
     public void l() {
         // hMod: Make sure this gets cast correctly, or mutant puppies will
         // spawn and eat your items.
-        ap.a((OICrafting) this);
+        k.a((OICrafting) this);
     }
 
-    @Override
-    public OItemStack[] I() {
-        return bF;
+    public OItemStack[] k_() {
+        return bG;
     }
 
-    @Override
-    public void b_() {
-        bE -= 1;
-        ap.a();
+    protected void l_() {
+        bb = 0.0F;
+    }
+
+    public float p() {
+        return 1.62F;
+    }
+
+    public void f_() {
+        c.a();
+
+        bF -= 1;
+        k.a();
 
         for (int i = 0; i < 5; i++) {
-            OItemStack localOItemStack = a(i);
-            if (localOItemStack != bF[i]) {
-                b.k.a(this, new OPacket5PlayerInventory(g, i, localOItemStack));
-                bF[i] = localOItemStack;
+            OItemStack localOItemStack = b_(i);
+            if (localOItemStack != bG[i]) {
+                b.k.a(this, new OPacket5PlayerInventory(aA, i, localOItemStack));
+                bG[i] = localOItemStack;
             }
         }
     }
 
-    public OItemStack a(int paramInt) {
-        if (paramInt == 0)
-            return an.e();
-        return an.b[(paramInt - 1)];
+    public OItemStack b_(int paramInt) {
+        if (paramInt == 0) {
+            return i.b();
+        }
+        return i.b[(paramInt - 1)];
     }
 
-    @Override
-    public void f(OEntity paramOEntity) {
+    public void a(OEntity paramOEntity) {
         // hMod: drops inventory on death.
         if (etc.getInstance().isHealthEnabled())
-            an.h();
+            i.g();
     }
 
-    @Override
     public boolean a(OEntity paramOEntity, int paramInt) {
-        if (bE > 0)
+        if (bF > 0) {
             return false;
+        }
 
         if (!b.n) {
-            if ((paramOEntity instanceof OEntityPlayer))
+            if ((paramOEntity instanceof OEntityPlayer)) {
                 return false;
+            }
             if ((paramOEntity instanceof OEntityArrow)) {
                 OEntityArrow localOEntityArrow = (OEntityArrow) paramOEntity;
-                if ((localOEntityArrow.b instanceof OEntityPlayer))
+                if ((localOEntityArrow.b instanceof OEntityPlayer)) {
                     return false;
+                }
             }
         }
         return super.a(paramOEntity, paramInt);
     }
 
-    @Override
-    public void d(int paramInt) {
-        super.d(paramInt);
+    public void b(int paramInt) {
+        super.b(paramInt);
     }
 
-    public void n() {
-        super.b_();
+    public void a(boolean paramBoolean) {
+        super.f_();
 
-        OChunkCoordIntPair localObject1 = null;
+        if ((paramBoolean) && (!f.isEmpty())) {
+            OChunkCoordIntPair localOChunkCoordIntPair = (OChunkCoordIntPair) f.get(0);
 
-        double d1 = 0.0D;
-        OChunkCoordIntPair localObject2;
-        for (int i = 0; i < f.size(); i++) {
-            localObject2 = (OChunkCoordIntPair) f.get(i);
-            double d2 = (localObject2).a(this);
-            if ((i == 0) || (d2 < d1)) {
-                localObject1 = localObject2;
-                d1 = (localObject2).a(this);
-            }
-        }
+            if (localOChunkCoordIntPair != null) {
+                int i = 0;
 
-        if (localObject1 != null) {
-            int i = 0;
+                if (a.b() < 2) {
+                    i = 1;
+                }
 
-            if (d1 < 1024.0D)
-                i = 1;
-            if (a.b() < 2)
-                i = 1;
-
-            if (i != 0) {
-                f.remove(localObject1);
-                a.b(new OPacket51MapChunk(localObject1.a * 16, 0, localObject1.b * 16, 16, 128, 16, b.e));
-                List list = b.e.d(localObject1.a * 16, 0, localObject1.b * 16, localObject1.a * 16 + 16, 128, localObject1.b * 16 + 16);
-                for (int j = 0; j < (list).size(); j++)
-                    a((OTileEntity) (list).get(j));
+                if (i != 0) {
+                    f.remove(localOChunkCoordIntPair);
+                    a.b(new OPacket51MapChunk(localOChunkCoordIntPair.a * 16, 0, localOChunkCoordIntPair.b * 16, 16, 128, 16, b.e));
+                    List localList = b.e.d(localOChunkCoordIntPair.a * 16, 0, localOChunkCoordIntPair.b * 16, localOChunkCoordIntPair.a * 16 + 16, 128, localOChunkCoordIntPair.b * 16 + 16);
+                    for (int j = 0; j < localList.size(); j++) {
+                        a((OTileEntity) localList.get(j));
+                    }
+                }
             }
         }
 
         // hMod: Update the health
-        if (ba != bE) {
+        if (X != bF) {
             // updates your health when it is changed.
             if (!etc.getInstance().isHealthEnabled()) {
-                aZ = 20;
-                bi = false;
-            } else if ((Boolean) manager.callHook(PluginLoader.Hook.HEALTH_CHANGE, getPlayer(), bD, aZ))
-                aZ = bD;
+                W = 20;
+                af = false;
+            } else if ((Boolean) manager.callHook(PluginLoader.Hook.HEALTH_CHANGE, getPlayer(), bE, W))
+                W = bE;
             else
-                a.b(new OPacket8(aZ));
-            bD = aZ;
+                a.b(new OPacket8(W));
+            bE = W;
         }
     }
 
@@ -185,53 +184,64 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
                 manager.callHook(PluginLoader.Hook.SIGN_SHOW, getPlayer(), sign);
             }
 
-            OPacket localOPacket = paramOTileEntity.g();
-            if (localOPacket != null)
+            OPacket localOPacket = paramOTileEntity.e();
+            if (localOPacket != null) {
                 a.b(localOPacket);
+            }
         }
     }
 
-    @Override
-    public void o() {
-        s = (t = u = 0.0D);
-        bA = false;
-        super.o();
+    public void q() {
+        super.q();
     }
 
-    @Override
-    public void c(OEntity paramOEntity, int paramInt) {
-        if (!paramOEntity.G) {
-            if ((paramOEntity instanceof OEntityItem))
-                b.k.a(paramOEntity, new OPacket22Collect(paramOEntity.g, g));
-            if ((paramOEntity instanceof OEntityArrow))
-                b.k.a(paramOEntity, new OPacket22Collect(paramOEntity.g, g));
+    public void b(OEntity paramOEntity, int paramInt) {
+        if (!paramOEntity.ba) {
+            if ((paramOEntity instanceof OEntityItem)) {
+                b.k.a(paramOEntity, new OPacket22Collect(paramOEntity.aA, aA));
+            }
+            if ((paramOEntity instanceof OEntityArrow)) {
+                b.k.a(paramOEntity, new OPacket22Collect(paramOEntity.aA, aA));
+            }
         }
-        super.c(paramOEntity, paramInt);
-        ap.a();
+        super.b(paramOEntity, paramInt);
+        k.a();
     }
 
-    @Override
-    public void K() {
-        if (!au) {
-            av = -1;
-            au = true;
+    public void r() {
+        if (!p) {
+            q = -1;
+            p = true;
             b.k.a(this, new OPacket18ArmAnimation(this, 1));
         }
     }
 
-    @Override
-    public float w() {
-        return 1.62F;
+    public void s() {
     }
 
-    @Override
-    public void e(OEntity paramOEntity) {
-        super.e(paramOEntity);
-        a.b(new OPacket39(this, k));
-        a.a(p, q, r, v, w);
+    public boolean a(int paramInt1, int paramInt2, int paramInt3) {
+        if (super.a(paramInt1, paramInt2, paramInt3)) {
+            b.k.a(this, new OPacket17Sleep(this, 0, paramInt1, paramInt2, paramInt3));
+
+            return true;
+        }
+        return false;
     }
 
-    @Override
+    public void a(boolean paramBoolean1, boolean paramBoolean2) {
+        if (E()) {
+            b.k.b(this, new OPacket18ArmAnimation(this, 3));
+        }
+        super.a(paramBoolean1, paramBoolean2);
+        a.a(aJ, aK, aL, aP, aQ);
+    }
+
+    public void b(OEntity paramOEntity) {
+        super.b(paramOEntity);
+        a.b(new OPacket39(this, aE));
+        a.a(aJ, aK, aL, aP, aQ);
+    }
+
     protected void a(double paramDouble, boolean paramBoolean) {
     }
 
@@ -239,29 +249,24 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         super.a(paramDouble, paramBoolean);
     }
 
-    private void U() {
-        bG = (bG % 100 + 1);
+    private void V() {
+        bH = (bH % 100 + 1);
     }
 
-    @Override
-    public void a(int paramInt1, int paramInt2, int paramInt3) {
-        OCraftingInventoryWorkbenchCB temp = new OCraftingInventoryWorkbenchCB(an, l, paramInt1, paramInt2, paramInt3);
-        Workbench bench = new Workbench(temp);
-        if ((Boolean) manager.callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), bench))
-            return;
-
-        U();
-        a.b(new OPacket100(bG, 1, "Crafting", 9));
-        ap = temp;
-        ap.f = bG;
-        ap.a((OICrafting) this);
+    public void b(int paramInt1, int paramInt2, int paramInt3) {
+        V();
+        a.b(new OPacket100(bH, 1, "Crafting", 9));
+        k = new OCraftingInventoryWorkbenchCB(i, aF, paramInt1, paramInt2, paramInt3);
+        k.f = bH;
+        // hMod: Make sure this gets cast correctly, or mutant puppies will
+        // spawn and eat your items.
+        k.a((OICrafting) this);
     }
 
-    @Override
     public void a(OIInventory paramOIInventory) {
         // hMod: Check if we can open this
         Inventory inv = null;
-        String name = paramOIInventory.b();
+        String name = paramOIInventory.c();
         if (paramOIInventory instanceof OTileEntityChest) {
             inv = new Chest((OTileEntityChest) paramOIInventory);
             if ((Boolean) manager.callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), inv))
@@ -274,91 +279,99 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
 
         if (inv != null)
             name = inv.getName();
-
-        U();
-        a.b(new OPacket100(bG, 0, name, paramOIInventory.h_()));
-        ap = new OCraftingInventoryChestCB(an, paramOIInventory);
-        ap.f = bG;
+        V();
+        a.b(new OPacket100(bH, 0, name, paramOIInventory.m_()));
+        k = new OCraftingInventoryChestCB(i, paramOIInventory);
+        k.f = bH;
         // hMod: Make sure this gets cast correctly, or mutant puppies will
         // spawn and eat your items.
-        ap.a((OICrafting) this);
+        k.a((OICrafting) this);
     }
 
-    @Override
     public void a(OTileEntityFurnace paramOTileEntityFurnace) {
         // hMod: Check if we can open this
         Inventory inv = new Furnace(paramOTileEntityFurnace);
-        String name = paramOTileEntityFurnace.b();
+        String name = paramOTileEntityFurnace.c();
         if ((Boolean) manager.callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), inv))
             return;
 
         if (inv != null)
             name = inv.getName();
 
-        U();
-        a.b(new OPacket100(bG, 2, name, paramOTileEntityFurnace.h_()));
-        ap = new OCraftingInventoryFurnaceCB(an, paramOTileEntityFurnace);
-        ap.f = bG;
+        V();
+        a.b(new OPacket100(bH, 2, name, paramOTileEntityFurnace.m_()));
+        k = new OCraftingInventoryFurnaceCB(i, paramOTileEntityFurnace);
+        k.f = bH;
         // hMod: Make sure this gets cast correctly, or mutant puppies will
         // spawn and eat your items.
-        ap.a((OICrafting) this);
+        k.a((OICrafting) this);
     }
 
-    @Override
     public void a(OTileEntityDispenser paramOTileEntityDispenser) {
         Dispenser dis = new Dispenser(paramOTileEntityDispenser);
-        String name = paramOTileEntityDispenser.b();
+        String name = paramOTileEntityDispenser.c();
         if ((Boolean) manager.callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), dis))
             return;
 
         if (dis != null)
             name = dis.getName();
-        U();
-        a.b(new OPacket100(bG, 3, name, paramOTileEntityDispenser.h_()));
-        ap = new OCraftingInventoryDispenserCB(an, paramOTileEntityDispenser);
-        ap.f = bG;
+
+        V();
+        a.b(new OPacket100(bH, 3, name, paramOTileEntityDispenser.m_()));
+        k = new OCraftingInventoryDispenserCB(i, paramOTileEntityDispenser);
+        k.f = bH;
         // hMod: Make sure this gets cast correctly, or mutant puppies will
         // spawn and eat your items.
-        ap.a((OICrafting) this);
+        k.a((OICrafting) this);
     }
 
     public void a(OCraftingInventoryCB paramOCraftingInventoryCB, int paramInt, OItemStack paramOItemStack) {
-        if ((paramOCraftingInventoryCB.a(paramInt) instanceof OSlotCrafting))
+        if ((paramOCraftingInventoryCB.a(paramInt) instanceof OSlotCrafting)) {
             return;
+        }
 
-        if (am)
+        if (h) {
             return;
+        }
 
         a.b(new OPacket103(paramOCraftingInventoryCB.f, paramInt, paramOItemStack));
     }
 
     public void a(OCraftingInventoryCB paramOCraftingInventoryCB, List paramList) {
         a.b(new OPacket104(paramOCraftingInventoryCB.f, paramList));
-        a.b(new OPacket103(-1, -1, an.i()));
+        a.b(new OPacket103(-1, -1, i.i()));
     }
 
     public void a(OCraftingInventoryCB paramOCraftingInventoryCB, int paramInt1, int paramInt2) {
         a.b(new OPacket105(paramOCraftingInventoryCB.f, paramInt1, paramInt2));
     }
 
-    @Override
     public void a(OItemStack paramOItemStack) {
     }
 
-    @Override
-    public void L() {
-        a.b(new OPacket101(ap.f));
-        N();
+    public void t() {
+        a.b(new OPacket101(k.f));
+        v();
     }
 
-    public void M() {
-        if (am)
+    public void u() {
+        if (h) {
             return;
-        a.b(new OPacket103(-1, -1, an.i()));
+        }
+        a.b(new OPacket103(-1, -1, i.i()));
     }
 
-    public void N() {
-        ap.a((OEntityPlayer) this);
-        ap = ao;
+    public void v() {
+        k.a((OEntityPlayer) this);
+        k = j;
+    }
+
+    public void a(float paramFloat1, float paramFloat2, boolean paramBoolean1, boolean paramBoolean2, float paramFloat3, float paramFloat4) {
+        au = paramFloat1;
+        av = paramFloat2;
+        ax = paramBoolean1;
+        b(paramBoolean2);
+        aQ = paramFloat3;
+        aP = paramFloat4;
     }
 }
