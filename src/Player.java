@@ -844,7 +844,7 @@ public class Player extends HumanEntity implements MessageReceiver {
         } catch (Throwable ex) { // Might as well try and catch big exceptions
             // before the server crashes from a stack
             // overflow or something
-            log.log(Level.SEVERE, "Exception in command handler (Report this to hey0 unless you did something dumb like enter letters as numbers):", ex);
+            log.log(Level.SEVERE, "Exception in command handler (Don't be dumb by entering letters as numbers):", ex);
             if (isAdmin())
                 sendMessage(Colors.Rose + "Exception occured. Check the server for more info.");
         }
