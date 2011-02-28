@@ -197,7 +197,7 @@ public class Item {
         Cake(354), //
         GoldRecord(2256), //
         GreenRecord(2257);
-        
+
         private int                       id;
         private static Map<Integer, Type> map;
 

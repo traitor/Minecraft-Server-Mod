@@ -764,7 +764,8 @@ public class PluginLoader {
             customListeners.remove(name);
         }
     }
-    public boolean isLoaded(){
+
+    public boolean isLoaded() {
         return loaded;
     }
 }

@@ -139,10 +139,10 @@ public class Player extends HumanEntity implements MessageReceiver {
         try {
             if (etc.getInstance().isLogging())
                 log.info("Command used by " + getName() + " " + command);
-            
+
             String[] split = command.split(" ");
             String cmd = split[0];
-            
+
             if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMMAND, new Object[] { this, split }))
                 return; // No need to go on, commands were parsed.
             if (!canUseCommand(cmd) && !cmd.startsWith("/#")) {
@@ -377,24 +377,24 @@ public class Player extends HumanEntity implements MessageReceiver {
                             // toGive.giveItem(itemId, amount);
                             Inventory inv = toGive.getInventory();
                             ArrayList<Item> list = new ArrayList<Item>();
-                            for(Item it : inv.getContents())
-                                if(it != null && it.getItemId() == i.getItemId() && it.getDamage() == i.getDamage())
+                            for (Item it : inv.getContents())
+                                if (it != null && it.getItemId() == i.getItemId() && it.getDamage() == i.getDamage())
                                     list.add(it);
-                            
-                            for(Item it : list){
-                                if(it.getAmount() < 64){
-                                    if(amount >= 64 - it.getAmount()){
+
+                            for (Item it : list) {
+                                if (it.getAmount() < 64) {
+                                    if (amount >= 64 - it.getAmount()) {
                                         amount -= 64 - it.getAmount();
                                         it.setAmount(64);
                                         toGive.giveItem(it);
-                                    }else{
+                                    } else {
                                         it.setAmount(it.getAmount() + amount);
                                         amount = 0;
                                         toGive.giveItem(it);
                                     }
                                 }
                             }
-                            if(amount != 0){
+                            if (amount != 0) {
                                 i.setAmount(64);
                                 while (amount > 64) {
                                     amount -= 64;
@@ -419,7 +419,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                     sendMessage(Colors.Rose + "Can't find user " + split[3]);
             } else if (cmd.equalsIgnoreCase("/cloth") || cmd.equalsIgnoreCase("/dye")) {
                 if (split.length < 3) {
-                    sendMessage(Colors.Rose + "Correct usage is: "+cmd+" [amount] [color]");
+                    sendMessage(Colors.Rose + "Correct usage is: " + cmd + " [amount] [color]");
                     return;
                 }
                 try {
@@ -441,35 +441,35 @@ public class Player extends HumanEntity implements MessageReceiver {
                         return;
                     }
                     Item i = c.getItem();
-                    
-                    if(cmd.equalsIgnoreCase("/dye")){
+
+                    if (cmd.equalsIgnoreCase("/dye")) {
                         i.setType(Item.Type.InkSack);
-                        //some1 had fun inverting this i guess .....
+                        // some1 had fun inverting this i guess .....
                         i.setDamage(15 - i.getDamage());
                     }
                     i.setAmount(amount);
                     log.log(Level.INFO, "Giving " + getName() + " some " + i.toString());
-                    
+
                     Inventory inv = getInventory();
                     ArrayList<Item> list = new ArrayList<Item>();
-                    for(Item it : inv.getContents())
-                        if(it != null && it.getItemId() == i.getItemId() && it.getDamage() == i.getDamage())
+                    for (Item it : inv.getContents())
+                        if (it != null && it.getItemId() == i.getItemId() && it.getDamage() == i.getDamage())
                             list.add(it);
-                    
-                    for(Item it : list){
-                        if(it.getAmount() < 64){
-                            if(amount >= 64 - it.getAmount()){
+
+                    for (Item it : list) {
+                        if (it.getAmount() < 64) {
+                            if (amount >= 64 - it.getAmount()) {
                                 amount -= 64 - it.getAmount();
                                 it.setAmount(64);
                                 giveItem(it);
-                            }else{
+                            } else {
                                 it.setAmount(it.getAmount() + amount);
                                 amount = 0;
                                 giveItem(it);
                             }
                         }
                     }
-                    if(amount != 0){
+                    if (amount != 0) {
                         i.setAmount(64);
                         while (amount > 64) {
                             amount -= 64;

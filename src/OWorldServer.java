@@ -58,11 +58,11 @@ public class OWorldServer extends OWorld {
 
     @Override
     public boolean a(OEntity entity) {
-        if(entity instanceof OEntityLiving && !(entity instanceof OEntityPlayer))
+        if (entity instanceof OEntityLiving && !(entity instanceof OEntityPlayer))
             // hMod: allow entities to spawn
-            if ((Boolean) (etc.getLoader().callHook(PluginLoader.Hook.MOB_SPAWN, new Mob((OEntityLiving)entity))))
+            if ((Boolean) (etc.getLoader().callHook(PluginLoader.Hook.MOB_SPAWN, new Mob((OEntityLiving) entity))))
                 return false;
-        
+
         return super.a(entity);
     }
 

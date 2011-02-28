@@ -14,6 +14,7 @@ public class OEntityBoat extends OEntity {
 
     // hMod Start
     Boat           boat = new Boat(this);
+
     // hMod end
 
     public OEntityBoat(OWorld paramOWorld) {

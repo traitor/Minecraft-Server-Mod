@@ -16,9 +16,9 @@ public class OBlockOre extends OBlock {
     }
 
     public int a(Random paramRandom) {
-        if(bi == Block.Type.LapisLazuliOre.getType())
+        if (bi == Block.Type.LapisLazuliOre.getType())
             return 4 + paramRandom.nextInt(5);
-        
+
         return 1;
     }
 

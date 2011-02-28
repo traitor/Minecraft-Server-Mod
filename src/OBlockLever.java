@@ -129,19 +129,18 @@ public class OBlockLever extends OBlock {
 
         // hMod: Allow the lever to change the current
         /*
-         * first 3 bits are for postion
-         * 4th bit is for power.(on / off)
+         * first 3 bits are for postion 4th bit is for power.(on / off)
          */
         int old = (k != 8) ? 1 : 0;
         int current = (k == 8) ? 1 : 0;
         current = ((Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(bi, paramInt1, paramInt2, paramInt3), old, current)).intValue();
         current = (current > 0) ? 8 : 0;
-        
+
         if (current == k) {
             paramOWorld.c(paramInt1, paramInt2, paramInt3, j + k);
             paramOWorld.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
 
-            paramOWorld.a((double)paramInt1 + 0.5D, (double)paramInt2 + 0.5D, (double)paramInt3 + 0.5D, "random.click", 0.3F, k > 0 ? 0.6F : 0.5F);
+            paramOWorld.a((double) paramInt1 + 0.5D, (double) paramInt2 + 0.5D, (double) paramInt3 + 0.5D, "random.click", 0.3F, k > 0 ? 0.6F : 0.5F);
 
             paramOWorld.h(paramInt1, paramInt2, paramInt3, bi);
             if (j == 1)
