@@ -107,15 +107,17 @@ public class OMobSpawnerBase {
         return a;
     }
 
+    // hMod: Custom mob spawning
     public Class<?>[] a(OEnumCreatureType paramOEnumCreatureType) {
+        etc config = etc.getInstance();
         if (paramOEnumCreatureType == OEnumCreatureType.a) {
-            return r;
+            return config.getMonstersClass();
         }
         if (paramOEnumCreatureType == OEnumCreatureType.b) {
-            return s;
+            return config.getAnimalsClass();
         }
         if (paramOEnumCreatureType == OEnumCreatureType.c) {
-            return t;
+            return config.getWaterAnimalsClass();
         }
         return null;
     }
