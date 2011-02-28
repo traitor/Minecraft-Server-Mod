@@ -144,7 +144,6 @@ public class OPlayerManager {
         return 144;
     }
 
-    // Stupid me, not checking. *slaps self*
     // hMod: OPlayerInstance calls these statically
     static MinecraftServer a(OPlayerManager jh1) {
         return jh1.d;
@@ -159,7 +158,6 @@ public class OPlayerManager {
     }
 
     // hMod: bring back old "send packet to chunk" method from alpha
-
     public void sendPacketToChunk(OPacket packetToSend, int globalx, int globaly, int globalz) {
         // Get chunk coordinates
         int chunkx = globalx >> 4;

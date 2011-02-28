@@ -117,6 +117,10 @@ public class OEntityTracker {
             MinecraftServer.a.warning("hMod WARNING: ConcurrentModificationException in OEntityTracker:");
             e.printStackTrace();
         }
+        // hMod: Execute runnables contained in eventQueue.
+        for (DelayedTask task = delayQueue.poll(); task != null; task = delayQueue.poll())
+            // should we catch exceptions here?
+            task.run();
     }
 
     // hMod: Allow adding of tasks to the queue
@@ -126,7 +130,11 @@ public class OEntityTracker {
         delayQueue.add(new DelayedTask(task, delayMillis));
     }
 
-    // hMod: deleted add(Runnable), was deprecated.
+    // hMod: deprecated. Use server.addToServerQueue().
+    @Deprecated
+    public synchronized static void add(Runnable r) {
+        add(r, 0L);
+    }
 
     public void a(OEntity paramOEntity, OPacket paramOPacket) {
         OEntityTrackerEntry localOEntityTrackerEntry = (OEntityTrackerEntry) b.a(paramOEntity.aA);

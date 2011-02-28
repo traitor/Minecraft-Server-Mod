@@ -69,7 +69,7 @@ public class OTileEntityMobSpawner extends OTileEntity {
                 localOEntityLiving.c(d4, d5, d6, d.k.nextFloat() * 360.0F, 0.0F);
 
                 if (localOEntityLiving.b()) {
-                    d.a(localOEntityLiving);
+                    ((OWorldServer)d).a(localOEntityLiving);
 
                     for (int m = 0; m < 20; m++) {
                         d1 = e + 0.5D + (d.k.nextFloat() - 0.5D) * 2.0D;

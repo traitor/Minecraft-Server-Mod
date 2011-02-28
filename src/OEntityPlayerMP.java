@@ -31,9 +31,9 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         int k = localOChunkCoordinates.b;
 
         if (!paramOWorld.m.e) {
-            i += bq.nextInt(20) - 10;
+            i += bq.nextInt(etc.getInstance().getSpawnProtectionSize() * 2 + 1) - etc.getInstance().getSpawnProtectionSize();
             k = paramOWorld.e(i, j);
-            j += bq.nextInt(20) - 10;
+            j += bq.nextInt(etc.getInstance().getSpawnProtectionSize() * 2 + 1) - etc.getInstance().getSpawnProtectionSize();
         }
         c(i + 0.5D, k, j + 0.5D, 0.0F, 0.0F);
 

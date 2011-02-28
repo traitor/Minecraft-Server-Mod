@@ -451,7 +451,8 @@ public abstract class OEntity {
 
     protected void a(int paramInt) {
         if (!by) {
-            a((OEntity) null, paramInt);
+            if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.FIRE, null, entity, paramInt))
+                a((OEntity) null, paramInt);
         }
     }
 
@@ -639,7 +640,7 @@ public abstract class OEntity {
         if ((ba) || (str == null)) {
             return false;
         }
-        paramONBTTagCompound.a("ONBTTagInt", str);
+        paramONBTTagCompound.a("id", str);
         d(paramONBTTagCompound);
         return true;
     }

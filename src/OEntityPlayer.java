@@ -250,7 +250,11 @@ public abstract class OEntityPlayer extends OEntityLiving {
             localOEntityItem.aO += Math.sin(f2) * f1;
         }
 
-        a(localOEntityItem);
+        if (!(Boolean) manager.callHook(PluginLoader.Hook.ITEM_DROP, ((OEntityPlayerMP) this).getPlayer(), new Item(paramOItemStack)))
+            a(localOEntityItem);
+        // return the item to the inventory.
+        else
+            i.a(paramOItemStack);
     }
 
     protected void a(OEntityItem paramOEntityItem) {

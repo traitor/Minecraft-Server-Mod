@@ -404,7 +404,7 @@ public class Server {
      * @return highest block altitude
      */
     public int getHighestBlockY(int x, int z) {
-        return server.e.d(x, z);
+        return server.e.e(x, z);
     }
 
     /**

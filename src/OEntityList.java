@@ -33,7 +33,7 @@ public class OEntityList {
     public static OEntity a(ONBTTagCompound paramONBTTagCompound, OWorld paramOWorld) {
         OEntity localOEntity = null;
         try {
-            Class localClass = (Class) a.get(paramONBTTagCompound.i("ONBTTagInt"));
+            Class localClass = (Class) a.get(paramONBTTagCompound.i("id"));
             if (localClass != null) {
                 localOEntity = (OEntity) localClass.getConstructor(new Class[] { OWorld.class }).newInstance(new Object[] { paramOWorld });
             }
@@ -43,7 +43,7 @@ public class OEntityList {
         if (localOEntity != null) {
             localOEntity.e(paramONBTTagCompound);
         } else {
-            System.out.println("Skipping Entity with id " + paramONBTTagCompound.i("ONBTTagInt"));
+            System.out.println("Skipping Entity with id " + paramONBTTagCompound.i("id"));
         }
         return localOEntity;
     }

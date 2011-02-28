@@ -88,34 +88,36 @@ public class OBlockPortal extends OBlockBreakable {
             j = 0;
         }
 
-        int k = paramInt2;
-        while (paramOWorld.a(paramInt1, k - 1, paramInt3) == bk) {
-            k--;
-        }
-        if (paramOWorld.a(paramInt1, k - 1, paramInt3) != OBlock.ap.bk) {
-            paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
-            return;
-        }
-
-        int m = 1;
-        while ((m < 4) && (paramOWorld.a(paramInt1, k + m, paramInt3) == bk)) {
-            m++;
-        }
-        if ((m != 3) || (paramOWorld.a(paramInt1, k + m, paramInt3) != OBlock.ap.bk)) {
-            paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
-            return;
-        }
-
-        int n = (paramOWorld.a(paramInt1 - 1, paramInt2, paramInt3) == bk) || (paramOWorld.a(paramInt1 + 1, paramInt2, paramInt3) == bk) ? 1 : 0;
-        int i1 = (paramOWorld.a(paramInt1, paramInt2, paramInt3 - 1) == bk) || (paramOWorld.a(paramInt1, paramInt2, paramInt3 + 1) == bk) ? 1 : 0;
-        if ((n != 0) && (i1 != 0)) {
-            paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
-            return;
-        }
-
-        if (((paramOWorld.a(paramInt1 + i, paramInt2, paramInt3 + j) != OBlock.ap.bk) || (paramOWorld.a(paramInt1 - i, paramInt2, paramInt3 - j) != bk)) && ((paramOWorld.a(paramInt1 - i, paramInt2, paramInt3 - j) != OBlock.ap.bk) || (paramOWorld.a(paramInt1 + i, paramInt2, paramInt3 + j) != bk))) {
-            paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
-            return;
+        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Block(bk, paramInt1, paramInt2, paramInt3), false)) {
+            int k = paramInt2;
+            while (paramOWorld.a(paramInt1, k - 1, paramInt3) == bk) {
+                k--;
+            }
+            if (paramOWorld.a(paramInt1, k - 1, paramInt3) != OBlock.ap.bk) {
+                paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
+                return;
+            }
+    
+            int m = 1;
+            while ((m < 4) && (paramOWorld.a(paramInt1, k + m, paramInt3) == bk)) {
+                m++;
+            }
+            if ((m != 3) || (paramOWorld.a(paramInt1, k + m, paramInt3) != OBlock.ap.bk)) {
+                paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
+                return;
+            }
+    
+            int n = (paramOWorld.a(paramInt1 - 1, paramInt2, paramInt3) == bk) || (paramOWorld.a(paramInt1 + 1, paramInt2, paramInt3) == bk) ? 1 : 0;
+            int i1 = (paramOWorld.a(paramInt1, paramInt2, paramInt3 - 1) == bk) || (paramOWorld.a(paramInt1, paramInt2, paramInt3 + 1) == bk) ? 1 : 0;
+            if ((n != 0) && (i1 != 0)) {
+                paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
+                return;
+            }
+    
+            if (((paramOWorld.a(paramInt1 + i, paramInt2, paramInt3 + j) != OBlock.ap.bk) || (paramOWorld.a(paramInt1 - i, paramInt2, paramInt3 - j) != bk)) && ((paramOWorld.a(paramInt1 - i, paramInt2, paramInt3 - j) != OBlock.ap.bk) || (paramOWorld.a(paramInt1 + i, paramInt2, paramInt3 + j) != bk))) {
+                paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
+                return;
+            }
         }
     }
 
