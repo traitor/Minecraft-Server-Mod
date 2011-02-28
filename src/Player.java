@@ -362,12 +362,10 @@ public class Player extends HumanEntity implements MessageReceiver {
 
                 if (toGive != null) {
 
-                    boolean allowedItem = false;
-                    if (!etc.getInstance().getDisallowedItems().isEmpty() && etc.getInstance().getDisallowedItems().contains(itemId)) {
+                    boolean allowedItem = true;
+                    if (!etc.getInstance().getDisallowedItems().isEmpty() && etc.getInstance().getDisallowedItems().contains(itemId))
                         allowedItem = false;
-                    } else {
-                    	allowedItem = true;
-                    }
+
                     if (Item.isValidItem(itemId)) {
                         if (allowedItem || canIgnoreRestrictions()) {
                             Item i = new Item(itemId, amount, -1, damage);
@@ -839,7 +837,7 @@ public class Player extends HumanEntity implements MessageReceiver {
         } catch (Throwable ex) { // Might as well try and catch big exceptions
             // before the server crashes from a stack
             // overflow or something
-            log.log(Level.SEVERE, "Exception in command handler (Don't be dumb by entering letters as numbers):", ex);
+            log.log(Level.SEVERE, "Exception in command handler (Report this unless you did something dumb like entering letters as numbers):", ex);
             if (isAdmin())
                 sendMessage(Colors.Rose + "Exception occured. Check the server for more info.");
         }
