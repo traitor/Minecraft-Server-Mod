@@ -121,6 +121,13 @@ public class OPlayerManager {
         if ((n == 0) && (i1 == 0)) {
             return;
         }
+        
+        //hMod speed up teleporting.
+        if (n > 10 || n < -10 || i1 > 10 || i1 < -10) {
+            b(paramOEntityPlayerMP);
+            a(paramOEntityPlayerMP);
+            return;
+        }
 
         for (int i2 = i - 10; i2 <= i + 10; i2++) {
             for (int i3 = j - 10; i3 <= j + 10; i3++) {
