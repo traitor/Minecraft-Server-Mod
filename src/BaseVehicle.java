@@ -84,8 +84,8 @@ public class BaseVehicle extends BaseEntity {
      * @param motionZ
      */
     public void setMotion(double motionX, double motionY, double motionZ) {
-        entity.aN = motionX;
-        entity.aM = motionY;
+        entity.aM = motionX;
+        entity.aN = motionY;
         entity.aO = motionZ;
     }
 

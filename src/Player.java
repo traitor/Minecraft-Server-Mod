@@ -362,11 +362,8 @@ public class Player extends HumanEntity implements MessageReceiver {
 
                 if (toGive != null) {
 
-                    boolean allowedItem = false;
-                    if (!etc.getInstance().getAllowedItems().isEmpty() && etc.getInstance().getAllowedItems().contains(itemId))
-                        allowedItem = true;
-                    else
-                        allowedItem = true;
+                    boolean allowedItem = etc.getInstance().getAllowedItems().isEmpty() || etc.getInstance().getAllowedItems().contains(itemId);
+
                     if (!etc.getInstance().getDisallowedItems().isEmpty() && etc.getInstance().getDisallowedItems().contains(itemId))
                         allowedItem = false;
 

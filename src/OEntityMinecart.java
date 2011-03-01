@@ -448,7 +448,7 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
         int i2 = OMathHelper.b(paramDouble2);
         int i3 = OMathHelper.b(paramDouble3);
         // hMod: Change of the cart
-        manager.callHook(PluginLoader.Hook.VEHICLE_POSITIONCHANGE, cart, i, j, k);
+        manager.callHook(PluginLoader.Hook.VEHICLE_POSITIONCHANGE, cart, i1, i2, i3);
 
         if (aF.a(i1, i2 - 1, i3) == OBlock.aG.bk) {
             i2--;
