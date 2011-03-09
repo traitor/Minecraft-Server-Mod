@@ -69,9 +69,9 @@ public class Main {
             System.out.println("Update found.");
         // derp.
 
-        // My mod doesn't work with gui.
+        // This mod works with GUI now :D
         try {
-            net.minecraft.server.MinecraftServer.main(new String[] { "nogui" });
+            net.minecraft.server.MinecraftServer.main(args);
         } catch (Throwable t) {
             log.log(Level.SEVERE, null, t);
         }
