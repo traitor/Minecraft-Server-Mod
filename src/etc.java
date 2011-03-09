@@ -56,7 +56,7 @@ public class etc {
     private String[]                      animals             = new String[] {};
     private String[]                      monsters            = new String[] {};
     private String[]                      waterAnimals        = new String[] {};
-    private int                           mobSpawnRate        = 2;
+    private int                           mobSpawnRate        = 100;
 
     private boolean                       mobReload           = false;
     private Class<?>[]                    animalsClass, monsterClass, waterAnimalsClass;

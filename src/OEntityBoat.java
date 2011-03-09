@@ -97,6 +97,10 @@ public class OEntityBoat extends OEntity {
         // hMod: Update of the boat
         manager.callHook(PluginLoader.Hook.VEHICLE_UPDATE, boat);
 
+        double prevX = this.aJ;
+        double prevY = this.aK;
+        double prevZ = this.aL;
+        
         super.f_();
         if (b > 0) {
             b -= 1;
@@ -246,7 +250,12 @@ public class OEntityBoat extends OEntity {
 
         aP = (float) (aP + d14);
         c(aP, aQ);
-
+        
+        // hMod: Change of the cart
+        if(this.aJ != prevX || aK != prevY || aL != prevZ)
+            manager.callHook(PluginLoader.Hook.VEHICLE_POSITIONCHANGE, boat, (int)aJ, (int)aK, (int)aL);
+        
+        
         List localList = aF.b(this, aT.b(0.2000000029802322D, 0.0D, 0.2000000029802322D));
         if ((localList != null) && (localList.size() > 0)) {
             for (int i1 = 0; i1 < localList.size(); i1++) {
