@@ -712,7 +712,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                     log.info(getName() + " created a lighter!");
                     giveItem(259, 1);
                 }
-            } else if ((command.startsWith("/#")) && (etc.getMCServer().f.g(getName()))) {
+            } else if ((command.startsWith("/#")) && (etc.getMCServer().f.h(getName()))) {
                 String str = command.substring(2);
                 log.info(getName() + " issued server command: " + str);
                 etc.getMCServer().a(str, getEntity().a);
