@@ -302,7 +302,7 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
         } else if (paramOPacket14BlockDig.e == 2) {
             // hMod: Stop digging
             Block block = etc.getServer().getBlockAt(i1, i2, i3);
-            block.setStatus(2); // Stopped digging
+            block.setStatus(3); // Stopped digging , old: 2
             OEntity.manager.callHook(PluginLoader.Hook.BLOCK_DESTROYED, player, block);
 
             e.c.b(i1, i2, i3);
