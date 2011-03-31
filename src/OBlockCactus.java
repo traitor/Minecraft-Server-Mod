@@ -75,6 +75,10 @@ public class OBlockCactus extends OBlock {
 
     @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, OEntity paramOEntity) {
-        paramOEntity.a(null, 1);
+        // hMod Damage hook: Cactus
+        if (paramOEntity instanceof OEntityLiving && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.CACTUS, null, new LivingEntity((OEntityLiving) paramOEntity), 1))
+            return;
+        paramOEntity.a((OEntity) null, 1);
+
     }
 }

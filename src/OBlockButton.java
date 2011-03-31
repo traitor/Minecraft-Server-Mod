@@ -130,6 +130,12 @@ public class OBlockButton extends OBlock {
         int k = 8 - (i & 0x8);
         if (k == 0)
             return true;
+        
+        // hMod: Allow button to provide power
+        int change = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(bk, paramInt1, paramInt2, paramInt3), 0, 1);
+        if (change == 0)
+            return true;
+
 
         paramOWorld.c(paramInt1, paramInt2, paramInt3, j + k);
         paramOWorld.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
@@ -208,6 +214,13 @@ public class OBlockButton extends OBlock {
         int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
         if ((i & 0x8) == 0)
             return;
+        
+        // hMod: Allow button to provide power
+        int change = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(bk, paramInt1, paramInt2, paramInt3), 1, 0);
+        if (change > 0)
+            return;
+
+        
         paramOWorld.c(paramInt1, paramInt2, paramInt3, i & 0x7);
 
         paramOWorld.h(paramInt1, paramInt2, paramInt3, bl);
