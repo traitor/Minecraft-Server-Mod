@@ -18,15 +18,15 @@ public final class OItemStack {
     }
 
     public OItemStack(OItem paramOItem) {
-        this(paramOItem.bc, 1, 0);
+        this(OItem.bc, 1, 0);
     }
 
     public OItemStack(OItem paramOItem, int paramInt) {
-        this(paramOItem.bc, paramInt, 0);
+        this(OItem.bc, paramInt, 0);
     }
 
     public OItemStack(OItem paramOItem, int paramInt1, int paramInt2) {
-        this(paramOItem.bc, paramInt1, paramInt2);
+        this(OItem.bc, paramInt1, paramInt2);
     }
 
     public OItemStack(int paramInt1, int paramInt2, int paramInt3) {
@@ -154,12 +154,10 @@ public final class OItemStack {
     }
 
     private boolean c(OItemStack paramOItemStack) {
-        if (a != paramOItemStack.a) {
+        if (a != paramOItemStack.a)
             return false;
-        }
-        if (c != paramOItemStack.c) {
+        if (c != paramOItemStack.c)
             return false;
-        }
         return d == paramOItemStack.d;
     }
 
@@ -171,6 +169,7 @@ public final class OItemStack {
         return paramOItemStack == null ? null : paramOItemStack.j();
     }
 
+    @Override
     public String toString() {
         return a + "x" + OItem.c[c].a() + "@" + d;
     }

@@ -31,20 +31,17 @@ public class OMobSpawnerBase {
     private static OMobSpawnerBase[]    u = new OMobSpawnerBase[4096];
 
     public static void a() {
-        for (int i1 = 0; i1 < 64; i1++) {
-            for (int i2 = 0; i2 < 64; i2++) {
+        for (int i1 = 0; i1 < 64; i1++)
+            for (int i2 = 0; i2 < 64; i2++)
                 u[(i1 + i2 * 64)] = a(i1 / 63.0F, i2 / 63.0F);
-            }
-        }
 
         h.o = (h.p = (byte) OBlock.E.bk);
         j.o = (j.p = (byte) OBlock.E.bk);
     }
 
     public OWorldGenerator a(Random paramRandom) {
-        if (paramRandom.nextInt(10) == 0) {
+        if (paramRandom.nextInt(10) == 0)
             return new OWorldGenBigTree();
-        }
         return new OWorldGenTrees();
     }
 
@@ -75,52 +72,41 @@ public class OMobSpawnerBase {
 
     public static OMobSpawnerBase a(float paramFloat1, float paramFloat2) {
         paramFloat2 *= paramFloat1;
-        if (paramFloat1 < 0.1F) {
+        if (paramFloat1 < 0.1F)
             return k;
-        }
         if (paramFloat2 < 0.2F) {
-            if (paramFloat1 < 0.5F) {
+            if (paramFloat1 < 0.5F)
                 return k;
-            }
-            if (paramFloat1 < 0.95F) {
+            if (paramFloat1 < 0.95F)
                 return e;
-            }
             return h;
         }
-        if ((paramFloat2 > 0.5F) && (paramFloat1 < 0.7F)) {
+        if ((paramFloat2 > 0.5F) && (paramFloat1 < 0.7F))
             return b;
-        }
-        if (paramFloat1 < 0.5F) {
+        if (paramFloat1 < 0.5F)
             return g;
-        }
         if (paramFloat1 < 0.97F) {
-            if (paramFloat2 < 0.35F) {
+            if (paramFloat2 < 0.35F)
                 return f;
-            }
             return d;
         }
 
-        if (paramFloat2 < 0.45F) {
+        if (paramFloat2 < 0.45F)
             return i;
-        }
-        if (paramFloat2 < 0.9F) {
+        if (paramFloat2 < 0.9F)
             return c;
-        }
         return a;
     }
 
     // hMod: Custom mob spawning
     public Class<?>[] a(OEnumCreatureType paramOEnumCreatureType) {
         etc config = etc.getInstance();
-        if (paramOEnumCreatureType == OEnumCreatureType.a) {
+        if (paramOEnumCreatureType == OEnumCreatureType.a)
             return config.getMonstersClass();
-        }
-        if (paramOEnumCreatureType == OEnumCreatureType.b) {
+        if (paramOEnumCreatureType == OEnumCreatureType.b)
             return config.getAnimalsClass();
-        }
-        if (paramOEnumCreatureType == OEnumCreatureType.c) {
+        if (paramOEnumCreatureType == OEnumCreatureType.c)
             return config.getWaterAnimalsClass();
-        }
         return null;
     }
 

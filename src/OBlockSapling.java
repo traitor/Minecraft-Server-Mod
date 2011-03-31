@@ -15,11 +15,10 @@ public class OBlockSapling extends OBlockFlower {
 
         if ((paramOWorld.j(paramInt1, paramInt2 + 1, paramInt3) >= 9) && (paramRandom.nextInt(5) == 0)) {
             int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
-            if (i < 15) {
+            if (i < 15)
                 paramOWorld.c(paramInt1, paramInt2, paramInt3, i + 1);
-            } else {
+            else
                 b(paramOWorld, paramInt1, paramInt2, paramInt3, paramRandom);
-            }
         }
     }
 
@@ -40,8 +39,7 @@ public class OBlockSapling extends OBlockFlower {
         else
             localObject = new OWorldGenTrees();
 
-        if (!localObject.a(paramOWorld, paramRandom, paramInt1, paramInt2, paramInt3)) {
+        if (!localObject.a(paramOWorld, paramRandom, paramInt1, paramInt2, paramInt3))
             paramOWorld.b(paramInt1, paramInt2, paramInt3, bk);
-        }
     }
 }

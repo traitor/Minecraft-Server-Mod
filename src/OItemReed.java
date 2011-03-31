@@ -7,37 +7,31 @@ public class OItemReed extends OItem {
         a = paramOBlock.bk;
     }
 
+    @Override
     public boolean a(OItemStack paramOItemStack, OEntityPlayer paramOEntityPlayer, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         // hMod: Store blockClicked
         int clicked = paramOWorld.a(paramInt1, paramInt2, paramInt3);
         Block blockClicked = new Block(clicked, paramInt1, paramInt2, paramInt3);
 
-        if (clicked == OBlock.aS.bk) {
+        if (clicked == OBlock.aS.bk)
             paramInt4 = 0;
-        } else {
-            if (paramInt4 == 0) {
+        else {
+            if (paramInt4 == 0)
                 paramInt2--;
-            }
-            if (paramInt4 == 1) {
+            if (paramInt4 == 1)
                 paramInt2++;
-            }
-            if (paramInt4 == 2) {
+            if (paramInt4 == 2)
                 paramInt3--;
-            }
-            if (paramInt4 == 3) {
+            if (paramInt4 == 3)
                 paramInt3++;
-            }
-            if (paramInt4 == 4) {
+            if (paramInt4 == 4)
                 paramInt1--;
-            }
-            if (paramInt4 == 5) {
+            if (paramInt4 == 5)
                 paramInt1++;
-            }
         }
 
-        if (paramOItemStack.a == 0) {
+        if (paramOItemStack.a == 0)
             return false;
-        }
 
         if (paramOWorld.a(a, paramInt1, paramInt2, paramInt3, false)) {
             // hMod: Reed placement

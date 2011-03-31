@@ -1,5 +1,4 @@
 import java.util.List;
-import java.util.Random;
 
 public abstract class OEntityPlayer extends OEntityLiving {
 
@@ -52,28 +51,27 @@ public abstract class OEntityPlayer extends OEntityLiving {
         M = "/mob/char.png";
     }
 
+    @Override
     protected void a() {
         super.a();
 
         bz.a(16, (byte) 0);
     }
 
+    @Override
     public void f_() {
         if (E()) {
             c += 1;
-            if (c > 100) {
+            if (c > 100)
                 c = 100;
-            }
-            if (!l()) {
+            if (!l())
                 a(true, true);
-            } else if ((!aF.t) && (aF.c())) {
+            else if ((!aF.t) && (aF.c()))
                 a(false, true);
-            }
         } else if (c > 0) {
             c += 1;
-            if (c >= 110) {
+            if (c >= 110)
                 c = 0;
-            }
         }
 
         super.f_();
@@ -92,30 +90,25 @@ public abstract class OEntityPlayer extends OEntityLiving {
         double d3 = aL - y;
 
         double d4 = 10.0D;
-        if (d1 > d4) {
-            t = (this.w = aJ);
-        }
-        if (d3 > d4) {
-            v = (this.y = aL);
-        }
-        if (d2 > d4) {
-            u = (this.x = aK);
-        }
-        if (d1 < -d4) {
-            t = (this.w = aJ);
-        }
-        if (d3 < -d4) {
-            v = (this.y = aL);
-        }
-        if (d2 < -d4) {
-            u = (this.x = aK);
-        }
+        if (d1 > d4)
+            t = (w = aJ);
+        if (d3 > d4)
+            v = (y = aL);
+        if (d2 > d4)
+            u = (x = aK);
+        if (d1 < -d4)
+            t = (w = aJ);
+        if (d3 < -d4)
+            v = (y = aL);
+        if (d2 < -d4)
+            u = (x = aK);
 
         w += d1 * 0.25D;
         y += d3 * 0.25D;
         x += d2 * 0.25D;
     }
 
+    @Override
     protected boolean w() {
         return (W <= 0) || (E());
     }
@@ -124,12 +117,14 @@ public abstract class OEntityPlayer extends OEntityLiving {
         k = j;
     }
 
+    @Override
     public void x() {
         super.x();
         n = o;
         o = 0.0F;
     }
 
+    @Override
     protected void c_() {
         if (p) {
             q += 1;
@@ -137,13 +132,13 @@ public abstract class OEntityPlayer extends OEntityLiving {
                 q = 0;
                 p = false;
             }
-        } else {
+        } else
             q = 0;
-        }
 
         V = (q / 8.0F);
     }
 
+    @Override
     public void q() {
         // hMod: adjust 'healing over time' independent of
         // monster-spawn=true/false (nice notchup!)
@@ -159,28 +154,23 @@ public abstract class OEntityPlayer extends OEntityLiving {
 
         float f1 = OMathHelper.a(aM * aM + aO * aO);
         float f2 = (float) Math.atan(-aN * 0.2000000029802322D) * 15.0F;
-        if (f1 > 0.1F) {
+        if (f1 > 0.1F)
             f1 = 0.1F;
-        }
-        if ((!aU) || (W <= 0)) {
+        if ((!aU) || (W <= 0))
             f1 = 0.0F;
-        }
-        if ((aU) || (W <= 0)) {
+        if ((aU) || (W <= 0))
             f2 = 0.0F;
-        }
         o += (f1 - o) * 0.4F;
         ae += (f2 - ae) * 0.8F;
 
         if (W > 0) {
             List localList = aF.b(this, aT.b(1.0D, 0.0D, 1.0D));
-            if (localList != null) {
+            if (localList != null)
                 for (int i1 = 0; i1 < localList.size(); i1++) {
                     OEntity localOEntity = (OEntity) localList.get(i1);
-                    if (!localOEntity.ba) {
+                    if (!localOEntity.ba)
                         i(localOEntity);
-                    }
                 }
-            }
         }
     }
 
@@ -188,26 +178,26 @@ public abstract class OEntityPlayer extends OEntityLiving {
         paramOEntity.b(this);
     }
 
+    @Override
     public void a(OEntity paramOEntity) {
         super.a(paramOEntity);
         a(0.2F, 0.2F);
         a(aJ, aK, aL);
         aN = 0.1000000014901161D;
 
-        if (r.equals("Notch")) {
+        if (r.equals("Notch"))
             a(new OItemStack(OItem.h, 1), true);
-        }
         i.g();
 
         if (paramOEntity != null) {
             aM = (-OMathHelper.b((aa + aP) * 3.141593F / 180.0F) * 0.1F);
             aO = (-OMathHelper.a((aa + aP) * 3.141593F / 180.0F) * 0.1F);
-        } else {
-            aM = (this.aO = 0.0D);
-        }
+        } else
+            aM = (aO = 0.0D);
         bb = 0.1F;
     }
 
+    @Override
     public void c(OEntity paramOEntity, int paramInt) {
         m += paramInt;
     }
@@ -221,9 +211,8 @@ public abstract class OEntityPlayer extends OEntityLiving {
     }
 
     public void a(OItemStack paramOItemStack, boolean paramBoolean) {
-        if (paramOItemStack == null) {
+        if (paramOItemStack == null)
             return;
-        }
 
         OEntityItem localOEntityItem = new OEntityItem(aF, aJ, aK - 0.300000011920929D + p(), aL, paramOItemStack);
         localOEntityItem.c = 40;
@@ -263,12 +252,10 @@ public abstract class OEntityPlayer extends OEntityLiving {
 
     public float a(OBlock paramOBlock) {
         float f = i.a(paramOBlock);
-        if (a(OMaterial.f)) {
+        if (a(OMaterial.f))
             f /= 5.0F;
-        }
-        if (!aU) {
+        if (!aU)
             f /= 5.0F;
-        }
 
         return f;
     }
@@ -277,6 +264,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
         return i.b(paramOBlock);
     }
 
+    @Override
     public void b(ONBTTagCompound paramONBTTagCompound) {
         super.b(paramONBTTagCompound);
         ONBTTagList localONBTTagList = paramONBTTagCompound.l("Inventory");
@@ -291,6 +279,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
         }
     }
 
+    @Override
     public void a(ONBTTagCompound paramONBTTagCompound) {
         super.a(paramONBTTagCompound);
         paramONBTTagCompound.a("Inventory", i.a(new ONBTTagList()));
@@ -308,6 +297,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
     public void b(OEntity paramOEntity, int paramInt) {
     }
 
+    @Override
     public float p() {
         return 0.12F;
     }
@@ -316,35 +306,31 @@ public abstract class OEntityPlayer extends OEntityLiving {
         bb = 1.62F;
     }
 
+    @Override
     public boolean a(OEntity paramOEntity, int paramInt) {
         at = 0;
-        if (W <= 0) {
+        if (W <= 0)
             return false;
-        }
 
-        if (E()) {
+        if (E())
             a(true, true);
-        }
 
         if (((paramOEntity instanceof OEntityMobs)) || ((paramOEntity instanceof OEntityArrow))) {
-            if (aF.j == 0) {
+            if (aF.j == 0)
                 paramInt = 0;
-            }
-            if (aF.j == 1) {
+            if (aF.j == 1)
                 paramInt = paramInt / 3 + 1;
-            }
-            if (aF.j == 3) {
+            if (aF.j == 3)
                 paramInt = paramInt * 3 / 2;
-            }
         }
 
-        if (paramInt == 0) {
+        if (paramInt == 0)
             return false;
-        }
 
         return super.a(paramOEntity, paramInt);
     }
 
+    @Override
     protected void c(int paramInt) {
         int i1 = 25 - i.f();
         int i2 = paramInt * i1 + d;
@@ -364,9 +350,8 @@ public abstract class OEntityPlayer extends OEntityLiving {
     }
 
     public void c(OEntity paramOEntity) {
-        if (paramOEntity.a(this)) {
+        if (paramOEntity.a(this))
             return;
-        }
         OItemStack localOItemStack = z();
         if ((localOItemStack != null) && ((paramOEntity instanceof OEntityLiving))) {
             localOItemStack.b((OEntityLiving) paramOEntity);
@@ -385,6 +370,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
         i.a(i.c, null);
     }
 
+    @Override
     public double B() {
         return bb - 0.5F;
     }
@@ -412,32 +398,29 @@ public abstract class OEntityPlayer extends OEntityLiving {
     public void a(OItemStack paramOItemStack) {
     }
 
+    @Override
     public void C() {
         super.C();
         j.a(this);
-        if (k != null) {
+        if (k != null)
             k.a(this);
-        }
     }
 
+    @Override
     public boolean D() {
         return (!a) && (super.D());
     }
 
     public boolean a(int paramInt1, int paramInt2, int paramInt3) {
-        if ((E()) || (!J())) {
+        if ((E()) || (!J()))
             return false;
-        }
 
-        if (aF.m.c) {
+        if (aF.m.c)
             return false;
-        }
-        if (aF.c()) {
+        if (aF.c())
             return false;
-        }
-        if ((Math.abs(aJ - paramInt1) > 3.0D) || (Math.abs(aK - paramInt2) > 2.0D) || (Math.abs(aL - paramInt3) > 3.0D)) {
+        if ((Math.abs(aJ - paramInt1) > 3.0D) || (Math.abs(aK - paramInt2) > 2.0D) || (Math.abs(aL - paramInt3) > 3.0D))
             return false;
-        }
 
         a(0.2F, 0.2F);
         bb = 0.2F;
@@ -463,17 +446,15 @@ public abstract class OEntityPlayer extends OEntityLiving {
 
             e(i2);
             a(paramInt1 + f1, paramInt2 + 0.9375F, paramInt3 + f2);
-        } else {
+        } else
             a(paramInt1 + 0.5F, paramInt2 + 0.9375F, paramInt3 + 0.5F);
-        }
         a = true;
         c = 0;
         b = new OChunkCoordinates(paramInt1, paramInt2, paramInt3);
-        aM = (this.aO = this.aN = 0.0D);
+        aM = (aO = aN = 0.0D);
 
-        if (!aF.t) {
+        if (!aF.t)
             aF.o();
-        }
 
         return true;
     }
@@ -510,20 +491,19 @@ public abstract class OEntityPlayer extends OEntityLiving {
         }
 
         a = false;
-        if ((!aF.t) && (paramBoolean2)) {
+        if ((!aF.t) && (paramBoolean2))
             aF.o();
-        }
-        if (paramBoolean1) {
+        if (paramBoolean1)
             c = 0;
-        } else {
+        else
             c = 100;
-        }
     }
 
     private boolean l() {
         return aF.a(b.a, b.b, b.c) == OBlock.S.bk;
     }
 
+    @Override
     public boolean E() {
         return a;
     }

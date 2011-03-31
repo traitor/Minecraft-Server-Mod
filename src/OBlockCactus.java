@@ -11,17 +11,15 @@ public class OBlockCactus extends OBlock {
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
         if (paramOWorld.e(paramInt1, paramInt2 + 1, paramInt3)) {
             int i = 1;
-            while (paramOWorld.a(paramInt1, paramInt2 - i, paramInt3) == bk) {
+            while (paramOWorld.a(paramInt1, paramInt2 - i, paramInt3) == bk)
                 i++;
-            }
             if (i < 3) {
                 int j = paramOWorld.b(paramInt1, paramInt2, paramInt3);
                 if (j == 15) {
                     paramOWorld.e(paramInt1, paramInt2 + 1, paramInt3, bk);
                     paramOWorld.c(paramInt1, paramInt2, paramInt3, 0);
-                } else {
+                } else
                     paramOWorld.c(paramInt1, paramInt2, paramInt3, j + 1);
-                }
             }
         }
     }
@@ -34,12 +32,10 @@ public class OBlockCactus extends OBlock {
 
     @Override
     public int a(int paramInt) {
-        if (paramInt == 1) {
+        if (paramInt == 1)
             return bj - 1;
-        }
-        if (paramInt == 0) {
+        if (paramInt == 0)
             return bj + 1;
-        }
         return bj;
     }
 
@@ -50,9 +46,8 @@ public class OBlockCactus extends OBlock {
 
     @Override
     public boolean a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        if (!super.a(paramOWorld, paramInt1, paramInt2, paramInt3)) {
+        if (!super.a(paramOWorld, paramInt1, paramInt2, paramInt3))
             return false;
-        }
 
         return f(paramOWorld, paramInt1, paramInt2, paramInt3);
     }
@@ -67,18 +62,14 @@ public class OBlockCactus extends OBlock {
 
     @Override
     public boolean f(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        if (paramOWorld.c(paramInt1 - 1, paramInt2, paramInt3).a()) {
+        if (paramOWorld.c(paramInt1 - 1, paramInt2, paramInt3).a())
             return false;
-        }
-        if (paramOWorld.c(paramInt1 + 1, paramInt2, paramInt3).a()) {
+        if (paramOWorld.c(paramInt1 + 1, paramInt2, paramInt3).a())
             return false;
-        }
-        if (paramOWorld.c(paramInt1, paramInt2, paramInt3 - 1).a()) {
+        if (paramOWorld.c(paramInt1, paramInt2, paramInt3 - 1).a())
             return false;
-        }
-        if (paramOWorld.c(paramInt1, paramInt2, paramInt3 + 1).a()) {
+        if (paramOWorld.c(paramInt1, paramInt2, paramInt3 + 1).a())
             return false;
-        }
         int i = paramOWorld.a(paramInt1, paramInt2 - 1, paramInt3);
         return (i == OBlock.aV.bk) || (i == OBlock.E.bk);
     }

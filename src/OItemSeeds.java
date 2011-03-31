@@ -9,9 +9,8 @@ public class OItemSeeds extends OItem {
 
     @Override
     public boolean a(OItemStack paramOItemStack, OEntityPlayer paramOEntityPlayer, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        if (paramInt4 != 1) {
+        if (paramInt4 != 1)
             return false;
-        }
 
         int i = paramOWorld.a(paramInt1, paramInt2, paramInt3);
 

@@ -4,32 +4,26 @@ public class OItemRedstone extends OItem {
         super(paramInt);
     }
 
+    @Override
     public boolean a(OItemStack paramOItemStack, OEntityPlayer paramOEntityPlayer, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         // hMod: Store block data clicked
         Block blockClicked = new Block(paramOWorld.a(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
         blockClicked.setFaceClicked(Block.Face.fromId(paramInt4));
 
-        if (paramInt4 == 0) {
+        if (paramInt4 == 0)
             paramInt2--;
-        }
-        if (paramInt4 == 1) {
+        if (paramInt4 == 1)
             paramInt2++;
-        }
-        if (paramInt4 == 2) {
+        if (paramInt4 == 2)
             paramInt3--;
-        }
-        if (paramInt4 == 3) {
+        if (paramInt4 == 3)
             paramInt3++;
-        }
-        if (paramInt4 == 4) {
+        if (paramInt4 == 4)
             paramInt1--;
-        }
-        if (paramInt4 == 5) {
+        if (paramInt4 == 5)
             paramInt1++;
-        }
-        if (!paramOWorld.e(paramInt1, paramInt2, paramInt3)) {
+        if (!paramOWorld.e(paramInt1, paramInt2, paramInt3))
             return false;
-        }
         if (OBlock.av.a(paramOWorld, paramInt1, paramInt2, paramInt3)) {
             // hMod: Redstone dust hook!
             Block blockPlaced = new Block(Block.Type.RedstoneWire.getType(), paramInt1, paramInt2, paramInt3);

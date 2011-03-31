@@ -1,8 +1,8 @@
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
+
 import net.minecraft.server.MinecraftServer;
 
 public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
@@ -75,18 +75,22 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         k.a((OICrafting) this);
     }
 
+    @Override
     public OItemStack[] k_() {
         return bG;
     }
 
+    @Override
     protected void l_() {
         bb = 0.0F;
     }
 
+    @Override
     public float p() {
         return 1.62F;
     }
 
+    @Override
     public void f_() {
         c.a();
 
@@ -103,37 +107,36 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     }
 
     public OItemStack b_(int paramInt) {
-        if (paramInt == 0) {
+        if (paramInt == 0)
             return i.b();
-        }
         return i.b[(paramInt - 1)];
     }
 
+    @Override
     public void a(OEntity paramOEntity) {
         // hMod: drops inventory on death.
         if (etc.getInstance().isHealthEnabled())
             i.g();
     }
 
+    @Override
     public boolean a(OEntity paramOEntity, int paramInt) {
-        if (bF > 0) {
+        if (bF > 0)
             return false;
-        }
 
         if (!b.n) {
-            if ((paramOEntity instanceof OEntityPlayer)) {
+            if ((paramOEntity instanceof OEntityPlayer))
                 return false;
-            }
             if ((paramOEntity instanceof OEntityArrow)) {
                 OEntityArrow localOEntityArrow = (OEntityArrow) paramOEntity;
-                if ((localOEntityArrow.b instanceof OEntityPlayer)) {
+                if ((localOEntityArrow.b instanceof OEntityPlayer))
                     return false;
-                }
             }
         }
         return super.a(paramOEntity, paramInt);
     }
 
+    @Override
     public void b(int paramInt) {
         super.b(paramInt);
     }
@@ -147,17 +150,15 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
             if (localOChunkCoordIntPair != null) {
                 int i = 0;
 
-                if (a.b() < 2) {
+                if (a.b() < 2)
                     i = 1;
-                }
 
                 if (i != 0) {
                     f.remove(localOChunkCoordIntPair);
                     a.b(new OPacket51MapChunk(localOChunkCoordIntPair.a * 16, 0, localOChunkCoordIntPair.b * 16, 16, 128, 16, b.e));
                     List localList = b.e.d(localOChunkCoordIntPair.a * 16, 0, localOChunkCoordIntPair.b * 16, localOChunkCoordIntPair.a * 16 + 16, 128, localOChunkCoordIntPair.b * 16 + 16);
-                    for (int j = 0; j < localList.size(); j++) {
+                    for (int j = 0; j < localList.size(); j++)
                         a((OTileEntity) localList.get(j));
-                    }
                 }
             }
         }
@@ -185,29 +186,29 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
             }
 
             OPacket localOPacket = paramOTileEntity.e();
-            if (localOPacket != null) {
+            if (localOPacket != null)
                 a.b(localOPacket);
-            }
         }
     }
 
+    @Override
     public void q() {
         super.q();
     }
 
+    @Override
     public void b(OEntity paramOEntity, int paramInt) {
         if (!paramOEntity.ba) {
-            if ((paramOEntity instanceof OEntityItem)) {
+            if ((paramOEntity instanceof OEntityItem))
                 b.k.a(paramOEntity, new OPacket22Collect(paramOEntity.aA, aA));
-            }
-            if ((paramOEntity instanceof OEntityArrow)) {
+            if ((paramOEntity instanceof OEntityArrow))
                 b.k.a(paramOEntity, new OPacket22Collect(paramOEntity.aA, aA));
-            }
         }
         super.b(paramOEntity, paramInt);
         k.a();
     }
 
+    @Override
     public void r() {
         if (!p) {
             q = -1;
@@ -219,6 +220,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     public void s() {
     }
 
+    @Override
     public boolean a(int paramInt1, int paramInt2, int paramInt3) {
         if (super.a(paramInt1, paramInt2, paramInt3)) {
             b.k.a(this, new OPacket17Sleep(this, 0, paramInt1, paramInt2, paramInt3));
@@ -228,20 +230,22 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         return false;
     }
 
+    @Override
     public void a(boolean paramBoolean1, boolean paramBoolean2) {
-        if (E()) {
+        if (E())
             b.k.b(this, new OPacket18ArmAnimation(this, 3));
-        }
         super.a(paramBoolean1, paramBoolean2);
         a.a(aJ, aK, aL, aP, aQ);
     }
 
+    @Override
     public void b(OEntity paramOEntity) {
         super.b(paramOEntity);
         a.b(new OPacket39(this, aE));
         a.a(aJ, aK, aL, aP, aQ);
     }
 
+    @Override
     protected void a(double paramDouble, boolean paramBoolean) {
     }
 
@@ -253,6 +257,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         bH = (bH % 100 + 1);
     }
 
+    @Override
     public void b(int paramInt1, int paramInt2, int paramInt3) {
         V();
         a.b(new OPacket100(bH, 1, "Crafting", 9));
@@ -263,6 +268,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         k.a((OICrafting) this);
     }
 
+    @Override
     public void a(OIInventory paramOIInventory) {
         // hMod: Check if we can open this
         Inventory inv = null;
@@ -288,6 +294,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         k.a((OICrafting) this);
     }
 
+    @Override
     public void a(OTileEntityFurnace paramOTileEntityFurnace) {
         // hMod: Check if we can open this
         Inventory inv = new Furnace(paramOTileEntityFurnace);
@@ -307,6 +314,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         k.a((OICrafting) this);
     }
 
+    @Override
     public void a(OTileEntityDispenser paramOTileEntityDispenser) {
         Dispenser dis = new Dispenser(paramOTileEntityDispenser);
         String name = paramOTileEntityDispenser.c();
@@ -326,13 +334,11 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     }
 
     public void a(OCraftingInventoryCB paramOCraftingInventoryCB, int paramInt, OItemStack paramOItemStack) {
-        if ((paramOCraftingInventoryCB.a(paramInt) instanceof OSlotCrafting)) {
+        if ((paramOCraftingInventoryCB.a(paramInt) instanceof OSlotCrafting))
             return;
-        }
 
-        if (h) {
+        if (h)
             return;
-        }
 
         a.b(new OPacket103(paramOCraftingInventoryCB.f, paramInt, paramOItemStack));
     }
@@ -346,18 +352,19 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         a.b(new OPacket105(paramOCraftingInventoryCB.f, paramInt1, paramInt2));
     }
 
+    @Override
     public void a(OItemStack paramOItemStack) {
     }
 
+    @Override
     public void t() {
         a.b(new OPacket101(k.f));
         v();
     }
 
     public void u() {
-        if (h) {
+        if (h)
             return;
-        }
         a.b(new OPacket103(-1, -1, i.i()));
     }
 

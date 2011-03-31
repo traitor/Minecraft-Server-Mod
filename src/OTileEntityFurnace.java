@@ -58,9 +58,8 @@ public class OTileEntityFurnace extends OTileEntity implements OIInventory, Cont
                 return localOItemStack;
             }
             OItemStack localOItemStack = h[paramInt1].a(paramInt2);
-            if (h[paramInt1].a == 0) {
+            if (h[paramInt1].a == 0)
                 h[paramInt1] = null;
-            }
             return localOItemStack;
         }
 
@@ -69,15 +68,15 @@ public class OTileEntityFurnace extends OTileEntity implements OIInventory, Cont
 
     public void a(int paramInt, OItemStack paramOItemStack) {
         h[paramInt] = paramOItemStack;
-        if ((paramOItemStack != null) && (paramOItemStack.a > n_())) {
+        if ((paramOItemStack != null) && (paramOItemStack.a > n_()))
             paramOItemStack.a = n_();
-        }
     }
 
     public String c() {
         return name;
     }
 
+    @Override
     public void a(ONBTTagCompound paramONBTTagCompound) {
         super.a(paramONBTTagCompound);
         ONBTTagList localONBTTagList = paramONBTTagCompound.l("Items");
@@ -85,9 +84,8 @@ public class OTileEntityFurnace extends OTileEntity implements OIInventory, Cont
         for (int i = 0; i < localONBTTagList.c(); i++) {
             ONBTTagCompound localONBTTagCompound = (ONBTTagCompound) localONBTTagList.a(i);
             int j = localONBTTagCompound.c("Slot");
-            if ((j < 0) || (j >= h.length)) {
+            if ((j < 0) || (j >= h.length))
                 continue;
-            }
             h[j] = new OItemStack(localONBTTagCompound);
         }
 
@@ -96,20 +94,20 @@ public class OTileEntityFurnace extends OTileEntity implements OIInventory, Cont
         b = a(h[1]);
     }
 
+    @Override
     public void b(ONBTTagCompound paramONBTTagCompound) {
         super.b(paramONBTTagCompound);
         paramONBTTagCompound.a("BurnTime", (short) a);
         paramONBTTagCompound.a("CookTime", (short) c);
         ONBTTagList localONBTTagList = new ONBTTagList();
 
-        for (int i = 0; i < h.length; i++) {
+        for (int i = 0; i < h.length; i++)
             if (h[i] != null) {
                 ONBTTagCompound localONBTTagCompound = new ONBTTagCompound();
                 localONBTTagCompound.a("Slot", (byte) i);
                 h[i].a(localONBTTagCompound);
                 localONBTTagList.a(localONBTTagCompound);
             }
-        }
         paramONBTTagCompound.a("Items", localONBTTagList);
     }
 
@@ -121,23 +119,22 @@ public class OTileEntityFurnace extends OTileEntity implements OIInventory, Cont
         return a > 0;
     }
 
+    @Override
     public void i_() {
         int i = a > 0 ? 1 : 0;
         int j = 0;
-        if (a > 0) {
+        if (a > 0)
             a -= 1;
-        }
 
         if (!d.t) {
             if ((a == 0) && (i())) {
-                b = (this.a = a(h[1]));
+                b = (a = a(h[1]));
                 if (a > 0) {
                     j = 1;
                     if (h[1] != null) {
                         h[1].a -= 1;
-                        if (h[1].a == 0) {
+                        if (h[1].a == 0)
                             h[1] = null;
-                        }
                     }
                 }
             }
@@ -149,9 +146,8 @@ public class OTileEntityFurnace extends OTileEntity implements OIInventory, Cont
                     g();
                     j = 1;
                 }
-            } else {
+            } else
                 c = 0;
-            }
 
             if (i != (a > 0 ? 1 : 0)) {
                 j = 1;
@@ -159,78 +155,64 @@ public class OTileEntityFurnace extends OTileEntity implements OIInventory, Cont
             }
         }
 
-        if (j != 0) {
+        if (j != 0)
             h();
-        }
     }
 
     private boolean i() {
-        if (h[0] == null) {
+        if (h[0] == null)
             return false;
-        }
         OItemStack localOItemStack = OFurnaceRecipes.a().a(h[0].a().bc);
-        if (localOItemStack == null) {
+        if (localOItemStack == null)
             return false;
-        }
-        if (h[2] == null) {
+        if (h[2] == null)
             return true;
-        }
-        if (!h[2].a(localOItemStack)) {
+        if (!h[2].a(localOItemStack))
             return false;
-        }
-        if ((h[2].a < n_()) && (h[2].a < h[2].b())) {
+        if ((h[2].a < n_()) && (h[2].a < h[2].b()))
             return true;
-        }
         return h[2].a < localOItemStack.b();
     }
 
     public void g() {
-        if (!i()) {
+        if (!i())
             return;
-        }
 
         OItemStack localOItemStack = OFurnaceRecipes.a().a(h[0].a().bc);
-        if (h[2] == null) {
+        if (h[2] == null)
             h[2] = localOItemStack.j();
-        } else if (h[2].c == localOItemStack.c) {
+        else if (h[2].c == localOItemStack.c)
             h[2].a += 1;
-        }
 
         h[0].a -= 1;
-        if (h[0].a <= 0) {
+        if (h[0].a <= 0)
             h[0] = null;
-        }
     }
 
     private int a(OItemStack paramOItemStack) {
-        if (paramOItemStack == null) {
+        if (paramOItemStack == null)
             return 0;
-        }
-        int i = paramOItemStack.a().bc;
+        paramOItemStack.a();
+        int i = OItem.bc;
 
-        if ((i < 256) && (OBlock.m[i].bv == OMaterial.c)) {
+        if ((i < 256) && (OBlock.m[i].bv == OMaterial.c))
             return 300;
-        }
 
-        if (i == OItem.B.bc) {
+        if (i == OItem.bc)
             return 100;
-        }
 
-        if (i == OItem.k.bc) {
+        if (i == OItem.bc)
             return 1600;
-        }
 
-        if (i == OItem.aw.bc) {
+        if (i == OItem.bc)
             return 20000;
-        }
 
         return 0;
     }
 
     public boolean a_(OEntityPlayer paramOEntityPlayer) {
-        if (d.m(e, f, g) != this) {
+        if (d.m(e, f, g) != this)
             return false;
-        }
         return paramOEntityPlayer.d(e + 0.5D, f + 0.5D, g + 0.5D) <= 64.0D;
     }
 }

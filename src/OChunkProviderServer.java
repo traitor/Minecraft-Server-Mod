@@ -1,8 +1,6 @@
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,9 +32,8 @@ public class OChunkProviderServer implements OIChunkProvider {
         int i = paramInt1 * 16 + 8 - localOChunkCoordinates.a;
         int j = paramInt2 * 16 + 8 - localOChunkCoordinates.c;
         int k = 128;
-        if ((i < -k) || (i > k) || (j < -k) || (j > k)) {
+        if ((i < -k) || (i > k) || (j < -k) || (j > k))
             a.add(Integer.valueOf(OChunkCoordIntPair.a(paramInt1, paramInt2)));
-        }
     }
 
     public OChunk d(int paramInt1, int paramInt2) {
@@ -46,14 +43,11 @@ public class OChunkProviderServer implements OIChunkProvider {
         OChunk localOChunk = (OChunk) e.get(Integer.valueOf(i));
         if (localOChunk == null) {
             localOChunk = e(paramInt1, paramInt2);
-            if (localOChunk == null) {
-                if (c == null) {
+            if (localOChunk == null)
+                if (c == null)
                     localOChunk = b;
-                } else {
+                else
                     localOChunk = c.b(paramInt1, paramInt2);
-                }
-
-            }
 
             e.put(Integer.valueOf(i), localOChunk);
             f.add(localOChunk);
@@ -63,18 +57,14 @@ public class OChunkProviderServer implements OIChunkProvider {
                 localOChunk.d();
             }
 
-            if ((!localOChunk.n) && (a(paramInt1 + 1, paramInt2 + 1)) && (a(paramInt1, paramInt2 + 1)) && (a(paramInt1 + 1, paramInt2))) {
+            if ((!localOChunk.n) && (a(paramInt1 + 1, paramInt2 + 1)) && (a(paramInt1, paramInt2 + 1)) && (a(paramInt1 + 1, paramInt2)))
                 a(this, paramInt1, paramInt2);
-            }
-            if ((a(paramInt1 - 1, paramInt2)) && (!b(paramInt1 - 1, paramInt2).n) && (a(paramInt1 - 1, paramInt2 + 1)) && (a(paramInt1, paramInt2 + 1)) && (a(paramInt1 - 1, paramInt2))) {
+            if ((a(paramInt1 - 1, paramInt2)) && (!b(paramInt1 - 1, paramInt2).n) && (a(paramInt1 - 1, paramInt2 + 1)) && (a(paramInt1, paramInt2 + 1)) && (a(paramInt1 - 1, paramInt2)))
                 a(this, paramInt1 - 1, paramInt2);
-            }
-            if ((a(paramInt1, paramInt2 - 1)) && (!b(paramInt1, paramInt2 - 1).n) && (a(paramInt1 + 1, paramInt2 - 1)) && (a(paramInt1, paramInt2 - 1)) && (a(paramInt1 + 1, paramInt2))) {
+            if ((a(paramInt1, paramInt2 - 1)) && (!b(paramInt1, paramInt2 - 1).n) && (a(paramInt1 + 1, paramInt2 - 1)) && (a(paramInt1, paramInt2 - 1)) && (a(paramInt1 + 1, paramInt2)))
                 a(this, paramInt1, paramInt2 - 1);
-            }
-            if ((a(paramInt1 - 1, paramInt2 - 1)) && (!b(paramInt1 - 1, paramInt2 - 1).n) && (a(paramInt1 - 1, paramInt2 - 1)) && (a(paramInt1, paramInt2 - 1)) && (a(paramInt1 - 1, paramInt2))) {
+            if ((a(paramInt1 - 1, paramInt2 - 1)) && (!b(paramInt1 - 1, paramInt2 - 1).n) && (a(paramInt1 - 1, paramInt2 - 1)) && (a(paramInt1, paramInt2 - 1)) && (a(paramInt1 - 1, paramInt2)))
                 a(this, paramInt1 - 1, paramInt2 - 1);
-            }
 
         }
 
@@ -85,9 +75,8 @@ public class OChunkProviderServer implements OIChunkProvider {
         OChunk localOChunk = (OChunk) e.get(Integer.valueOf(OChunkCoordIntPair.a(paramInt1, paramInt2)));
 
         if (localOChunk == null) {
-            if (g.r) {
+            if (g.r)
                 return d(paramInt1, paramInt2);
-            }
             return b;
         }
 
@@ -95,14 +84,12 @@ public class OChunkProviderServer implements OIChunkProvider {
     }
 
     private OChunk e(int paramInt1, int paramInt2) {
-        if (d == null) {
+        if (d == null)
             return null;
-        }
         try {
             OChunk localOChunk = d.a(g, paramInt1, paramInt2);
-            if (localOChunk != null) {
+            if (localOChunk != null)
                 localOChunk.r = g.k();
-            }
             return localOChunk;
         } catch (Exception localException) {
             localException.printStackTrace();
@@ -111,9 +98,8 @@ public class OChunkProviderServer implements OIChunkProvider {
     }
 
     private void a(OChunk paramOChunk) {
-        if (d == null) {
+        if (d == null)
             return;
-        }
         try {
             d.b(g, paramOChunk);
         } catch (Exception localException) {
@@ -122,9 +108,8 @@ public class OChunkProviderServer implements OIChunkProvider {
     }
 
     private void b(OChunk paramOChunk) {
-        if (d == null) {
+        if (d == null)
             return;
-        }
         paramOChunk.r = g.k();
         d.a(g, paramOChunk);
     }
@@ -152,23 +137,20 @@ public class OChunkProviderServer implements OIChunkProvider {
         int i = 0;
         for (int j = 0; j < f.size(); j++) {
             OChunk localOChunk = (OChunk) f.get(j);
-            if ((paramBoolean) && (!localOChunk.p)) {
+            if ((paramBoolean) && (!localOChunk.p))
                 a(localOChunk);
-            }
             if (localOChunk.a(paramBoolean)) {
                 b(localOChunk);
                 localOChunk.o = false;
                 i++;
-                if ((i == 24) && (!paramBoolean)) {
+                if ((i == 24) && (!paramBoolean))
                     return false;
-                }
             }
         }
 
         if (paramBoolean) {
-            if (d == null) {
+            if (d == null)
                 return true;
-            }
             d.b();
         }
         return true;
@@ -176,7 +158,7 @@ public class OChunkProviderServer implements OIChunkProvider {
 
     public boolean a() {
         if (!g.w) {
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 100; i++)
                 if (!a.isEmpty()) {
                     Integer localInteger = (Integer) a.iterator().next();
 
@@ -189,11 +171,9 @@ public class OChunkProviderServer implements OIChunkProvider {
                     e.remove(localInteger);
                     f.remove(localOChunk);
                 }
-            }
 
-            if (d != null) {
+            if (d != null)
                 d.a();
-            }
         }
 
         return c.a();

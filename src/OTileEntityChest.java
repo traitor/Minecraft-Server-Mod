@@ -7,18 +7,16 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
         int size = getContentsSize();
         OItemStack[] result = new OItemStack[size];
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++)
             result[i] = getContentsAt(i);
-        }
         return result;
     }
 
     public void setContents(OItemStack[] values) {
         int size = getContentsSize();
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++)
             setContentsAt(i, values[i]);
-        }
     }
 
     public OItemStack getContentsAt(int index) {
@@ -58,9 +56,8 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
                 return localOItemStack;
             }
             OItemStack localOItemStack = a[paramInt1].a(paramInt2);
-            if (a[paramInt1].a == 0) {
+            if (a[paramInt1].a == 0)
                 a[paramInt1] = null;
-            }
             h();
             return localOItemStack;
         }
@@ -70,9 +67,8 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
 
     public void a(int paramInt, OItemStack paramOItemStack) {
         a[paramInt] = paramOItemStack;
-        if ((paramOItemStack != null) && (paramOItemStack.a > n_())) {
+        if ((paramOItemStack != null) && (paramOItemStack.a > n_()))
             paramOItemStack.a = n_();
-        }
         h();
     }
 
@@ -80,6 +76,7 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
         return name;
     }
 
+    @Override
     public void a(ONBTTagCompound paramONBTTagCompound) {
         super.a(paramONBTTagCompound);
         ONBTTagList localONBTTagList = paramONBTTagCompound.l("Items");
@@ -87,25 +84,24 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
         for (int i = 0; i < localONBTTagList.c(); i++) {
             ONBTTagCompound localONBTTagCompound = (ONBTTagCompound) localONBTTagList.a(i);
             int j = localONBTTagCompound.c("Slot") & 0xFF;
-            if ((j < 0) || (j >= a.length)) {
+            if ((j < 0) || (j >= a.length))
                 continue;
-            }
             a[j] = new OItemStack(localONBTTagCompound);
         }
     }
 
+    @Override
     public void b(ONBTTagCompound paramONBTTagCompound) {
         super.b(paramONBTTagCompound);
         ONBTTagList localONBTTagList = new ONBTTagList();
 
-        for (int i = 0; i < a.length; i++) {
+        for (int i = 0; i < a.length; i++)
             if (a[i] != null) {
                 ONBTTagCompound localONBTTagCompound = new ONBTTagCompound();
                 localONBTTagCompound.a("Slot", (byte) i);
                 a[i].a(localONBTTagCompound);
                 localONBTTagList.a(localONBTTagCompound);
             }
-        }
         paramONBTTagCompound.a("Items", localONBTTagList);
     }
 
@@ -114,9 +110,8 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
     }
 
     public boolean a_(OEntityPlayer paramOEntityPlayer) {
-        if (d.m(e, f, g) != this) {
+        if (d.m(e, f, g) != this)
             return false;
-        }
         return paramOEntityPlayer.d(e + 0.5D, f + 0.5D, g + 0.5D) <= 64.0D;
     }
 }

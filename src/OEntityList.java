@@ -1,5 +1,3 @@
-import java.io.PrintStream;
-import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,10 +18,9 @@ public class OEntityList {
     public static OEntity a(String paramString, OWorld paramOWorld) {
         OEntity localOEntity = null;
         try {
-            Class localClass = (Class) a.get(paramString);
-            if (localClass != null) {
+            Class localClass = a.get(paramString);
+            if (localClass != null)
                 localOEntity = (OEntity) localClass.getConstructor(new Class[] { OWorld.class }).newInstance(new Object[] { paramOWorld });
-            }
         } catch (Exception localException) {
             localException.printStackTrace();
         }
@@ -33,27 +30,25 @@ public class OEntityList {
     public static OEntity a(ONBTTagCompound paramONBTTagCompound, OWorld paramOWorld) {
         OEntity localOEntity = null;
         try {
-            Class localClass = (Class) a.get(paramONBTTagCompound.i("id"));
-            if (localClass != null) {
+            Class localClass = a.get(paramONBTTagCompound.i("id"));
+            if (localClass != null)
                 localOEntity = (OEntity) localClass.getConstructor(new Class[] { OWorld.class }).newInstance(new Object[] { paramOWorld });
-            }
         } catch (Exception localException) {
             localException.printStackTrace();
         }
-        if (localOEntity != null) {
+        if (localOEntity != null)
             localOEntity.e(paramONBTTagCompound);
-        } else {
+        else
             System.out.println("Skipping Entity with id " + paramONBTTagCompound.i("id"));
-        }
         return localOEntity;
     }
 
     public static int a(OEntity paramOEntity) {
-        return ((Integer) d.get(paramOEntity.getClass())).intValue();
+        return (d.get(paramOEntity.getClass())).intValue();
     }
 
     public static String b(OEntity paramOEntity) {
-        return (String) b.get(paramOEntity.getClass());
+        return b.get(paramOEntity.getClass());
     }
 
     // hMod: Let us do a name->class lookup for mob spawning

@@ -6,17 +6,15 @@ public class OBlockStationary extends OBlockFluids {
         super(paramInt, paramOMaterial);
 
         a(false);
-        if (paramOMaterial == OMaterial.g) {
+        if (paramOMaterial == OMaterial.g)
             a(true);
-        }
     }
 
     @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         super.a(paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
-        if (paramOWorld.a(paramInt1, paramInt2, paramInt3) == bk) {
+        if (paramOWorld.a(paramInt1, paramInt2, paramInt3) == bk)
             i(paramOWorld, paramInt1, paramInt2, paramInt3);
-        }
     }
 
     private void i(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
@@ -46,9 +44,8 @@ public class OBlockStationary extends OBlockFluids {
                             paramOWorld.e(paramInt1, paramInt2, paramInt3, OBlock.ar.bk);
                             return;
                         }
-                    } else if (OBlock.m[k].bv.c()) {
+                    } else if (OBlock.m[k].bv.c())
                         return;
-                    }
                 }
         }
     }

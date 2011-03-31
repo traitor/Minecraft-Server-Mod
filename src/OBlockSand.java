@@ -35,12 +35,10 @@ public class OBlockSand extends OBlock {
             int m = 32;
             if ((a) || (!paramOWorld.a(paramInt1 - m, paramInt2 - m, paramInt3 - m, paramInt1 + m, paramInt2 + m, paramInt3 + m))) {
                 paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
-                while ((b_(paramOWorld, paramInt1, paramInt2 - 1, paramInt3)) && (paramInt2 > 0)) {
+                while ((b_(paramOWorld, paramInt1, paramInt2 - 1, paramInt3)) && (paramInt2 > 0))
                     paramInt2--;
-                }
-                if (paramInt2 > 0) {
+                if (paramInt2 > 0)
                     paramOWorld.e(paramInt1, paramInt2, paramInt3, bk);
-                }
             } else {
                 OEntityFallingSand localOEntityFallingSand = new OEntityFallingSand(paramOWorld, paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, bk);
                 paramOWorld.a(localOEntityFallingSand);
@@ -55,16 +53,13 @@ public class OBlockSand extends OBlock {
 
     public static boolean b_(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         int i = paramOWorld.a(paramInt1, paramInt2, paramInt3);
-        if (i == 0) {
+        if (i == 0)
             return true;
-        }
-        if (i == OBlock.ar.bk) {
+        if (i == OBlock.ar.bk)
             return true;
-        }
         OMaterial localOMaterial = OBlock.m[i].bv;
-        if (localOMaterial == OMaterial.f) {
+        if (localOMaterial == OMaterial.f)
             return true;
-        }
         return localOMaterial == OMaterial.g;
     }
 }

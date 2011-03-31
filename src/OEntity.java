@@ -86,13 +86,14 @@ public abstract class OEntity {
         return bz;
     }
 
+    @Override
     public boolean equals(Object paramObject) {
-        if ((paramObject instanceof OEntity)) {
+        if ((paramObject instanceof OEntity))
             return ((OEntity) paramObject).aA == aA;
-        }
         return false;
     }
 
+    @Override
     public int hashCode() {
         return aA;
     }
@@ -126,9 +127,8 @@ public abstract class OEntity {
     }
 
     public void H() {
-        if ((aE != null) && (aE.ba)) {
+        if ((aE != null) && (aE.ba))
             aE = null;
-        }
 
         br += 1;
         be = bf;
@@ -141,9 +141,8 @@ public abstract class OEntity {
         if (g_()) {
             if ((!bv) && (!c)) {
                 float f1 = OMathHelper.a(aM * aM * 0.2000000029802322D + aN * aN + aO * aO * 0.2000000029802322D) * 0.2F;
-                if (f1 > 1.0F) {
+                if (f1 > 1.0F)
                     f1 = 1.0F;
-                }
                 aF.a(this, "random.splash", f1, 1.0F + (bq.nextFloat() - bq.nextFloat()) * 0.4F);
                 float f2 = OMathHelper.b(aT.b);
                 float f3;
@@ -162,36 +161,29 @@ public abstract class OEntity {
             bh = 0.0F;
             bv = true;
             bt = 0;
-        } else {
+        } else
             bv = false;
-        }
 
-        if (aF.t) {
+        if (aF.t)
             bt = 0;
-        } else if (bt > 0) {
+        else if (bt > 0)
             if (by) {
                 bt -= 4;
-                if (bt < 0) {
+                if (bt < 0)
                     bt = 0;
-                }
             } else {
-                if (bt % 20 == 0) {
+                if (bt % 20 == 0)
                     // hMod Damage hook: Periodic burn damage
                     if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.FIRE_TICK, null, entity, 1))
                         a((OEntity) null, 1);
-                }
                 bt -= 1;
             }
 
-        }
-
-        if (Q()) {
+        if (Q())
             P();
-        }
 
-        if (aK < -64.0D) {
+        if (aK < -64.0D)
             M();
-        }
 
         if (!aF.t) {
             a(0, bt > 0);
@@ -219,9 +211,8 @@ public abstract class OEntity {
     public boolean b(double paramDouble1, double paramDouble2, double paramDouble3) {
         OAxisAlignedBB localOAxisAlignedBB = aT.c(paramDouble1, paramDouble2, paramDouble3);
         List localList = aF.a(this, localOAxisAlignedBB);
-        if (localList.size() > 0) {
+        if (localList.size() > 0)
             return false;
-        }
         return !aF.b(localOAxisAlignedBB);
     }
 
@@ -248,57 +239,49 @@ public abstract class OEntity {
         if (i != 0) {
             double d6 = 0.05D;
             while ((paramDouble1 != 0.0D) && (aF.a(this, aT.c(paramDouble1, -1.0D, 0.0D)).size() == 0)) {
-                if ((paramDouble1 < d6) && (paramDouble1 >= -d6)) {
+                if ((paramDouble1 < d6) && (paramDouble1 >= -d6))
                     paramDouble1 = 0.0D;
-                } else if (paramDouble1 > 0.0D) {
+                else if (paramDouble1 > 0.0D)
                     paramDouble1 -= d6;
-                } else {
+                else
                     paramDouble1 += d6;
-                }
                 d3 = paramDouble1;
             }
             while ((paramDouble3 != 0.0D) && (aF.a(this, aT.c(0.0D, -1.0D, paramDouble3)).size() == 0)) {
-                if ((paramDouble3 < d6) && (paramDouble3 >= -d6)) {
+                if ((paramDouble3 < d6) && (paramDouble3 >= -d6))
                     paramDouble3 = 0.0D;
-                } else if (paramDouble3 > 0.0D) {
+                else if (paramDouble3 > 0.0D)
                     paramDouble3 -= d6;
-                } else {
+                else
                     paramDouble3 += d6;
-                }
                 d5 = paramDouble3;
             }
         }
 
         List localList = aF.a(this, aT.a(paramDouble1, paramDouble2, paramDouble3));
 
-        for (int j = 0; j < localList.size(); j++) {
+        for (int j = 0; j < localList.size(); j++)
             paramDouble2 = ((OAxisAlignedBB) localList.get(j)).b(aT, paramDouble2);
-        }
         aT.d(0.0D, paramDouble2, 0.0D);
 
-        if ((!aZ) && (d4 != paramDouble2)) {
+        if ((!aZ) && (d4 != paramDouble2))
             paramDouble1 = paramDouble2 = paramDouble3 = 0.0D;
-        }
 
         int j = (aU) || ((d4 != paramDouble2) && (d4 < 0.0D)) ? 1 : 0;
 
-        for (int k = 0; k < localList.size(); k++) {
+        for (int k = 0; k < localList.size(); k++)
             paramDouble1 = ((OAxisAlignedBB) localList.get(k)).a(aT, paramDouble1);
-        }
         aT.d(paramDouble1, 0.0D, 0.0D);
 
-        if ((!aZ) && (d3 != paramDouble1)) {
+        if ((!aZ) && (d3 != paramDouble1))
             paramDouble1 = paramDouble2 = paramDouble3 = 0.0D;
-        }
 
-        for (int k = 0; k < localList.size(); k++) {
+        for (int k = 0; k < localList.size(); k++)
             paramDouble3 = ((OAxisAlignedBB) localList.get(k)).c(aT, paramDouble3);
-        }
         aT.d(0.0D, 0.0D, paramDouble3);
 
-        if ((!aZ) && (d5 != paramDouble3)) {
+        if ((!aZ) && (d5 != paramDouble3))
             paramDouble1 = paramDouble2 = paramDouble3 = 0.0D;
-        }
 
         if ((bm > 0.0F) && (j != 0) && (bl < 0.05F) && ((d3 != paramDouble1) || (d5 != paramDouble3))) {
             double d7 = paramDouble1;
@@ -313,41 +296,34 @@ public abstract class OEntity {
             aT.b(localOAxisAlignedBB1);
             localList = aF.a(this, aT.a(paramDouble1, paramDouble2, paramDouble3));
 
-            for (int n = 0; n < localList.size(); n++) {
+            for (int n = 0; n < localList.size(); n++)
                 paramDouble2 = ((OAxisAlignedBB) localList.get(n)).b(aT, paramDouble2);
-            }
             aT.d(0.0D, paramDouble2, 0.0D);
 
-            if ((!aZ) && (d4 != paramDouble2)) {
+            if ((!aZ) && (d4 != paramDouble2))
                 paramDouble1 = paramDouble2 = paramDouble3 = 0.0D;
-            }
 
-            for (int n = 0; n < localList.size(); n++) {
+            for (int n = 0; n < localList.size(); n++)
                 paramDouble1 = ((OAxisAlignedBB) localList.get(n)).a(aT, paramDouble1);
-            }
             aT.d(paramDouble1, 0.0D, 0.0D);
 
-            if ((!aZ) && (d3 != paramDouble1)) {
+            if ((!aZ) && (d3 != paramDouble1))
                 paramDouble1 = paramDouble2 = paramDouble3 = 0.0D;
-            }
 
-            for (int n = 0; n < localList.size(); n++) {
+            for (int n = 0; n < localList.size(); n++)
                 paramDouble3 = ((OAxisAlignedBB) localList.get(n)).c(aT, paramDouble3);
-            }
             aT.d(0.0D, 0.0D, paramDouble3);
 
-            if ((!aZ) && (d5 != paramDouble3)) {
+            if ((!aZ) && (d5 != paramDouble3))
                 paramDouble1 = paramDouble2 = paramDouble3 = 0.0D;
-            }
 
             if (d7 * d7 + d9 * d9 >= paramDouble1 * paramDouble1 + paramDouble3 * paramDouble3) {
                 paramDouble1 = d7;
                 paramDouble2 = d8;
                 paramDouble3 = d9;
                 aT.b(localOAxisAlignedBB2);
-            } else {
+            } else
                 bl = (float) (bl + 0.5D);
-            }
 
         }
 
@@ -361,15 +337,12 @@ public abstract class OEntity {
         aX = ((aV) || (aW));
         a(paramDouble2, aU);
 
-        if (d3 != paramDouble1) {
+        if (d3 != paramDouble1)
             aM = 0.0D;
-        }
-        if (d4 != paramDouble2) {
+        if (d4 != paramDouble2)
             aN = 0.0D;
-        }
-        if (d5 != paramDouble3) {
+        if (d5 != paramDouble3)
             aO = 0.0D;
-        }
 
         double d7 = aJ - d1;
         double d8 = aL - d2;
@@ -386,9 +359,8 @@ public abstract class OEntity {
                 if (aF.a(i1, i2 + 1, m) == OBlock.aS.bk) {
                     localOStepSound = OBlock.aS.bt;
                     aF.a(this, localOStepSound.c(), localOStepSound.a() * 0.15F, localOStepSound.b());
-                } else if (!OBlock.m[n].bv.d()) {
+                } else if (!OBlock.m[n].bv.d())
                     aF.a(this, localOStepSound.c(), localOStepSound.a() * 0.15F, localOStepSound.b());
-                }
                 OBlock.m[n].b(aF, i1, i2, m, this);
             }
 
@@ -401,18 +373,14 @@ public abstract class OEntity {
         int i3 = OMathHelper.b(aT.e);
         int i4 = OMathHelper.b(aT.f);
 
-        if (aF.a(i1, i2, m, n, i3, i4)) {
-            for (int i5 = i1; i5 <= n; i5++) {
-                for (int i6 = i2; i6 <= i3; i6++) {
+        if (aF.a(i1, i2, m, n, i3, i4))
+            for (int i5 = i1; i5 <= n; i5++)
+                for (int i6 = i2; i6 <= i3; i6++)
                     for (int i7 = m; i7 <= i4; i7++) {
                         int i8 = aF.a(i5, i6, i7);
-                        if (i8 > 0) {
+                        if (i8 > 0)
                             OBlock.m[i8].a(aF, i5, i6, i7, this);
-                        }
                     }
-                }
-            }
-        }
         bl *= 0.4F;
 
         boolean bool = g_();
@@ -420,13 +388,11 @@ public abstract class OEntity {
             a(1);
             if (!bool) {
                 bt += 1;
-                if (bt == 0) {
+                if (bt == 0)
                     bt = 300;
-                }
             }
-        } else if (bt <= 0) {
+        } else if (bt <= 0)
             bt = (-bs);
-        }
 
         if ((bool) && (bt > 0)) {
             aF.a(this, "random.fizz", 0.7F, 1.6F + (bq.nextFloat() - bq.nextFloat()) * 0.4F);
@@ -440,9 +406,8 @@ public abstract class OEntity {
                 a(bh);
                 bh = 0.0F;
             }
-        } else if (paramDouble < 0.0D) {
+        } else if (paramDouble < 0.0D)
             bh = (float) (bh - paramDouble);
-        }
     }
 
     public OAxisAlignedBB d() {
@@ -450,10 +415,9 @@ public abstract class OEntity {
     }
 
     protected void a(int paramInt) {
-        if (!by) {
+        if (!by)
             if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.FIRE, null, entity, paramInt))
                 a((OEntity) null, paramInt);
-        }
     }
 
     protected void a(float paramFloat) {
@@ -487,13 +451,11 @@ public abstract class OEntity {
 
     public void a(float paramFloat1, float paramFloat2, float paramFloat3) {
         float f1 = OMathHelper.c(paramFloat1 * paramFloat1 + paramFloat2 * paramFloat2);
-        if (f1 < 0.01F) {
+        if (f1 < 0.01F)
             return;
-        }
 
-        if (f1 < 1.0F) {
+        if (f1 < 1.0F)
             f1 = 1.0F;
-        }
         f1 = paramFloat3 / f1;
         paramFloat1 *= f1;
         paramFloat2 *= f1;
@@ -511,35 +473,32 @@ public abstract class OEntity {
         double d1 = (aT.e - aT.b) * 0.66D;
         int j = OMathHelper.b(aK - bb + d1);
         int k = OMathHelper.b(aL);
-        if (aF.a(OMathHelper.b(aT.a), OMathHelper.b(aT.b), OMathHelper.b(aT.c), OMathHelper.b(aT.d), OMathHelper.b(aT.e), OMathHelper.b(aT.f))) {
+        if (aF.a(OMathHelper.b(aT.a), OMathHelper.b(aT.b), OMathHelper.b(aT.c), OMathHelper.b(aT.d), OMathHelper.b(aT.e), OMathHelper.b(aT.f)))
             return aF.l(i, j, k);
-        }
         return 0.0F;
     }
 
     public void b(double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat1, float paramFloat2) {
-        aG = (this.aJ = paramDouble1);
-        aH = (this.aK = paramDouble2);
-        aI = (this.aL = paramDouble3);
-        aR = (this.aP = paramFloat1);
-        aS = (this.aQ = paramFloat2);
+        aG = (aJ = paramDouble1);
+        aH = (aK = paramDouble2);
+        aI = (aL = paramDouble3);
+        aR = (aP = paramFloat1);
+        aS = (aQ = paramFloat2);
         bl = 0.0F;
 
         double d1 = aR - paramFloat1;
-        if (d1 < -180.0D) {
+        if (d1 < -180.0D)
             aR += 360.0F;
-        }
-        if (d1 >= 180.0D) {
+        if (d1 >= 180.0D)
             aR -= 360.0F;
-        }
         a(aJ, aK, aL);
         c(paramFloat1, paramFloat2);
     }
 
     public void c(double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat1, float paramFloat2) {
-        bi = (this.aG = this.aJ = paramDouble1);
-        bj = (this.aH = this.aK = paramDouble2 + bb);
-        bk = (this.aI = this.aL = paramDouble3);
+        bi = (aG = aJ = paramDouble1);
+        bj = (aH = aK = paramDouble2 + bb);
+        bk = (aI = aL = paramDouble3);
         aP = paramFloat1;
         aQ = paramFloat2;
         a(aJ, aK, aL);
@@ -577,9 +536,8 @@ public abstract class OEntity {
     }
 
     public void h(OEntity paramOEntity) {
-        if ((paramOEntity.aD == this) || (paramOEntity.aE == this)) {
+        if ((paramOEntity.aD == this) || (paramOEntity.aE == this))
             return;
-        }
 
         double d1 = paramOEntity.aJ - aJ;
         double d2 = paramOEntity.aL - aL;
@@ -592,9 +550,8 @@ public abstract class OEntity {
             d2 /= d3;
 
             double d4 = 1.0D / d3;
-            if (d4 > 1.0D) {
+            if (d4 > 1.0D)
                 d4 = 1.0D;
-            }
             d1 *= d4;
             d2 *= d4;
 
@@ -637,9 +594,8 @@ public abstract class OEntity {
 
     public boolean c(ONBTTagCompound paramONBTTagCompound) {
         String str = S();
-        if ((ba) || (str == null)) {
+        if ((ba) || (str == null))
             return false;
-        }
         paramONBTTagCompound.a("id", str);
         d(paramONBTTagCompound);
         return true;
@@ -668,22 +624,19 @@ public abstract class OEntity {
         aN = ((ONBTTagDouble) localONBTTagList2.a(1)).a;
         aO = ((ONBTTagDouble) localONBTTagList2.a(2)).a;
 
-        if (Math.abs(aM) > 10.0D) {
+        if (Math.abs(aM) > 10.0D)
             aM = 0.0D;
-        }
-        if (Math.abs(aN) > 10.0D) {
+        if (Math.abs(aN) > 10.0D)
             aN = 0.0D;
-        }
-        if (Math.abs(aO) > 10.0D) {
+        if (Math.abs(aO) > 10.0D)
             aO = 0.0D;
-        }
 
-        aG = (this.bi = this.aJ = ((ONBTTagDouble) localONBTTagList1.a(0)).a);
-        aH = (this.bj = this.aK = ((ONBTTagDouble) localONBTTagList1.a(1)).a);
-        aI = (this.bk = this.aL = ((ONBTTagDouble) localONBTTagList1.a(2)).a);
+        aG = (bi = aJ = ((ONBTTagDouble) localONBTTagList1.a(0)).a);
+        aH = (bj = aK = ((ONBTTagDouble) localONBTTagList1.a(1)).a);
+        aI = (bk = aL = ((ONBTTagDouble) localONBTTagList1.a(2)).a);
 
-        aR = (this.aP = ((ONBTTagFloat) localONBTTagList3.a(0)).a % 6.283186F);
-        aS = (this.aQ = ((ONBTTagFloat) localONBTTagList3.a(1)).a % 6.283186F);
+        aR = (aP = ((ONBTTagFloat) localONBTTagList3.a(0)).a % 6.283186F);
+        aS = (aQ = ((ONBTTagFloat) localONBTTagList3.a(1)).a % 6.283186F);
 
         bh = paramONBTTagCompound.g("FallDistance");
         bt = paramONBTTagCompound.d("Fire");
@@ -705,17 +658,15 @@ public abstract class OEntity {
 
     protected ONBTTagList a(double[] paramArrayOfDouble) {
         ONBTTagList localONBTTagList = new ONBTTagList();
-        for (double d1 : paramArrayOfDouble) {
+        for (double d1 : paramArrayOfDouble)
             localONBTTagList.a(new ONBTTagDouble(d1));
-        }
         return localONBTTagList;
     }
 
     protected ONBTTagList a(float[] paramArrayOfFloat) {
         ONBTTagList localONBTTagList = new ONBTTagList();
-        for (float f : paramArrayOfFloat) {
+        for (float f : paramArrayOfFloat)
             localONBTTagList.a(new ONBTTagFloat(f));
-        }
         return localONBTTagList;
     }
 
@@ -767,34 +718,26 @@ public abstract class OEntity {
         e += aE.aP - aE.aR;
         d += aE.aQ - aE.aS;
 
-        while (e >= 180.0D) {
+        while (e >= 180.0D)
             e -= 360.0D;
-        }
-        while (e < -180.0D) {
+        while (e < -180.0D)
             e += 360.0D;
-        }
-        while (d >= 180.0D) {
+        while (d >= 180.0D)
             d -= 360.0D;
-        }
-        while (d < -180.0D) {
+        while (d < -180.0D)
             d += 360.0D;
-        }
         double d1 = e * 0.5D;
         double d2 = d * 0.5D;
 
         float f = 10.0F;
-        if (d1 > f) {
+        if (d1 > f)
             d1 = f;
-        }
-        if (d1 < -f) {
+        if (d1 < -f)
             d1 = -f;
-        }
-        if (d2 > f) {
+        if (d2 > f)
             d2 = f;
-        }
-        if (d2 < -f) {
+        if (d2 < -f)
             d2 = -f;
-        }
 
         e -= d1;
         d -= d2;
@@ -833,12 +776,10 @@ public abstract class OEntity {
             c(paramOEntity.aJ, paramOEntity.aT.b + paramOEntity.bd, paramOEntity.aL, aP, aQ);
             return;
         }
-        if (aE != null) {
+        if (aE != null)
             aE.aD = null;
-        }
-        if (paramOEntity.aD != null) {
+        if (paramOEntity.aD != null)
             paramOEntity.aD.aE = null;
-        }
         aE = paramOEntity;
         paramOEntity.aD = this;
     }
@@ -868,10 +809,9 @@ public abstract class OEntity {
 
     protected void a(int paramInt, boolean paramBoolean) {
         int i = bz.a(0);
-        if (paramBoolean) {
+        if (paramBoolean)
             bz.b(0, Byte.valueOf((byte) (i | 1 << paramInt)));
-        } else {
+        else
             bz.b(0, Byte.valueOf((byte) (i & (1 << paramInt ^ 0xFFFFFFFF))));
-        }
     }
 }

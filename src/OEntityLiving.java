@@ -1,5 +1,4 @@
 import java.util.List;
-import java.util.Random;
 
 public abstract class OEntityLiving extends OEntity {
 
@@ -75,6 +74,7 @@ public abstract class OEntityLiving extends OEntity {
         bm = 0.5F;
     }
 
+    @Override
     protected void a() {
     }
 
@@ -82,14 +82,17 @@ public abstract class OEntityLiving extends OEntity {
         return aF.a(OVec3D.b(aJ, aK + p(), aL), OVec3D.b(paramOEntity.aJ, paramOEntity.aK + paramOEntity.p(), paramOEntity.aL)) == null;
     }
 
+    @Override
     public boolean d_() {
         return !ba;
     }
 
+    @Override
     public boolean e_() {
         return !ba;
     }
 
+    @Override
     public float p() {
         return bd * 0.85F;
     }
@@ -100,11 +103,11 @@ public abstract class OEntityLiving extends OEntity {
 
     public void G() {
         String str = e();
-        if (str != null) {
+        if (str != null)
             aF.a(this, str, i(), (bq.nextFloat() - bq.nextFloat()) * 0.2F + 1.0F);
-        }
     }
 
+    @Override
     public void H() {
         U = V;
         super.H();
@@ -114,15 +117,13 @@ public abstract class OEntityLiving extends OEntity {
             G();
         }
 
-        if ((J()) && (D())) {
+        if ((J()) && (D()))
             // hMod Damage hook: Suffocation
             if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.SUFFOCATION, null, entity, 1))
                 a((OEntity) null, 1);
-        }
 
-        if ((by) || (aF.t)) {
+        if ((by) || (aF.t))
             bt = 0;
-        }
         int i;
         if ((J()) && (a(OMaterial.f)) && (!b_())) {
             bx -= 1;
@@ -140,21 +141,17 @@ public abstract class OEntityLiving extends OEntity {
             }
 
             bt = 0;
-        } else {
+        } else
             bx = bu;
-        }
 
         ad = ae;
 
-        if (ac > 0) {
+        if (ac > 0)
             ac -= 1;
-        }
-        if (Y > 0) {
+        if (Y > 0)
             Y -= 1;
-        }
-        if (bw > 0) {
+        if (bw > 0)
             bw -= 1;
-        }
         if (W <= 0) {
             ab += 1;
             if (ab > 20) {
@@ -186,12 +183,14 @@ public abstract class OEntityLiving extends OEntity {
         }
     }
 
+    @Override
     public void x() {
         super.x();
         H = I;
         I = 0.0F;
     }
 
+    @Override
     public void f_() {
         super.f_();
 
@@ -212,89 +211,71 @@ public abstract class OEntityLiving extends OEntity {
             f3 = f1 * 3.0F;
             f2 = (float) Math.atan2(d2, d1) * 180.0F / 3.141593F - 90.0F;
         }
-        if (V > 0.0F) {
+        if (V > 0.0F)
             f2 = aP;
-        }
-        if (!aU) {
+        if (!aU)
             f4 = 0.0F;
-        }
         I += (f4 - I) * 0.3F;
 
         float f5 = f2 - F;
-        while (f5 < -180.0F) {
+        while (f5 < -180.0F)
             f5 += 360.0F;
-        }
-        while (f5 >= 180.0F) {
+        while (f5 >= 180.0F)
             f5 -= 360.0F;
-        }
         F += f5 * 0.3F;
 
         float f6 = aP - F;
-        while (f6 < -180.0F) {
+        while (f6 < -180.0F)
             f6 += 360.0F;
-        }
-        while (f6 >= 180.0F) {
+        while (f6 >= 180.0F)
             f6 -= 360.0F;
-        }
         int i = (f6 < -90.0F) || (f6 >= 90.0F) ? 1 : 0;
-        if (f6 < -75.0F) {
+        if (f6 < -75.0F)
             f6 = -75.0F;
-        }
-        if (f6 >= 75.0F) {
+        if (f6 >= 75.0F)
             f6 = 75.0F;
-        }
         F = (aP - f6);
-        if (f6 * f6 > 2500.0F) {
+        if (f6 * f6 > 2500.0F)
             F += f6 * 0.2F;
-        }
 
-        if (i != 0) {
+        if (i != 0)
             f3 *= -1.0F;
-        }
-        while (aP - aR < -180.0F) {
+        while (aP - aR < -180.0F)
             aR -= 360.0F;
-        }
-        while (aP - aR >= 180.0F) {
+        while (aP - aR >= 180.0F)
             aR += 360.0F;
-        }
-        while (F - G < -180.0F) {
+        while (F - G < -180.0F)
             G -= 360.0F;
-        }
-        while (F - G >= 180.0F) {
+        while (F - G >= 180.0F)
             G += 360.0F;
-        }
-        while (aQ - aS < -180.0F) {
+        while (aQ - aS < -180.0F)
             aS -= 360.0F;
-        }
-        while (aQ - aS >= 180.0F) {
+        while (aQ - aS >= 180.0F)
             aS += 360.0F;
-        }
         J += f3;
     }
 
+    @Override
     protected void a(float paramFloat1, float paramFloat2) {
         super.a(paramFloat1, paramFloat2);
     }
 
     public void b(int paramInt) {
-        if (W <= 0) {
+        if (W <= 0)
             return;
-        }
         W += paramInt;
-        if (W > 20) {
+        if (W > 20)
             W = 20;
-        }
         bw = (C / 2);
     }
 
+    @Override
     public boolean a(OEntity paramOEntity, int paramInt) {
-        if (aF.t) {
+        if (aF.t)
             return false;
-        }
         at = 0;
-        if (W <= 0) {
+        if (W <= 0)
             return false;
-        }
 
         aj = 1.5F;
 
@@ -324,7 +305,7 @@ public abstract class OEntityLiving extends OEntity {
             X = W;
             bw = C;
             c(paramInt);
-            Y = (this.Z = 10);
+            Y = (Z = 10);
         }
 
         aa = 0.0F;
@@ -342,19 +323,16 @@ public abstract class OEntityLiving extends OEntity {
                 }
                 aa = ((float) (Math.atan2(d2, d1) * 180.0D / 3.141592741012573D) - aP);
                 a(paramOEntity, paramInt, d1, d2);
-            } else {
+            } else
                 aa = ((int) (Math.random() * 2.0D) * 180);
-            }
         }
 
         if (W <= 0) {
-            if (i != 0) {
+            if (i != 0)
                 aF.a(this, g(), i(), (bq.nextFloat() - bq.nextFloat()) * 0.2F + 1.0F);
-            }
             a(paramOEntity);
-        } else if (i != 0) {
+        } else if (i != 0)
             aF.a(this, f(), i(), (bq.nextFloat() - bq.nextFloat()) * 0.2F + 1.0F);
-        }
 
         return true;
     }
@@ -391,20 +369,17 @@ public abstract class OEntityLiving extends OEntity {
         aN += 0.4000000059604645D;
         aO -= paramDouble2 / f1 * f2;
 
-        if (aN > 0.4000000059604645D) {
+        if (aN > 0.4000000059604645D)
             aN = 0.4000000059604645D;
-        }
     }
 
     public void a(OEntity paramOEntity) {
-        if ((R > 0) && (paramOEntity != null)) {
+        if ((R > 0) && (paramOEntity != null))
             paramOEntity.c(this, R);
-        }
         af = true;
 
-        if (!aF.t) {
+        if (!aF.t)
             o();
-        }
 
         // hMod: Forced cast to play Death Animations.
         aF.a(this, (byte) 3);
@@ -414,9 +389,8 @@ public abstract class OEntityLiving extends OEntity {
         int i = h();
         if (i > 0) {
             int j = bq.nextInt(3);
-            for (int k = 0; k < j; k++) {
+            for (int k = 0; k < j; k++)
                 b(i, 1);
-            }
         }
     }
 
@@ -424,6 +398,7 @@ public abstract class OEntityLiving extends OEntity {
         return 0;
     }
 
+    @Override
     protected void a(float paramFloat) {
         int i = (int) Math.ceil(paramFloat - 3.0F);
         if (i > 0) {
@@ -450,9 +425,8 @@ public abstract class OEntityLiving extends OEntity {
             aO *= 0.800000011920929D;
             aN -= 0.02D;
 
-            if ((aV) && (b(aM, aN + 0.6000000238418579D - aK + d1, aO))) {
+            if ((aV) && (b(aM, aN + 0.6000000238418579D - aK + d1, aO)))
                 aN = 0.300000011920929D;
-            }
         } else if (Q()) {
             double d1 = aK;
             a(paramFloat1, paramFloat2, 0.02F);
@@ -462,17 +436,15 @@ public abstract class OEntityLiving extends OEntity {
             aO *= 0.5D;
             aN -= 0.02D;
 
-            if ((aV) && (b(aM, aN + 0.6000000238418579D - aK + d1, aO))) {
+            if ((aV) && (b(aM, aN + 0.6000000238418579D - aK + d1, aO)))
                 aN = 0.300000011920929D;
-            }
         } else {
             float f1 = 0.91F;
             if (aU) {
                 f1 = 0.5460001F;
                 int i = aF.a(OMathHelper.b(aJ), OMathHelper.b(aT.b) - 1, OMathHelper.b(aL));
-                if (i > 0) {
+                if (i > 0)
                     f1 = OBlock.m[i].bw * 0.91F;
-                }
             }
 
             float f2 = 0.1627714F / (f1 * f1 * f1);
@@ -482,24 +454,21 @@ public abstract class OEntityLiving extends OEntity {
             if (aU) {
                 f1 = 0.5460001F;
                 int j = aF.a(OMathHelper.b(aJ), OMathHelper.b(aT.b) - 1, OMathHelper.b(aL));
-                if (j > 0) {
+                if (j > 0)
                     f1 = OBlock.m[j].bw * 0.91F;
-                }
             }
 
             if (m()) {
                 bh = 0.0F;
-                if (aN < -0.15D) {
+                if (aN < -0.15D)
                     aN = -0.15D;
-                }
 
             }
 
             c(aM, aN, aO);
 
-            if ((aV) && (m())) {
+            if ((aV) && (m()))
                 aN = 0.2D;
-            }
 
             aN -= 0.08D;
             aN *= 0.9800000190734863D;
@@ -510,9 +479,8 @@ public abstract class OEntityLiving extends OEntity {
         double d1 = aJ - aG;
         double d2 = aL - aI;
         float f3 = OMathHelper.a(d1 * d1 + d2 * d2) * 4.0F;
-        if (f3 > 1.0F) {
+        if (f3 > 1.0F)
             f3 = 1.0F;
-        }
         aj += (f3 - aj) * 0.4F;
         ak += aj;
     }
@@ -524,6 +492,7 @@ public abstract class OEntityLiving extends OEntity {
         return (aF.a(i, j, k) == OBlock.aF.bk) || (aF.a(i, j + 1, k) == OBlock.aF.bk);
     }
 
+    @Override
     public void a(ONBTTagCompound paramONBTTagCompound) {
         paramONBTTagCompound.a("Health", (short) W);
         paramONBTTagCompound.a("HurtTime", (short) Y);
@@ -531,16 +500,17 @@ public abstract class OEntityLiving extends OEntity {
         paramONBTTagCompound.a("AttackTime", (short) ac);
     }
 
+    @Override
     public void b(ONBTTagCompound paramONBTTagCompound) {
         W = paramONBTTagCompound.d("Health");
-        if (!paramONBTTagCompound.b("Health")) {
+        if (!paramONBTTagCompound.b("Health"))
             W = 10;
-        }
         Y = paramONBTTagCompound.d("HurtTime");
         ab = paramONBTTagCompound.d("DeathTime");
         ac = paramONBTTagCompound.d("AttackTime");
     }
 
+    @Override
     public boolean J() {
         return (!ba) && (W > 0);
     }
@@ -556,12 +526,10 @@ public abstract class OEntityLiving extends OEntity {
             double d3 = aL + (ao - aL) / al;
 
             double d4 = ap - aP;
-            while (d4 < -180.0D) {
+            while (d4 < -180.0D)
                 d4 += 360.0D;
-            }
-            while (d4 >= 180.0D) {
+            while (d4 >= 180.0D)
                 d4 -= 360.0D;
-            }
             aP = (float) (aP + d4 / al);
             aQ = (float) (aQ + (aq - aQ) / al);
 
@@ -575,23 +543,19 @@ public abstract class OEntityLiving extends OEntity {
             au = 0.0F;
             av = 0.0F;
             aw = 0.0F;
-        } else if (!T) {
+        } else if (!T)
             c_();
-        }
 
         boolean bool1 = g_();
         boolean bool2 = Q();
 
-        if (ax) {
-            if (bool1) {
+        if (ax)
+            if (bool1)
                 aN += 0.03999999910593033D;
-            } else if (bool2) {
+            else if (bool2)
                 aN += 0.03999999910593033D;
-            } else if (aU) {
+            else if (aU)
                 K();
-            }
-
-        }
 
         au *= 0.98F;
         av *= 0.98F;
@@ -599,15 +563,13 @@ public abstract class OEntityLiving extends OEntity {
         b(au, av);
 
         List localList = aF.b(this, aT.b(0.2000000029802322D, 0.0D, 0.2000000029802322D));
-        if ((localList != null) && (localList.size() > 0)) {
+        if ((localList != null) && (localList.size() > 0))
             for (int i = 0; i < localList.size(); i++) {
                 OEntity localOEntity = (OEntity) localList.get(i);
-                if (!localOEntity.e_()) {
+                if (!localOEntity.e_())
                     continue;
-                }
                 localOEntity.h(this);
             }
-        }
     }
 
     protected boolean w() {
@@ -629,17 +591,14 @@ public abstract class OEntityLiving extends OEntity {
             double d3 = localOEntityPlayer.aL - aL;
             double d4 = d1 * d1 + d2 * d2 + d3 * d3;
 
-            if (d4 > 16384.0D) {
+            if (d4 > 16384.0D)
                 C();
-            }
 
-            if ((at > 600) && (bq.nextInt(800) == 0)) {
-                if (d4 < 1024.0D) {
+            if ((at > 600) && (bq.nextInt(800) == 0))
+                if (d4 < 1024.0D)
                     at = 0;
-                } else {
+                else
                     C();
-                }
-            }
         }
 
         au = 0.0F;
@@ -651,29 +610,25 @@ public abstract class OEntityLiving extends OEntity {
             if (localOEntityPlayer != null) {
                 b = localOEntityPlayer;
                 c = (10 + bq.nextInt(20));
-            } else {
+            } else
                 aw = ((bq.nextFloat() - 0.5F) * 20.0F);
-            }
         }
 
         if (b != null) {
             b(b, 10.0F);
-            if ((c-- <= 0) || (b.ba) || (b.g(this) > f * f)) {
+            if ((c-- <= 0) || (b.ba) || (b.g(this) > f * f))
                 b = null;
-            }
         } else {
-            if (bq.nextFloat() < 0.05F) {
+            if (bq.nextFloat() < 0.05F)
                 aw = ((bq.nextFloat() - 0.5F) * 20.0F);
-            }
             aP += aw;
             aQ = ay;
         }
 
         boolean bool1 = g_();
         boolean bool2 = Q();
-        if ((bool1) || (bool2)) {
+        if ((bool1) || (bool2))
             ax = (bq.nextFloat() < 0.8F);
-        }
     }
 
     public void b(OEntity paramOEntity, float paramFloat) {
@@ -684,9 +639,8 @@ public abstract class OEntityLiving extends OEntity {
         if ((paramOEntity instanceof OEntityLiving)) {
             OEntityLiving localOEntityLiving = (OEntityLiving) paramOEntity;
             d3 = localOEntityLiving.aK + localOEntityLiving.p() - (aK + p());
-        } else {
+        } else
             d3 = (paramOEntity.aT.b + paramOEntity.aT.e) / 2.0D - (aK + p());
-        }
 
         double d4 = OMathHelper.a(d1 * d1 + d2 * d2);
 
@@ -698,18 +652,14 @@ public abstract class OEntityLiving extends OEntity {
 
     private float b(float paramFloat1, float paramFloat2, float paramFloat3) {
         float f = paramFloat2 - paramFloat1;
-        while (f < -180.0F) {
+        while (f < -180.0F)
             f += 360.0F;
-        }
-        while (f >= 180.0F) {
+        while (f >= 180.0F)
             f -= 360.0F;
-        }
-        if (f > paramFloat3) {
+        if (f > paramFloat3)
             f = paramFloat3;
-        }
-        if (f < -paramFloat3) {
+        if (f < -paramFloat3)
             f = -paramFloat3;
-        }
         return paramFloat1 + f;
     }
 
@@ -720,10 +670,12 @@ public abstract class OEntityLiving extends OEntity {
         return (aF.a(aT)) && (aF.a(this, aT).size() == 0) && (!aF.b(aT));
     }
 
+    @Override
     protected void M() {
         a((OEntity) null, 4);
     }
 
+    @Override
     public OVec3D N() {
         return b(1.0F);
     }

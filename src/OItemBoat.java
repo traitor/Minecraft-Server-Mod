@@ -5,6 +5,7 @@ public class OItemBoat extends OItem {
         bd = 1;
     }
 
+    @Override
     public OItemStack a(OItemStack paramOItemStack, OWorld paramOWorld, OEntityPlayer paramOEntityPlayer) {
         float f1 = 1.0F;
 
@@ -29,9 +30,8 @@ public class OItemBoat extends OItem {
         double d4 = 5.0D;
         OVec3D localOVec3D2 = localOVec3D1.c(f8 * d4, f9 * d4, f10 * d4);
         OMovingObjectPosition localOMovingObjectPosition = paramOWorld.a(localOVec3D1, localOVec3D2, true);
-        if (localOMovingObjectPosition == null) {
+        if (localOMovingObjectPosition == null)
             return paramOItemStack;
-        }
 
         if (localOMovingObjectPosition.a == OEnumMovingObjectType.a) {
             int i = localOMovingObjectPosition.b;

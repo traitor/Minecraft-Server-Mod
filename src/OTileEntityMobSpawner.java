@@ -23,9 +23,8 @@ public class OTileEntityMobSpawner extends OTileEntity {
     public void i_() {
         c = b;
 
-        if (!a()) {
+        if (!a())
             return;
-        }
 
         double d1 = e + d.k.nextFloat();
         double d2 = f + d.k.nextFloat();
@@ -39,9 +38,8 @@ public class OTileEntityMobSpawner extends OTileEntity {
             c -= 360.0D;
         }
 
-        if (a == -1) {
+        if (a == -1)
             c();
-        }
 
         if (a > 0) {
             a -= 1;
@@ -50,10 +48,9 @@ public class OTileEntityMobSpawner extends OTileEntity {
 
         int i = 4;
         for (int j = 0; j < i; j++) {
-            OEntityLiving localOEntityLiving = (OEntityLiving) (OEntityLiving) OEntityList.a(h, d);
-            if (localOEntityLiving == null) {
+            OEntityLiving localOEntityLiving = (OEntityLiving) OEntityList.a(h, d);
+            if (localOEntityLiving == null)
                 return;
-            }
 
             int k = d.a(localOEntityLiving.getClass(), OAxisAlignedBB.b(e, f, g, e + 1, f + 1, g + 1).b(8.0D, 4.0D, 8.0D)).size();
             if (k >= 6) {
@@ -69,7 +66,7 @@ public class OTileEntityMobSpawner extends OTileEntity {
                 localOEntityLiving.c(d4, d5, d6, d.k.nextFloat() * 360.0F, 0.0F);
 
                 if (localOEntityLiving.b()) {
-                    ((OWorldServer)d).a(localOEntityLiving);
+                    ((OWorldServer) d).a(localOEntityLiving);
 
                     for (int m = 0; m < 20; m++) {
                         d1 = e + 0.5D + (d.k.nextFloat() - 0.5D) * 2.0D;

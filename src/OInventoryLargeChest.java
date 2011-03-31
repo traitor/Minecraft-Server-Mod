@@ -67,25 +67,22 @@ public class OInventoryLargeChest implements OIInventory, Container<OItemStack> 
     }
 
     public OItemStack c_(int paramInt) {
-        if (paramInt >= b.m_()) {
+        if (paramInt >= b.m_())
             return c.c_(paramInt - b.m_());
-        }
         return b.c_(paramInt);
     }
 
     public OItemStack a(int paramInt1, int paramInt2) {
-        if (paramInt1 >= b.m_()) {
+        if (paramInt1 >= b.m_())
             return c.a(paramInt1 - b.m_(), paramInt2);
-        }
         return b.a(paramInt1, paramInt2);
     }
 
     public void a(int paramInt, OItemStack paramOItemStack) {
-        if (paramInt >= b.m_()) {
+        if (paramInt >= b.m_())
             c.a(paramInt - b.m_(), paramOItemStack);
-        } else {
+        else
             b.a(paramInt, paramOItemStack);
-        }
     }
 
     public int n_() {

@@ -1,5 +1,3 @@
-import java.util.Random;
-
 public class OItemHoe extends OItem {
 
     public OItemHoe(int paramInt, OEnumToolMaterial paramOEnumToolMaterial) {
@@ -8,6 +6,7 @@ public class OItemHoe extends OItem {
         be = paramOEnumToolMaterial.a();
     }
 
+    @Override
     public boolean a(OItemStack paramOItemStack, OEntityPlayer paramOEntityPlayer, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         int i = paramOWorld.a(paramInt1, paramInt2, paramInt3);
         OMaterial localOMaterial = paramOWorld.c(paramInt1, paramInt2 + 1, paramInt3);
@@ -28,9 +27,8 @@ public class OItemHoe extends OItem {
             OBlock localOBlock = OBlock.aA;
             paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localOBlock.bt.c(), (localOBlock.bt.a() + 1.0F) / 2.0F, localOBlock.bt.b() * 0.8F);
 
-            if (paramOWorld.t) {
+            if (paramOWorld.t)
                 return true;
-            }
             paramOWorld.e(paramInt1, paramInt2, paramInt3, localOBlock.bk);
             paramOItemStack.b(1);
 

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.server.MinecraftServer;
 
 public class OPlayerManager {
@@ -15,9 +16,8 @@ public class OPlayerManager {
     }
 
     public void a() {
-        for (int i = 0; i < c.size(); i++) {
+        for (int i = 0; i < c.size(); i++)
             c.get(i).a();
-        }
         c.clear();
     }
 
@@ -35,9 +35,8 @@ public class OPlayerManager {
         int i = paramInt1 >> 4;
         int j = paramInt3 >> 4;
         OPlayerInstance localOPlayerInstance = a(i, j, false);
-        if (localOPlayerInstance != null) {
+        if (localOPlayerInstance != null)
             localOPlayerInstance.a(paramInt1 & 0xF, paramInt2, paramInt3 & 0xF);
-        }
     }
 
     public void a(OEntityPlayerMP paramOEntityPlayerMP) {
@@ -54,7 +53,7 @@ public class OPlayerManager {
 
         a(i, j, true).a(paramOEntityPlayerMP);
 
-        for (int i2 = 1; i2 <= m * 2; i2++) {
+        for (int i2 = 1; i2 <= m * 2; i2++)
             for (int i3 = 0; i3 < 2; i3++) {
                 int[] arrayOfInt = e[(k++ % 4)];
 
@@ -64,8 +63,6 @@ public class OPlayerManager {
                     a(i + n, j + i1, true).a(paramOEntityPlayerMP);
                 }
             }
-
-        }
 
         k %= 4;
         for (int i2 = 0; i2 < m * 2; i2++) {
@@ -81,24 +78,21 @@ public class OPlayerManager {
         int i = (int) paramOEntityPlayerMP.d >> 4;
         int j = (int) paramOEntityPlayerMP.e >> 4;
 
-        for (int k = i - 10; k <= i + 10; k++) {
+        for (int k = i - 10; k <= i + 10; k++)
             for (int m = j - 10; m <= j + 10; m++) {
                 OPlayerInstance localOPlayerInstance = a(k, m, false);
-                if (localOPlayerInstance == null) {
+                if (localOPlayerInstance == null)
                     continue;
-                }
                 localOPlayerInstance.b(paramOEntityPlayerMP);
             }
-        }
         a.remove(paramOEntityPlayerMP);
     }
 
     private boolean a(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         int i = paramInt1 - paramInt3;
         int j = paramInt2 - paramInt4;
-        if ((i < -10) || (i > 10)) {
+        if ((i < -10) || (i > 10))
             return false;
-        }
         return (j >= -10) && (j <= 10);
     }
 
@@ -109,40 +103,35 @@ public class OPlayerManager {
         double d1 = paramOEntityPlayerMP.d - paramOEntityPlayerMP.aJ;
         double d2 = paramOEntityPlayerMP.e - paramOEntityPlayerMP.aL;
         double d3 = d1 * d1 + d2 * d2;
-        if (d3 < 64.0D) {
+        if (d3 < 64.0D)
             return;
-        }
 
         int k = (int) paramOEntityPlayerMP.d >> 4;
         int m = (int) paramOEntityPlayerMP.e >> 4;
 
         int n = i - k;
         int i1 = j - m;
-        if ((n == 0) && (i1 == 0)) {
+        if ((n == 0) && (i1 == 0))
             return;
-        }
-        
-        //hMod speed up teleporting.
+
+        // hMod speed up teleporting.
         if (n > 10 || n < -10 || i1 > 10 || i1 < -10) {
             b(paramOEntityPlayerMP);
             a(paramOEntityPlayerMP);
             return;
         }
 
-        for (int i2 = i - 10; i2 <= i + 10; i2++) {
+        for (int i2 = i - 10; i2 <= i + 10; i2++)
             for (int i3 = j - 10; i3 <= j + 10; i3++) {
-                if (!a(i2, i3, k, m)) {
+                if (!a(i2, i3, k, m))
                     a(i2, i3, true).a(paramOEntityPlayerMP);
-                }
                 if (!a(i2 - n, i3 - i1, i, j)) {
                     OPlayerInstance localOPlayerInstance = a(i2 - n, i3 - i1, false);
-                    if (localOPlayerInstance == null) {
+                    if (localOPlayerInstance == null)
                         continue;
-                    }
                     localOPlayerInstance.b(paramOEntityPlayerMP);
                 }
             }
-        }
         paramOEntityPlayerMP.d = paramOEntityPlayerMP.aJ;
         paramOEntityPlayerMP.e = paramOEntityPlayerMP.aL;
     }

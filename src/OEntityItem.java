@@ -1,5 +1,3 @@
-import java.util.Random;
-
 public class OEntityItem extends OEntity {
 
     public OItemStack a;
@@ -30,15 +28,15 @@ public class OEntityItem extends OEntity {
         bb = (bd / 2.0F);
     }
 
+    @Override
     protected void a() {
     }
 
     @Override
     public void f_() {
         super.f_();
-        if (c > 0) {
+        if (c > 0)
             c -= 1;
-        }
         aG = aJ;
         aH = aK;
         aI = aL;
@@ -57,24 +55,21 @@ public class OEntityItem extends OEntity {
         if (aU) {
             f1 = 0.5880001F;
             int i = aF.a(OMathHelper.b(aJ), OMathHelper.b(aT.b) - 1, OMathHelper.b(aL));
-            if (i > 0) {
+            if (i > 0)
                 f1 = OBlock.m[i].bw * 0.98F;
-            }
         }
 
         aM *= f1;
         aN *= 0.9800000190734863D;
         aO *= f1;
 
-        if (aU) {
+        if (aU)
             aN *= -0.5D;
-        }
 
         e += 1;
         b += 1;
-        if (b >= 6000) {
+        if (b >= 6000)
             C();
-        }
     }
 
     @Override
@@ -127,24 +122,18 @@ public class OEntityItem extends OEntity {
             }
 
             float f1 = bq.nextFloat() * 0.2F + 0.1F;
-            if (i5 == 0) {
+            if (i5 == 0)
                 aM = (-f1);
-            }
-            if (i5 == 1) {
+            if (i5 == 1)
                 aM = f1;
-            }
-            if (i5 == 2) {
+            if (i5 == 2)
                 aN = (-f1);
-            }
-            if (i5 == 3) {
+            if (i5 == 3)
                 aN = f1;
-            }
-            if (i5 == 4) {
+            if (i5 == 4)
                 aO = (-f1);
-            }
-            if (i5 == 5) {
+            if (i5 == 5)
                 aO = f1;
-            }
         }
 
         return false;
@@ -159,18 +148,19 @@ public class OEntityItem extends OEntity {
     public boolean a(OEntity paramOEntity, int paramInt) {
         R();
         f -= paramInt;
-        if (f <= 0) {
+        if (f <= 0)
             C();
-        }
         return false;
     }
 
+    @Override
     public void a(ONBTTagCompound paramONBTTagCompound) {
         paramONBTTagCompound.a("Health", (short) (byte) f);
         paramONBTTagCompound.a("Age", (short) b);
         paramONBTTagCompound.a("Item", a.a(new ONBTTagCompound()));
     }
 
+    @Override
     public void b(ONBTTagCompound paramONBTTagCompound) {
         f = (paramONBTTagCompound.d("Health") & 0xFF);
         b = paramONBTTagCompound.d("Age");
@@ -180,9 +170,8 @@ public class OEntityItem extends OEntity {
 
     @Override
     public void b(OEntityPlayer paramOEntityPlayer) {
-        if (aF.t) {
+        if (aF.t)
             return;
-        }
 
         int i = a.a;
         if ((c == 0) && (paramOEntityPlayer.i.a(a))) {

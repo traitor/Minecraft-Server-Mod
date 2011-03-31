@@ -1,4 +1,5 @@
 import java.util.List;
+
 import net.minecraft.server.MinecraftServer;
 
 public class OEntityMinecart extends OEntity implements OIInventory, Container<OItemStack> {
@@ -64,6 +65,7 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
         bg = false;
     }
 
+    @Override
     protected void a() {
     }
 
@@ -72,10 +74,12 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
         return paramOEntity.aT;
     }
 
+    @Override
     public OAxisAlignedBB d() {
         return null;
     }
 
+    @Override
     public boolean e_() {
         return true;
     }
@@ -97,38 +101,40 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
         manager.callHook(PluginLoader.Hook.VEHICLE_CREATE, cart);
     }
 
+    @Override
     public double k() {
         return bd * 0.0D - 0.300000011920929D;
     }
 
+    @Override
     public boolean a(OEntity paramOEntity, int paramInt) {
         // hMod: Attack of the cart
         if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_DAMAGE, cart, paramOEntity == null ? null : paramOEntity.entity, paramInt))
             return true;
 
-        if ((aF.t) || (ba)) {
+        if ((aF.t) || (ba))
             return true;
-        }
         c = (-c);
         b = 10;
         R();
         a += paramInt * 10;
         if (a > 40) {
-            a(OItem.ax.bc, 1, 0.0F);
-            if (d == 1) {
+            a(OItem.bc, 1, 0.0F);
+            if (d == 1)
                 a(OBlock.au.bk, 1, 0.0F);
-            } else if (d == 2) {
+            else if (d == 2)
                 a(OBlock.aB.bk, 1, 0.0F);
-            }
             C();
         }
         return true;
     }
 
+    @Override
     public boolean d_() {
         return !ba;
     }
 
+    @Override
     public void C() {
         // hMod: Destruction of the cart
         manager.callHook(PluginLoader.Hook.VEHICLE_DESTROYED, cart);
@@ -142,9 +148,8 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
 
                 while (localOItemStack.a > 0) {
                     int i2 = bq.nextInt(21) + 10;
-                    if (i2 > localOItemStack.a) {
+                    if (i2 > localOItemStack.a)
                         i2 = localOItemStack.a;
-                    }
                     localOItemStack.a -= i2;
 
                     OEntityItem localOEntityItem = new OEntityItem(aF, aJ + f1, aK + f2, aL + f3, new OItemStack(localOItemStack.c, i2, localOItemStack.h()));
@@ -159,16 +164,15 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
         super.C();
     }
 
+    @Override
     public void f_() {
         // hMod: Update of the cart
         manager.callHook(PluginLoader.Hook.VEHICLE_UPDATE, cart);
 
-        if (b > 0) {
+        if (b > 0)
             b -= 1;
-        }
-        if (a > 0) {
+        if (a > 0)
             a -= 1;
-        }
 
         if ((aF.t) && (k > 0)) {
             if (k > 0) {
@@ -177,12 +181,10 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
                 double d3 = aL + (n - aL) / k;
 
                 double d4 = o - aP;
-                while (d4 < -180.0D) {
+                while (d4 < -180.0D)
                     d4 += 360.0D;
-                }
-                while (d4 >= 180.0D) {
+                while (d4 >= 180.0D)
                     d4 -= 360.0D;
-                }
                 aP = (float) (aP + d4 / k);
                 aQ = (float) (aQ + (p - aQ) / k);
 
@@ -205,9 +207,8 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
         int i1 = OMathHelper.b(aJ);
         int i2 = OMathHelper.b(aK);
         int i3 = OMathHelper.b(aL);
-        if (aF.a(i1, i2 - 1, i3) == OBlock.aG.bk) {
+        if (aF.a(i1, i2 - 1, i3) == OBlock.aG.bk)
             i2--;
-        }
 
         double d5 = 0.4D;
         int i4 = 0;
@@ -217,22 +218,17 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
             OVec3D localOVec3D1 = g(aJ, aK, aL);
             int i5 = aF.b(i1, i2, i3);
             aK = i2;
-            if ((i5 >= 2) && (i5 <= 5)) {
+            if ((i5 >= 2) && (i5 <= 5))
                 aK = (i2 + 1);
-            }
 
-            if (i5 == 2) {
+            if (i5 == 2)
                 aM -= d4;
-            }
-            if (i5 == 3) {
+            if (i5 == 3)
                 aM += d4;
-            }
-            if (i5 == 4) {
+            if (i5 == 4)
                 aO += d4;
-            }
-            if (i5 == 5) {
+            if (i5 == 5)
                 aO -= d4;
-            }
 
             int[][] arrayOfInt = j[i5];
 
@@ -285,25 +281,20 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
                 d16 *= 0.75D;
                 d17 *= 0.75D;
             }
-            if (d16 < -d5) {
+            if (d16 < -d5)
                 d16 = -d5;
-            }
-            if (d16 > d5) {
+            if (d16 > d5)
                 d16 = d5;
-            }
-            if (d17 < -d5) {
+            if (d17 < -d5)
                 d17 = -d5;
-            }
-            if (d17 > d5) {
+            if (d17 > d5)
                 d17 = d5;
-            }
             c(d16, 0.0D, d17);
 
-            if ((arrayOfInt[0][1] != 0) && (OMathHelper.b(aJ) - i1 == arrayOfInt[0][0]) && (OMathHelper.b(aL) - i3 == arrayOfInt[0][2])) {
+            if ((arrayOfInt[0][1] != 0) && (OMathHelper.b(aJ) - i1 == arrayOfInt[0][0]) && (OMathHelper.b(aL) - i3 == arrayOfInt[0][2]))
                 a(aJ, aK + arrayOfInt[0][1], aL);
-            } else if ((arrayOfInt[1][1] != 0) && (OMathHelper.b(aJ) - i1 == arrayOfInt[1][0]) && (OMathHelper.b(aL) - i3 == arrayOfInt[1][2])) {
+            else if ((arrayOfInt[1][1] != 0) && (OMathHelper.b(aJ) - i1 == arrayOfInt[1][0]) && (OMathHelper.b(aL) - i3 == arrayOfInt[1][2]))
                 a(aJ, aK + arrayOfInt[1][1], aL);
-            }
 
             if (aD != null) {
                 aM *= 0.996999979019165D;
@@ -370,18 +361,14 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
                 }
             }
         } else {
-            if (aM < -d5) {
+            if (aM < -d5)
                 aM = (-d5);
-            }
-            if (aM > d5) {
+            if (aM > d5)
                 aM = d5;
-            }
-            if (aO < -d5) {
+            if (aO < -d5)
                 aO = (-d5);
-            }
-            if (aO > d5) {
+            if (aO > d5)
                 aO = d5;
-            }
             if (aU) {
                 aM *= 0.5D;
                 aN *= 0.5D;
@@ -401,18 +388,15 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
         double d23 = aI - aL;
         if (d22 * d22 + d23 * d23 > 0.001D) {
             aP = (float) (Math.atan2(d23, d22) * 180.0D / 3.141592653589793D);
-            if (i) {
+            if (i)
                 aP += 180.0F;
-            }
         }
 
         double d24 = aP - aR;
-        while (d24 >= 180.0D) {
+        while (d24 >= 180.0D)
             d24 -= 360.0D;
-        }
-        while (d24 < -180.0D) {
+        while (d24 < -180.0D)
             d24 += 360.0D;
-        }
         if ((d24 < -170.0D) || (d24 >= 170.0D)) {
             aP += 180.0F;
             i = (!i);
@@ -420,25 +404,20 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
         c(aP, aQ);
 
         List localList = aF.b(this, aT.b(0.2000000029802322D, 0.0D, 0.2000000029802322D));
-        if ((localList != null) && (localList.size() > 0)) {
+        if ((localList != null) && (localList.size() > 0))
             for (int i8 = 0; i8 < localList.size(); i8++) {
                 OEntity localOEntity = (OEntity) localList.get(i8);
-                if ((localOEntity != aD) && (localOEntity.e_()) && ((localOEntity instanceof OEntityMinecart))) {
+                if ((localOEntity != aD) && (localOEntity.e_()) && ((localOEntity instanceof OEntityMinecart)))
                     localOEntity.h(this);
-                }
             }
 
-        }
-
-        if ((aD != null) && (aD.ba)) {
+        if ((aD != null) && (aD.ba))
             aD = null;
-        }
 
         if ((i4 != 0) && (bq.nextInt(4) == 0)) {
             e -= 1;
-            if (e < 0) {
-                f = (this.g = 0.0D);
-            }
+            if (e < 0)
+                f = (g = 0.0D);
             aF.a("largesmoke", aJ, aK + 0.8D, aL, 0.0D, 0.0D, 0.0D);
         }
     }
@@ -450,9 +429,8 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
         // hMod: Change of the cart
         manager.callHook(PluginLoader.Hook.VEHICLE_POSITIONCHANGE, cart, i1, i2, i3);
 
-        if (aF.a(i1, i2 - 1, i3) == OBlock.aG.bk) {
+        if (aF.a(i1, i2 - 1, i3) == OBlock.aG.bk)
             i2--;
-        }
 
         if (aF.a(i1, i2, i3) == OBlock.aG.bk) {
             int i4 = aF.b(i1, i2, i3);
@@ -495,17 +473,16 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
             paramDouble1 = d2 + d8 * d1;
             paramDouble2 = d3 + d9 * d1;
             paramDouble3 = d4 + d10 * d1;
-            if (d9 < 0.0D) {
+            if (d9 < 0.0D)
                 paramDouble2 += 1.0D;
-            }
-            if (d9 > 0.0D) {
+            if (d9 > 0.0D)
                 paramDouble2 += 0.5D;
-            }
             return OVec3D.b(paramDouble1, paramDouble2, paramDouble3);
         }
         return null;
     }
 
+    @Override
     protected void a(ONBTTagCompound paramONBTTagCompound) {
         paramONBTTagCompound.a("Type", d);
 
@@ -516,18 +493,18 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
         } else if (d == 1) {
             ONBTTagList localONBTTagList = new ONBTTagList();
 
-            for (int i1 = 0; i1 < h.length; i1++) {
+            for (int i1 = 0; i1 < h.length; i1++)
                 if (h[i1] != null) {
                     ONBTTagCompound localONBTTagCompound = new ONBTTagCompound();
                     localONBTTagCompound.a("Slot", (byte) i1);
                     h[i1].a(localONBTTagCompound);
                     localONBTTagList.a(localONBTTagCompound);
                 }
-            }
             paramONBTTagCompound.a("Items", localONBTTagList);
         }
     }
 
+    @Override
     protected void b(ONBTTagCompound paramONBTTagCompound) {
         d = paramONBTTagCompound.e("Type");
         if (d == 2) {
@@ -540,29 +517,26 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
             for (int i1 = 0; i1 < localONBTTagList.c(); i1++) {
                 ONBTTagCompound localONBTTagCompound = (ONBTTagCompound) localONBTTagList.a(i1);
                 int i2 = localONBTTagCompound.c("Slot") & 0xFF;
-                if ((i2 < 0) || (i2 >= h.length)) {
+                if ((i2 < 0) || (i2 >= h.length))
                     continue;
-                }
                 h[i2] = new OItemStack(localONBTTagCompound);
             }
         }
     }
 
+    @Override
     public void h(OEntity paramOEntity) {
-        if (aF.t) {
+        if (aF.t)
             return;
-        }
 
-        if (paramOEntity == aD) {
+        if (paramOEntity == aD)
             return;
-        }
         // hMod: Collision of a cart
         if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_COLLISION, cart, paramOEntity.entity))
             return;
 
-        if (((paramOEntity instanceof OEntityLiving)) && (!(paramOEntity instanceof OEntityPlayer)) && (d == 0) && (aM * aM + aO * aO > 0.01D) && (aD == null) && (paramOEntity.aE == null)) {
+        if (((paramOEntity instanceof OEntityLiving)) && (!(paramOEntity instanceof OEntityPlayer)) && (d == 0) && (aM * aM + aO * aO > 0.01D) && (aD == null) && (paramOEntity.aE == null))
             paramOEntity.b(this);
-        }
 
         double d1 = paramOEntity.aJ - aJ;
         double d2 = paramOEntity.aL - aL;
@@ -573,9 +547,8 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
             d1 /= d3;
             d2 /= d3;
             double d4 = 1.0D / d3;
-            if (d4 > 1.0D) {
+            if (d4 > 1.0D)
                 d4 = 1.0D;
-            }
             d1 *= d4;
             d2 *= d4;
             d1 *= 0.1000000014901161D;
@@ -635,9 +608,8 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
                 return localOItemStack;
             }
             OItemStack localOItemStack = h[paramInt1].a(paramInt2);
-            if (h[paramInt1].a == 0) {
+            if (h[paramInt1].a == 0)
                 h[paramInt1] = null;
-            }
             return localOItemStack;
         }
 
@@ -646,9 +618,8 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
 
     public void a(int paramInt, OItemStack paramOItemStack) {
         h[paramInt] = paramOItemStack;
-        if ((paramOItemStack != null) && (paramOItemStack.a > n_())) {
+        if ((paramOItemStack != null) && (paramOItemStack.a > n_()))
             paramOItemStack.a = n_();
-        }
     }
 
     public String c() {
@@ -662,28 +633,25 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
     public void h() {
     }
 
+    @Override
     public boolean a(OEntityPlayer paramOEntityPlayer) {
         // hMod: Entering the cart
         manager.callHook(PluginLoader.Hook.VEHICLE_ENTERED, cart, paramOEntityPlayer.entity);
 
         if (d == 0) {
-            if ((aD != null) && ((aD instanceof OEntityPlayer)) && (aD != paramOEntityPlayer)) {
+            if ((aD != null) && ((aD instanceof OEntityPlayer)) && (aD != paramOEntityPlayer))
                 return true;
-            }
-            if (!aF.t) {
+            if (!aF.t)
                 paramOEntityPlayer.b(this);
-            }
         } else if (d == 1) {
-            if (!aF.t) {
+            if (!aF.t)
                 // hMod cast this down to fix decompiler error.
                 paramOEntityPlayer.a((OIInventory) this);
-            }
         } else if (d == 2) {
             OItemStack localOItemStack = paramOEntityPlayer.i.b();
-            if ((localOItemStack != null) && (localOItemStack.c == OItem.k.bc)) {
-                if (--localOItemStack.a == 0) {
+            if ((localOItemStack != null) && (localOItemStack.c == OItem.bc)) {
+                if (--localOItemStack.a == 0)
                     paramOEntityPlayer.i.a(paramOEntityPlayer.i.c, null);
-                }
                 e += 1200;
             }
 
@@ -694,9 +662,8 @@ public class OEntityMinecart extends OEntity implements OIInventory, Container<O
     }
 
     public boolean a_(OEntityPlayer paramOEntityPlayer) {
-        if (ba) {
+        if (ba)
             return false;
-        }
         return paramOEntityPlayer.g(this) <= 64.0D;
     }
 }

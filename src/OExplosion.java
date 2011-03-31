@@ -45,12 +45,11 @@ public class OExplosion {
         double d5;
         double d6;
         double d7;
-        for (int k = 0; k < j; k++) {
-            for (int m = 0; m < j; m++) {
+        for (int k = 0; k < j; k++)
+            for (int m = 0; m < j; m++)
                 for (int n = 0; n < j; n++) {
-                    if ((k != 0) && (k != j - 1) && (m != 0) && (m != j - 1) && (n != 0) && (n != j - 1)) {
+                    if ((k != 0) && (k != j - 1) && (m != 0) && (m != j - 1) && (n != 0) && (n != j - 1))
                         continue;
-                    }
                     double d1 = k / (j - 1.0F) * 2.0F - 1.0F;
                     double d2 = m / (j - 1.0F) * 2.0F - 1.0F;
                     double d3 = n / (j - 1.0F) * 2.0F - 1.0F;
@@ -71,12 +70,10 @@ public class OExplosion {
                         int i3 = OMathHelper.b(d6);
                         int i4 = OMathHelper.b(d7);
                         int i5 = i.a(i2, i3, i4);
-                        if (i5 > 0) {
+                        if (i5 > 0)
                             f2 -= (OBlock.m[i5].a(e) + 0.3F) * f3;
-                        }
-                        if (f2 > 0.0F) {
+                        if (f2 > 0.0F)
                             g.add(new OChunkPosition(i2, i3, i4));
-                        }
 
                         d5 += d1 * f3;
                         d6 += d2 * f3;
@@ -84,9 +81,6 @@ public class OExplosion {
                         f2 -= f3 * 0.75F;
                     }
                 }
-            }
-
-        }
 
         f *= 2.0F;
         int k = OMathHelper.b(b - f - 1.0D);
@@ -130,7 +124,7 @@ public class OExplosion {
         ArrayList localArrayList = new ArrayList();
         localArrayList.addAll(g);
 
-        if (a) {
+        if (a)
             for (int i10 = localArrayList.size() - 1; i10 >= 0; i10--) {
                 OChunkPosition localOChunkPosition = (OChunkPosition) localArrayList.get(i10);
                 int i1 = localOChunkPosition.a;
@@ -138,11 +132,9 @@ public class OExplosion {
                 int i12 = localOChunkPosition.c;
                 int i13 = i.a(i1, i11, i12);
                 int i14 = i.a(i1, i11 - 1, i12);
-                if ((i13 == 0) && OBlock.o[i14] && (h.nextInt(3) == 0)) {
+                if ((i13 == 0) && OBlock.o[i14] && (h.nextInt(3) == 0))
                     i.e(i1, i11, i12, OBlock.ar.bk);
-                }
             }
-        }
     }
 
     public void b() {

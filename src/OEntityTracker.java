@@ -1,10 +1,9 @@
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.DelayQueue;
+
 import net.minecraft.server.MinecraftServer;
 
 public class OEntityTracker {
@@ -27,36 +26,33 @@ public class OEntityTracker {
         if ((paramOEntity instanceof OEntityPlayerMP)) {
             a(paramOEntity, 512, 2);
             localOEntityPlayerMP = (OEntityPlayerMP) paramOEntity;
-            for (OEntityTrackerEntry localOEntityTrackerEntry : a) {
-                if (localOEntityTrackerEntry.a != localOEntityPlayerMP) {
+            for (OEntityTrackerEntry localOEntityTrackerEntry : a)
+                if (localOEntityTrackerEntry.a != localOEntityPlayerMP)
                     localOEntityTrackerEntry.b(localOEntityPlayerMP);
-                }
-            }
-        } else if ((paramOEntity instanceof OEntityFish)) {
+        } else if ((paramOEntity instanceof OEntityFish))
             a(paramOEntity, 64, 5, true);
-        } else if ((paramOEntity instanceof OEntityArrow)) {
+        else if ((paramOEntity instanceof OEntityArrow))
             a(paramOEntity, 64, 5, true);
-        } else if ((paramOEntity instanceof OEntitySnowball)) {
+        else if ((paramOEntity instanceof OEntitySnowball))
             a(paramOEntity, 64, 5, true);
-        } else if ((paramOEntity instanceof OEntityEgg)) {
+        else if ((paramOEntity instanceof OEntityEgg))
             a(paramOEntity, 64, 5, true);
-        } else if ((paramOEntity instanceof OEntityItem)) {
+        else if ((paramOEntity instanceof OEntityItem))
             a(paramOEntity, 64, 20, true);
-        } else if ((paramOEntity instanceof OEntityMinecart)) {
+        else if ((paramOEntity instanceof OEntityMinecart))
             a(paramOEntity, 160, 5, true);
-        } else if ((paramOEntity instanceof OEntityBoat)) {
+        else if ((paramOEntity instanceof OEntityBoat))
             a(paramOEntity, 160, 5, true);
-        } else if ((paramOEntity instanceof OEntitySquid)) {
+        else if ((paramOEntity instanceof OEntitySquid))
             a(paramOEntity, 160, 3, true);
-        } else if ((paramOEntity instanceof OIAnimals)) {
+        else if ((paramOEntity instanceof OIAnimals))
             a(paramOEntity, 160, 3);
-        } else if ((paramOEntity instanceof OEntityTNTPrimed)) {
+        else if ((paramOEntity instanceof OEntityTNTPrimed))
             a(paramOEntity, 160, 10, true);
-        } else if ((paramOEntity instanceof OEntityFallingSand)) {
+        else if ((paramOEntity instanceof OEntityFallingSand))
             a(paramOEntity, 160, 20, true);
-        } else if ((paramOEntity instanceof OEntityPainting)) {
+        else if ((paramOEntity instanceof OEntityPainting))
             a(paramOEntity, 160, 2147483647, false);
-        }
     }
 
     public void a(OEntity paramOEntity, int paramInt1, int paramInt2) {
@@ -64,12 +60,10 @@ public class OEntityTracker {
     }
 
     public void a(OEntity paramOEntity, int paramInt1, int paramInt2, boolean paramBoolean) {
-        if (paramInt1 > d) {
+        if (paramInt1 > d)
             paramInt1 = d;
-        }
-        if (b.b(paramOEntity.aA)) {
+        if (b.b(paramOEntity.aA))
             throw new IllegalStateException("Entity is already tracked!");
-        }
         OEntityTrackerEntry localOEntityTrackerEntry = new OEntityTrackerEntry(paramOEntity, paramInt1, paramInt2, paramBoolean);
         a.add(localOEntityTrackerEntry);
         b.a(paramOEntity.aA, localOEntityTrackerEntry);
@@ -78,12 +72,11 @@ public class OEntityTracker {
 
     public void b(OEntity paramOEntity) {
         if ((paramOEntity instanceof OEntityPlayerMP)) {
-            Object localObject = (OEntityPlayerMP) paramOEntity;
-            for (OEntityTrackerEntry localOEntityTrackerEntry : a) {
+            Object localObject = paramOEntity;
+            for (OEntityTrackerEntry localOEntityTrackerEntry : a)
                 localOEntityTrackerEntry.a((OEntityPlayerMP) localObject);
-            }
         }
-        Object localObject = (OEntityTrackerEntry) b.d(paramOEntity.aA);
+        Object localObject = b.d(paramOEntity.aA);
         if (localObject != null) {
             a.remove(localObject);
             ((OEntityTrackerEntry) localObject).a();
@@ -94,21 +87,18 @@ public class OEntityTracker {
         try {
             synchronized (a) {
                 ArrayList localArrayList = new ArrayList();
-                for (Iterator localIterator1 = a.iterator(); localIterator1.hasNext();) {
-                    Object localObject = (OEntityTrackerEntry) localIterator1.next();
+                for (Object element : a) {
+                    Object localObject = element;
                     ((OEntityTrackerEntry) localObject).a(c.e.d);
-                    if ((((OEntityTrackerEntry) localObject).m) && ((((OEntityTrackerEntry) localObject).a instanceof OEntityPlayerMP))) {
-                        localArrayList.add((OEntityPlayerMP) ((OEntityTrackerEntry) localObject).a);
-                    }
+                    if ((((OEntityTrackerEntry) localObject).m) && ((((OEntityTrackerEntry) localObject).a instanceof OEntityPlayerMP)))
+                        localArrayList.add(((OEntityTrackerEntry) localObject).a);
                 }
                 Object localObject;
                 for (int i = 0; i < localArrayList.size(); i++) {
-                    localObject = (OEntityPlayerMP) localArrayList.get(i);
-                    for (OEntityTrackerEntry localOEntityTrackerEntry : a) {
-                        if (localOEntityTrackerEntry.a != localObject) {
+                    localObject = localArrayList.get(i);
+                    for (OEntityTrackerEntry localOEntityTrackerEntry : a)
+                        if (localOEntityTrackerEntry.a != localObject)
                             localOEntityTrackerEntry.b((OEntityPlayerMP) localObject);
-                        }
-                    }
                 }
             }
         } catch (ConcurrentModificationException e) {
@@ -138,21 +128,18 @@ public class OEntityTracker {
 
     public void a(OEntity paramOEntity, OPacket paramOPacket) {
         OEntityTrackerEntry localOEntityTrackerEntry = (OEntityTrackerEntry) b.a(paramOEntity.aA);
-        if (localOEntityTrackerEntry != null) {
+        if (localOEntityTrackerEntry != null)
             localOEntityTrackerEntry.a(paramOPacket);
-        }
     }
 
     public void b(OEntity paramOEntity, OPacket paramOPacket) {
         OEntityTrackerEntry localOEntityTrackerEntry = (OEntityTrackerEntry) b.a(paramOEntity.aA);
-        if (localOEntityTrackerEntry != null) {
+        if (localOEntityTrackerEntry != null)
             localOEntityTrackerEntry.b(paramOPacket);
-        }
     }
 
     public void a(OEntityPlayerMP paramOEntityPlayerMP) {
-        for (OEntityTrackerEntry localOEntityTrackerEntry : a) {
+        for (OEntityTrackerEntry localOEntityTrackerEntry : a)
             localOEntityTrackerEntry.c(paramOEntityPlayerMP);
-        }
     }
 }
