@@ -1,7 +1,9 @@
-public class OInventoryCraftResult implements OIInventory {
-    private OItemStack[] a = new OItemStack[1];
+public class OInventoryCraftResult implements OIInventory, Container<OItemStack> {
 
-    public int q_() {
+    private OItemStack[] a    = new OItemStack[1];
+    private String       name = "Result";
+
+    public int m_() {
         return 1;
     }
 
@@ -9,8 +11,36 @@ public class OInventoryCraftResult implements OIInventory {
         return a[paramInt];
     }
 
+    public OItemStack[] getContents() {
+        return a;
+    }
+
+    public void setContents(OItemStack[] e) {
+        a = e;
+    }
+
+    public OItemStack getContentsAt(int index) {
+        return c_(index);
+    }
+
+    public void setContentsAt(int index, OItemStack value) {
+        a(index, value);
+    }
+
+    public int getContentsSize() {
+        return m_();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String value) {
+        name = value;
+    }
+
     public String c() {
-        return "Result";
+        return name;
     }
 
     public OItemStack a(int paramInt1, int paramInt2) {
@@ -26,11 +56,11 @@ public class OInventoryCraftResult implements OIInventory {
         a[paramInt] = paramOItemStack;
     }
 
-    public int r_() {
+    public int n_() {
         return 64;
     }
 
-    public void i() {
+    public void h() {
     }
 
     public boolean a_(OEntityPlayer paramOEntityPlayer) {

@@ -4,11 +4,12 @@ import java.util.List;
 import net.minecraft.server.MinecraftServer;
 
 public class OPlayerManager {
-    private List            a = new ArrayList();
-    private OMCHashTable2   b = new OMCHashTable2();
-    private List            c = new ArrayList();
-    private MinecraftServer d;
-    private final int[][]   e = { { 1, 0 }, { 0, 1 }, { -1, 0 }, { 0, -1 } };
+
+    private List<OEntityPlayerMP> a = new ArrayList();
+    private OMCHashTable2         b = new OMCHashTable2();
+    private List<OPlayerInstance> c = new ArrayList();
+    private MinecraftServer       d;
+    private final int[][]         e = { { 1, 0 }, { 0, 1 }, { -1, 0 }, { 0, -1 } };
 
     public OPlayerManager(MinecraftServer paramMinecraftServer) {
         d = paramMinecraftServer;
@@ -16,7 +17,7 @@ public class OPlayerManager {
 
     public void a() {
         for (int i = 0; i < c.size(); i++)
-            ((OPlayerInstance) c.get(i)).a();
+            c.get(i).a();
         c.clear();
     }
 
@@ -39,11 +40,11 @@ public class OPlayerManager {
     }
 
     public void a(OEntityPlayerMP paramOEntityPlayerMP) {
-        int i = (int) paramOEntityPlayerMP.aK >> 4;
-        int j = (int) paramOEntityPlayerMP.aM >> 4;
+        int i = (int) paramOEntityPlayerMP.aJ >> 4;
+        int j = (int) paramOEntityPlayerMP.aL >> 4;
 
-        paramOEntityPlayerMP.d = paramOEntityPlayerMP.aK;
-        paramOEntityPlayerMP.e = paramOEntityPlayerMP.aM;
+        paramOEntityPlayerMP.d = paramOEntityPlayerMP.aJ;
+        paramOEntityPlayerMP.e = paramOEntityPlayerMP.aL;
 
         int k = 0;
         int m = 10;
@@ -64,7 +65,7 @@ public class OPlayerManager {
             }
 
         k %= 4;
-        for (i2 = 0; i2 < m * 2; i2++) {
+        for (int i2 = 0; i2 < m * 2; i2++) {
             n += e[k][0];
             i1 += e[k][1];
             a(i + n, j + i1, true).a(paramOEntityPlayerMP);
@@ -96,11 +97,11 @@ public class OPlayerManager {
     }
 
     public void c(OEntityPlayerMP paramOEntityPlayerMP) {
-        int i = (int) paramOEntityPlayerMP.aK >> 4;
-        int j = (int) paramOEntityPlayerMP.aM >> 4;
+        int i = (int) paramOEntityPlayerMP.aJ >> 4;
+        int j = (int) paramOEntityPlayerMP.aL >> 4;
 
-        double d1 = paramOEntityPlayerMP.d - paramOEntityPlayerMP.aK;
-        double d2 = paramOEntityPlayerMP.e - paramOEntityPlayerMP.aM;
+        double d1 = paramOEntityPlayerMP.d - paramOEntityPlayerMP.aJ;
+        double d2 = paramOEntityPlayerMP.e - paramOEntityPlayerMP.aL;
         double d3 = d1 * d1 + d2 * d2;
         if (d3 < 64.0D)
             return;
@@ -113,6 +114,13 @@ public class OPlayerManager {
         if ((n == 0) && (i1 == 0))
             return;
 
+        // hMod speed up teleporting.
+        if (n > 10 || n < -10 || i1 > 10 || i1 < -10) {
+            b(paramOEntityPlayerMP);
+            a(paramOEntityPlayerMP);
+            return;
+        }
+
         for (int i2 = i - 10; i2 <= i + 10; i2++)
             for (int i3 = j - 10; i3 <= j + 10; i3++) {
                 if (!a(i2, i3, k, m))
@@ -124,11 +132,37 @@ public class OPlayerManager {
                     localOPlayerInstance.b(paramOEntityPlayerMP);
                 }
             }
-        paramOEntityPlayerMP.d = paramOEntityPlayerMP.aK;
-        paramOEntityPlayerMP.e = paramOEntityPlayerMP.aM;
+        paramOEntityPlayerMP.d = paramOEntityPlayerMP.aJ;
+        paramOEntityPlayerMP.e = paramOEntityPlayerMP.aL;
     }
 
     public int b() {
         return 144;
     }
+
+    // hMod: OPlayerInstance calls these statically
+    static MinecraftServer a(OPlayerManager jh1) {
+        return jh1.d;
+    }
+
+    static OMCHashTable2 b(OPlayerManager jh1) {
+        return jh1.b;
+    }
+
+    static List c(OPlayerManager jh1) {
+        return jh1.c;
+    }
+
+    // hMod: bring back old "send packet to chunk" method from alpha
+    public void sendPacketToChunk(OPacket packetToSend, int globalx, int globaly, int globalz) {
+        // Get chunk coordinates
+        int chunkx = globalx >> 4;
+        int chunkz = globalz >> 4;
+        // Get the chunk
+        OPlayerInstance localat = a(chunkx, chunkz, false);
+        // if chunk != null, send packet
+        if (localat != null)
+            localat.a(packetToSend);
+    }
+    // end hMod
 }

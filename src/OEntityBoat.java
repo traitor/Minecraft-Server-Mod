@@ -1,9 +1,10 @@
 import java.util.List;
 
 public class OEntityBoat extends OEntity {
-    public int     a = 0;
-    public int     b = 0;
-    public int     c = 1;
+
+    public int     a    = 0;
+    public int     b    = 0;
+    public int     c    = 1;
     private int    d;
     private double e;
     private double f;
@@ -11,16 +12,17 @@ public class OEntityBoat extends OEntity {
     private double h;
     private double i;
 
+    // hMod Start
+    Boat           boat = new Boat(this);
+
+    // hMod end
+
     public OEntityBoat(OWorld paramOWorld) {
         super(paramOWorld);
-        aD = true;
-        b(1.5F, 0.6F);
-        bc = (be / 2.0F);
-    }
-
-    @Override
-    protected boolean l() {
-        return false;
+        aC = true;
+        a(1.5F, 0.6F);
+        bb = (bd / 2.0F);
+        bg = false;
     }
 
     @Override
@@ -29,12 +31,12 @@ public class OEntityBoat extends OEntity {
 
     @Override
     public OAxisAlignedBB a_(OEntity paramOEntity) {
-        return paramOEntity.aU;
+        return paramOEntity.aT;
     }
 
     @Override
     public OAxisAlignedBB d() {
-        return aU;
+        return aT;
     }
 
     @Override
@@ -44,128 +46,142 @@ public class OEntityBoat extends OEntity {
 
     public OEntityBoat(OWorld paramOWorld, double paramDouble1, double paramDouble2, double paramDouble3) {
         this(paramOWorld);
-        a(paramDouble1, paramDouble2 + bc, paramDouble3);
+        a(paramDouble1, paramDouble2 + bb, paramDouble3);
 
+        aM = 0.0D;
         aN = 0.0D;
         aO = 0.0D;
-        aP = 0.0D;
 
-        aH = paramDouble1;
-        aI = paramDouble2;
-        aJ = paramDouble3;
+        aG = paramDouble1;
+        aH = paramDouble2;
+        aI = paramDouble3;
+
+        // hMod: Creation of the boat
+        manager.callHook(PluginLoader.Hook.VEHICLE_CREATE, boat);
     }
 
     @Override
     public double k() {
-        return be * 0.0D - 0.300000011920929D;
+        return bd * 0.0D - 0.300000011920929D;
     }
 
     @Override
     public boolean a(OEntity paramOEntity, int paramInt) {
-        if ((aG.t) || (bb))
+        // hMod: Attack of the boat
+        if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_DAMAGE, boat, paramOEntity == null ? null : paramOEntity.entity, paramInt))
+            return true;
+
+        if ((aF.t) || (ba))
             return true;
         c = (-c);
         b = 10;
         a += paramInt * 10;
-        W();
+        R();
         if (a > 40) {
             for (int j = 0; j < 3; j++)
-                a(OBlock.x.bl, 1, 0.0F);
-            for (j = 0; j < 2; j++)
-                a(OItem.B.bd, 1, 0.0F);
-            D();
+                a(OBlock.x.bk, 1, 0.0F);
+            for (int j = 0; j < 2; j++)
+                a(OItem.bc, 1, 0.0F);
+            C();
         }
         return true;
     }
 
     @Override
     public boolean d_() {
-        return !bb;
+        return !ba;
     }
 
     @Override
     public void f_() {
+        // hMod: Update of the boat
+        manager.callHook(PluginLoader.Hook.VEHICLE_UPDATE, boat);
+
+        double prevX = aJ;
+        double prevY = aK;
+        double prevZ = aL;
+
         super.f_();
         if (b > 0)
             b -= 1;
         if (a > 0)
             a -= 1;
+        aG = aJ;
         aH = aK;
         aI = aL;
-        aJ = aM;
 
         int j = 5;
         double d1 = 0.0D;
         for (int k = 0; k < j; k++) {
-            double d2 = aU.b + (aU.e - aU.b) * (k + 0) / j - 0.125D;
-            double d3 = aU.b + (aU.e - aU.b) * (k + 1) / j - 0.125D;
-            OAxisAlignedBB localOAxisAlignedBB = OAxisAlignedBB.b(aU.a, d2, aU.c, aU.d, d3, aU.f);
-            if (aG.b(localOAxisAlignedBB, OMaterial.f))
+            double d2 = aT.b + (aT.e - aT.b) * (k + 0) / j - 0.125D;
+            double d3 = aT.b + (aT.e - aT.b) * (k + 1) / j - 0.125D;
+            OAxisAlignedBB localOAxisAlignedBB = OAxisAlignedBB.b(aT.a, d2, aT.c, aT.d, d3, aT.f);
+            if (aF.b(localOAxisAlignedBB, OMaterial.f))
                 d1 += 1.0D / j;
         }
 
-        if (aG.t) {
+        if (aF.t) {
             if (d > 0) {
-                d4 = aK + (e - aK) / d;
-                d5 = aL + (f - aL) / d;
-                d6 = aM + (g - aM) / d;
+                double d4 = aJ + (e - aJ) / d;
+                double d5 = aK + (f - aK) / d;
+                double d6 = aL + (g - aL) / d;
 
-                d7 = h - aQ;
+                double d7 = h - aP;
                 while (d7 < -180.0D)
                     d7 += 360.0D;
                 while (d7 >= 180.0D)
                     d7 -= 360.0D;
-                aQ = (float) (aQ + d7 / d);
-                aR = (float) (aR + (i - aR) / d);
+                aP = (float) (aP + d7 / d);
+                aQ = (float) (aQ + (i - aQ) / d);
 
                 d -= 1;
                 a(d4, d5, d6);
-                c(aQ, aR);
+                c(aP, aQ);
             } else {
-                d4 = aK + aN;
-                d5 = aL + aO;
-                d6 = aM + aP;
+                double d4 = aJ + aM;
+                double d5 = aK + aN;
+                double d6 = aL + aO;
                 a(d4, d5, d6);
-                if (aV) {
+                if (aU) {
+                    aM *= 0.5D;
                     aN *= 0.5D;
                     aO *= 0.5D;
-                    aP *= 0.5D;
                 }
-                aN *= 0.9900000095367432D;
-                aO *= 0.949999988079071D;
-                aP *= 0.9900000095367432D;
+                aM *= 0.9900000095367432D;
+                aN *= 0.949999988079071D;
+                aO *= 0.9900000095367432D;
             }
             return;
         }
 
         double d4 = d1 * 2.0D - 1.0D;
-        aO += 0.03999999910593033D * d4;
+        aN += 0.03999999910593033D * d4;
 
-        if (aE != null) {
-            aN += aE.aN * 0.2D;
-            aP += aE.aP * 0.2D;
+        if (aD != null) {
+            aM += aD.aM * 0.2D;
+            aO += aD.aO * 0.2D;
         }
 
         double d5 = 0.4D;
 
-        if (aN < -d5)
-            aN = (-d5);
-        if (aN > d5)
-            aN = d5;
-        if (aP < -d5)
-            aP = (-d5);
-        if (aP > d5)
-            aP = d5;
-        if (aV) {
+        if (aM < -d5)
+            aM = (-d5);
+        if (aM > d5)
+            aM = d5;
+        if (aO < -d5)
+            aO = (-d5);
+        if (aO > d5)
+            aO = d5;
+        if (aU) {
+            aM *= 0.5D;
             aN *= 0.5D;
             aO *= 0.5D;
-            aP *= 0.5D;
         }
-        c(aN, aO, aP);
-        double d6 = Math.sqrt(aN * aN + aP * aP);
+        c(aM, aN, aO);
+        double d6 = Math.sqrt(aM * aM + aO * aO);
         if (d6 > 0.15D) {
-            d7 = Math.cos(aQ * 3.141592653589793D / 180.0D);
-            d8 = Math.sin(aQ * 3.141592653589793D / 180.0D);
+            double d7 = Math.cos(aP * 3.141592653589793D / 180.0D);
+            double d8 = Math.sin(aP * 3.141592653589793D / 180.0D);
 
             for (int m = 0; m < 1.0D + d6 * 60.0D; m++) {
                 double d9 = bq.nextFloat() * 2.0F - 1.0F;
@@ -174,39 +190,39 @@ public class OEntityBoat extends OEntity {
                 double d11;
                 double d12;
                 if (bq.nextBoolean()) {
-                    d11 = aK - d7 * d9 * 0.8D + d8 * d10;
-                    d12 = aM - d8 * d9 * 0.8D - d7 * d10;
-                    aG.a("splash", d11, aL - 0.125D, d12, aN, aO, aP);
+                    d11 = aJ - d7 * d9 * 0.8D + d8 * d10;
+                    d12 = aL - d8 * d9 * 0.8D - d7 * d10;
+                    aF.a("splash", d11, aK - 0.125D, d12, aM, aN, aO);
                 } else {
-                    d11 = aK + d7 + d8 * d9 * 0.7D;
-                    d12 = aM + d8 - d7 * d9 * 0.7D;
-                    aG.a("splash", d11, aL - 0.125D, d12, aN, aO, aP);
+                    d11 = aJ + d7 + d8 * d9 * 0.7D;
+                    d12 = aL + d8 - d7 * d9 * 0.7D;
+                    aF.a("splash", d11, aK - 0.125D, d12, aM, aN, aO);
                 }
             }
         }
 
-        if ((aW) && (d6 > 0.15D)) {
-            if (!aG.t) {
-                D();
+        if ((aV) && (d6 > 0.15D)) {
+            if (!aF.t) {
+                C();
                 for (int n = 0; n < 3; n++)
-                    a(OBlock.x.bl, 1, 0.0F);
-                for (n = 0; n < 2; n++)
-                    a(OItem.B.bd, 1, 0.0F);
+                    a(OBlock.x.bk, 1, 0.0F);
+                for (int n = 0; n < 2; n++)
+                    a(OItem.bc, 1, 0.0F);
             }
         } else {
-            aN *= 0.9900000095367432D;
-            aO *= 0.949999988079071D;
-            aP *= 0.9900000095367432D;
+            aM *= 0.9900000095367432D;
+            aN *= 0.949999988079071D;
+            aO *= 0.9900000095367432D;
         }
 
-        aR = 0.0F;
-        double d7 = aQ;
-        double d8 = aH - aK;
-        double d13 = aJ - aM;
+        aQ = 0.0F;
+        double d7 = aP;
+        double d8 = aG - aJ;
+        double d13 = aI - aL;
         if (d8 * d8 + d13 * d13 > 0.001D)
             d7 = (float) (Math.atan2(d13, d8) * 180.0D / 3.141592653589793D);
 
-        double d14 = d7 - aQ;
+        double d14 = d7 - aP;
         while (d14 >= 180.0D)
             d14 -= 360.0D;
         while (d14 < -180.0D)
@@ -216,29 +232,33 @@ public class OEntityBoat extends OEntity {
         if (d14 < -20.0D)
             d14 = -20.0D;
 
-        aQ = (float) (aQ + d14);
-        c(aQ, aR);
+        aP = (float) (aP + d14);
+        c(aP, aQ);
 
-        List localList = aG.b(this, aU.b(0.2000000029802322D, 0.0D, 0.2000000029802322D));
+        // hMod: Change of the cart
+        if (aJ != prevX || aK != prevY || aL != prevZ)
+            manager.callHook(PluginLoader.Hook.VEHICLE_POSITIONCHANGE, boat, (int) aJ, (int) aK, (int) aL);
+
+        List localList = aF.b(this, aT.b(0.2000000029802322D, 0.0D, 0.2000000029802322D));
         if ((localList != null) && (localList.size() > 0))
             for (int i1 = 0; i1 < localList.size(); i1++) {
                 OEntity localOEntity = (OEntity) localList.get(i1);
-                if ((localOEntity != aE) && (localOEntity.e_()) && ((localOEntity instanceof OEntityBoat)))
+                if ((localOEntity != aD) && (localOEntity.e_()) && ((localOEntity instanceof OEntityBoat)))
                     localOEntity.h(this);
             }
 
-        if ((aE != null) && (aE.bb))
-            aE = null;
+        if ((aD != null) && (aD.ba))
+            aD = null;
     }
 
     @Override
     public void h_() {
-        if (aE == null)
+        if (aD == null)
             return;
 
-        double d1 = Math.cos(aQ * 3.141592653589793D / 180.0D) * 0.4D;
-        double d2 = Math.sin(aQ * 3.141592653589793D / 180.0D) * 0.4D;
-        aE.a(aK + d1, aL + k() + aE.C(), aM + d2);
+        double d1 = Math.cos(aP * 3.141592653589793D / 180.0D) * 0.4D;
+        double d2 = Math.sin(aP * 3.141592653589793D / 180.0D) * 0.4D;
+        aD.a(aJ + d1, aK + k() + aD.B(), aL + d2);
     }
 
     @Override
@@ -251,9 +271,12 @@ public class OEntityBoat extends OEntity {
 
     @Override
     public boolean a(OEntityPlayer paramOEntityPlayer) {
-        if ((aE != null) && ((aE instanceof OEntityPlayer)) && (aE != paramOEntityPlayer))
+        // hMod: Entering the boat
+        manager.callHook(PluginLoader.Hook.VEHICLE_ENTERED, boat, paramOEntityPlayer.entity);
+
+        if ((aD != null) && ((aD instanceof OEntityPlayer)) && (aD != paramOEntityPlayer))
             return true;
-        if (!aG.t)
+        if (!aF.t)
             paramOEntityPlayer.b(this);
         return true;
     }

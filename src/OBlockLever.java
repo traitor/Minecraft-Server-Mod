@@ -1,4 +1,5 @@
 public class OBlockLever extends OBlock {
+
     protected OBlockLever(int paramInt1, int paramInt2) {
         super(paramInt1, paramInt2, OMaterial.n);
     }
@@ -65,7 +66,7 @@ public class OBlockLever extends OBlock {
                 j = 1;
 
             if (j != 0) {
-                a_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
+                b_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
                 paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
             }
         }
@@ -73,7 +74,7 @@ public class OBlockLever extends OBlock {
 
     private boolean g(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         if (!a(paramOWorld, paramInt1, paramInt2, paramInt3)) {
-            a_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
+            b_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
             paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
             return false;
         }
@@ -111,22 +112,30 @@ public class OBlockLever extends OBlock {
         int j = i & 0x7;
         int k = 8 - (i & 0x8);
 
+        // hMod: Allow the lever to change the current
+        /*
+         * first 3 bits are for postion 4th bit is for power.(on / off)
+         */
+        int old = (k != 8) ? 1 : 0;
+        int current = (k == 8) ? 1 : 0;
+        current = ((Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(bk, paramInt1, paramInt2, paramInt3), old, current)).intValue();
+        current = (current > 0) ? 8 : 0;
         paramOWorld.c(paramInt1, paramInt2, paramInt3, j + k);
         paramOWorld.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
 
         paramOWorld.a(paramInt1 + 0.5D, paramInt2 + 0.5D, paramInt3 + 0.5D, "random.click", 0.3F, k > 0 ? 0.6F : 0.5F);
 
-        paramOWorld.h(paramInt1, paramInt2, paramInt3, bl);
+        paramOWorld.h(paramInt1, paramInt2, paramInt3, bk);
         if (j == 1)
-            paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bl);
+            paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bk);
         else if (j == 2)
-            paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bl);
+            paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bk);
         else if (j == 3)
-            paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bl);
+            paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bk);
         else if (j == 4)
-            paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bl);
+            paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bk);
         else
-            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bl);
+            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bk);
 
         return true;
     }
@@ -135,18 +144,18 @@ public class OBlockLever extends OBlock {
     public void b(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
         if ((i & 0x8) > 0) {
-            paramOWorld.h(paramInt1, paramInt2, paramInt3, bl);
+            paramOWorld.h(paramInt1, paramInt2, paramInt3, bk);
             int j = i & 0x7;
             if (j == 1)
-                paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bl);
+                paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bk);
             else if (j == 2)
-                paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bl);
+                paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bk);
             else if (j == 3)
-                paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bl);
+                paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bk);
             else if (j == 4)
-                paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bl);
+                paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bk);
             else
-                paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bl);
+                paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bk);
         }
         super.b(paramOWorld, paramInt1, paramInt2, paramInt3);
     }

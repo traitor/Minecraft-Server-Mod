@@ -1,25 +1,27 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.server.MinecraftServer;
 
 public class OWorldServer extends OWorld {
+
     public OChunkProviderServer u;
     public boolean              v = false;
     public boolean              w;
     private MinecraftServer     x;
     private OMCHashTable        y = new OMCHashTable();
 
-    public OWorldServer(MinecraftServer paramMinecraftServer, OISaveHandler paramOISaveHandler, String paramString, int paramInt, long paramLong) {
-        super(paramOISaveHandler, paramString, paramLong, OWorldProvider.a(paramInt));
+    public OWorldServer(MinecraftServer paramMinecraftServer, OISaveHandler paramOISaveHandler, String paramString, int paramInt) {
+        super(paramOISaveHandler, paramString, new Random().nextLong(), OWorldProvider.a(paramInt));
         x = paramMinecraftServer;
     }
 
     @Override
     public void a(OEntity paramOEntity, boolean paramBoolean) {
         if ((!x.m) && (((paramOEntity instanceof OEntityAnimals)) || ((paramOEntity instanceof OEntityWaterMob))))
-            paramOEntity.D();
-        if ((paramOEntity.aE == null) || (!(paramOEntity.aE instanceof OEntityPlayer)))
+            paramOEntity.C();
+        if ((paramOEntity.aD == null) || (!(paramOEntity.aD instanceof OEntityPlayer)))
             super.a(paramOEntity, paramBoolean);
     }
 
@@ -56,13 +58,13 @@ public class OWorldServer extends OWorld {
     @Override
     protected void b(OEntity paramOEntity) {
         super.b(paramOEntity);
-        y.a(paramOEntity.aB, paramOEntity);
+        y.a(paramOEntity.aA, paramOEntity);
     }
 
     @Override
     protected void c(OEntity paramOEntity) {
         super.c(paramOEntity);
-        y.d(paramOEntity.aB);
+        y.d(paramOEntity.aA);
     }
 
     public OEntity a(int paramInt) {
@@ -71,7 +73,7 @@ public class OWorldServer extends OWorld {
 
     @Override
     public void a(OEntity paramOEntity, byte paramByte) {
-        OPacket38 localOPacket38 = new OPacket38(paramOEntity.aB, paramByte);
+        OPacket38 localOPacket38 = new OPacket38(paramOEntity.aA, paramByte);
         x.k.b(paramOEntity, localOPacket38);
     }
 
@@ -88,7 +90,18 @@ public class OWorldServer extends OWorld {
         x.f.a(paramInt1, paramInt2, paramInt3, 64.0D, new OPacket54(paramInt1, paramInt2, paramInt3, paramInt4, paramInt5));
     }
 
-    public void t() {
+    @Override
+    public void r() {
         p.e();
+    }
+
+    @Override
+    public boolean a(OEntity entity) {
+        if (entity instanceof OEntityLiving && !(entity instanceof OEntityPlayer))
+            // hMod: allow entities to spawn
+            if ((etc.getInstance().getMobSpawnRate() < 100 && etc.getInstance().getMobSpawnRate() > 0 && etc.getInstance().getMobSpawnRate() <= k.nextInt(101)) || etc.getInstance().getMobSpawnRate() <= 0 || (Boolean) (etc.getLoader().callHook(PluginLoader.Hook.MOB_SPAWN, new Mob((OEntityLiving) entity))))
+                return false;
+
+        return super.a(entity);
     }
 }

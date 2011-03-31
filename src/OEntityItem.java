@@ -1,35 +1,31 @@
 public class OEntityItem extends OEntity {
+
     public OItemStack a;
     private int       e;
     public int        b = 0;
     public int        c;
     private int       f = 5;
-
     public float      d = (float) (Math.random() * 3.141592653589793D * 2.0D);
 
     public OEntityItem(OWorld paramOWorld, double paramDouble1, double paramDouble2, double paramDouble3, OItemStack paramOItemStack) {
         super(paramOWorld);
-        b(0.25F, 0.25F);
-        bc = (be / 2.0F);
+        a(0.25F, 0.25F);
+        bb = (bd / 2.0F);
         a(paramDouble1, paramDouble2, paramDouble3);
         a = paramOItemStack;
 
-        aQ = (float) (Math.random() * 360.0D);
+        aP = (float) (Math.random() * 360.0D);
 
-        aN = (float) (Math.random() * 0.2000000029802322D - 0.1000000014901161D);
-        aO = 0.2000000029802322D;
-        aP = (float) (Math.random() * 0.2000000029802322D - 0.1000000014901161D);
-    }
-
-    @Override
-    protected boolean l() {
-        return false;
+        aM = (float) (Math.random() * 0.2000000029802322D - 0.1000000014901161D);
+        aN = 0.2000000029802322D;
+        aO = (float) (Math.random() * 0.2000000029802322D - 0.1000000014901161D);
+        bg = false;
     }
 
     public OEntityItem(OWorld paramOWorld) {
         super(paramOWorld);
-        b(0.25F, 0.25F);
-        bc = (be / 2.0F);
+        a(0.25F, 0.25F);
+        bb = (bd / 2.0F);
     }
 
     @Override
@@ -41,44 +37,44 @@ public class OEntityItem extends OEntity {
         super.f_();
         if (c > 0)
             c -= 1;
+        aG = aJ;
         aH = aK;
         aI = aL;
-        aJ = aM;
 
-        aO -= 0.03999999910593033D;
-        if (aG.c(OMathHelper.b(aK), OMathHelper.b(aL), OMathHelper.b(aM)) == OMaterial.g) {
-            aO = 0.2000000029802322D;
-            aN = ((bq.nextFloat() - bq.nextFloat()) * 0.2F);
-            aP = ((bq.nextFloat() - bq.nextFloat()) * 0.2F);
-            aG.a(this, "random.fizz", 0.4F, 2.0F + bq.nextFloat() * 0.4F);
+        aN -= 0.03999999910593033D;
+        if (aF.c(OMathHelper.b(aJ), OMathHelper.b(aK), OMathHelper.b(aL)) == OMaterial.g) {
+            aN = 0.2000000029802322D;
+            aM = ((bq.nextFloat() - bq.nextFloat()) * 0.2F);
+            aO = ((bq.nextFloat() - bq.nextFloat()) * 0.2F);
+            aF.a(this, "random.fizz", 0.4F, 2.0F + bq.nextFloat() * 0.4F);
         }
-        g(aK, aL, aM);
-        c(aN, aO, aP);
+        g(aJ, aK, aL);
+        c(aM, aN, aO);
 
         float f1 = 0.98F;
-        if (aV) {
+        if (aU) {
             f1 = 0.5880001F;
-            int i = aG.a(OMathHelper.b(aK), OMathHelper.b(aU.b) - 1, OMathHelper.b(aM));
+            int i = aF.a(OMathHelper.b(aJ), OMathHelper.b(aT.b) - 1, OMathHelper.b(aL));
             if (i > 0)
-                f1 = OBlock.m[i].bx * 0.98F;
+                f1 = OBlock.m[i].bw * 0.98F;
         }
 
-        aN *= f1;
-        aO *= 0.9800000190734863D;
-        aP *= f1;
+        aM *= f1;
+        aN *= 0.9800000190734863D;
+        aO *= f1;
 
-        if (aV)
-            aO *= -0.5D;
+        if (aU)
+            aN *= -0.5D;
 
         e += 1;
         b += 1;
         if (b >= 6000)
-            D();
+            C();
     }
 
     @Override
     public boolean g_() {
-        return aG.a(aU, OMaterial.f, this);
+        return aF.a(aT, OMaterial.f, this);
     }
 
     private boolean g(double paramDouble1, double paramDouble2, double paramDouble3) {
@@ -90,13 +86,13 @@ public class OEntityItem extends OEntity {
         double d2 = paramDouble2 - j;
         double d3 = paramDouble3 - k;
 
-        if (OBlock.o[aG.a(i, j, k)] != 0) {
-            int m = OBlock.o[aG.a(i - 1, j, k)] == 0 ? 1 : 0;
-            int n = OBlock.o[aG.a(i + 1, j, k)] == 0 ? 1 : 0;
-            int i1 = OBlock.o[aG.a(i, j - 1, k)] == 0 ? 1 : 0;
-            int i2 = OBlock.o[aG.a(i, j + 1, k)] == 0 ? 1 : 0;
-            int i3 = OBlock.o[aG.a(i, j, k - 1)] == 0 ? 1 : 0;
-            int i4 = OBlock.o[aG.a(i, j, k + 1)] == 0 ? 1 : 0;
+        if (OBlock.o[aF.a(i, j, k)] != false) {
+            int m = OBlock.o[aF.a(i - 1, j, k)] == false ? 1 : 0;
+            int n = OBlock.o[aF.a(i + 1, j, k)] == false ? 1 : 0;
+            int i1 = OBlock.o[aF.a(i, j - 1, k)] == false ? 1 : 0;
+            int i2 = OBlock.o[aF.a(i, j + 1, k)] == false ? 1 : 0;
+            int i3 = OBlock.o[aF.a(i, j, k - 1)] == false ? 1 : 0;
+            int i4 = OBlock.o[aF.a(i, j, k + 1)] == false ? 1 : 0;
 
             int i5 = -1;
             double d4 = 9999.0D;
@@ -127,17 +123,17 @@ public class OEntityItem extends OEntity {
 
             float f1 = bq.nextFloat() * 0.2F + 0.1F;
             if (i5 == 0)
-                aN = (-f1);
+                aM = (-f1);
             if (i5 == 1)
-                aN = f1;
+                aM = f1;
             if (i5 == 2)
-                aO = (-f1);
+                aN = (-f1);
             if (i5 == 3)
-                aO = f1;
+                aN = f1;
             if (i5 == 4)
-                aP = (-f1);
+                aO = (-f1);
             if (i5 == 5)
-                aP = f1;
+                aO = f1;
         }
 
         return false;
@@ -145,15 +141,15 @@ public class OEntityItem extends OEntity {
 
     @Override
     protected void a(int paramInt) {
-        a(null, paramInt);
+        a((OEntity) null, paramInt);
     }
 
     @Override
     public boolean a(OEntity paramOEntity, int paramInt) {
-        W();
+        R();
         f -= paramInt;
         if (f <= 0)
-            D();
+            C();
         return false;
     }
 
@@ -174,14 +170,18 @@ public class OEntityItem extends OEntity {
 
     @Override
     public void b(OEntityPlayer paramOEntityPlayer) {
-        if (aG.t)
+        if (aF.t)
             return;
 
         int i = a.a;
         if ((c == 0) && (paramOEntityPlayer.i.a(a))) {
-            aG.a(this, "random.pop", 0.2F, ((bq.nextFloat() - bq.nextFloat()) * 0.7F + 1.0F) * 2.0F);
-            paramOEntityPlayer.b(this, i);
-            D();
+            // hMod: allow item pickups
+            Item item = new Item(a.c, i);
+            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_PICK_UP, ((OEntityPlayerMP) paramOEntityPlayer).getPlayer(), item)) {
+                aF.a(this, "random.pop", 0.2F, ((bq.nextFloat() - bq.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+                paramOEntityPlayer.b(this, i);
+                C();
+            }
         }
     }
 }

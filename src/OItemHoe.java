@@ -1,8 +1,9 @@
 public class OItemHoe extends OItem {
+
     public OItemHoe(int paramInt, OEnumToolMaterial paramOEnumToolMaterial) {
         super(paramInt);
-        be = 1;
-        d(paramOEnumToolMaterial.a());
+        bd = 1;
+        be = paramOEnumToolMaterial.a();
     }
 
     @Override
@@ -10,16 +11,28 @@ public class OItemHoe extends OItem {
         int i = paramOWorld.a(paramInt1, paramInt2, paramInt3);
         OMaterial localOMaterial = paramOWorld.c(paramInt1, paramInt2 + 1, paramInt3);
 
-        if (((!localOMaterial.a()) && (i == OBlock.u.bl)) || (i == OBlock.v.bl)) {
+        if (((!localOMaterial.a()) && (i == OBlock.u.bk)) || (i == OBlock.v.bk)) {
+            // hMod: Hoes
+            Block blockClicked = new Block(i, paramInt1, paramInt2, paramInt3);
+            blockClicked.setFaceClicked(Block.Face.fromId(paramInt4));
+            Block blockPlaced = new Block(paramOWorld.a(paramInt1, paramInt2 + 1, paramInt3), paramInt1, paramInt2 + 1, paramInt3);
+
+            // Call the hook
+            if (paramOEntityPlayer instanceof OEntityPlayerMP) {
+                Player player = ((OEntityPlayerMP) paramOEntityPlayer).getPlayer();
+                if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, blockPlaced, blockClicked, new Item(paramOItemStack)))
+                    return false;
+            }
+
             OBlock localOBlock = OBlock.aA;
-            paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localOBlock.bu.c(), (localOBlock.bu.a() + 1.0F) / 2.0F, localOBlock.bu.b() * 0.8F);
+            paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localOBlock.bt.c(), (localOBlock.bt.a() + 1.0F) / 2.0F, localOBlock.bt.b() * 0.8F);
 
             if (paramOWorld.t)
                 return true;
-            paramOWorld.e(paramInt1, paramInt2, paramInt3, localOBlock.bl);
-            paramOItemStack.a(1, paramOEntityPlayer);
+            paramOWorld.e(paramInt1, paramInt2, paramInt3, localOBlock.bk);
+            paramOItemStack.b(1);
 
-            if ((paramOWorld.k.nextInt(8) == 0) && (i == OBlock.u.bl)) {
+            if ((paramOWorld.k.nextInt(8) == 0) && (i == OBlock.u.bk)) {
                 int j = 1;
                 for (int k = 0; k < j; k++) {
                     float f1 = 0.7F;

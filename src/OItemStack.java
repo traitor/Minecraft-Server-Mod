@@ -1,4 +1,5 @@
 public final class OItemStack {
+
     public int  a = 0;
     public int  b;
     public int  c;
@@ -9,23 +10,23 @@ public final class OItemStack {
     }
 
     public OItemStack(OBlock paramOBlock, int paramInt) {
-        this(paramOBlock.bl, paramInt, 0);
+        this(paramOBlock.bk, paramInt, 0);
     }
 
     public OItemStack(OBlock paramOBlock, int paramInt1, int paramInt2) {
-        this(paramOBlock.bl, paramInt1, paramInt2);
+        this(paramOBlock.bk, paramInt1, paramInt2);
     }
 
     public OItemStack(OItem paramOItem) {
-        this(paramOItem.bd, 1, 0);
+        this(OItem.bc, 1, 0);
     }
 
     public OItemStack(OItem paramOItem, int paramInt) {
-        this(paramOItem.bd, paramInt, 0);
+        this(OItem.bc, paramInt, 0);
     }
 
     public OItemStack(OItem paramOItem, int paramInt1, int paramInt2) {
-        this(paramOItem.bd, paramInt1, paramInt2);
+        this(OItem.bc, paramInt1, paramInt2);
     }
 
     public OItemStack(int paramInt1, int paramInt2, int paramInt3) {
@@ -48,10 +49,7 @@ public final class OItemStack {
     }
 
     public boolean a(OEntityPlayer paramOEntityPlayer, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        boolean bool = a().a(this, paramOEntityPlayer, paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
-        if (bool)
-            paramOEntityPlayer.a(NEW13.A[c], 1);
-        return bool;
+        return a().a(this, paramOEntityPlayer, paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
     }
 
     public float a(OBlock paramOBlock) {
@@ -63,14 +61,14 @@ public final class OItemStack {
     }
 
     public ONBTTagCompound a(ONBTTagCompound paramONBTTagCompound) {
-        paramONBTTagCompound.a("OPacket106", (short) c);
+        paramONBTTagCompound.a("id", (short) c);
         paramONBTTagCompound.a("Count", (byte) a);
         paramONBTTagCompound.a("Damage", (short) d);
         return paramONBTTagCompound;
     }
 
     public void b(ONBTTagCompound paramONBTTagCompound) {
-        c = paramONBTTagCompound.d("OPacket106");
+        c = paramONBTTagCompound.d("id");
         a = paramONBTTagCompound.c("Count");
         d = paramONBTTagCompound.d("Damage");
     }
@@ -107,14 +105,12 @@ public final class OItemStack {
         return OItem.c[c].d();
     }
 
-    public void a(int paramInt, OEntity paramOEntity) {
+    public void b(int paramInt) {
         if (!d())
             return;
 
         d += paramInt;
         if (d > i()) {
-            if ((paramOEntity instanceof OEntityPlayer))
-                ((OEntityPlayer) paramOEntity).a(NEW13.B[c], 1);
             a -= 1;
             if (a < 0)
                 a = 0;
@@ -122,16 +118,12 @@ public final class OItemStack {
         }
     }
 
-    public void a(OEntityLiving paramOEntityLiving, OEntityPlayer paramOEntityPlayer) {
-        boolean bool = OItem.c[c].a(this, paramOEntityLiving, paramOEntityPlayer);
-        if (bool)
-            paramOEntityPlayer.a(NEW13.A[c], 1);
+    public void a(OEntityLiving paramOEntityLiving) {
+        OItem.c[c].a(this, paramOEntityLiving);
     }
 
-    public void a(int paramInt1, int paramInt2, int paramInt3, int paramInt4, OEntityPlayer paramOEntityPlayer) {
-        boolean bool = OItem.c[c].a(this, paramInt1, paramInt2, paramInt3, paramInt4, paramOEntityPlayer);
-        if (bool)
-            paramOEntityPlayer.a(NEW13.A[c], 1);
+    public void a(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+        OItem.c[c].a(this, paramInt1, paramInt2, paramInt3, paramInt4);
     }
 
     public int a(OEntity paramOEntity) {
@@ -145,8 +137,8 @@ public final class OItemStack {
     public void a(OEntityPlayer paramOEntityPlayer) {
     }
 
-    public void a(OEntityLiving paramOEntityLiving) {
-        OItem.c[c].a(this, paramOEntityLiving);
+    public void b(OEntityLiving paramOEntityLiving) {
+        OItem.c[c].b(this, paramOEntityLiving);
     }
 
     public OItemStack j() {
@@ -179,6 +171,6 @@ public final class OItemStack {
 
     @Override
     public String toString() {
-        return a + "OBlockPortal" + OItem.c[c].a() + "@" + d;
+        return a + "x" + OItem.c[c].a() + "@" + d;
     }
 }

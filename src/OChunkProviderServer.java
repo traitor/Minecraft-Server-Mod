@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class OChunkProviderServer implements OIChunkProvider {
+
     private Set             a = new HashSet();
     private OChunk          b;
     private OIChunkProvider c;
@@ -27,8 +27,8 @@ public class OChunkProviderServer implements OIChunkProvider {
         return e.containsKey(Integer.valueOf(OChunkCoordIntPair.a(paramInt1, paramInt2)));
     }
 
-    public void d(int paramInt1, int paramInt2) {
-        OChunkCoordinates localOChunkCoordinates = g.m();
+    public void c(int paramInt1, int paramInt2) {
+        OChunkCoordinates localOChunkCoordinates = g.l();
         int i = paramInt1 * 16 + 8 - localOChunkCoordinates.a;
         int j = paramInt2 * 16 + 8 - localOChunkCoordinates.c;
         int k = 128;
@@ -36,7 +36,7 @@ public class OChunkProviderServer implements OIChunkProvider {
             a.add(Integer.valueOf(OChunkCoordIntPair.a(paramInt1, paramInt2)));
     }
 
-    public OChunk c(int paramInt1, int paramInt2) {
+    public OChunk d(int paramInt1, int paramInt2) {
         int i = OChunkCoordIntPair.a(paramInt1, paramInt2);
         a.remove(Integer.valueOf(i));
 
@@ -76,7 +76,7 @@ public class OChunkProviderServer implements OIChunkProvider {
 
         if (localOChunk == null) {
             if (g.r)
-                return c(paramInt1, paramInt2);
+                return d(paramInt1, paramInt2);
             return b;
         }
 
@@ -89,7 +89,7 @@ public class OChunkProviderServer implements OIChunkProvider {
         try {
             OChunk localOChunk = d.a(g, paramInt1, paramInt2);
             if (localOChunk != null)
-                localOChunk.r = g.l();
+                localOChunk.r = g.k();
             return localOChunk;
         } catch (Exception localException) {
             localException.printStackTrace();
@@ -110,12 +110,8 @@ public class OChunkProviderServer implements OIChunkProvider {
     private void b(OChunk paramOChunk) {
         if (d == null)
             return;
-        try {
-            paramOChunk.r = g.l();
-            d.a(g, paramOChunk);
-        } catch (IOException localIOException) {
-            localIOException.printStackTrace();
-        }
+        paramOChunk.r = g.k();
+        d.a(g, paramOChunk);
     }
 
     public void a(OIChunkProvider paramOIChunkProvider, int paramInt1, int paramInt2) {
@@ -129,7 +125,15 @@ public class OChunkProviderServer implements OIChunkProvider {
         }
     }
 
+    // hMod: load status
+    boolean loaded = false;
+
     public boolean a(boolean paramBoolean, OIProgressUpdate paramOIProgressUpdate) {
+        // hMod: load once!
+        if (!loaded) {
+            etc.getLoader().loadPlugins();
+            loaded = true;
+        }
         int i = 0;
         for (int j = 0; j < f.size(); j++) {
             OChunk localOChunk = (OChunk) f.get(j);

@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.Set;
 
 public class OExplosion {
+
     public boolean a = false;
     private Random h = new Random();
     private OWorld i;
@@ -25,6 +26,19 @@ public class OExplosion {
     }
 
     public void a() {
+        // hMod: allow explosion
+        Block block = new Block(i.a((int) Math.floor(b), (int) Math.floor(c), (int) Math.floor(d)), (int) Math.floor(b), (int) Math.floor(c), (int) Math.floor(d));
+
+        // hMod: preserve source through blockstatus.
+        if (e == null)
+            block.setStatus(1); // TNT
+        else if (e instanceof OEntityCreeper)
+            block.setStatus(2); // Creeper
+
+        // hMod: call explode hook.
+        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.EXPLODE, block))
+            return;
+
         float f1 = f;
 
         int j = 16;
@@ -32,8 +46,8 @@ public class OExplosion {
         double d6;
         double d7;
         for (int k = 0; k < j; k++)
-            for (m = 0; m < j; m++)
-                for (n = 0; n < j; n++) {
+            for (int m = 0; m < j; m++)
+                for (int n = 0; n < j; n++) {
                     if ((k != 0) && (k != j - 1) && (m != 0) && (m != j - 1) && (n != 0) && (n != j - 1))
                         continue;
                     double d1 = k / (j - 1.0F) * 2.0F - 1.0F;
@@ -69,7 +83,7 @@ public class OExplosion {
                 }
 
         f *= 2.0F;
-        k = OMathHelper.b(b - f - 1.0D);
+        int k = OMathHelper.b(b - f - 1.0D);
         int m = OMathHelper.b(b + f + 1.0D);
         int n = OMathHelper.b(c - f - 1.0D);
         int i6 = OMathHelper.b(c + f + 1.0D);
@@ -81,9 +95,9 @@ public class OExplosion {
             OEntity localOEntity = (OEntity) localList.get(i9);
             double d8 = localOEntity.e(b, c, d) / f;
             if (d8 <= 1.0D) {
-                d5 = localOEntity.aK - b;
-                d6 = localOEntity.aL - c;
-                d7 = localOEntity.aM - d;
+                d5 = localOEntity.aJ - b;
+                d6 = localOEntity.aK - c;
+                d7 = localOEntity.aL - d;
 
                 double d9 = OMathHelper.a(d5 * d5 + d6 * d6 + d7 * d7);
 
@@ -91,14 +105,18 @@ public class OExplosion {
                 d6 /= d9;
                 d7 /= d9;
 
-                double d10 = i.a(localOVec3D, localOEntity.aU);
+                double d10 = i.a(localOVec3D, localOEntity.aT);
                 double d11 = (1.0D - d8) * d10;
-                localOEntity.a(e, (int) ((d11 * d11 + d11) / 2.0D * 8.0D * f + 1.0D));
+                // hMod Damage hook: Explosions
+                int damage = (int) ((d11 * d11 + d11) / 2.0D * 8.0D * f + 1.0D);
+                PluginLoader.DamageType dmgType = (e instanceof OEntityCreeper) ? PluginLoader.DamageType.CREEPER_EXPLOSION : PluginLoader.DamageType.EXPLOSION;
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, dmgType, null, localOEntity.entity, damage))
+                    localOEntity.a(e, (int) ((d11 * d11 + d11) / 2.0D * 8.0D * f + 1.0D));
 
                 double d12 = d11;
-                localOEntity.aN += d5 * d12;
-                localOEntity.aO += d6 * d12;
-                localOEntity.aP += d7 * d12;
+                localOEntity.aM += d5 * d12;
+                localOEntity.aN += d6 * d12;
+                localOEntity.aO += d7 * d12;
             }
         }
         f = f1;
@@ -114,8 +132,8 @@ public class OExplosion {
                 int i12 = localOChunkPosition.c;
                 int i13 = i.a(i1, i11, i12);
                 int i14 = i.a(i1, i11 - 1, i12);
-                if ((i13 == 0) && (OBlock.o[i14] != 0) && (h.nextInt(3) == 0))
-                    i.e(i1, i11, i12, OBlock.ar.bl);
+                if ((i13 == 0) && OBlock.o[i14] && (h.nextInt(3) == 0))
+                    i.e(i1, i11, i12, OBlock.ar.bk);
             }
     }
 

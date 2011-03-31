@@ -1,24 +1,47 @@
-public class OInventoryPlayer implements OIInventory {
-    public OItemStack[]  a = new OItemStack[36];
-    public OItemStack[]  b = new OItemStack[4];
+public class OInventoryPlayer implements OIInventory, Container<OItemStack> {
 
-    public int           c = 0;
-    public OEntityPlayer d;
-    private OItemStack   f;
-    public boolean       e = false;
+    public OItemStack[]   a    = new OItemStack[36];
+    public OItemStack[]   b    = new OItemStack[4];
+    public int            c    = 0;
+    private OEntityPlayer e;
+    private OItemStack    f;
+    public boolean        d    = false;
+    private String        name = "Inventory";
 
     public OInventoryPlayer(OEntityPlayer paramOEntityPlayer) {
-        d = paramOEntityPlayer;
+        e = paramOEntityPlayer;
+    }
+
+    public OItemStack[] getContents() {
+        return a;
+    }
+
+    public void setContents(OItemStack[] values) {
+        a = values;
+    }
+
+    public OItemStack getContentsAt(int index) {
+        return c_(index);
+    }
+
+    public void setContentsAt(int index, OItemStack value) {
+        a(index, value);
+    }
+
+    public int getContentsSize() {
+        return m_();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String value) {
+        name = value;
     }
 
     public OItemStack b() {
-        if ((c < 9) && (c >= 0))
-            return a[c];
-        return null;
-    }
-
-    public static int e() {
-        return 9;
+        return a[c];
     }
 
     private int d(int paramInt) {
@@ -30,12 +53,12 @@ public class OInventoryPlayer implements OIInventory {
 
     private int c(OItemStack paramOItemStack) {
         for (int i = 0; i < a.length; i++)
-            if ((a[i] != null) && (a[i].c == paramOItemStack.c) && (a[i].c()) && (a[i].a < a[i].b()) && (a[i].a < r_()) && ((!a[i].e()) || (a[i].h() == paramOItemStack.h())))
+            if ((a[i] != null) && (a[i].c == paramOItemStack.c) && (a[i].c()) && (a[i].a < a[i].b()) && (a[i].a < n_()) && ((!a[i].e()) || (a[i].h() == paramOItemStack.h())))
                 return i;
         return -1;
     }
 
-    private int k() {
+    private int j() {
         for (int i = 0; i < a.length; i++)
             if (a[i] == null)
                 return i;
@@ -48,7 +71,7 @@ public class OInventoryPlayer implements OIInventory {
 
         int k = c(paramOItemStack);
         if (k < 0)
-            k = k();
+            k = j();
         if (k < 0)
             return j;
         if (a[k] == null)
@@ -57,8 +80,8 @@ public class OInventoryPlayer implements OIInventory {
         int m = j;
         if (m > a[k].b() - a[k].a)
             m = a[k].b() - a[k].a;
-        if (m > r_() - a[k].a)
-            m = r_() - a[k].a;
+        if (m > n_() - a[k].a)
+            m = n_() - a[k].a;
 
         if (m == 0)
             return j;
@@ -70,7 +93,7 @@ public class OInventoryPlayer implements OIInventory {
         return j;
     }
 
-    public void f() {
+    public void e() {
         for (int i = 0; i < a.length; i++) {
             if ((a[i] == null) || (a[i].b <= 0))
                 continue;
@@ -95,7 +118,7 @@ public class OInventoryPlayer implements OIInventory {
                 return true;
         }
 
-        int i = k();
+        int i = j();
         if (i >= 0) {
             a[i] = paramOItemStack;
             a[i].b = 5;
@@ -113,7 +136,7 @@ public class OInventoryPlayer implements OIInventory {
 
         if (arrayOfOItemStack[paramInt1] != null) {
             if (arrayOfOItemStack[paramInt1].a <= paramInt2) {
-                localOItemStack = arrayOfOItemStack[paramInt1];
+                OItemStack localOItemStack = arrayOfOItemStack[paramInt1];
                 arrayOfOItemStack[paramInt1] = null;
                 return localOItemStack;
             }
@@ -152,7 +175,7 @@ public class OInventoryPlayer implements OIInventory {
                 a[i].a(localONBTTagCompound);
                 paramONBTTagList.a(localONBTTagCompound);
             }
-        for (i = 0; i < b.length; i++)
+        for (int i = 0; i < b.length; i++)
             if (b[i] != null) {
                 localONBTTagCompound = new ONBTTagCompound();
                 localONBTTagCompound.a("Slot", (byte) (i + 100));
@@ -179,7 +202,7 @@ public class OInventoryPlayer implements OIInventory {
         }
     }
 
-    public int q_() {
+    public int m_() {
         return a.length + 4;
     }
 
@@ -197,7 +220,7 @@ public class OInventoryPlayer implements OIInventory {
         return "Inventory";
     }
 
-    public int r_() {
+    public int n_() {
         return 64;
     }
 
@@ -209,7 +232,7 @@ public class OInventoryPlayer implements OIInventory {
     }
 
     public boolean b(OBlock paramOBlock) {
-        if ((paramOBlock.bw != OMaterial.d) && (paramOBlock.bw != OMaterial.e) && (paramOBlock.bw != OMaterial.t) && (paramOBlock.bw != OMaterial.s))
+        if ((paramOBlock.bv != OMaterial.d) && (paramOBlock.bv != OMaterial.e) && (paramOBlock.bv != OMaterial.t) && (paramOBlock.bv != OMaterial.s))
             return true;
 
         OItemStack localOItemStack = c_(c);
@@ -218,7 +241,7 @@ public class OInventoryPlayer implements OIInventory {
         return false;
     }
 
-    public int g() {
+    public int f() {
         int i = 0;
         int j = 0;
         int k = 0;
@@ -243,43 +266,43 @@ public class OInventoryPlayer implements OIInventory {
     public void c(int paramInt) {
         for (int i = 0; i < b.length; i++)
             if ((b[i] != null) && ((b[i].a() instanceof OItemArmor))) {
-                b[i].a(paramInt, d);
+                b[i].b(paramInt);
                 if (b[i].a == 0) {
-                    b[i].a(d);
+                    b[i].a(e);
                     b[i] = null;
                 }
             }
     }
 
-    public void h() {
+    public void g() {
         for (int i = 0; i < a.length; i++)
             if (a[i] != null) {
-                d.a(a[i], true);
+                e.a(a[i], true);
                 a[i] = null;
             }
-        for (i = 0; i < b.length; i++)
+        for (int i = 0; i < b.length; i++)
             if (b[i] != null) {
-                d.a(b[i], true);
+                e.a(b[i], true);
                 b[i] = null;
             }
     }
 
-    public void i() {
-        e = true;
+    public void h() {
+        d = true;
     }
 
     public void b(OItemStack paramOItemStack) {
         f = paramOItemStack;
-        d.a(paramOItemStack);
+        e.a(paramOItemStack);
     }
 
-    public OItemStack j() {
+    public OItemStack i() {
         return f;
     }
 
     public boolean a_(OEntityPlayer paramOEntityPlayer) {
-        if (d.bb)
+        if (e.ba)
             return false;
-        return paramOEntityPlayer.g(d) <= 64.0D;
+        return paramOEntityPlayer.g(e) <= 64.0D;
     }
 }
