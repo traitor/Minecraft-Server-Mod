@@ -1,45 +1,7 @@
-public class OTileEntityChest extends OTileEntity implements OIInventory, Container<OItemStack> {
+public class OTileEntityChest extends OTileEntity implements OIInventory {
+    private OItemStack[] a = new OItemStack[36];
 
-    private OItemStack[] a    = new OItemStack[36];
-    private String       name = "Chest";
-
-    public OItemStack[] getContents() {
-        int size = getContentsSize();
-        OItemStack[] result = new OItemStack[size];
-
-        for (int i = 0; i < size; i++)
-            result[i] = getContentsAt(i);
-        return result;
-    }
-
-    public void setContents(OItemStack[] values) {
-        int size = getContentsSize();
-
-        for (int i = 0; i < size; i++)
-            setContentsAt(i, values[i]);
-    }
-
-    public OItemStack getContentsAt(int index) {
-        return c_(index);
-    }
-
-    public void setContentsAt(int index, OItemStack value) {
-        a(index, value);
-    }
-
-    public int getContentsSize() {
-        return m_();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String value) {
-        name = value;
-    }
-
-    public int m_() {
+    public int q_() {
         return 27;
     }
 
@@ -50,15 +12,15 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
     public OItemStack a(int paramInt1, int paramInt2) {
         if (a[paramInt1] != null) {
             if (a[paramInt1].a <= paramInt2) {
-                OItemStack localOItemStack = a[paramInt1];
+                localOItemStack = a[paramInt1];
                 a[paramInt1] = null;
-                h();
+                i();
                 return localOItemStack;
             }
             OItemStack localOItemStack = a[paramInt1].a(paramInt2);
             if (a[paramInt1].a == 0)
                 a[paramInt1] = null;
-            h();
+            i();
             return localOItemStack;
         }
 
@@ -67,20 +29,20 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
 
     public void a(int paramInt, OItemStack paramOItemStack) {
         a[paramInt] = paramOItemStack;
-        if ((paramOItemStack != null) && (paramOItemStack.a > n_()))
-            paramOItemStack.a = n_();
-        h();
+        if ((paramOItemStack != null) && (paramOItemStack.a > r_()))
+            paramOItemStack.a = r_();
+        i();
     }
 
     public String c() {
-        return name;
+        return "Chest";
     }
 
     @Override
     public void a(ONBTTagCompound paramONBTTagCompound) {
         super.a(paramONBTTagCompound);
         ONBTTagList localONBTTagList = paramONBTTagCompound.l("Items");
-        a = new OItemStack[m_()];
+        a = new OItemStack[q_()];
         for (int i = 0; i < localONBTTagList.c(); i++) {
             ONBTTagCompound localONBTTagCompound = (ONBTTagCompound) localONBTTagList.a(i);
             int j = localONBTTagCompound.c("Slot") & 0xFF;
@@ -105,7 +67,7 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
         paramONBTTagCompound.a("Items", localONBTTagList);
     }
 
-    public int n_() {
+    public int r_() {
         return 64;
     }
 

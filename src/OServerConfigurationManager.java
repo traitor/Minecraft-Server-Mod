@@ -12,33 +12,23 @@ import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 
 public class OServerConfigurationManager {
-
-    public static Logger         a = Logger.getLogger("Minecraft");
-    // hMod set list to contain <OEntityPlayerMP> objects.
-    public List<OEntityPlayerMP> b = new ArrayList();
-    private MinecraftServer      c;
-    private OPlayerManager       d;
-    private int                  e;
-    // hMod set these to Set<String> to remove errors and warnings.
-    private Set<String>          f = new HashSet();
-    private Set<String>          g = new HashSet();
-    private Set<String>          h = new HashSet();
-    private Set<String>          i = new HashSet();
-    private File                 j;
-    private File                 k;
-    private File                 l;
-    private File                 m;
-    private OIPlayerFileData     n;
-    private boolean              o;
+    public static Logger     a = Logger.getLogger("Minecraft");
+    public List              b = new ArrayList();
+    private MinecraftServer  c;
+    private OPlayerManager   d;
+    private int              e;
+    private Set              f = new HashSet();
+    private Set              g = new HashSet();
+    private Set              h = new HashSet();
+    private Set              i = new HashSet();
+    private File             j;
+    private File             k;
+    private File             l;
+    private File             m;
+    private OIPlayerFileData n;
+    private boolean          o;
 
     public OServerConfigurationManager(MinecraftServer paramMinecraftServer) {
-        etc.setServer(paramMinecraftServer);
-        etc.getInstance().loadData();
-        a.info("Note: your current classpath is: " + System.getProperty("java.class.path", "*UNKNOWN*"));
-        if (!etc.getInstance().getTainted())
-            a.info("Hey0 Server Mod Build " + etc.getInstance().getVersion());
-        else
-            a.info("hMod Build Information: " + etc.getInstance().getVersionStr());
         c = paramMinecraftServer;
         j = paramMinecraftServer.a("banned-players.txt");
         k = paramMinecraftServer.a("banned-ips.txt");
@@ -58,7 +48,7 @@ public class OServerConfigurationManager {
     }
 
     public void a(OWorldServer paramOWorldServer) {
-        n = paramOWorldServer.m().d();
+        n = paramOWorldServer.o().d();
     }
 
     public int a() {
@@ -69,18 +59,12 @@ public class OServerConfigurationManager {
         b.add(paramOEntityPlayerMP);
         n.b(paramOEntityPlayerMP);
 
-        c.e.u.d((int) paramOEntityPlayerMP.aJ >> 4, (int) paramOEntityPlayerMP.aL >> 4);
+        c.e.u.c((int) paramOEntityPlayerMP.aK >> 4, (int) paramOEntityPlayerMP.aM >> 4);
 
-        while (c.e.a(paramOEntityPlayerMP, paramOEntityPlayerMP.aT).size() != 0)
-            paramOEntityPlayerMP.a(paramOEntityPlayerMP.aJ, paramOEntityPlayerMP.aK + 1.0D, paramOEntityPlayerMP.aL);
+        while (c.e.a(paramOEntityPlayerMP, paramOEntityPlayerMP.aU).size() != 0)
+            paramOEntityPlayerMP.a(paramOEntityPlayerMP.aK, paramOEntityPlayerMP.aL + 1.0D, paramOEntityPlayerMP.aM);
         c.e.a(paramOEntityPlayerMP);
         d.a(paramOEntityPlayerMP);
-        // hMod: Handle login (send MOTD and call hook)
-        String[] motd = etc.getInstance().getMotd();
-        if (!(motd.length == 1 && motd[0].equals("")))
-            for (String str : etc.getInstance().getMotd())
-                paramOEntityPlayerMP.a.b(new OPacket3Chat(str));
-        etc.getLoader().callHook(PluginLoader.Hook.LOGIN, paramOEntityPlayerMP.getPlayer());
     }
 
     public void b(OEntityPlayerMP paramOEntityPlayerMP) {
@@ -95,17 +79,14 @@ public class OServerConfigurationManager {
     }
 
     public OEntityPlayerMP a(ONetLoginHandler paramONetLoginHandler, String paramString1, String paramString2) {
-        if (!etc.getLoader().isLoaded())
-            paramONetLoginHandler.a("The server is not finished loading yet!");
-
         if (f.contains(paramString1.trim().toLowerCase())) {
             paramONetLoginHandler.a("You are banned from this server!");
             return null;
         }
-        // hMod: whole section below is modified to handle whitelists etc
-        OEntityPlayerMP temp = new OEntityPlayerMP(c, c.e, paramString1, new OItemInWorldManager(c.e));
-        Player player = temp.getPlayer();
-
+        if (!g(paramString1)) {
+            paramONetLoginHandler.a("You are not white-listed on this server!");
+            return null;
+        }
         String str = paramONetLoginHandler.b.b().toString();
         str = str.substring(str.indexOf("/") + 1);
         str = str.substring(0, str.indexOf(":"));
@@ -113,76 +94,16 @@ public class OServerConfigurationManager {
             paramONetLoginHandler.a("Your IP address is banned from this server!");
             return null;
         }
-
-        if (!g(paramString1) || (etc.getInstance().isWhitelistEnabled() && !(etc.getDataSource().isUserOnWhitelist(paramString1) || player.isAdmin()))) {
-            paramONetLoginHandler.a(etc.getInstance().getWhitelistMessage());
-            return null;
-        } else if (b.size() >= e && (!etc.getInstance().isReservelistEnabled() || !etc.getDataSource().isUserOnReserveList(paramString1))) {
+        if (b.size() >= e) {
             paramONetLoginHandler.a("The server is full!");
             return null;
         }
-
-        if (!player.getIps()[0].equals("")) {
-            boolean kick = true;
-            for (int i = 0; i < player.getIps().length; i++)
-                if (!player.getIps()[i].equals("") && str.equals(player.getIps()[i]))
-                    kick = false;
-            if (kick) {
-                paramONetLoginHandler.a("IP doesn't match specified IP.");
-                return null;
-            }
-        }
-
         for (int i1 = 0; i1 < b.size(); i1++) {
-            OEntityPlayerMP localOEntityPlayerMP = b.get(i1);
+            OEntityPlayerMP localOEntityPlayerMP = (OEntityPlayerMP) b.get(i1);
             if (localOEntityPlayerMP.r.equalsIgnoreCase(paramString1))
                 localOEntityPlayerMP.a.a("You logged in from another location");
         }
-
-        // hMod: user passed basic login check, inform plugins.
-        Object obj = etc.getLoader().callHook(PluginLoader.Hook.LOGINCHECK, paramString1);
-        if (obj instanceof String) {
-            String result = (String) obj;
-            if (result != null && !result.equals("")) {
-                paramONetLoginHandler.a(result);
-                return null;
-            }
-        }
-        return temp;
-    }
-
-    /**
-     * Returns the list of bans
-     * 
-     * @return
-     */
-    public String getBans() {
-        StringBuilder builder = new StringBuilder();
-        int l = 0;
-        for (Object o : f) {
-            if (l > 0)
-                builder.append(", ");
-            builder.append(o);
-            l++;
-        }
-        return builder.toString();
-    }
-
-    /**
-     * Returns the list of IP bans
-     * 
-     * @return
-     */
-    public String getIpBans() {
-        StringBuilder builder = new StringBuilder();
-        int l = 0;
-        for (Object o : g) {
-            if (l > 0)
-                builder.append(", ");
-            builder.append(o);
-            l++;
-        }
-        return builder.toString();
+        return new OEntityPlayerMP(c, c.e, paramString1, new OItemInWorldManager(c.e));
     }
 
     public OEntityPlayerMP d(OEntityPlayerMP paramOEntityPlayerMP) {
@@ -192,24 +113,36 @@ public class OServerConfigurationManager {
         b.remove(paramOEntityPlayerMP);
         c.e.e(paramOEntityPlayerMP);
 
+        OChunkCoordinates localOChunkCoordinates1 = paramOEntityPlayerMP.H();
+
         OEntityPlayerMP localOEntityPlayerMP = new OEntityPlayerMP(c, c.e, paramOEntityPlayerMP.r, new OItemInWorldManager(c.e));
-        localOEntityPlayerMP.aA = paramOEntityPlayerMP.aA;
+        localOEntityPlayerMP.aB = paramOEntityPlayerMP.aB;
         localOEntityPlayerMP.a = paramOEntityPlayerMP.a;
 
-        c.e.u.d((int) localOEntityPlayerMP.aJ >> 4, (int) localOEntityPlayerMP.aL >> 4);
+        if (localOChunkCoordinates1 != null) {
+            OChunkCoordinates localOChunkCoordinates2 = OEntityPlayer.a(c.e, localOChunkCoordinates1);
+            if (localOChunkCoordinates2 != null) {
+                localOEntityPlayerMP.c(localOChunkCoordinates2.a + 0.5F, localOChunkCoordinates2.b + 0.1F, localOChunkCoordinates2.c + 0.5F, 0.0F, 0.0F);
+                localOEntityPlayerMP.a(localOChunkCoordinates1);
+            } else
+                localOEntityPlayerMP.a.b(new NEW6(0));
 
-        while (c.e.a(localOEntityPlayerMP, localOEntityPlayerMP.aT).size() != 0)
-            localOEntityPlayerMP.a(localOEntityPlayerMP.aJ, localOEntityPlayerMP.aK + 1.0D, localOEntityPlayerMP.aL);
+        }
+
+        c.e.u.c((int) localOEntityPlayerMP.aK >> 4, (int) localOEntityPlayerMP.aM >> 4);
+
+        while (c.e.a(localOEntityPlayerMP, localOEntityPlayerMP.aU).size() != 0)
+            localOEntityPlayerMP.a(localOEntityPlayerMP.aK, localOEntityPlayerMP.aL + 1.0D, localOEntityPlayerMP.aM);
 
         localOEntityPlayerMP.a.b(new OPacket9());
-        localOEntityPlayerMP.a.a(localOEntityPlayerMP.aJ, localOEntityPlayerMP.aK, localOEntityPlayerMP.aL, localOEntityPlayerMP.aP, localOEntityPlayerMP.aQ);
+        localOEntityPlayerMP.a.a(localOEntityPlayerMP.aK, localOEntityPlayerMP.aL, localOEntityPlayerMP.aM, localOEntityPlayerMP.aQ, localOEntityPlayerMP.aR);
 
         d.a(localOEntityPlayerMP);
         c.e.a(localOEntityPlayerMP);
         b.add(localOEntityPlayerMP);
 
-        localOEntityPlayerMP.l();
-        localOEntityPlayerMP.s();
+        localOEntityPlayerMP.m();
+        localOEntityPlayerMP.t();
         return localOEntityPlayerMP;
     }
 
@@ -223,7 +156,7 @@ public class OServerConfigurationManager {
 
     public void a(OPacket paramOPacket) {
         for (int i1 = 0; i1 < b.size(); i1++) {
-            OEntityPlayerMP localOEntityPlayerMP = b.get(i1);
+            OEntityPlayerMP localOEntityPlayerMP = (OEntityPlayerMP) b.get(i1);
             localOEntityPlayerMP.a.b(paramOPacket);
         }
     }
@@ -233,7 +166,7 @@ public class OServerConfigurationManager {
         for (int i1 = 0; i1 < b.size(); i1++) {
             if (i1 > 0)
                 str = str + ", ";
-            str = str + b.get(i1).r;
+            str = str + ((OEntityPlayerMP) b.get(i1)).r;
         }
         return str;
     }
@@ -375,7 +308,7 @@ public class OServerConfigurationManager {
 
     public OEntityPlayerMP i(String paramString) {
         for (int i1 = 0; i1 < b.size(); i1++) {
-            OEntityPlayerMP localOEntityPlayerMP = b.get(i1);
+            OEntityPlayerMP localOEntityPlayerMP = (OEntityPlayerMP) b.get(i1);
             if (localOEntityPlayerMP.r.equalsIgnoreCase(paramString))
                 return localOEntityPlayerMP;
         }
@@ -390,10 +323,10 @@ public class OServerConfigurationManager {
 
     public void a(double paramDouble1, double paramDouble2, double paramDouble3, double paramDouble4, OPacket paramOPacket) {
         for (int i1 = 0; i1 < b.size(); i1++) {
-            OEntityPlayerMP localOEntityPlayerMP = b.get(i1);
-            double d1 = paramDouble1 - localOEntityPlayerMP.aJ;
-            double d2 = paramDouble2 - localOEntityPlayerMP.aK;
-            double d3 = paramDouble3 - localOEntityPlayerMP.aL;
+            OEntityPlayerMP localOEntityPlayerMP = (OEntityPlayerMP) b.get(i1);
+            double d1 = paramDouble1 - localOEntityPlayerMP.aK;
+            double d2 = paramDouble2 - localOEntityPlayerMP.aL;
+            double d3 = paramDouble3 - localOEntityPlayerMP.aM;
             if (d1 * d1 + d2 * d2 + d3 * d3 < paramDouble4 * paramDouble4)
                 localOEntityPlayerMP.a.b(paramOPacket);
         }
@@ -402,7 +335,7 @@ public class OServerConfigurationManager {
     public void j(String paramString) {
         OPacket3Chat localOPacket3Chat = new OPacket3Chat(paramString);
         for (int i1 = 0; i1 < b.size(); i1++) {
-            OEntityPlayerMP localOEntityPlayerMP = b.get(i1);
+            OEntityPlayerMP localOEntityPlayerMP = (OEntityPlayerMP) b.get(i1);
             if (h(localOEntityPlayerMP.r))
                 localOEntityPlayerMP.a.b(localOPacket3Chat);
         }
@@ -419,14 +352,10 @@ public class OServerConfigurationManager {
 
     public void d() {
         for (int i1 = 0; i1 < b.size(); i1++)
-            n.a(b.get(i1));
+            n.a((OEntityPlayer) b.get(i1));
     }
 
     public void a(int paramInt1, int paramInt2, int paramInt3, OTileEntity paramOTileEntity) {
-        // hMod: fix sign updating in beta 1.1_02
-        // Check if bg (TileEntity) is a Sign
-        if (paramOTileEntity instanceof OTileEntitySign)
-            d.sendPacketToChunk(((OTileEntitySign) paramOTileEntity).e(), paramInt1, paramInt2, paramInt3);
     }
 
     public void k(String paramString) {

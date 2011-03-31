@@ -5,14 +5,7 @@ import java.io.InputStreamReader;
 import net.minecraft.server.MinecraftServer;
 
 public class OThreadCommandReader extends Thread {
-
-    // hMod: Store server
-
-    private MinecraftServer server;
-
     public OThreadCommandReader(MinecraftServer paramMinecraftServer) {
-        // hMod: Actually store it
-        server = paramMinecraftServer;
     }
 
     @Override
@@ -20,10 +13,8 @@ public class OThreadCommandReader extends Thread {
         BufferedReader localBufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String str = null;
         try {
-            // hMod: Parse all console commands
-            while ((!server.g) && ((str = localBufferedReader.readLine()) != null))
-                if (!etc.getInstance().parseConsoleCommand(str, server))
-                    server.a(str, server);
+            while ((!a.g) && (MinecraftServer.a(a)) && ((str = localBufferedReader.readLine()) != null))
+                a.a(str, a);
         } catch (IOException localIOException) {
             localIOException.printStackTrace();
         }

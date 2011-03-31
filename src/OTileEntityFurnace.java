@@ -1,49 +1,11 @@
-public class OTileEntityFurnace extends OTileEntity implements OIInventory, Container<OItemStack> {
+public class OTileEntityFurnace extends OTileEntity implements OIInventory {
+    private OItemStack[] h = new OItemStack[3];
+    public int           a = 0;
+    public int           b = 0;
+    public int           c = 0;
 
-    private OItemStack[] h    = new OItemStack[3];
-    public int           a    = 0;
-    public int           b    = 0;
-    public int           c    = 0;
-    private String       name = "Furnace";
-
-    public int m_() {
+    public int q_() {
         return h.length;
-    }
-
-    public OItemStack[] getContents() {
-        int size = getContentsSize();
-        OItemStack[] result = new OItemStack[size];
-
-        for (int i = 0; i < size; i++)
-            result[i] = getContentsAt(i);
-        return result;
-    }
-
-    public void setContents(OItemStack[] values) {
-        int size = getContentsSize();
-
-        for (int i = 0; i < size; i++)
-            setContentsAt(i, values[i]);
-    }
-
-    public OItemStack getContentsAt(int index) {
-        return c_(index);
-    }
-
-    public void setContentsAt(int index, OItemStack value) {
-        a(index, value);
-    }
-
-    public int getContentsSize() {
-        return m_();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String value) {
-        name = value;
     }
 
     public OItemStack c_(int paramInt) {
@@ -53,7 +15,7 @@ public class OTileEntityFurnace extends OTileEntity implements OIInventory, Cont
     public OItemStack a(int paramInt1, int paramInt2) {
         if (h[paramInt1] != null) {
             if (h[paramInt1].a <= paramInt2) {
-                OItemStack localOItemStack = h[paramInt1];
+                localOItemStack = h[paramInt1];
                 h[paramInt1] = null;
                 return localOItemStack;
             }
@@ -68,19 +30,19 @@ public class OTileEntityFurnace extends OTileEntity implements OIInventory, Cont
 
     public void a(int paramInt, OItemStack paramOItemStack) {
         h[paramInt] = paramOItemStack;
-        if ((paramOItemStack != null) && (paramOItemStack.a > n_()))
-            paramOItemStack.a = n_();
+        if ((paramOItemStack != null) && (paramOItemStack.a > r_()))
+            paramOItemStack.a = r_();
     }
 
     public String c() {
-        return name;
+        return "Furnace";
     }
 
     @Override
     public void a(ONBTTagCompound paramONBTTagCompound) {
         super.a(paramONBTTagCompound);
         ONBTTagList localONBTTagList = paramONBTTagCompound.l("Items");
-        h = new OItemStack[m_()];
+        h = new OItemStack[q_()];
         for (int i = 0; i < localONBTTagList.c(); i++) {
             ONBTTagCompound localONBTTagCompound = (ONBTTagCompound) localONBTTagList.a(i);
             int j = localONBTTagCompound.c("Slot");
@@ -111,7 +73,7 @@ public class OTileEntityFurnace extends OTileEntity implements OIInventory, Cont
         paramONBTTagCompound.a("Items", localONBTTagList);
     }
 
-    public int n_() {
+    public int r_() {
         return 64;
     }
 
@@ -127,7 +89,7 @@ public class OTileEntityFurnace extends OTileEntity implements OIInventory, Cont
             a -= 1;
 
         if (!d.t) {
-            if ((a == 0) && (i())) {
+            if ((a == 0) && (h())) {
                 b = (a = a(h[1]));
                 if (a > 0) {
                     j = 1;
@@ -139,7 +101,7 @@ public class OTileEntityFurnace extends OTileEntity implements OIInventory, Cont
                 }
             }
 
-            if ((f()) && (i())) {
+            if ((f()) && (h())) {
                 c += 1;
                 if (c == 200) {
                     c = 0;
@@ -156,29 +118,29 @@ public class OTileEntityFurnace extends OTileEntity implements OIInventory, Cont
         }
 
         if (j != 0)
-            h();
+            i();
     }
 
-    private boolean i() {
+    private boolean h() {
         if (h[0] == null)
             return false;
-        OItemStack localOItemStack = OFurnaceRecipes.a().a(h[0].a().bc);
+        OItemStack localOItemStack = OFurnaceRecipes.a().a(h[0].a().bd);
         if (localOItemStack == null)
             return false;
         if (h[2] == null)
             return true;
         if (!h[2].a(localOItemStack))
             return false;
-        if ((h[2].a < n_()) && (h[2].a < h[2].b()))
+        if ((h[2].a < r_()) && (h[2].a < h[2].b()))
             return true;
         return h[2].a < localOItemStack.b();
     }
 
     public void g() {
-        if (!i())
+        if (!h())
             return;
 
-        OItemStack localOItemStack = OFurnaceRecipes.a().a(h[0].a().bc);
+        OItemStack localOItemStack = OFurnaceRecipes.a().a(h[0].a().bd);
         if (h[2] == null)
             h[2] = localOItemStack.j();
         else if (h[2].c == localOItemStack.c)
@@ -192,19 +154,18 @@ public class OTileEntityFurnace extends OTileEntity implements OIInventory, Cont
     private int a(OItemStack paramOItemStack) {
         if (paramOItemStack == null)
             return 0;
-        paramOItemStack.a();
-        int i = OItem.bc;
+        int i = paramOItemStack.a().bd;
 
-        if ((i < 256) && (OBlock.m[i].bv == OMaterial.c))
+        if ((i < 256) && (OBlock.m[i].bw == OMaterial.c))
             return 300;
 
-        if (i == OItem.bc)
+        if (i == OItem.B.bd)
             return 100;
 
-        if (i == OItem.bc)
+        if (i == OItem.k.bd)
             return 1600;
 
-        if (i == OItem.bc)
+        if (i == OItem.aw.bd)
             return 20000;
 
         return 0;

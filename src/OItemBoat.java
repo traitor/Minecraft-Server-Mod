@@ -1,20 +1,19 @@
 public class OItemBoat extends OItem {
-
     public OItemBoat(int paramInt) {
         super(paramInt);
-        bd = 1;
+        be = 1;
     }
 
     @Override
     public OItemStack a(OItemStack paramOItemStack, OWorld paramOWorld, OEntityPlayer paramOEntityPlayer) {
         float f1 = 1.0F;
 
-        float f2 = paramOEntityPlayer.aS + (paramOEntityPlayer.aQ - paramOEntityPlayer.aS) * f1;
-        float f3 = paramOEntityPlayer.aR + (paramOEntityPlayer.aP - paramOEntityPlayer.aR) * f1;
+        float f2 = paramOEntityPlayer.aT + (paramOEntityPlayer.aR - paramOEntityPlayer.aT) * f1;
+        float f3 = paramOEntityPlayer.aS + (paramOEntityPlayer.aQ - paramOEntityPlayer.aS) * f1;
 
-        double d1 = paramOEntityPlayer.aG + (paramOEntityPlayer.aJ - paramOEntityPlayer.aG) * f1;
-        double d2 = paramOEntityPlayer.aH + (paramOEntityPlayer.aK - paramOEntityPlayer.aH) * f1 + 1.62D - paramOEntityPlayer.bb;
-        double d3 = paramOEntityPlayer.aI + (paramOEntityPlayer.aL - paramOEntityPlayer.aI) * f1;
+        double d1 = paramOEntityPlayer.aH + (paramOEntityPlayer.aK - paramOEntityPlayer.aH) * f1;
+        double d2 = paramOEntityPlayer.aI + (paramOEntityPlayer.aL - paramOEntityPlayer.aI) * f1 + 1.62D - paramOEntityPlayer.bc;
+        double d3 = paramOEntityPlayer.aJ + (paramOEntityPlayer.aM - paramOEntityPlayer.aJ) * f1;
 
         OVec3D localOVec3D1 = OVec3D.b(d1, d2, d3);
 
@@ -38,16 +37,8 @@ public class OItemBoat extends OItem {
             int j = localOMovingObjectPosition.c;
             int k = localOMovingObjectPosition.d;
 
-            if (!paramOWorld.t) {
-                // hMod: placing of a boat
-                Block blockClicked = new Block(paramOWorld.a(i, j, k), i, j, k);
-                blockClicked.setFaceClicked(Block.Face.fromId(localOMovingObjectPosition.e));
-                Block blockPlaced = new Block(0, i, j, k);
-                // hMod: Call hook
-                if (paramOEntityPlayer instanceof OEntityPlayerMP && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, ((OEntityPlayerMP) paramOEntityPlayer).getPlayer(), blockPlaced, blockClicked, new Item(paramOItemStack)))
-                    return paramOItemStack;
+            if (!paramOWorld.t)
                 paramOWorld.a(new OEntityBoat(paramOWorld, i + 0.5F, j + 1.5F, k + 0.5F));
-            }
             paramOItemStack.a -= 1;
         }
 

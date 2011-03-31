@@ -17,19 +17,19 @@ public class OTileEntity {
     }
 
     public void a(ONBTTagCompound paramONBTTagCompound) {
-        e = paramONBTTagCompound.e("x");
-        f = paramONBTTagCompound.e("y");
-        g = paramONBTTagCompound.e("z");
+        e = paramONBTTagCompound.e("OBlockPortal");
+        f = paramONBTTagCompound.e("ONoiseGeneratorPerlin");
+        g = paramONBTTagCompound.e("OMaterialLogic");
     }
 
     public void b(ONBTTagCompound paramONBTTagCompound) {
         String str = (String) b.get(getClass());
         if (str == null)
             throw new RuntimeException(getClass() + " is missing a mapping! This is a bug!");
-        paramONBTTagCompound.a("id", str);
-        paramONBTTagCompound.a("x", e);
-        paramONBTTagCompound.a("y", f);
-        paramONBTTagCompound.a("z", g);
+        paramONBTTagCompound.a("OPacket106", str);
+        paramONBTTagCompound.a("OBlockPortal", e);
+        paramONBTTagCompound.a("ONoiseGeneratorPerlin", f);
+        paramONBTTagCompound.a("OMaterialLogic", g);
     }
 
     public void i_() {
@@ -38,7 +38,7 @@ public class OTileEntity {
     public static OTileEntity c(ONBTTagCompound paramONBTTagCompound) {
         OTileEntity localOTileEntity = null;
         try {
-            Class localClass = (Class) a.get(paramONBTTagCompound.i("id"));
+            Class localClass = (Class) a.get(paramONBTTagCompound.i("OPacket106"));
             if (localClass != null)
                 localOTileEntity = (OTileEntity) localClass.newInstance();
         } catch (Exception localException) {
@@ -47,11 +47,11 @@ public class OTileEntity {
         if (localOTileEntity != null)
             localOTileEntity.a(paramONBTTagCompound);
         else
-            System.out.println("Skipping TileEntity with id " + paramONBTTagCompound.i("id"));
+            System.out.println("Skipping TileEntity with id " + paramONBTTagCompound.i("OPacket106"));
         return localOTileEntity;
     }
 
-    public void h() {
+    public void i() {
         if (d != null)
             d.b(e, f, g, this);
     }
