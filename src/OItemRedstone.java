@@ -32,7 +32,7 @@ public class OItemRedstone extends OItem {
                 return false;
 
             paramOItemStack.a -= 1;
-            paramOWorld.e(paramInt1, paramInt2, paramInt3, OBlock.av.bk);
+            paramOWorld.e(paramInt1, paramInt2, paramInt3, OBlock.av.bl);
         }
 
         return true;

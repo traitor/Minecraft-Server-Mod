@@ -40,6 +40,6 @@ public class OBlockSapling extends OBlockFlower {
             localObject = new OWorldGenTrees();
 
         if (!localObject.a(paramOWorld, paramRandom, paramInt1, paramInt2, paramInt3))
-            paramOWorld.b(paramInt1, paramInt2, paramInt3, bk);
+            paramOWorld.b(paramInt1, paramInt2, paramInt3, bl);
     }
 }

@@ -16,7 +16,7 @@ public class OBlockRedstoneTorch extends OBlockTorch {
 
     private boolean a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, boolean paramBoolean) {
         if (paramBoolean)
-            b.add(new ORedstoneUpdateInfo(paramInt1, paramInt2, paramInt3, paramOWorld.k()));
+            b.add(new ORedstoneUpdateInfo(paramInt1, paramInt2, paramInt3, paramOWorld.l()));
         int i = 0;
         for (int j = 0; j < b.size(); j++) {
             ORedstoneUpdateInfo localORedstoneUpdateInfo = (ORedstoneUpdateInfo) b.get(j);
@@ -45,24 +45,24 @@ public class OBlockRedstoneTorch extends OBlockTorch {
         if (paramOWorld.b(paramInt1, paramInt2, paramInt3) == 0)
             super.e(paramOWorld, paramInt1, paramInt2, paramInt3);
         if (a) {
-            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bk);
-            paramOWorld.h(paramInt1, paramInt2 + 1, paramInt3, bk);
-            paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bk);
-            paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bk);
-            paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bk);
-            paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bk);
+            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bl);
+            paramOWorld.h(paramInt1, paramInt2 + 1, paramInt3, bl);
+            paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bl);
+            paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bl);
+            paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bl);
+            paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bl);
         }
     }
 
     @Override
     public void b(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         if (a) {
-            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bk);
-            paramOWorld.h(paramInt1, paramInt2 + 1, paramInt3, bk);
-            paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bk);
-            paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bk);
-            paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bk);
-            paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bk);
+            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bl);
+            paramOWorld.h(paramInt1, paramInt2 + 1, paramInt3, bl);
+            paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bl);
+            paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bl);
+            paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bl);
+            paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bl);
         }
     }
 
@@ -102,15 +102,15 @@ public class OBlockRedstoneTorch extends OBlockTorch {
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, Random paramRandom) {
         boolean bool = g(paramOWorld, paramInt1, paramInt2, paramInt3);
 
-        while ((b.size() > 0) && (paramOWorld.k() - ((ORedstoneUpdateInfo) b.get(0)).d > 100L))
+        while ((b.size() > 0) && (paramOWorld.l() - ((ORedstoneUpdateInfo) b.get(0)).d > 100L))
             b.remove(0);
 
         if (a) {
             if (bool) {
-                paramOWorld.b(paramInt1, paramInt2, paramInt3, OBlock.aP.bk, paramOWorld.b(paramInt1, paramInt2, paramInt3));
+                paramOWorld.b(paramInt1, paramInt2, paramInt3, OBlock.aP.bl, paramOWorld.b(paramInt1, paramInt2, paramInt3));
 
                 // hMod: Allow redstone torches to provide power
-                int current = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[] { new Block(bk, paramInt1, paramInt2, paramInt3), 1, 0 });
+                int current = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[] { new Block(bl, paramInt1, paramInt2, paramInt3), 1, 0 });
                 if (current == 0)
                     if (a(paramOWorld, paramInt1, paramInt2, paramInt3, true)) {
                         paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, "random.fizz", 0.5F, 2.6F + (paramOWorld.k.nextFloat() - paramOWorld.k.nextFloat()) * 0.8F);
@@ -125,16 +125,16 @@ public class OBlockRedstoneTorch extends OBlockTorch {
             }
         } else if ((!bool) && (!a(paramOWorld, paramInt1, paramInt2, paramInt3, false))) {
             // hMod: Allow redstone torches to provide power
-            int current = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[] { new Block(bk, paramInt1, paramInt2, paramInt3), 0, 1 });
+            int current = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[] { new Block(bl, paramInt1, paramInt2, paramInt3), 0, 1 });
             if (current > 0)
-                paramOWorld.b(paramInt1, paramInt2, paramInt3, OBlock.aQ.bk, paramOWorld.b(paramInt1, paramInt2, paramInt3));
+                paramOWorld.b(paramInt1, paramInt2, paramInt3, OBlock.aQ.bl, paramOWorld.b(paramInt1, paramInt2, paramInt3));
         }
     }
 
     @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         super.a(paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
-        paramOWorld.c(paramInt1, paramInt2, paramInt3, bk, b());
+        paramOWorld.c(paramInt1, paramInt2, paramInt3, bl, b());
     }
 
     @Override
@@ -147,7 +147,7 @@ public class OBlockRedstoneTorch extends OBlockTorch {
 
     @Override
     public int a(int paramInt, Random paramRandom) {
-        return OBlock.aQ.bk;
+        return OBlock.aQ.bl;
     }
 
     @Override

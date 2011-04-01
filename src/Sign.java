@@ -58,7 +58,7 @@ public class Sign implements ComplexBlock {
     }
 
     public void update() {
-        sign.h();
+        sign.i();
     }
 
     /**

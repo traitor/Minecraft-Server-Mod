@@ -4,7 +4,7 @@ public class OItemReed extends OItem {
 
     public OItemReed(int paramInt, OBlock paramOBlock) {
         super(paramInt);
-        a = paramOBlock.bk;
+        a = paramOBlock.bl;
     }
 
     @Override
@@ -13,7 +13,7 @@ public class OItemReed extends OItem {
         int clicked = paramOWorld.a(paramInt1, paramInt2, paramInt3);
         Block blockClicked = new Block(clicked, paramInt1, paramInt2, paramInt3);
 
-        if (clicked == OBlock.aS.bk)
+        if (clicked == OBlock.aS.bl)
             paramInt4 = 0;
         else {
             if (paramInt4 == 0)
@@ -46,7 +46,7 @@ public class OItemReed extends OItem {
             if (paramOWorld.e(paramInt1, paramInt2, paramInt3, a)) {
                 OBlock.m[a].d(paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
                 OBlock.m[a].a(paramOWorld, paramInt1, paramInt2, paramInt3, (OEntityLiving) paramOEntityPlayer);
-                paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localOBlock.bt.c(), (localOBlock.bt.a() + 1.0F) / 2.0F, localOBlock.bt.b() * 0.8F);
+                paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localOBlock.bu.c(), (localOBlock.bu.a() + 1.0F) / 2.0F, localOBlock.bu.b() * 0.8F);
                 paramOItemStack.a -= 1;
             }
 

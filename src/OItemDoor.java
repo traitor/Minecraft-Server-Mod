@@ -5,8 +5,7 @@ public class OItemDoor extends OItem {
     public OItemDoor(int paramInt, OMaterial paramOMaterial) {
         super(paramInt);
         a = paramOMaterial;
-        be = 64;
-        bd = 1;
+        be = 1;
     }
 
     @Override
@@ -34,7 +33,7 @@ public class OItemDoor extends OItem {
                 return false;
         }
 
-        int i = OMathHelper.b((paramOEntityPlayer.aP + 180.0F) * 4.0F / 360.0F - 0.5D) & 0x3;
+        int i = OMathHelper.b((paramOEntityPlayer.aQ + 180.0F) * 4.0F / 360.0F - 0.5D) & 0x3;
 
         int j = 0;
         int k = 0;
@@ -50,8 +49,8 @@ public class OItemDoor extends OItem {
         int m = (paramOWorld.d(paramInt1 - j, paramInt2, paramInt3 - k) ? 1 : 0) + (paramOWorld.d(paramInt1 - j, paramInt2 + 1, paramInt3 - k) ? 1 : 0);
         int n = (paramOWorld.d(paramInt1 + j, paramInt2, paramInt3 + k) ? 1 : 0) + (paramOWorld.d(paramInt1 + j, paramInt2 + 1, paramInt3 + k) ? 1 : 0);
 
-        int i1 = (paramOWorld.a(paramInt1 - j, paramInt2, paramInt3 - k) == localOBlock.bk) || (paramOWorld.a(paramInt1 - j, paramInt2 + 1, paramInt3 - k) == localOBlock.bk) ? 1 : 0;
-        int i2 = (paramOWorld.a(paramInt1 + j, paramInt2, paramInt3 + k) == localOBlock.bk) || (paramOWorld.a(paramInt1 + j, paramInt2 + 1, paramInt3 + k) == localOBlock.bk) ? 1 : 0;
+        int i1 = (paramOWorld.a(paramInt1 - j, paramInt2, paramInt3 - k) == localOBlock.bl) || (paramOWorld.a(paramInt1 - j, paramInt2 + 1, paramInt3 - k) == localOBlock.bl) ? 1 : 0;
+        int i2 = (paramOWorld.a(paramInt1 + j, paramInt2, paramInt3 + k) == localOBlock.bl) || (paramOWorld.a(paramInt1 + j, paramInt2 + 1, paramInt3 + k) == localOBlock.bl) ? 1 : 0;
 
         int i3 = 0;
         if ((i1 != 0) && (i2 == 0))
@@ -64,10 +63,10 @@ public class OItemDoor extends OItem {
             i += 4;
         }
 
-        paramOWorld.e(paramInt1, paramInt2, paramInt3, localOBlock.bk);
+        paramOWorld.e(paramInt1, paramInt2, paramInt3, localOBlock.bl);
         paramOWorld.c(paramInt1, paramInt2, paramInt3, i);
 
-        paramOWorld.e(paramInt1, paramInt2 + 1, paramInt3, localOBlock.bk);
+        paramOWorld.e(paramInt1, paramInt2 + 1, paramInt3, localOBlock.bl);
         paramOWorld.c(paramInt1, paramInt2 + 1, paramInt3, i + 8);
 
         paramOItemStack.a -= 1;

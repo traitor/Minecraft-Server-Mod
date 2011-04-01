@@ -6,26 +6,31 @@ import java.util.Set;
 import net.minecraft.server.MinecraftServer;
 
 public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
-
     public ONetServerHandler   a;
     public MinecraftServer     b;
     public OItemInWorldManager c;
     public double              d;
     public double              e;
     public List                f  = new LinkedList();
+
     public Set                 g  = new HashSet();
+
     private int                bE = -99999999;
     private int                bF = 60;
+
     private OItemStack[]       bG = { null, null, null, null, null };
+
     private int                bH = 0;
     public boolean             h;
-    // hMod: Player storage
+
+ // hMod: Player storage
     private Player             player;
 
+    
     public OEntityPlayerMP(MinecraftServer paramMinecraftServer, OWorld paramOWorld, String paramString, OItemInWorldManager paramOItemInWorldManager) {
         super(paramOWorld);
 
-        OChunkCoordinates localOChunkCoordinates = paramOWorld.l();
+        OChunkCoordinates localOChunkCoordinates = paramOWorld.m();
         int i = localOChunkCoordinates.a;
         int j = localOChunkCoordinates.c;
         int k = localOChunkCoordinates.b;
@@ -42,14 +47,15 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         paramOItemInWorldManager.a = this;
         r = paramString;
         c = paramOItemInWorldManager;
-        bb = 0.0F;
-
+        bc = 0.0F;
+        
         // hMod: So we don't conflict with runecraft
         c = new Digging(paramOWorld, this);
 
         // hMod: Store player
         player = etc.getDataSource().getPlayer(paramString);
         player.setUser(this);
+
     }
 
     /**
@@ -68,11 +74,12 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         player = etc.getDataSource().getPlayer(r);
         player.setUser(this);
     }
+        
+    public void m() {
+     // hMod: Make sure this gets cast correctly, or mutant puppies will
+     // spawn and eat your items.
+     k.a((OICrafting) this);
 
-    public void l() {
-        // hMod: Make sure this gets cast correctly, or mutant puppies will
-        // spawn and eat your items.
-        k.a((OICrafting) this);
     }
 
     @Override
@@ -82,11 +89,11 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
 
     @Override
     protected void l_() {
-        bb = 0.0F;
+        bc = 0.0F;
     }
 
     @Override
-    public float p() {
+    public float q() {
         return 1.62F;
     }
 
@@ -100,7 +107,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         for (int i = 0; i < 5; i++) {
             OItemStack localOItemStack = b_(i);
             if (localOItemStack != bG[i]) {
-                b.k.a(this, new OPacket5PlayerInventory(aA, i, localOItemStack));
+                b.k.a(this, new OPacket5PlayerInventory(aB, i, localOItemStack));
                 bG[i] = localOItemStack;
             }
         }
@@ -114,9 +121,9 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
 
     @Override
     public void a(OEntity paramOEntity) {
-        // hMod: drops inventory on death.
+     // hMod: drops inventory on death.
         if (etc.getInstance().isHealthEnabled())
-            i.g();
+            i.h();
     }
 
     @Override
@@ -163,9 +170,8 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
             }
         }
 
-        // hMod: Update the health
-        if (X != bF) {
-            // updates your health when it is changed.
+        if (W != bE) {
+         // updates your health when it is changed.
             if (!etc.getInstance().isHealthEnabled()) {
                 W = 20;
                 af = false;
@@ -174,12 +180,13 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
             else
                 a.b(new OPacket8(W));
             bE = W;
+
         }
     }
 
     private void a(OTileEntity paramOTileEntity) {
         if (paramOTileEntity != null) {
-            // hMod: Let plugins know we're showing a sign
+         // hMod: Let plugins know we're showing a sign
             if (paramOTileEntity instanceof OTileEntitySign) {
                 Sign sign = new Sign((OTileEntitySign) paramOTileEntity);
                 manager.callHook(PluginLoader.Hook.SIGN_SHOW, getPlayer(), sign);
@@ -192,24 +199,24 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     }
 
     @Override
-    public void q() {
-        super.q();
+    public void r() {
+        super.r();
     }
 
     @Override
     public void b(OEntity paramOEntity, int paramInt) {
-        if (!paramOEntity.ba) {
+        if (!paramOEntity.bb) {
             if ((paramOEntity instanceof OEntityItem))
-                b.k.a(paramOEntity, new OPacket22Collect(paramOEntity.aA, aA));
+                b.k.a(paramOEntity, new OPacket22Collect(paramOEntity.aB, aB));
             if ((paramOEntity instanceof OEntityArrow))
-                b.k.a(paramOEntity, new OPacket22Collect(paramOEntity.aA, aA));
+                b.k.a(paramOEntity, new OPacket22Collect(paramOEntity.aB, aB));
         }
         super.b(paramOEntity, paramInt);
         k.a();
     }
 
     @Override
-    public void r() {
+    public void m_() {
         if (!p) {
             q = -1;
             p = true;
@@ -217,32 +224,30 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         }
     }
 
-    public void s() {
+    public void t() {
     }
 
     @Override
-    public boolean a(int paramInt1, int paramInt2, int paramInt3) {
-        if (super.a(paramInt1, paramInt2, paramInt3)) {
+    public NEW9 a(int paramInt1, int paramInt2, int paramInt3) {
+        NEW9 localNEW9 = super.a(paramInt1, paramInt2, paramInt3);
+        if (localNEW9 == NEW9.a)
             b.k.a(this, new OPacket17Sleep(this, 0, paramInt1, paramInt2, paramInt3));
-
-            return true;
-        }
-        return false;
+        return localNEW9;
     }
 
     @Override
-    public void a(boolean paramBoolean1, boolean paramBoolean2) {
-        if (E())
+    public void a(boolean paramBoolean1, boolean paramBoolean2, boolean paramBoolean3) {
+        if (F())
             b.k.b(this, new OPacket18ArmAnimation(this, 3));
-        super.a(paramBoolean1, paramBoolean2);
-        a.a(aJ, aK, aL, aP, aQ);
+        super.a(paramBoolean1, paramBoolean2, paramBoolean3);
+        a.a(aK, aL, aM, aQ, aR);
     }
 
     @Override
     public void b(OEntity paramOEntity) {
         super.b(paramOEntity);
-        a.b(new OPacket39(this, aE));
-        a.a(aJ, aK, aL, aP, aQ);
+        a.b(new OPacket39(this, aF));
+        a.a(aK, aL, aM, aQ, aR);
     }
 
     @Override
@@ -253,24 +258,25 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         super.a(paramDouble, paramBoolean);
     }
 
-    private void V() {
+    private void aa() {
         bH = (bH % 100 + 1);
     }
 
     @Override
     public void b(int paramInt1, int paramInt2, int paramInt3) {
-        V();
+        aa();
         a.b(new OPacket100(bH, 1, "Crafting", 9));
-        k = new OCraftingInventoryWorkbenchCB(i, aF, paramInt1, paramInt2, paramInt3);
+        k = new OCraftingInventoryWorkbenchCB(i, aG, paramInt1, paramInt2, paramInt3);
         k.f = bH;
-        // hMod: Make sure this gets cast correctly, or mutant puppies will
-        // spawn and eat your items.
-        k.a((OICrafting) this);
+     // hMod: Make sure this gets cast correctly, or mutant puppies will
+     // spawn and eat your items.
+     k.a((OICrafting) this);
+
     }
 
     @Override
     public void a(OIInventory paramOIInventory) {
-        // hMod: Check if we can open this
+     // hMod: Check if we can open this
         Inventory inv = null;
         String name = paramOIInventory.c();
         if (paramOIInventory instanceof OTileEntityChest) {
@@ -285,18 +291,20 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
 
         if (inv != null)
             name = inv.getName();
-        V();
-        a.b(new OPacket100(bH, 0, name, paramOIInventory.m_()));
+
+        aa();
+        a.b(new OPacket100(bH, 0, name, paramOIInventory.q_()));
         k = new OCraftingInventoryChestCB(i, paramOIInventory);
         k.f = bH;
-        // hMod: Make sure this gets cast correctly, or mutant puppies will
-        // spawn and eat your items.
-        k.a((OICrafting) this);
+     // hMod: Make sure this gets cast correctly, or mutant puppies will
+     // spawn and eat your items.
+     k.a((OICrafting) this);
+
     }
 
     @Override
     public void a(OTileEntityFurnace paramOTileEntityFurnace) {
-        // hMod: Check if we can open this
+     // hMod: Check if we can open this
         Inventory inv = new Furnace(paramOTileEntityFurnace);
         String name = paramOTileEntityFurnace.c();
         if ((Boolean) manager.callHook(PluginLoader.Hook.OPEN_INVENTORY, getPlayer(), inv))
@@ -305,13 +313,16 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         if (inv != null)
             name = inv.getName();
 
-        V();
-        a.b(new OPacket100(bH, 2, name, paramOTileEntityFurnace.m_()));
+
+        
+        aa();
+        a.b(new OPacket100(bH, 2, name, paramOTileEntityFurnace.q_()));
         k = new OCraftingInventoryFurnaceCB(i, paramOTileEntityFurnace);
         k.f = bH;
-        // hMod: Make sure this gets cast correctly, or mutant puppies will
-        // spawn and eat your items.
-        k.a((OICrafting) this);
+     // hMod: Make sure this gets cast correctly, or mutant puppies will
+     // spawn and eat your items.
+     k.a((OICrafting) this);
+
     }
 
     @Override
@@ -324,13 +335,14 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         if (dis != null)
             name = dis.getName();
 
-        V();
-        a.b(new OPacket100(bH, 3, name, paramOTileEntityDispenser.m_()));
+        aa();
+        a.b(new OPacket100(bH, 3, name, paramOTileEntityDispenser.q_()));
         k = new OCraftingInventoryDispenserCB(i, paramOTileEntityDispenser);
         k.f = bH;
-        // hMod: Make sure this gets cast correctly, or mutant puppies will
-        // spawn and eat your items.
-        k.a((OICrafting) this);
+     // hMod: Make sure this gets cast correctly, or mutant puppies will
+     // spawn and eat your items.
+     k.a((OICrafting) this);
+
     }
 
     public void a(OCraftingInventoryCB paramOCraftingInventoryCB, int paramInt, OItemStack paramOItemStack) {
@@ -345,7 +357,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
 
     public void a(OCraftingInventoryCB paramOCraftingInventoryCB, List paramList) {
         a.b(new OPacket104(paramOCraftingInventoryCB.f, paramList));
-        a.b(new OPacket103(-1, -1, i.i()));
+        a.b(new OPacket103(-1, -1, i.j()));
     }
 
     public void a(OCraftingInventoryCB paramOCraftingInventoryCB, int paramInt1, int paramInt2) {
@@ -357,19 +369,19 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     }
 
     @Override
-    public void t() {
-        a.b(new OPacket101(k.f));
-        v();
-    }
-
     public void u() {
-        if (h)
-            return;
-        a.b(new OPacket103(-1, -1, i.i()));
+        a.b(new OPacket101(k.f));
+        w();
     }
 
     public void v() {
-        k.a((OEntityPlayer) this);
+        if (h)
+            return;
+        a.b(new OPacket103(-1, -1, i.j()));
+    }
+
+    public void w() {
+        k.a((OEntityPlayer)this);
         k = j;
     }
 
@@ -377,8 +389,8 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         au = paramFloat1;
         av = paramFloat2;
         ax = paramBoolean1;
-        b(paramBoolean2);
-        aQ = paramFloat3;
-        aP = paramFloat4;
+        e(paramBoolean2);
+        aR = paramFloat3;
+        aQ = paramFloat4;
     }
 }

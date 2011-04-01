@@ -33,7 +33,7 @@ public class MobSpawner implements ComplexBlock {
     }
 
     public void update() {
-        spawner.h();
+        spawner.i();
     }
 
     /**

@@ -14,7 +14,7 @@ public class OItemSeeds extends OItem {
 
         int i = paramOWorld.a(paramInt1, paramInt2, paramInt3);
 
-        if ((i == OBlock.aA.bk) && (paramOWorld.e(paramInt1, paramInt2 + 1, paramInt3))) {
+        if ((i == OBlock.aA.bl) && (paramOWorld.e(paramInt1, paramInt2 + 1, paramInt3))) {
             // hMod: Seeds
             Block blockClicked = new Block(i, paramInt1, paramInt2, paramInt3);
             blockClicked.setFaceClicked(Block.Face.fromId(paramInt4));

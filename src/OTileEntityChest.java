@@ -28,7 +28,7 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
     }
 
     public int getContentsSize() {
-        return m_();
+        return q_();
     }
 
     public String getName() {
@@ -39,7 +39,7 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
         name = value;
     }
 
-    public int m_() {
+    public int q_() {
         return 27;
     }
 
@@ -52,13 +52,13 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
             if (a[paramInt1].a <= paramInt2) {
                 OItemStack localOItemStack = a[paramInt1];
                 a[paramInt1] = null;
-                h();
+                i();
                 return localOItemStack;
             }
             OItemStack localOItemStack = a[paramInt1].a(paramInt2);
             if (a[paramInt1].a == 0)
                 a[paramInt1] = null;
-            h();
+            i();
             return localOItemStack;
         }
 
@@ -67,9 +67,9 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
 
     public void a(int paramInt, OItemStack paramOItemStack) {
         a[paramInt] = paramOItemStack;
-        if ((paramOItemStack != null) && (paramOItemStack.a > n_()))
-            paramOItemStack.a = n_();
-        h();
+        if ((paramOItemStack != null) && (paramOItemStack.a > r_()))
+            paramOItemStack.a = r_();
+        i();
     }
 
     public String c() {
@@ -80,7 +80,7 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
     public void a(ONBTTagCompound paramONBTTagCompound) {
         super.a(paramONBTTagCompound);
         ONBTTagList localONBTTagList = paramONBTTagCompound.l("Items");
-        a = new OItemStack[m_()];
+        a = new OItemStack[q_()];
         for (int i = 0; i < localONBTTagList.c(); i++) {
             ONBTTagCompound localONBTTagCompound = (ONBTTagCompound) localONBTTagList.a(i);
             int j = localONBTTagCompound.c("Slot") & 0xFF;
@@ -105,7 +105,7 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
         paramONBTTagCompound.a("Items", localONBTTagList);
     }
 
-    public int n_() {
+    public int r_() {
         return 64;
     }
 

@@ -21,7 +21,7 @@ public class OBlockLeaves extends OBlockLeavesBase {
                 for (int m = -i; m <= i; m++)
                     for (int n = -i; n <= i; n++) {
                         int i1 = paramOWorld.a(paramInt1 + k, paramInt2 + m, paramInt3 + n);
-                        if (i1 == OBlock.K.bk) {
+                        if (i1 == OBlock.K.bl) {
                             int i2 = paramOWorld.b(paramInt1 + k, paramInt2 + m, paramInt3 + n);
                             paramOWorld.d(paramInt1 + k, paramInt2 + m, paramInt3 + n, i2 | 0x4);
                         }
@@ -52,9 +52,9 @@ public class OBlockLeaves extends OBlockLeavesBase {
                     for (i3 = -j; i3 <= j; i3++)
                         for (i4 = -j; i4 <= j; i4++) {
                             i5 = paramOWorld.a(paramInt1 + i2, paramInt2 + i3, paramInt3 + i4);
-                            if (i5 == OBlock.J.bk)
+                            if (i5 == OBlock.J.bl)
                                 a[((i2 + i1) * n + (i3 + i1) * m + (i4 + i1))] = 0;
-                            else if (i5 == OBlock.K.bk)
+                            else if (i5 == OBlock.K.bl)
                                 a[((i2 + i1) * n + (i3 + i1) * m + (i4 + i1))] = -2;
                             else
                                 a[((i2 + i1) * n + (i3 + i1) * m + (i4 + i1))] = -1;
@@ -90,7 +90,7 @@ public class OBlockLeaves extends OBlockLeavesBase {
         // hMod: stop leaves from decaying
         Block block = new Block(etc.getServer().getBlockIdAt(paramInt1, paramInt2, paramInt3), paramInt1, paramInt2, paramInt3);
         if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.LEAF_DECAY, block)) {
-            b_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
+            a_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
             paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
         }
     }
@@ -102,7 +102,7 @@ public class OBlockLeaves extends OBlockLeavesBase {
 
     @Override
     public int a(int paramInt, Random paramRandom) {
-        return OBlock.y.bk;
+        return OBlock.y.bl;
     }
 
     @Override
@@ -113,8 +113,8 @@ public class OBlockLeaves extends OBlockLeavesBase {
     @Override
     public int a(int paramInt1, int paramInt2) {
         if ((paramInt2 & 0x3) == 1)
-            return bj + 80;
-        return bj;
+            return bk + 80;
+        return bk;
     }
 
     @Override

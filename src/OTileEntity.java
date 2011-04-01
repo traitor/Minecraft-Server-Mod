@@ -51,7 +51,7 @@ public class OTileEntity {
         return localOTileEntity;
     }
 
-    public void h() {
+    public void i() {
         if (d != null)
             d.b(e, f, g, this);
     }

@@ -6,7 +6,7 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
     private Random       b    = new Random();
     private String       name = "Trap";
 
-    public int m_() {
+    public int q_() {
         return 9;
     }
 
@@ -35,7 +35,7 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
     }
 
     public int getContentsSize() {
-        return m_();
+        return q_();
     }
 
     public String getName() {
@@ -55,13 +55,13 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
             if (a[paramInt1].a <= paramInt2) {
                 OItemStack localOItemStack = a[paramInt1];
                 a[paramInt1] = null;
-                h();
+                i();
                 return localOItemStack;
             }
             OItemStack localOItemStack = a[paramInt1].a(paramInt2);
             if (a[paramInt1].a == 0)
                 a[paramInt1] = null;
-            h();
+            i();
             return localOItemStack;
         }
 
@@ -85,9 +85,9 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
 
     public void a(int paramInt, OItemStack paramOItemStack) {
         a[paramInt] = paramOItemStack;
-        if ((paramOItemStack != null) && (paramOItemStack.a > n_()))
-            paramOItemStack.a = n_();
-        h();
+        if ((paramOItemStack != null) && (paramOItemStack.a > r_()))
+            paramOItemStack.a = r_();
+        i();
     }
 
     public String c() {
@@ -98,7 +98,7 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
     public void a(ONBTTagCompound paramONBTTagCompound) {
         super.a(paramONBTTagCompound);
         ONBTTagList localONBTTagList = paramONBTTagCompound.l("Items");
-        a = new OItemStack[m_()];
+        a = new OItemStack[q_()];
         for (int i = 0; i < localONBTTagList.c(); i++) {
             ONBTTagCompound localONBTTagCompound = (ONBTTagCompound) localONBTTagList.a(i);
             int j = localONBTTagCompound.c("Slot") & 0xFF;
@@ -123,7 +123,7 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
         paramONBTTagCompound.a("Items", localONBTTagList);
     }
 
-    public int n_() {
+    public int r_() {
         return 64;
     }
 

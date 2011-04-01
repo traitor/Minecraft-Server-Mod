@@ -46,7 +46,7 @@ public class OBlockPressurePlate extends OBlock {
             i = 1;
 
         if (i != 0) {
-            b_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
+            a_(paramOWorld, paramInt1, paramInt2, paramInt3, paramOWorld.b(paramInt1, paramInt2, paramInt3));
             paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
         }
     }
@@ -89,38 +89,38 @@ public class OBlockPressurePlate extends OBlock {
 
         // hMod: Allow pressure plate interaction to power redstone
         if (j != i) {
-            j = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(bk, paramInt1, paramInt2, paramInt3), i, j);
+            j = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(bl, paramInt1, paramInt2, paramInt3), i, j);
             if (j > 0)
                 j = 1;
         }
 
         if ((j != 0) && (i == 0)) {
             paramOWorld.c(paramInt1, paramInt2, paramInt3, 1);
-            paramOWorld.h(paramInt1, paramInt2, paramInt3, bk);
-            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bk);
+            paramOWorld.h(paramInt1, paramInt2, paramInt3, bl);
+            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bl);
             paramOWorld.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
 
             paramOWorld.a(paramInt1 + 0.5D, paramInt2 + 0.1D, paramInt3 + 0.5D, "random.click", 0.3F, 0.6F);
         }
         if ((j == 0) && (i != 0)) {
             paramOWorld.c(paramInt1, paramInt2, paramInt3, 0);
-            paramOWorld.h(paramInt1, paramInt2, paramInt3, bk);
-            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bk);
+            paramOWorld.h(paramInt1, paramInt2, paramInt3, bl);
+            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bl);
             paramOWorld.b(paramInt1, paramInt2, paramInt3, paramInt1, paramInt2, paramInt3);
 
             paramOWorld.a(paramInt1 + 0.5D, paramInt2 + 0.1D, paramInt3 + 0.5D, "random.click", 0.3F, 0.5F);
         }
 
         if (j != 0)
-            paramOWorld.c(paramInt1, paramInt2, paramInt3, bk, b());
+            paramOWorld.c(paramInt1, paramInt2, paramInt3, bl, b());
     }
 
     @Override
     public void b(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
         if (i > 0) {
-            paramOWorld.h(paramInt1, paramInt2, paramInt3, bk);
-            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bk);
+            paramOWorld.h(paramInt1, paramInt2, paramInt3, bl);
+            paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bl);
         }
         super.b(paramOWorld, paramInt1, paramInt2, paramInt3);
     }

@@ -35,8 +35,8 @@ public class OMobSpawnerBase {
             for (int i2 = 0; i2 < 64; i2++)
                 u[(i1 + i2 * 64)] = a(i1 / 63.0F, i2 / 63.0F);
 
-        h.o = (h.p = (byte) OBlock.E.bk);
-        j.o = (j.p = (byte) OBlock.E.bk);
+        h.o = (h.p = (byte) OBlock.E.bl);
+        j.o = (j.p = (byte) OBlock.E.bl);
     }
 
     public OWorldGenerator a(Random paramRandom) {

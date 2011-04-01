@@ -3,7 +3,7 @@ public class OInventoryCraftResult implements OIInventory, Container<OItemStack>
     private OItemStack[] a    = new OItemStack[1];
     private String       name = "Result";
 
-    public int m_() {
+    public int q_() {
         return 1;
     }
 
@@ -28,7 +28,7 @@ public class OInventoryCraftResult implements OIInventory, Container<OItemStack>
     }
 
     public int getContentsSize() {
-        return m_();
+        return q_();
     }
 
     public String getName() {
@@ -56,11 +56,11 @@ public class OInventoryCraftResult implements OIInventory, Container<OItemStack>
         a[paramInt] = paramOItemStack;
     }
 
-    public int n_() {
+    public int r_() {
         return 64;
     }
 
-    public void h() {
+    public void i() {
     }
 
     public boolean a_(OEntityPlayer paramOEntityPlayer) {

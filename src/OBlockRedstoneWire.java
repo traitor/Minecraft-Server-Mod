@@ -15,7 +15,7 @@ public class OBlockRedstoneWire extends OBlock {
 
     @Override
     public int a(int paramInt1, int paramInt2) {
-        return bj;
+        return bk;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class OBlockRedstoneWire extends OBlock {
         b.clear();
         for (int i = 0; i < localArrayList.size(); i++) {
             OChunkPosition localOChunkPosition = (OChunkPosition) localArrayList.get(i);
-            paramOWorld.h(localOChunkPosition.a, localOChunkPosition.b, localOChunkPosition.c, bk);
+            paramOWorld.h(localOChunkPosition.a, localOChunkPosition.b, localOChunkPosition.c, bl);
         }
     }
 
@@ -69,13 +69,13 @@ public class OBlockRedstoneWire extends OBlock {
                     n++;
 
                 if ((m != paramInt4) || (paramInt2 != paramInt5) || (n != paramInt6))
-                    j = g(paramOWorld, m, paramInt2, n, j);
+                    j = f(paramOWorld, m, paramInt2, n, j);
                 if ((paramOWorld.d(m, paramInt2, n)) && (!paramOWorld.d(paramInt1, paramInt2 + 1, paramInt3))) {
                     if ((m == paramInt4) && (paramInt2 + 1 == paramInt5) && (n == paramInt6))
                         continue;
-                    j = g(paramOWorld, m, paramInt2 + 1, n, j);
+                    j = f(paramOWorld, m, paramInt2 + 1, n, j);
                 } else if ((!paramOWorld.d(m, paramInt2, n)) && ((m != paramInt4) || (paramInt2 - 1 != paramInt5) || (n != paramInt6)))
-                    j = g(paramOWorld, m, paramInt2 - 1, n, j);
+                    j = f(paramOWorld, m, paramInt2 - 1, n, j);
             }
             if (j > 0)
                 j--;
@@ -84,7 +84,7 @@ public class OBlockRedstoneWire extends OBlock {
         }
         // hMod: Allow redstone wire current changes
         if (i != j)
-            j = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[] { new Block(bk, paramInt1, paramInt2, paramInt3), i, j });
+            j = (Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Object[] { new Block(bl, paramInt1, paramInt2, paramInt3), i, j });
 
         if (i != j) {
             paramOWorld.h = true;
@@ -109,13 +109,13 @@ public class OBlockRedstoneWire extends OBlock {
                     i1 += 2;
 
                 int i2 = 0;
-                i2 = g(paramOWorld, m, paramInt2, n, -1);
+                i2 = f(paramOWorld, m, paramInt2, n, -1);
                 j = paramOWorld.b(paramInt1, paramInt2, paramInt3);
                 if (j > 0)
                     j--;
                 if ((i2 >= 0) && (i2 != j))
                     a(paramOWorld, m, paramInt2, n, paramInt1, paramInt2, paramInt3);
-                i2 = g(paramOWorld, m, i1, n, -1);
+                i2 = f(paramOWorld, m, i1, n, -1);
                 j = paramOWorld.b(paramInt1, paramInt2, paramInt3);
                 if (j > 0)
                     j--;
@@ -136,17 +136,17 @@ public class OBlockRedstoneWire extends OBlock {
     }
 
     private void h(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
-        if (paramOWorld.a(paramInt1, paramInt2, paramInt3) != bk)
+        if (paramOWorld.a(paramInt1, paramInt2, paramInt3) != bl)
             return;
 
-        paramOWorld.h(paramInt1, paramInt2, paramInt3, bk);
-        paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bk);
-        paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bk);
-        paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bk);
-        paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bk);
+        paramOWorld.h(paramInt1, paramInt2, paramInt3, bl);
+        paramOWorld.h(paramInt1 - 1, paramInt2, paramInt3, bl);
+        paramOWorld.h(paramInt1 + 1, paramInt2, paramInt3, bl);
+        paramOWorld.h(paramInt1, paramInt2, paramInt3 - 1, bl);
+        paramOWorld.h(paramInt1, paramInt2, paramInt3 + 1, bl);
 
-        paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bk);
-        paramOWorld.h(paramInt1, paramInt2 + 1, paramInt3, bk);
+        paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bl);
+        paramOWorld.h(paramInt1, paramInt2 + 1, paramInt3, bl);
     }
 
     @Override
@@ -156,8 +156,8 @@ public class OBlockRedstoneWire extends OBlock {
             return;
 
         g(paramOWorld, paramInt1, paramInt2, paramInt3);
-        paramOWorld.h(paramInt1, paramInt2 + 1, paramInt3, bk);
-        paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bk);
+        paramOWorld.h(paramInt1, paramInt2 + 1, paramInt3, bl);
+        paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bl);
 
         h(paramOWorld, paramInt1 - 1, paramInt2, paramInt3);
         h(paramOWorld, paramInt1 + 1, paramInt2, paramInt3);
@@ -188,8 +188,8 @@ public class OBlockRedstoneWire extends OBlock {
         if (paramOWorld.t)
             return;
 
-        paramOWorld.h(paramInt1, paramInt2 + 1, paramInt3, bk);
-        paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bk);
+        paramOWorld.h(paramInt1, paramInt2 + 1, paramInt3, bl);
+        paramOWorld.h(paramInt1, paramInt2 - 1, paramInt3, bl);
         g(paramOWorld, paramInt1, paramInt2, paramInt3);
 
         h(paramOWorld, paramInt1 - 1, paramInt2, paramInt3);
@@ -215,7 +215,7 @@ public class OBlockRedstoneWire extends OBlock {
             h(paramOWorld, paramInt1, paramInt2 - 1, paramInt3 + 1);
     }
 
-    private int g(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+    private int f(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         if (paramOWorld.a(paramInt1, paramInt2, paramInt3) != bk)
             return paramInt4;
         int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
@@ -233,7 +233,7 @@ public class OBlockRedstoneWire extends OBlock {
         boolean bool = a(paramOWorld, paramInt1, paramInt2, paramInt3);
 
         if (!bool) {
-            b_(paramOWorld, paramInt1, paramInt2, paramInt3, i);
+            a_(paramOWorld, paramInt1, paramInt2, paramInt3, i);
             paramOWorld.e(paramInt1, paramInt2, paramInt3, 0);
         } else
             g(paramOWorld, paramInt1, paramInt2, paramInt3);
@@ -243,7 +243,7 @@ public class OBlockRedstoneWire extends OBlock {
 
     @Override
     public int a(int paramInt, Random paramRandom) {
-        return OItem.bc;
+        return OItem.aA.bd;
     }
 
     @Override
@@ -297,7 +297,7 @@ public class OBlockRedstoneWire extends OBlock {
 
     public static boolean b(OIBlockAccess paramOIBlockAccess, int paramInt1, int paramInt2, int paramInt3) {
         int i = paramOIBlockAccess.a(paramInt1, paramInt2, paramInt3);
-        if (i == OBlock.av.bk)
+        if (i == OBlock.av.bl)
             return true;
         if (i == 0)
             return false;

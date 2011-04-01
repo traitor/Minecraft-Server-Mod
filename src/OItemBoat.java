@@ -2,19 +2,21 @@ public class OItemBoat extends OItem {
 
     public OItemBoat(int paramInt) {
         super(paramInt);
-        bd = 1;
+        be = 1;
     }
 
     @Override
     public OItemStack a(OItemStack paramOItemStack, OWorld paramOWorld, OEntityPlayer paramOEntityPlayer) {
         float f1 = 1.0F;
 
-        float f2 = paramOEntityPlayer.aS + (paramOEntityPlayer.aQ - paramOEntityPlayer.aS) * f1;
-        float f3 = paramOEntityPlayer.aR + (paramOEntityPlayer.aP - paramOEntityPlayer.aR) * f1;
+        float f2 = paramOEntityPlayer.aT + (paramOEntityPlayer.aR - paramOEntityPlayer.aT) * f1;
+        float f3 = paramOEntityPlayer.aS + (paramOEntityPlayer.aQ - paramOEntityPlayer.aS) * f1;
 
-        double d1 = paramOEntityPlayer.aG + (paramOEntityPlayer.aJ - paramOEntityPlayer.aG) * f1;
-        double d2 = paramOEntityPlayer.aH + (paramOEntityPlayer.aK - paramOEntityPlayer.aH) * f1 + 1.62D - paramOEntityPlayer.bb;
-        double d3 = paramOEntityPlayer.aI + (paramOEntityPlayer.aL - paramOEntityPlayer.aI) * f1;
+
+        double d1 = paramOEntityPlayer.aH + (paramOEntityPlayer.aK - paramOEntityPlayer.aH) * f1;
+        double d2 = paramOEntityPlayer.aI + (paramOEntityPlayer.aL - paramOEntityPlayer.aI) * f1 + 1.62D - paramOEntityPlayer.bc;
+        double d3 = paramOEntityPlayer.aJ + (paramOEntityPlayer.aM - paramOEntityPlayer.aJ) * f1;
+
 
         OVec3D localOVec3D1 = OVec3D.b(d1, d2, d3);
 

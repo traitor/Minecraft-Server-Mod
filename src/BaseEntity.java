@@ -28,7 +28,7 @@ public class BaseEntity {
      * @return id
      */
     public int getId() {
-        return entity.aA;
+        return entity.aB;
     }
 
     /**
@@ -70,7 +70,7 @@ public class BaseEntity {
      * @return x
      */
     public double getX() {
-        return entity.aJ;
+        return entity.aK;
     }
 
     /**
@@ -89,7 +89,7 @@ public class BaseEntity {
      * @return y
      */
     public double getY() {
-        return entity.aK;
+        return entity.aL;
     }
 
     /**
@@ -108,7 +108,7 @@ public class BaseEntity {
      * @return z
      */
     public double getZ() {
-        return entity.aL;
+        return entity.aM;
     }
 
     /**
@@ -146,7 +146,7 @@ public class BaseEntity {
      * @return rotation
      */
     public float getRotation() {
-        return entity.aP;
+        return entity.aR;
     }
 
     /**

@@ -35,7 +35,7 @@ public class OInventoryLargeChest implements OIInventory, Container<OItemStack> 
     }
 
     public int getContentsSize() {
-        return m_();
+        return q_();
     }
 
     public Block getChestBlock() {
@@ -58,8 +58,8 @@ public class OInventoryLargeChest implements OIInventory, Container<OItemStack> 
         a = value;
     }
 
-    public int m_() {
-        return b.m_() + c.m_();
+    public int q_() {
+        return b.q_() + c.q_();
     }
 
     public String c() {
@@ -67,31 +67,31 @@ public class OInventoryLargeChest implements OIInventory, Container<OItemStack> 
     }
 
     public OItemStack c_(int paramInt) {
-        if (paramInt >= b.m_())
-            return c.c_(paramInt - b.m_());
+        if (paramInt >= b.q_())
+            return c.c_(paramInt - b.q_());
         return b.c_(paramInt);
     }
 
     public OItemStack a(int paramInt1, int paramInt2) {
-        if (paramInt1 >= b.m_())
-            return c.a(paramInt1 - b.m_(), paramInt2);
+        if (paramInt1 >= b.q_())
+            return c.a(paramInt1 - b.q_(), paramInt2);
         return b.a(paramInt1, paramInt2);
     }
 
     public void a(int paramInt, OItemStack paramOItemStack) {
-        if (paramInt >= b.m_())
-            c.a(paramInt - b.m_(), paramOItemStack);
+        if (paramInt >= b.q_())
+            c.a(paramInt - b.q_(), paramOItemStack);
         else
             b.a(paramInt, paramOItemStack);
     }
 
-    public int n_() {
-        return b.n_();
+    public int r_() {
+        return b.r_();
     }
 
-    public void h() {
-        b.h();
-        c.h();
+    public void i() {
+        b.i();
+        c.i();
     }
 
     public boolean a_(OEntityPlayer paramOEntityPlayer) {

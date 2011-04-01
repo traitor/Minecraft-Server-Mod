@@ -58,7 +58,7 @@ public class OServerConfigurationManager {
     }
 
     public void a(OWorldServer paramOWorldServer) {
-        n = paramOWorldServer.m().d();
+        n = paramOWorldServer.o().d();
     }
 
     public int a() {
@@ -69,10 +69,10 @@ public class OServerConfigurationManager {
         b.add(paramOEntityPlayerMP);
         n.b(paramOEntityPlayerMP);
 
-        c.e.u.d((int) paramOEntityPlayerMP.aJ >> 4, (int) paramOEntityPlayerMP.aL >> 4);
+        c.e.u.d((int) paramOEntityPlayerMP.aK >> 4, (int) paramOEntityPlayerMP.aM >> 4);
 
-        while (c.e.a(paramOEntityPlayerMP, paramOEntityPlayerMP.aT).size() != 0)
-            paramOEntityPlayerMP.a(paramOEntityPlayerMP.aJ, paramOEntityPlayerMP.aK + 1.0D, paramOEntityPlayerMP.aL);
+        while (c.e.a(paramOEntityPlayerMP, paramOEntityPlayerMP.aU).size() != 0)
+            paramOEntityPlayerMP.a(paramOEntityPlayerMP.aK, paramOEntityPlayerMP.aL + 1.0D, paramOEntityPlayerMP.aM);
         c.e.a(paramOEntityPlayerMP);
         d.a(paramOEntityPlayerMP);
         // hMod: Handle login (send MOTD and call hook)
@@ -192,17 +192,29 @@ public class OServerConfigurationManager {
         b.remove(paramOEntityPlayerMP);
         c.e.e(paramOEntityPlayerMP);
 
+        OChunkCoordinates localOChunkCoordinates1 = paramOEntityPlayerMP.H();
+        
         OEntityPlayerMP localOEntityPlayerMP = new OEntityPlayerMP(c, c.e, paramOEntityPlayerMP.r, new OItemInWorldManager(c.e));
-        localOEntityPlayerMP.aA = paramOEntityPlayerMP.aA;
+        localOEntityPlayerMP.aB = paramOEntityPlayerMP.aB;
         localOEntityPlayerMP.a = paramOEntityPlayerMP.a;
 
-        c.e.u.d((int) localOEntityPlayerMP.aJ >> 4, (int) localOEntityPlayerMP.aL >> 4);
+        if (localOChunkCoordinates1 != null) {
+            OChunkCoordinates localOChunkCoordinates2 = OEntityPlayer.a(c.e, localOChunkCoordinates1);
+            if (localOChunkCoordinates2 != null) {
+                localOEntityPlayerMP.c(localOChunkCoordinates2.a + 0.5F, localOChunkCoordinates2.b + 0.1F, localOChunkCoordinates2.c + 0.5F, 0.0F, 0.0F);
+                localOEntityPlayerMP.a(localOChunkCoordinates1);
+            } else
+                localOEntityPlayerMP.a.b(new NEW6(0));
 
-        while (c.e.a(localOEntityPlayerMP, localOEntityPlayerMP.aT).size() != 0)
-            localOEntityPlayerMP.a(localOEntityPlayerMP.aJ, localOEntityPlayerMP.aK + 1.0D, localOEntityPlayerMP.aL);
+        }
+
+        c.e.u.d((int) localOEntityPlayerMP.aK >> 4, (int) localOEntityPlayerMP.aM >> 4);
+
+        while (c.e.a(localOEntityPlayerMP, localOEntityPlayerMP.aU).size() != 0)
+            localOEntityPlayerMP.a(localOEntityPlayerMP.aK, localOEntityPlayerMP.aL + 1.0D, localOEntityPlayerMP.aM);
 
         localOEntityPlayerMP.a.b(new OPacket9());
-        localOEntityPlayerMP.a.a(localOEntityPlayerMP.aJ, localOEntityPlayerMP.aK, localOEntityPlayerMP.aL, localOEntityPlayerMP.aP, localOEntityPlayerMP.aQ);
+        localOEntityPlayerMP.a.a(localOEntityPlayerMP.aK, localOEntityPlayerMP.aL, localOEntityPlayerMP.aM, localOEntityPlayerMP.aQ, localOEntityPlayerMP.aR);
 
         d.a(localOEntityPlayerMP);
         c.e.a(localOEntityPlayerMP);
@@ -391,9 +403,9 @@ public class OServerConfigurationManager {
     public void a(double paramDouble1, double paramDouble2, double paramDouble3, double paramDouble4, OPacket paramOPacket) {
         for (int i1 = 0; i1 < b.size(); i1++) {
             OEntityPlayerMP localOEntityPlayerMP = b.get(i1);
-            double d1 = paramDouble1 - localOEntityPlayerMP.aJ;
-            double d2 = paramDouble2 - localOEntityPlayerMP.aK;
-            double d3 = paramDouble3 - localOEntityPlayerMP.aL;
+            double d1 = paramDouble1 - localOEntityPlayerMP.aK;
+            double d2 = paramDouble2 - localOEntityPlayerMP.aL;
+            double d3 = paramDouble3 - localOEntityPlayerMP.aM;
             if (d1 * d1 + d2 * d2 + d3 * d3 < paramDouble4 * paramDouble4)
                 localOEntityPlayerMP.a.b(paramOPacket);
         }

@@ -10,23 +10,23 @@ public final class OItemStack {
     }
 
     public OItemStack(OBlock paramOBlock, int paramInt) {
-        this(paramOBlock.bk, paramInt, 0);
+        this(paramOBlock.bl, paramInt, 0);
     }
 
     public OItemStack(OBlock paramOBlock, int paramInt1, int paramInt2) {
-        this(paramOBlock.bk, paramInt1, paramInt2);
+        this(paramOBlock.bl, paramInt1, paramInt2);
     }
 
     public OItemStack(OItem paramOItem) {
-        this(OItem.bc, 1, 0);
+        this(paramOItem.bd, 1, 0);
     }
 
     public OItemStack(OItem paramOItem, int paramInt) {
-        this(OItem.bc, paramInt, 0);
+        this(paramOItem.bd, paramInt, 0);
     }
 
     public OItemStack(OItem paramOItem, int paramInt1, int paramInt2) {
-        this(OItem.bc, paramInt1, paramInt2);
+        this(paramOItem.bd, paramInt1, paramInt2);
     }
 
     public OItemStack(int paramInt1, int paramInt2, int paramInt3) {
@@ -49,7 +49,11 @@ public final class OItemStack {
     }
 
     public boolean a(OEntityPlayer paramOEntityPlayer, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        return a().a(this, paramOEntityPlayer, paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
+        boolean bool = a().a(this, paramOEntityPlayer, paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
+        if (bool)
+            paramOEntityPlayer.a(NEW13.A[c], 1);
+        return bool;
+
     }
 
     public float a(OBlock paramOBlock) {
@@ -105,12 +109,15 @@ public final class OItemStack {
         return OItem.c[c].d();
     }
 
-    public void b(int paramInt) {
+    public void a(int paramInt, OEntity paramOEntity) {
         if (!d())
             return;
 
         d += paramInt;
         if (d > i()) {
+            if ((paramOEntity instanceof OEntityPlayer))
+                ((OEntityPlayer) paramOEntity).a(NEW13.B[c], 1);
+
             a -= 1;
             if (a < 0)
                 a = 0;
@@ -118,12 +125,18 @@ public final class OItemStack {
         }
     }
 
-    public void a(OEntityLiving paramOEntityLiving) {
-        OItem.c[c].a(this, paramOEntityLiving);
+    public void a(OEntityLiving paramOEntityLiving, OEntityPlayer paramOEntityPlayer) {
+        boolean bool = OItem.c[c].a(this, paramOEntityLiving, paramOEntityPlayer);
+        if (bool)
+            paramOEntityPlayer.a(NEW13.A[c], 1);
+
     }
 
-    public void a(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        OItem.c[c].a(this, paramInt1, paramInt2, paramInt3, paramInt4);
+    public void a(int paramInt1, int paramInt2, int paramInt3, int paramInt4, OEntityPlayer paramOEntityPlayer) {
+        boolean bool = OItem.c[c].a(this, paramInt1, paramInt2, paramInt3, paramInt4, paramOEntityPlayer);
+        if (bool)
+            paramOEntityPlayer.a(NEW13.A[c], 1);
+
     }
 
     public int a(OEntity paramOEntity) {
@@ -137,8 +150,8 @@ public final class OItemStack {
     public void a(OEntityPlayer paramOEntityPlayer) {
     }
 
-    public void b(OEntityLiving paramOEntityLiving) {
-        OItem.c[c].b(this, paramOEntityLiving);
+    public void a(OEntityLiving paramOEntityLiving) {
+        OItem.c[c].a(this, paramOEntityLiving);
     }
 
     public OItemStack j() {

@@ -77,7 +77,7 @@ public class OTileEntityMobSpawner extends OTileEntity {
                         d.a("flame", d1, d2, d3, 0.0D, 0.0D, 0.0D);
                     }
 
-                    localOEntityLiving.I();
+                    localOEntityLiving.M();
                     c();
                 }
             }

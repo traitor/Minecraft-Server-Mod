@@ -2,8 +2,8 @@ public class OItemFlintAndSteel extends OItem {
 
     public OItemFlintAndSteel(int paramInt) {
         super(paramInt);
-        bd = 1;
-        be = 64;
+        be = 1;
+        d(64);
     }
 
     @Override
@@ -40,11 +40,11 @@ public class OItemFlintAndSteel extends OItem {
                 return false;
             else {
                 paramOWorld.a(paramInt1 + 0.5D, paramInt2 + 0.5D, paramInt3 + 0.5D, "fire.ignite", 1.0F, b.nextFloat() * 0.4F + 0.8F);
-                paramOWorld.e(paramInt1, paramInt2, paramInt3, OBlock.ar.bk);
+                paramOWorld.e(paramInt1, paramInt2, paramInt3, OBlock.ar.bl);
             }
         }
 
-        paramOItemStack.b(1);
+        paramOItemStack.a(1, paramOEntityPlayer);
         return true;
     }
 }

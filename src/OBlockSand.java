@@ -11,15 +11,15 @@ public class OBlockSand extends OBlock {
     @Override
     public void e(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3) {
         // hMod: Physics
-        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Block(bk, paramInt1, paramInt2, paramInt3), true))
-            paramOWorld.c(paramInt1, paramInt2, paramInt3, bk, b());
+        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Block(bl, paramInt1, paramInt2, paramInt3), true))
+            paramOWorld.c(paramInt1, paramInt2, paramInt3, bl, b());
     }
 
     @Override
     public void a(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         // hMod: Physics
-        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Block(bk, paramInt1, paramInt2, paramInt3), true))
-            paramOWorld.c(paramInt1, paramInt2, paramInt3, bk, b());
+        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, new Block(bl, paramInt1, paramInt2, paramInt3), true))
+            paramOWorld.c(paramInt1, paramInt2, paramInt3, bl, b());
     }
 
     @Override
@@ -38,9 +38,9 @@ public class OBlockSand extends OBlock {
                 while ((b_(paramOWorld, paramInt1, paramInt2 - 1, paramInt3)) && (paramInt2 > 0))
                     paramInt2--;
                 if (paramInt2 > 0)
-                    paramOWorld.e(paramInt1, paramInt2, paramInt3, bk);
+                    paramOWorld.e(paramInt1, paramInt2, paramInt3, bl);
             } else {
-                OEntityFallingSand localOEntityFallingSand = new OEntityFallingSand(paramOWorld, paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, bk);
+                OEntityFallingSand localOEntityFallingSand = new OEntityFallingSand(paramOWorld, paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, bl);
                 paramOWorld.a(localOEntityFallingSand);
             }
         }
@@ -55,9 +55,9 @@ public class OBlockSand extends OBlock {
         int i = paramOWorld.a(paramInt1, paramInt2, paramInt3);
         if (i == 0)
             return true;
-        if (i == OBlock.ar.bk)
+        if (i == OBlock.ar.bl)
             return true;
-        OMaterial localOMaterial = OBlock.m[i].bv;
+        OMaterial localOMaterial = OBlock.m[i].bw;
         if (localOMaterial == OMaterial.f)
             return true;
         return localOMaterial == OMaterial.g;

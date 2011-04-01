@@ -21,7 +21,7 @@ public class OWorldServer extends OWorld {
     public void a(OEntity paramOEntity, boolean paramBoolean) {
         if ((!x.m) && (((paramOEntity instanceof OEntityAnimals)) || ((paramOEntity instanceof OEntityWaterMob))))
             paramOEntity.C();
-        if ((paramOEntity.aD == null) || (!(paramOEntity.aD instanceof OEntityPlayer)))
+        if ((paramOEntity.aE == null) || (!(paramOEntity.aE instanceof OEntityPlayer)))
             super.a(paramOEntity, paramBoolean);
     }
 
@@ -58,13 +58,13 @@ public class OWorldServer extends OWorld {
     @Override
     protected void b(OEntity paramOEntity) {
         super.b(paramOEntity);
-        y.a(paramOEntity.aA, paramOEntity);
+        y.a(paramOEntity.aB, paramOEntity);
     }
 
     @Override
     protected void c(OEntity paramOEntity) {
         super.c(paramOEntity);
-        y.d(paramOEntity.aA);
+        y.d(paramOEntity.aB);
     }
 
     public OEntity a(int paramInt) {
@@ -73,7 +73,7 @@ public class OWorldServer extends OWorld {
 
     @Override
     public void a(OEntity paramOEntity, byte paramByte) {
-        OPacket38 localOPacket38 = new OPacket38(paramOEntity.aA, paramByte);
+        OPacket38 localOPacket38 = new OPacket38(paramOEntity.aB, paramByte);
         x.k.b(paramOEntity, localOPacket38);
     }
 
@@ -90,8 +90,7 @@ public class OWorldServer extends OWorld {
         x.f.a(paramInt1, paramInt2, paramInt3, 64.0D, new OPacket54(paramInt1, paramInt2, paramInt3, paramInt4, paramInt5));
     }
 
-    @Override
-    public void r() {
+    public void t() {
         p.e();
     }
 

@@ -105,7 +105,7 @@ public class OExplosion {
                 d6 /= d9;
                 d7 /= d9;
 
-                double d10 = i.a(localOVec3D, localOEntity.aT);
+                double d10 = i.a(localOVec3D, localOEntity.aU);
                 double d11 = (1.0D - d8) * d10;
                 // hMod Damage hook: Explosions
                 int damage = (int) ((d11 * d11 + d11) / 2.0D * 8.0D * f + 1.0D);
@@ -133,7 +133,7 @@ public class OExplosion {
                 int i13 = i.a(i1, i11, i12);
                 int i14 = i.a(i1, i11 - 1, i12);
                 if ((i13 == 0) && OBlock.o[i14] && (h.nextInt(3) == 0))
-                    i.e(i1, i11, i12, OBlock.ar.bk);
+                    i.e(i1, i11, i12, OBlock.ar.bl);
             }
     }
 

@@ -4,8 +4,7 @@ public class OItemBucket extends OItem {
 
     public OItemBucket(int paramInt1, int paramInt2) {
         super(paramInt1);
-        bd = 1;
-        be = 64;
+        be = 1;
         a = paramInt2;
     }
 
@@ -13,12 +12,13 @@ public class OItemBucket extends OItem {
     public OItemStack a(OItemStack paramOItemStack, OWorld paramOWorld, OEntityPlayer paramOEntityPlayer) {
         float f1 = 1.0F;
 
-        float f2 = paramOEntityPlayer.aS + (paramOEntityPlayer.aQ - paramOEntityPlayer.aS) * f1;
-        float f3 = paramOEntityPlayer.aR + (paramOEntityPlayer.aP - paramOEntityPlayer.aR) * f1;
+        float f2 = paramOEntityPlayer.aT + (paramOEntityPlayer.aR - paramOEntityPlayer.aT) * f1;
+        float f3 = paramOEntityPlayer.aS + (paramOEntityPlayer.aQ - paramOEntityPlayer.aS) * f1;
 
-        double d1 = paramOEntityPlayer.aG + (paramOEntityPlayer.aJ - paramOEntityPlayer.aG) * f1;
-        double d2 = paramOEntityPlayer.aH + (paramOEntityPlayer.aK - paramOEntityPlayer.aH) * f1 + 1.62D - paramOEntityPlayer.bb;
-        double d3 = paramOEntityPlayer.aI + (paramOEntityPlayer.aL - paramOEntityPlayer.aI) * f1;
+
+        double d1 = paramOEntityPlayer.aH + (paramOEntityPlayer.aK - paramOEntityPlayer.aH) * f1;
+        double d2 = paramOEntityPlayer.aI + (paramOEntityPlayer.aL - paramOEntityPlayer.aI) * f1 + 1.62D - paramOEntityPlayer.bc;
+        double d3 = paramOEntityPlayer.aJ + (paramOEntityPlayer.aM - paramOEntityPlayer.aJ) * f1;
 
         OVec3D localOVec3D1 = OVec3D.b(d1, d2, d3);
 
@@ -83,7 +83,7 @@ public class OItemBucket extends OItem {
                     i++;
 
                 if ((paramOWorld.e(i, j, k)) || (!paramOWorld.c(i, j, k).a())) {
-                    if ((paramOWorld.m.d) && (a == OBlock.A.bk)) {
+                    if ((paramOWorld.m.d) && (a == OBlock.A.bl)) {
                         paramOWorld.a(d1 + 0.5D, d2 + 0.5D, d3 + 0.5D, "random.fizz", 0.5F, 2.6F + (paramOWorld.k.nextFloat() - paramOWorld.k.nextFloat()) * 0.8F);
                         for (int m = 0; m < 8; m++)
                             paramOWorld.a("largesmoke", i + Math.random(), j + Math.random(), k + Math.random(), 0.0D, 0.0D, 0.0D);

@@ -72,7 +72,7 @@ public class OItemBlock extends OItem {
                 } else {
                     OBlock.m[a].d(paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
                     OBlock.m[a].a(paramOWorld, paramInt1, paramInt2, paramInt3, (OEntityLiving) paramOEntityPlayer);
-                    paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localOBlock.bt.c(), (localOBlock.bt.a() + 1.0F) / 2.0F, localOBlock.bt.b() * 0.8F);
+                    paramOWorld.a(paramInt1 + 0.5F, paramInt2 + 0.5F, paramInt3 + 0.5F, localOBlock.bu.c(), (localOBlock.bu.a() + 1.0F) / 2.0F, localOBlock.bu.b() * 0.8F);
                     paramOItemStack.a -= 1;
                 }
 
@@ -83,6 +83,6 @@ public class OItemBlock extends OItem {
 
     @Override
     public String a() {
-        return OBlock.m[a].e();
+        return OBlock.m[a].f();
     }
 }

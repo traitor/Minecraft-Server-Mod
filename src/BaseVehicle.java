@@ -25,7 +25,7 @@ public class BaseVehicle extends BaseEntity {
      * @return x-motion
      */
     public double getMotionX() {
-        return entity.aM;
+        return entity.aN;
     }
 
     /**
@@ -34,7 +34,7 @@ public class BaseVehicle extends BaseEntity {
      * @return y-motion
      */
     public double getMotionY() {
-        return entity.aN;
+        return entity.aO;
     }
 
     /**
@@ -43,7 +43,7 @@ public class BaseVehicle extends BaseEntity {
      * @return z-motion
      */
     public double getMotionZ() {
-        return entity.aO;
+        return entity.aP;
     }
 
     /**
@@ -53,7 +53,7 @@ public class BaseVehicle extends BaseEntity {
      *            motion to set
      */
     public void setMotionX(double motion) {
-        entity.aM = motion;
+        entity.aN = motion;
     }
 
     /**
@@ -63,7 +63,7 @@ public class BaseVehicle extends BaseEntity {
      *            motion to set
      */
     public void setMotionY(double motion) {
-        entity.aN = motion;
+        entity.aO = motion;
     }
 
     /**
@@ -73,7 +73,7 @@ public class BaseVehicle extends BaseEntity {
      *            motion to set
      */
     public void setMotionZ(double motion) {
-        entity.aO = motion;
+        entity.aP = motion;
     }
 
     /**
@@ -84,9 +84,9 @@ public class BaseVehicle extends BaseEntity {
      * @param motionZ
      */
     public void setMotion(double motionX, double motionY, double motionZ) {
-        entity.aM = motionX;
-        entity.aN = motionY;
-        entity.aO = motionZ;
+        setMotionX(motionX);
+        setMotionY(motionY);
+        setMotionZ(motionZ);
     }
 
     /**
@@ -102,7 +102,7 @@ public class BaseVehicle extends BaseEntity {
      * @return true if unoccupied.
      */
     public boolean isEmpty() {
-        if (entity.aD == null)
+        if (entity.aE == null)
             return true;
         else
             return false;
@@ -115,9 +115,9 @@ public class BaseVehicle extends BaseEntity {
      * @return passenger
      */
     public Player getPassenger() {
-        if (entity.aD != null)
-            if (isPlayer(entity.aD))
-                return ((OEntityPlayerMP) entity.aD).getPlayer();
+        if (entity.aE != null)
+            if (isPlayer(entity.aE))
+                return ((OEntityPlayerMP) entity.aE).getPlayer();
 
         return null;
     }
