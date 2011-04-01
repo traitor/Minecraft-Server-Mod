@@ -51,7 +51,7 @@ public final class OItemStack {
     public boolean a(OEntityPlayer paramOEntityPlayer, OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         boolean bool = a().a(this, paramOEntityPlayer, paramOWorld, paramInt1, paramInt2, paramInt3, paramInt4);
         if (bool)
-            paramOEntityPlayer.a(NEW13.A[c], 1);
+            paramOEntityPlayer.a(OStatList.A[c], 1);
         return bool;
 
     }
@@ -116,7 +116,7 @@ public final class OItemStack {
         d += paramInt;
         if (d > i()) {
             if ((paramOEntity instanceof OEntityPlayer))
-                ((OEntityPlayer) paramOEntity).a(NEW13.B[c], 1);
+                ((OEntityPlayer) paramOEntity).a(OStatList.B[c], 1);
 
             a -= 1;
             if (a < 0)
@@ -128,14 +128,14 @@ public final class OItemStack {
     public void a(OEntityLiving paramOEntityLiving, OEntityPlayer paramOEntityPlayer) {
         boolean bool = OItem.c[c].a(this, paramOEntityLiving, paramOEntityPlayer);
         if (bool)
-            paramOEntityPlayer.a(NEW13.A[c], 1);
+            paramOEntityPlayer.a(OStatList.A[c], 1);
 
     }
 
     public void a(int paramInt1, int paramInt2, int paramInt3, int paramInt4, OEntityPlayer paramOEntityPlayer) {
         boolean bool = OItem.c[c].a(this, paramInt1, paramInt2, paramInt3, paramInt4, paramOEntityPlayer);
         if (bool)
-            paramOEntityPlayer.a(NEW13.A[c], 1);
+            paramOEntityPlayer.a(OStatList.A[c], 1);
 
     }
 

@@ -5,9 +5,11 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,7 +61,7 @@ public class etc {
     private int                           mobSpawnRate        = 100;
 
     private boolean                       mobReload           = false;
-    private Class<?>[]                    animalsClass, monsterClass, waterAnimalsClass;
+    private List                          animalsList, monsterList, waterAnimalsList;
 
     private etc() {
         commands.put("/help", "[Page] - Shows a list of commands. 7 per page.");
@@ -958,35 +960,41 @@ public class etc {
         return monsters;
     }
 
-    public Class<?>[] getMonstersClass() {
+    public List getMonstersClass(OMobSpawnerBase biomeSpawner) {
         if (mobReload)
             reloadMonsterClass();
-        return monsterClass;
+        return monsterList;
     }
 
-    public Class<?>[] getAnimalsClass() {
+    public List getAnimalsClass(OMobSpawnerBase biomeSpawner) {
         if (mobReload)
             reloadMonsterClass();
-        return animalsClass;
+
+        // Wolfies also like to spawn
+        List toRet = animalsList;
+        if (biomeSpawner instanceof OMobSpawnerTaiga || biomeSpawner instanceof OMobSpawnerForest)
+            toRet.add(OEntityWolf.class);
+
+        return toRet;
     }
 
-    public Class<?>[] getWaterAnimalsClass() {
+    public List getWaterAnimalsClass(OMobSpawnerBase biomeSpawner) {
         if (mobReload)
             reloadMonsterClass();
-        return waterAnimalsClass;
+        return waterAnimalsList;
     }
 
     private void reloadMonsterClass() {
-        monsterClass = new Class[getMonsters().length];
-        animalsClass = new Class[getAnimals().length];
-        waterAnimalsClass = new Class[getWaterAnimals().length];
+        monsterList = new ArrayList(getMonsters().length);
+        animalsList = new ArrayList(getAnimals().length);
+        waterAnimalsList = new ArrayList(getWaterAnimals().length);
 
-        for (int i = 0; i < monsterClass.length; i++)
-            monsterClass[i] = OEntityList.getEntity(getMonsters()[i]);
-        for (int i = 0; i < animalsClass.length; i++)
-            animalsClass[i] = OEntityList.getEntity(getAnimals()[i]);
-        for (int i = 0; i < waterAnimalsClass.length; i++)
-            waterAnimalsClass[i] = OEntityList.getEntity(getWaterAnimals()[i]);
+        for (String monster : getMonsters())
+            monsterList.add(OEntityList.getEntity(monster));
+        for (String animal : getAnimals())
+            monsterList.add(OEntityList.getEntity(animal));
+        for (String waterAnimal : getWaterAnimals())
+            monsterList.add(OEntityList.getEntity(waterAnimal));
 
         mobReload = false;
     }

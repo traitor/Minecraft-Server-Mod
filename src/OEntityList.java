@@ -77,7 +77,7 @@ public class OEntityList {
         a(OEntityCow.class, "Cow", 92);
         a(OEntityChicken.class, "Chicken", 93);
         a(OEntitySquid.class, "Squid", 94);
-        a(NEW12.class, "Wolf", 95);
+        a(OEntityWolf.class, "Wolf", 95);
 
         a(OEntityTNTPrimed.class, "PrimedTnt", 20);
         a(OEntityFallingSand.class, "FallingSand", 21);

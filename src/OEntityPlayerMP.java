@@ -228,11 +228,11 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     }
 
     @Override
-    public NEW9 a(int paramInt1, int paramInt2, int paramInt3) {
-        NEW9 localNEW9 = super.a(paramInt1, paramInt2, paramInt3);
-        if (localNEW9 == NEW9.a)
+    public OEnumStatus a(int paramInt1, int paramInt2, int paramInt3) {
+        OEnumStatus localOEnumStatus = super.a(paramInt1, paramInt2, paramInt3);
+        if (localOEnumStatus == OEnumStatus.a)
             b.k.a(this, new OPacket17Sleep(this, 0, paramInt1, paramInt2, paramInt3));
-        return localNEW9;
+        return localOEnumStatus;
     }
 
     @Override

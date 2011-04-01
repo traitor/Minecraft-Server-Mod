@@ -204,7 +204,7 @@ public class OServerConfigurationManager {
                 localOEntityPlayerMP.c(localOChunkCoordinates2.a + 0.5F, localOChunkCoordinates2.b + 0.1F, localOChunkCoordinates2.c + 0.5F, 0.0F, 0.0F);
                 localOEntityPlayerMP.a(localOChunkCoordinates1);
             } else
-                localOEntityPlayerMP.a.b(new NEW6(0));
+                localOEntityPlayerMP.a.b(new OPacket70(0));
 
         }
 

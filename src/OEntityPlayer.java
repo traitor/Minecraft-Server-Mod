@@ -108,7 +108,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
         y += d3 * 0.25D;
         x += d2 * 0.25D;
 
-        a(NEW13.j, 1);
+        a(OStatList.j, 1);
     }
 
     @Override
@@ -199,7 +199,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
             aN = (aP = 0.0D);
         bc = 0.1F;
 
-        a(NEW13.u, 1);
+        a(OStatList.u, 1);
     }
 
     @Override
@@ -207,9 +207,9 @@ public abstract class OEntityPlayer extends OEntityLiving {
         m += paramInt;
 
         if ((paramOEntity instanceof OEntityPlayer))
-            a(NEW13.w, 1);
+            a(OStatList.w, 1);
         else
-            a(NEW13.v, 1);
+            a(OStatList.v, 1);
     }
 
     public void z() {
@@ -251,7 +251,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
 
         if (!(Boolean) manager.callHook(PluginLoader.Hook.ITEM_DROP, ((OEntityPlayerMP) this).getPlayer(), new Item(paramOItemStack))){
             a(localOEntityItem);
-            a(NEW13.r, 1);
+            a(OStatList.r, 1);
         // return the item to the inventory.
         }else
             i.a(paramOItemStack);
@@ -355,7 +355,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
         if ((localObject instanceof OEntityLiving))
             a((OEntityLiving) localObject, false);
 
-        a(NEW13.t, paramInt);
+        a(OStatList.t, paramInt);
 
         return super.a(paramOEntity, paramInt);
     }
@@ -364,19 +364,19 @@ public abstract class OEntityPlayer extends OEntityLiving {
         if (((paramOEntityLiving instanceof OEntityCreeper)) || ((paramOEntityLiving instanceof OEntityGhast)))
             return;
 
-        if ((paramOEntityLiving instanceof NEW12)) {
-            NEW12 localObject = (NEW12) paramOEntityLiving;
-            if ((((NEW12) localObject).y()) && (r.equals(((NEW12) localObject).v())))
+        if ((paramOEntityLiving instanceof OEntityWolf)) {
+            OEntityWolf localObject = (OEntityWolf) paramOEntityLiving;
+            if ((((OEntityWolf) localObject).y()) && (r.equals(((OEntityWolf) localObject).v())))
                 return;
 
         }
 
-        Object localObject = aG.a(NEW12.class, OAxisAlignedBB.b(aK, aL, aM, aK + 1.0D, aL + 1.0D, aM + 1.0D).b(16.0D, 4.0D, 16.0D));
+        Object localObject = aG.a(OEntityWolf.class, OAxisAlignedBB.b(aK, aL, aM, aK + 1.0D, aL + 1.0D, aM + 1.0D).b(16.0D, 4.0D, 16.0D));
         for (OEntity localOEntity : (List<OEntity>) localObject) {
-            NEW12 localNEW12 = (NEW12) localOEntity;
-            if ((localNEW12.y()) && (localNEW12.A() == null) && (r.equals(localNEW12.v())) && ((!paramBoolean) || (!localNEW12.w()))) {
-                localNEW12.b(false);
-                localNEW12.c(paramOEntityLiving);
+            OEntityWolf localOEntityWolf = (OEntityWolf) localOEntity;
+            if ((localOEntityWolf.y()) && (localOEntityWolf.A() == null) && (r.equals(localOEntityWolf.v())) && ((!paramBoolean) || (!localOEntityWolf.w()))) {
+                localOEntityWolf.b(false);
+                localOEntityWolf.c(paramOEntityLiving);
             }
         }
     }
@@ -446,7 +446,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
             if ((paramOEntity instanceof OEntityLiving)) {
                 if (paramOEntity.N())
                     a((OEntityLiving) paramOEntity, true);
-                a(NEW13.s, i1);
+                a(OStatList.s, i1);
             }
         }
     }
@@ -467,16 +467,16 @@ public abstract class OEntityPlayer extends OEntityLiving {
         return (!a) && (super.E());
     }
 
-    public NEW9 a(int paramInt1, int paramInt2, int paramInt3) {
+    public OEnumStatus a(int paramInt1, int paramInt2, int paramInt3) {
         if ((F()) || (!N()))
-            return NEW9.e;
+            return OEnumStatus.e;
 
         if (aG.m.c)
-            return NEW9.b;
+            return OEnumStatus.b;
         if (aG.d())
-            return NEW9.c;
+            return OEnumStatus.c;
         if ((Math.abs(aK - paramInt1) > 3.0D) || (Math.abs(aL - paramInt2) > 2.0D) || (Math.abs(aM - paramInt3) > 3.0D))
-            return NEW9.d;
+            return OEnumStatus.d;
 
         b(0.2F, 0.2F);
         bc = 0.2F;
@@ -512,7 +512,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
         if (!aG.t)
             aG.q();
 
-        return NEW9.a;
+        return OEnumStatus.a;
     }
 
     private void e(int paramInt) {
@@ -601,13 +601,13 @@ public abstract class OEntityPlayer extends OEntityLiving {
             d = null;
     }
 
-    public void a(NEW20 paramNEW20, int paramInt) {
+    public void a(OStatBasic paramOStatBasic, int paramInt) {
     }
 
     @Override
     protected void I() {
         super.I();
-        a(NEW13.q, 1);
+        a(OStatList.q, 1);
     }
 
     @Override
@@ -626,29 +626,29 @@ public abstract class OEntityPlayer extends OEntityLiving {
         if (a(OMaterial.f)) {
             i1 = Math.round(OMathHelper.a(paramDouble1 * paramDouble1 + paramDouble2 * paramDouble2 + paramDouble3 * paramDouble3) * 100.0F);
             if (i1 > 0)
-                a(NEW13.p, i1);
+                a(OStatList.p, i1);
         } else if (g_()) {
             i1 = Math.round(OMathHelper.a(paramDouble1 * paramDouble1 + paramDouble3 * paramDouble3) * 100.0F);
             if (i1 > 0)
-                a(NEW13.l, i1);
+                a(OStatList.l, i1);
         } else if (n()) {
             if (paramDouble2 > 0.0D)
-                a(NEW13.n, (int) Math.round(paramDouble2 * 100.0D));
+                a(OStatList.n, (int) Math.round(paramDouble2 * 100.0D));
         } else if (aV) {
             i1 = Math.round(OMathHelper.a(paramDouble1 * paramDouble1 + paramDouble3 * paramDouble3) * 100.0F);
             if (i1 > 0)
-                a(NEW13.k, i1);
+                a(OStatList.k, i1);
         } else {
             i1 = Math.round(OMathHelper.a(paramDouble1 * paramDouble1 + paramDouble3 * paramDouble3) * 100.0F);
             if (i1 > 25)
-                a(NEW13.o, i1);
+                a(OStatList.o, i1);
         }
     }
 
     @Override
     protected void a(float paramFloat) {
         if (paramFloat >= 2.0F)
-            a(NEW13.m, (int) Math.round(paramFloat * 100.0D));
+            a(OStatList.m, (int) Math.round(paramFloat * 100.0D));
         super.a(paramFloat);
     }
 

@@ -1,5 +1,5 @@
 rule a OPacket7
-rule b NEW1
+rule b OAchievementMap
 rule c OPathPoint
 rule d OBlockChest
 rule e OMobSpawnerTaiga
@@ -30,12 +30,12 @@ rule ac OCompressedStreamTools
 rule ad OItemPickaxe
 rule ae OTileEntityDispenser
 rule af OItemBucket
-rule ag NEW4
+rule ag OStatDistance
 rule ah OWorldGenFlowers
 rule ai OIChunkLoader
 rule aj OEntityAnimals
 rule ak OItemCloth
-rule al NEW5
+rule al OSpawnListEntry
 rule am OBlockLeaves
 rule an OCraftingInventoryFurnaceCB
 rule ao OChunkCoordinates
@@ -47,7 +47,7 @@ rule at OBlockPressurePlate
 rule au OEntityCow
 rule av OEntitySnowball
 rule aw OItemSoup
-rule ax NEW6
+rule ax OPacket70
 rule ay OCraftingInventoryChestCB
 rule az ONoiseGenerator2
 rule ba OEntityFireball
@@ -62,7 +62,7 @@ rule bi OThreadCommandReader
 rule bj OThreadSleepForever
 rule bk OStepSound
 rule bl OItemFishingRod
-rule bm NEW9
+rule bm OEnumStatus
 rule bn OTileEntityMobSpawner
 rule bo OBlockRedstoneTorch
 rule bp OBlockMobSpawner
@@ -72,7 +72,7 @@ rule bs OPacket22Collect
 rule bt OWorldGenLakes
 rule bu OEntitySheep
 rule bv OItemSnowball
-rule bw NEW10
+rule bw OStatCollector
 rule bx OBlockLadder
 rule by OGuiLogOutputHandler
 rule bz OItemTool
@@ -89,7 +89,7 @@ rule cj OThreadLoginVerifier
 rule ck OBlockStone
 rule cl OItemSlab
 rule cm OAxisAlignedBB
-rule cn NEW11
+rule cn OAchievementList
 rule co OWorldGenDungeons
 rule cp OPacket8
 rule cq OPacket13PlayerLookMove
@@ -102,7 +102,7 @@ rule cw OWorld
 rule cx OIMobs
 rule cy OEntityPlayerMP
 rule cz OWorldManager
-rule da Oga
+rule da OBlockWorkbench
 rule db OBlockGlass
 rule dc OWorldServer
 rule dd OPlayerNBTManager
@@ -120,7 +120,7 @@ rule do OEntityCreeper
 rule dp OWorldGenLightStone1
 rule dq ONetLoginHandler
 rule dr OPacket28
-rule ds NEW12
+rule ds OEntityWolf
 rule dt OBlockSand
 rule du OItem
 rule dv OItemLog
@@ -166,7 +166,7 @@ rule fi OPacket38
 rule fj OEnumMovingObjectType
 rule fk OModelBed
 rule fl OPacket24MobSpawn
-rule fm NEW13
+rule fm OStatList
 rule fn OBlockBreakable
 rule fo OBlockSnow
 rule fp OTileEntityChest
@@ -180,7 +180,7 @@ rule fw OPacket104
 rule fx OMobSpawnerBase
 rule fy OPacket
 rule fz OItemDye
-rule ga NEW14
+rule ga OBlockLockedChest
 rule gb OChunkProviderLoadOrGenerate
 rule gc ORecipeSorter
 rule gd OGuiStatsComponent
@@ -218,7 +218,7 @@ rule hi OSaveOldDir
 rule hj OPacket21PickupSpawn
 rule hk OBlockGravel
 rule hl ORecipesDyes
-rule hm NEW15
+rule hm OStringTranslate
 rule hn OBlockCrops
 rule ho OBlockIce
 rule hp OISaveFormat
@@ -229,7 +229,7 @@ rule ht OEntityZombieSimple
 rule hu ONBTTagCompound
 rule hv OPacketCounter
 rule hw OBlockStationary
-rule hx NEW16
+rule hx OAchievement
 rule hy OPacket1Login
 rule hz OBlockSlowSand
 rule ia ORecipesFood
@@ -255,7 +255,7 @@ rule it OPacket33RelEntityMoveLook
 rule iu OWorldGenHellLava
 rule iv OItemSword
 rule iw ORegionFile
-rule ix NEW17
+rule ix OItemCookie
 rule iy OPacket27
 rule iz OChunkProviderHell
 rule ja ONBTTagByte
@@ -315,7 +315,7 @@ rule lb OSaveFormatOld
 rule lc OItemRecord
 rule ld OPacket19
 rule le OShapelessRecipes
-rule lf NEW18
+rule lf OStatCrafting
 rule lg OPacket53BlockChange
 rule lh ODataWatcher
 rule li ONoiseGeneratorOctaves
@@ -341,8 +341,8 @@ rule mb OEntityTracker
 rule mc OBlockSoil
 rule md OBlockTorch
 rule me OMinecartTrackLogic
-rule mf NEW19
-rule mg NEW20
+rule mf OSlotFurnace
+rule mg OStatBasic
 rule mh OPacket25
 rule mi OEntityEgg
 rule mj OPacket54
@@ -385,9 +385,9 @@ rule nt OEntityPigZombie
 rule nu OIProgressUpdate
 rule nv OChunkProviderGenerate
 rule nw OItemFlintAndSteel
-rule nx NEW21
+rule nx OBlockBloodStone
 rule ny OWorldGenTrees
-rule nz OBlockBloodStone
+rule nz OStatTime
 rule oa OMobSpawnerRainforest
 rule ob OTileEntitySign
 rule oc OEntityMinecart
@@ -396,6 +396,6 @@ rule oe OBlockFire
 rule of OItemInWorldManager
 rule og OPacket255KickDisconnect
 rule oh OBlockStep
-rule oi NEW22
+rule oi OItemFood
 rule oj OSlotCrafting
 rule ok OChunkCoordIntPair

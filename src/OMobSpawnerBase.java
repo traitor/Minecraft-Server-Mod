@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.List;
 
 public class OMobSpawnerBase {
 
@@ -20,14 +22,9 @@ public class OMobSpawnerBase {
     public byte                         p = (byte) OBlock.v.bk;
     public int                          q = 5169201;
 
-    protected Class<?>[]                r;
-    // protected Class[] r = {OEntitySpider.class, OEntityZombie.class,
-    // OEntitySkeleton.class, OEntityCreeper.class, OEntitySlime.class};
-    protected Class<?>[]                s;
-    // protected Class[] s = {OEntitySheep.class, OEntityPig.class,
-    // OEntityChicken.class, OEntityCow.class};
-    protected Class<?>[]                t;
-    // protected Class[] t = {OEntitySquid.class};
+    protected List r = new ArrayList();
+    protected List s = new ArrayList();
+    protected List t = new ArrayList();
     private static OMobSpawnerBase[]    u = new OMobSpawnerBase[4096];
 
     public static void a() {
@@ -99,14 +96,14 @@ public class OMobSpawnerBase {
     }
 
     // hMod: Custom mob spawning
-    public Class<?>[] a(OEnumCreatureType paramOEnumCreatureType) {
+    public List a(OEnumCreatureType paramOEnumCreatureType) {
         etc config = etc.getInstance();
         if (paramOEnumCreatureType == OEnumCreatureType.a)
-            return config.getMonstersClass();
+            return config.getMonstersClass(this);
         if (paramOEnumCreatureType == OEnumCreatureType.b)
-            return config.getAnimalsClass();
+            return config.getAnimalsClass(this);
         if (paramOEnumCreatureType == OEnumCreatureType.c)
-            return config.getWaterAnimalsClass();
+            return config.getWaterAnimalsClass(this);
         return null;
     }
 
