@@ -216,7 +216,7 @@ public class OBlockRedstoneWire extends OBlock {
     }
 
     private int f(OWorld paramOWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        if (paramOWorld.a(paramInt1, paramInt2, paramInt3) != bk)
+        if (paramOWorld.a(paramInt1, paramInt2, paramInt3) != bl)
             return paramInt4;
         int i = paramOWorld.b(paramInt1, paramInt2, paramInt3);
         if (i > paramInt4)

@@ -18,8 +18,8 @@ public class OMobSpawnerBase {
     public static final OMobSpawnerBase l = new OMobSpawnerHell().b(16711680).a("Hell");
     public String                       m;
     public int                          n;
-    public byte                         o = (byte) OBlock.u.bk;
-    public byte                         p = (byte) OBlock.v.bk;
+    public byte                         o = (byte) OBlock.u.bl;
+    public byte                         p = (byte) OBlock.v.bl;
     public int                          q = 5169201;
 
     protected List r = new ArrayList();

@@ -17,7 +17,7 @@ public class OItemBlock extends OItem {
         int blockClickedId = paramOWorld.a(paramInt1, paramInt2, paramInt3);
         Block blockClicked = new Block(blockClickedId, paramInt1, paramInt2, paramInt3);
 
-        if (paramOWorld.a(paramInt1, paramInt2, paramInt3) == OBlock.aS.bk)
+        if (paramOWorld.a(paramInt1, paramInt2, paramInt3) == OBlock.aS.bl)
             paramInt4 = 0;
         else {
             if (paramInt4 == 0)
