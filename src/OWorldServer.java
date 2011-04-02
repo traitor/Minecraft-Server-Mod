@@ -12,15 +12,15 @@ public class OWorldServer extends OWorld {
     private MinecraftServer     x;
     private OMCHashTable        y = new OMCHashTable();
 
-    public OWorldServer(MinecraftServer paramMinecraftServer, OISaveHandler paramOISaveHandler, String paramString, int paramInt) {
-        super(paramOISaveHandler, paramString, new Random().nextLong(), OWorldProvider.a(paramInt));
+    public OWorldServer(MinecraftServer paramMinecraftServer, OISaveHandler paramOISaveHandler, String paramString, int paramInt, long paramLong) {
+        super(paramOISaveHandler, paramString, paramLong, OWorldProvider.a(paramInt));
         x = paramMinecraftServer;
     }
 
     @Override
     public void a(OEntity paramOEntity, boolean paramBoolean) {
         if ((!x.m) && (((paramOEntity instanceof OEntityAnimals)) || ((paramOEntity instanceof OEntityWaterMob))))
-            paramOEntity.C();
+            paramOEntity.D();
         if ((paramOEntity.aE == null) || (!(paramOEntity.aE instanceof OEntityPlayer)))
             super.a(paramOEntity, paramBoolean);
     }

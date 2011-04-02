@@ -61,7 +61,7 @@ public class etc {
     private int                           mobSpawnRate        = 100;
 
     private boolean                       mobReload           = false;
-    private List                          animalsList, monsterList, waterAnimalsList;
+    private List<OSpawnListEntry>         animalsList, monsterList, waterAnimalsList;
 
     private etc() {
         commands.put("/help", "[Page] - Shows a list of commands. 7 per page.");
@@ -973,7 +973,7 @@ public class etc {
         // Wolfies also like to spawn
         List toRet = animalsList;
         if (biomeSpawner instanceof OMobSpawnerTaiga || biomeSpawner instanceof OMobSpawnerForest)
-            toRet.add(OEntityWolf.class);
+            toRet.add(OSpawnListEntry.getSpawnListEntry(OEntityWolf.class));
 
         return toRet;
     }
@@ -990,11 +990,11 @@ public class etc {
         waterAnimalsList = new ArrayList(getWaterAnimals().length);
 
         for (String monster : getMonsters())
-            monsterList.add(OEntityList.getEntity(monster));
+            monsterList.add(OSpawnListEntry.getSpawnListEntry(OEntityList.getEntity(monster)));
         for (String animal : getAnimals())
-            monsterList.add(OEntityList.getEntity(animal));
+            monsterList.add(OSpawnListEntry.getSpawnListEntry(OEntityList.getEntity(animal)));
         for (String waterAnimal : getWaterAnimals())
-            monsterList.add(OEntityList.getEntity(waterAnimal));
+            monsterList.add(OSpawnListEntry.getSpawnListEntry(OEntityList.getEntity(waterAnimal)));
 
         mobReload = false;
     }

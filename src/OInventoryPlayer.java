@@ -3,7 +3,7 @@ public class OInventoryPlayer implements OIInventory, Container<OItemStack> {
     public OItemStack[]   a    = new OItemStack[36];
     public OItemStack[]   b    = new OItemStack[4];
     public int            c    = 0;
-    private OEntityPlayer d;
+    public OEntityPlayer d;
     private OItemStack    f;
     public boolean        e    = false;
     private String        name = "Inventory";

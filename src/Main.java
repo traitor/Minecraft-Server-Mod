@@ -14,18 +14,13 @@ import java.util.zip.CheckedInputStream;
 
 public class Main {
 
-    public static final long   minecraft_server                   = 280458825L;
+    public static final long   minecraft_server                   = 0x367f8840L;
 
-    public static final long   minecraft_servero                  = 1253042995L;
-
-    public static final long   minecraft_servero_runecraft        = 2581072959L;
-    public static final long   minecraft_servero_runecraft_winrar = 3296853903L;
-
-    public static final long[] minecraft_servero_list             = new long[] { minecraft_servero, minecraft_servero_runecraft, minecraft_servero_runecraft_winrar };
+    public static final long   minecraft_servero                  = 0xbba4f2d3L;
 
     public static final long   mysql                              = 3001390372L;
     public static final long   jarjar                             = 233379283L;
-    public static final long   rules                              = 3379329792L;
+    public static final long   rules                              = 0x9c44d10cL;
 
     public static final Logger log                                = Logger.getLogger("Minecraft");
 
@@ -55,12 +50,12 @@ public class Main {
             } catch (Throwable t) {
                 log.log(Level.SEVERE, null, t);
             }
-            checkCRC32("minecraft_servero.jar", minecraft_servero_list);
+            checkCRC32("minecraft_servero.jar", minecraft_servero);
 
             log("Finished converting minecraft_server.jar, Starting minecraft server...");
             dynamicLoadJar("minecraft_servero.jar");
         } else
-            checkCRC32("minecraft_servero.jar", minecraft_servero_list);
+            checkCRC32("minecraft_servero.jar", minecraft_servero);
 
         if (etc.getInstance().getDataSourceType().equalsIgnoreCase("mysql"))
             checkCRC32("mysql-connector-java-bin.jar", mysql);
@@ -80,23 +75,6 @@ public class Main {
 
     public static boolean fileExists(String filename) {
         return new File(filename).exists();
-    }
-
-    public static void checkCRC32(String fileName, long[] crcs) throws IOException {
-        if (etc.getInstance().getTainted())
-            return;
-
-        long checksum = getCRC32(fileName);
-        for (long i : crcs)
-            if (i == checksum)
-                return;
-        log("-----------------------------");
-        log(fileName + " does not match checksum!");
-        log("if you still want to run the server, delete version.txt to run the server in tainted mode.");
-        log("This means some of your files are either corrupted,outdated or to new(minecraft got updated?).");
-        log("-----------------------------");
-        System.exit(0);
-
     }
 
     public static void checkCRC32(String fileName, long crc) throws IOException {
