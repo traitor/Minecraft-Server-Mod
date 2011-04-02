@@ -69,7 +69,7 @@ public class OServerConfigurationManager {
         b.add(paramOEntityPlayerMP);
         n.b(paramOEntityPlayerMP);
 
-        c.e.u.d((int) paramOEntityPlayerMP.aK >> 4, (int) paramOEntityPlayerMP.aM >> 4);
+        c.e.u.c((int) paramOEntityPlayerMP.aK >> 4, (int) paramOEntityPlayerMP.aM >> 4);
 
         while (c.e.a(paramOEntityPlayerMP, paramOEntityPlayerMP.aU).size() != 0)
             paramOEntityPlayerMP.a(paramOEntityPlayerMP.aK, paramOEntityPlayerMP.aL + 1.0D, paramOEntityPlayerMP.aM);
@@ -208,7 +208,7 @@ public class OServerConfigurationManager {
 
         }
 
-        c.e.u.d((int) localOEntityPlayerMP.aK >> 4, (int) localOEntityPlayerMP.aM >> 4);
+        c.e.u.c((int) localOEntityPlayerMP.aK >> 4, (int) localOEntityPlayerMP.aM >> 4);
 
         while (c.e.a(localOEntityPlayerMP, localOEntityPlayerMP.aU).size() != 0)
             localOEntityPlayerMP.a(localOEntityPlayerMP.aK, localOEntityPlayerMP.aL + 1.0D, localOEntityPlayerMP.aM);
@@ -220,8 +220,8 @@ public class OServerConfigurationManager {
         c.e.a(localOEntityPlayerMP);
         b.add(localOEntityPlayerMP);
 
-        localOEntityPlayerMP.l();
-        localOEntityPlayerMP.s();
+        localOEntityPlayerMP.m();
+        localOEntityPlayerMP.t();
         return localOEntityPlayerMP;
     }
 

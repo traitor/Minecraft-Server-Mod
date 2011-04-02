@@ -95,9 +95,9 @@ public class OExplosion {
             OEntity localOEntity = (OEntity) localList.get(i9);
             double d8 = localOEntity.e(b, c, d) / f;
             if (d8 <= 1.0D) {
-                d5 = localOEntity.aJ - b;
-                d6 = localOEntity.aK - c;
-                d7 = localOEntity.aL - d;
+                d5 = localOEntity.aK - b;
+                d6 = localOEntity.aL - c;
+                d7 = localOEntity.aM - d;
 
                 double d9 = OMathHelper.a(d5 * d5 + d6 * d6 + d7 * d7);
 
@@ -114,9 +114,9 @@ public class OExplosion {
                     localOEntity.a(e, (int) ((d11 * d11 + d11) / 2.0D * 8.0D * f + 1.0D));
 
                 double d12 = d11;
-                localOEntity.aM += d5 * d12;
-                localOEntity.aN += d6 * d12;
-                localOEntity.aO += d7 * d12;
+                localOEntity.aN += d5 * d12;
+                localOEntity.aO += d6 * d12;
+                localOEntity.aP += d7 * d12;
             }
         }
         f = f1;

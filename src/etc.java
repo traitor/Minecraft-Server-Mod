@@ -166,7 +166,7 @@ public class etc {
             animals = properties.getString("natural-animals", "Sheep,Pig,Chicken,Cow").split(",");
             if (animals.length == 1 && (animals[0].equals(" ") || animals[0].equals("")))
                 animals = new String[] {};
-            validateMobGroup(animals, "natural-animals", new String[] { "Sheep", "Pig", "Chicken", "Cow" });
+            validateMobGroup(animals, "natural-animals", new String[] { "Sheep", "Pig", "Chicken", "Cow", "Wolf" });
 
             monsters = properties.getString("natural-monsters", "Spider,Zombie,Skeleton,Creeper,Slime").split(",");
             if (monsters.length == 1 && (monsters[0].equals(" ") || monsters[0].equals("")))
@@ -971,9 +971,12 @@ public class etc {
             reloadMonsterClass();
 
         // Wolfies also like to spawn
-        List toRet = animalsList;
-        if (biomeSpawner instanceof OMobSpawnerTaiga || biomeSpawner instanceof OMobSpawnerForest)
-            toRet.add(OSpawnListEntry.getSpawnListEntry(OEntityWolf.class));
+        ArrayList toRet = new ArrayList(animalsList); // Create a copy.
+        if ((biomeSpawner instanceof OMobSpawnerTaiga) || (biomeSpawner instanceof OMobSpawnerForest)) {
+            OSpawnListEntry wolfEntry = OSpawnListEntry.getSpawnListEntry(OEntityWolf.class);
+            if (!toRet.contains(wolfEntry))
+                toRet.add(wolfEntry);
+        }
 
         return toRet;
     }
@@ -992,9 +995,9 @@ public class etc {
         for (String monster : getMonsters())
             monsterList.add(OSpawnListEntry.getSpawnListEntry(OEntityList.getEntity(monster)));
         for (String animal : getAnimals())
-            monsterList.add(OSpawnListEntry.getSpawnListEntry(OEntityList.getEntity(animal)));
+            animalsList.add(OSpawnListEntry.getSpawnListEntry(OEntityList.getEntity(animal)));
         for (String waterAnimal : getWaterAnimals())
-            monsterList.add(OSpawnListEntry.getSpawnListEntry(OEntityList.getEntity(waterAnimal)));
+            waterAnimalsList.add(OSpawnListEntry.getSpawnListEntry(OEntityList.getEntity(waterAnimal)));
 
         mobReload = false;
     }
