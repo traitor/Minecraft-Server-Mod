@@ -58,6 +58,14 @@ public class Player extends HumanEntity implements MessageReceiver {
     public boolean isConnected() {
         return !getEntity().a.c;
     }
+    
+    /**
+     * Returns if the player is still connected
+     * @return
+     */
+    public boolean isConnected() {
+        return !getEntity().a.c;
+    }
 
     /**
      * Kicks player with the specified reason
