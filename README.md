@@ -1,5 +1,11 @@
 hMod
 ====================
+**This project is dead, go find bukkit**
+
+
+This project hasn't been updated in at least 5 years, Minecraft is a totally different beast that the one this project was intending to modify. It was super fun while it lasted, thanks for stopping by.
+
+
 hMod is a server mod for the Minecraft Beta server software. This is only the source code, if you don't know how to use this you won't find it useful.
 
 Compiling
