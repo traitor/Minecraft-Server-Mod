@@ -726,4 +726,14 @@ public class Server {
     public boolean isBlockIndirectlyPowered(int x, int y, int z) {
         return server.e.o(x, y, z);
     }
+    
+    /**
+     * Adds a runnable to the Server Queue, so that it will be executed in the Server Thread.
+     *  
+     * @param r - the runnable
+     * @return true if successful
+     */
+    public void addToServerQueue(Runnable r) {
+    	gt.add(r);
+    }    
 }
