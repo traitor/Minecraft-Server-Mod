@@ -219,6 +219,14 @@ public class BaseEntity {
     public static boolean isLiving(OEntity entity) {
         return entity instanceof OEntityLiving;
     }
+	
+    /**
+     * Returns whether or not this entity is alive
+     * @return true if living entity
+     */
+    public boolean isLiving() {
+        return entity instanceof ka;
+    }
 
     /**
      * Returns the player for this entity
