@@ -12,6 +12,21 @@ public class BaseVehicle extends BaseEntity {
     public BaseVehicle(OEntity entity) {
         this.entity = entity;
     }
+    
+    public enum vehicleTypes {
+    	EmptyMinecart,
+    	StorageMinecart,
+    	PoweredMinecart,
+    	Boat, }
+
+	public BaseVehicle(vehicleTypes e, double x, double y, double z) {
+	        switch (e){
+	        case Boat: fm boat = new fm(etc.getMCServer().e, x, y, z); etc.getMCServer().e.a(boat); this.entity = boat; break;
+	        case EmptyMinecart: jo minecart = new jo(etc.getMCServer().e, x, y, z, 0); etc.getMCServer().e.a(minecart); this.entity = minecart; break;
+	        case StorageMinecart: jo storageCart = new jo(etc.getMCServer().e, x, y, z, 1); etc.getMCServer().e.a(storageCart); this.entity = storageCart; break;
+	        case PoweredMinecart: jo poweredCart = new jo(etc.getMCServer().e, x, y, z, 2); etc.getMCServer().e.a(poweredCart); this.entity = poweredCart; break;                        
+	    }
+	}
 
     /**
      * Interface for vehicles.
