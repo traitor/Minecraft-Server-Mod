@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -492,8 +494,12 @@ public class Player extends HumanEntity implements MessageReceiver {
                     hours = Integer.parseInt(split[2]);
                 if (split.length >= 4)
                     days = Integer.parseInt(split[3]);
-                Date date = new Date();
+                Calendar date = new GregorianCalendar();
+                date.set(Calendar.MINUTE, date.get(Calendar.MINUTE) + minutes );
+                date.set(Calendar.HOUR_OF_DAY, date.get(Calendar.HOUR_OF_DAY) + hours );
+                date.set(Calendar.DATE, date.get(Calendar.DATE) + days );
                 // date.
+                // A date object now exists for the next time they are allowed on the server
             } else if (cmd.equalsIgnoreCase("/banlist")) {
                 byte type = 0;
                 if (split.length == 2)
