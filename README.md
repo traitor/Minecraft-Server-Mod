@@ -1,6 +1,6 @@
 hMod
 ====================
-**This project is dead, go find spigot at spigot.org**
+**This project is dead, go find paper at [papermc.io](https://papermc.io/)**
 
 
 This project hasn't been updated in at least 5 years, Minecraft is a totally different beast that the one this project was intending to modify. It was super fun while it lasted, thanks for stopping by.
